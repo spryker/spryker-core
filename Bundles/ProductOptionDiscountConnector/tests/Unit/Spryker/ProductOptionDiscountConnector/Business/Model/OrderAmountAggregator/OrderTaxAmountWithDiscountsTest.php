@@ -9,10 +9,9 @@ namespace Unit\Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAm
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface;
 
 class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,32 +19,15 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testAggregateTaxAmountWhenDiscountSetShouldUseEffectiveTaxRate()
+    public function testAggregateTaxAmountShouldSumAllItemTaxes()
     {
         $orderTaxAmountWithDiscountsAggregator = $this->createOrderTaxAmountWithDiscountAggregator();
         $orderTransfer = $this->createOrderTransfer();
         $orderTaxAmountWithDiscountsAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(
-            round(600 / $this->getEffectiveTaxRateForTestData()),
-            $orderTransfer->getTotals()->getTaxTotal()->getAmount()
-        );
+        $this->assertSame(186.0, $orderTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
-    public function testAggregateTaxWithDiscountsIfEffectiveRateUsedFromAverageTaxes()
-    {
-        $orderTaxAmountWithDiscountsAggregator = $this->createOrderTaxAmountWithDiscountAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $orderTaxAmountWithDiscountsAggregator->aggregate($orderTransfer);
-
-        $this->assertEquals(
-            $this->getEffectiveTaxRateForTestData(),
-            $orderTransfer->getTotals()->getTaxTotal()->getTaxRate()
-        );
-    }
 
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -54,22 +36,15 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     {
         $orderTransfer = new OrderTransfer();
 
-        $totalsTransfer = new TotalsTransfer();
-        $totalsTransfer->setGrandTotal(600);
-        $orderTransfer->setTotals($totalsTransfer);
+        $orderTransfer->setTotals(new TotalsTransfer());
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setTaxRate(19);
-        $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(200);
-        $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(400);
+        $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts(63);
 
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setTaxRate(7);
-        $itemTransfer->addProductOption($productOptionTransfer);
+        $orderTransfer->addItem($itemTransfer);
 
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setTaxRate(7);
-        $itemTransfer->addProductOption($productOptionTransfer);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts(123);
 
         $orderTransfer->addItem($itemTransfer);
 
@@ -77,34 +52,19 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return float
-     */
-    protected function getEffectiveTaxRateForTestData()
-    {
-        return ((19 + 7 + 7) / 3);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts
      */
     protected function createOrderTaxAmountWithDiscountAggregator()
     {
-        $taxFacadeBridgeMock = $this->createTaxFacadeBridgeMock();
-        $taxFacadeBridgeMock->method('getTaxAmountFromGrossPrice')->willReturnCallback(
-            function ($grossSum, $taxRate) {
-                return round($grossSum / $taxRate); //tax forumula is not important, in this test we are testing if tax was calculated.
-            }
-        );
-
-        return new OrderTaxAmountWithDiscounts($taxFacadeBridgeMock);
+        return new OrderTaxAmountWithDiscounts();
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface
      */
     protected function createTaxFacadeBridgeMock()
     {
-        return $this->getMockBuilder(ProductOptionToTaxBridgeInterface::class)->disableArgumentCloning()->getMock();
+        return $this->getMockBuilder(ProductOptionToTaxInterface::class)->disableArgumentCloning()->getMock();
     }
 
 }

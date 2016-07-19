@@ -18,7 +18,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
@@ -289,29 +288,6 @@ class ProductManager implements ProductManagerInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @deprecated Use hasProductAbstractAttributes() instead.
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
-     *
-     * @return void
-     */
-    protected function checkProductAbstractAttributesDoNotExist($idProductAbstract, $locale)
-    {
-        if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
-            throw new ProductAbstractAttributesExistException(
-                sprintf(
-                    'Tried to create abstract attributes for product abstract %s, locale id %s, but it already exists',
-                    $idProductAbstract,
-                    $locale->getIdLocale()
-                )
-            );
-        }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
      * @return bool
      */
     protected function hasProductAbstractAttributes($idProductAbstract, LocaleTransfer $locale)
@@ -576,38 +552,6 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return float
-     */
-    public function getEffectiveTaxRateForProductConcrete($sku)
-    {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
-
-        if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
-        }
-
-        $productAbstract = $productConcrete->getSpyProductAbstract();
-
-        $taxSetEntity = $productAbstract->getSpyTaxSet();
-        if ($taxSetEntity === null) {
-            return 0;
-        }
-
-        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
-
-        return $effectiveTaxRate;
-    }
-
-    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -648,28 +592,7 @@ class ProductManager implements ProductManagerInterface
             ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($productConcrete[self::COL_NAME]);
 
-        $this->addTaxRate($productConcreteTransfer);
-
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function addTaxRate(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForProductAbstract($productConcreteTransfer->getIdProductAbstract())
-            ->findOne();
-
-        if ($taxSetEntity === null) {
-            return;
-        }
-
-        $effectiveTaxRate = $this->getEffectiveTaxRate($taxSetEntity->getSpyTaxRates());
-        $productConcreteTransfer->setTaxRate($effectiveTaxRate);
     }
 
     /**
@@ -726,21 +649,6 @@ class ProductManager implements ProductManagerInterface
     protected function encodeAttributes(array $attributes)
     {
         return json_encode($attributes);
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $taxRates
-     *
-     * @return int
-     */
-    protected function getEffectiveTaxRate($taxRates)
-    {
-        $taxRate = 0;
-        foreach ($taxRates as $taxRateEntity) {
-            $taxRate += $taxRateEntity->getRate();
-        }
-
-        return $taxRate;
     }
 
 }

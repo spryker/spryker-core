@@ -21,8 +21,8 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\Library\System;
-use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
@@ -104,7 +104,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param int|null $timeoutInSeconds
-     * @param bool $isBackgroundRequest
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
      *
@@ -114,12 +113,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $pathInfo,
         TransferInterface $transferObject = null,
         array $metaTransfers = [],
-        $timeoutInSeconds = null,
-        $isBackgroundRequest = false
+        $timeoutInSeconds = null
     ) {
-        if (!$this->isRequestAllowed($isBackgroundRequest)) {
-            throw new \LogicException('You cannot make more than one request from Yves to Zed.');
-        }
+
         self::$requestCounter++;
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
@@ -149,23 +145,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function isLoggingAllowed($pathInfo)
     {
         return strpos($pathInfo, 'heartbeat');
-    }
-
-    /**
-     * @param bool $isBackgroundRequest
-     *
-     * @return bool
-     */
-    protected function isRequestAllowed($isBackgroundRequest)
-    {
-        if (!$isBackgroundRequest) {
-            if (self::$alreadyRequested === true) {
-                return false;
-            }
-            self::$alreadyRequested = true;
-        }
-
-        return true;
     }
 
     /**
@@ -247,7 +226,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
-     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Guzzle\Http\Message\Response
      */
@@ -264,7 +243,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param \Guzzle\Http\Message\Response $response
      *
-     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */

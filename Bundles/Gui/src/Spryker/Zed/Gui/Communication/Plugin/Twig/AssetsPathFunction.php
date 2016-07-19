@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Spryker\Zed\Library\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunction;
 
 class AssetsPathFunction extends TwigFunction
 {

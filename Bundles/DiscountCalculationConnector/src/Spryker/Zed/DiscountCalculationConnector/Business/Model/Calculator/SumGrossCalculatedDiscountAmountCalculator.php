@@ -48,19 +48,6 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $itemTransfer->getSumGrossPrice() - $totalDiscountSumGrossAmount
         );
 
-        $totalDiscountUnitGrossAmount += $this->getProductOptionGrossUnitTotalAmount($itemTransfer->getProductOptions());
-        $totalDiscountSumGrossAmount += $this->getProductOptionGrossSumTotalAmount($itemTransfer->getProductOptions());
-
-        $itemTransfer->setUnitTotalDiscountAmountWithProductOption($totalDiscountUnitGrossAmount);
-        $itemTransfer->setSumTotalDiscountAmountWithProductOption($totalDiscountSumGrossAmount);
-
-        $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
-            $itemTransfer->getSumGrossPriceWithProductOptions() - $totalDiscountSumGrossAmount
-        );
-
-        $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
-            $itemTransfer->getUnitGrossPriceWithProductOptions() - $totalDiscountUnitGrossAmount
-        );
     }
 
     /**
@@ -106,56 +93,6 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
                 $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
             );
         }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
-     *
-     * @return int
-     */
-    protected function getSumOfProductOptionCalculatedDiscounts(\ArrayObject $productOptionTransfer)
-    {
-        $totalDiscountUnitGrossAmount = 0;
-        $totalDiscountSumGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountUnitGrossAmount += $this->getCalculatedDiscountsUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountSumGrossAmount += $this->getCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-        }
-
-        return [$totalDiscountUnitGrossAmount, $totalDiscountSumGrossAmount];
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
-     *
-     * @return int
-     */
-    protected function getProductOptionGrossUnitTotalAmount(\ArrayObject $productOptionTransfer)
-    {
-        $totalDiscountUnitGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountUnitGrossAmount += $this->getCalculatedDiscountsUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
-        }
-
-        return $totalDiscountUnitGrossAmount;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
-     *
-     * @return int
-     */
-    protected function getProductOptionGrossSumTotalAmount(\ArrayObject $productOptionTransfer)
-    {
-        $totalDiscountSumGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $totalDiscountSumGrossAmount += $this->getCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-        }
-
-        return $totalDiscountSumGrossAmount;
     }
 
     /**

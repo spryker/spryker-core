@@ -16,4 +16,17 @@ interface DiscountSalesAggregatorConnectorToTaxInterface
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
+    /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
+    /**
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta();
+
 }

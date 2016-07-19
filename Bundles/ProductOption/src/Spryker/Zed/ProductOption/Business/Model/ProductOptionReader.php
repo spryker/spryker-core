@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
@@ -90,13 +89,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
             $productOptionTransfer->setUnitGrossPrice((int)$price);
         }
 
-        $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
-            ->findOne();
-
-        if ($taxSetEntity !== null) {
-            $this->addTaxRate($productOptionTransfer, $taxSetEntity);
-        }
-
         return $productOptionTransfer;
     }
 
@@ -145,21 +137,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
         }
 
         return $productList;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
-     *
-     * @return void
-     */
-    protected function addTaxRate(productOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
-    {
-        $taxRate = 0;
-        foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
-            $taxRate += $taxRateEntity->getRate();
-        }
-        $productOptionTransfer->setTaxRate($taxRate);
     }
 
     /**

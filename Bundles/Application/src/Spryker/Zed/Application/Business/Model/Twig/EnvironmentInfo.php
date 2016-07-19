@@ -9,7 +9,7 @@ namespace Spryker\Zed\Application\Business\Model\Twig;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\System;
-use Spryker\Zed\Library\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunction;
 
 class EnvironmentInfo extends TwigFunction
 {

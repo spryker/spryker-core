@@ -8,4 +8,4 @@ composer require spryker/sales-aggregator
 
 ## Documentation
 
-[CalculationCheckoutConnector Documentation](http://spryker.github.io/core/bundles/sales-aggregator)
+[Documentation](http://spryker.github.io)

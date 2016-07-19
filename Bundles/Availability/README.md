@@ -8,4 +8,4 @@ composer require spryker/availability
 
 ## Documentation
 
-[Availability Documentation](http://spryker.github.io/core/bundles/availability)
+[Documentation](http://spryker.github.io)

@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts;
-use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts;
+use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorDependencyProvider;
 
 /**
@@ -22,9 +22,9 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
 {
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount
      */
-    public function createDiscountTotalAmountAggregator()
+    public function createDiscountTotalWithProductOptionsCalculator()
     {
         return new DiscountTotalAmount();
     }
@@ -38,33 +38,47 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts
      */
-    public function createProductOptionDiscountAggregator()
+    public function createProductOptionDiscountCalculator()
     {
         return new ProductOptionDiscounts(
-            $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::QUERY_CONTAINER_DISCOUNT)
+            $this->getDiscountQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts
      */
-    public function createItemProductOptionsAndDiscountsAggregator()
+    public function createItemProductOptionsAndDiscountsTaxCalculator()
     {
         return new ItemProductOptionTaxWithDiscounts(
-            $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX)
+            $this->getTaxFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts
      */
-    public function createOrderTaxAmountWithDiscounts()
+    public function createOrderTotalWithDiscountsTaxCalculator()
     {
-        return new OrderTaxAmountWithDiscounts(
-            $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX)
-        );
+        return new OrderTaxAmountWithDiscounts();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface
+     */
+    protected function getTaxFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     */
+    protected function getDiscountQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductOptionDiscountConnectorDependencyProvider::QUERY_CONTAINER_DISCOUNT);
     }
 
 }

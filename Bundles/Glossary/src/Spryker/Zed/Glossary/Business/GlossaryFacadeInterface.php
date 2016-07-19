@@ -243,6 +243,16 @@ interface GlossaryFacadeInterface
     /**
      * @api
      *
+     * @param int $idKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @api
+     *
      * @param string $keyName
      *
      * @return int

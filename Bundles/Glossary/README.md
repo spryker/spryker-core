@@ -8,4 +8,4 @@ composer require spryker/glossary
 
 ## Documentation
 
-[Glossary Documentation](http://spryker.github.io/core/bundles/glossary)
+[Documentation](http://spryker.github.io)

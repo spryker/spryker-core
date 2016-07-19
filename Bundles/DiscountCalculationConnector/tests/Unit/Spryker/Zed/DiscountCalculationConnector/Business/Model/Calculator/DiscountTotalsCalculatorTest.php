@@ -10,7 +10,6 @@ namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Cal
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
@@ -25,8 +24,6 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountT
 class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 
-    const ITEM_GROSS_PRICE_WITH_OPTIONS = 500;
-    const ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS = 250;
     const ITEM_QUANTITY = 2;
     const UNIT_GROSS_AMOUNT = 10;
 
@@ -41,40 +38,28 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $quoteTransfer = $this->createQuoteTransferWithFixtureData(
             self::ITEM_QUANTITY,
-            self::ITEM_GROSS_PRICE_WITH_OPTIONS,
-            self::ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS,
             $calculatedDiscountFixtures
         );
 
         $discountTotalsCalculator->recalculate($quoteTransfer);
 
-        $this->assertEquals(120, $quoteTransfer->getTotals()->getDiscountTotal());
+        $this->assertEquals(80, $quoteTransfer->getTotals()->getDiscountTotal());
     }
 
     /**
      * @param int $itemQuantity
-     * @param int $itemGrossSumPriceWithOptions
-     * @param int $itemGrossUnitPriceWithOptions
      * @param array $calculatedDiscounts
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransferWithFixtureData(
-        $itemQuantity,
-        $itemGrossSumPriceWithOptions,
-        $itemGrossUnitPriceWithOptions,
-        array $calculatedDiscounts
-    ) {
+    protected function createQuoteTransferWithFixtureData($itemQuantity, array $calculatedDiscounts)
+    {
         $quoteTransfer = $this->createQuoteTransfer();
 
         $quoteTransfer->setTotals($this->createTotalsTransfer());
 
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setQuantity($itemQuantity);
-        $itemTransfer->setUnitGrossPriceWithProductOptions($itemGrossUnitPriceWithOptions);
-        $itemTransfer->setSumGrossPriceWithProductOptions($itemGrossSumPriceWithOptions);
-        $productOptionTransfer = $this->createProductOptionTransfer();
-        $itemTransfer->addProductOption($productOptionTransfer);
 
         foreach ($calculatedDiscounts as $calculatedDiscount) {
             $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
@@ -84,10 +69,6 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
                 $calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
             );
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-            foreach ($itemTransfer->getProductOptions() as $productOption) {
-                $productOption->addCalculatedDiscount(clone $calculatedDiscountTransfer);
-            }
 
             $expenseTransfer = $this->createExpenseTransfer();
             $expenseTransfer->addCalculatedDiscount(clone $calculatedDiscountTransfer);
@@ -154,14 +135,6 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     protected function createCalculatedDiscountTransfer()
     {
         return new CalculatedDiscountTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
-     */
-    protected function createProductOptionTransfer()
-    {
-        return new ProductOptionTransfer();
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -15,7 +14,9 @@ interface SalesAggregatorFacadeInterface
 {
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -26,7 +27,10 @@ interface SalesAggregatorFacadeInterface
     public function getOrderTotalsByIdSalesOrder($idSalesOrder);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -37,7 +41,10 @@ interface SalesAggregatorFacadeInterface
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     *  Specification:
+     *  - Use existing OrderTransfer instead fo quering database
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -48,7 +55,9 @@ interface SalesAggregatorFacadeInterface
     public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Iterate order exepenses and sum up amounts
      *
      * @api
      *
@@ -59,7 +68,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderExpenseAmounts(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     *  Specification:
+     *  - Sum up expenses and subtotals
      *
      * @api
      *
@@ -70,7 +81,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderGrandTotal(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Sum up item amounts before discounts
+     *
      *
      * @api
      *
@@ -81,7 +94,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderItemAmounts(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Sum up order subtotal
      *
      * @api
      *
@@ -92,7 +107,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderSubtotal(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Calculate item tax amount
      *
      * @api
      *
@@ -103,7 +120,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Calculate order total tax amount
      *
      * @api
      *
@@ -114,7 +133,9 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer);
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Calculate order expense tax amount
      *
      * @api
      *

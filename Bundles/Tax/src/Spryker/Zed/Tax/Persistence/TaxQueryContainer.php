@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Tax\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -19,6 +21,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
+
+    const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
 
     /**
      * @api
@@ -96,6 +101,54 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
             );
 
         return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $allIdProductAbstracts
+     * @param string $countryIso2Code
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     */
+    public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code)
+    {
+        return $this->getFactory()->createTaxSetQuery()
+            ->useSpyProductAbstractQuery()
+                ->filterByIdProductAbstract($allIdProductAbstracts, Criteria::IN)
+                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
+                ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
+            ->endUse()
+            ->useSpyTaxSetTaxQuery()
+                ->useSpyTaxRateQuery()
+                    ->useCountryQuery()
+                       ->filterByIso2Code($countryIso2Code)
+                    ->endUse()
+                    ->_or()
+                    ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
+                ->endUse()
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
+            ->endUse()
+            ->select([self::COL_MAX_TAX_RATE]);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $name
+     * @param int $idCountry
+     * @param float $rate
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
+     */
+    public function queryTaxRateWithCountryAndRate($name, $idCountry, $rate)
+    {
+        return $this->getFactory()
+            ->createTaxRateQuery()
+            ->filterByName($name)
+            ->filterByFkCountry($idCountry)
+            ->filterByRate($rate);
     }
 
 }

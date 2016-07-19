@@ -8,4 +8,4 @@ composer require spryker/cms
 
 ## Documentation
 
-[Cms Documentation](http://spryker.github.io/core/bundles/cms)
+[Documentation](http://spryker.github.io)

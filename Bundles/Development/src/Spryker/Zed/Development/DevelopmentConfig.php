@@ -96,6 +96,29 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return array
      */
+    public function getExternalToInternalNamespaceMap()
+    {
+        return [
+            'Psr' => 'spryker/log',
+            'Propel' => 'spryker/propel',
+            'Silex' => 'spryker/silex',
+            'Pimple' => 'spryker/pimple',
+            'Predis' => 'spryker/redis',
+            'Guzzle' => 'spryker/guzzle',
+            'GuzzleHttp' => 'spryker/guzzle',
+            'League\\Csv' => 'spryker/csv',
+            'Monolog' => 'spryker/monolog',
+            'Elastica' => 'spryker/elastica',
+            'Symfony\\Component' => 'spryker/symfony',
+            'Twig' => 'spryker/twig',
+            'Zend' => 'spryker/zend',
+            'phpDocumentor\\GraphViz' => 'spryker/graphviz'
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function getExternalToInternalMap()
     {
         return [

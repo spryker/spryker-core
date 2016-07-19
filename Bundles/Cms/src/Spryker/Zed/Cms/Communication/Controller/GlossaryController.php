@@ -54,21 +54,21 @@ class GlossaryController extends AbstractController
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
-        $cmsPage = $this->findCmsPageById($idPage);
-        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        $cmsPageEntity = $this->findCmsPageById($idPage);
+        $localeTransfer = $this->getLocaleTransfer($cmsPageEntity);
 
-        $fkLocale = $this->getLocaleByCmsPage($cmsPage);
+        $fkLocale = $this->getLocaleByCmsPage($cmsPageEntity);
 
         if ($block === null) {
-            $title = $cmsPage->getUrl();
+            $title = $cmsPageEntity->getUrl();
         } else {
             $type = CmsConstants::RESOURCE_TYPE_BLOCK;
             $title = $block->getName();
         }
 
-        $placeholders = $this->findPagePlaceholders($cmsPage);
+        $placeholders = $this->findPagePlaceholders($cmsPageEntity);
         $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
-        $this->touchNecessaryBlock($idPage);
+
         $forms = [];
         $formViews = [];
 
@@ -98,9 +98,7 @@ class GlossaryController extends AbstractController
     public function getLocaleByCmsPage(SpyCmsPage $cmsPage)
     {
         $fkLocale = null;
-        $url = $this->getQueryContainer()
-            ->queryUrlById($cmsPage->getIdCmsPage())
-            ->findOne();
+        $url = $cmsPage->getSpyUrls()->getFirst();
 
         if ($url) {
             $fkLocale = $url->getFkLocale();
@@ -243,7 +241,7 @@ class GlossaryController extends AbstractController
             ->saveGlossaryKeyTranslations($keyTranslationTransfer);
         $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
         $this->getFacade()
-            ->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
+            ->savePageKeyMappingAndTouch($pageKeyMappingTransfer, $localeTransfer);
     }
 
     /**
@@ -295,6 +293,8 @@ class GlossaryController extends AbstractController
         if ($forms[$idForm]->isValid()) {
             $data = $forms[$idForm]->getData();
             $this->saveGlossaryKeyPageMapping($data, $localeTransfer);
+
+            $this->touchNecessaryBlock($data['fkPage']);
 
             return $this->jsonResponse([
                 'success' => 'true',
@@ -413,6 +413,24 @@ class GlossaryController extends AbstractController
         $blockTransfer->fromArray($blockEntity->toArray());
 
         return $blockTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocaleTransfer(SpyCmsPage $cmsPageEntity)
+    {
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        $url = $cmsPageEntity->getSpyUrls()->getFirst();
+
+        if ($url) {
+            $localeTransfer = new LocaleTransfer();
+            $localeTransfer->fromArray($url->getSpyLocale()->toArray());
+        }
+
+        return $localeTransfer;
     }
 
 }

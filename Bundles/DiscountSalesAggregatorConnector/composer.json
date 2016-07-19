@@ -9,10 +9,11 @@
   "require": {
     "spryker/discount": "^3.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/sales-aggregator": "^1.0.0",
-    "spryker/tax": "^2.0.0"
+    "spryker/propel": "^2.0.0",
+    "spryker/sales": "^2.0.0",
+    "spryker/tax": "^3.0.0"
   },
-  "description": "discount sales aggregator connector bundle",
+  "description": "DiscountSalesAggregatorConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -20,5 +21,8 @@
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -9,6 +9,9 @@ namespace Spryker\Shared\Library\Zed\Exception;
 
 use Guzzle\Http\Message\Response;
 
+/**
+ * @deprecated Moved to ZedRequest Bundle
+ */
 class InvalidZedResponseException extends \RuntimeException
 {
 

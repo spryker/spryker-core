@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
+namespace Unit\Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Item;
 
-class ItemTest extends \PHPUnit_Framework_TestCase
+class OrderItemTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
