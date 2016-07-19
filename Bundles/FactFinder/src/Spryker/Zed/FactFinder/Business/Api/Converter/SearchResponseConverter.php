@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\Search as FFSearchAdapter;
-use Generated\Shared\Transfer\FFSearchResponseTransfer;
+use Generated\Shared\Transfer\FfSearchResponseTransfer;
 
 class SearchResponseConverter extends BaseConverter
 {
@@ -27,11 +27,11 @@ class SearchResponseConverter extends BaseConverter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FFSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
      */
     public function convert()
     {
-        $responseTransfer = new FFSearchResponseTransfer();
+        $responseTransfer = new FfSearchResponseTransfer();
 //        $responseTransfer->set();
 
         return $responseTransfer;

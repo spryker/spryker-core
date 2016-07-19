@@ -10,7 +10,7 @@ namespace Spryker\Zed\FactFinder\Business\Api\Handler\Request;
 use FACTFinder\Adapter\AbstractAdapter;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\FactFinder\Business\Api\Converter\ConverterFactory;
-use Spryker\Zed\FactFinder\Business\Api\FFConnector;
+use Spryker\Zed\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Zed\FactFinder\Business\Log\LoggerTrait;
 
 abstract class AbstractRequest implements RequestInterface
@@ -21,7 +21,7 @@ abstract class AbstractRequest implements RequestInterface
     const TRANSACTION_TYPE = null;
 
     /**
-     * @var \Spryker\Zed\FactFinder\Business\Api\FFConnector
+     * @var \Spryker\Zed\FactFinder\Business\Api\FactFinderConnector
      */
     protected $ffConnector;
 
@@ -31,11 +31,11 @@ abstract class AbstractRequest implements RequestInterface
     protected $converterFactory;
 
     /**
-     * @param \Spryker\Zed\FactFinder\Business\Api\FFConnector $ffConnector
+     * @param \Spryker\Zed\FactFinder\Business\Api\FactFinderConnector $ffConnector
      * @param \Spryker\Zed\FactFinder\Business\Api\Converter\ConverterFactory $converterFactory
      */
     public function __construct(
-        FFConnector $ffConnector,
+        FactFinderConnector $ffConnector,
         ConverterFactory $converterFactory
     )
     {

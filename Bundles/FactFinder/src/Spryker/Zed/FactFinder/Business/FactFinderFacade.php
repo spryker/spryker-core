@@ -24,7 +24,7 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
      */
     public function search(QuoteTransfer $quoteTransfer)
     {

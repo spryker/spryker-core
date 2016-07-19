@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\SimilarRecords as FFSimilarRecords;
-use Generated\Shared\Transfer\FFSimilarRecordsResponseTransfer;
+use Generated\Shared\Transfer\FfSimilarRecordsResponseTransfer;
 
 class SimilarRecordsResponseConverter extends BaseConverter
 {
@@ -27,11 +27,11 @@ class SimilarRecordsResponseConverter extends BaseConverter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FFSimilarRecordsResponseTransfer
+     * @return \Generated\Shared\Transfer\FfSimilarRecordsResponseTransfer
      */
     public function convert()
     {
-        $responseTransfer = new FFSimilarRecordsResponseTransfer();
+        $responseTransfer = new FfSimilarRecordsResponseTransfer();
 //        $responseTransfer->set();
 
         return $responseTransfer;

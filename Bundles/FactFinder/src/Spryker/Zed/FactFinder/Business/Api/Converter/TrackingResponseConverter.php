@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
-use Generated\Shared\Transfer\FFTrackingResponseTransfer;
+use Generated\Shared\Transfer\FfTrackingResponseTransfer;
 
 class TrackingResponseConverter extends BaseConverter
 {
@@ -27,11 +27,11 @@ class TrackingResponseConverter extends BaseConverter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FFTrackingResponseTransfer
+     * @return \Generated\Shared\Transfer\FfTrackingResponseTransfer
      */
     public function convert()
     {
-        $responseTransfer = new FFTrackingResponseTransfer();
+        $responseTransfer = new FfTrackingResponseTransfer();
 //        $responseTransfer->set();
 
         return $responseTransfer;

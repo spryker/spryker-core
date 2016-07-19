@@ -18,11 +18,11 @@ class TrackingRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFTagCloudResponseTransfer
+     * @return \Generated\Shared\Transfer\FfTagCloudResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $trackingRequestTransfer = $quoteTransfer->getFFTrackingRequest();
+        $trackingRequestTransfer = $quoteTransfer->getFfTrackingRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);

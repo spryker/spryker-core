@@ -10,7 +10,7 @@ namespace Spryker\Zed\FactFinder\Business\Api;
 use FACTFinder\Loader as FF;
 use Spryker\Zed\FactFinder\FactFinderConfig;
 
-class FFConnector
+class FactFinderConnector
 {
 
     /**

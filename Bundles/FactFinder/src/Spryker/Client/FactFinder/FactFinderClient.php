@@ -12,6 +12,41 @@ use Spryker\Client\Kernel\AbstractClient;
 /**
  * @method \Spryker\Client\FactFinder\FactFinderFactory getFactory()
  */
-class BraintreeClient extends AbstractClient implements FactFinderClientInterface
+class FactFinderClient extends AbstractClient implements FactFinderClientInterface
 {
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
+     */
+    public function search()
+    {
+        $ffSearchResponseTransfer = $this->getFactory()
+            ->createZedFactFinderStub()
+            ->search($this->getQuote());
+
+        return $ffSearchResponseTransfer;
+    }
+
+    /**
+     * Returns the stored quote
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->getSession()->getQuote();
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
+     */
+    protected function getSession()
+    {
+        return $this->getFactory()->createSession();
+    }
+
 }

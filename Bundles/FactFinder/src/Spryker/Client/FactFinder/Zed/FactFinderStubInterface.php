@@ -5,25 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\FactFinder;
+namespace Spryker\Client\FactFinder\Zed;
 
-interface FactFinderClientInterface
+use Generated\Shared\Transfer\QuoteTransfer;
+
+interface FactFinderStubInterface
 {
 
     /**
-     * @api
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
      */
-    public function search();
-
-    /**
-     * Returns the stored quote
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
+    public function search(QuoteTransfer $quoteTransfer);
 
 }

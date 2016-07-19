@@ -18,11 +18,11 @@ class ProductCampaignRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFProductCampaignResponseTransfer
+     * @return \Generated\Shared\Transfer\FfProductCampaignResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $productCampaignRequestTransfer = $quoteTransfer->getFFProductCampaignRequest();
+        $productCampaignRequestTransfer = $quoteTransfer->getFfProductCampaignRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);

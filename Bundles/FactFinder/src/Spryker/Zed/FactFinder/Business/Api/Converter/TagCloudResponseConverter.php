@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
-use Generated\Shared\Transfer\FFTagCloudResponseTransfer;
+use Generated\Shared\Transfer\FfTagCloudResponseTransfer;
 
 class TagCloudResponseConverter extends BaseConverter
 {
@@ -27,11 +27,11 @@ class TagCloudResponseConverter extends BaseConverter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FFTagCloudResponseTransfer
+     * @return \Generated\Shared\Transfer\FfTagCloudResponseTransfer
      */
     public function convert()
     {
-        $responseTransfer = new FFTagCloudResponseTransfer();
+        $responseTransfer = new FfTagCloudResponseTransfer();
 //        $responseTransfer->set();
 
         return $responseTransfer;

@@ -18,11 +18,11 @@ class SuggestRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFSuggestResponseTransfer
+     * @return \Generated\Shared\Transfer\FfSuggestResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $suggestRequestTransfer = $quoteTransfer->getFFSuggestRequest();
+        $suggestRequestTransfer = $quoteTransfer->getFfSuggestRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);

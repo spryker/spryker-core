@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business;
 
 use Spryker\Zed\FactFinder\Business\Api\Converter\ConverterFactory;
-use Spryker\Zed\FactFinder\Business\Api\FFConnector;
+use Spryker\Zed\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Zed\FactFinder\Business\Api\Handler\Request\SearchRequest;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -20,11 +20,11 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\FactFinder\Business\Api\FFConnector
+     * @return \Spryker\Zed\FactFinder\Business\Api\FactFinderConnector
      */
-    public function createFFConnector()
+    public function createFactFinderConnector()
     {
-        return new FFConnector($this->getConfig());
+        return new FactFinderConnector($this->getConfig());
     }
 
     /**
@@ -33,7 +33,7 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     public function createSearchRequest()
     {
         return new SearchRequest(
-            $this->createFFConnector(),
+            $this->createFactFinderConnector(),
             $this->createConverterFactory()
         );
     }

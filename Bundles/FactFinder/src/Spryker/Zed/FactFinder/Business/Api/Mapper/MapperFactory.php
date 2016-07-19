@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\FactFinder\Business\Api\Mapper;
 
-use Generated\Shared\Transfer\FFSearchRequestTransfer;
+use Generated\Shared\Transfer\FfSearchRequestTransfer;
 
 class MapperFactory
 {
 
     /**
-     * @var \Generated\Shared\Transfer\FFSearchRequestTransfer
+     * @var \Generated\Shared\Transfer\FfSearchRequestTransfer
      */
     protected $requestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FFSearchRequestTransfer $requestTransfer
+     * @param \Generated\Shared\Transfer\FfSearchRequestTransfer $requestTransfer
      */
-    public function __construct(FFSearchRequestTransfer $requestTransfer)
+    public function __construct(FfSearchRequestTransfer $requestTransfer)
     {
         $this->requestTransfer = $requestTransfer;
     }

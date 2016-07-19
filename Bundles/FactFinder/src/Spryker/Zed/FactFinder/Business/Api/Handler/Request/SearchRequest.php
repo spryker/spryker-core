@@ -18,11 +18,11 @@ class SearchRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FFSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $searchRequestTransfer = $quoteTransfer->getFFSearchRequest();
+        $searchRequestTransfer = $quoteTransfer->getFfSearchRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
