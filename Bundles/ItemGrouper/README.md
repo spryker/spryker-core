@@ -1,6 +1,6 @@
 # ItemGrouper Bundle
 
-**This bundle is abandoned.**
+**This bundle is not continued at this point.**
 
 ## Installation
 
