@@ -10,19 +10,19 @@
                     {% for orderItem in order.items %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
-                            <td class="text-right">{{ orderItem.sumGrossPriceWithProductOptions | currency  }}</td>
+                            <td class="text-right">{{ orderItem.unitGrossPrice | currency  }}</td>
                             <td>{{ 'gross price per item' | trans }}</td>
                         </tr>
                         {% for orderItemOption in orderItem.productOptions %}
                             <tr>
-                                <td> + {{ orderItemOption.LabelOptionType }}</td>
+                                <td> + {{ orderItemOption.value }}</td>
                                 <td class="text-right">{{ orderItemOption.unitGrossPrice | currency  }}</td>
                                 <td>{{ 'option price' | trans }}</td>
                             </tr>
                         {% endfor %}
                         <tr>
                             <th>&nbsp;</th>
-                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.unitGrossPriceWithProductOptions | currency  }}</td>
+                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.unitGrossPrice | currency  }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
@@ -33,7 +33,7 @@
                     {% for expense in order.expenses %}
                         <tr>
                             <th>{{ expense.type|lower|replace({'_' : ' '}) }} -  {{ expense.name }}</th>
-                            <td class="text-right">{{ expense.unitGrossPriceWithDiscounts | currency  }}</td>
+                            <td class="text-right">{{ expense.unitGrossPrice | currency  }}</td>
                             <td></td>
                         </tr>
                     {% endfor %}

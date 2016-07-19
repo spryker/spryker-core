@@ -10,9 +10,9 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 interface ProductOptionValueExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductOptions(CartChangeTransfer $change);
+    public function expandProductOptions(CartChangeTransfer $changeTransfer);
 }

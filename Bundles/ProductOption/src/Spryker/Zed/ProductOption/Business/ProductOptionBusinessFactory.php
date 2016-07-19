@@ -44,7 +44,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionOrderSaver()
     {
-        return new ProductOptionOrderSaver();
+        return new ProductOptionOrderSaver($this->getGlossaryFacade());
     }
 
     /**
@@ -109,6 +109,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getTaxFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
     }
 
 }

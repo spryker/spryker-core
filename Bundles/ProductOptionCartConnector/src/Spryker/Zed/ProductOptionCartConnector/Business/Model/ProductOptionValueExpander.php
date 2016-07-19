@@ -17,7 +17,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     /**
      * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
      */
-    private $productOptionFacade;
+    protected $productOptionFacade;
 
     /**
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface $productOptionFacade
@@ -28,17 +28,17 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductOptions(CartChangeTransfer $change)
+    public function expandProductOptions(CartChangeTransfer $changeTransfer)
     {
-        foreach ($change->getItems() as $cartItem) {
-            $this->expandProductOptionTransfers($cartItem);
+        foreach ($changeTransfer->getItems() as $itemTransfer) {
+            $this->expandProductOptionTransfers($itemTransfer);
         }
 
-        return $change;
+        return $changeTransfer;
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     {
         foreach ($itemTransfer->getProductOptions() as &$productOptionTransfer) {
             if ($productOptionTransfer->getIdProductOptionValue() === null) {
-                throw new \RuntimeException('Unable to expand product option. Missing required value: idOptionValueUsage.');
+                throw new \RuntimeException('Unable to expand product option. Missing required value: idOptionValue.');
             }
 
             $productOptionTransfer = $this->productOptionFacade

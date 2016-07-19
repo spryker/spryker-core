@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
@@ -21,6 +22,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
@@ -43,6 +45,10 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductOptionToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new ProductOptionToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         $container[self::FACADE_TAX] = function (Container $container) {
