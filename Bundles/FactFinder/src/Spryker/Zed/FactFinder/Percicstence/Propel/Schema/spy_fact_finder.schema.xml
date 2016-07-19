@@ -5,11 +5,11 @@
     defaultIdMethod="native"
     defaultPhpNamingMethod="underscore"
     xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-    namespace="Orm\Zed\Braintree\Persistence"
-    package="src.Orm.Zed.Braintree.Persistence"
+    namespace="Orm\Zed\FactFinder\Persistence"
+    package="src.Orm.Zed.FactFinder.Persistence"
 >
 
-    <table name="spy_fact_finder" phpName="SpyPaymentBraintree">
+    <table name="spy_fact_finder" phpName="SpyPaymentFactFinder">
 
     </table>
 

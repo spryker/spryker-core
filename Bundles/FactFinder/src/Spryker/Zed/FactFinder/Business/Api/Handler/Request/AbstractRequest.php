@@ -56,17 +56,17 @@ abstract class AbstractRequest implements RequestInterface
     {
         $context = [
             'transaction_type' => static::TRANSACTION_TYPE,
-
-            'request_body' => (string)$request,
-
-            'response_type' => $response->getResponseType(),
-            'response_result_code' => $response->getResultCode(),
-            'response_result_text' => $response->getResultText(),
-            'response_reason_code' => $response->getReasonCode(),
-            'response_reason_text' => $response->getReasonText(),
-            'response_status_code' => $response->getStatusCode(),
-            'response_status_text' => $response->getStatusText(),
-            'response_custom_message' => $response->getCustomerMessage(),
+//
+//            'request_body' => (string)$request,
+//
+//            'response_type' => $response->getResponseType(),
+//            'response_result_code' => $response->getResultCode(),
+//            'response_result_text' => $response->getResultText(),
+//            'response_reason_code' => $response->getReasonCode(),
+//            'response_reason_text' => $response->getReasonText(),
+//            'response_status_code' => $response->getStatusCode(),
+//            'response_status_text' => $response->getStatusText(),
+//            'response_custom_message' => $response->getCustomerMessage(),
         ];
 
         $this->getLogger()->info(static::TRANSACTION_TYPE, $context);

@@ -119,7 +119,8 @@ class PaymentLogger implements LoggerInterface
      */
     protected function write($message, array $context = [])
     {
-        $paymentLogEntity = new SpyFactFinderLog();
+        // @todo @artem
+//        $paymentLogEntity = new SpyFactFinderLog();
 
 //        $paymentLogEntity->setFkSalesOrder($context['order_id']);
 //        $paymentLogEntity->setMessage($message);
@@ -141,7 +142,7 @@ class PaymentLogger implements LoggerInterface
 //        $paymentLogEntity->setResponseStatusText($context['response_status_text']);
 //        $paymentLogEntity->setResponseCustomerMessage($context['response_customer_message']);
 
-        $paymentLogEntity->save();
+//        $paymentLogEntity->save();
     }
 
 }
