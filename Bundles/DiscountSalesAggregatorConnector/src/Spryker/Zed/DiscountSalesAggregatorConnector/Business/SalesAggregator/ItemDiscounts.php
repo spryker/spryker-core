@@ -200,7 +200,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
         $itemTransfer->setRefundableAmount(
-            $itemTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getUnitGrossAmount()
+            round($itemTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getUnitGrossAmount())
         );
     }
 
