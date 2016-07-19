@@ -109,7 +109,6 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             'disabled' => $isDisabled,
             'label' => false,
             'attr' => [
-                'style' => 'width: 250px !important',
                 'class' => 'attribute_metadata_value',
                 'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC]
             ],
