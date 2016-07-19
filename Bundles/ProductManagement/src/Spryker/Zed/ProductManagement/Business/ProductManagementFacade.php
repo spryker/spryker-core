@@ -153,17 +153,17 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      * @api
      *
      * @param int $idAttribute
+     * @param int $idLocale
      * @param string $searchText
      * @param int $offset
      * @param int $limit
-     *
-     * @return mixed
+     * @return array
      */
-    public function getAttributeValues($idAttribute, $searchText = '', $offset = 0, $limit = 10)
+    public function getAttributeValues($idAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
     {
         return $this->getFactory()
             ->createAttributeReader()
-            ->getAttributeValues($idAttribute, $searchText, $offset, $limit);
+            ->getAttributeValues($idAttribute, $idLocale, $searchText, $offset, $limit);
     }
 
 }

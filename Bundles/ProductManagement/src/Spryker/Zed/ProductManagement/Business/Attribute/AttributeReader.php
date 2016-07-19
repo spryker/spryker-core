@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -46,15 +48,26 @@ class AttributeReader implements AttributeReaderInterface
 
     /**
      * @param int $idAttribute
+     * @param string $idLocale
      * @param string $searchText
      * @param int $offset
      * @param int $limit
-     *
      * @return array
      */
-    public function getAttributeValues($idAttribute, $searchText = '', $offset = 0, $limit = 10)
+    public function getAttributeValues($idAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
     {
+        $query = $this->productManagementQueryContainer->queryProductManagementAttributeValueWithTranslation($idAttribute, $idLocale);
 
+        $searchText = trim($searchText);
+        if ($searchText !== '') {
+            $term = '%' . mb_strtoupper($searchText) . '%';
+
+            $query->where('UPPER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') LIKE ?', $term, \PDO::PARAM_STR)
+                ->_or()
+                ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, \PDO::PARAM_STR);
+        }
+
+        return $query->find()->toArray();
     }
 
 }

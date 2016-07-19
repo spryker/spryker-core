@@ -12,12 +12,12 @@ interface AttributeReaderInterface
 
     /**
      * @param int $idAttribute
+     * @param $idLocale
      * @param string $searchText
      * @param int $offset
      * @param int $limit
-     *
      * @return array
      */
-    public function getAttributeValues($idAttribute, $searchText = '', $offset = 0, $limit = 10);
+    public function getAttributeValues($idAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
 
 }

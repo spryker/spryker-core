@@ -100,4 +100,16 @@ interface ProductManagementFacadeInterface
      */
     public function translateProductManagementAttribute(array $attributeTranslationFormTransfers);
 
+    /**
+     * @api
+     *
+     * @param int $idAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getAttributeValues($idAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
+
 }

@@ -14,6 +14,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,6 +24,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AttributesController extends AbstractController
 {
+
+    const ID_PRODUCT_ABSTRACT = 'id-attribute';
+    const SEARCH_TEXT = 'search_text';
 
     /**
      * @return array
@@ -227,6 +231,25 @@ class AttributesController extends AbstractController
             ->setLocaleName($locale);
 
         return $attributeValueFormTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    public function autocompleteAction(Request $request)
+    {
+        $idAttribute = $this->castId(
+            $request->get(self::ID_PRODUCT_ABSTRACT)
+        );
+
+        $searchText = trim($request->get(self::SEARCH_TEXT));
+        $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $values = $this->getFacade()->getAttributeValues($idAttribute, $idLocale, $searchText);
+
+        return new JsonResponse([
+            'id_attribute' => $idAttribute,
+            'values' => $values
+        ]);
     }
 
 }
