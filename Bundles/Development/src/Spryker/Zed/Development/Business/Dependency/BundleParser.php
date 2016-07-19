@@ -228,7 +228,7 @@ class BundleParser
                     break;
                 }
 
-                if (!$found) {
+                if ($found === null) {
                     continue;
                 }
 
