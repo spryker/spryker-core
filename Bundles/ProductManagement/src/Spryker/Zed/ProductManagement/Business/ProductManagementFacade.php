@@ -149,4 +149,21 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
             ->saveProductManagementAttributeTranslation($attributeTranslationFormTransfers);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idAttribute
+     * @param string $searchText
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return mixed
+     */
+    public function getAttributeValues($idAttribute, $searchText = '', $offset = 0, $limit = 10)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getAttributeValues($idAttribute, $searchText, $offset, $limit);
+    }
+
 }

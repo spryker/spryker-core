@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManager;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeSaver;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueSaver;
@@ -161,6 +162,18 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeValueSaver(
             $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeReaderInterface
+     */
+    public function createAttributeReader()
+    {
+        return new AttributeReader(
+            $this->getQueryContainer(),
+            $this->getProductFacade(),
+            $this->getGlossaryFacade()
         );
     }
 
