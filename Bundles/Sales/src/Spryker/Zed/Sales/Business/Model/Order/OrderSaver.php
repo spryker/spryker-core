@@ -166,7 +166,10 @@ class OrderSaver implements OrderSaverInterface
      */
     protected function saveOrderItems(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        $items = $this->expandItems($quoteTransfer->getItems());
+        $quoteTransfer->setItems($items);
+
+        foreach ($items as $itemTransfer) {
             $this->assertItemRequirements($itemTransfer);
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
@@ -174,6 +177,27 @@ class OrderSaver implements OrderSaverInterface
             $salesOrderItemEntity->save();
             $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandItems(\ArrayObject $items)
+    {
+        $expandedItems = new \ArrayObject();
+        foreach ($items as $itemTransfer) {
+            $quantity = $itemTransfer->getQuantity();
+            for ($i = 1; $quantity >= $i; $i++) {
+                $expandedItemTransfer = clone $itemTransfer;
+                $expandedItemTransfer->setGroupKey(null);
+                $expandedItemTransfer->setQuantity(1);
+                $expandedItems->append($expandedItemTransfer);
+            }
+        }
+
+        return $expandedItems;
     }
 
     /**
