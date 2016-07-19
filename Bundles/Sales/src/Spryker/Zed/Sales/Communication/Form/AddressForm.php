@@ -168,7 +168,7 @@ class AddressForm extends AbstractType
      */
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ADDRESS_1, 'text',[
+        $builder->add(self::FIELD_ADDRESS_1, 'text', [
             'label' => 'Address1*',
         ]);
 
