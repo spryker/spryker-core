@@ -54,6 +54,20 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testAggregateShouldSubtractCalculatedDiscountAmountFromItemRefundableAmount()
+    {
+        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator();
+        $orderTransfer = $this->createOrderTransfer();
+
+        $itemsDiscountsAggregator->aggregate($orderTransfer);
+
+        $itemCalculatedRefundableAmount = $orderTransfer->getItems()[0]->getRefundableAmount();
+        $this->assertEquals(900, $itemCalculatedRefundableAmount);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
@@ -65,6 +79,8 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(1);
         $itemTransfer->setIdSalesOrderItem(1);
+        $itemTransfer->setRefundableAmount(1000);
+
         $orderTransfer->addItem($itemTransfer);
 
         $expenseTransfer = new ExpenseTransfer();
