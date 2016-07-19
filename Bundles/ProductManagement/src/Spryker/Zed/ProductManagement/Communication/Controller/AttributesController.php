@@ -286,6 +286,7 @@ class AttributesController extends AbstractController
         $idProductManagementAttribute = $this->castId($request->get(self::PARAM_ID));
         $searchText = trim($request->get(self::PARAM_SEARCH_TEXT));
         $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $total = $this->getFacade()->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale);
 
         $attributeValueTranslationTransfers = $this->getFacade()
             ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText);
@@ -297,7 +298,8 @@ class AttributesController extends AbstractController
 
         return $this->jsonResponse([
             'id_attribute' => $idProductManagementAttribute,
-            'values' => $values
+            'values' => $values,
+            'total' => $total
         ]);
     }
 

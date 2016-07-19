@@ -167,4 +167,20 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
             ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText, $offset, $limit);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
+     */
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText);
+    }
+
 }

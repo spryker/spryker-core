@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -62,6 +63,44 @@ class AttributeReader implements AttributeReaderInterface
         $query = $this->productManagementQueryContainer
             ->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
 
+        $this->updateQuerySearchTextConditions($searchText, $query);
+
+        $results = [];
+        foreach ($query->find() as $attributeValueTranslation) {
+            $results[] = (new ProductManagementAttributeValueTranslationTransfer())
+                ->fromArray($attributeValueTranslation->toArray(), true);
+        }
+
+        return $results;
+    }
+
+
+    /**
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
+     */
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
+    {
+        $query = $this->productManagementQueryContainer
+            ->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
+
+        $this->updateQuerySearchTextConditions($searchText, $query);
+
+        return $query->count();
+    }
+
+    /**
+     * @param string $searchText
+     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery $query
+     *
+     * @return void
+     */
+    protected function updateQuerySearchTextConditions($searchText, SpyProductManagementAttributeValueQuery $query)
+    {
+        //TODO double check for injections; if propel is binding values or just appending strings
         $searchText = trim($searchText);
         if ($searchText !== '') {
             $term = '%' . mb_strtoupper($searchText) . '%';
@@ -71,15 +110,6 @@ class AttributeReader implements AttributeReaderInterface
                 ->_or()
                 ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, \PDO::PARAM_STR);
         }
-
-        $results = [];
-
-        foreach ($query->find() as $attributeValueTranslation) {
-            $results[] = (new ProductManagementAttributeValueTranslationTransfer())
-                ->fromArray($attributeValueTranslation->toArray(), true);
-        }
-
-        return $results;
     }
 
     /**

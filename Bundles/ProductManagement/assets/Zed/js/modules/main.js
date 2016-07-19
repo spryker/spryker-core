@@ -21,7 +21,6 @@ $(document).ready(function() {
     $('.spryker-form-select2combobox.ajax:not([class=".tags"])').select2({
         tags: false,
         ajax: {
-            //url: "https://api.github.com/search/repositories",
             url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
             dataType: 'json',
             delay: 250,
@@ -29,7 +28,7 @@ $(document).ready(function() {
                 var p = {
                     q: params.term,
                     page: params.page,
-                    'id-attribute': this.attr('id_attribute')
+                    id: this.attr('id_attribute')
                 };
 
                 return p;
@@ -46,14 +45,9 @@ $(document).ready(function() {
                 for (var a=0; a<data.values.length; a++) {
                     var item = data.values[a];
 
-                    var title = item.translation;
-                    if (title == '') {
-                        title = item.value;
-                    }
-
                     values.push({
                         id: item.id_product_management_attribute_value,
-                        text: title
+                        text: item.translation || item.value
                     });
                 }
 
@@ -72,7 +66,6 @@ $(document).ready(function() {
     $('.spryker-form-select2combobox.ajax.tags').select2({
         tags: true,
         ajax: {
-            //url: "https://api.github.com/search/repositories",
             url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
             dataType: 'json',
             delay: 250,
@@ -80,7 +73,7 @@ $(document).ready(function() {
                 var p = {
                     q: params.term,
                     page: params.page,
-                    'id-attribute': this.attr('id_attribute')
+                    id: this.attr('id_attribute')
                 };
 
                 return p;
@@ -97,14 +90,9 @@ $(document).ready(function() {
                 for (var a=0; a<data.values.length; a++) {
                     var item = data.values[a];
 
-                    var title = item.translation;
-                    if (title == '') {
-                        title = item.value;
-                    }
-
                     values.push({
                         id: item.id_product_management_attribute_value,
-                        text: title
+                        text: item.translation || item.value
                     });
                 }
 
