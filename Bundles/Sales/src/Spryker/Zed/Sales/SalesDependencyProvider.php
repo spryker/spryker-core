@@ -21,11 +21,15 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_USER = 'FACADE_USER';
     const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
+
+    /**
+     * @deprecated Will be removed in the next major version.
+     */
+    const FACADE_LOCALE = 'LOCALE_FACADE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
