@@ -27,10 +27,8 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
 
         $input = new Select2ComboBoxType();
         $config['multiple'] = $isMultiple;
-        $config['choices'] = [
-            'aaa', 'bbb', 'ccc'
-        ];
-        $config['attr']['tags'] = false;
+        $config['choices'] = [];
+        $config['attr']['tags'] = true;
         $config['attr']['class'] .= ' ajax';
         $config['attr']['style'] .= ' width: 250px';
 

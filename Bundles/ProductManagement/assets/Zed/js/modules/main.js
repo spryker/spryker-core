@@ -9,72 +9,117 @@ require('ZedGui');
 require('../../sass/main.scss');
 
 $(document).ready(function() {
-    function formatRepo (repo) {
-        if (repo.loading) return repo.text;
 
-        var markup = "<div class='select2-result-repository clearfix'>" +
-            "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
-            "<div class='select2-result-repository__meta'>" +
-            "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+    $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
 
-        if (repo.description) {
-            markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
-        }
-
-        markup += "<div class='select2-result-repository__statistics'>" +
-            "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
-            "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
-            "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
-            "</div>" +
-            "</div></div>";
-
-        return markup;
-    }
-
-    function formatRepoSelection (repo) {
-        return repo.full_name || repo.text;
-    }
-
-    $('select.spryker-form-select2combobox:not([class=".tags"])').select2({
-        tags: false
     });
 
-    $('.spryker-form-select2combobox.tags').select2({
+    $('.spryker-form-select2combobox.tags:not([class=".ajax"])').select2({
         tags: true
     });
 
-    $('.spryker-form-select2combobox.ajax').select2({
+    $('.spryker-form-select2combobox.ajax:not([class=".tags"])').select2({
+        tags: false,
         ajax: {
-            url: "https://api.github.com/search/repositories",
+            //url: "https://api.github.com/search/repositories",
+            url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
             dataType: 'json',
             delay: 250,
             data: function (params) {
-                return {
-                    q: params.term, // search term
-                    page: params.page
+                var p = {
+                    q: params.term,
+                    page: params.page,
+                    'id-attribute': this.attr('id_attribute')
                 };
+
+                return p;
             },
             processResults: function (data, params) {
+                //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
                 // parse the results into the format expected by Select2
                 // since we are using custom formatting functions we do not need to
                 // alter the remote JSON data, except to indicate that infinite
                 // scrolling can be used
                 params.page = params.page || 1;
 
+                var values = [];
+                for (var a=0; a<data.values.length; a++) {
+                    var item = data.values[a];
+
+                    var title = item.translation;
+                    if (title == '') {
+                        title = item.value;
+                    }
+
+                    values.push({
+                        id: item.id_product_management_attribute_value,
+                        text: title
+                    });
+                }
+
                 return {
-                    results: data.items,
+                    results: values,
                     pagination: {
-                        more: (params.page * 30) < data.total_count
+                        more: (params.page * 30) < data.total || 0
                     }
                 };
             },
             cache: true
         },
-        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-        minimumInputLength: 1,
-        templateResult: formatRepo, // omitted for brevity, see the source of this page
-        templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+        minimumInputLength: 1
     });
+
+    $('.spryker-form-select2combobox.ajax.tags').select2({
+        tags: true,
+        ajax: {
+            //url: "https://api.github.com/search/repositories",
+            url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                var p = {
+                    q: params.term,
+                    page: params.page,
+                    'id-attribute': this.attr('id_attribute')
+                };
+
+                return p;
+            },
+            processResults: function (data, params) {
+                //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+
+                var values = [];
+                for (var a=0; a<data.values.length; a++) {
+                    var item = data.values[a];
+
+                    var title = item.translation;
+                    if (title == '') {
+                        title = item.value;
+                    }
+
+                    values.push({
+                        id: item.id_product_management_attribute_value,
+                        text: title
+                    });
+                }
+
+                return {
+                    results: values,
+                    pagination: {
+                        more: (params.page * 30) < data.total || 0
+                    }
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1
+    });
+
 
     $('.attribute_metadata_checkbox').each(function() {
         var $item = $(this);
@@ -98,5 +143,8 @@ $(document).ready(function() {
             input.prop('disabled', !$item.prop('checked'));
             input.focus();
         });
+
+
+
 
 });

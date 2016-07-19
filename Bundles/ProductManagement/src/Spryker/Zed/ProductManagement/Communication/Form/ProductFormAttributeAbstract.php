@@ -26,8 +26,9 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     const VALUE_DISABLED = 'value_disabled';
     const INPUT = 'input';
     const ALLOW_INPUT = 'allow_input';
+    const ID = 'id';
 
-    const OPTION_ATTRIBUTE = 'option_attribute_abstract';
+    const OPTION_ATTRIBUTE = 'option_attribute';
 
     /**
      * @var array
@@ -88,7 +89,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
                 'disabled' => $isDisabled,
                 'attr' => [
                     'class' => 'attribute_metadata_checkbox',
-                    'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC]
+                    'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
                 ],
             ]);
 
@@ -111,7 +112,8 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             'attr' => [
                 'class' => 'attribute_metadata_value',
                 'style' => '',
-                'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC]
+                'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
+                'id_attribute' => $attributes[$name][self::ID]
             ],
             'constraints' => [
                 new Callback([
@@ -161,10 +163,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
             if ($isMultiple) {
                 $config['attr']['tags'] = $allowInput;
-                //load multiple choices or load choices via ajax
-                $config['choices'] = [
-                    'aaa', 'bbb', 'ccc'
-                ];
+                $config['choices'] = [];
             }
         }
 
