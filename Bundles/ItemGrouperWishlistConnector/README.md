@@ -1,5 +1,7 @@
 # ItemGrouperWishlistConnector Bundle
 
+**This bundle is not continued at this point.**
+
 ## Installation
 
 ```

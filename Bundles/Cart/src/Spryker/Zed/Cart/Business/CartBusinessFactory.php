@@ -26,7 +26,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return new Operation(
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
-            $this->getItemGrouperFacade(),
             $this->getMessengerFacade(),
             $this->getItemExpanderPlugins()
         );
@@ -38,14 +37,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function createStorageProvider()
     {
         return new NonPersistentProvider();
-    }
-
-    /**
-     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
-     */
-    protected function getItemGrouperFacade()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::FACADE_ITEM_GROUPER);
     }
 
     /**

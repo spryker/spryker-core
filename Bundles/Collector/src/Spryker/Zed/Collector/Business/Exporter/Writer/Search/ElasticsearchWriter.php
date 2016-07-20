@@ -74,15 +74,19 @@ class ElasticsearchWriter implements WriterInterface
             throw new InvalidDataSetException();
         }
 
-        $documents = [];
-        foreach ($dataSet as $key => $value) {
-            $documents[] = $this->index->getType($this->type)->getDocument($key);
+        try {
+            $documents = [];
+            foreach ($dataSet as $key => $value) {
+                $documents[] = $this->index->getType($this->type)->getDocument($key);
+            }
+
+            $response = $this->index->deleteDocuments($documents);
+            $this->index->flush(true);
+
+            return $response->isOk();
+        } catch (\Exception $exception) {
+            return true;
         }
-
-        $response = $this->index->deleteDocuments($documents);
-        $this->index->flush(true);
-
-        return $response->isOk();
     }
 
     /**
