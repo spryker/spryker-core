@@ -391,7 +391,6 @@ class AbstractProductFormDataProvider
                     'product_specific' => true,
                     'label' => $this->getLocalizedAttributeMetadataKey($key),
                     'multiple' => $isMulti,
-                    'localized' => false,
                     'input' => 'text',
                     'value_disabled' => true,
                     'name_disabled' => true,
