@@ -290,12 +290,10 @@ class AbstractProductFormDataProvider
 
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
 
-            $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
             $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
             $valueDisabled = true;
 
-            //sd($isProductSpecificAttribute, $checkboxDisabled);
             if ($isProductSpecificAttribute) {
                 $checkboxDisabled = true;
             }
@@ -307,7 +305,6 @@ class AbstractProductFormDataProvider
                 'product_specific' => $isProductSpecificAttribute,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
                 'multiple' => $isMultiple,
-                'localized' => $isLocalized,
                 'input' => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
                 'value_disabled' => $valueDisabled,
                 'name_disabled' => $checkboxDisabled,
@@ -353,7 +350,6 @@ class AbstractProductFormDataProvider
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
 
-            $isLocalized = $this->attributeTransferCollection[$type]->getIsLocalized();
             $isMulti = $this->attributeTransferCollection[$type]->getIsMultiple();
 
             $valueDisabled = !$isProductSpecificAttribute;
@@ -381,7 +377,6 @@ class AbstractProductFormDataProvider
                 'product_specific' => $isProductSpecificAttribute,
                 'label' => $this->getLocalizedAttributeMetadataKey($type),
                 'multiple' => $isMulti,
-                'localized' => $isLocalized,
                 'input' => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
                 'value_disabled' => $valueDisabled,
                 'name_disabled' => $checkboxDisabled,

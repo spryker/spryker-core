@@ -7,14 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -73,15 +67,17 @@ class AttributesController extends AbstractController
             ->handleRequest($request);
 
         if ($attributeForm->isValid()) {
-            $productManagementAttributeTransfer = $this->createAttributeTransfer($attributeForm);
+            $attributeTransfer = $this->getFactory()
+                ->createAttributeFormTransferGenerator()
+                ->createTransfer($attributeForm);
 
-            $productManagementAttributeTransfer = $this
+            $attributeTransfer = $this
                 ->getFacade()
-                ->createProductManagementAttribute($productManagementAttributeTransfer);
+                ->createProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
                 '/product-management/attributes/translate?id=%d',
-                $productManagementAttributeTransfer->getIdProductManagementAttribute()
+                $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
 
@@ -109,14 +105,13 @@ class AttributesController extends AbstractController
             ->handleRequest($request);
 
         if ($attributeTranslateFormCollection->isValid()) {
-            $translationForms = $attributeTranslateFormCollection->get(AttributeTranslationFormCollection::FIELD_TRANSLATIONS)->getData();
+            $translationForms = $attributeTranslateFormCollection->get(AttributeTranslationFormCollection::FIELD_TRANSLATIONS);
 
-            $attributeTranslationFormTransfers = [];
-            foreach ($translationForms as $locale => $translationForm) {
-                $attributeTranslationFormTransfers[] = $this->createAttributeTranslationFormTransfer($translationForm, $locale);
-            }
+            $productManagementAttributeTransfer = $this->getFactory()
+                ->createAttributeTranslationFormTransferGenerator()
+                ->createTransfer($translationForms);
 
-            $this->getFacade()->translateProductManagementAttribute($attributeTranslationFormTransfers);
+            $this->getFacade()->translateProductManagementAttribute($productManagementAttributeTransfer);
 
             return $this->redirectResponse(sprintf(
                 '/product-management/attributes/view?id=%d',
@@ -167,15 +162,17 @@ class AttributesController extends AbstractController
             ->handleRequest($request);
 
         if ($attributeForm->isValid()) {
-            $productManagementAttributeTransfer = $this->createAttributeTransfer($attributeForm);
+            $attributeTransfer = $this->getFactory()
+                ->createAttributeFormTransferGenerator()
+                ->createTransfer($attributeForm);
 
-            $productManagementAttributeTransfer = $this
+            $attributeTransfer = $this
                 ->getFacade()
-                ->updateProductManagementAttribute($productManagementAttributeTransfer);
+                ->updateProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
                 '/product-management/attributes/translate?id=%d',
-                $productManagementAttributeTransfer->getIdProductManagementAttribute()
+                $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
 
@@ -218,62 +215,6 @@ class AttributesController extends AbstractController
             'attributeTranslationFormCollection' => $attributeTranslateFormCollection->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $attributeForm
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
-     */
-    protected function createAttributeTransfer(FormInterface $attributeForm)
-    {
-        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
-            ->fromArray($attributeForm->getData(), true);
-
-        $values = (array)$attributeForm->get(AttributeForm::FIELD_VALUES)->getData();
-
-        $this->addAttributeValues($productManagementAttributeTransfer, $values);
-
-        return $productManagementAttributeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
-     * @param array $values
-     *
-     * @return void
-     */
-    protected function addAttributeValues(ProductManagementAttributeTransfer $productManagementAttributeTransfer, array $values)
-    {
-        $productManagementAttributeTransfer->setValues(new \ArrayObject());
-
-        foreach ($values as $value) {
-            $productManagementAttributeValueTransfer = new ProductManagementAttributeValueTransfer();
-            $productManagementAttributeValueTransfer->setValue($value);
-
-            $productManagementAttributeTransfer->addValue($productManagementAttributeValueTransfer);
-        }
-    }
-
-    /**
-     * @param array $attributeTranslateFormData
-     * @param string $locale
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer
-     */
-    protected function createAttributeTranslationFormTransfer(array $attributeTranslateFormData, $locale)
-    {
-        $attributeValueFormTransfer = new ProductManagementAttributeTranslationFormTransfer();
-
-        if (!$attributeTranslateFormData[AttributeTranslationForm::FIELD_TRANSLATE_VALUES]) {
-            unset($attributeTranslateFormData[AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS]);
-        }
-
-        $attributeValueFormTransfer
-            ->fromArray($attributeTranslateFormData, true)
-            ->setLocaleName($locale);
-
-        return $attributeValueFormTransfer;
     }
 
     /**

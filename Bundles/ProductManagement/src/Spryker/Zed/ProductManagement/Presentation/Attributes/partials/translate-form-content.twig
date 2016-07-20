@@ -36,16 +36,16 @@
                             <div class="col-sm-4">
                                 {{ form_row(localizedAttribute.id_product_management_attribute) }}
 
-                                {{ form_row(localizedAttribute.attribute_name) }}
+                                {{ form_row(localizedAttribute.key) }}
                             </div>
                             <div class="col-sm-8">
-                                <div class="form-group {% if localizedAttribute.attribute_name_translation.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(localizedAttribute.attribute_name_translation) }}
+                                <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(localizedAttribute.key_translation) }}
                                     {% if not readOnly %}
                                         <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="name-translation">{{ 'Copy to other languages' | trans }}</a>
                                     {% endif %}
-                                    {{ form_widget(localizedAttribute.attribute_name_translation, {'attr': {'class': 'name-translation'}}) }}
-                                    {{ form_errors(localizedAttribute.attribute_name_translation) }}
+                                    {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation'}}) }}
+                                    {{ form_errors(localizedAttribute.key_translation) }}
                                 </div>
                             </div>
                         </div>

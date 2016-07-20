@@ -172,8 +172,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeReader(
             $this->getQueryContainer(),
-            $this->getProductFacade(),
-            $this->getGlossaryFacade()
+            $this->getLocaleFacade()
         );
     }
 

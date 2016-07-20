@@ -65,7 +65,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             )
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
+            ->withColumn($idLocale, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
     }
 
@@ -94,18 +94,17 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
 
     /**
      * @param int $idProductManagementAttribute
-     * @param int $idLocale
      *
      * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
-    public function queryProductManagementAttributeValueTranslationByIdAndLocale($idProductManagementAttribute, $idLocale)
+    public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
     {
-        return $this->queryProductManagementAttributeValueTranslation()
+        return $this
+            ->queryProductManagementAttributeValueTranslation()
             ->joinSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()
                 ->filterByFkProductManagementAttribute($idProductManagementAttribute)
-            ->endUse()
-            ->filterByFkLocale($idLocale);
+            ->endUse();
     }
 
 }

@@ -18,8 +18,8 @@ class AttributeTranslationForm extends AbstractType
 {
 
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
-    const FIELD_ATTRIBUTE_NAME = 'attribute_name';
-    const FIELD_ATTRIBUTE_NAME_TRANSLATION = 'attribute_name_translation';
+    const FIELD_KEY = 'key';
+    const FIELD_KEY_TRANSLATION = 'key_translation';
     const FIELD_TRANSLATE_VALUES = 'translate_values';
     const FIELD_VALUE_TRANSLATIONS = 'value_translations';
 
@@ -66,7 +66,7 @@ class AttributeTranslationForm extends AbstractType
     {
         $this
             ->addIdProductManagementAttributeField($builder)
-            ->addAttributeNameField($builder)
+            ->addAttributeKeyField($builder)
             ->addAttributeNameTranslationField($builder)
             ->addTranslateValuesField($builder)
             ->addValueTranslationFields($builder);
@@ -89,9 +89,9 @@ class AttributeTranslationForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeNameField(FormBuilderInterface $builder)
+    protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ATTRIBUTE_NAME, 'text', [
+        $builder->add(self::FIELD_KEY, 'text', [
             'label' => 'Attribute name',
             'read_only' => true,
             'disabled' => true,
@@ -107,7 +107,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeNameTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ATTRIBUTE_NAME_TRANSLATION, 'text', [
+        $builder->add(self::FIELD_KEY_TRANSLATION, 'text', [
             'label' => 'Translation',
             'constraints' => [
                 new NotBlank(),

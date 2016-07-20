@@ -138,15 +138,15 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer[] $attributeTranslationFormTransfers
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return void
      */
-    public function translateProductManagementAttribute(array $attributeTranslationFormTransfers)
+    public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
     {
         $this->getFactory()
             ->createAttributeTranslator()
-            ->saveProductManagementAttributeTranslation($attributeTranslationFormTransfers);
+            ->saveProductManagementAttributeTranslation($productManagementAttributeTransfer);
     }
 
     /**

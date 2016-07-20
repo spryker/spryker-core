@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -48,31 +50,30 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer[] $attributeTranslationFormTransfers
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
      *
      * @throws \Exception
      *
      * @return void
      */
-    public function saveProductManagementAttributeTranslation(array $attributeTranslationFormTransfers)
+    public function saveProductManagementAttributeTranslation(ProductManagementAttributeTransfer $attributeTransfer)
     {
+        $attributeTransfer->requireIdProductManagementAttribute();
+
         $this->productManagementQueryContainer
             ->getConnection()
             ->beginTransaction();
 
         try {
-            foreach ($attributeTranslationFormTransfers as $attributeTranslationFormTransfer) {
-                $attributeTranslationFormTransfer
-                    ->requireIdProductManagementAttribute()
-                    ->requireLocaleName();
+            foreach ($attributeTransfer->getLocalizedKeys() as $localizedAttributeKeyTransfer) {
+                $localizedAttributeKeyTransfer->requireLocaleName();
+                $localeTransfer = $this->localeFacade->getLocale($localizedAttributeKeyTransfer->getLocaleName());
 
-                $localeTransfer = $this->localeFacade->getLocale($attributeTranslationFormTransfer->getLocaleName());
-
-                $this->saveAttributeNameToGlossary($attributeTranslationFormTransfer, $localeTransfer);
-
-                $this->resetAttributeValueTranslations($attributeTranslationFormTransfer, $localeTransfer);
-                $this->saveAttributeValueTranslations($attributeTranslationFormTransfer, $localeTransfer);
+                $this->saveAttributeNameToGlossary($attributeTransfer->getKey(), $localizedAttributeKeyTransfer->getKeyTranslation(), $localeTransfer);
             }
+
+            $this->resetAttributeValueTranslations($attributeTransfer->getIdProductManagementAttribute());
+            $this->saveAttributeValueTranslations($attributeTransfer->getValues());
 
             $this->productManagementQueryContainer
                 ->getConnection()
@@ -88,20 +89,21 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer
+     * @param string $key
+     * @param string $keyTranslation
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function saveAttributeNameToGlossary(ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer, LocaleTransfer $localeTransfer)
+    protected function saveAttributeNameToGlossary($key, $keyTranslation, LocaleTransfer $localeTransfer)
     {
-        $attributeGlossaryKey = $this->generateAttributeGlossaryKey($attributeTranslationFormTransfer->getAttributeName());
+        $attributeGlossaryKey = $this->generateAttributeGlossaryKey($key);
 
         if ($this->glossaryFacade->hasTranslation($attributeGlossaryKey, $localeTransfer)) {
             $this->glossaryFacade->updateAndTouchTranslation(
                 $attributeGlossaryKey,
                 $localeTransfer,
-                $attributeTranslationFormTransfer->getAttributeNameTranslation(),
+                $keyTranslation,
                 true
             );
 
@@ -111,7 +113,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
         $this->glossaryFacade->createAndTouchTranslation(
             $attributeGlossaryKey,
             $localeTransfer,
-            $attributeTranslationFormTransfer->getAttributeNameTranslation(),
+            $keyTranslation,
             true
         );
     }
@@ -127,48 +129,46 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idProductManagementAttribute
      *
      * @return void
      */
-    protected function saveAttributeValueTranslations(ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer, LocaleTransfer $localeTransfer)
+    protected function resetAttributeValueTranslations($idProductManagementAttribute)
     {
-        foreach ($attributeTranslationFormTransfer->getValueTranslations() as $valueTranslationTransfer) {
-            $translation = trim($valueTranslationTransfer->getTranslation());
-
-            if ($translation === '') {
-                continue;
-            }
-
-            $translationEntity = $this->productManagementQueryContainer
-                ->queryProductManagementAttributeValueTranslationByIdAndLocale(
-                    $valueTranslationTransfer->getIdProductManagementAttributeValue(),
-                    $localeTransfer->getIdLocale()
-                )
-                ->findOneOrCreate();
-
-            $translationEntity
-                ->setTranslation($valueTranslationTransfer->getTranslation())
-                ->save();
-        }
+        $this->productManagementQueryContainer
+            ->queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
+            ->find()
+            ->delete();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]|ArrayObject $attributeValueTransfers
      *
      * @return void
      */
-    protected function resetAttributeValueTranslations(ProductManagementAttributeTranslationFormTransfer $attributeTranslationFormTransfer, LocaleTransfer $localeTransfer)
+    protected function saveAttributeValueTranslations(ArrayObject $attributeValueTransfers)
     {
-        $this->productManagementQueryContainer
-            ->queryProductManagementAttributeValueTranslationByIdAndLocale(
-                $attributeTranslationFormTransfer->getIdProductManagementAttribute(),
-                $localeTransfer->getIdLocale()
-            )
-            ->find()
-            ->delete();
+        foreach ($attributeValueTransfers as $attributeValueTransfer) {
+            $attributeValueTransfer->requireIdProductManagementAttributeValue();
+
+            foreach ($attributeValueTransfer->getLocalizedValues() as $localizedAttributeValueTransfer) {
+                $translation = trim($localizedAttributeValueTransfer->getTranslation());
+
+                if ($translation === '') {
+                    continue;
+                }
+
+                $localizedAttributeValueTransfer->requireFkLocale();
+
+                $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+                $attributeValueTranslationEntity
+                    ->setFkLocale($localizedAttributeValueTransfer->getFkLocale())
+                    ->setFkProductManagementAttributeValue($attributeValueTransfer->getIdProductManagementAttributeValue())
+                    ->setTranslation($translation);
+
+                $attributeValueTranslationEntity->save();
+            }
+        }
     }
 
 }
