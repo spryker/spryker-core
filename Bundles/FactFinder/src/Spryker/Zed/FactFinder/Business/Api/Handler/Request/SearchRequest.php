@@ -28,11 +28,26 @@ class SearchRequest extends AbstractRequest implements RequestInterface
         // $request = mapper->map($searchRequestTransfer);
         $searchAdapter = $this->ffConnector->createSearchAdapter();
         // @todo check
+
+        $error = $searchAdapter->getError();
+        $status = $searchAdapter->getStatus();
+
         $campaigns = $searchAdapter->getCampaigns();
         if ($campaigns->hasRedirect()) {
             //throw new RedirectException($campaigns->getRedirectUrl());
             $redirectUrl = $campaigns->getRedirectUrl();
         }
+
+        $afterSerchNavigation = $searchAdapter->getAfterSearchNavigation();
+        $articleNumberStatus = $searchAdapter->getArticleNumberStatus();
+        $breadCrumbTrail = $searchAdapter->getBreadCrumbTrail();
+        $paging = $searchAdapter->getPaging();
+        $result = $searchAdapter->getResult();
+        $resultsPerPageOptions = $searchAdapter->getResultsPerPageOptions();
+        $singleWordSearch = $searchAdapter->getSingleWordSearch();
+        $sorting = $searchAdapter->getSorting();
+//        $followSearchValue = $searchAdapter->getFollowSearchValue();
+
 
         $this->logInfo($quoteTransfer, $searchAdapter);
         
