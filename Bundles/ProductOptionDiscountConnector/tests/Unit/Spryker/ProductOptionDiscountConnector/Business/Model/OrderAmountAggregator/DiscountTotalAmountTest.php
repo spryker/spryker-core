@@ -46,6 +46,7 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
         $itemTransfer->setUnitGrossPriceWithProductOptions(200);
         $itemTransfer->setSumGrossPriceWithProductOptions(400);
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setSumGrossPrice(500);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setSumGrossAmount(100);

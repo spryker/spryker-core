@@ -60,6 +60,8 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setQuantity($itemQuantity);
+        $itemTransfer->setUnitGrossPrice(500);
+        $itemTransfer->setSumGrossPrice($itemQuantity * 500);
 
         foreach ($calculatedDiscounts as $calculatedDiscount) {
             $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
@@ -71,6 +73,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
             $expenseTransfer = $this->createExpenseTransfer();
+            $expenseTransfer->setSumGrossPrice(100);
             $expenseTransfer->addCalculatedDiscount(clone $calculatedDiscountTransfer);
             $quoteTransfer->addExpense($expenseTransfer);
         }

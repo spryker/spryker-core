@@ -94,7 +94,7 @@ class SalesFacadeTest extends Test
         $orderTransfer = $orderListTransfer->getOrders()[0];
         $grandTotal = $orderTransfer->getTotals()->getGrandTotal();
 
-        $this->assertSame(1350.0, $grandTotal);
+        $this->assertSame(1350, $grandTotal);
     }
 
     /**

@@ -37,6 +37,8 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = new OrderTransfer();
 
         $itemTransfer = new ItemTransfer();
+        $itemTransfer->setUnitGrossPrice(200);
+        $itemTransfer->setSumGrossPrice(400);
 
         $calculatedDiscount = new CalculatedDiscountTransfer();
         $calculatedDiscount->setSumGrossAmount(100);
@@ -48,6 +50,8 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
         $orderTransfer->setTotals($totalsTransfer);
 
         $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setUnitGrossPrice(100);
+        $expenseTransfer->setSumGrossPrice(200);
 
         $calculatedDiscount = new CalculatedDiscountTransfer();
         $calculatedDiscount->setSumGrossAmount(100);
