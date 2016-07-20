@@ -36,9 +36,6 @@
 
 #}
 
-{% set attributeLocaleCollection = localeCollection %}
-{% set attributeLocaleCollection = attributeLocaleCollection|merge(['default']) %}
-
 {% import _self as forms %}
 
 {% form_theme form _self %}
@@ -76,7 +73,7 @@
                             {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
                             formPrefix: 'general',
                             localeCollection: localeCollection,
-                            currentLocale: currentLocale,
+                            activeLocale: currentLocale,
                             form: form
                             } %}
                             {% endembed %}
@@ -99,7 +96,7 @@
                                 {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
-                                    currentLocale: currentLocale,
+                                    activeLocale: 'default',
                                     form: form
                                     } %}
                                 {% endembed %}
@@ -107,7 +104,7 @@
                                 {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
                                     formPrefix: 'attribute_abstract',
                                     localeCollection: attributeLocaleCollection,
-                                    currentLocale: currentLocale,
+                                    activeLocale: 'default',
                                     form: form
                                 } %}
                                     {% block tabContentRow %}
@@ -151,61 +148,37 @@
                             </div>
                         {% endfor %}
                     </div>
+                    <br/>
+                    <br/>
+                    <button type="button" class="btn btn-w-m btn-default">Preview</button>
                 </div>
             </div>
 
             <div class="panel-body">
                 <div class="table-responsive">
                     <table
-                        id="productMatrixTable"
-                        class="table table-striped table-bordered table-hover gui-table-data"
-                        data-page-size="4"
-                        data-order='[["0", "asc"]]'
-                        data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
-                        data-state-save="false"
+                            id="productMatrixTable"
+                            class="table table-striped table-bordered table-hover gui-table-data"
+                            data-page-size="4"
+                            data-order='[["0", "asc"]]'
+                            data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
+                            data-state-save="false"
                     >
                         <thead>
                         <tr>
                             <th>Sku</th>
-                            {% for attributeGroupKey,attributeGroup in attributeValueCollection %}
-                                <th>{{ attributeGroup.key }}</th>
-                            {% endfor %}
                             <th class="center">Price</th>
                             <th class="center">Stock</th>
                             <th class="no-sort">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for product in concretes %}
+                        {% for product in matrix %}
                             <tr class="gradeX">
                                 {# --------------------------------------- SKU --------------------------------------- #}
                                 <td>{{ product.sku }}</td>
                                 {# --------------------------------------- ATTRIBUTES --------------------------------------- #}
-                                {% for attributeGroupKey,attributeGroup in attributeValueCollection %}
-                                    {% if attributeValueCollection[attributeGroupKey] is defined %}
-                                        {% set productAttributeMetadata = attributeValueCollection[attributeGroupKey] %}
-                                    {% endif %}
 
-                                    {% if product.attributes[attributeGroupKey] is defined %}
-                                        {% set value = product.attributes[attributeGroupKey] %}
-                                        {% if productAttributeMetadata is defined and productAttributeMetadata.isLocalized %}
-
-                                            {% if value[currentLocale] is defined  %}
-                                                <td>({{ currentLocale }}) {{ value[currentLocale] }}</td>
-                                            {% else %}
-                                                <td>{{ dump(value) }}</td>
-                                            {% endif %}
-
-                                        {% elseif productAttributeMetadata is defined and productAttributeMetadata.isMultiple %}
-                                            <td>Multiple: {{ dump(value) }}</td>
-                                        {% else %}
-                                            <td>{{ value }}</td>
-                                        {% endif %}
-
-                                    {% else %}
-                                        <td>-</td>
-                                    {% endif %}
-                                {% endfor %}
 
                                 {# --------------------------------------- PRICE --------------------------------------- #}
                                 {% if product.price is defined and product.price.price is defined %}
@@ -227,9 +200,6 @@
                         <tfoot>
                         <tr>
                             <th>Sku</th>
-                            {% for attributeGroupKey,attributeGroup in attributeValueCollection %}
-                                <th>{{ attributeGroup.key }}</th>
-                            {% endfor %}
                             <th class="center">Price</th>
                             <th class="center">Stock</th>
                             <th class="no-sort">Action</th>
@@ -277,7 +247,7 @@
                         {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
                         formPrefix: 'seo',
                         localeCollection: localeCollection,
-                        currentLocale: currentLocale,
+                        activeLocale: currentLocale,
                         form: form
                         } %}
                         {% endembed %}

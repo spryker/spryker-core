@@ -18,7 +18,7 @@
         {% set invalidCss = '' %}
         {% set invalidCssFound = false %}
 
-        {% if currentLocale == localeCode %}
+        {% if activeLocale == localeCode %}
             {% set activeCss =  'active' %}
         {% endif %}
 
@@ -29,6 +29,6 @@
             {% endif %}
         {% endfor %}
 
-        <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_{{ formPrefix }}_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+        <li class="{{ activeCss }} {{ invalidCss }}"><a href="#content_form_tab_{{ formKey }}" data-toggle="tab">{{ localeCode }}</a></li>
     {% endfor %}
 </ul>

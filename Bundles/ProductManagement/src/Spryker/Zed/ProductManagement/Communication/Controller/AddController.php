@@ -71,13 +71,15 @@ class AddController extends AbstractController
             }
         }
 
+        $localeCollection = $this->getFactory()->getLocaleFacade()->getAvailableLocales();
+        $attributeLocaleCollection = ['default' => 'default'] + $localeCollection;
+
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'matrix' => [],
-            'concretes' => [],
-            'attributeValueCollection' => $attributeCollection,
-            'localeCollection' => $this->getFactory()->getLocaleFacade()->getAvailableLocales(),
+            'localeCollection' => $localeCollection,
+            'attributeLocaleCollection' => $attributeLocaleCollection
         ]);
     }
 
