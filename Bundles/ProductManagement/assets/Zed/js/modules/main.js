@@ -10,7 +10,7 @@ require('../../sass/main.scss');
 
 $(document).ready(function() {
 
-    var processAjaxResult = function (data, params) {
+    function processAjaxResult(data, params) {
         //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
         // parse the results into the format expected by Select2
         // since we are using custom formatting functions we do not need to
@@ -31,6 +31,18 @@ $(document).ready(function() {
                 more: (params.page * 30) < data.total || 0
             }
         };
+    }
+
+    function select2_search ($select, term) {
+        $select.select2('open');
+
+        // Get the search box within the dropdown or the selection
+        // Dropdown = single, Selection = multiple
+        var $search = $select.data('select2').dropdown.$search || $select.data('select2').selection.$search;
+        // This is undocumented and may change in the future
+
+        $search.val(term);
+        $search.trigger('keyup');
     }
 
     $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
@@ -62,7 +74,34 @@ $(document).ready(function() {
         },
         minimumInputLength: 1
     })
-        .on("select2:openDISALBLED", function (e) {
+        .on("DISALBED_select2:open", function (e) {
+
+            var $select = $($(this).data('target'));
+            console.log('select', $select.data);
+
+            //$select.select2('data', null)
+            //select v4 - wtf
+/*
+            $select.empty();
+            $select.html('').select2({data: [{id: '', text: ''}]});
+            $select.html('').select2({data: [
+                {id: '', text: ''},
+                {id: '1', text: 'Facebook'},
+                {id: '2', text: 'Youtube'},
+                {id: '3', text: 'Instagram'},
+                {id: '4', text: 'Pinterest'}]
+            });
+*/
+            debugger;
+            var $search = $select.data('select2').dropdown.$search || $select.data('select2').selection.$search;
+            // This is undocumented and may change in the future
+
+            $search.val(term);
+            $search.trigger('keyup');
+            return;
+
+
+
             console.log('open', e, this);
             var id = $(this).attr('id_attribute');
             var self = $(this);

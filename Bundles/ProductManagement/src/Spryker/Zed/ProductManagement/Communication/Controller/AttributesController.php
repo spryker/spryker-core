@@ -26,7 +26,7 @@ class AttributesController extends AbstractController
 {
 
     const PARAM_ID = 'id';
-    const PARAM_SEARCH_TEXT = 'search_text';
+    const PARAM_SEARCH_TEXT = 'q';
 
     /**
      * @return array
