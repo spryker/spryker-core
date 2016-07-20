@@ -18,13 +18,6 @@ $(document).ready(function() {
         // scrolling can be used
         params.page = params.page || 1;
 
-/*        var values = $.map(data.values, function (item) {
-            return {
-                id: item.id_product_management_attribute_value,
-                text: item.translation || item.value
-            }
-        });*/
-
         return {
             results: data.values,
             pagination: {
