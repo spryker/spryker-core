@@ -39,7 +39,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject $calculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
      *
      * @return int
      */
