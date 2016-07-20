@@ -48,7 +48,7 @@ class BundleParser
     public function parseOutgoingDependencies($bundleName)
     {
         $allFileDependencies = $this->parseDependencies($bundleName);
-        $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies);
+        $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies, $bundleName);
         $locatorBundleDependencies = $this->buildLocatorBundleDependencies($allFileDependencies, $bundleName);
 
         $allFileDependencies = $this->filterRelevantClasses($allFileDependencies);
@@ -216,10 +216,11 @@ class BundleParser
 
     /**
      * @param array $allFileDependencies
+     * @param string $currentBundleName
      *
      * @return array
      */
-    protected function buildExternalBundleDependencies(array $allFileDependencies)
+    protected function buildExternalBundleDependencies(array $allFileDependencies, $currentBundleName)
     {
         $bundleDependencies = [];
 
@@ -254,10 +255,7 @@ class BundleParser
                 $filter = new UnderscoreToCamelCase();
                 $name = ucfirst($filter->filter($name));
 
-                if (!isset($bundleDependencies[$name])) {
-                    $bundleDependencies[$name] = 0;
-                }
-                $bundleDependencies[$name]++;
+                $bundleDependencies = $this->addDependency($name, $bundleDependencies, $currentBundleName);
             }
         }
 
