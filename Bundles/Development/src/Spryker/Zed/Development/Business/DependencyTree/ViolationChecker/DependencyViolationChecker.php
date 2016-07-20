@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\ViolationChecker;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilter;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface;
@@ -26,7 +26,7 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     private $violationFinder;
 
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilter
+     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     private $dependencyFilter;
 
@@ -38,9 +38,9 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $treeReader
      * @param \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface $violationFinder
-     * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilter $dependencyFilter
+     * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      */
-    public function __construct(DependencyTreeReaderInterface $treeReader, ViolationFinderInterface $violationFinder, DependencyFilter $dependencyFilter)
+    public function __construct(DependencyTreeReaderInterface $treeReader, ViolationFinderInterface $violationFinder, DependencyFilterInterface $dependencyFilter)
     {
         $this->treeReader = $treeReader;
         $this->violationFinder = $violationFinder;

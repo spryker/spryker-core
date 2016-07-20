@@ -46,10 +46,45 @@ class DependencyTreeDependencyViolationConsole extends Console
 
         $dependencyViolations = $this->getFacade()->getDependencyViolations();
 
-        $this->info(sprintf('Found "%d" dependencies', count($dependencyViolations)));
+        $this->info(sprintf('Found %d dependencies', count($dependencyViolations)));
 
         foreach ($dependencyViolations as $dependencyViolation) {
             $this->info($dependencyViolation);
+        }
+
+        $this->printLineSeparator();
+
+        $bundles = $this->getFacade()->getAllBundles();
+        $this->info(sprintf('Checking all %d bundles for dependency issues', count($bundles)));
+
+        foreach ($bundles as $bundle) {
+            $violations = [];
+            $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundle);
+
+            $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundle, array_keys($dependencies));
+
+            foreach ($composerDependencies as $composerDependency) {
+                if ($composerDependency['code'] && $composerDependency['composer']) {
+                    continue;
+                }
+                if (!$composerDependency['code']) {
+                    $composerDependency['code'] = '-';
+                }
+                if (!$composerDependency['composer']) {
+                    $composerDependency['composer'] = '-';
+                }
+
+                $violations[] = 'code: ' . $composerDependency['code'] . ' / composer: ' . $composerDependency['composer'];
+            }
+
+            if (!$violations) {
+                continue;
+            }
+
+            $this->info($bundle . ':');
+            foreach ($violations as $violation) {
+                $this->info(' - ' . $violation);
+            }
         }
     }
 
