@@ -3,11 +3,11 @@
         {% set formKey = formPrefix ~ '_' ~ localeCode %}
         {% set activeCss = '' %}
 
-        {% if currentLocale == localeCode %}
+        {% if activeLocale == localeCode %}
             {% set activeCss =  'active' %}
         {% endif %}
 
-        <div id="content_{{ formPrefix }}_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+        <div id="content_form_tab_{{ formKey }}" class="tab-pane {{ activeCss }}">
             {% block tabContentRow %}
                 <div class="panel-body">
                     <div class="well">
