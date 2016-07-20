@@ -10,6 +10,29 @@ require('../../sass/main.scss');
 
 $(document).ready(function() {
 
+    var processAjaxResult = function (data, params) {
+        //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
+        // parse the results into the format expected by Select2
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data, except to indicate that infinite
+        // scrolling can be used
+        params.page = params.page || 1;
+
+        var values = $.map(data.values, function (item) {
+            return {
+                id: item.id_product_management_attribute_value,
+                text: item.translation || item.value
+            }
+        });
+
+        return {
+            results: values,
+            pagination: {
+                more: (params.page * 30) < data.total || 0
+            }
+        };
+    }
+
     $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
 
     });
@@ -20,10 +43,12 @@ $(document).ready(function() {
 
     $('.spryker-form-select2combobox.ajax:not([class=".tags"])').select2({
         tags: false,
+        preLoaded: false,
         ajax: {
             url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
             dataType: 'json',
             delay: 250,
+            cache: true,
             data: function (params) {
                 var p = {
                     q: params.term,
@@ -33,35 +58,26 @@ $(document).ready(function() {
 
                 return p;
             },
-            processResults: function (data, params) {
-                //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                params.page = params.page || 1;
-
-                var values = [];
-                for (var a=0; a<data.values.length; a++) {
-                    var item = data.values[a];
-
-                    values.push({
-                        id: item.id_product_management_attribute_value,
-                        text: item.translation || item.value
-                    });
-                }
-
-                return {
-                    results: values,
-                    pagination: {
-                        more: (params.page * 30) < data.total || 0
-                    }
-                };
-            },
-            cache: true
+            processResults: processAjaxResult
         },
         minimumInputLength: 1
-    });
+    })
+        .on("select2:openDISALBLED", function (e) {
+            console.log('open', e, this);
+            var id = $(this).attr('id_attribute');
+            var self = $(this);
+            if (self.attr('preLoaded')) return;
+
+            $.ajax('http://zed.de.spryker.dev/product-management/attributes/autocomplete/', {
+                dataType: 'json',
+                data: 'q=&page=1&id=' + id
+            }).done(function(data) {
+                var processedResult = processAjaxResult(data, {});
+                console.log(processedResult.results);
+                self.select2({'data': processedResult.results});
+                self.attr('preLoaded', true);
+            });
+        });
 
     $('.spryker-form-select2combobox.ajax.tags').select2({
         tags: true,
@@ -69,6 +85,8 @@ $(document).ready(function() {
             url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
             dataType: 'json',
             delay: 250,
+            cache: true,
+            preLoaded: false,
             data: function (params) {
                 var p = {
                     q: params.term,
@@ -78,32 +96,7 @@ $(document).ready(function() {
 
                 return p;
             },
-            processResults: function (data, params) {
-                //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                params.page = params.page || 1;
-
-                var values = [];
-                for (var a=0; a<data.values.length; a++) {
-                    var item = data.values[a];
-
-                    values.push({
-                        id: item.id_product_management_attribute_value,
-                        text: item.translation || item.value
-                    });
-                }
-
-                return {
-                    results: values,
-                    pagination: {
-                        more: (params.page * 30) < data.total || 0
-                    }
-                };
-            },
-            cache: true
+            processResults: processAjaxResult
         },
         minimumInputLength: 1
     });
