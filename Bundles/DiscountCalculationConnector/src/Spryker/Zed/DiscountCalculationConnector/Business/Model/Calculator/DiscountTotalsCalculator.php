@@ -37,7 +37,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
         $discountTotalAmount = $this->calculateItemDiscounts($quoteTransfer);
         $discountTotalAmount += $this->calculateExpenseTotalDiscountAmount($quoteTransfer);
 
-        return (int) round($discountTotalAmount);
+        return (int)round($discountTotalAmount);
     }
 
     /**
