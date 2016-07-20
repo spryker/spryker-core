@@ -21,6 +21,7 @@ class AttributesController extends AbstractController
 
     const PARAM_ID = 'id';
     const PARAM_SEARCH_TEXT = 'q';
+    const PARAM_TERM = 'term';
 
     /**
      * @return array
@@ -132,15 +133,11 @@ class AttributesController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $searchTerm = $request->query->get('term');
+        $searchTerm = $request->query->get(self::PARAM_TERM);
 
-        // TODO: get these from spy_product_attribute_key table
-        return $this->jsonResponse([
-            $searchTerm,
-            'Foo',
-            'Bar',
-            'Baz',
-        ]);
+        $keys = $this->getFacade()->suggestUnusedAttributeKeys($searchTerm);
+
+        return $this->jsonResponse($keys);
     }
 
     /**

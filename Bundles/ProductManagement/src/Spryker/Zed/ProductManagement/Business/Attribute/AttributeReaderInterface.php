@@ -37,4 +37,12 @@ interface AttributeReaderInterface
      */
     public function getAttribute($idProductManagementAttribute);
 
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestUnusedKeys($searchText = '', $limit = 10);
+
 }

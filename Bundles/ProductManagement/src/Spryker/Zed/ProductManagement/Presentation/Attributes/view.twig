@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Attribute' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View Attribute #' ~ app.request.query.get('id') } %}
         {% block widget_content %}
 
             <h4>{{ 'General Information' | trans }}</h4>

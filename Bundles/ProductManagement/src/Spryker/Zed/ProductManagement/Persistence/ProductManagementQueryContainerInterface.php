@@ -57,4 +57,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute);
 
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys();
+
 }

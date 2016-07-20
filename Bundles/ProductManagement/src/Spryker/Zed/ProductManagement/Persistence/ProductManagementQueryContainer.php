@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -76,9 +77,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryProductAttributeKey()
     {
-        return $this->getFactory()
-            ->createProductAttributeKeyQuery()
-            ->joinSpyProductManagementAttribute();
+        return $this->getFactory()->createProductAttributeKeyQuery();
     }
 
     /**
@@ -104,6 +103,19 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             ->joinSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()
                 ->filterByFkProductManagementAttribute($idProductManagementAttribute)
+            ->endUse();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys()
+    {
+        return $this
+            ->queryProductAttributeKey()
+            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
+            ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIdProductManagementAttribute(null)
             ->endUse();
     }
 

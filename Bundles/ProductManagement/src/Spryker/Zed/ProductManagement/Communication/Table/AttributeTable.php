@@ -76,6 +76,7 @@ class AttributeTable extends AbstractTable
         $query = $this
             ->productManagementQueryContainer
             ->queryProductAttributeKey()
+            ->joinSpyProductManagementAttribute()
             ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE)
             ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, static::COL_INPUT_TYPE);
 

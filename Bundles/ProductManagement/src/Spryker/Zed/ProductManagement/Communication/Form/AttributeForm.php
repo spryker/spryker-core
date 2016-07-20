@@ -137,6 +137,7 @@ class AttributeForm extends AbstractType
                         function ($key, ExecutionContextInterface $context) {
                             $keyCount = $this->productManagementQueryContainer
                                 ->queryProductAttributeKey()
+                                ->joinSpyProductManagementAttribute()
                                 ->filterByKey($key)
                                 ->count();
 
