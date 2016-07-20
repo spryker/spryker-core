@@ -45,12 +45,4 @@ class DiscountSalesAggregatorConnectorToTaxBridge implements DiscountSalesAggreg
         return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
 
-    /**
-     * @return void
-     */
-    public function resetAccruedTaxCalculatorRoundingErrorDelta()
-    {
-        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
-    }
-
 }

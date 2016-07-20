@@ -20,12 +20,12 @@ class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
     public function testAggregateShouldAddDiscountToGrossPriceWithDiscounts()
     {
         $discountTaxBridgeMock = $this->createDiscountTaxBridgeMock();
-        $discountTaxBridgeMock->expects($this->at(1))
-            ->method('getAccruedTaxAmountFromGrossPrice')
+        $discountTaxBridgeMock->expects($this->at(0))
+            ->method('getTaxAmountFromGrossPrice')
             ->willReturn(10);
 
-        $discountTaxBridgeMock->expects($this->at(2))
-            ->method('getAccruedTaxAmountFromGrossPrice')
+        $discountTaxBridgeMock->expects($this->at(1))
+            ->method('getTaxAmountFromGrossPrice')
             ->willReturn(20);
 
         $orderExpenseWithDiscounts = $this->createOrderExpenseWithDiscounts($discountTaxBridgeMock);

@@ -43,8 +43,6 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
      */
     protected function addExpenseTaxes(OrderTransfer $orderTransfer)
     {
-        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
-
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             if (!$expenseTransfer->getTaxRate()) {
                 continue;
