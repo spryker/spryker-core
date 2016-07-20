@@ -346,10 +346,9 @@ class AbstractProductFormDataProvider
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-
             $isMulti = $this->attributeTransferCollection[$type]->getIsMultiple();
-
             $valueDisabled = !$isProductSpecificAttribute;
+
             if ($isNew) {
                 $valueDisabled = false;
             }
