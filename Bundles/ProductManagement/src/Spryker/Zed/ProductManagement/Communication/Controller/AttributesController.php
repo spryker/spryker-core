@@ -222,13 +222,12 @@ class AttributesController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function autocompleteAction(Request $request)
+    public function suggestAction(Request $request)
     {
         $idProductManagementAttribute = $this->castId($request->get(self::PARAM_ID));
         $searchText = trim($request->get(self::PARAM_SEARCH_TEXT));
         $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
         $total = $this->getFacade()->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale);
-
         $values = $this->getFacade()
             ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText);
 

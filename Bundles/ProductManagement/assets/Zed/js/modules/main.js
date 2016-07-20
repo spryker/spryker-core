@@ -50,7 +50,7 @@ $(document).ready(function() {
         tags: false,
         preLoaded: false,
         ajax: {
-            url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
+            url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
             dataType: 'json',
             delay: 250,
             cache: true,
@@ -100,7 +100,7 @@ $(document).ready(function() {
             var self = $(this);
             if (self.attr('preLoaded')) return;
 
-            $.ajax('http://zed.de.spryker.dev/product-management/attributes/autocomplete/', {
+            $.ajax('http://zed.de.spryker.dev/product-management/attributes/suggest/', {
                 dataType: 'json',
                 data: 'q=&page=1&id=' + id
             }).done(function(data) {
@@ -114,7 +114,7 @@ $(document).ready(function() {
     $('.spryker-form-select2combobox.ajax.tags').select2({
         tags: true,
         ajax: {
-            url: 'http://zed.de.spryker.dev/product-management/attributes/autocomplete/',
+            url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
             dataType: 'json',
             delay: 250,
             cache: true,
