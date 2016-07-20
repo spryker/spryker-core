@@ -9,12 +9,15 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AttributeForm extends AbstractType
 {
@@ -31,6 +34,20 @@ class AttributeForm extends AbstractType
     const OPTION_IS_UPDATE = 'is_update';
 
     const GROUP_VALUES = 'values_group';
+    const GROUP_UNIQUE_KEY = 'unique_key_group';
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     */
+    protected $productManagementQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     */
+    public function __construct(ProductManagementQueryContainerInterface $productManagementQueryContainer)
+    {
+        $this->productManagementQueryContainer = $productManagementQueryContainer;
+    }
 
     /**
      * @return string The name of this type
@@ -56,13 +73,19 @@ class AttributeForm extends AbstractType
             self::OPTION_IS_UPDATE => false,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
+                $groups = [Constraint::DEFAULT_GROUP];
+                $originalData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (isset($submittedData[self::FIELD_ALLOW_INPUT]) && $submittedData[self::FIELD_ALLOW_INPUT]) {
-                    return [Constraint::DEFAULT_GROUP];
+                if (!isset($submittedData[self::FIELD_ALLOW_INPUT]) || !$submittedData[self::FIELD_ALLOW_INPUT]) {
+                    $groups[] = self::GROUP_VALUES;
                 }
 
-                return [Constraint::DEFAULT_GROUP, self::GROUP_VALUES];
+                if (!isset($originalData[self::FIELD_KEY]) || $submittedData[self::FIELD_KEY] !== $originalData[self::FIELD_KEY]) {
+                    $groups[] = self::GROUP_UNIQUE_KEY;
+                }
+
+                return $groups;
             },
         ]);
     }
@@ -109,6 +132,21 @@ class AttributeForm extends AbstractType
             'url' => '/product-management/attributes/keys',
             'constraints' => [
                 new NotBlank(),
+                new Callback([
+                    'methods' => [
+                        function ($key, ExecutionContextInterface $context) {
+                            $keyCount = $this->productManagementQueryContainer
+                                ->queryProductAttributeKey()
+                                ->filterByKey($key)
+                                ->count();
+
+                            if ($keyCount > 0) {
+                                $context->addViolation('Attribute key is already used');
+                            }
+                        },
+                    ],
+                    'groups' => [self::GROUP_UNIQUE_KEY]
+                ]),
             ],
             'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);

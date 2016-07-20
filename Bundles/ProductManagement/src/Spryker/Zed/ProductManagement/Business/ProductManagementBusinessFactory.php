@@ -14,6 +14,7 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
+use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -138,7 +139,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeManager(
             $this->getQueryContainer(),
-            $this->getLocaleFacade()
+            $this->createProductAttributeTransferGenerator()
         );
     }
 
@@ -172,7 +173,19 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeReader(
             $this->getQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->createProductAttributeTransferGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     */
+    protected function createProductAttributeTransferGenerator()
+    {
+        return new ProductAttributeTransferGenerator(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
         );
     }
 

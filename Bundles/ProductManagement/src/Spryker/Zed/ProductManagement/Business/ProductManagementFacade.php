@@ -183,4 +183,22 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
             ->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText);
     }
 
+    /**
+     * Specification:
+     * - Reads a spy_product_management_attribute entity from the database and returns a fully hydrated ProductManagementAttributeTransfer
+     * - Return null if the entity is not found by id
+     *
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
+     */
+    public function getProductManagementAttribute($idProductManagementAttribute)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getAttribute($idProductManagementAttribute);
+    }
+
 }

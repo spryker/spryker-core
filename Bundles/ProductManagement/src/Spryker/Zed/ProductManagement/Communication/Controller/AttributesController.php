@@ -184,36 +184,22 @@ class AttributesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function viewAction(Request $request)
     {
         $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
 
-        $generalDataProvider = $this
-            ->getFactory()
-            ->createAttributeFormDataProvider();
-        $attributeForm = $this
-            ->getFactory()
-            ->createReadOnlyAttributeForm(
-                $generalDataProvider->getData($idProductManagementAttribute),
-                $generalDataProvider->getOptions($idProductManagementAttribute)
-            );
+        $attributeTransfer = $this->getFacade()
+            ->getProductManagementAttribute($idProductManagementAttribute);
 
-        $translationDataProvider = $this
-            ->getFactory()
-            ->createAttributeTranslationFormCollectionDataProvider();
-        $attributeTranslateFormCollection = $this
-            ->getFactory()
-            ->createReadOnlyAttributeTranslationFormCollection(
-                $translationDataProvider->getData($idProductManagementAttribute),
-                $translationDataProvider->getOptions()
-            );
+        if (!$attributeTransfer) {
+            return $this->redirectResponse('/product-management/attributes');
+        }
 
         return $this->viewResponse([
-            'attributeForm' => $attributeForm->createView(),
-            'attributeTranslationFormCollection' => $attributeTranslateFormCollection->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+            'attributeTransfer' => $attributeTransfer,
+            'locales' => $this->getFactory()->getLocaleFacade()->getAvailableLocales(),
         ]);
     }
 

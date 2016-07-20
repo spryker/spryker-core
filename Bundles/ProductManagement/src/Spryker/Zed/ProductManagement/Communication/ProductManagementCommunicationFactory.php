@@ -235,7 +235,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createAttributeFormType()
     {
-        return new AttributeForm();
+        return new AttributeForm($this->getQueryContainer());
     }
 
     /**
@@ -243,7 +243,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createReadOnlyAttributeFormType()
     {
-        return new ReadOnlyAttributeForm();
+        return new ReadOnlyAttributeForm($this->getQueryContainer());
     }
 
     /**

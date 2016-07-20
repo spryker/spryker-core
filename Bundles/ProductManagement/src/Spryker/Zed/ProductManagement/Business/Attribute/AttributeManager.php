@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
+use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
 class AttributeManager implements AttributeManagerInterface
@@ -20,36 +19,20 @@ class AttributeManager implements AttributeManagerInterface
     protected $productManagementQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator
+     * @var \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface
      */
     protected $transferGenerator;
 
     /**
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface $transferGenerator
      */
     public function __construct(
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
-        ProductManagementToLocaleInterface $localeFacade
+        ProductAttributeTransferGeneratorInterface $transferGenerator
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator
-     */
-    protected function getTransferGenerator()
-    {
-        if ($this->transferGenerator === null) {
-            $this->transferGenerator = new ProductAttributeTransferGenerator();
-        }
-
-        return $this->transferGenerator;
+        $this->transferGenerator = $transferGenerator;
     }
 
     /**
@@ -62,7 +45,7 @@ class AttributeManager implements AttributeManagerInterface
             ->innerJoinSpyProductAttributeKey()
             ->find();
 
-        return $this->getTransferGenerator()->convertProductAttributeCollection($collection);
+        return $this->transferGenerator->convertProductAttributeCollection($collection);
     }
 
     /**
@@ -74,7 +57,7 @@ class AttributeManager implements AttributeManagerInterface
             ->queryProductManagementAttributeValue()
             ->find();
 
-        return $this->getTransferGenerator()->convertProductAttributeValueCollection($collection);
+        return $this->transferGenerator->convertProductAttributeValueCollection($collection);
     }
 
 }

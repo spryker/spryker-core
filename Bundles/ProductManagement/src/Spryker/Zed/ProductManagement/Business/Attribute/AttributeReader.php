@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
@@ -30,15 +28,23 @@ class AttributeReader implements AttributeReaderInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     */
+    protected $productAttributeTransferGenerator;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface $productAttributeTransferGenerator
      */
     public function __construct(
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
-        ProductManagementToLocaleInterface $localeFacade
+        ProductManagementToLocaleInterface $localeFacade,
+        ProductAttributeTransferGeneratorInterface $productAttributeTransferGenerator
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->productAttributeTransferGenerator = $productAttributeTransferGenerator;
     }
 
     /**
@@ -90,6 +96,23 @@ class AttributeReader implements AttributeReaderInterface
     }
 
     /**
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
+     */
+    public function getAttribute($idProductManagementAttribute)
+    {
+        $attributeEntity = $this->getAttributeEntity($idProductManagementAttribute);
+
+        if (!$attributeEntity) {
+            return null;
+        }
+
+        return $this->productAttributeTransferGenerator
+            ->convertProductAttribute($attributeEntity);
+    }
+
+    /**
      * @param string $searchText
      * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery $query
      *
@@ -107,28 +130,6 @@ class AttributeReader implements AttributeReaderInterface
                 ->_or()
                 ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, \PDO::PARAM_STR);
         }
-    }
-
-    /**
-     * @param int $idProductManagementAttribute
-     *
-     * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeTransfer[]
-     */
-    public function getLocalizedAttribute($idProductManagementAttribute)
-    {
-        $result = [];
-        $availableLocales = $this->localeFacade->getAvailableLocales();
-
-        $attributeEntity = $this->getAttributeEntity($idProductManagementAttribute);
-        foreach ($availableLocales as $idLocale => $localeName) {
-
-            $data = $attributeEntity->toArray();
-
-//            $localizedAttributeTransfer = (new LocalizedProductManagementAttributeTransfer())
-//                ->fromArray($attributeEntity->toArray(), true);
-        }
-
-        return $result;
     }
 
     /**
