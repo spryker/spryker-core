@@ -73,7 +73,6 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorI
         $totalSumGrossDiscountAmount = 0;
         foreach ($items as $itemTransfer) {
             $totalSumGrossDiscountAmount += $this->getProductOptionCalculatedDiscounts($itemTransfer);
-            ;
         }
 
         return $totalSumGrossDiscountAmount;

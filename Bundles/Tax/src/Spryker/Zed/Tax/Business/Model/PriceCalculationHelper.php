@@ -35,7 +35,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
             return $amount;
         }
 
-        return round($amount);
+        return (int) round($amount);
     }
 
     /**
@@ -62,7 +62,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
             return $amount;
         }
 
-        return round($amount);
+        return (int) round($amount);
     }
 
     /**
