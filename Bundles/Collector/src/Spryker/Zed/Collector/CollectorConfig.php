@@ -22,6 +22,7 @@ class CollectorConfig extends AbstractBundleConfig
     const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
     const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
     const COLLECTOR_SEARCH_KEY = 'collector_search_key';
+    const COLLECTOR_FILE_KEY = 'collector_file_key';
 
     const COLLECTOR_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
     const COLLECTOR_TYPE_CATEGORYNODE = 'categorynode';
@@ -149,6 +150,14 @@ class CollectorConfig extends AbstractBundleConfig
         $classMap = $this->getQueryToDbEngineClassMap();
 
         return $classMap[$this->getCurrentEngineName()];
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileExporterOutputDir()
+    {
+        return APPLICATION_ROOT_DIR;
     }
 
 }

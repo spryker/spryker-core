@@ -10,13 +10,17 @@ namespace Spryker\Zed\Collector\Business;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
+use Spryker\Zed\Collector\Business\Exporter\FileExporter;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
+use Spryker\Zed\Collector\Business\Exporter\Reader\File\FileReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
@@ -51,14 +55,25 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
+     */
+    public function createYvesFileExporter()
+    {
+        return new CollectorExporter(
+            $this->getTouchQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->createFileExporter(),
+            $this->getConfig()->getAvailableCollectorTypes()
+        );
+    }
+
+    /**
      * @deprecated Use getTouchQueryContainer() instead
      *
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected function createTouchQueryContainer()
     {
-        trigger_error('Deprecated, use getTouchQueryContainer() instead.', E_USER_DEPRECATED);
-
         return $this->getTouchQueryContainer();
     }
 
@@ -90,14 +105,75 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater()
+            $this->createExporterWriterStorageTouchUpdater(),
+            $this->getCollectorStorageExporterPlugins()
         );
 
-        foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
-            $storageExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
-        }
-
         return $storageExporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
+     */
+    protected function getCollectorStorageExporterPlugins()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
+     */
+    protected function createFileExporter()
+    {
+        $fileExporter = new FileExporter(
+            $this->getTouchQueryContainer(),
+            $this->createFileReader(),
+            $this->createFileWriter(),
+            $this->createStorageMarker(),
+            $this->createFailedResultModel(),
+            $this->createBatchResultModel(),
+            $this->createExporterWriterStorageTouchUpdater(),
+            $this->getCollectorFileExporterPlugins()
+        );
+
+        return $fileExporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter
+     */
+    public function createFileWriter()
+    {
+        $csvFileWriterAdapter = $this->createCsvFileWriterAdapter();
+        $fileWriter = new FileWriter($csvFileWriterAdapter);
+
+        return $fileWriter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\File\FileReader
+     */
+    public function createFileReader()
+    {
+        $fileReader = new FileReader();
+
+        return $fileReader;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter
+     */
+    protected function createCsvFileWriterAdapter()
+    {
+        return new CsvAdapter($this->getConfig()->getFileExporterOutputDir());
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
+     */
+    protected function getCollectorFileExporterPlugins()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::FILE_PLUGINS);
     }
 
     /**
@@ -220,14 +296,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterSearchTouchUpdater()
+            $this->createExporterWriterSearchTouchUpdater(),
+            $this->getCollectorSearchExporterPlugins()
         );
 
-        foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {
-            $searchExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
-        }
-
         return $searchExporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginCollectionInterface
+     */
+    protected function getCollectorSearchExporterPlugins()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS);
     }
 
     /**

@@ -38,6 +38,23 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Initiates export into a file
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportFile(OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesFileExporter();
+
+        return $exporter->exportStorage($output);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
