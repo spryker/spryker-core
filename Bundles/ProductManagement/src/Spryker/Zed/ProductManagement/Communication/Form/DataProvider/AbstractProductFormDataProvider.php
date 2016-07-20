@@ -287,9 +287,7 @@ class AbstractProductFormDataProvider
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributes);
-
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
             $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
             $valueDisabled = true;
@@ -323,7 +321,6 @@ class AbstractProductFormDataProvider
                     'product_specific' => true,
                     'label' => $this->getLocalizedAttributeMetadataKey($key),
                     'multiple' => $isMultiple,
-                    'localized' => false,
                     'input' => 'text',
                     'value_disabled' => true,
                     'name_disabled' => true,
