@@ -89,6 +89,16 @@ class BundleParser
     /**
      * @param string $bundle
      *
+     * @return bool
+     */
+    protected function isExistentBundle($bundle)
+    {
+        return is_dir($this->config->getBundleDirectory() . $bundle);
+    }
+
+    /**
+     * @param string $bundle
+     *
      * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     protected function findAllFilesOfBundle($bundle)
@@ -170,18 +180,25 @@ class BundleParser
                 continue;
             }
 
-            $filter = new UnderscoreToCamelCase();
-            $name = $filter->filter($matches[1]);
-            if ($name === $bundleName) {
+            $name = $matches[1];
+
+            $content = file_get_contents($file->getPathname());
+            preg_match_all('/\bforeignTable="spy\_(.+?)"/', $content, $tableMatches);
+
+            $tables = $tableMatches[1];
+            foreach ($tables as $key => $value) {
+                if (strpos($value, $name) === 0) {
+                    unset($tables[$key]);
+                }
+            }
+
+            if (!$tables) {
                 continue;
             }
 
-            if (!isset($bundleDependencies[$name])) {
-                $bundleDependencies[$name] = 1;
-                continue;
+            foreach ($tables as $table) {
+                $bundleDependencies = $this->checkForPersistenceLayerDependency($table, $bundleDependencies, $bundleName);
             }
-
-            $bundleDependencies[$name]++;
         }
 
         return $bundleDependencies;
@@ -310,17 +327,71 @@ class BundleParser
 
         foreach ($matches as $match) {
             $toBundle = ucfirst($match['bundle']);
-            if ($toBundle === $bundleName) {
-                continue;
-            }
 
-            if (!isset($dependencies[$toBundle])) {
-                $dependencies[$toBundle] = 0;
-            }
-            $dependencies[$toBundle]++;
+            $dependencies = $this->addDependency($toBundle, $dependencies, $bundleName);
         }
 
         return $dependencies;
+    }
+
+    /**
+     * @param string $table
+     * @param array $bundleDependencies
+     * @param string $currentBundle
+     *
+     * @return array
+     */
+    protected function checkForPersistenceLayerDependency($table, array $bundleDependencies, $currentBundle)
+    {
+        $filter = new UnderscoreToCamelCase();
+        $name = $filter->filter($table);
+
+        $existent = $this->isExistentBundle($name);
+        if ($existent) {
+            $bundleDependencies = $this->addDependency($name, $bundleDependencies, $currentBundle);
+            return $bundleDependencies;
+        }
+
+        $lastUnderscore = strrpos($table, '_');
+        while ($lastUnderscore) {
+            $table = substr($table, 0, $lastUnderscore);
+
+            $filter = new UnderscoreToCamelCase();
+            $name = $filter->filter($table);
+
+            $existent = $this->isExistentBundle($name);
+            if (!$existent) {
+                $lastUnderscore = strrpos($table, '_');
+                continue;
+            }
+
+            $this->addDependency($name, $bundleDependencies, $currentBundle);
+            break;
+        }
+
+        return $bundleDependencies;
+    }
+
+    /**
+     * @param string $name
+     * @param array $bundleDependencies
+     * @param string|null $currentBundleName
+     *
+     * @return array
+     */
+    protected function addDependency($name, array $bundleDependencies, $currentBundleName = null)
+    {
+        if ($currentBundleName !== null && $name === $currentBundleName) {
+            return $bundleDependencies;
+        }
+
+        if (!isset($bundleDependencies[$name])) {
+            $bundleDependencies[$name] = 0;
+        }
+
+        $bundleDependencies[$name]++;
+
+        return $bundleDependencies;
     }
 
 }
