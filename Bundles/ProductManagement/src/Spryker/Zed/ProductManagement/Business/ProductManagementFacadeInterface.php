@@ -109,7 +109,7 @@ interface ProductManagementFacadeInterface
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
+     * @return array
      */
     public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
 
@@ -120,7 +120,7 @@ interface ProductManagementFacadeInterface
      * @param int $idLocale
      * @param string $searchText
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
+     * @return int
      */
     public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
 

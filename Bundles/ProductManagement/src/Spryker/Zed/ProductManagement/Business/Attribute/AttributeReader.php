@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
+use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
@@ -46,7 +48,7 @@ class AttributeReader implements AttributeReaderInterface
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
+     * @return array
      */
     public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
     {
@@ -56,9 +58,15 @@ class AttributeReader implements AttributeReaderInterface
         $this->updateQuerySearchTextConditions($searchText, $query);
 
         $results = [];
-        foreach ($query->find() as $attributeValueTranslation) {
-            $results[] = (new ProductManagementAttributeValueTranslationTransfer())
-                ->fromArray($attributeValueTranslation->toArray(), true);
+        foreach ($query->find() as $attributeEntity) {
+            $data = $attributeEntity->toArray();
+            $title = trim($data['translation']);
+            $title = ($title === '') ? $attributeEntity->getValue() : $title;
+
+            $results[] = [
+                'id' => $attributeEntity->getIdProductManagementAttributeValue(),
+                'text' => $title
+            ];
         }
 
         return $results;
@@ -69,7 +77,7 @@ class AttributeReader implements AttributeReaderInterface
      * @param int $idLocale
      * @param string $searchText
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer[]
+     * @return int
      */
     public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
     {

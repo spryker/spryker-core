@@ -229,13 +229,8 @@ class AttributesController extends AbstractController
         $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
         $total = $this->getFacade()->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale);
 
-        $attributeValueTranslationTransfers = $this->getFacade()
+        $values = $this->getFacade()
             ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText);
-
-        $values = [];
-        foreach ($attributeValueTranslationTransfers as $attributeValueTranslationTransfer) {
-            $values[] = $attributeValueTranslationTransfer->toArray();
-        }
 
         return $this->jsonResponse([
             'id_attribute' => $idProductManagementAttribute,
