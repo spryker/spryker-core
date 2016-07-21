@@ -137,4 +137,17 @@ interface ProductManagementFacadeInterface
      */
     public function getProductManagementAttribute($idProductManagementAttribute);
 
+    /**
+     * Specification:
+     * - Returns a filtered list of keys that are in spy_product_attribute_key table but not in spy_product_management_attribute_key table
+     *
+     * @api
+     *
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10);
+
 }

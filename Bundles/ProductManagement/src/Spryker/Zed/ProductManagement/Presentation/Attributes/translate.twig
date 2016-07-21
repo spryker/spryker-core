@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Attribute' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Translate Attribute #' ~ app.request.query.get('id') } %}
         {% block widget_content %}
             {{ form_start(form) }}
 

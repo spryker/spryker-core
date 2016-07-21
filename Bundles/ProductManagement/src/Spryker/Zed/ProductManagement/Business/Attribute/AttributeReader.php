@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 class AttributeReader implements AttributeReaderInterface
 {
@@ -142,6 +144,29 @@ class AttributeReader implements AttributeReaderInterface
         return $this->productManagementQueryContainer
             ->queryProductManagementAttribute()
             ->findOneByIdProductManagementAttribute($idProductManagementAttribute);
+    }
+
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestUnusedKeys($searchText = '', $limit = 10)
+    {
+        $query = $this->productManagementQueryContainer
+            ->queryUnusedProductAttributeKeys()
+            ->limit($limit)
+            ->setFormatter(new PropelArraySetFormatter());
+
+        $searchText = trim($searchText);
+        if ($searchText !== '') {
+            $term = '%' . mb_strtoupper($searchText) . '%';
+
+            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, \PDO::PARAM_STR);
+        }
+
+        return $query->find();
     }
 
 }
