@@ -10,9 +10,10 @@ namespace Spryker\Shared\Library\Currency;
 use Spryker\Shared\Kernel\Store;
 
 /**
+ * @deprecated Use Money and Currency Bundle instead
+ *
  * This class is the central math class for currency arithmetic operations
  */
-
 class CurrencyManager implements CurrencyManagerInterface
 {
 

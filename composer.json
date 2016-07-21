@@ -234,6 +234,14 @@
       "Unit\\Spryker\\Shared\\Messenger\\": "Bundles/Messenger/tests",
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
+
+      "Spryker\\Shared\\Money\\": "Bundles/Money/src",
+      "Spryker\\Yves\\Money\\": "Bundles/Money/src",
+      "Spryker\\Zed\\Money\\": "Bundles/Money/src",
+      "Unit\\Spryker\\Shared\\Money\\": "Bundles/Money/tests",
+      "Unit\\Spryker\\Yves\\Money\\": "Bundles/Money/tests",
+      "Unit\\Spryker\\Zed\\Money\\": "Bundles/Money/tests",
+
       "Spryker\\Shared\\NewRelic\\": "Bundles/NewRelic/src",
       "Spryker\\Zed\\NewRelic\\": "Bundles/NewRelic/src",
       "Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/src",
