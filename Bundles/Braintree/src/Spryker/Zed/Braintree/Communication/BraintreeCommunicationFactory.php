@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Braintree\Communication;
 
-use Spryker\Zed\Braintree\BraintreeDependencyProvider;
 use Spryker\Zed\Braintree\Communication\Table\Payments;
 use Spryker\Zed\Braintree\Communication\Table\RequestLog;
 use Spryker\Zed\Braintree\Communication\Table\StatusLog;

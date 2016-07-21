@@ -11,6 +11,7 @@
     }
   },
   "require": {
+    "spryker/console": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/locale": "^2.0.0",
