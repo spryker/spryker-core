@@ -118,6 +118,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         if ($totalSumDiscountAmount > $itemTransfer->getSumGrossPrice()) {
             $totalSumDiscountAmount = $itemTransfer->getSumGrossPrice();
         }
+
         $itemTransfer->setSumTotalDiscountAmount($totalSumDiscountAmount);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
     }

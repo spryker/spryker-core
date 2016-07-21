@@ -43,7 +43,29 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $discountTotalsCalculator->recalculate($quoteTransfer);
 
-        $this->assertEquals(80, $quoteTransfer->getTotals()->getDiscountTotal());
+        $this->assertSame(80, $quoteTransfer->getTotals()->getDiscountTotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateTotalsWhenDiscountIsMoreThanItemAmountShouldNotGoOverItemAmount()
+    {
+        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
+
+        $calculatedDiscountFixtures = $this->getCalculatedDiscountFixtures();
+
+        $calculatedDiscountFixtures[0]['unitGrossAmount'] = 1000;
+        $calculatedDiscountFixtures[1]['unitGrossAmount'] = 1000;
+
+        $quoteTransfer = $this->createQuoteTransferWithFixtureData(
+            self::ITEM_QUANTITY,
+            $calculatedDiscountFixtures
+        );
+
+        $discountTotalsCalculator->recalculate($quoteTransfer);
+
+        $this->assertSame(1200, $quoteTransfer->getTotals()->getDiscountTotal());
     }
 
     /**

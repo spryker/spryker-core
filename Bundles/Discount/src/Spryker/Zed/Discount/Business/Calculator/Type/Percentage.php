@@ -44,7 +44,7 @@ class Percentage implements CalculatorInterface
             return 0;
         }
 
-        return (int) round($discountAmount);
+        return (int)round($discountAmount);
     }
 
     /**

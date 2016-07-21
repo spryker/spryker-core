@@ -342,6 +342,10 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
                 $productOptionTransfer->getCalculatedDiscounts()
             );
 
+            if ($productOptionUnitDiscountAmount > $productOptionTransfer->getUnitGrossPrice()) {
+                $productOptionUnitDiscountAmount = $productOptionTransfer->getUnitGrossPrice();
+            }
+
             $productOptionTransfer->setUnitGrossPriceWithDiscounts(
                 $productOptionTransfer->getUnitGrossPrice() - $productOptionUnitDiscountAmount
             );
@@ -365,6 +369,10 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
             $productOptionSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
+
+            if ($productOptionSumDiscountAmount > $productOptionTransfer->getSumGrossPrice()) {
+                $productOptionSumDiscountAmount = $productOptionTransfer->getSumGrossPrice();
+            }
 
             $productOptionTransfer->setSumGrossPriceWithDiscounts(
                 $productOptionTransfer->getSumGrossPrice() - $productOptionSumDiscountAmount

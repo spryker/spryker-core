@@ -25,7 +25,7 @@ class OrderDiscountTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $orderDiscountAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(500, $orderTransfer->getCalculatedDiscounts()['test']->getSumGrossAmount());
+        $this->assertSame(500, $orderTransfer->getCalculatedDiscounts()['test']->getSumGrossAmount());
     }
 
     /**
