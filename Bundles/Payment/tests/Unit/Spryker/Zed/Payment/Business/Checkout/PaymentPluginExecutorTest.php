@@ -15,7 +15,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
-use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
@@ -66,21 +65,6 @@ class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $paymentPluginExecutor->executePostCheckPlugin($quoteTransfer, $checkoutResponseTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testOrderSaverShouldThrowExceptionWhenNonExistantProviderUsed()
-    {
-        $this->setExpectedException(CheckoutPluginNotFoundException::class);
-
-        $paymentPluginExecutor = $this->createPaymentPluginExecutor(null, null, null);
-        $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->getPayment()->setPaymentProvider('non existant provider');
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-
-        $paymentPluginExecutor->executeOrderSaverPlugin($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

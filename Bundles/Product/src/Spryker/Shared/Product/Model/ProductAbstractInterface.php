@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Product\Model;
 
 /**
- * @deprecated Will be removed in the next major version. Please use Transfer objects instead.
+ * //TODO: Will be removed in the next major version. Please use Transfer objects instead.
  */
 interface ProductAbstractInterface
 {

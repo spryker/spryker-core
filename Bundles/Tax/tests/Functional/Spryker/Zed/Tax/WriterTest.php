@@ -235,16 +235,6 @@ class WriterTest extends Test
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToCreateTaxSetWithoutAnyTaxRates()
-    {
-        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
-
-        $this->taxFacade->createTaxSet($this->createTaxSetTransfer());
-    }
-
-    /**
-     * @return void
-     */
     public function testExceptionRaisedIfAttemptingToUpdateNonExistentTaxRate()
     {
         $taxRateTransfer = $this->createTaxRateTransfer();

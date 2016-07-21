@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Library\Twig;
 
+/**
+ * @deprecated Use Twig bundle instead.
+ */
 abstract class TwigFilter extends \Twig_SimpleFilter
 {
 

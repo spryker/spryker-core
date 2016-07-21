@@ -17,7 +17,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
 {
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -31,7 +33,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Reads order from database and stores in order transfer
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -45,7 +49,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     *  Specification:
+     *  - Use existing OrderTransfer instead fo quering database
+     *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
      *
@@ -59,7 +65,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Iterate order exepenses and sum up amounts
      *
      * @api
      *
@@ -73,7 +80,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     *  Specification:
+     *  - Sum up expenses and subtotals
      *
      * @api
      *
@@ -87,7 +95,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Sum up item amounts before discounts
      *
      * @api
      *
@@ -101,7 +110,9 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     *
+     * Specification:
+     *  - Sum up order subtotal
      *
      * @api
      *
@@ -115,7 +126,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Calculate item tax amount
      *
      * @api
      *
@@ -129,7 +141,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Calculate order total tax amount
      *
      * @api
      *
@@ -143,7 +156,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     * TODO FW Move to own bundle and add description
+     * Specification:
+     *  - Calculate order expense tax amount
      *
      * @api
      *

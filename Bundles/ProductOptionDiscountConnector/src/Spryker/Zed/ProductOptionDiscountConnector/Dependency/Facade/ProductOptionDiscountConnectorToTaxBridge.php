@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade;
 
-class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxBridgeInterface
+class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxInterface
 {
 
     /**
@@ -32,6 +32,27 @@ class ProductOptionDiscountConnectorToTaxBridge implements ProductOptionToTaxBri
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
         return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->taxFacade->getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    }
+
+    /**
+     * @return void
+     */
+    public function resetAccruedTaxCalculatorRoundingErrorDelta()
+    {
+        $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
     }
 
 }

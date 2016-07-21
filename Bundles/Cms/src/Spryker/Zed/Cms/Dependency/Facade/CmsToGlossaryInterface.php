@@ -95,6 +95,14 @@ interface CmsToGlossaryInterface
     public function touchCurrentTranslationForKeyId($idKey);
 
     /**
+     * @param int $idKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
+
+    /**
      * @param string $keyName
      *
      * @return int

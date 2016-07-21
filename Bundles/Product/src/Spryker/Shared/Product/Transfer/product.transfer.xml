@@ -22,6 +22,8 @@
         <property name="attributes" type="array" singular="attribute" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />
+        <property name="taxRate" type="float" />
+        <property name="productImagesSets" type="ProductImageSet[]" singular="productImageSet" />
         <property name="taxSetId" type="int" />
     </transfer>
 
@@ -45,6 +47,12 @@
     <transfer name="ProductAttributeKey">
         <property name="idProductAttributeKey" type="int" />
         <property name="key" type="string" />
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

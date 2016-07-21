@@ -329,7 +329,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Pyz\Yves\Application\Business\Model\FlashMessengerInterface
+     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
     private function getFlashMessenger()
     {

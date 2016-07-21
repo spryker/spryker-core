@@ -1,5 +1,7 @@
 # ItemGrouperWishlistConnector Bundle
 
+**This bundle is not continued at this point.**
+
 ## Installation
 
 ```
@@ -8,4 +10,4 @@ composer require spryker/item-grouper-wishlist-connector
 
 ## Documentation
 
-[ItemGrouperWishlistConnector Documentation](http://spryker.github.io/core/bundles/item-grouper-wishlist-connector)
+[Documentation](http://spryker.github.io)

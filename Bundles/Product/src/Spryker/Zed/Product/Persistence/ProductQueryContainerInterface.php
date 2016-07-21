@@ -17,18 +17,6 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Not used. Will be removed in the next major release.
-     *
-     * @param string $skus
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function getProductWithAttributeQuery($skus, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
      * @param string $concreteSku
      * @param int $idLocale
      *

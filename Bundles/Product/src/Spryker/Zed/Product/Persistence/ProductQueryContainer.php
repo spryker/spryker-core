@@ -29,40 +29,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @api
      *
-     * @deprecated Not used. Will be removed in the next ajor release.
-     *
-     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
-     *
-     * @param string $skus
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function getProductWithAttributeQuery($skus, LocaleTransfer $locale)
-    {
-        $query = $this->getFactory()->createProductQuery();
-        if (is_array($skus)) {
-            $query->filterBySku($skus, Criteria::IN);
-        } else {
-            $query->filterBySku($skus);
-        }
-        $query->useSpyProductLocalizedAttributesQuery()
-                    ->filterByFkLocale($locale->getIdLocale())
-                ->endUse()
-
-            ->addSelectColumn(SpyProductTableMap::COL_SKU)
-            ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
-            ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_NAME)
-            ->addAsColumn('sku', SpyProductTableMap::COL_SKU)
-            ->addAsColumn('attributes', SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
-            ->addAsColumn('name', SpyProductLocalizedAttributesTableMap::COL_NAME);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
      * @param string $concreteSku
      * @param int $idLocale
      *

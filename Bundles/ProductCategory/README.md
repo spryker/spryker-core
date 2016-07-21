@@ -8,4 +8,4 @@ composer require spryker/product-category
 
 ## Documentation
 
-[ProductCategory Documentation](http://spryker.github.io/core/bundles/product-category)
+[Documentation](http://spryker.github.io)

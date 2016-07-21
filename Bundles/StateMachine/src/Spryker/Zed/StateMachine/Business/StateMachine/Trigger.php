@@ -264,8 +264,9 @@ class Trigger implements TriggerInterface
                 continue;
             }
 
-            $this->transitionLog->setEvent($event);
             $commandPlugin = $this->getCommand($event->getCommand(), $stateMachineItemTransfer->getStateMachineName());
+
+            $this->transitionLog->addCommand($stateMachineItemTransfer, $commandPlugin);
 
             try {
                 $commandPlugin->run($stateMachineItemTransfer);
@@ -298,6 +299,10 @@ class Trigger implements TriggerInterface
             );
 
             $sourceState = $process->getStateFromAllProcesses($stateName);
+
+            $event = $sourceState->getEvent($eventName);
+            $this->transitionLog->setEvent($event);
+
             $this->transitionLog->addSourceState($stateMachineItemTransfer, $sourceState->getName());
 
             $targetState = $sourceState;

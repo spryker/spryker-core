@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons;
 
-use Spryker\Zed\Library\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunction;
 
 abstract class AbstractButtonFunction extends TwigFunction
 {
@@ -28,7 +28,6 @@ abstract class AbstractButtonFunction extends TwigFunction
     protected function getFunction()
     {
         return function ($url, $title, $options = []) {
-
             $options[ButtonUrlGenerator::ICON] = $this->getIcon();
             $options[ButtonUrlGenerator::BUTTON_CLASS] = $this->getButtonClass();
             $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;

@@ -70,8 +70,6 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
         $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
-
-        $this->assertEquals('15', $productOptionTransfer->getTaxRate());
     }
 
 }

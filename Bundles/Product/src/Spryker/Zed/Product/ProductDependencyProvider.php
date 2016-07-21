@@ -22,7 +22,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT_CATEGORY = 'facade product category';
     const FACADE_PRODUCT_OPTION = 'facade product option';
-    const QUERY_CONTAINER_PRODUCT = 'query container product';
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'query container product category';
 
     /**
@@ -64,13 +63,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_URL] = function (Container $container) {
             return new ProductToUrlBridge($container->getLocator()->url()->facade());
-        };
-
-        /**
-         * @deprecated Use getQueryContainer() directly for the own bundle's query container
-         */
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {

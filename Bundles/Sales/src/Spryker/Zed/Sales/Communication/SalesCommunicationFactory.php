@@ -82,7 +82,10 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAddressFormDataProvider()
     {
-        return new AddressFormDataProvider($this->getQueryContainer());
+        return new AddressFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getCountryFacade()
+        );
     }
 
     /**
@@ -114,6 +117,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getUserFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
+     */
+    public function getCountryFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY);
     }
 
     /**

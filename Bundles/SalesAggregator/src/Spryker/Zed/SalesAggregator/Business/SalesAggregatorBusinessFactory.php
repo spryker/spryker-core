@@ -105,11 +105,11 @@ class SalesAggregatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderTaxAmountAggregator()
     {
-        return new OrderTaxAmount($this->getTaxFacade());
+        return new OrderTaxAmount();
     }
 
     /**
-     * @return \Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount
+     * @return \Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ExpenseTax
      */
     public function createOrderExpenseTaxAmountAggregator()
     {
