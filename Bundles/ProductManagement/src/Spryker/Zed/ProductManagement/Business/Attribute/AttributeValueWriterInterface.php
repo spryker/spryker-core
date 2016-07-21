@@ -15,7 +15,7 @@ interface AttributeValueWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function saveProductAttributeValues(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
 

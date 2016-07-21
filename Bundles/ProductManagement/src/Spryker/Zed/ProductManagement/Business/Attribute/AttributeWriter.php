@@ -75,7 +75,7 @@ class AttributeWriter implements AttributeWriterInterface
             $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
             $productManagementAttributeTransfer = $this->createProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
             $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
-            $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
+            $productManagementAttributeTransfer = $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
 
             $this->productManagementQueryContainer
                 ->getConnection()
@@ -111,7 +111,7 @@ class AttributeWriter implements AttributeWriterInterface
             $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
             $productManagementAttributeTransfer = $this->updateProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
             $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
-            $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
+            $productManagementAttributeTransfer = $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
 
             $this->productManagementQueryContainer
                 ->getConnection()

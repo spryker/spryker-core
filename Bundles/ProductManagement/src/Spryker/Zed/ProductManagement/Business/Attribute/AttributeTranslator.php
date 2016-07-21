@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
@@ -65,13 +66,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
             ->beginTransaction();
 
         try {
-            foreach ($attributeTransfer->getLocalizedKeys() as $localizedAttributeKeyTransfer) {
-                $localizedAttributeKeyTransfer->requireLocaleName();
-                $localeTransfer = $this->localeFacade->getLocale($localizedAttributeKeyTransfer->getLocaleName());
-
-                $this->saveAttributeNameToGlossary($attributeTransfer->getKey(), $localizedAttributeKeyTransfer->getKeyTranslation(), $localeTransfer);
-            }
-
+            $this->saveAttributeKeyTranslations($attributeTransfer);
             $this->resetAttributeValueTranslations($attributeTransfer->getIdProductManagementAttribute());
             $this->saveAttributeValueTranslations($attributeTransfer->getValues());
 
@@ -89,13 +84,38 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
+     * @param string $attributeName
+     *
+     * @return string
+     */
+    protected function generateAttributeGlossaryKey($attributeName)
+    {
+        return ProductManagementConstants::PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX . $attributeName;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
+     *
+     * @return void
+     */
+    protected function saveAttributeKeyTranslations(ProductManagementAttributeTransfer $attributeTransfer)
+    {
+        foreach ($attributeTransfer->getLocalizedKeys() as $localizedAttributeKeyTransfer) {
+            $localizedAttributeKeyTransfer->requireLocaleName();
+            $localeTransfer = $this->getLocaleByName($localizedAttributeKeyTransfer->getLocaleName());
+
+            $this->saveAttributeKeyToGlossary($attributeTransfer->getKey(), $localizedAttributeKeyTransfer->getKeyTranslation(), $localeTransfer);
+        }
+    }
+
+    /**
      * @param string $key
      * @param string $keyTranslation
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function saveAttributeNameToGlossary($key, $keyTranslation, LocaleTransfer $localeTransfer)
+    protected function saveAttributeKeyToGlossary($key, $keyTranslation, LocaleTransfer $localeTransfer)
     {
         $attributeGlossaryKey = $this->generateAttributeGlossaryKey($key);
 
@@ -119,16 +139,6 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param string $attributeName
-     *
-     * @return string
-     */
-    protected function generateAttributeGlossaryKey($attributeName)
-    {
-        return ProductManagementConstants::PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX . $attributeName;
-    }
-
-    /**
      * @param int $idProductManagementAttribute
      *
      * @return void
@@ -142,7 +152,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]|ArrayObject $attributeValueTransfers
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]|\ArrayObject $attributeValueTransfers
      *
      * @return void
      */
@@ -152,23 +162,44 @@ class AttributeTranslator implements AttributeTranslatorInterface
             $attributeValueTransfer->requireIdProductManagementAttributeValue();
 
             foreach ($attributeValueTransfer->getLocalizedValues() as $localizedAttributeValueTransfer) {
-                $translation = trim($localizedAttributeValueTransfer->getTranslation());
-
-                if ($translation === '') {
-                    continue;
-                }
-
-                $localizedAttributeValueTransfer->requireFkLocale();
-
-                $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
-                $attributeValueTranslationEntity
-                    ->setFkLocale($localizedAttributeValueTransfer->getFkLocale())
-                    ->setFkProductManagementAttributeValue($attributeValueTransfer->getIdProductManagementAttributeValue())
-                    ->setTranslation($translation);
-
-                $attributeValueTranslationEntity->save();
+                $this->saveAttributeValueTranslation($attributeValueTransfer->getIdProductManagementAttributeValue(), $localizedAttributeValueTransfer);
             }
         }
+    }
+
+    /**
+     * @param int $idProductManagementAttributeValue
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer $localizedAttributeValueTransfer
+     *
+     * @return void
+     */
+    protected function saveAttributeValueTranslation($idProductManagementAttributeValue, ProductManagementAttributeValueTranslationTransfer $localizedAttributeValueTransfer)
+    {
+        $translation = trim($localizedAttributeValueTransfer->getTranslation());
+
+        if ($translation === '') {
+            return;
+        }
+
+        $localizedAttributeValueTransfer->requireFkLocale();
+
+        $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+        $attributeValueTranslationEntity
+            ->setFkLocale($localizedAttributeValueTransfer->getFkLocale())
+            ->setFkProductManagementAttributeValue($idProductManagementAttributeValue)
+            ->setTranslation($translation);
+
+        $attributeValueTranslationEntity->save();
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return LocaleTransfer
+     */
+    protected function getLocaleByName($localeName)
+    {
+        return $this->localeFacade->getLocale($localeName);
     }
 
 }

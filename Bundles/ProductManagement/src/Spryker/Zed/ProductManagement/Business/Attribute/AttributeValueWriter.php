@@ -33,7 +33,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
      *
      * @throws \Exception
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function saveProductAttributeValues(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
     {
@@ -68,6 +68,8 @@ class AttributeValueWriter implements AttributeValueWriterInterface
 
             throw $e;
         }
+
+        return $productManagementAttributeTransfer;
     }
 
     /**
@@ -102,6 +104,8 @@ class AttributeValueWriter implements AttributeValueWriterInterface
         $attributeValueEntity->fromArray($attributeValueTransfer->toArray());
 
         $attributeValueEntity->save();
+
+        $attributeValueTransfer->setIdProductManagementAttributeValue($attributeValueEntity->getIdProductManagementAttributeValue());
     }
 
     /**
