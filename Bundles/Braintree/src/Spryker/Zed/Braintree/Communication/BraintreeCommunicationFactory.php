@@ -54,20 +54,4 @@ class BraintreeCommunicationFactory extends AbstractCommunicationFactory
         return new StatusLog($statusLogQuery, $idPayment);
     }
 
-    /**
-     * @return \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToGlossaryInterface
-     */
-    public function getGlossaryFacade()
-    {
-        return $this->getProvidedDependency(BraintreeDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
-     * @return \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToSalesAggregatorInterface
-     */
-    public function getSalesAggregator()
-    {
-        return $this->getProvidedDependency(BraintreeDependencyProvider::FACADE_SALES_AGGREGATOR);
-    }
-
 }

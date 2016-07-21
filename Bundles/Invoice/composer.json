@@ -10,7 +10,7 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {
+  "require-dev": {
     "spryker/library": "^2.0.0"
   },
   "description": "Invoice bundle",

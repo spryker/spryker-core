@@ -14,8 +14,6 @@ use Spryker\Zed\Kernel\Container;
 class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_SALES_AGGREGATOR = 'sales aggregor facade';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -23,10 +21,6 @@ class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new BraintreeToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
-        };
-
         return $container;
     }
 

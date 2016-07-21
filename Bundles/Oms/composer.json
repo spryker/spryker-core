@@ -11,7 +11,6 @@
     "spryker/application": "^2.0.0",
     "spryker/console": "^2.0.0",
     "spryker/country": "^2.0.0",
-    "spryker/customer": "^2.0.0",
     "spryker/graph": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.4.3",
