@@ -85,19 +85,6 @@ interface CollectorFacadeInterface
     public function getSearchDocumentType();
 
     /**
-     * Specification:
-     * - Composes filename for given collector type
-     *
-     * @api
-     *
-     * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return string
-     */
-    public function getCsvFileName($type, LocaleTransfer $locale);
-
-    /**
      * @api
      *
      * @param array $keys

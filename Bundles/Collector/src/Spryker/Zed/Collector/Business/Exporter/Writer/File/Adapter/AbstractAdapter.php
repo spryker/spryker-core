@@ -55,6 +55,14 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\FileWriterException
      *
      * @return string

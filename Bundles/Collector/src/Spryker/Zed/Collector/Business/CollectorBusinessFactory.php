@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\CollectorExporter;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
@@ -21,6 +22,8 @@ use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\StorageExporter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter\CsvAdapter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGenerator;
+use Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGeneratorBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
@@ -133,7 +136,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
             $this->createExporterWriterStorageTouchUpdater(),
-            $this->getCollectorFileExporterPlugins()
+            $this->getCollectorFileExporterPlugins(),
+            $this->createCsvNameGeneratorBuilder()
         );
 
         return $fileExporter;
@@ -158,6 +162,25 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $fileReader = new FileReader();
 
         return $fileReader;
+    }
+
+    /**
+     * @param string $type
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGenerator
+     */
+    public function createCsvNameGenerator($type, LocaleTransfer $localeTransfer)
+    {
+        return new CsvNameGenerator($type, $localeTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator\CsvNameGeneratorBuilder
+     */
+    public function createCsvNameGeneratorBuilder()
+    {
+        return new CsvNameGeneratorBuilder();
     }
 
     /**

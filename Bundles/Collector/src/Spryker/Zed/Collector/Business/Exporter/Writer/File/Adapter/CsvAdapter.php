@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\File\Adapter;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class CsvAdapter extends AbstractAdapter
 {
 

@@ -13,6 +13,14 @@ interface FactFinderStubInterface
 {
 
     /**
+     * @param string $locale
+     * @param string $type
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getExportedCsv($locale, $type);
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\FfSearchResponseTransfer

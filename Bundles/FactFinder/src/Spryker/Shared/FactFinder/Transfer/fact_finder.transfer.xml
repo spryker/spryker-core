@@ -71,4 +71,10 @@
         <property name="temp" type="string"/>
     </transfer>
 
+    <transfer name="FactFinderCsv">
+        <property name="locale" type="string" />
+        <property name="type" type="string" />
+        <property name="contents" type="string" />
+    </transfer>
+
 </transfer>

@@ -14,6 +14,7 @@ class FactFinderControllerProvider extends AbstractYvesControllerProvider
 {
 
     const ROUTE_FACT_FINDER = 'fact-finder';
+    const FACT_FINDER_CSV_PATH = 'fact_finder/csv/';
 
     /**
      * @param \Silex\Application $app
@@ -25,7 +26,16 @@ class FactFinderControllerProvider extends AbstractYvesControllerProvider
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
         $this->createController('/{factfinder}', self::ROUTE_FACT_FINDER, 'FactFinder', 'Index', 'index')
-            ->assert('factfinder', $allowedLocalesPattern . 'fact-finder');
+            ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder');
+
+        $this->createController('/{factfinder}/csv/products.csv', self::FACT_FINDER_CSV_PATH . 'products', 'FactFinder', 'csv', 'products')
+            ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder')
+            ->value('fact-finder', 'fact-finder');
+
+        $this->createController('/{factfinder}/csv/categories.csv', self::FACT_FINDER_CSV_PATH . 'categories', 'FactFinder', 'csv', 'categories')
+            ->assert('factfinder', $allowedLocalesPattern . 'fact-finder|fact-finder')
+            ->value('fact-finder', 'fact-finder');
+
     }
 
 }

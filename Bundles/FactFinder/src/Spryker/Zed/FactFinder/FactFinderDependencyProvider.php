@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Container;
 class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+    const COLLECTOR_FACADE = 'collector facade';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -21,6 +23,18 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::COLLECTOR_FACADE] = function (Container $container) {
+            return $container->getLocator()->collector()->facade();
+        };
     }
 
 }

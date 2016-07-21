@@ -16,6 +16,31 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
 {
 
     /**
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getProductCsv($locale)
+    {
+        return $this->getFactory()
+            ->createZedFactFinderStub()
+            ->getExportedCsv($locale, 'product_abstract');
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getCategoryCsv($locale)
+    {
+        return $this->getFactory()
+            ->createZedFactFinderStub()
+            ->getExportedCsv($locale, 'categorynode');
+    }
+
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\FfSearchResponseTransfer

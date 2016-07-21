@@ -11,6 +11,20 @@ interface FactFinderClientInterface
 {
 
     /**
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getProductCsv($locale);
+
+    /**
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getCategoryCsv($locale);
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\FfSearchResponseTransfer

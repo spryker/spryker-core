@@ -17,6 +17,11 @@ interface AdapterInterface
     public function setFileName($fileName);
 
     /**
+     * @return string
+     */
+    public function getFileName();
+
+    /**
      * @param array $dataSet
      * @param string $type
      *

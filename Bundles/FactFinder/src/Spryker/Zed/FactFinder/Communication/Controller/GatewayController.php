@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FactFinder\Communication\Controller;
 
+use Generated\Shared\Transfer\FactFinderCsvTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -26,6 +27,21 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->search($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FactFinderCsvTransfer $csvTransfer
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getFactFinderCsvAction(FactFinderCsvTransfer $csvTransfer)
+    {
+        return $csvTransfer->setContents(
+            $this->getFacade()->getFactFinderCsv(
+                $csvTransfer->getLocale(),
+                $csvTransfer->getType()
+            )
+        );
     }
 
 }

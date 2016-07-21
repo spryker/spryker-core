@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\FactFinder\Zed;
 
+use Generated\Shared\Transfer\FactFinderCsvTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -24,6 +25,19 @@ class FactFinderStub implements FactFinderStubInterface
     public function __construct(ZedRequestClient $zedStub)
     {
         $this->zedStub = $zedStub;
+    }
+
+    /**
+     * @param string $locale
+     * @param string $type
+     *
+     * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
+     */
+    public function getExportedCsv($locale, $type)
+    {
+        $factFinderTransfer = new FactFinderCsvTransfer();
+        $factFinderTransfer->setType($type)->setLocale($locale);
+        return $this->zedStub->call('/fact-finder/gateway/get-fact-finder-csv', $factFinderTransfer);
     }
 
     /**

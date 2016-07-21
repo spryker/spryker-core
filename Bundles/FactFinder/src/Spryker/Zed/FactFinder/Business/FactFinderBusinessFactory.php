@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\FactFinder\Business;
 
+use Spryker\Shared\Library\Reader\Csv\CsvReader;
 use Spryker\Zed\FactFinder\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Zed\FactFinder\Business\Api\Handler\Request\SearchRequest;
+use Spryker\Zed\FactFinder\FactFinderDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -44,6 +46,24 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     protected function createConverterFactory()
     {
         return new ConverterFactory();
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Reader\Csv\CsvReader
+     */
+    public function createFileReader()
+    {
+        return new CsvReader();
+    }
+
+    /**
+     * @return mixed
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getCollectorFacade()
+    {
+        return $this->getProvidedDependency(FactFinderDependencyProvider::COLLECTOR_FACADE);
     }
 
 }

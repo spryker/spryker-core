@@ -37,6 +37,13 @@ class FileWriter implements FileWriterInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileWriterAdapter->getFileName();
+    }
 
     /**
      * @param array $dataSet
