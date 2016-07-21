@@ -44,6 +44,8 @@ class Refund implements RefundInterface
     }
 
     /**
+     * This is just a fake method, in a normal environment you would call your facade and trigger the refund process.
+     *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return bool

@@ -27,7 +27,7 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
             if ($this->shouldItemRefunded($itemTransfer, $salesOrderItems)) {
                 $refundTransfer->addItem($itemTransfer);
             } else {
-                $refundedItemAmount += $itemTransfer->getRefundableAmount();
+                $refundedItemAmount += (int)$itemTransfer->getRefundableAmount();
             }
         }
 
