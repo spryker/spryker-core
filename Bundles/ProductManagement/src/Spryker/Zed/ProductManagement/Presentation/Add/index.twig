@@ -110,9 +110,9 @@
                                     {% block tabContentRow %}
                                         <div class="panel-body">
                                             <div class="well">
-                                                <div class="row" style="padding-right: 20px !important;">
+                                                <div class="row">
                                                     {% for input in form[formKey] %}
-                                                        <div class="col-md-10 col-sm-12 col-lg-4">
+                                                        <div class="col-md-10 col-sm-12 col-lg-6">
                                                             <div class="row vertical-align attribute_metadata_row col-lg-12">
                                                                 <div class="pull-right"><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }}</nobr></div>
                                                             </div>
@@ -139,7 +139,7 @@
                 <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
 
                 <div class="well">
-                    <div class="row" style="padding-right: 20px !important;">
+                    <div class="row">
                         {% for input in form.attribute_variant %}
                             <div class="col-md-10 col-sm-12 col-lg-6">
                                 <div class="row vertical-align attribute_metadata_row col-lg-12">

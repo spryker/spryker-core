@@ -23,7 +23,7 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
         $config = $this->getValueFieldConfig($name, $attributes);
-        $isMultiple = $attributes[$name][self::MULTIPLE];
+
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
 
         $input = new Select2ComboBoxType();

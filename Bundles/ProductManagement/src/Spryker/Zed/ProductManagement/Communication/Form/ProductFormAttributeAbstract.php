@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -147,23 +148,31 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
-        $config = $this->getValueFieldConfig($name, $attributes);
 
-        $input = $attributes[$name][self::INPUT];
+        $inputType = $attributes[$name][self::INPUT];
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
         $isMultiple = $attributes[$name][self::MULTIPLE];
+
+        $inputManager = new AttributeInputManager();
+        $input = $inputManager->getSymfonyInputType($inputType);
+        $config = $this->getValueFieldConfig($name, $attributes);
+        $config['attr']['style'] .= ' width: 250px';
 
         if (strtolower($input) === 'select2') {
             $input = new Select2ComboBoxType();
         }
 
+        $config['attr']['class'] .= ' ajax';
+
         if ($isMultiple) {
             $input = new Select2ComboBoxType();
-            $config['multiple'] = $isMultiple;
 
-            if ($isMultiple) {
-                $config['attr']['tags'] = $allowInput;
-                $config['choices'] = [];
+            $config['multiple'] = $isMultiple;
+            $config['attr']['style'] .= ' width: 250px';
+            $config['choices'] = [];
+
+            if ($allowInput) {
+                $config['attr']['tags'] = true;
             }
         }
 
