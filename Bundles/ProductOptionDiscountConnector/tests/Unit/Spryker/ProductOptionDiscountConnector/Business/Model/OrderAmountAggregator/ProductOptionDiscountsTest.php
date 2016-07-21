@@ -24,12 +24,13 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     public function testProductOptionDiscountWhenOrderHaveShouldHydrateToCalculatedDiscounts()
     {
-        $productOptionAggregator = $this->createProductOptionsAggregator();
+        $discountCollection = $this->createDiscountCollection();
+        $productOptionAggregator = $this->createProductOptionsAggregator($discountCollection);
         $orderTransfer = $this->createOrderTransfer();
         $productOptionAggregator->aggregate($orderTransfer);
 
         $productOptionTransfer = $orderTransfer->getItems()[0]->getProductOptions()[0];
-        $this->assertEquals(100, $productOptionTransfer->getCalculatedDiscounts()[0]->getSumGrossAmount());
+        $this->assertEquals(50, $productOptionTransfer->getCalculatedDiscounts()[0]->getSumGrossAmount());
     }
 
     /**
@@ -37,11 +38,12 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenDiscountUsedThenItemShouldHaveDiscountsApplied()
     {
-        $productOptionAggregator = $this->createProductOptionsAggregator();
+        $discountCollection = $this->createDiscountCollection();
+        $productOptionAggregator = $this->createProductOptionsAggregator($discountCollection);
         $orderTransfer = $this->createOrderTransfer();
         $productOptionAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(300, $orderTransfer->getItems()[0]->getSumGrossPriceWithProductOptionAndDiscountAmounts());
+        $this->assertSame(700, $orderTransfer->getItems()[0]->getSumGrossPriceWithProductOptionAndDiscountAmounts());
     }
 
     /**
@@ -49,37 +51,26 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     public function testRefundableAmountShouldBeAfterDiscounts()
     {
-        $productOptionAggregator = $this->createProductOptionsAggregator();
+        $discountCollection = $this->createDiscountCollection();
+        $productOptionAggregator = $this->createProductOptionsAggregator($discountCollection);
         $orderTransfer = $this->createOrderTransfer();
         $productOptionAggregator->aggregate($orderTransfer);
 
         $refundableAmount = $orderTransfer->getItems()[0]->getRefundableAmount();
 
-        $this->assertEquals(300, $refundableAmount);
+        $this->assertSame(700, $refundableAmount);
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $discountCollection
+     *
      * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts
      */
-    protected function createProductOptionsAggregator()
+    protected function createProductOptionsAggregator(ObjectCollection $discountCollection)
     {
         $discountQueryContainerMock = $this->createDiscountQueryContainer();
 
         $salesDiscountQueryMock = $this->createDiscountQueryMock();
-
-        $objectCollection = new ObjectCollection();
-
-        $salesDiscountEntity = new SpySalesDiscount();
-        $salesDiscountEntity->setFkSalesOrderItem(1);
-        $salesDiscountEntity->setAmount(100);
-        $salesDiscountEntity->setFkSalesOrderItemOption(1);
-        $objectCollection->append($salesDiscountEntity);
-
-        $salesDiscountEntity = new SpySalesDiscount();
-        $salesDiscountEntity->setFkSalesOrderItem(1);
-        $salesDiscountEntity->setAmount(200);
-        $salesDiscountEntity->setFkSalesOrderItemOption(1);
-        $objectCollection->append($salesDiscountEntity);
 
         $salesDiscountQueryMock->expects($this->once())
             ->method('filterByFkSalesOrderItem')
@@ -93,7 +84,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $salesDiscountQueryMock
             ->expects($this->once())
             ->method('find')
-            ->willReturn($objectCollection);
+            ->willReturn($discountCollection);
 
         $discountQueryContainerMock
             ->expects($this->once())
@@ -139,11 +130,15 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemTransfer->setIdSalesOrderItem(1);
 
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setUnitGrossPrice(100);
+        $productOptionTransfer->setSumGrossPrice(100);
         $productOptionTransfer->setIdSalesOrderItemOption(1);
         $productOptionTransfer->setQuantity(1);
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setUnitGrossPrice(200);
+        $productOptionTransfer->setSumGrossPrice(200);
         $productOptionTransfer->setIdSalesOrderItemOption(1);
         $productOptionTransfer->setQuantity(1);
         $itemTransfer->addProductOption($productOptionTransfer);
@@ -151,6 +146,28 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer->addItem($itemTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function createDiscountCollection()
+    {
+        $objectCollection = new ObjectCollection();
+
+        $salesDiscountEntity = new SpySalesDiscount();
+        $salesDiscountEntity->setFkSalesOrderItem(1);
+        $salesDiscountEntity->setAmount(50);
+        $salesDiscountEntity->setFkSalesOrderItemOption(1);
+        $objectCollection->append($salesDiscountEntity);
+
+        $salesDiscountEntity = new SpySalesDiscount();
+        $salesDiscountEntity->setFkSalesOrderItem(1);
+        $salesDiscountEntity->setAmount(50);
+        $salesDiscountEntity->setFkSalesOrderItemOption(1);
+        $objectCollection->append($salesDiscountEntity);
+
+        return $objectCollection;
     }
 
 }

@@ -33,8 +33,8 @@ class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $orderExpensesWithDiscounts->aggregate($orderTransfer);
 
-        $this->assertEquals(90, $orderTransfer->getExpenses()[0]->getUnitGrossPriceWithDiscounts());
-        $this->assertEquals(190, $orderTransfer->getExpenses()[0]->getSumGrossPriceWithDiscounts());
+        $this->assertSame(90, $orderTransfer->getExpenses()[0]->getUnitGrossPriceWithDiscounts());
+        $this->assertSame(190, $orderTransfer->getExpenses()[0]->getSumGrossPriceWithDiscounts());
     }
 
     /**

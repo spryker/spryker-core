@@ -26,7 +26,24 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $discountTotalAmountAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(400, $orderTransfer->getTotals()->getDiscountTotal());
+        $this->assertSame(400, $orderTransfer->getTotals()->getDiscountTotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDiscountTotalWhenDiscountIsMoreThanItemAmountShouldNotGoOverItemAmount()
+    {
+        $discountTotalAmountAggregator = $this->createDiscountTotalAmountAggregator();
+        $orderTransfer = $this->createOrderTransfer();
+
+        $itemTransfer = $orderTransfer->getItems()[0];
+        $productOptionTransfer = $itemTransfer->getProductOptions()[0];
+        $productOptionTransfer->getCalculatedDiscounts()[0]->setSumGrossAmount(1000);
+
+        $discountTotalAmountAggregator->aggregate($orderTransfer);
+
+        $this->assertSame(600, $orderTransfer->getTotals()->getDiscountTotal());
     }
 
     /**
@@ -46,6 +63,7 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
         $itemTransfer->setUnitGrossPriceWithProductOptions(200);
         $itemTransfer->setSumGrossPriceWithProductOptions(400);
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setSumGrossPrice(500);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setSumGrossAmount(100);

@@ -23,7 +23,7 @@ class GrandTotalWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $grandTotalWithDiscountsAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(400, $orderTransfer->getTotals()->getGrandTotal());
+        $this->assertSame(400, $orderTransfer->getTotals()->getGrandTotal());
     }
 
     /**

@@ -32,7 +32,7 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $grandTotalWithDiscountsCalculator = $this->createGrandTotalWithDiscountsCalculator();
         $grandTotalWithDiscountsCalculator->recalculate($quoteTransfer);
 
-        $this->assertEquals(
+        $this->assertSame(
             self::GRAND_TOTAL_BEFORE_DISCOUNTS - self::DISCOUNT_AMOUNT,
             $quoteTransfer->getTotals()->getGrandTotal()
         );
@@ -51,7 +51,7 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $grandTotalWithDiscountsCalculator = $this->createGrandTotalWithDiscountsCalculator();
         $grandTotalWithDiscountsCalculator->recalculate($quoteTransfer);
 
-        $this->assertEquals(0, $quoteTransfer->getTotals()->getGrandTotal());
+        $this->assertSame(0, $quoteTransfer->getTotals()->getGrandTotal());
     }
 
     /**

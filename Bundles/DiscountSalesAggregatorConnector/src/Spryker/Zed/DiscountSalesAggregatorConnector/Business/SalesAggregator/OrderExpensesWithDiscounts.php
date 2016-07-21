@@ -47,6 +47,7 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
         }
 
         $this->addDiscountsFromSalesOrderDiscountEntity($orderTransfer, $salesOrderDiscounts);
+        $this->updateExpenseGrossPriceWithDiscounts($orderTransfer);
     }
 
     /**
@@ -103,15 +104,18 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
 
             $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
-            $expenseTransfer->setUnitTotalDiscountAmount(
-                $expenseTransfer->getUnitTotalDiscountAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
-            );
+            $expenseUnitTotalDiscountAmount = $expenseTransfer->getUnitTotalDiscountAmount() + $calculatedDiscountTransfer->getUnitGrossAmount();
+            if ($expenseUnitTotalDiscountAmount > $expenseTransfer->getUnitGrossPrice()) {
+                $expenseUnitTotalDiscountAmount = $expenseTransfer->getUnitGrossPrice();
+            }
+            $expenseTransfer->setUnitTotalDiscountAmount($expenseUnitTotalDiscountAmount);
 
-            $expenseTransfer->setSumTotalDiscountAmount(
-                $expenseTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
-            );
+            $expenseSumTotalDiscountAmount = $expenseTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount();
+            if ($expenseSumTotalDiscountAmount > $expenseTransfer->getSumGrossPrice()) {
+                $expenseSumTotalDiscountAmount = $expenseTransfer->getSumGrossPrice();
+            }
+            $expenseTransfer->setSumTotalDiscountAmount($expenseSumTotalDiscountAmount);
 
-            $this->updateExpenseGrossPriceWithDiscounts($expenseTransfer, $calculatedDiscountTransfer);
             $this->setExpenseRefundableAmount($expenseTransfer, $calculatedDiscountTransfer);
         }
     }
@@ -145,22 +149,22 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    protected function updateExpenseGrossPriceWithDiscounts(
-        ExpenseTransfer $expenseTransfer,
-        CalculatedDiscountTransfer $calculatedDiscountTransfer
-    ) {
-        $expenseTransfer->setUnitGrossPriceWithDiscounts(
-            $expenseTransfer->getUnitGrossPrice() - $calculatedDiscountTransfer->getUnitGrossAmount()
-        );
+    protected function updateExpenseGrossPriceWithDiscounts(OrderTransfer $orderTransfer)
+    {
 
-        $expenseTransfer->setSumGrossPriceWithDiscounts(
-            $expenseTransfer->getSumGrossPrice() - $calculatedDiscountTransfer->getSumGrossAmount()
-        );
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            $expenseTransfer->setUnitGrossPriceWithDiscounts(
+                $expenseTransfer->getUnitGrossPrice() - $expenseTransfer->getUnitTotalDiscountAmount()
+            );
+
+            $expenseTransfer->setSumGrossPriceWithDiscounts(
+                $expenseTransfer->getSumGrossPrice() - $expenseTransfer->getSumTotalDiscountAmount()
+            );
+        }
     }
 
     /**
