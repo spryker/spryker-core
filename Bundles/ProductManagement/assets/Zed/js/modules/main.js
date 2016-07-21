@@ -158,6 +158,36 @@ $(document).ready(function() {
         });
 
 
+    $('.attribute_autocomplete').each(function(key, value) {
+        var obj = $(value);
+        if (obj.data('url') === 'undefined') {
+            //return;
+        }
 
+        var id = obj.attr('id_attribute') || null;
+
+        obj.autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
+                    dataType: "json",
+                    data: {
+                        q: request.term,
+                        id: id
+                    },
+                    success: function(data) {
+                        response($.map(data.values, function (item) {
+                            return {
+                                label: item.text,
+                                value: item.id
+                            };
+                        }));
+                    }
+                });
+            },
+            //source: obj.data('url'),
+            minLength: 0
+        });
+    });
 
 });

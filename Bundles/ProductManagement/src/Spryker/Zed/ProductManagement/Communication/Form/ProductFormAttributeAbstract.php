@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -162,7 +163,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             $input = new Select2ComboBoxType();
         }
 
-        $config['attr']['class'] .= ' ajax';
+        $config['attr']['class'] .= ' attribute_autocomplete';
 
         if ($isMultiple) {
             $input = new Select2ComboBoxType();
@@ -179,6 +180,34 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $builder->add(self::FIELD_VALUE, $input, $config);
 
         return $this;
+    }
+
+    public function foo()
+    {
+        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
+            'label' => 'Attribute key',
+            'url' => '/product-management/attributes/keys',
+            'constraints' => [
+                new NotBlank(),
+                new Callback([
+                    'methods' => [
+                        function ($key, ExecutionContextInterface $context) {
+                            $keyCount = $this->productManagementQueryContainer
+                                ->queryProductAttributeKey()
+                                ->joinSpyProductManagementAttribute()
+                                ->filterByKey($key)
+                                ->count();
+
+                            if ($keyCount > 0) {
+                                $context->addViolation('Attribute key is already used');
+                            }
+                        },
+                    ],
+                    'groups' => [self::GROUP_UNIQUE_KEY]
+                ]),
+            ],
+            'disabled' => $options[self::OPTION_IS_UPDATE],
+        ]);
     }
 
 }
