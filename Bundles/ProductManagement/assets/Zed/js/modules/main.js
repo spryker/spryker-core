@@ -163,6 +163,7 @@ $(document).ready(function() {
         var id = input.attr('id_attribute') || null;
 
         input.autocomplete({
+            minLength: 0,
             source: function(request, response) {
                 $.ajax({
                     url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
@@ -181,7 +182,22 @@ $(document).ready(function() {
                     }
                 });
             },
-            minLength: 0
+            select: function(event, ui) {
+                var input = $(this);
+                input.val(ui.item.label);
+                input.attr('data-labelValue', ui.item.label);
+                input.attr('data-value', ui.item.value);
+
+                return false;
+            },
+            focus: function(event, ui) {
+                var input = $(this);
+                input.val(ui.item.label);
+                input.attr('data-labelValue', ui.item.label);
+                input.attr('data-value', ui.item.value);
+
+                return false;
+            }
         });
     });
 
