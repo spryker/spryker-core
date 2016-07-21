@@ -159,14 +159,10 @@ $(document).ready(function() {
 
 
     $('.attribute_autocomplete').each(function(key, value) {
-        var obj = $(value);
-        if (obj.data('url') === 'undefined') {
-            //return;
-        }
+        var input = $(value);
+        var id = input.attr('id_attribute') || null;
 
-        var id = obj.attr('id_attribute') || null;
-
-        obj.autocomplete({
+        input.autocomplete({
             source: function(request, response) {
                 $.ajax({
                     url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
@@ -185,7 +181,6 @@ $(document).ready(function() {
                     }
                 });
             },
-            //source: obj.data('url'),
             minLength: 0
         });
     });

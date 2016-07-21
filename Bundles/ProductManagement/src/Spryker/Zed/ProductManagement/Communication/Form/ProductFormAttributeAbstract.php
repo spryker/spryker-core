@@ -163,17 +163,23 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             $input = new Select2ComboBoxType();
         }
 
-        $config['attr']['class'] .= ' attribute_autocomplete';
-
         if ($isMultiple) {
             $input = new Select2ComboBoxType();
 
             $config['multiple'] = $isMultiple;
             $config['attr']['style'] .= ' width: 250px';
             $config['choices'] = [];
+            $config['attr']['class'] .= ' ajax';
 
             if ($allowInput) {
                 $config['attr']['tags'] = true;
+            }
+        }
+        else {
+            if ($allowInput) {
+                $config['attr']['class'] .= ' attribute_autocomplete';
+            } else {
+                $config['disabled'] = true;
             }
         }
 

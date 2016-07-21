@@ -24,17 +24,12 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
         $attributes = $options[self::OPTION_ATTRIBUTE];
         $config = $this->getValueFieldConfig($name, $attributes);
 
-        $allowInput = $attributes[$name][self::ALLOW_INPUT];
-
         $input = new Select2ComboBoxType();
         $config['multiple'] = true; //be able to select multiple values of super attributes;
         $config['attr']['style'] .= ' width: 250px';
         $config['choices'] = [];
         $config['attr']['class'] .= ' ajax';
-
-        if ($allowInput) {
-            $config['attr']['tags'] = true;
-        }
+        $config['attr']['tags'] = false; //don't allow undefined values
 
         $builder->add(self::FIELD_VALUE, $input, $config);
 
