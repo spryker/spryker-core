@@ -1,0 +1,27 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Edit Stock' | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/availability/index/view', {'id-product': idProductAbstract}), 'List of Product Availability' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit tax set' | trans } %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+            {% for stock in form.stocks %}
+
+                <li>{{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}</li>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <label>Products</label>
+        <title>Products</title>
+        <bundle>Product</bundle>
+        <icon>fa-files-o</icon>
+        <pages>
+            <availability>
+                <label>Availability</label>
+                <title>Availability</title>
+                <bundle>availability</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <icon>fa-file-o</icon>
+            </availability>
+        </pages>
+    </product>
+</config>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability;
 
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToLocaleBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
@@ -19,7 +20,10 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'oms facade';
     const FACADE_STOCK = 'stock facade';
     const FACADE_TOUCH = 'touch facade';
+    const FACADE_LOCALE = 'locale facade';
+
     const QUERY_CONTAINER_PRODUCT = 'product query container';
+    const QUERY_CONTAINER_STOCK = 'stock query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,10 +52,32 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return Container
      */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new AvailabilityToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        $container[self::FACADE_STOCK] = function (Container $container) {
+            return new AvailabilityToStockBridge($container->getLocator()->stock()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_STOCK] = function (Container $container) {
+            return $container->getLocator()->stock()->queryContainer();
         };
 
         return $container;

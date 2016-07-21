@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Persistence;
 
 use Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 
 interface AvailabilityQueryContainerInterface
 {
@@ -47,4 +48,63 @@ interface AvailabilityQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function querySpyProductBySku($sku);
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     */
+    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+
+    /**
+     * @param int $idLocale
+     *
+     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithStockByIdLocale($idLocale);
+
+    /**
+     * @param int $idLocale
+     *
+     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     */
+    public function queryAvailabilityWithStockByIdLocale($idLocale);
+
+    /**
+     * @param int $idLocale
+     *
+     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     */
+    public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale);
+
+    /**
+     * @return SpyProductAbstractQuery
+     */
+    public function querySpyProductAbstractAvailabilityWithStock();
+
+    /**
+     * @return SpyProductAbstractQuery
+     */
+    public function querySpyProductAbstractAvailability();
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByIdProduct($idProduct);
+
+    /**
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    public function queryAllStockType();
 }

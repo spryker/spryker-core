@@ -90,7 +90,6 @@ class Reservation implements ReservationInterface
      */
     protected function retrieveReservedStates()
     {
-        //TODO: Need optimization: $reservedStates can be cached here and will be invalidated when processes are changing.
         $reservedStates = [];
         foreach ($this->activeProcesses as $processName) {
             $builder = clone $this->builder;
@@ -108,7 +107,7 @@ class Reservation implements ReservationInterface
      */
     protected function saveReservation($sku)
     {
-        $reservationQuantity = $this->sumReservedProductQuantitiesForSku($sku);
+        $reservationQuantity = (int)$this->sumReservedProductQuantitiesForSku($sku);
         $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
         $reservationEntity->setReservationQuantity($reservationQuantity);
 
