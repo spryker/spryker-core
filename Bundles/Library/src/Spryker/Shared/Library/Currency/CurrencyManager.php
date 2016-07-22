@@ -10,7 +10,7 @@ namespace Spryker\Shared\Library\Currency;
 use Spryker\Shared\Kernel\Store;
 
 /**
- * @deprecated Use Money and Currency Bundle instead
+ * @deprecated Use Money Bundle instead
  *
  * This class is the central math class for currency arithmetic operations
  */
@@ -34,6 +34,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Money Bundle instead
+     *
      * @return $this
      */
     public static function getInstance()
@@ -46,6 +48,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Money Bundle instead
+     *
      * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      *
      * @return void
@@ -56,6 +60,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param string $isoCode
      *
      * @return void
@@ -66,6 +72,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Store class instead
+     *
      * @return \Spryker\Shared\Library\Currency\CurrencyInterface
      */
     public static function getDefaultCurrency()
@@ -90,6 +98,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Money Bundle instead
+     *
      * This method should never return a number with a thousend separator, otherwise
      * the next call to number_format will leeds to an error
      *
@@ -103,6 +113,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Money Bundle instead
+     *
      * @param float $decimalValue
      *
      * @return int
@@ -113,6 +125,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated
+     *
      * Ceil the current value
      * Solves precision lose problems, like in:
      * -((0.1+0.7)*10), ('34.200' + 0) * 100)
@@ -130,6 +144,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Money Bundle instead
+     *
      * @param int|float $value
      * @param bool $includeSymbol
      *
@@ -141,6 +157,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated Use Money Bundle instead
+     *
      * @param string $isoCode
      * @param int|float $value
      * @param bool $includeSymbol
