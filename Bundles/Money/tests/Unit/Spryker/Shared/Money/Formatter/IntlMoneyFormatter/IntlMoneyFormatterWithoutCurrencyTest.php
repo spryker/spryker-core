@@ -9,13 +9,13 @@ namespace Unit\Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
+use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
 
 /**
- * @group IntlMoneyFormatterWithCurrency
+ * @group IntlMoneyFormatterWithoutCurrency
  */
-class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
+class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTest
 {
 
     const AMOUNT = '1000';
@@ -27,7 +27,7 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
      */
     public function testConstruct()
     {
-        $intlMoneyFormatter = new IntlMoneyFormatterWithCurrency($this->getTransferToMoneyConverterMock());
+        $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock());
         $this->assertInstanceOf(MoneyFormatterInterface::class, $intlMoneyFormatter);
     }
 
@@ -36,7 +36,7 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
      */
     public function testFormatShouldReturnFormatted()
     {
-        $intlMoneyFormatter = new IntlMoneyFormatterWithCurrency($this->getTransferToMoneyConverterMock());
+        $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock());
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount(self::AMOUNT);
         $moneyTransfer->setCurrency(self::CURRENCY);
@@ -45,7 +45,7 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
         $moneyTransfer->setLocale($localeTransfer);
 
         $formatted = $intlMoneyFormatter->format($moneyTransfer);
-        $this->assertSame('10,00 €', $formatted);
+        $this->assertSame('10,00', $formatted);
     }
 
 }

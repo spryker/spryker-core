@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Money\Plugin\Money;
 
 use Generated\Shared\Transfer\MoneyTransfer;
+use Spryker\Shared\Money\MoneyConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
@@ -17,7 +18,7 @@ class MoneyPlugin extends AbstractPlugin
 {
 
     /**
-     * @param int|float $amount
+     * @param int|float|string $amount
      * @param string|null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
@@ -28,7 +29,7 @@ class MoneyPlugin extends AbstractPlugin
     }
 
     /**
-     * This method will return formatted string representation of the given MoneyTransfer object
+     * This method will return formatted string representation of the given MoneyTransfer object with currency symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$currency = EUR` will return `10,00 €`
      *
@@ -36,13 +37,13 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return string
      */
-    public function format(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITH_SYMBOL);
     }
 
     /**
-     * This method will return float representation of the given MoneyTransfer object
+     * This method will return float representation of the given MoneyTransfer object without symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$currency = EUR` will return `10,00`
      *
@@ -50,9 +51,29 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return string
      */
-    public function formatRaw(MoneyTransfer $moneyTransfer)
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $moneyTransfer->getAmount();
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertCentToDecimal($value)
+    {
+        return $this->getFactory()->createIntegerToFloatConverter()->convert($value);
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToCent($value)
+    {
+        return $this->getFactory()->createFloatToIntegerConverter()->convert($value);
     }
 
 }

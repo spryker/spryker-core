@@ -5,12 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Money;
+namespace Spryker\Shared\Money\Converter;
 
-interface MoneyConstants
+interface DecimalToCentConverterInterface
 {
 
-    const FORMATTER_WITH_SYMBOL = 'FORMATTER_WITH_CURRENCY';
-    const FORMATTER_WITHOUT_SYMBOL = 'FORMATTER_WITHOUT_CURRENCY';
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convert($value);
 
 }

@@ -55,4 +55,24 @@ class MoneyPlugin extends AbstractPlugin
         return $this->getFacade()->formatWithoutSymbol($moneyTransfer);
     }
 
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertCentToDecimal($value)
+    {
+        return $this->getFacade()->convertCentToDecimal($value);
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToCent($value)
+    {
+        return $this->getFacade()->convertDecimalToCent($value);
+    }
+
 }

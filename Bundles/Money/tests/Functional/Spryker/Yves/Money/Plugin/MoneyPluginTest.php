@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Money\Communication\Plugin;
+namespace Functional\Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
+use Spryker\Yves\Money\Plugin\Money\MoneyPlugin;
 
 /**
  * @group Functional

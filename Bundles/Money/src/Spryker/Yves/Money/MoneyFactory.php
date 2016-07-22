@@ -7,7 +7,10 @@
 
 namespace Spryker\Yves\Money;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
+use Spryker\Shared\Money\Converter\DecimalToCentConverter;
+use Spryker\Shared\Money\Converter\CentToDecimalConverter;
 use Spryker\Shared\Money\Converter\MoneyToTransferConverter;
 use Spryker\Shared\Money\Converter\TransferToMoneyConverter;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
@@ -15,10 +18,9 @@ use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutC
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\MoneyConstants;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Money\MoneyDependencyProvider;
+use Spryker\Yves\Kernel\AbstractFactory;
 
-class MoneyBusinessFactory extends AbstractBusinessFactory
+class MoneyFactory extends AbstractFactory
 {
 
     /**
@@ -50,12 +52,12 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterCollection->addFormatter(
             $this->createIntlFormatterCurrency(),
-            MoneyConstants::FORMATTER_WITH_CURRENCY
+            MoneyConstants::FORMATTER_WITH_SYMBOL
         );
 
         $moneyFormatterCollection->addFormatter(
             $this->createIntlFormatterDecimal(),
-            MoneyConstants::FORMATTER_WITHOUT_CURRENCY
+            MoneyConstants::FORMATTER_WITHOUT_SYMBOL
         );
 
         return $moneyFormatterCollection;
@@ -66,7 +68,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
      */
     protected function getStore()
     {
-        return $this->getProvidedDependency(MoneyDependencyProvider::STORE);
+        return Store::getInstance();
     }
 
     /**
@@ -103,6 +105,22 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
         return new IntlMoneyFormatterWithoutCurrency(
             $this->createTransferToMoneyConverter()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Converter\CentToDecimalConverterInterface
+     */
+    public function createIntegerToFloatConverter()
+    {
+        return new CentToDecimalConverter();
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface
+     */
+    public function createFloatToIntegerConverter()
+    {
+        return new DecimalToCentConverter();
     }
 
 }

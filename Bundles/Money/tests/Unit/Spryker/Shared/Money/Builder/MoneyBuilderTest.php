@@ -144,7 +144,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
             [[]],
             [new \stdClass()],
             [true],
-            [function(){}],
+            [function (){}],
             [STDIN],
         ];
     }

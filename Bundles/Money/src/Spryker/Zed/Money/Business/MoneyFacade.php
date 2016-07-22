@@ -49,13 +49,13 @@ class MoneyFacade extends AbstractFacade
     {
         return $this->getFactory()->createMoneyFormatter()->format(
             $moneyTransfer,
-            MoneyConstants::FORMATTER_WITH_CURRENCY
+            MoneyConstants::FORMATTER_WITH_SYMBOL
         );
     }
 
     /**
      * Specification:
-     * - Converts MoneyTransfer Object into string representation with currency symbol
+     * - Converts MoneyTransfer Object into string representation without currency symbol
      *
      * @api
      *
@@ -67,8 +67,32 @@ class MoneyFacade extends AbstractFacade
     {
         return $this->getFactory()->createMoneyFormatter()->format(
             $moneyTransfer,
-            MoneyConstants::FORMATTER_WITHOUT_CURRENCY
+            MoneyConstants::FORMATTER_WITHOUT_SYMBOL
         );
+    }
+
+    /**
+     * @api
+     *
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertCentToDecimal($value)
+    {
+        return $this->getFactory()->createIntegerToFloatConverter()->convert($value);
+    }
+
+    /**
+     * @api
+     *
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToCent($value)
+    {
+        return $this->getFactory()->createFloatToIntegerConverter()->convert($value);
     }
 
 }

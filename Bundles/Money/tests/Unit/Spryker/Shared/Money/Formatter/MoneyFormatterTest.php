@@ -9,7 +9,6 @@ namespace Unit\Spryker\Shared\Money\Formatter;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
-use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
@@ -24,6 +23,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
  */
 class MoneyFormatterTest extends \PHPUnit_Framework_TestCase
 {
+
     const AMOUNT = '1000';
 
     /**
