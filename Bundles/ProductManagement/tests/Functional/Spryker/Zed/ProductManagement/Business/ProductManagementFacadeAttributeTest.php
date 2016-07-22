@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
-use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
@@ -28,6 +27,9 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBri
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer;
 
 /**
+ * @group Spryker
+ * @group Zed
+ * @group Business
  * @group ProductManagementFacade
  */
 class ProductManagementFacadeAttributeTest extends Test
@@ -294,14 +296,9 @@ class ProductManagementFacadeAttributeTest extends Test
             'some-unique-key-1',
             'some-unique-key-2',
             'some-unique-key-3',
-            'some-unique-key-4',
-            'some-unique-key-5',
-            'some-unique-key-6',
-            'some-unique-key-7',
-            'some-unique-key-8',
-            'some-unique-key-9',
-            'some-unique-key-10',
-            'some-unique-key-11',
+            'other-unique-key-1',
+            'other-unique-key-2',
+            'other-unique-key-3',
         ];
         foreach ($keys as $key) {
             $productAttributeKeyEntity = new SpyProductAttributeKey();
@@ -311,7 +308,7 @@ class ProductManagementFacadeAttributeTest extends Test
 
         $result = $this->productManagementFacade->suggestUnusedAttributeKeys('some-unique-key-', 5);
 
-        $this->assertCount(5, $result);
+        $this->assertCount(3, $result);
 
         foreach ($result as $key) {
             $this->assertContains($key, $keys);

@@ -361,11 +361,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if the product attribute key exists in database or not
+     *
+     * @api
+     *
      * @param string $key
      *
      * @return bool
-     *
-     * TODO: add tests
      */
     public function hasProductAttributeKey($key)
     {
@@ -375,11 +378,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns a product attribute key if exists, null otherwise
+     *
+     * @api
+     *
      * @param string $key
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
-     *
-     * TODO: add tests
      */
     public function getProductAttributeKey($key)
     {
@@ -389,11 +395,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Creates a new product attribute key entity
+     * - Returns the newly created product attribute key
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
-     *
-     * TODO: add tests
      */
     public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
     {
@@ -403,11 +413,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Updates an existing product attribute key entity
+     * - Returns the updated product attribute key
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
-     *
-     * TODO: add tests
      */
     public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
     {
