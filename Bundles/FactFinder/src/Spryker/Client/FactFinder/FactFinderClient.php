@@ -8,6 +8,7 @@
 namespace Spryker\Client\FactFinder;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Zed\Collector\CollectorConfig;
 
 /**
  * @method \Spryker\Client\FactFinder\FactFinderFactory getFactory()
@@ -24,7 +25,7 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     {
         return $this->getFactory()
             ->createZedFactFinderStub()
-            ->getExportedCsv($locale, 'product_abstract');
+            ->getExportedCsv($locale, CollectorConfig::COLLECTOR_TYPE_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -36,7 +37,7 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     {
         return $this->getFactory()
             ->createZedFactFinderStub()
-            ->getExportedCsv($locale, 'categorynode');
+            ->getExportedCsv($locale, CollectorConfig::COLLECTOR_TYPE_CATEGORYNODE);
     }
 
 

@@ -8,6 +8,7 @@
 namespace Spryker\Yves\FactFinder\Controller;
 
 use Spryker\Yves\Application\Controller\AbstractController;
+use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -17,11 +18,14 @@ class CsvController extends AbstractController
 {
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function productsAction()
+    public function productsAction(Request $request)
     {
-        $response = $this->getClient()->getProductCsv($this->getLocale())->getContents();
+        $locale = $request->get('locale', $this->getLocale());
+        $response = $this->getClient()->getProductCsv($locale)->getContents();
 
         return $this->streamedResponse(
             function () use ($response) {
@@ -33,11 +37,14 @@ class CsvController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function categoriesAction()
+    public function categoriesAction($request)
     {
-        $response = $this->getClient()->getCategoryCsv($this->getLocale())->getContents();
+        $locale = $request->get('locale', $this->getLocale());
+        $response = $this->getClient()->getCategoryCsv($locale)->getContents();
 
         return $this->streamedResponse(
             function () use ($response) {

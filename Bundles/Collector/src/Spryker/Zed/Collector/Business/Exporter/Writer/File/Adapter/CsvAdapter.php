@@ -66,6 +66,32 @@ class CsvAdapter extends AbstractAdapter
     }
 
     /**
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+        $this->csvFile = null;
+
+        return $this;
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return $this
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+        $this->csvFile = null;
+
+        return $this;
+    }
+
+    /**
      * @param \SplFileObject $csvFile
      * @param array $dataRow
      *

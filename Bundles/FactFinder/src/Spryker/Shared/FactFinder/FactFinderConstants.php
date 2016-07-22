@@ -16,6 +16,7 @@ interface FactFinderConstants
     const ENV_PRODUCTION = 'production';
     const ENV_DEVELOPMENT = 'development';
     const ENV_TEST = 'test';
+    const CSV_DIRECTORY = 'factfinder csv directory';
 
     const CONFIG_BASIC_AUTH_USERNAME = 'fact_finder_basic_auth_username';
     const CONFIG_BASIC_AUTH_PASSWORD = 'fact_finder_basic_auth_password';

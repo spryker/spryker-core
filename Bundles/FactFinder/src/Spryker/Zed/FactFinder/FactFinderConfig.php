@@ -29,4 +29,12 @@ class FactFinderConfig extends AbstractBundleConfig
         return $this->get(FactFinderConstants::ENV . $this->getEnv());
     }
 
+    /**
+     * @return string
+     */
+    public function getCsvDirectory()
+    {
+        return $this->get(FactFinderConstants::CSV_DIRECTORY);
+    }
+
 }

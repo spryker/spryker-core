@@ -19,4 +19,21 @@ interface FileWriterInterface extends WriterInterface
      */
     public function setFileName($fileName);
 
+    /**
+     * @return string
+     */
+    public function getFileName();
+
+    /**
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setDirectory($directory);
+
+    /**
+     * @return string
+     */
+    public function getDirectory();
+
 }

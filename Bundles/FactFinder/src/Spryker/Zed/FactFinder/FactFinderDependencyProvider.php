@@ -35,6 +35,8 @@ class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::COLLECTOR_FACADE] = function (Container $container) {
             return $container->getLocator()->collector()->facade();
         };
+
+        return $container;
     }
 
 }

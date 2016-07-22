@@ -46,6 +46,26 @@ class FileWriter implements FileWriterInterface
     }
 
     /**
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setDirectory($directory)
+    {
+        $this->fileWriterAdapter->setDirectory($directory);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirectory()
+    {
+        return $this->fileWriterAdapter->getDirectory();
+    }
+
+    /**
      * @param array $dataSet
      * @param string $type
      *
