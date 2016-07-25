@@ -227,18 +227,10 @@ class BundleParser
         $map = $this->config->getExternalToInternalNamespaceMap();
 
         foreach ($allFileDependencies as $file => $fileDependencies) {
-            // Hack until we have proper FQCN for all non-php classes
-            if (strpos($file, '/Zed/Library/Twig/') !== false) {
-                if (!isset($bundleDependencies['Twig'])) {
-                    $bundleDependencies['Twig'] = 0;
-                }
-                $bundleDependencies['Twig']++;
-            }
-
             foreach ($fileDependencies as $fileDependency) {
                 $found = null;
                 foreach ($map as $namespace => $package) {
-                    if (strpos($fileDependency, $namespace . '\\') !== 0) {
+                    if (strpos($fileDependency, $namespace) !== 0) {
                         continue;
                     }
 
