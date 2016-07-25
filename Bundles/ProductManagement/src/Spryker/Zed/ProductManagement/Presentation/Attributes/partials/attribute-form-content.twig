@@ -17,7 +17,6 @@
 <div class='form-group {% if form.values.vars.errors|length %}has-error{% endif %}'>
     <h4>{{ form_label(form.values) }}</h4>
     {{ form_widget(form.values) }}
-    {{ form_row(form.values) }}
     {% if not readOnly %}
         <span class="help-block">{{ 'You can add new values by pressing "Enter" after each element' | trans }}</span>
     {% endif %}
