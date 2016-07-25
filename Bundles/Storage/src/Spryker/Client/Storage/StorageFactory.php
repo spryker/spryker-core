@@ -64,18 +64,26 @@ class StorageFactory extends AbstractFactory
      */
     protected function getConnectionParameters()
     {
+        // TODO: Remove defaults. The default Config::get() values are for BC only.
         $config = [
-            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_PROTOCOL, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_PORT, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+            'host' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_HOST, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
+            'database' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_DATABASE, 0),
         ];
 
-        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+        // TODO: Remove elseif. Only for BC.
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_REDIS_PASSWORD);
+        } elseif (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
             $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
         }
 
+        // TODO: Remove elseif. Only for BC.
         $config['persistent'] = false;
-        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
+        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_PERSISTENT_CONNECTION)) {
+            $config['persistent'] = (bool)Config::get(ApplicationConstants::YVES_STORAGE_PERSISTENT_CONNECTION);
+        } elseif (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
             $config['persistent'] = (bool)Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
         }
 
