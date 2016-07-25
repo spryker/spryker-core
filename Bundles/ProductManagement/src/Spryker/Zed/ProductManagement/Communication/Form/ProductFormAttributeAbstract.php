@@ -163,6 +163,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $input = $inputManager->getSymfonyInputType($inputType);
         $config = $this->getValueFieldConfig($name, $attributes);
         $config['attr']['style'] .= ' width: 250px';
+        $config['attr']['data-value'] = null;
 
         if (strtolower($input) === 'select2') {
             $input = new Select2ComboBoxType();

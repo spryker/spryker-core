@@ -36,6 +36,7 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
         $config['choices'] = [];
         $config['attr']['class'] .= ' ajax';
         $config['attr']['tags'] = false; //don't allow undefined values
+        $config['read_only'] = true;
 
         $builder->add(self::FIELD_VALUE, $input, $config);
 

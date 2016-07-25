@@ -90,33 +90,43 @@ $(document).ready(function() {
         minimumInputLength: 1
     });
 
-    // $('.attribute_metadata_checkbox').each(function() {
-    //     var $item = $(this);
-    //     var $input = $item
-    //         .parents('.attribute_metadata_row')
-    //         .find('.attribute_metadata_value');
-    //
-    //     if (!$item.prop('readonly')) {
-    //         //$input.prop('readonly', !$item.prop('checked'));
-    //     }
-    // });
+    $('.attribute_metadata_checkbox').each(function() {
+        var $item = $(this);
+        var $input = $item
+            .parents('.attribute_metadata_row')
+            .find('.attribute_metadata_value');
+
+        if (!$item.prop('checked')) {
+            $input.prop('readonly', !$item.prop('checked'));
+
+            if ($input.hasClass('spryker-form-select2combobox')) {
+                $input.prop('disabled', !$item.prop('checked'));
+            }
+        }
+    });
 
     $('.attribute_metadata_checkbox')
         .off('click')
         .on('click', function() {
-            console.log('boo');
             var $item = $(this);
-            var input = $item
+            var $input = $item
                 .parents('.attribute_metadata_row')
                 .find('.attribute_metadata_value');
 
-            console.log(input);
+            $input.prop('readonly', !$item.prop('checked'));
 
-            input.prop('readonly', !$item.prop('checked'));
-            input.focus();
 
-            if (input.select2) {
-                input.select2('focus');
+            if ($input.hasClass('spryker-form-select2combobox')) {
+                $input.prop('disabled', !$item.prop('checked'));
+
+                if ($item.prop('checked')) {
+                    setTimeout(function() {
+                        console.log(123);
+                        $input.select2('focus');
+                    }, 0);
+                }
+            } else {
+                $input.focus();
             }
         });
 
