@@ -66,50 +66,7 @@ $(document).ready(function() {
             processResults: processAjaxResult
         },
         minimumInputLength: 1
-    })
-        .on("DISALBED_select2:open", function (e) {
-
-            var $select = $($(this).data('target'));
-            console.log('select', $select.data);
-
-            //$select.select2('data', null)
-            //select v4 - wtf
-/*
-            $select.empty();
-            $select.html('').select2({data: [{id: '', text: ''}]});
-            $select.html('').select2({data: [
-                {id: '', text: ''},
-                {id: '1', text: 'Facebook'},
-                {id: '2', text: 'Youtube'},
-                {id: '3', text: 'Instagram'},
-                {id: '4', text: 'Pinterest'}]
-            });
-*/
-            debugger;
-            var $search = $select.data('select2').dropdown.$search || $select.data('select2').selection.$search;
-            // This is undocumented and may change in the future
-
-            $search.val(term);
-            $search.trigger('keyup');
-            return;
-
-
-
-            console.log('open', e, this);
-            var id = $(this).attr('id_attribute');
-            var self = $(this);
-            if (self.attr('preLoaded')) return;
-
-            $.ajax('http://zed.de.spryker.dev/product-management/attributes/suggest/', {
-                dataType: 'json',
-                data: 'q=&page=1&id=' + id
-            }).done(function(data) {
-                var processedResult = processAjaxResult(data, {});
-                console.log(processedResult.results);
-                self.select2({'data': processedResult.results});
-                self.attr('preLoaded', true);
-            });
-        });
+    });
 
     $('.spryker-form-select2combobox.ajax.tags').select2({
         tags: true,
@@ -211,11 +168,6 @@ $(document).ready(function() {
                 .attr('name', name).val(inputValue);
 
             form.append($(hiddenInput));
-
-            console.log($(hiddenInput));
         });
-
-        //e.preventDefault();
-        //return false;
     });
 });
