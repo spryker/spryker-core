@@ -90,28 +90,34 @@ $(document).ready(function() {
         minimumInputLength: 1
     });
 
-
-    $('.attribute_metadata_checkbox').each(function() {
-        var $item = $(this);
-        var $input = $item
-            .parents('.attribute_metadata_row')
-            .find('.attribute_metadata_value');
-
-        if (!$item.prop('readonly')) {
-            $input.prop('readonly', !$item.prop('checked'));
-        }
-    });
+    // $('.attribute_metadata_checkbox').each(function() {
+    //     var $item = $(this);
+    //     var $input = $item
+    //         .parents('.attribute_metadata_row')
+    //         .find('.attribute_metadata_value');
+    //
+    //     if (!$item.prop('readonly')) {
+    //         //$input.prop('readonly', !$item.prop('checked'));
+    //     }
+    // });
 
     $('.attribute_metadata_checkbox')
         .off('click')
         .on('click', function() {
+            console.log('boo');
             var $item = $(this);
             var input = $item
                 .parents('.attribute_metadata_row')
                 .find('.attribute_metadata_value');
 
+            console.log(input);
+
             input.prop('readonly', !$item.prop('checked'));
             input.focus();
+
+            if (input.select2) {
+                input.select2('focus');
+            }
         });
 
 
