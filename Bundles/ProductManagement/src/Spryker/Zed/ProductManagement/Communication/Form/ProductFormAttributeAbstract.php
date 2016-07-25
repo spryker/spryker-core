@@ -63,6 +63,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
                 if ($submittedData[self::FIELD_NAME] && !$submittedData[self::FIELD_VALUE]) {
                     $groups[] = self::VALIDATION_GROUP_ATTRIBUTE_VALUE;
+                    $groups[] = ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT;
                 }
 
                 return $groups;

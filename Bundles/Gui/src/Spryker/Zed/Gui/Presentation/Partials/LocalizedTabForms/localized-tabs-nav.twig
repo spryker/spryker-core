@@ -8,6 +8,14 @@
                 {%  set errorList = errorList|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
             {% endif %}
         {% endfor %}
+
+        {% for inputCollection in form[formKey] %}
+            {% for input in inputCollection %}
+                {%  if input.vars.errors is defined and input.vars.errors|length %}
+                    {%  set errorList = errorList|merge([{'code': localeCode, 'field': input.vars.errors.form.config.name }]) %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
     {% endif %}
 {% endfor %}
 

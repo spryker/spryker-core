@@ -47,7 +47,9 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Specification' } %}
 
         {% block widget_content %}
+
             {{ form_errors(form) }}
+
 <div class="tabs-container">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
@@ -111,9 +113,7 @@
                                         <div class="panel-body">
                                             <div class="well">
                                                 <div class="row">
-                                                    {% set localizedForm = form[formKey] %}
-
-                                                    {% for inputCollection in localizedForm %}
+                                                    {% for inputCollection in form[formKey] %}
                                                         {% set form_group_errors_css = '' %}
 
                                                         {% if inputCollection.value.vars.errors|length %}

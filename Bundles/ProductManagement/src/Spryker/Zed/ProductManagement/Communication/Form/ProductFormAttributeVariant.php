@@ -11,9 +11,37 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
 
 class ProductFormAttributeVariant extends ProductFormAttributeAbstract
 {
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $groups = [Constraint::DEFAULT_GROUP];
+                $originalData = $form->getConfig()->getData();
+                $submittedData = $form->getData();
+
+                if ($submittedData[self::FIELD_NAME] && !$submittedData[self::FIELD_VALUE]) {
+                    $groups[] = self::VALIDATION_GROUP_ATTRIBUTE_VALUE;
+                    $groups[] = ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_VARIANT;
+                }
+
+                return $groups;
+            },
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
