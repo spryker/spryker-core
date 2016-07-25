@@ -203,7 +203,7 @@ class AbstractProductFormDataProvider
     public function getAttributeVariantDefaultFields()
     {
         $attributeProcessor = new AttributeProcessor();
-        return $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, true);
+        return $this->convertVariantAttributesToFormValues($attributeProcessor, true);
     }
 
     /**
@@ -267,35 +267,24 @@ class AbstractProductFormDataProvider
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributes);
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : 'foo';
+            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
-            $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
-            $valueDisabled = true;
-
-            if ($isProductSpecificAttribute) {
-                $checkboxDisabled = true;
-            }
 
             if ($isNew) {
                 $value = null;
             }
 
+            if ($isMultiple && !is_array($value)) {
+                $value = [$value];
+            }
+
             $values[$type] = [
-                self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                self::FORM_FIELD_NAME => null,
                 self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
-                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_MULTIPLE => $isMultiple,
-                self::FORM_FIELD_INPUT_TYPE => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
-                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput()
             ];
         }
 
-        $productValues = $this->getProductAttributesFormFields($productAttributes);
+        $productValues = $this->getProductAttributesFormValues($productAttributes);
 
         return array_merge($productValues, $values);
     }
@@ -308,8 +297,36 @@ class AbstractProductFormDataProvider
      */
     protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, $isNew);
-        return $this->removeValueFromData($data);
+        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
+
+        $values = [];
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributes);
+            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : 'foo';
+            $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
+            $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
+            $valueDisabled = true;
+
+            if ($isProductSpecificAttribute) {
+                $checkboxDisabled = true;
+            }
+
+            $values[$type] = [
+                self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_INPUT_TYPE => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
+                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                self::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput()
+            ];
+        }
+
+        $productValues = $this->getProductAttributesFormOptions($productAttributes);
+
+        return array_merge($productValues, $values);
     }
 
     /**
@@ -319,6 +336,37 @@ class AbstractProductFormDataProvider
      * @return array
      */
     protected function convertVariantAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    {
+        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
+
+        $result = [];
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
+            $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
+
+            $value = 'shit';
+            if ($isMultiple && !is_array($value)) {
+                $value = [$value];
+            }
+
+            $result[$type] = [
+                self::FORM_FIELD_NAME => null,
+                self::FORM_FIELD_VALUE => []
+            ];
+        }
+
+        $productValues = $this->getProductAttributesFormValues($productAttributes);
+
+        return array_merge($productValues, $result);
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param bool|false $isNew
+     *
+     * @return array
+     */
+    protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
         $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
 
@@ -348,7 +396,6 @@ class AbstractProductFormDataProvider
 
             $values[$type] = [
                 self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
-                self::FORM_FIELD_VALUE => $value,
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
@@ -360,37 +407,9 @@ class AbstractProductFormDataProvider
             ];
         }
 
-        $productValues = $this->getProductAttributesFormFields($productAttributes);
+        $productValues = $this->getProductAttributesFormOptions($productAttributes);
 
         return array_merge($productValues, $values);
-    }
-
-    /**
-     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     * @param bool|false $isNew
-     *
-     * @return array
-     */
-    protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
-    {
-        $data = $this->convertVariantAttributesToFormValues($attributeProcessor, $isNew);
-        return $this->removeValueFromData($data);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function removeValueFromData(array $data)
-    {
-        $result = [];
-        foreach ($data as $type => $typeData) {
-            unset($typeData['value']);
-            $result[$type] = $typeData;
-        }
-
-        return $result;
     }
 
     /**
@@ -398,7 +417,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function getProductAttributesFormFields(array $productAttributes)
+    protected function getProductAttributesFormOptions(array $productAttributes)
     {
         $values = [];
         foreach ($productAttributes as $key => $value) {
@@ -415,6 +434,32 @@ class AbstractProductFormDataProvider
                     self::FORM_FIELD_VALUE_DISABLED => true,
                     self::FORM_FIELD_NAME_DISABLED => true,
                     self::FORM_FIELD_ALLOW_INPUT => false
+                ];
+            }
+        }
+
+        return $values;
+    }
+
+    /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    protected function getProductAttributesFormValues(array $productAttributes)
+    {
+        $values = [];
+        foreach ($productAttributes as $key => $value) {
+            $isMultiple = isset($value) && is_array($value);
+
+            if ($isMultiple && !is_array($value)) {
+                $value = [$value];
+            }
+
+            if (!array_key_exists($key, $values)) {
+                $values[$key] = [
+                    self::FORM_FIELD_NAME => false,
+                    self::FORM_FIELD_VALUE => $value,
                 ];
             }
         }

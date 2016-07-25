@@ -10,9 +10,13 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
+use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAttributeAbstract extends AbstractSubForm
@@ -32,6 +36,8 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
     const OPTION_ATTRIBUTE = 'option_attribute';
 
+    const VALIDATION_GROUP_ATTRIBUTE_VALUE = 'validation_group_attribute_value';
+
     /**
      * @var array
      */
@@ -48,6 +54,20 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::OPTION_ATTRIBUTE);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $groups = [Constraint::DEFAULT_GROUP];
+                $originalData = $form->getConfig()->getData();
+                $submittedData = $form->getData();
+
+                if ($submittedData[self::FIELD_NAME] && !$submittedData[self::FIELD_VALUE]) {
+                    $groups[] = self::VALIDATION_GROUP_ATTRIBUTE_VALUE;
+                }
+
+                return $groups;
+            },
+        ]);
     }
 
     /**
@@ -117,25 +137,10 @@ class ProductFormAttributeAbstract extends AbstractSubForm
                 'id_attribute' => $attributes[$name][self::ID]
             ],
             'constraints' => [
-                new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-                            //TODO more sophisticated validation
-                            if (!($dataToValidate)) {
-                                //$context->addViolation('Please enter attribute value.');
-                            }
-                        },
-                    ],
+                new NotBlank([
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
                 ]),
             ]
-            /*
-           'constraints' => [
-                new AttributeFieldNotBlank([
-                    'attributeFieldValue' => self::FIELD_VALUE,
-                    'attributeCheckboxFieldName' => self::FIELD_NAME,
-                ]),
-            ],
-            */
         ];
     }
 

@@ -158,7 +158,7 @@ $(document).ready(function() {
         });
 
 
-    $('.attribute_autocomplete').each(function(key, value) {
+    $('.kv_attribute_autocomplete').each(function(key, value) {
         var input = $(value);
         var id = input.attr('id_attribute') || null;
 
@@ -185,7 +185,6 @@ $(document).ready(function() {
             select: function(event, ui) {
                 var input = $(this);
                 input.val(ui.item.label);
-                input.attr('data-labelValue', ui.item.label);
                 input.attr('data-value', ui.item.value);
 
                 return false;
@@ -193,7 +192,6 @@ $(document).ready(function() {
             focus: function(event, ui) {
                 var input = $(this);
                 input.val(ui.item.label);
-                input.attr('data-labelValue', ui.item.label);
                 input.attr('data-value', ui.item.value);
 
                 return false;
@@ -201,4 +199,23 @@ $(document).ready(function() {
         });
     });
 
+    $(".kv_autocomplete_form222").submit(function(e) {
+        var form = $(this);
+        $('.kv_attribute_autocomplete').each(function(key, value) {
+            var input = $(this);
+            var inputValue = input.attr('data-value');
+            var name = 'hidden_' + input.context.name;
+
+            var hiddenInput = $("<input>")
+                .attr('type', 'hidden')
+                .attr('name', name).val(inputValue);
+
+            form.append($(hiddenInput));
+
+            console.log($(hiddenInput));
+        });
+
+        //e.preventDefault();
+        //return false;
+    });
 });
