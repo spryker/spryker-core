@@ -80,8 +80,13 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     protected function getCalculatedDiscountsUnitGrossAmount(\ArrayObject $calculatedDiscounts)
     {
         $totalDiscountUnitGrossAmount = 0;
+        $appliedDiscounts = [];
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            if (isset($appliedDiscounts[$calculatedDiscountTransfer->getIdDiscount()])) {
+                continue;
+            }
             $totalDiscountUnitGrossAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
+            $appliedDiscounts[$calculatedDiscountTransfer->getIdDiscount()] = true;
         }
 
         return $totalDiscountUnitGrossAmount;
