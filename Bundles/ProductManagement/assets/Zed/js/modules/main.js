@@ -140,8 +140,8 @@ $(document).ready(function() {
             .parents('.attribute_metadata_row')
             .find('.attribute_metadata_value');
 
-        if (!$item.prop('disabled')) {
-            $input.prop('disabled', !$item.prop('checked'));
+        if (!$item.prop('readonly')) {
+            $input.prop('readonly', !$item.prop('checked'));
         }
     });
 
@@ -153,7 +153,7 @@ $(document).ready(function() {
                 .parents('.attribute_metadata_row')
                 .find('.attribute_metadata_value');
 
-            input.prop('disabled', !$item.prop('checked'));
+            input.prop('readonly', !$item.prop('checked'));
             input.focus();
         });
 
@@ -199,7 +199,7 @@ $(document).ready(function() {
         });
     });
 
-    $(".kv_autocomplete_form222").submit(function(e) {
+/*    $(".kv_autocomplete_form222").submit(function(e) {
         var form = $(this);
         $('.kv_attribute_autocomplete').each(function(key, value) {
             var input = $(this);
@@ -217,5 +217,5 @@ $(document).ready(function() {
 
         //e.preventDefault();
         //return false;
-    });
+    });*/
 });

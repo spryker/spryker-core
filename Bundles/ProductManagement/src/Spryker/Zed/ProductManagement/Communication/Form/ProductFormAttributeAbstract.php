@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
-use Spryker\Zed\ProductManagement\Communication\Form\Constraints\AttributeFieldNotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -55,20 +54,19 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
         $resolver->setRequired(self::OPTION_ATTRIBUTE);
 
-        $resolver->setDefaults([
+/*        $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                $groups = [Constraint::DEFAULT_GROUP];
+                $groups = [ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT];
                 $originalData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
                 if ($submittedData[self::FIELD_NAME] && !$submittedData[self::FIELD_VALUE]) {
                     $groups[] = self::VALIDATION_GROUP_ATTRIBUTE_VALUE;
-                    $groups[] = ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT;
                 }
 
                 return $groups;
             },
-        ]);
+        ]);*/
     }
 
     /**
@@ -108,7 +106,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $builder
             ->add(self::FIELD_NAME, 'checkbox', [
                 'label' => $label,
-                'disabled' => $isDisabled,
+                'read_only' => $isDisabled,
                 'attr' => [
                     'class' => 'attribute_metadata_checkbox',
                     'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
@@ -129,7 +127,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $isDisabled = $attributes[$name][self::VALUE_DISABLED];
 
         return [
-            'disabled' => $isDisabled,
+            'read_only' => $isDisabled,
             'label' => false,
             'attr' => [
                 'class' => 'attribute_metadata_value',
@@ -137,11 +135,11 @@ class ProductFormAttributeAbstract extends AbstractSubForm
                 'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
                 'id_attribute' => $attributes[$name][self::ID]
             ],
-            'constraints' => [
-                new NotBlank([
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
-                ]),
-            ]
+            /*            'constraints' => [
+                            new NotBlank([
+                                'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
+                            ]),
+                        ]*/
         ];
     }
 
@@ -184,7 +182,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             if ($allowInput) {
                 $config['attr']['class'] .= ' kv_attribute_autocomplete';
             } else {
-                $config['disabled'] = true;
+                $config['read_only'] = true;
             }
         }
 
