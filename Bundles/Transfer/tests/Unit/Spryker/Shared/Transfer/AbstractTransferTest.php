@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Transfer;
 
+use ArrayObject;
 use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 
 /**
@@ -154,7 +155,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'bool' => null,
             'array' => [],
             'transfer' => null,
-            'transfer_collection' => new \ArrayObject(),
+            'transfer_collection' => new ArrayObject(),
         ];
 
         $this->assertEquals($expected, $given);
@@ -176,7 +177,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'bool' => null,
             'array' => [],
             'transfer' => null,
-            'transfer_collection' => new \ArrayObject(),
+            'transfer_collection' => new ArrayObject(),
         ];
 
         $this->assertEquals($expected, $given);
@@ -209,9 +210,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
                 'bool' => null,
                 'array' => [],
                 'transfer' => null,
-                'transfer_collection' => new \ArrayObject(),
+                'transfer_collection' => new ArrayObject(),
             ],
-            'transfer_collection' => new \ArrayObject(),
+            'transfer_collection' => new ArrayObject(),
         ];
 
         $this->assertEquals($expected, $given);
@@ -239,7 +240,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'bool' => null,
             'array' => [],
             'transfer' => $innerTransfer,
-            'transfer_collection' => new \ArrayObject(),
+            'transfer_collection' => new ArrayObject(),
         ];
 
         $this->assertEquals($expected, $given);
@@ -312,7 +313,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'bool' => null,
             'array' => [],
             'transfer' => null,
-            'transfer_collection' => new \ArrayObject(),
+            'transfer_collection' => new ArrayObject(),
         ];
 
         $this->assertEquals($expected, $given);
@@ -345,7 +346,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer
             ->setString('foo')
             ->setTransfer((new AbstractTransfer())->setInt(123))
-            ->setTransferCollection(new \ArrayObject([
+            ->setTransferCollection(new ArrayObject([
                 (new AbstractTransfer())->setBool(false),
                 (new AbstractTransfer())->setBool(true),
             ]));
@@ -433,7 +434,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     public function testSetTransferCollectionWithArrayObject()
     {
         $transfer = new AbstractTransfer();
-        $collection = new \ArrayObject([
+        $collection = new ArrayObject([
             new AbstractTransfer(),
             new AbstractTransfer(),
         ]);

@@ -117,6 +117,12 @@ class Config
          * e.g. config_default-production_DE.php
          */
         self::buildConfig('default-' . $environment . '_' . $storeName, $config);
+
+        /*
+         * e.g. config_local_test.php
+         */
+        self::buildConfig('local_test', $config);
+
         /*
          * e.g. config_local.php
          */
