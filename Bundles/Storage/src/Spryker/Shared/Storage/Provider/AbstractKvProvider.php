@@ -11,6 +11,9 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 
+/**
+ * @deprecated Not used anymore.
+ */
 abstract class AbstractKvProvider extends AbstractClientProvider
 {
 

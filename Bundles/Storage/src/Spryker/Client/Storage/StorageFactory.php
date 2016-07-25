@@ -67,7 +67,7 @@ class StorageFactory extends AbstractFactory
         // TODO: Remove defaults. The default Config::get() values are for BC only.
         $config = [
             'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_PROTOCOL, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
-            'port' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_PORT, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_PORT, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT)),
             'host' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_HOST, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
             'database' => Config::get(ApplicationConstants::YVES_STORAGE_REDIS_DATABASE, 0),
         ];

@@ -111,26 +111,33 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      *
      * @throws \Exception
      *
-     * @return string
+     * @return string|null
      */
     protected function getSavePath($saveHandler)
     {
         $path = null;
 
         if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
-            $path = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
-                . '://' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST)
-                . ':' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT);
+            $path = sprintf(
+                '%s://%s:%s?database=%s',
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
+                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_DATABASE, 0)
+            );
 
             if (Config::hasKey(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD)) {
                 $path = sprintf(
-                    '%s://h:%s@%s:%s',
+                    '%s://h:%s@%s:%s?database=%s',
                     Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
                     Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
                     Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
-                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT)
+                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
+                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_DATABASE, 0)
                 );
             }
+
+            return $path;
         }
 
         if (SessionConstants::SESSION_HANDLER_FILE === $saveHandler) {

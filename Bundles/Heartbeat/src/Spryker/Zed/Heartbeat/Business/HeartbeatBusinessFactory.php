@@ -112,9 +112,10 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_PROTOCOL, Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_PORT, Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT)),
+            'host' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_HOST, Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST)),
+            'database' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_DATABASE, 0),
         ];
 
         if (Config::hasKey(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD)) {
