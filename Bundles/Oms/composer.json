@@ -4,7 +4,11 @@
     "psr-0": {
       "Spryker": "src/",
       "Functional": "tests/",
-      "Unit": "tests/"
+      "Unit": "tests/",
+      "Acceptance": "tests/"
+    },
+    "psr-4": {
+      "Oms\\Module\\": "tests/_support/Module"
     }
   },
   "require": {
