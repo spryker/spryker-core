@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Money\Converter;
 
+use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
+
 class CentToDecimalConverter implements CentToDecimalConverterInterface
 {
 
@@ -19,7 +21,14 @@ class CentToDecimalConverter implements CentToDecimalConverterInterface
      */
     public function convert($value)
     {
-        return (float)number_format($value / self::PRICE_PRECISION, 2, '.', '');
+        if (!is_int($value)) {
+            throw new InvalidConverterArgumentException(sprintf(
+                'Only integer values allowed for conversion to float. Current type is "%s"',
+                gettype($value)
+            ));
+        }
+
+        return (float)($value / static::PRICE_PRECISION);
     }
 
 }

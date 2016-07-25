@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\Money\Converter;
 
 use Spryker\Shared\Money\Converter\DecimalToCentConverter;
+use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
 /**
  * @group Unit
@@ -15,9 +16,9 @@ use Spryker\Shared\Money\Converter\DecimalToCentConverter;
  * @group Shared
  * @group Money
  * @group Converter
- * @group FloatToIntegerConverter
+ * @group DecimalToCentConverter
  */
-class FloatToIntegerConverterTest extends \PHPUnit_Framework_TestCase
+class DecimalToCentConverterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -41,11 +42,24 @@ class FloatToIntegerConverterTest extends \PHPUnit_Framework_TestCase
     public function convertValues()
     {
         return [
+            [10.01, 1001],
+            [10.10, 1010],
             [10.00, 1000],
             [1.00, 100],
             [0.10, 10],
             [0.01, 1],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testConvertShouldThrowExceptionIfValueNotInt()
+    {
+        $this->expectException(InvalidConverterArgumentException::class);
+
+        $centToDecimalConverter = new DecimalToCentConverter();
+        $centToDecimalConverter->convert(100);
     }
 
 }

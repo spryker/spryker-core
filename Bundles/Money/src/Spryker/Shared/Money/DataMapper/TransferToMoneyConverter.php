@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Money\Converter;
+namespace Spryker\Shared\Money\DataMapper;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
@@ -21,7 +21,10 @@ class TransferToMoneyConverter implements TransferToMoneyConverterInterface
      */
     public function convert(MoneyTransfer $moneyTransfer)
     {
-        return new Money($moneyTransfer->getAmount(), new Currency($moneyTransfer->getCurrency()));
+        return new Money(
+            $moneyTransfer->getAmount(),
+            new Currency($moneyTransfer->getCurrency())
+        );
     }
 
 }

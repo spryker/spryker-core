@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 
+use NumberFormatter;
+
 class IntlMoneyFormatterWithCurrency extends AbstractIntlMoneyFormatter
 {
 
@@ -17,7 +19,7 @@ class IntlMoneyFormatterWithCurrency extends AbstractIntlMoneyFormatter
      */
     protected function getNumberFormatter($localeName)
     {
-        $numberFormatter = new \NumberFormatter($localeName, \NumberFormatter::CURRENCY);
+        $numberFormatter = new NumberFormatter($localeName, NumberFormatter::CURRENCY);
         $numberFormatter->setPattern(str_replace(' ', ' ', $numberFormatter->getPattern()));
 
         return $numberFormatter;

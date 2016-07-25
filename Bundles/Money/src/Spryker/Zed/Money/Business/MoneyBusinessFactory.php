@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Money\Business;
 
 use Spryker\Shared\Money\Builder\MoneyBuilder;
-use Spryker\Shared\Money\Converter\DecimalToCentConverter;
 use Spryker\Shared\Money\Converter\CentToDecimalConverter;
-use Spryker\Shared\Money\Converter\MoneyToTransferConverter;
-use Spryker\Shared\Money\Converter\TransferToMoneyConverter;
+use Spryker\Shared\Money\Converter\DecimalToCentConverter;
+use Spryker\Shared\Money\DataMapper\MoneyToTransferConverter;
+use Spryker\Shared\Money\DataMapper\TransferToMoneyConverter;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
@@ -72,7 +72,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Money\Converter\MoneyToTransferConverterInterface
+     * @return \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface
      */
     protected function createMoneyToTransferConverter()
     {
@@ -80,7 +80,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Money\Converter\TransferToMoneyConverterInterface
+     * @return \Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface
      */
     protected function createTransferToMoneyConverter()
     {

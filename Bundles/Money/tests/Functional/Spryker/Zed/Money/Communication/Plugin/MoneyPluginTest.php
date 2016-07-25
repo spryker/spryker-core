@@ -111,7 +111,7 @@ class MoneyPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testConvertDecimalToCentShouldReturnFloat()
+    public function testConvertDecimalToCentShouldReturnInt()
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertDecimalToCent(10.00);

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Money\Converter;
+namespace Spryker\Shared\Money\DataMapper;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 
+use NumberFormatter;
+
 class IntlMoneyFormatterWithoutCurrency extends AbstractIntlMoneyFormatter
 {
 
@@ -17,8 +19,8 @@ class IntlMoneyFormatterWithoutCurrency extends AbstractIntlMoneyFormatter
      */
     protected function getNumberFormatter($localeName)
     {
-        $numberFormatter = new \NumberFormatter($localeName, \NumberFormatter::DECIMAL);
-        $numberFormatter->setAttribute(\NumberFormatter::FRACTION_DIGITS, 2);
+        $numberFormatter = new NumberFormatter($localeName, NumberFormatter::DECIMAL);
+        $numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
 
         return $numberFormatter;
     }

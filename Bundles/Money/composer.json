@@ -11,7 +11,8 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0"
+    "spryker/kernel": "^2.0.0",
+    "mathiasverraes/money": "~3.0"
   },
   "description": "Money bundle",
   "license": "proprietary",

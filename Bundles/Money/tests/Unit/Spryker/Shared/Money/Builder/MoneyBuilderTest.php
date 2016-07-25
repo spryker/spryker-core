@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Builder\MoneyBuilderInterface;
-use Spryker\Shared\Money\Converter\MoneyToTransferConverterInterface;
+use Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
 
 /**
@@ -50,7 +50,6 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_INTEGER);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
         $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
     /**
@@ -63,7 +62,6 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_INTEGER, self::OTHER_CURRENCY);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
         $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
     /**
@@ -76,7 +74,6 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_FLOAT);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
         $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
     /**
@@ -89,7 +86,6 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_FLOAT, self::OTHER_CURRENCY);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
         $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
     /**
@@ -102,7 +98,6 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_STRING);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
         $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
     /**
@@ -115,7 +110,6 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_STRING, self::OTHER_CURRENCY);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
         $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
     /**
@@ -150,7 +144,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Shared\Money\Converter\MoneyToTransferConverter
+     * @return \Spryker\Shared\Money\DataMapper\MoneyToTransferConverter
      */
     protected function getMoneyToTransferConverterMock()
     {
@@ -169,8 +163,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount($money->getAmount())
-            ->setCurrency($money->getCurrency()->getCode())
-            ->setHash(spl_object_hash($money));
+            ->setCurrency($money->getCurrency()->getCode());
 
         return $moneyTransfer;
     }

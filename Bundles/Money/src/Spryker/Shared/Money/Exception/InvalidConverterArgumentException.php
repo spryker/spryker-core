@@ -9,6 +9,6 @@ namespace Spryker\Shared\Money\Exception;
 
 use InvalidArgumentException;
 
-class InvalidAmountArgumentException extends InvalidArgumentException
+class InvalidConverterArgumentException extends InvalidArgumentException
 {
 }

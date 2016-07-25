@@ -60,7 +60,7 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use Money Bundle instead
      *
      * @param string $isoCode
      *
@@ -86,7 +86,7 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use Money Bundle instead
      *
      * @param string $currencyIsoCode
      *
@@ -127,7 +127,7 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use Money Bundle instead
      *
      * Ceil the current value
      * Solves precision lose problems, like in:
@@ -173,7 +173,7 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use Money Bundle instead
      *
      * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      * @param int|float $value
@@ -200,7 +200,7 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use Money Bundle instead
      *
      * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      * @param int|float $value

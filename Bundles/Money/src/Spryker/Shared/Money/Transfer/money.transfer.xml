@@ -7,7 +7,6 @@
         <property name="amount" type="string" />
         <property name="currency" type="string" />
         <property name="locale" type="Locale" />
-        <property name="hash" type="string" />
     </transfer>
 
     <transfer name="Locale">

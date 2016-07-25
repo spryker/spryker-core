@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Money\Converter;
+namespace Unit\Spryker\Shared\Money\DataMapper;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
-use Spryker\Shared\Money\Converter\MoneyToTransferConverter;
+use Spryker\Shared\Money\DataMapper\MoneyToTransferConverter;
 
 /**
  * @group Unit
@@ -38,7 +38,6 @@ class MoneyToTransferConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame((string)self::AMOUNT, $moneyTransfer->getAmount());
         $this->assertSame(self::CURRENCY, $moneyTransfer->getCurrency());
-        $this->assertNotNull($moneyTransfer->getHash());
     }
 
 }

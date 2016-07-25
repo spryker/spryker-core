@@ -61,9 +61,9 @@ class MoneyFormatterCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFormatterWhichIsNotAddedShouldThrowException()
     {
-        $moneyFormatterCollection = new MoneyFormatterCollection();
-
         $this->expectException(FormatterNotFoundException::class);
+
+        $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterCollection->getFormatter(self::FORMATTER);
     }
 
