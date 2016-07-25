@@ -11,6 +11,8 @@ use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
@@ -54,7 +56,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
         $resolver->setRequired(self::OPTION_ATTRIBUTE);
 
-/*        $resolver->setDefaults([
+        $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $groups = [ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT];
                 $originalData = $form->getConfig()->getData();
@@ -66,7 +68,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
                 return $groups;
             },
-        ]);*/
+        ]);
     }
 
     /**
@@ -135,11 +137,11 @@ class ProductFormAttributeAbstract extends AbstractSubForm
                 'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
                 'id_attribute' => $attributes[$name][self::ID]
             ],
-            /*            'constraints' => [
-                            new NotBlank([
-                                'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
-                            ]),
-                        ]*/
+            'constraints' => [
+                new NotBlank([
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
+                ]),
+            ]
         ];
     }
 

@@ -199,7 +199,7 @@ $(document).ready(function() {
         });
     });
 
-/*    $(".kv_autocomplete_form222").submit(function(e) {
+    $(".kv_autocomplete_form").submit(function(e) {
         var form = $(this);
         $('.kv_attribute_autocomplete').each(function(key, value) {
             var input = $(this);
@@ -217,5 +217,5 @@ $(document).ready(function() {
 
         //e.preventDefault();
         //return false;
-    });*/
+    });
 });
