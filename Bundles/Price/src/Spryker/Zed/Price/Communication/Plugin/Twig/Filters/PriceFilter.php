@@ -8,12 +8,23 @@
 namespace Spryker\Zed\Price\Communication\Plugin\Twig\Filters;
 
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class PriceFilter
+/**
+ * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
+ * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
+ */
+class PriceFilter extends AbstractPlugin
 {
 
+    /**
+     * @deprecated
+     */
     const DECIMALS = 2;
 
+    /**
+     * @deprecated
+     */
     const DIVIDER = 100;
 
     /**
@@ -36,9 +47,10 @@ class PriceFilter
      */
     public function getConvertedPrice($price)
     {
-        return $this->currencyManager->format(
-            $this->currencyManager->convertCentToDecimal($price)
-        );
+        $moneyPlugin = $this->getFactory()->getMoneyPlugin();
+        $moneyTransfer = $moneyPlugin->getMoney($price);
+
+        return $moneyPlugin->formatWithSymbol($moneyTransfer);
     }
 
 }

@@ -10,7 +10,7 @@ interface MoneyBuilderInterface
 {
 
     /**
-     * @param int|float $amount
+     * @param int|float|string $amount
      * @param string null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer

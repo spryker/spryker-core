@@ -110,7 +110,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Money\Converter\CentToDecimalConverterInterface
      */
-    public function createIntegerToFloatConverter()
+    public function createCentToDecimalConverter()
     {
         return new CentToDecimalConverter();
     }
@@ -118,7 +118,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface
      */
-    public function createFloatToIntegerConverter()
+    public function createDecimalToCentConverter()
     {
         return new DecimalToCentConverter();
     }

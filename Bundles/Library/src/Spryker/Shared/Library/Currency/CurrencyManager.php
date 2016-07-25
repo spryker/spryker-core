@@ -86,6 +86,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param string $currencyIsoCode
      *
      * @return \Spryker\Shared\Library\Currency\CurrencyInterface
@@ -171,6 +173,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      * @param int|float $value
      * @param bool $includeSymbol
@@ -196,6 +200,8 @@ class CurrencyManager implements CurrencyManagerInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      * @param int|float $value
      *
