@@ -42,7 +42,7 @@
 
 {% block content %}
 
-    {{ form_start(form) }}
+    {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Specification' } %}
 

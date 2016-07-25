@@ -56,7 +56,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         }
         $formData[ProductFormAdd::SEO] = $seoData;
 
-        $attributeValueCollection = $this->convertAbstractAttributesToFormValues($attributeProcessor);
+        $attributeValueCollection = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor);
 
         $formData[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $attributeValueCollection;
         $formData[ProductFormAdd::ATTRIBUTE_VARIANT] = [];

@@ -26,7 +26,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     const PRODUCT_SPECIFIC = 'product_specific';
     const NAME_DISABLED = 'name_disabled';
     const VALUE_DISABLED = 'value_disabled';
-    const INPUT = 'input';
+    const INPUT_TYPE = 'input_type';
     const ALLOW_INPUT = 'allow_input';
     const ID = 'id';
 
@@ -48,7 +48,6 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::OPTION_ATTRIBUTE);
-        $resolver->setRequired(ProductFormAdd::SUB_FORM_NAME);
     }
 
     /**
@@ -150,7 +149,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
 
-        $inputType = $attributes[$name][self::INPUT];
+        $inputType = $attributes[$name][self::INPUT_TYPE];
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
         $isMultiple = $attributes[$name][self::MULTIPLE];
 
@@ -177,7 +176,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         }
         else {
             if ($allowInput) {
-                $config['attr']['class'] .= ' attribute_autocomplete';
+                $config['attr']['class'] .= ' kv_attribute_autocomplete';
             } else {
                 $config['disabled'] = true;
             }
@@ -186,34 +185,6 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $builder->add(self::FIELD_VALUE, $input, $config);
 
         return $this;
-    }
-
-    public function foo()
-    {
-        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
-            'label' => 'Attribute key',
-            'url' => '/product-management/attributes/keys',
-            'constraints' => [
-                new NotBlank(),
-                new Callback([
-                    'methods' => [
-                        function ($key, ExecutionContextInterface $context) {
-                            $keyCount = $this->productManagementQueryContainer
-                                ->queryProductAttributeKey()
-                                ->joinSpyProductManagementAttribute()
-                                ->filterByKey($key)
-                                ->count();
-
-                            if ($keyCount > 0) {
-                                $context->addViolation('Attribute key is already used');
-                            }
-                        },
-                    ],
-                    'groups' => [self::GROUP_UNIQUE_KEY]
-                ]),
-            ],
-            'disabled' => $options[self::OPTION_IS_UPDATE],
-        ]);
     }
 
 }

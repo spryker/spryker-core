@@ -118,7 +118,8 @@ class ProductFormAdd extends AbstractType
      */
     protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
-        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+        $localeCollection = $this->getLocaleCollection();
+        foreach ($localeCollection as $localeCode) {
             $name = self::getGeneralFormName($localeCode);
             $this->addGeneralForm($builder, $name);
         }
@@ -134,7 +135,8 @@ class ProductFormAdd extends AbstractType
      */
     protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
     {
-        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+        $localeCollection = $this->getLocaleCollection();
+        foreach ($localeCollection as $localeCode) {
             $name = self::getSeoFormName($localeCode);
             $this->addSeoForm($builder, $name, $options);
         }
@@ -150,7 +152,8 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
     {
-        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+        $localeCollection = $this->getLocaleCollection(true);
+        foreach ($localeCollection as $localeCode) {
             $name = self::getAbstractAttributeFormName($localeCode);
             $this->addAttributeAbstractForm($builder, $name, $options);
         }
@@ -199,8 +202,7 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormGeneral(), [
-                self::SUB_FORM_NAME => $name,
+            ->add($name, new ProductFormGeneral(self::GENERAL), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -230,15 +232,16 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new ProductFormAttributeAbstract(),
+                'type' => new ProductFormAttributeAbstract(self::ATTRIBUTE_ABSTRACT),
                 'options' => [
                     ProductFormAttributeAbstract::OPTION_ATTRIBUTE => $options,
-                    self::SUB_FORM_NAME => $name,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
+                    return;
+                    sd($attributes);
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
@@ -270,15 +273,15 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_VARIANT, 'collection', [
-                'type' => new ProductFormAttributeVariant(),
+                'type' => new ProductFormAttributeVariant(self::ATTRIBUTE_ABSTRACT),
                 'options' => [
                     ProductFormAttributeVariant::OPTION_ATTRIBUTE => $options,
-                    self::SUB_FORM_NAME => 'ProductAttributeVariant',
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
+                    return;
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
@@ -339,9 +342,8 @@ class ProductFormAdd extends AbstractType
     protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormSeo(), [
+            ->add($name, new ProductFormSeo(self::SEO), [
                 'label' => false,
-                self::SUB_FORM_NAME => $name,
             ]);
 
         return $this;
@@ -385,6 +387,25 @@ class ProductFormAdd extends AbstractType
     public static function getAbstractAttributeFormName($localeCode)
     {
         return self::getLocalizedPrefixName(self::ATTRIBUTE_ABSTRACT, $localeCode);
+    }
+
+    /**
+     * @param bool $includeDefault
+     *
+     * @return array
+     */
+    public function getLocaleCollection($includeDefault = false)
+    {
+        $result = [];
+        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
+            $result[] = $localeCode;
+        }
+
+        if ($includeDefault) {
+            $result[] = AbstractProductFormDataProvider::DEFAULT_LOCALE;
+        }
+
+        return $result;
     }
 
 }

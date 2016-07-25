@@ -25,6 +25,17 @@ class AbstractProductFormDataProvider
     const LOCALE_NAME = 'locale_name';
     const DEFAULT_LOCALE = 'default';
 
+    const FORM_FIELD_ID = 'id';
+    const FORM_FIELD_VALUE = 'value';
+    const FORM_FIELD_NAME = 'name';
+    const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+    const FORM_FIELD_LABEL = 'label';
+    const FORM_FIELD_MULTIPLE = 'multiple';
+    const FORM_FIELD_INPUT_TYPE = 'input_type';
+    const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+    const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+    const FORM_FIELD_ALLOW_INPUT = 'allow_input';
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -102,8 +113,8 @@ class AbstractProductFormDataProvider
         $isNew = $idProductAbstract === null;
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
 
-        $formOptions[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->convertAbstractAttributesToFormValues($attributes, $isNew);
-        $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormValues($attributes, $isNew);
+        $formOptions[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
+        $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
 
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
@@ -145,36 +156,6 @@ class AbstractProductFormDataProvider
     {
         return $this->productManagementFacade
             ->getProductAttributesByAbstractProductId($idProductAbstract);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $attributes
-     *
-     * @return array
-     */
-    public function getLocalizedAttributesAsArray($attributes)
-    {
-        $localizedAttributes = [];
-        foreach ($attributes as $attribute) {
-            $localizedAttributes[$attribute->getLocale()->getLocaleName()] = $attribute->toArray();
-        }
-
-        return $localizedAttributes;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $attributes
-     *
-     * @return array
-     */
-    public function getAbstractLocalizedAttributesAsArray($attributes)
-    {
-        $localizedAttributes = [];
-        foreach ($attributes as $attribute) {
-            $localizedAttributes[$attribute->getLocale()->getLocaleName()] = $attribute->toArray();
-        }
-
-        return $localizedAttributes;
     }
 
     /**
@@ -222,7 +203,7 @@ class AbstractProductFormDataProvider
     public function getAttributeVariantDefaultFields()
     {
         $attributeProcessor = new AttributeProcessor();
-        return $this->convertAbstractAttributesToFormValues($attributeProcessor, true);
+        return $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, true);
     }
 
     /**
@@ -232,7 +213,7 @@ class AbstractProductFormDataProvider
     {
         $availableLocales = $this->localeFacade->getAvailableLocales();
         $attributeProcessor = $this->getAttributesForAbstractProduct(null);
-        $data = $this->convertAbstractAttributesToFormValues($attributeProcessor, true);
+        $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, true);
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
@@ -280,14 +261,14 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertAbstractAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    protected function convertAbstractLocalizedAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
         $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributes);
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
+            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : 'foo';
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
             $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
             $valueDisabled = true;
@@ -296,40 +277,39 @@ class AbstractProductFormDataProvider
                 $checkboxDisabled = true;
             }
 
+            if ($isNew) {
+                $value = null;
+            }
+
             $values[$type] = [
-                'id' => $attributeTransfer->getIdProductManagementAttribute(),
-                'value' => $value,
-                'name' => isset($value),
-                'product_specific' => $isProductSpecificAttribute,
-                'label' => $this->getLocalizedAttributeMetadataKey($type),
-                'multiple' => $isMultiple,
-                'input' => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
-                'value_disabled' => $valueDisabled,
-                'name_disabled' => $checkboxDisabled,
-                'allow_input' => $attributeTransfer->getAllowInput()
+                self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                self::FORM_FIELD_VALUE => $value,
+                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_INPUT_TYPE => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
+                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                self::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput()
             ];
         }
 
-        //append product custom attributes
-        foreach ($productAttributes as $key => $value) {
-            $isMultiple = isset($value) && is_array($value);
-            if (!array_key_exists($key, $values)) {
-                $values[$key] = [
-                    'id' => null,
-                    'value' => $value,
-                    'name' => false,
-                    'product_specific' => true,
-                    'label' => $this->getLocalizedAttributeMetadataKey($key),
-                    'multiple' => $isMultiple,
-                    'input' => 'text',
-                    'value_disabled' => true,
-                    'name_disabled' => true,
-                    'allow_input' => false
-                ];
-            }
-        }
+        $productValues = $this->getProductAttributesFormFields($productAttributes);
 
-        return $values;
+        return array_merge($productValues, $values);
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param bool|false $isNew
+     *
+     * @return array
+     */
+    protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    {
+        $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, $isNew);
+        return $this->removeValueFromData($data);
     }
 
     /**
@@ -367,34 +347,74 @@ class AbstractProductFormDataProvider
             }
 
             $values[$type] = [
-                'id' => $attributeTransfer->getIdProductManagementAttribute(),
-                'value' => $value,
-                'name' => isset($value),
-                'product_specific' => $isProductSpecificAttribute,
-                'label' => $this->getLocalizedAttributeMetadataKey($type),
-                'multiple' => $isMulti,
-                'input' => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
-                'value_disabled' => $valueDisabled,
-                'name_disabled' => $checkboxDisabled,
-                'allow_input' => $attributeTransfer->getAllowInput()
+                self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                self::FORM_FIELD_VALUE => $value,
+                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                self::FORM_FIELD_MULTIPLE => $isMulti,
+                self::FORM_FIELD_INPUT_TYPE => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
+                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                self::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput()
             ];
         }
 
-        //append product custom attributes
+        $productValues = $this->getProductAttributesFormFields($productAttributes);
+
+        return array_merge($productValues, $values);
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param bool|false $isNew
+     *
+     * @return array
+     */
+    protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    {
+        $data = $this->convertVariantAttributesToFormValues($attributeProcessor, $isNew);
+        return $this->removeValueFromData($data);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function removeValueFromData(array $data)
+    {
+        $result = [];
+        foreach ($data as $type => $typeData) {
+            unset($typeData['value']);
+            $result[$type] = $typeData;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    protected function getProductAttributesFormFields(array $productAttributes)
+    {
+        $values = [];
         foreach ($productAttributes as $key => $value) {
-            $isMulti = isset($value) && is_array($value);
+            $isMultiple = isset($value) && is_array($value);
             if (!array_key_exists($key, $values)) {
                 $values[$key] = [
-                    'id' => null,
-                    'value' => $value,
-                    'name' => false,
-                    'product_specific' => true,
-                    'label' => $this->getLocalizedAttributeMetadataKey($key),
-                    'multiple' => $isMulti,
-                    'input' => 'text',
-                    'value_disabled' => true,
-                    'name_disabled' => true,
-                    'allow_input' => false
+                    self::FORM_FIELD_ID => null,
+                    self::FORM_FIELD_VALUE => $value,
+                    self::FORM_FIELD_NAME => false,
+                    self::FORM_FIELD_PRODUCT_SPECIFIC => true,
+                    self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
+                    self::FORM_FIELD_MULTIPLE => $isMultiple,
+                    self::FORM_FIELD_INPUT_TYPE => 'text',
+                    self::FORM_FIELD_VALUE_DISABLED => true,
+                    self::FORM_FIELD_NAME_DISABLED => true,
+                    self::FORM_FIELD_ALLOW_INPUT => false
                 ];
             }
         }
