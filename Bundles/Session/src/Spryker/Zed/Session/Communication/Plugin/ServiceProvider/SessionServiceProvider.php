@@ -74,23 +74,23 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         switch ($saveHandler) {
             case SessionConstants::SESSION_HANDLER_COUCHBASE:
-                $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
+                $savePath = !empty($savePath) ? $savePath : null;
 
                 $sessionHelper->registerCouchbaseSessionHandler($savePath);
                 break;
 
             case SessionConstants::SESSION_HANDLER_MYSQL:
-                $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
+                $savePath = !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerMysqlSessionHandler($savePath);
                 break;
 
             case SessionConstants::SESSION_HANDLER_REDIS:
-                $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
+                $savePath = !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerRedisSessionHandler($savePath);
                 break;
 
             case SessionConstants::SESSION_HANDLER_FILE:
-                $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
+                $savePath = !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerFileSessionHandler($savePath);
                 break;
 
@@ -98,7 +98,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                 if (isset($saveHandler) && !empty($saveHandler)) {
                     ini_set('session.save_handler', $saveHandler);
                 }
-                if (isset($savePath) && !empty($savePath)) {
+                if (!empty($savePath)) {
                     session_save_path($savePath);
                 }
         }
