@@ -20,7 +20,6 @@ class IntlMoneyFormatterWithCurrency extends AbstractIntlMoneyFormatter
     protected function getNumberFormatter($localeName)
     {
         $numberFormatter = new NumberFormatter($localeName, NumberFormatter::CURRENCY);
-        $numberFormatter->setPattern(str_replace(' ', ' ', $numberFormatter->getPattern()));
 
         return $numberFormatter;
     }

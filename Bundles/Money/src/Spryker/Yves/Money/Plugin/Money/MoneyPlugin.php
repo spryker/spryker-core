@@ -18,14 +18,36 @@ class MoneyPlugin extends AbstractPlugin
 {
 
     /**
-     * @param int|float|string $amount
+     * @param int $amount
      * @param string|null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function getMoney($amount, $currency = null)
+    public function fromInteger($amount, $currency = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->getMoney($amount, $currency);
+        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $currency);
+    }
+
+    /**
+     * @param float $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $currency = null)
+    {
+        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $currency);
+    }
+
+    /**
+     * @param string $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $currency = null)
+    {
+        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $currency);
     }
 
     /**
@@ -63,7 +85,7 @@ class MoneyPlugin extends AbstractPlugin
      */
     public function convertCentToDecimal($value)
     {
-        return $this->getFactory()->createIntegerToFloatConverter()->convert($value);
+        return $this->getFactory()->createCentToDecimalConverter()->convert($value);
     }
 
     /**
@@ -73,7 +95,7 @@ class MoneyPlugin extends AbstractPlugin
      */
     public function convertDecimalToCent($value)
     {
-        return $this->getFactory()->createFloatToIntegerConverter()->convert($value);
+        return $this->getFactory()->createDecimalToCentConverter()->convert($value);
     }
 
 }

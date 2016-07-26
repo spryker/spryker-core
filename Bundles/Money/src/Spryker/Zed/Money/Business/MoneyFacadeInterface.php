@@ -17,17 +17,44 @@ interface MoneyFacadeInterface
     /**
      * Specification:
      * - Converts int amount and currency to MoneyTransfer Object
-     * - Converts float amount and currency to MoneyTransfer Object
-     * - If currency is not provided it will use configured one from Store
+     * - If currency is not provided it will use from Store configured one
      *
      * @api
      *
-     * @param int|float $amount
+     * @param int $amount
      * @param string|null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function getMoney($amount, $currency = null);
+    public function fromInteger($amount, $currency = null);
+
+    /**
+     * Specification:
+     * - Converts float amount and currency to MoneyTransfer Object
+     * - If currency is not provided it will use from Store configured one
+     *
+     * @api
+     *
+     * @param float $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $currency = null);
+
+    /**
+     * Specification:
+     * - Converts string amount and currency to MoneyTransfer Object
+     * - If currency is not provided it will use from Store configured one
+     *
+     * @api
+     *
+     * @param string $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $currency = null);
 
     /**
      * Specification:

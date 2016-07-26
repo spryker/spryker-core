@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Builder\MoneyBuilderInterface;
+use Spryker\Shared\Money\Converter\DecimalToCentConverter;
 use Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
 
@@ -37,111 +38,124 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
+        $moneyBuilder = $this->getMoneyBuilder();
         $this->assertInstanceOf(MoneyBuilderInterface::class, $moneyBuilder);
     }
 
     /**
      * @return void
      */
-    public function testGetMoneyWithIntegerAndWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
+    public function testFromIntegerWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
     {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
+        $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_INTEGER);
-        $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
+        $moneyTransfer = $moneyBuilder->fromInteger(self::AMOUNT_INTEGER);
+        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
         $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
      * @return void
      */
-    public function testGetMoneyWithIntegerAndCurrencyShouldReturnMoneyTransfer()
+    public function testFromIntegerWithCurrencyShouldReturnMoneyTransfer()
     {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
+        $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_INTEGER, self::OTHER_CURRENCY);
-        $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
+        $moneyTransfer = $moneyBuilder->fromInteger(self::AMOUNT_INTEGER, self::OTHER_CURRENCY);
+        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
         $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
      * @return void
      */
-    public function testGetMoneyWithFloatAndWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
-    {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
-
-        $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_FLOAT);
-        $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetMoneyWithFloatAndCurrencyShouldReturnMoneyTransfer()
-    {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
-
-        $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_FLOAT, self::OTHER_CURRENCY);
-        $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetMoneyWithStringAndWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
-    {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
-
-        $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_STRING);
-        $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetMoneyWithStringAndCurrencyShouldReturnMoneyTransfer()
-    {
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
-
-        $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_STRING, self::OTHER_CURRENCY);
-        $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
-    }
-
-    /**
-     * @dataProvider forbiddenAmountTypes
-     *
-     * @return void
-     */
-    public function testGetMoneyShouldThrowExceptionWhenAmountTypeNotSupported($forbiddenAmountType)
+    public function testFromIntegerWithoutIntegerShouldThrowException()
     {
         $this->expectException(InvalidAmountArgumentException::class);
 
-        $moneyBuilder = new MoneyBuilder($this->getMoneyToTransferConverterMock(), self::DEFAULT_CURRENCY);
-        $moneyBuilder->getMoney($forbiddenAmountType);
+        $moneyBuilder = $this->getMoneyBuilder();
+        $moneyBuilder->fromInteger(self::AMOUNT_STRING);
     }
 
     /**
-     * @return array
+     * @return void
      */
-    public function forbiddenAmountTypes()
+    public function testFromFloatWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
     {
-        return [
-            ['10.00'],
-            ['10,00'],
-            ['1.000'],
-            ['1,000'],
-            [[]],
-            [new \stdClass()],
-            [true],
-            [function (){}],
-            [STDIN],
-        ];
+        $moneyBuilder = $this->getMoneyBuilder();
+
+        $moneyTransfer = $moneyBuilder->fromFloat(self::AMOUNT_FLOAT);
+        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromFloatWithCurrencyShouldReturnMoneyTransfer()
+    {
+        $moneyBuilder = $this->getMoneyBuilder();
+
+        $moneyTransfer = $moneyBuilder->fromFloat(self::AMOUNT_FLOAT, self::OTHER_CURRENCY);
+        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromFloatWithoutFloatShouldThrowException()
+    {
+        $this->expectException(InvalidAmountArgumentException::class);
+
+        $moneyBuilder = $this->getMoneyBuilder();
+        $moneyBuilder->fromFloat(self::AMOUNT_STRING);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromStringWithoutCurrencyShouldReturnMoneyTransferWithDefaultCurrency()
+    {
+        $moneyBuilder = $this->getMoneyBuilder();
+
+        $moneyTransfer = $moneyBuilder->fromString(self::AMOUNT_STRING);
+        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromStringWithCurrencyShouldReturnMoneyTransfer()
+    {
+        $moneyBuilder = $this->getMoneyBuilder();
+
+        $moneyTransfer = $moneyBuilder->fromString(self::AMOUNT_STRING, self::OTHER_CURRENCY);
+        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromStringWithoutStringShouldThrowException()
+    {
+        $this->expectException(InvalidAmountArgumentException::class);
+
+        $moneyBuilder = $this->getMoneyBuilder();
+        $moneyBuilder->fromString(self::AMOUNT_INTEGER);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromStringWithInvalidStringShouldThrowException()
+    {
+        $this->expectException(InvalidAmountArgumentException::class);
+
+        $moneyBuilder = $this->getMoneyBuilder();
+        $moneyBuilder->fromString(self::AMOUNT_STRING . '.00');
     }
 
     /**
@@ -170,6 +184,14 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer->setCurrency($currencyTransfer);
 
         return $moneyTransfer;
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
+     */
+    protected function getMoneyBuilder()
+    {
+        return new MoneyBuilder($this->getMoneyToTransferConverterMock(), new DecimalToCentConverter(), self::DEFAULT_CURRENCY);
     }
 
 }

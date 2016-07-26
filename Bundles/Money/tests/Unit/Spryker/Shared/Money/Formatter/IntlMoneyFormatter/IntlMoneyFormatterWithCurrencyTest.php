@@ -50,7 +50,7 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
         $moneyTransfer->setLocale($localeTransfer);
 
         $formatted = $intlMoneyFormatter->format($moneyTransfer);
-        $this->assertSame('10,00 €', $formatted);
+        $this->assertSame('10,00 €', $formatted);
     }
 
 }

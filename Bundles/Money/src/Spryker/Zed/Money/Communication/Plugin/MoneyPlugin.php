@@ -17,14 +17,36 @@ class MoneyPlugin extends AbstractPlugin
 {
 
     /**
-     * @param int|float $amount
+     * @param int $amount
      * @param string|null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function getMoney($amount, $currency = null)
+    public function fromInteger($amount, $currency = null)
     {
-        return $this->getFacade()->getMoney($amount, $currency);
+        return $this->getFacade()->fromInteger($amount, $currency);
+    }
+
+    /**
+     * @param float $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $currency = null)
+    {
+        return $this->getFacade()->fromFloat($amount, $currency);
+    }
+
+    /**
+     * @param string $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $currency = null)
+    {
+        return $this->getFacade()->fromString($amount, $currency);
     }
 
     /**

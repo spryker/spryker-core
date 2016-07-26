@@ -30,6 +30,7 @@ class MoneyFactory extends AbstractFactory
     {
         return new MoneyBuilder(
             $this->createMoneyToTransferConverter(),
+            $this->createDecimalToCentConverter(),
             $this->getStore()->getCurrencyIsoCode()
         );
     }
@@ -82,7 +83,7 @@ class MoneyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface
      */
-    protected function createTransferToMoneyConverter()
+    protected function createTransferToMoneyDataMapper()
     {
         return new TransferToMoneyConverter();
     }
@@ -93,7 +94,7 @@ class MoneyFactory extends AbstractFactory
     protected function createIntlFormatterCurrency()
     {
         return new IntlMoneyFormatterWithCurrency(
-            $this->createTransferToMoneyConverter()
+            $this->createTransferToMoneyDataMapper()
         );
     }
 
@@ -103,14 +104,14 @@ class MoneyFactory extends AbstractFactory
     protected function createIntlFormatterDecimal()
     {
         return new IntlMoneyFormatterWithoutCurrency(
-            $this->createTransferToMoneyConverter()
+            $this->createTransferToMoneyDataMapper()
         );
     }
 
     /**
      * @return \Spryker\Shared\Money\Converter\CentToDecimalConverterInterface
      */
-    public function createIntegerToFloatConverter()
+    public function createCentToDecimalConverter()
     {
         return new CentToDecimalConverter();
     }
@@ -118,7 +119,7 @@ class MoneyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface
      */
-    public function createFloatToIntegerConverter()
+    public function createDecimalToCentConverter()
     {
         return new DecimalToCentConverter();
     }

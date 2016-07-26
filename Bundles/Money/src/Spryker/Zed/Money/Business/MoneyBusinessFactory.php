@@ -30,6 +30,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     {
         return new MoneyBuilder(
             $this->createMoneyToTransferConverter(),
+            $this->createDecimalToCentConverter(),
             $this->getStore()->getCurrencyIsoCode()
         );
     }

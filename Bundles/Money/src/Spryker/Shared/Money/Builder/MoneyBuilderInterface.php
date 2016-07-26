@@ -11,11 +11,27 @@ interface MoneyBuilderInterface
 {
 
     /**
-     * @param int|float|string $amount
-     * @param string null $currency
+     * @param int $amount
+     * @param null|string $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function getMoney($amount, $currency = null);
+    public function fromInteger($amount, $currency = null);
+
+    /**
+     * @param float $amount
+     * @param null|string $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $currency = null);
+
+    /**
+     * @param string $amount
+     * @param null|string $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $currency = null);
 
 }

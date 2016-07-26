@@ -20,20 +20,52 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     /**
      * Specification:
      * - Converts int amount and currency to MoneyTransfer Object
+     * - If currency is not provided it will use from Store configured one
+     *
+     * @api
+     *
+     * @param int $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromInteger($amount, $currency = null)
+    {
+        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $currency);
+    }
+
+    /**
+     * Specification:
      * - Converts float amount and currency to MoneyTransfer Object
+     * - If currency is not provided it will use from Store configured one
+     *
+     * @api
+     *
+     * @param float $amount
+     * @param string|null $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $currency = null)
+    {
+        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $currency);
+    }
+
+    /**
+     * Specification:
      * - Converts string amount and currency to MoneyTransfer Object
      * - If currency is not provided it will use from Store configured one
      *
      * @api
      *
-     * @param int|float|string $amount
+     * @param string $amount
      * @param string|null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function getMoney($amount, $currency = null)
+    public function fromString($amount, $currency = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->getMoney($amount, $currency);
+        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $currency);
     }
 
     /**

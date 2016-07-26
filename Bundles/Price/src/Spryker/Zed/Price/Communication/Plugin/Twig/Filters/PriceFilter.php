@@ -48,7 +48,7 @@ class PriceFilter extends AbstractPlugin
     public function getConvertedPrice($price)
     {
         $moneyPlugin = $this->getFactory()->getMoneyPlugin();
-        $moneyTransfer = $moneyPlugin->getMoney($price);
+        $moneyTransfer = $moneyPlugin->fromInteger($price);
 
         return $moneyPlugin->formatWithSymbol($moneyTransfer);
     }

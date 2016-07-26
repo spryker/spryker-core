@@ -9,6 +9,8 @@ namespace Spryker\Shared\Money\Builder;
 
 use Money\Currency;
 use Money\Money;
+use Spryker\Shared\Money\Converter\DecimalToCentConverter;
+use Spryker\Shared\Money\Converter\DecimalToCentConverterInterface;
 use Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
 
@@ -18,7 +20,12 @@ class MoneyBuilder implements MoneyBuilderInterface
     /**
      * @var \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface
      */
-    protected $converter;
+    protected $dataMapper;
+
+    /**
+     * @var \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface
+     */
+    protected $decimalToCentConverter;
 
     /**
      * @var string
@@ -27,68 +34,90 @@ class MoneyBuilder implements MoneyBuilderInterface
 
     /**
      * @param \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface $moneyToTransferConverter
+     * @param \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface $decimalToCentConverter
      * @param string $defaultCurrency
      */
-    public function __construct(MoneyToTransferConverterInterface $moneyToTransferConverter, $defaultCurrency)
-    {
-        $this->converter = $moneyToTransferConverter;
+    public function __construct(
+        MoneyToTransferConverterInterface $moneyToTransferConverter,
+        DecimalToCentConverterInterface $decimalToCentConverter,
+        $defaultCurrency
+    ) {
+
+        $this->dataMapper = $moneyToTransferConverter;
+        $this->decimalToCentConverter = $decimalToCentConverter;
         $this->defaultCurrency = $defaultCurrency;
     }
 
     /**
-     * @param int|float|string $amount
+     * @param int $amount
+     * @param null|string $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromInteger($amount, $currency = null)
+    {
+        if (!is_int($amount)) {
+            throw new InvalidAmountArgumentException(sprintf(
+                'Current amount was expected to be int. Current type is "%s"',
+                gettype($amount)
+            ));
+        }
+
+        return $this->getMoney($amount, $currency);
+    }
+
+    /**
+     * @param float $amount
+     * @param null|string $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $currency = null)
+    {
+        if (!is_float($amount)) {
+            throw new InvalidAmountArgumentException(sprintf(
+                'Current amount was expected to be float. Current type is "%s"',
+                gettype($amount)
+            ));
+        }
+
+        return $this->getMoney($this->decimalToCentConverter->convert($amount), $currency);
+    }
+
+    /**
+     * @param string $amount
+     * @param null|string $currency
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $currency = null)
+    {
+        if (!is_string($amount)) {
+            throw new InvalidAmountArgumentException(sprintf(
+                'Current amount was expected to be string. Current type is "%s"',
+                gettype($amount)
+            ));
+        }
+        if (strstr($amount, ',') || strstr($amount, '.')) {
+            throw new InvalidAmountArgumentException('Amount as string should not contain decimals or a thousand separator!');
+        }
+
+        return $this->getMoney($amount, $currency);
+    }
+
+    /**
+     * @param int|string $amount
      * @param string null $currency
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function getMoney($amount, $currency = null)
+    protected function getMoney($amount, $currency = null)
     {
-        $amount = $this->convert($amount);
         $currency = $this->getCurrency($currency);
-
         $money = $this->createMoney($amount, $currency);
         $moneyTransfer = $this->convertToTransfer($money);
 
         return $moneyTransfer;
-    }
-
-    /**
-     * @param int|float|string $amount
-     *
-     * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
-     *
-     * @return int
-     */
-    protected function convert($amount)
-    {
-        if (is_int($amount)) {
-            return $amount;
-        }
-
-        if (is_float($amount)) {
-            return (int)$amount * 100;
-        }
-
-        if (is_string($amount) && (!strstr($amount, ',') && !strstr($amount, '.'))) {
-            return $amount;
-        }
-
-        throw new InvalidAmountArgumentException($this->getExceptionMessage($amount));
-    }
-
-    /**
-     * @param mixed $amount
-     *
-     * @return string
-     */
-    protected function getExceptionMessage($amount)
-    {
-        return sprintf(
-            'Current amount can not be handled properly. Method `getMoney()` can called with integer, float or string.' . PHP_EOL,
-            'String representations should not contain any decimals or thousand separator.' . PHP_EOL,
-            'Current type is "%s"',
-            gettype($amount)
-        );
     }
 
     /**
@@ -123,7 +152,7 @@ class MoneyBuilder implements MoneyBuilderInterface
      */
     protected function convertToTransfer(Money $money)
     {
-        return $this->converter->convert($money);
+        return $this->dataMapper->convert($money);
     }
 
 }
