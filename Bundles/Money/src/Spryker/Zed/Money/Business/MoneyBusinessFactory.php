@@ -10,8 +10,8 @@ namespace Spryker\Zed\Money\Business;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\CentToDecimalConverter;
 use Spryker\Shared\Money\Converter\DecimalToCentConverter;
-use Spryker\Shared\Money\DataMapper\MoneyToTransferConverter;
-use Spryker\Shared\Money\DataMapper\TransferToMoneyConverter;
+use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
+use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
@@ -73,19 +73,19 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface
+     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
     protected function createMoneyToTransferConverter()
     {
-        return new MoneyToTransferConverter();
+        return new MoneyToTransferMapper();
     }
 
     /**
-     * @return \Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface
+     * @return \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
     protected function createTransferToMoneyConverter()
     {
-        return new TransferToMoneyConverter();
+        return new TransferToMoneyMapper();
     }
 
     /**

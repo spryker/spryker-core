@@ -11,8 +11,8 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\CentToDecimalConverter;
 use Spryker\Shared\Money\Converter\DecimalToCentConverter;
-use Spryker\Shared\Money\DataMapper\MoneyToTransferConverter;
-use Spryker\Shared\Money\DataMapper\TransferToMoneyConverter;
+use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
+use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
@@ -73,19 +73,19 @@ class MoneyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface
+     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
     protected function createMoneyToTransferConverter()
     {
-        return new MoneyToTransferConverter();
+        return new MoneyToTransferMapper();
     }
 
     /**
-     * @return \Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface
+     * @return \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
-    protected function createTransferToMoneyDataMapper()
+    protected function createTransferToMoneyMapper()
     {
-        return new TransferToMoneyConverter();
+        return new TransferToMoneyMapper();
     }
 
     /**
@@ -94,7 +94,7 @@ class MoneyFactory extends AbstractFactory
     protected function createIntlFormatterCurrency()
     {
         return new IntlMoneyFormatterWithCurrency(
-            $this->createTransferToMoneyDataMapper()
+            $this->createTransferToMoneyMapper()
         );
     }
 
@@ -104,7 +104,7 @@ class MoneyFactory extends AbstractFactory
     protected function createIntlFormatterDecimal()
     {
         return new IntlMoneyFormatterWithoutCurrency(
-            $this->createTransferToMoneyDataMapper()
+            $this->createTransferToMoneyMapper()
         );
     }
 

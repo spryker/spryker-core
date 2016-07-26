@@ -9,16 +9,15 @@ namespace Spryker\Shared\Money\Builder;
 
 use Money\Currency;
 use Money\Money;
-use Spryker\Shared\Money\Converter\DecimalToCentConverter;
 use Spryker\Shared\Money\Converter\DecimalToCentConverterInterface;
-use Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
+use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
 class MoneyBuilder implements MoneyBuilderInterface
 {
 
     /**
-     * @var \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface
+     * @var \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
     protected $dataMapper;
 
@@ -33,12 +32,12 @@ class MoneyBuilder implements MoneyBuilderInterface
     protected $defaultCurrency;
 
     /**
-     * @param \Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface $moneyToTransferConverter
+     * @param \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface $moneyToTransferConverter
      * @param \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface $decimalToCentConverter
      * @param string $defaultCurrency
      */
     public function __construct(
-        MoneyToTransferConverterInterface $moneyToTransferConverter,
+        MoneyToTransferMapperInterface $moneyToTransferConverter,
         DecimalToCentConverterInterface $decimalToCentConverter,
         $defaultCurrency
     ) {

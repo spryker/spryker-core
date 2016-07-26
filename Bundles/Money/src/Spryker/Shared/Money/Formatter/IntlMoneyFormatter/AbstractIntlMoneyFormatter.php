@@ -10,21 +10,21 @@ namespace Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Formatter\IntlMoneyFormatter as InnerFormatter;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface;
+use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
 
 abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
 {
 
     /**
-     * @var \Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface
+     * @var \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
     protected $converter;
 
     /**
-     * @param \Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface $transferToMoneyConverter
+     * @param \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface $transferToMoneyConverter
      */
-    public function __construct(TransferToMoneyConverterInterface $transferToMoneyConverter)
+    public function __construct(TransferToMoneyMapperInterface $transferToMoneyConverter)
     {
         $this->converter = $transferToMoneyConverter;
     }

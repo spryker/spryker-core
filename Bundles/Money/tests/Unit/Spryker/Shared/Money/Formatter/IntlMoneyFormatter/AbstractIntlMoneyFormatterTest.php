@@ -10,7 +10,7 @@ namespace Unit\Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
-use Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface;
+use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 /**
  * @group Unit
@@ -23,11 +23,11 @@ abstract class AbstractIntlMoneyFormatterTest extends \PHPUnit_Framework_TestCas
 {
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Money\DataMapper\TransferToMoneyConverterInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
     protected function getTransferToMoneyConverterMock()
     {
-        $transferToMoneyConverterMock = $this->getMockBuilder(TransferToMoneyConverterInterface::class)->getMock();
+        $transferToMoneyConverterMock = $this->getMockBuilder(TransferToMoneyMapperInterface::class)->getMock();
         $transferToMoneyConverterMock->method('convert')->willReturnCallback([$this, 'convert']);
 
         return $transferToMoneyConverterMock;

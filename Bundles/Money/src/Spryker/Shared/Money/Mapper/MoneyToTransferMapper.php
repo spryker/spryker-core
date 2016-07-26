@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Money\DataMapper;
+namespace Spryker\Shared\Money\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
 
-class MoneyToTransferConverter implements MoneyToTransferConverterInterface
+class MoneyToTransferMapper implements MoneyToTransferMapperInterface
 {
 
     /**

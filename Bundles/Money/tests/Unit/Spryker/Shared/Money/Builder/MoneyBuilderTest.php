@@ -13,7 +13,7 @@ use Money\Money;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Builder\MoneyBuilderInterface;
 use Spryker\Shared\Money\Converter\DecimalToCentConverter;
-use Spryker\Shared\Money\DataMapper\MoneyToTransferConverterInterface;
+use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
 
 /**
@@ -159,11 +159,11 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Shared\Money\DataMapper\MoneyToTransferConverter
+     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapper
      */
     protected function getMoneyToTransferConverterMock()
     {
-        $moneyToTransferConverterMock = $this->getMockBuilder(MoneyToTransferConverterInterface::class)->getMock();
+        $moneyToTransferConverterMock = $this->getMockBuilder(MoneyToTransferMapperInterface::class)->getMock();
         $moneyToTransferConverterMock->method('convert')->willReturnCallback([$this, 'convert']);
 
         return $moneyToTransferConverterMock;
