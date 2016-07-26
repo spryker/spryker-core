@@ -91,16 +91,16 @@ $(document).ready(function() {
     });
 
     $('.attribute_metadata_checkbox').each(function() {
-        var $item = $(this);
-        var $input = $item
+        var $checkbox = $(this);
+        var $input = $checkbox
             .parents('.attribute_metadata_row')
             .find('.attribute_metadata_value');
 
-        if (!$item.prop('checked')) {
-            $input.prop('readonly', !$item.prop('checked'));
+        if (!$checkbox.prop('checked') && !$checkbox.prop('disabled')) {
+            $input.prop('readonly', !$checkbox.prop('checked'));
 
             if ($input.hasClass('spryker-form-select2combobox')) {
-                $input.prop('disabled', !$item.prop('checked'));
+                $input.prop('disabled', !$checkbox.prop('checked'));
             }
         }
     });
@@ -108,20 +108,19 @@ $(document).ready(function() {
     $('.attribute_metadata_checkbox')
         .off('click')
         .on('click', function() {
-            var $item = $(this);
-            var $input = $item
+            var $checkbox = $(this);
+            var $input = $checkbox
                 .parents('.attribute_metadata_row')
                 .find('.attribute_metadata_value');
 
-            $input.prop('readonly', !$item.prop('checked'));
-
+            $input.prop('readonly', !$checkbox.prop('checked'));
 
             if ($input.hasClass('spryker-form-select2combobox')) {
-                $input.prop('disabled', !$item.prop('checked'));
+                $input.prop('disabled', !$checkbox.prop('checked'));
 
-                if ($item.prop('checked')) {
+                if ($checkbox.prop('checked')) {
+                    //fixes focus issues
                     setTimeout(function() {
-                        console.log(123);
                         $input.select2('focus');
                     }, 0);
                 }
@@ -175,15 +174,11 @@ $(document).ready(function() {
     $(".kv_autocomplete_form").submit(function(e) {
         var form = $(this);
         $('.kv_attribute_autocomplete').each(function(key, value) {
-            var input = $(this);
-            var inputValue = input.attr('data-value');
-            var name = 'hidden_' + input.context.name;
-
-            var hiddenInput = $("<input>")
-                .attr('type', 'hidden')
-                .attr('name', name).val(inputValue);
-
-            form.append($(hiddenInput));
+            var $input = $(this);
+            var hidden = $input.next();
+            var inputValue = $input.attr('data-value');
+            var name = hidden.attr('name');
+                hidden.val(inputValue);
         });
     });
 });

@@ -28,6 +28,7 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
+        $isDisabled = $attributes[$name][self::NAME_DISABLED];
         $config = $this->getValueFieldConfig($name, $attributes);
 
         $input = new Select2ComboBoxType();
@@ -37,6 +38,10 @@ class ProductFormAttributeVariant extends ProductFormAttributeAbstract
         $config['attr']['class'] .= ' ajax';
         $config['attr']['tags'] = false; //don't allow undefined values
         $config['read_only'] = true;
+
+        if ($isDisabled) {
+            $config['disabled'] = true;
+        }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
 

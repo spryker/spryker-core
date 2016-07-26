@@ -25,6 +25,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
     const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
+    const FIELD_VALUE_HIDDEN = 'value_hidden';
 
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
@@ -44,6 +45,33 @@ class ProductFormAttributeAbstract extends AbstractSubForm
      */
     protected $attributeValues;
 
+
+    /**
+     * @param string $name
+     * @param string $attributes
+     *
+     * @return array
+     */
+    protected function getValueFieldConfig($name, $attributes)
+    {
+        $isDisabled = $attributes[$name][self::VALUE_DISABLED];
+
+        return [
+            'read_only' => $isDisabled,
+            'label' => false,
+            'attr' => [
+                'class' => 'attribute_metadata_value',
+                'style' => '',
+                'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
+                'id_attribute' => $attributes[$name][self::ID]
+            ],
+            'constraints' => [
+                new NotBlank([
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
+                ]),
+            ]
+        ];
+    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
@@ -83,7 +111,8 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
         $this
             ->addCheckboxNameField($builder, $options)
-            ->addValueField($builder, $options);
+            ->addValueField($builder, $options)
+            ->addValueHiddenField($builder, $options);
     }
 
     /**
@@ -119,30 +148,17 @@ class ProductFormAttributeAbstract extends AbstractSubForm
     }
 
     /**
-     * @param string $name
-     * @param string $attributes
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return array
+     * @return $this
      */
-    protected function getValueFieldConfig($name, $attributes)
+    protected function addValueHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $isDisabled = $attributes[$name][self::VALUE_DISABLED];
+        $builder
+            ->add(self::FIELD_VALUE_HIDDEN, 'hidden', []);
 
-        return [
-            'read_only' => $isDisabled,
-            'label' => false,
-            'attr' => [
-                'class' => 'attribute_metadata_value',
-                'style' => '',
-                'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
-                'id_attribute' => $attributes[$name][self::ID]
-            ],
-            'constraints' => [
-                new NotBlank([
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
-                ]),
-            ]
-        ];
+        return $this;
     }
 
     /**
@@ -158,6 +174,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $inputType = $attributes[$name][self::INPUT_TYPE];
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
         $isMultiple = $attributes[$name][self::MULTIPLE];
+        $isDisabled = $attributes[$name][self::NAME_DISABLED];
 
         $inputManager = new AttributeInputManager();
         $input = $inputManager->getSymfonyInputType($inputType);
@@ -187,6 +204,10 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             } else {
                 $config['read_only'] = true;
             }
+        }
+
+        if ($isDisabled) {
+            $config['disabled'] = true;
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
