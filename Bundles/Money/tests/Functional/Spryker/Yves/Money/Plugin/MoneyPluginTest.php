@@ -124,10 +124,10 @@ class MoneyPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testConvertCentToDecimalShouldReturnFloat()
+    public function testConvertIntegerToDecimalShouldReturnFloat()
     {
         $moneyPlugin = new MoneyPlugin();
-        $converted = $moneyPlugin->convertCentToDecimal(1000);
+        $converted = $moneyPlugin->convertIntegerToDecimal(1000);
         $this->assertInternalType('float', $converted);
         $this->assertSame(10.00, $converted);
     }
@@ -135,10 +135,10 @@ class MoneyPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testConvertDecimalToCentShouldReturnInt()
+    public function testConvertDecimalToIntegerShouldReturnInt()
     {
         $moneyPlugin = new MoneyPlugin();
-        $converted = $moneyPlugin->convertDecimalToCent(10.00);
+        $converted = $moneyPlugin->convertDecimalToInteger(10.00);
         $this->assertInternalType('int', $converted);
         $this->assertSame(1000, $converted);
     }

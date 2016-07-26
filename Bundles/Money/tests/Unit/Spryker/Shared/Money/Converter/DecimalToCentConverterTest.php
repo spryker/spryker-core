@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Money\Converter;
 
-use Spryker\Shared\Money\Converter\DecimalToCentConverter;
+use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
 /**
@@ -16,9 +16,9 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
  * @group Shared
  * @group Money
  * @group Converter
- * @group DecimalToCentConverter
+ * @group DecimalToIntegerConverter
  */
-class DecimalToCentConverterTest extends \PHPUnit_Framework_TestCase
+class DecimalToIntegerConverterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -31,9 +31,9 @@ class DecimalToCentConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvertShouldReturnInteger($input, $expected)
     {
-        $decimalToCentConverter = new DecimalToCentConverter();
+        $decimalToIntegerConverter = new DecimalToIntegerConverter();
 
-        $this->assertSame($expected, $decimalToCentConverter->convert($input));
+        $this->assertSame($expected, $decimalToIntegerConverter->convert($input));
     }
 
     /**
@@ -58,8 +58,8 @@ class DecimalToCentConverterTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(InvalidConverterArgumentException::class);
 
-        $centToDecimalConverter = new DecimalToCentConverter();
-        $centToDecimalConverter->convert(100);
+        $integerToDecimalConverter = new DecimalToIntegerConverter();
+        $integerToDecimalConverter->convert(100);
     }
 
 }

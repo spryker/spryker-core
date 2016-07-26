@@ -9,7 +9,7 @@ namespace Spryker\Shared\Money\Builder;
 
 use Money\Currency;
 use Money\Money;
-use Spryker\Shared\Money\Converter\DecimalToCentConverterInterface;
+use Spryker\Shared\Money\Converter\DecimalToIntegerConverterInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
@@ -22,9 +22,9 @@ class MoneyBuilder implements MoneyBuilderInterface
     protected $dataMapper;
 
     /**
-     * @var \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface
+     * @var \Spryker\Shared\Money\Converter\DecimalToIntegerConverterInterface
      */
-    protected $decimalToCentConverter;
+    protected $decimalToIntegerConverter;
 
     /**
      * @var string
@@ -33,17 +33,17 @@ class MoneyBuilder implements MoneyBuilderInterface
 
     /**
      * @param \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface $moneyToTransferConverter
-     * @param \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface $decimalToCentConverter
+     * @param \Spryker\Shared\Money\Converter\DecimalToIntegerConverterInterface $decimalToIntegerConverter
      * @param string $defaultCurrency
      */
     public function __construct(
         MoneyToTransferMapperInterface $moneyToTransferConverter,
-        DecimalToCentConverterInterface $decimalToCentConverter,
+        DecimalToIntegerConverterInterface $decimalToIntegerConverter,
         $defaultCurrency
     ) {
 
         $this->dataMapper = $moneyToTransferConverter;
-        $this->decimalToCentConverter = $decimalToCentConverter;
+        $this->decimalToIntegerConverter = $decimalToIntegerConverter;
         $this->defaultCurrency = $defaultCurrency;
     }
 
@@ -80,7 +80,7 @@ class MoneyBuilder implements MoneyBuilderInterface
             ));
         }
 
-        return $this->getMoney($this->decimalToCentConverter->convert($amount), $currency);
+        return $this->getMoney($this->decimalToIntegerConverter->convert($amount), $currency);
     }
 
     /**

@@ -114,9 +114,9 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
      *
      * @return float
      */
-    public function convertCentToDecimal($value)
+    public function convertIntegerToDecimal($value)
     {
-        return $this->getFactory()->createCentToDecimalConverter()->convert($value);
+        return $this->getFactory()->createIntegerToDecimalConverter()->convert($value);
     }
 
     /**
@@ -129,9 +129,9 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
      *
      * @return int
      */
-    public function convertDecimalToCent($value)
+    public function convertDecimalToInteger($value)
     {
-        return $this->getFactory()->createDecimalToCentConverter()->convert($value);
+        return $this->getFactory()->createDecimalToIntegerConverter()->convert($value);
     }
 
 }

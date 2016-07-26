@@ -82,9 +82,9 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return float
      */
-    public function convertCentToDecimal($value)
+    public function convertIntegerToDecimal($value)
     {
-        return $this->getFacade()->convertCentToDecimal($value);
+        return $this->getFacade()->convertIntegerToDecimal($value);
     }
 
     /**
@@ -92,9 +92,9 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return int
      */
-    public function convertDecimalToCent($value)
+    public function convertDecimalToInteger($value)
     {
-        return $this->getFacade()->convertDecimalToCent($value);
+        return $this->getFacade()->convertDecimalToInteger($value);
     }
 
 }

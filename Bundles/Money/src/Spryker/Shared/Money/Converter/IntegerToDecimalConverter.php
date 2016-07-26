@@ -9,7 +9,7 @@ namespace Spryker\Shared\Money\Converter;
 
 use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
-class CentToDecimalConverter implements CentToDecimalConverterInterface
+class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
 {
 
     const PRICE_PRECISION = 100;

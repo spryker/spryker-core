@@ -90,7 +90,7 @@ interface MoneyFacadeInterface
      *
      * @return float
      */
-    public function convertCentToDecimal($value);
+    public function convertIntegerToDecimal($value);
 
     /**
      * Specification
@@ -102,6 +102,6 @@ interface MoneyFacadeInterface
      *
      * @return int
      */
-    public function convertDecimalToCent($value);
+    public function convertDecimalToInteger($value);
 
 }

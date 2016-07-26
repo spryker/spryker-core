@@ -7,13 +7,13 @@
 
 namespace Spryker\Shared\Money\Converter;
 
-interface DecimalToCentConverterInterface
+interface IntegerToDecimalConverterInterface
 {
 
     /**
-     * @param float $value
+     * @param int $value
      *
-     * @return int
+     * @return float
      */
     public function convert($value);
 

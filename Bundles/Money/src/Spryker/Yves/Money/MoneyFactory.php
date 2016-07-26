@@ -9,8 +9,8 @@ namespace Spryker\Yves\Money;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
-use Spryker\Shared\Money\Converter\CentToDecimalConverter;
-use Spryker\Shared\Money\Converter\DecimalToCentConverter;
+use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
+use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
@@ -30,7 +30,7 @@ class MoneyFactory extends AbstractFactory
     {
         return new MoneyBuilder(
             $this->createMoneyToTransferConverter(),
-            $this->createDecimalToCentConverter(),
+            $this->createDecimalToIntegerConverter(),
             $this->getStore()->getCurrencyIsoCode()
         );
     }
@@ -109,19 +109,19 @@ class MoneyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Money\Converter\CentToDecimalConverterInterface
+     * @return \Spryker\Shared\Money\Converter\IntegerToDecimalConverterInterface
      */
-    public function createCentToDecimalConverter()
+    public function createIntegerToDecimalConverter()
     {
-        return new CentToDecimalConverter();
+        return new IntegerToDecimalConverter();
     }
 
     /**
-     * @return \Spryker\Shared\Money\Converter\DecimalToCentConverterInterface
+     * @return \Spryker\Shared\Money\Converter\DecimalToIntegerConverterInterface
      */
-    public function createDecimalToCentConverter()
+    public function createDecimalToIntegerConverter()
     {
-        return new DecimalToCentConverter();
+        return new DecimalToIntegerConverter();
     }
 
 }
