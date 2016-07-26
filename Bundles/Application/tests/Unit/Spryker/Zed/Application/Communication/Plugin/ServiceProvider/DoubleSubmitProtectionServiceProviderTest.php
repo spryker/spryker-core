@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Symfony\Plugin\ServiceProvider;
+namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Codeception\TestCase\Test;
 use Silex\Application;
+use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\DoubleSubmitProtectionServiceProvider;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
-use Spryker\Shared\Symfony\Plugin\ServiceProvider\DoubleSubmitProtectionServiceProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @group Shared
- * @group Symfony
- * @group Form
- * @group Extension
- * @group DoubleSubmitProtectionExtensionTest
+ * @group Zed
+ * @group Application
+ * @group Communication
+ * @group Plugin
+ * @group ServiceProvider
+ * @group DoubleSubmitProtectionServiceProvider
  */
 class DoubleSubmitProtectionServiceProviderTest extends Test
 {
