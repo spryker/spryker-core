@@ -13,8 +13,8 @@ use Money\Money;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Builder\MoneyBuilderInterface;
 use Spryker\Shared\Money\Converter\DecimalToCentConverter;
-use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 use Spryker\Shared\Money\Exception\InvalidAmountArgumentException;
+use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
 /**
  * @group Unit

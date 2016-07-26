@@ -11,12 +11,12 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\CentToDecimalConverter;
 use Spryker\Shared\Money\Converter\DecimalToCentConverter;
-use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
-use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
+use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
+use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\MoneyConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 

@@ -10,8 +10,8 @@ namespace Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Formatter\IntlMoneyFormatter as InnerFormatter;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
+use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
 {
