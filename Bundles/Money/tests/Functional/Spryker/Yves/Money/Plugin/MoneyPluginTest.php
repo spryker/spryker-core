@@ -87,12 +87,12 @@ class MoneyPluginTest extends \PHPUnit_Framework_TestCase
     {
         $moneyPlugin = new MoneyPlugin();
 
-        $currency = 'USD';
-        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER, $currency);
+        $isoCode = 'USD';
+        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER, $isoCode);
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
 
-        $this->assertSame($currency, $moneyTransfer->getCurrency()->getCode());
+        $this->assertSame($isoCode, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**

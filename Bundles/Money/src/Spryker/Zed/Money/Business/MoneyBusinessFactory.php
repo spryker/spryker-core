@@ -14,10 +14,10 @@ use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurr
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
-use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\MoneyConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Money\Business\Model\Mapper\MoneyToTransferMapper;
 use Spryker\Zed\Money\MoneyDependencyProvider;
 
 class MoneyBusinessFactory extends AbstractBusinessFactory
@@ -73,11 +73,21 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
      * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
     protected function createMoneyToTransferMapper()
     {
-        return new MoneyToTransferMapper();
+        return new MoneyToTransferMapper(
+            $this->getCurrencyFacade()
+        );
     }
 
     /**

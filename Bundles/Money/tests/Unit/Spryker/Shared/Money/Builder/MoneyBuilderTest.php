@@ -179,9 +179,9 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount($money->getAmount());
 
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode($money->getCurrency()->getCode());
-        $moneyTransfer->setCurrency($currencyTransfer);
+        $isoCodeTransfer = new CurrencyTransfer();
+        $isoCodeTransfer->setCode($money->getCurrency()->getCode());
+        $moneyTransfer->setCurrency($isoCodeTransfer);
 
         return $moneyTransfer;
     }

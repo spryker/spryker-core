@@ -31,12 +31,12 @@ class TransferToMoneyConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvertShouldReturnMoney()
     {
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode(self::CURRENCY);
+        $isoCodeTransfer = new CurrencyTransfer();
+        $isoCodeTransfer->setCode(self::CURRENCY);
 
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount(self::AMOUNT)
-            ->setCurrency($currencyTransfer);
+            ->setCurrency($isoCodeTransfer);
 
         $transferToMoneyConverter = new TransferToMoneyMapper();
         $money = $transferToMoneyConverter->convert($moneyTransfer);

@@ -3,14 +3,12 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {
+    "spryker/currency": "^1.0.0",
     "spryker/kernel": "^2.0.0",
     "mathiasverraes/money": "~3.0"
   },

@@ -21,14 +21,38 @@ class MoneyToTransferMapper implements MoneyToTransferMapperInterface
      */
     public function convert(Money $money)
     {
+        $moneyTransfer = $this->getMoneyTransfer($money);
+        $isoCodeTransfer = $this->getCurrencyTransfer($money);
+
+        $moneyTransfer->setCurrency($isoCodeTransfer);
+
+        return $moneyTransfer;
+    }
+
+    /**
+     * @param \Money\Money $money
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    protected function getMoneyTransfer(Money $money)
+    {
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount($money->getAmount());
 
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode($money->getCurrency()->getCode());
-        $moneyTransfer->setCurrency($currencyTransfer);
-
         return $moneyTransfer;
+    }
+
+    /**
+     * @param \Money\Money $money
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer(Money $money)
+    {
+        $isoCodeTransfer = new CurrencyTransfer();
+        $isoCodeTransfer->setCode($money->getCurrency()->getCode());
+
+        return $isoCodeTransfer;
     }
 
 }

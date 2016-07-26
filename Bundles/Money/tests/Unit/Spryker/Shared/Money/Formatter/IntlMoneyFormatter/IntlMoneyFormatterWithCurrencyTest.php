@@ -41,9 +41,9 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount(self::AMOUNT);
 
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode(self::CURRENCY);
-        $moneyTransfer->setCurrency($currencyTransfer);
+        $isoCodeTransfer = new CurrencyTransfer();
+        $isoCodeTransfer->setCode(self::CURRENCY);
+        $moneyTransfer->setCurrency($isoCodeTransfer);
 
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName(self::LOCALE);

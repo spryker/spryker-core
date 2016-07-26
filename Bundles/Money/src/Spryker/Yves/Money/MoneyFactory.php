@@ -15,10 +15,11 @@ use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurr
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
-use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Money\Mapper\MoneyToTransferMapper;
 
 class MoneyFactory extends AbstractFactory
 {
@@ -77,7 +78,17 @@ class MoneyFactory extends AbstractFactory
      */
     protected function createMoneyToTransferMapper()
     {
-        return new MoneyToTransferMapper();
+        return new MoneyToTransferMapper(
+            $this->getCurrencyPlugin()
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin
+     */
+    protected function getCurrencyPlugin()
+    {
+        return new CurrencyPlugin();
     }
 
     /**

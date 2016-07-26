@@ -12,26 +12,26 @@ interface MoneyBuilderInterface
 
     /**
      * @param int $amount
-     * @param null|string $currency
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $currency = null);
+    public function fromInteger($amount, $isoCode = null);
 
     /**
      * @param float $amount
-     * @param null|string $currency
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $currency = null);
+    public function fromFloat($amount, $isoCode = null);
 
     /**
      * @param string $amount
-     * @param null|string $currency
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $currency = null);
+    public function fromString($amount, $isoCode = null);
 
 }

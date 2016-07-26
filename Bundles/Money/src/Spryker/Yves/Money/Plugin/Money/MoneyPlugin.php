@@ -19,41 +19,41 @@ class MoneyPlugin extends AbstractPlugin
 
     /**
      * @param int $amount
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $currency = null)
+    public function fromInteger($amount, $isoCode = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $currency);
+        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $isoCode);
     }
 
     /**
      * @param float $amount
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $currency = null)
+    public function fromFloat($amount, $isoCode = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $currency);
+        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $isoCode);
     }
 
     /**
      * @param string $amount
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $currency = null)
+    public function fromString($amount, $isoCode = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $currency);
+        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $isoCode);
     }
 
     /**
      * This method will return formatted string representation of the given MoneyTransfer object with currency symbol
      *
-     * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$currency = EUR` will return `10,00 €`
+     * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$isoCode = EUR` will return `10,00 €`
      *
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
@@ -67,7 +67,7 @@ class MoneyPlugin extends AbstractPlugin
     /**
      * This method will return float representation of the given MoneyTransfer object without symbol
      *
-     * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$currency = EUR` will return `10,00`
+     * E.g. `MoneyTransfer::$amount = 1000`, `MoneyTransfer::$isoCode = EUR` will return `10,00`
      *
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *

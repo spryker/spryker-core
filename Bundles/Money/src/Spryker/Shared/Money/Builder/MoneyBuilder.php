@@ -29,31 +29,31 @@ class MoneyBuilder implements MoneyBuilderInterface
     /**
      * @var string
      */
-    protected $defaultCurrency;
+    protected $defaultIsoCode;
 
     /**
      * @param \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface $moneyToTransferConverter
      * @param \Spryker\Shared\Money\Converter\DecimalToIntegerConverterInterface $decimalToIntegerConverter
-     * @param string $defaultCurrency
+     * @param string $defaultIsoCode
      */
     public function __construct(
         MoneyToTransferMapperInterface $moneyToTransferConverter,
         DecimalToIntegerConverterInterface $decimalToIntegerConverter,
-        $defaultCurrency
+        $defaultIsoCode
     ) {
 
         $this->dataMapper = $moneyToTransferConverter;
         $this->decimalToIntegerConverter = $decimalToIntegerConverter;
-        $this->defaultCurrency = $defaultCurrency;
+        $this->defaultIsoCode = $defaultIsoCode;
     }
 
     /**
      * @param int $amount
-     * @param null|string $currency
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $currency = null)
+    public function fromInteger($amount, $isoCode = null)
     {
         if (!is_int($amount)) {
             throw new InvalidAmountArgumentException(sprintf(
@@ -62,16 +62,16 @@ class MoneyBuilder implements MoneyBuilderInterface
             ));
         }
 
-        return $this->getMoney($amount, $currency);
+        return $this->getMoney($amount, $isoCode);
     }
 
     /**
      * @param float $amount
-     * @param null|string $currency
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $currency = null)
+    public function fromFloat($amount, $isoCode = null)
     {
         if (!is_float($amount)) {
             throw new InvalidAmountArgumentException(sprintf(
@@ -80,16 +80,16 @@ class MoneyBuilder implements MoneyBuilderInterface
             ));
         }
 
-        return $this->getMoney($this->decimalToIntegerConverter->convert($amount), $currency);
+        return $this->getMoney($this->decimalToIntegerConverter->convert($amount), $isoCode);
     }
 
     /**
      * @param string $amount
-     * @param null|string $currency
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $currency = null)
+    public function fromString($amount, $isoCode = null)
     {
         if (!is_string($amount)) {
             throw new InvalidAmountArgumentException(sprintf(
@@ -101,47 +101,47 @@ class MoneyBuilder implements MoneyBuilderInterface
             throw new InvalidAmountArgumentException('Amount as string should not contain decimals or a thousand separator!');
         }
 
-        return $this->getMoney($amount, $currency);
+        return $this->getMoney($amount, $isoCode);
     }
 
     /**
      * @param int|string $amount
-     * @param string null $currency
+     * @param string null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    protected function getMoney($amount, $currency = null)
+    protected function getMoney($amount, $isoCode = null)
     {
-        $currency = $this->getCurrency($currency);
-        $money = $this->createMoney($amount, $currency);
+        $isoCode = $this->getCurrency($isoCode);
+        $money = $this->createMoney($amount, $isoCode);
         $moneyTransfer = $this->convertToTransfer($money);
 
         return $moneyTransfer;
     }
 
     /**
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Money\Currency
      */
-    protected function getCurrency($currency = null)
+    protected function getCurrency($isoCode = null)
     {
-        if (!$currency) {
-            $currency = $this->defaultCurrency;
+        if (!$isoCode) {
+            $isoCode = $this->defaultIsoCode;
         }
 
-        return new Currency($currency);
+        return new Currency($isoCode);
     }
 
     /**
      * @param int $amount
-     * @param \Money\Currency $currency
+     * @param \Money\Currency $isoCode
      *
      * @return \Money\Money
      */
-    protected function createMoney($amount, Currency $currency)
+    protected function createMoney($amount, Currency $isoCode)
     {
-        return new Money($amount, $currency);
+        return new Money($amount, $isoCode);
     }
 
     /**

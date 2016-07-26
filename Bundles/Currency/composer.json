@@ -1,0 +1,26 @@
+{
+  "name": "spryker/currency",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+    "spryker/kernel": "^2.0.0",
+    "symfony/intl": "~2.8.8"
+  },
+  "description": "Currency bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

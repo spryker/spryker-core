@@ -16,45 +16,45 @@ interface MoneyFacadeInterface
 
     /**
      * Specification:
-     * - Converts int amount and currency to MoneyTransfer Object
-     * - If currency is not provided it will use from Store configured one
+     * - Converts int amount and isoCode to MoneyTransfer Object
+     * - If isoCode is not provided it will use from Store configured one
      *
      * @api
      *
      * @param int $amount
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $currency = null);
+    public function fromInteger($amount, $isoCode = null);
 
     /**
      * Specification:
-     * - Converts float amount and currency to MoneyTransfer Object
-     * - If currency is not provided it will use from Store configured one
+     * - Converts float amount and isoCode to MoneyTransfer Object
+     * - If isoCode is not provided it will use from Store configured one
      *
      * @api
      *
      * @param float $amount
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $currency = null);
+    public function fromFloat($amount, $isoCode = null);
 
     /**
      * Specification:
-     * - Converts string amount and currency to MoneyTransfer Object
-     * - If currency is not provided it will use from Store configured one
+     * - Converts string amount and isoCode to MoneyTransfer Object
+     * - If isoCode is not provided it will use from Store configured one
      *
      * @api
      *
      * @param string $amount
-     * @param string|null $currency
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $currency = null);
+    public function fromString($amount, $isoCode = null);
 
     /**
      * Specification:
