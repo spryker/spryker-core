@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Unit\Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
 
 use Codeception\TestCase\Test;
 use Silex\Application;
