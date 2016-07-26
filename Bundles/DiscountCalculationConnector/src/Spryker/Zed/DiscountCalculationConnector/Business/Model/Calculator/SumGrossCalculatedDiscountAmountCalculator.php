@@ -82,11 +82,12 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $totalDiscountUnitGrossAmount = 0;
         $appliedDiscounts = [];
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
-            if (isset($appliedDiscounts[$calculatedDiscountTransfer->getIdDiscount()])) {
+            $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
+            if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
             $totalDiscountUnitGrossAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
-            $appliedDiscounts[$calculatedDiscountTransfer->getIdDiscount()] = true;
+            $appliedDiscounts[$idDiscount] = true;
         }
 
         return $totalDiscountUnitGrossAmount;

@@ -260,11 +260,12 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
         $totalUnitGrossDiscountAmount = 0;
         $appliedDiscounts = [];
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
-            if (isset($appliedDiscounts[$calculatedDiscountTransfer->getIdDiscount()])) {
+            $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
+            if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
             $totalUnitGrossDiscountAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
-            $appliedDiscounts[$calculatedDiscountTransfer->getIdDiscount()] = true;
+            $appliedDiscounts[$idDiscount] = true;
         }
 
         return $totalUnitGrossDiscountAmount;

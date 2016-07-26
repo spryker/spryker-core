@@ -85,7 +85,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
                 $orderItemTransfer->getIdSalesOrderItem()
             );
         }
-
     }
 
     /**
@@ -292,17 +291,17 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
 
         $appliedDiscounts = [];
         foreach ($discountCollection as $key => $discountTransfer) {
-            if (isset($appliedDiscounts[$discountTransfer->getDisplayName()])) {
+            $idDiscount = $discountTransfer->getIdDiscount();
+            if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
 
-            $appliedDiscounts[$discountTransfer->getDisplayName()] = $discountTransfer;
+            $appliedDiscounts[$idDiscount] = $discountTransfer;
             unset($discountCollection[$key]);
         }
         $calculatedDiscountsByGroupKey[$groupKey] = $discountCollection;
 
         return new ArrayObject($appliedDiscounts);
-
     }
 
 }

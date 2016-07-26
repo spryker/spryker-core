@@ -19,7 +19,6 @@ use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 
 class DiscountTest extends \PHPUnit_Framework_TestCase
 {
@@ -391,14 +390,6 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
     protected function createDecisionRuleSpecificationMock()
     {
         return $this->getMock(DecisionRuleSpecificationInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
-     */
-    protected function createValidatorMock()
-    {
-        return $this->getMock(ValidatorInterface::class);
     }
 
     /**
