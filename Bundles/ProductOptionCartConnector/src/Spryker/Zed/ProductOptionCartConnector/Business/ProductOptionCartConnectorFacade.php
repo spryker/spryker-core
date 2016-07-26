@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -48,6 +49,18 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
         return $this->getFactory()
             ->createGroupKeyExpander()
             ->expand($changeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionCartQuantity()
+            ->changeQuantity($quoteTransfer);
     }
 
 }

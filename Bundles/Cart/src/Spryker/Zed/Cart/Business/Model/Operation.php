@@ -41,21 +41,29 @@ class Operation implements OperationInterface
     protected $itemExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
+     */
+    protected $postSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToMessengerInterface $messengerFacade,
-        array $itemExpanderPlugins
+        array $itemExpanderPlugins,
+        array $postSavePlugins = []
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
         $this->messengerFacade = $messengerFacade;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
+        $this->postSavePlugins = $postSavePlugins;
     }
 
     /**
@@ -67,6 +75,7 @@ class Operation implements OperationInterface
     {
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
+        $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
@@ -81,6 +90,7 @@ class Operation implements OperationInterface
     {
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->removeItems($expandedCartChangeTransfer);
+        $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::REMOVE_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
@@ -98,6 +108,20 @@ class Operation implements OperationInterface
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePostSavePlugins(QuoteTransfer $quoteTransfer)
+    {
+        foreach ($this->postSavePlugins as $postSavePlugin) {
+            $quoteTransfer = $postSavePlugin->postSave($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**

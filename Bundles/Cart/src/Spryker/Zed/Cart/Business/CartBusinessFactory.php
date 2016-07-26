@@ -63,4 +63,12 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS);
     }
 
+    /**
+     * @return \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
+     */
+    protected function getPostSavePlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_POST_SAVE_PLUGINS);
+    }
+
 }
