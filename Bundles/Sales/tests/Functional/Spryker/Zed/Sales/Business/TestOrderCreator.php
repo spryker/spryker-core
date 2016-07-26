@@ -141,7 +141,7 @@ class TestOrderCreator
     protected function createSalesExpense(SpySalesOrder $salesOrderEntity)
     {
         $salesExpenseEntity = new SpySalesExpense();
-        $salesExpenseEntity->setName('shiping test');
+        $salesExpenseEntity->setName('shipping test');
         $salesExpenseEntity->setTaxRate(19);
         $salesExpenseEntity->setGrossPrice(100);
         $salesExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
@@ -162,14 +162,14 @@ class TestOrderCreator
         $salesOrderAddressEntity->setCity('City');
         $salesOrderAddressEntity->setCreatedAt(new \DateTime());
         $salesOrderAddressEntity->setUpdatedAt(new \DateTime());
-        $salesOrderAddressEntity->setComment('comment');
-        $salesOrderAddressEntity->setDescription('describtion');
-        $salesOrderAddressEntity->setCompany('company');
-        $salesOrderAddressEntity->setFirstName('First name');
-        $salesOrderAddressEntity->setLastName('Last Name');
+        $salesOrderAddressEntity->setComment('Comment');
+        $salesOrderAddressEntity->setDescription('Description');
+        $salesOrderAddressEntity->setCompany('Company');
+        $salesOrderAddressEntity->setFirstName('FirstName');
+        $salesOrderAddressEntity->setLastName('LastName');
         $salesOrderAddressEntity->setFkCountry(1);
-        $salesOrderAddressEntity->setEmail('email');
-        $salesOrderAddressEntity->setZipCode(10405);
+        $salesOrderAddressEntity->setEmail('Email');
+        $salesOrderAddressEntity->setZipCode(12345);
         $salesOrderAddressEntity->save();
 
         return $salesOrderAddressEntity;

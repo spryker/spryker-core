@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
+use LogicException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
@@ -17,6 +18,8 @@ use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Library\Sanitize\Html;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 abstract class AbstractTable
 {
@@ -229,7 +232,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = twig_escape_filter(new \Twig_Environment(), $value);
+                $value = twig_escape_filter(new Twig_Environment(), $value);
             }
 
             return $value;
@@ -333,12 +336,12 @@ abstract class AbstractTable
             ->getApplication()['twig'];
 
         if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
+            throw new LogicException('Twig environment not set up.');
         }
 
         /** @var \Twig_Loader_Chain $loaderChain */
         $loaderChain = $twig->getLoader();
-        $loaderChain->addLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../../Presentation/Table/'));
+        $loaderChain->addLoader(new Twig_Loader_Filesystem(__DIR__ . '/../../Presentation/Table/'));
 
         return $twig;
     }

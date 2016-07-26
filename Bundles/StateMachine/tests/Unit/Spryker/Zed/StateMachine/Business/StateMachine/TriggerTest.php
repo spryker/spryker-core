@@ -168,6 +168,33 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
+     * @return void
+     */
+    public function testTriggerShouldLogTransitionsForTriggerEvent()
+    {
+        $stateMachinePersistenceMock = $this->createTriggerPersistenceMock();
+        $finderMock = $this->createTrigerFinderMock();
+        $conditionMock = $this->createTriggerConditionMock();
+
+        $transitionLogMock = $this->createTransitionLogMock();
+        $transitionLogMock->expects($this->exactly(1))->method('setEvent');
+
+        $trigger = $this->createTrigger(
+            $transitionLogMock,
+            $finderMock,
+            $stateMachinePersistenceMock,
+            $conditionMock
+        );
+
+        $stateMachineItems[] = $this->createTriggerStateMachineItem();
+
+        $trigger->triggerEvent(
+            'event',
+            $stateMachineItems
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
      */
     protected function createProcesses()
@@ -218,11 +245,11 @@ class TriggerTest extends StateMachineMocks
     /**
      * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface|null $transitionLogMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface|null $finderMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $persistenceMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface $conditionMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface|null $persistenceMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface|null $conditionMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface|null $stateUpdaterMock
      *
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface $stateUpdaterMock
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Trigger
      */
     protected function createTrigger(

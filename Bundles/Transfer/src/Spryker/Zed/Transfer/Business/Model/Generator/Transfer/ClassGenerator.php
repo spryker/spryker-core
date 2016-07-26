@@ -9,6 +9,8 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 class ClassGenerator implements GeneratorInterface
 {
@@ -32,8 +34,8 @@ class ClassGenerator implements GeneratorInterface
     {
         $this->targetDirectory = $targetDirectory;
 
-        $loader = new \Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
-        $this->twig = new \Twig_Environment($loader, []);
+        $loader = new Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
+        $this->twig = new Twig_Environment($loader, []);
     }
 
     /**
