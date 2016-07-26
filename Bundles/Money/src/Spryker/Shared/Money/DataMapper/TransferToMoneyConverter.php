@@ -23,7 +23,7 @@ class TransferToMoneyConverter implements TransferToMoneyConverterInterface
     {
         return new Money(
             $moneyTransfer->getAmount(),
-            new Currency($moneyTransfer->getCurrency())
+            new Currency($moneyTransfer->getCurrency()->getCode())
         );
     }
 

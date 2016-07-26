@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Money\DataMapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
 use Spryker\Shared\Money\DataMapper\TransferToMoneyConverter;
@@ -30,9 +31,12 @@ class TransferToMoneyConverterTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvertShouldReturnMoney()
     {
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode(self::CURRENCY);
+
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount(self::AMOUNT)
-            ->setCurrency('EUR');
+            ->setCurrency($currencyTransfer);
 
         $transferToMoneyConverter = new TransferToMoneyConverter();
         $money = $transferToMoneyConverter->convert($moneyTransfer);

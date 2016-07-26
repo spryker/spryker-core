@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Money\DataMapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
 
@@ -22,7 +23,10 @@ class MoneyToTransferConverter implements MoneyToTransferConverterInterface
     {
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount($money->getAmount());
-        $moneyTransfer->setCurrency($money->getCurrency()->getCode());
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode($money->getCurrency()->getCode());
+        $moneyTransfer->setCurrency($currencyTransfer);
 
         return $moneyTransfer;
     }

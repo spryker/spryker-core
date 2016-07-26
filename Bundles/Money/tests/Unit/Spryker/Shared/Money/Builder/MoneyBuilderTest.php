@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Money\Builder;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
@@ -49,7 +50,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_INTEGER);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency());
+        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -61,7 +62,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_INTEGER, self::OTHER_CURRENCY);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency());
+        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -73,7 +74,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_FLOAT);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency());
+        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -85,7 +86,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_FLOAT, self::OTHER_CURRENCY);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency());
+        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -97,7 +98,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_STRING);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency());
+        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -109,7 +110,7 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $moneyTransfer = $moneyBuilder->getMoney(self::AMOUNT_STRING, self::OTHER_CURRENCY);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency());
+        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -162,8 +163,11 @@ class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
     public function convert(Money $money)
     {
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount($money->getAmount())
-            ->setCurrency($money->getCurrency()->getCode());
+        $moneyTransfer->setAmount($money->getAmount());
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode($money->getCurrency()->getCode());
+        $moneyTransfer->setCurrency($currencyTransfer);
 
         return $moneyTransfer;
     }

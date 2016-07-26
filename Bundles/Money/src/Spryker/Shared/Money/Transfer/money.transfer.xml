@@ -5,8 +5,12 @@
 
     <transfer name="Money">
         <property name="amount" type="string" />
-        <property name="currency" type="string" />
+        <property name="currency" type="Currency" />
         <property name="locale" type="Locale" />
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
     </transfer>
 
     <transfer name="Locale">

@@ -40,7 +40,7 @@ abstract class AbstractIntlMoneyFormatterTest extends \PHPUnit_Framework_TestCas
      */
     public function convert(MoneyTransfer $moneyTransfer)
     {
-        $money = new Money($moneyTransfer->getAmount(), new Currency($moneyTransfer->getCurrency()));
+        $money = new Money($moneyTransfer->getAmount(), new Currency($moneyTransfer->getCurrency()->getCode()));
 
         return $money;
     }

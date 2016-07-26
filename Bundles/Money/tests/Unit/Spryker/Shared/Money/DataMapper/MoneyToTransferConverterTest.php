@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Money\DataMapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
@@ -37,7 +38,9 @@ class MoneyToTransferConverterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame((string)self::AMOUNT, $moneyTransfer->getAmount());
-        $this->assertSame(self::CURRENCY, $moneyTransfer->getCurrency());
+
+        $this->assertInstanceOf(CurrencyTransfer::class, $moneyTransfer->getCurrency());
+        $this->assertSame(self::CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
 }

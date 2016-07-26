@@ -53,7 +53,7 @@ class MoneyPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
 
         $defaultCurrency = Store::getInstance()->getCurrencyIsoCode();
-        $this->assertSame($defaultCurrency, $moneyTransfer->getCurrency());
+        $this->assertSame($defaultCurrency, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -68,7 +68,7 @@ class MoneyPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame((string)self::AMOUNT_INTEGER, $moneyTransfer->getAmount());
 
-        $this->assertSame($currency, $moneyTransfer->getCurrency());
+        $this->assertSame($currency, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**

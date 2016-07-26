@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
@@ -39,7 +40,11 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
         $intlMoneyFormatter = new IntlMoneyFormatterWithCurrency($this->getTransferToMoneyConverterMock());
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount(self::AMOUNT);
-        $moneyTransfer->setCurrency(self::CURRENCY);
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode(self::CURRENCY);
+        $moneyTransfer->setCurrency($currencyTransfer);
+
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName(self::LOCALE);
         $moneyTransfer->setLocale($localeTransfer);
