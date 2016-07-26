@@ -9,6 +9,7 @@
   },
   "require": {
     "spryker/availability": "^2.0.0",
+    "spryker/cart": "^2.0.0",
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
