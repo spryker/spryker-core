@@ -9,8 +9,8 @@ namespace Spryker\Yves\Money;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
-use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
+use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurrency;
 use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
