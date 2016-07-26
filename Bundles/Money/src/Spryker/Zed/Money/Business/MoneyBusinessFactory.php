@@ -29,7 +29,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     public function createMoneyBuilder()
     {
         return new MoneyBuilder(
-            $this->createMoneyToTransferConverter(),
+            $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
             $this->getStore()->getCurrencyIsoCode()
         );
@@ -75,7 +75,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
-    protected function createMoneyToTransferConverter()
+    protected function createMoneyToTransferMapper()
     {
         return new MoneyToTransferMapper();
     }
@@ -83,7 +83,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
-    protected function createTransferToMoneyConverter()
+    protected function createTransferToMoneyMapper()
     {
         return new TransferToMoneyMapper();
     }
@@ -94,7 +94,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     protected function createIntlFormatterCurrency()
     {
         return new IntlMoneyFormatterWithCurrency(
-            $this->createTransferToMoneyConverter()
+            $this->createTransferToMoneyMapper()
         );
     }
 
@@ -104,7 +104,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     protected function createIntlFormatterDecimal()
     {
         return new IntlMoneyFormatterWithoutCurrency(
-            $this->createTransferToMoneyConverter()
+            $this->createTransferToMoneyMapper()
         );
     }
 

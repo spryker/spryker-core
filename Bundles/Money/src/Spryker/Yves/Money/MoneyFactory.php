@@ -29,7 +29,7 @@ class MoneyFactory extends AbstractFactory
     public function createMoneyBuilder()
     {
         return new MoneyBuilder(
-            $this->createMoneyToTransferConverter(),
+            $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
             $this->getStore()->getCurrencyIsoCode()
         );
@@ -75,7 +75,7 @@ class MoneyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
-    protected function createMoneyToTransferConverter()
+    protected function createMoneyToTransferMapper()
     {
         return new MoneyToTransferMapper();
     }
