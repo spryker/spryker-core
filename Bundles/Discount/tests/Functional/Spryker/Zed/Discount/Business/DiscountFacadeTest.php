@@ -578,8 +578,8 @@ class DiscountFacadeTest extends Test
         $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
         $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
 
-        $this->assertEquals(14.29, $firstItemDistributedAmount);
-        $this->assertEquals(85.71, $secondItemDistributedAmount);
+        $this->assertEquals(14, $firstItemDistributedAmount);
+        $this->assertEquals(86, $secondItemDistributedAmount);
         $this->assertEquals($totalDiscountAmount, $firstItemDistributedAmount + $secondItemDistributedAmount);
     }
 

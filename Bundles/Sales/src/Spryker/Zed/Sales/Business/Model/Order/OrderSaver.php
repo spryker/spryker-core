@@ -191,7 +191,6 @@ class OrderSaver implements OrderSaverInterface
             $quantity = $itemTransfer->getQuantity();
             for ($i = 1; $quantity >= $i; $i++) {
                 $expandedItemTransfer = clone $itemTransfer;
-                $expandedItemTransfer->setGroupKey(null);
                 $expandedItemTransfer->setQuantity(1);
                 $expandedItems->append($expandedItemTransfer);
             }
