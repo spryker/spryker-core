@@ -37,8 +37,6 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
-    const SUB_FORM_NAME = 'sub_form_name';
-
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */

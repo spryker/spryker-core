@@ -168,6 +168,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
         $localizedAttributesTransfer->setName($data[ProductFormGeneral::FIELD_NAME]);
+        $localizedAttributesTransfer->setDescription($data[ProductFormGeneral::FIELD_DESCRIPTION]);
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
         $localizedAttributesTransfer->setMetaTitle($data[ProductFormSeo::FIELD_META_TITLE]);
         $localizedAttributesTransfer->setMetaKeywords($data[ProductFormSeo::FIELD_META_KEYWORDS]);

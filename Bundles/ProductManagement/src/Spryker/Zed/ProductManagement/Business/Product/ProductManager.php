@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
+use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
@@ -125,8 +126,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Exception
      *
      * @return int
      */
@@ -154,18 +154,16 @@ class ProductManager implements ProductManagerInterface
             $this->productQueryContainer->getConnection()->commit();
             return $idProductAbstract;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productQueryContainer->getConnection()->rollBack();
-            return 0;
+            throw $e;
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Exception
      * @return int
      */
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
@@ -218,9 +216,9 @@ class ProductManager implements ProductManagerInterface
 
             return $idProductAbstract;
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             $this->productQueryContainer->getConnection()->rollBack();
-            return 0;
+            throw $e;
         }
     }
 
@@ -293,6 +291,10 @@ class ProductManager implements ProductManagerInterface
                 ->setFkProductAbstract($idProductAbstract)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
+                ->setDescription($localizedAttributes->getDescription())
+                ->setMetaTitle($localizedAttributes->getMetaTitle())
+                ->setMetaDescription($localizedAttributes->getMetaDescription())
+                ->setMetaKeywords($localizedAttributes->getMetaKeywords())
                 ->setAttributes($encodedAttributes);
 
             $productAbstractAttributesEntity->save();
