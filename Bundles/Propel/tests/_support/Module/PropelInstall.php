@@ -80,8 +80,7 @@ class PropelInstall extends Module
         return $this->getBaseCommand()
         . ' vendor/bin/propel model:build'
         . $this->getConfigDirectoryForCommand($config)
-        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package'
-            ;
+        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
     }
 
     /**
@@ -92,8 +91,7 @@ class PropelInstall extends Module
         return 'APPLICATION_ENV=' . APPLICATION_ENV
         . ' APPLICATION_STORE=' . APPLICATION_STORE
         . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-        . ' APPLICATION=' . APPLICATION
-            ;
+        . ' APPLICATION=' . APPLICATION;
     }
 
     /**
@@ -115,8 +113,7 @@ class PropelInstall extends Module
         $command = $this->getBaseCommand()
             . ' vendor/bin/propel diff'
             . $this->getConfigDirectoryForCommand($config)
-            . ' --schema-dir ' . $config['paths']['schemaDir']
-        ;
+            . ' --schema-dir ' . $config['paths']['schemaDir'];
 
         return $command;
     }
@@ -129,8 +126,7 @@ class PropelInstall extends Module
         $config = Config::get(PropelConstants::PROPEL);
         $command = $this->getBaseCommand()
             . ' vendor/bin/propel migrate'
-            . $this->getConfigDirectoryForCommand($config)
-        ;
+            . $this->getConfigDirectoryForCommand($config);
 
         return $command;
     }
