@@ -143,13 +143,20 @@ class ProductManager implements ProductManagerInterface
             $productAbstract = new SpyProductAbstract();
             $productAbstract
                 ->setAttributes($jsonAttributes)
-                ->setSku($sku);
+                ->setSku($sku)
+                ->setFkTaxSet($productAbstractTransfer->getTaxSetId());
 
             $productAbstract->save();
 
             $idProductAbstract = $productAbstract->getPrimaryKey();
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
             $this->createProductAbstractLocalizedAttributes($productAbstractTransfer);
+
+            $priceTransfer = $productAbstractTransfer->getPrice();
+            if ($priceTransfer !== null) {
+                $priceTransfer->setIdProduct($idProductAbstract);
+                $this->priceFacade->persistAbstractProductPrice($priceTransfer);
+            }
 
             $this->productQueryContainer->getConnection()->commit();
             return $idProductAbstract;
@@ -172,7 +179,7 @@ class ProductManager implements ProductManagerInterface
 
         try {
             $sku = $productAbstractTransfer->getSku();
-            $idProductAbstract = (int) $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
+            $idProductAbstract = (int)$productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
 
             $productAbstract = $this->productQueryContainer
                 ->queryProductAbstract()
@@ -202,7 +209,8 @@ class ProductManager implements ProductManagerInterface
             $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
             $productAbstract
                 ->setAttributes($jsonAttributes)
-                ->setSku($sku);
+                ->setSku($sku)
+                ->setFkTaxSet($productAbstractTransfer->getTaxSetId());
 
             $this->priceFacade->persistAbstractProductPrice($productAbstractTransfer->getPrice());
 
@@ -211,6 +219,12 @@ class ProductManager implements ProductManagerInterface
             $idProductAbstract = $productAbstract->getPrimaryKey();
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
             $this->saveProductAbstractLocalizedAttributes($productAbstractTransfer);
+
+            $priceTransfer = $productAbstractTransfer->getPrice();
+            if ($priceTransfer !== null) {
+                $priceTransfer->setIdProduct($idProductAbstract);
+                $this->priceFacade->persistAbstractProductPrice($priceTransfer);
+            }
 
             $this->productQueryContainer->getConnection()->commit();
 

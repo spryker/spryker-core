@@ -174,7 +174,6 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $inputType = $attributes[$name][self::INPUT_TYPE];
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
         $isMultiple = $attributes[$name][self::MULTIPLE];
-        $isDisabled = $attributes[$name][self::NAME_DISABLED];
 
         $inputManager = new AttributeInputManager();
         $input = $inputManager->getSymfonyInputType($inputType);
@@ -204,10 +203,6 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             } else {
                 $config['read_only'] = true;
             }
-        }
-
-        if ($isDisabled) {
-            $config['disabled'] = true;
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);

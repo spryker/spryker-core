@@ -47,7 +47,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      * @param int $idAbstractProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceType = null)
     {

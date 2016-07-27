@@ -9,6 +9,7 @@ namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductAbstractTransfer;
 use Generated\Shared\Transfer\PriceProductConcreteTransfer;
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
@@ -92,7 +93,7 @@ class Reader implements ReaderInterface
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
@@ -107,11 +108,10 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        $priceTransfer = (new PriceProductAbstractTransfer())
-            ->setIdPriceProduct($priceEntity->getIdPriceProduct())
-            ->setFkProductAbstract($idAbstractProduct)
+        $priceTransfer = (new ZedProductPriceTransfer())
+            ->setIdProduct($idAbstractProduct)
             ->setPrice($priceEntity->getPrice())
-            ->setPriceTypeName($priceTypeName);
+            ->setPriceType($priceTypeName);
 
         return $priceTransfer;
     }
@@ -122,7 +122,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Exception
      *
-     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceTypeName = null)
     {
@@ -137,11 +137,10 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        $priceTransfer = (new PriceProductConcreteTransfer())
-            ->setIdPriceProduct($priceEntity->getIdPriceProduct())
-            ->setFkProduct($idProduct)
+        $priceTransfer = (new ZedProductPriceTransfer())
+            ->setIdProduct($idProduct)
             ->setPrice($priceEntity->getPrice())
-            ->setPriceTypeName($priceTypeName);
+            ->setPriceType($priceTypeName);
 
         return $priceTransfer;
     }

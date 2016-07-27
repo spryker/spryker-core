@@ -29,7 +29,7 @@ interface ReaderInterface
      *
      * @throws \Exception
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
 
@@ -39,7 +39,7 @@ interface ReaderInterface
      *
      * @throws \Exception
      *
-     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceTypeName = null);
 

@@ -19,6 +19,7 @@
     <transfer name="ZedProductPrice">
         <property name="idProduct" type="int" />
         <property name="price" type="int" />
+        <property name="priceType" type="string" />
     </transfer>
 
     <transfer name="ProductManagementAttribute">

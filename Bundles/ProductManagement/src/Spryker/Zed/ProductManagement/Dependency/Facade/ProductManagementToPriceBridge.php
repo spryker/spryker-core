@@ -31,7 +31,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
      * @param int $idAbstractProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceType = null)
     {
@@ -44,7 +44,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
      * @param int $idProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceType = null)
     {
