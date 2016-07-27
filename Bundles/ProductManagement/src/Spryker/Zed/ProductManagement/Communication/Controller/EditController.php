@@ -64,7 +64,7 @@ class EditController extends AddController
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeCollection);
+                $attributeValues = $this->convertAttributeTransferFromData($form->getData(), $attributeCollection);
 
                 $matrixGenerator = new MatrixGenerator();
                 $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);

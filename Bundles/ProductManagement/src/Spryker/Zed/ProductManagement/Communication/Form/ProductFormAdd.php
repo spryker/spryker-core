@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -161,7 +162,7 @@ class ProductFormAdd extends AbstractType
             $this->addAttributeAbstractForm($builder, $name, $options);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, AbstractProductFormDataProvider::DEFAULT_LOCALE);
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         $this->addAttributeAbstractForm($builder, $defaultName, $options);
 
         return $this;
@@ -402,7 +403,7 @@ class ProductFormAdd extends AbstractType
         $result = [];
 
         if ($includeDefault) {
-            $result[] = AbstractProductFormDataProvider::DEFAULT_LOCALE;
+            $result[] = ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE;
         }
 
         foreach (self::$localeCollection as $localeCode => $localeTransfer) {

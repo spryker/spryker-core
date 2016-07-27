@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\Library\Collection\CollectionInterface;
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 
 class AttributeProcessor implements AttributeProcessorInterface
 {
@@ -162,6 +163,23 @@ class AttributeProcessor implements AttributeProcessorInterface
         $concreteLocalizedAttributes = $this->getConcreteLocalizedAttributes()->toArray(true);
 
         return array_merge($concreteAttributes, $concreteLocalizedAttributes);
+    }
+
+    /**
+     * @param array $values
+     *
+     * @return array
+     */
+    public function generateAttributeValues(array $values)
+    {
+        $defaults = $values[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE];
+        unset($values[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]);
+
+        foreach ($values as $localeCode => $data) {
+            $values[$localeCode] = array_merge($data, $defaults);
+        }
+
+        return $values;
     }
 
 }

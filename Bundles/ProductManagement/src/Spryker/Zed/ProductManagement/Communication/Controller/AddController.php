@@ -12,12 +12,17 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeAbstract;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -53,18 +58,17 @@ class AddController extends AbstractController
         if ($form->isValid()) {
             try {
                 $data = $form->getData();
-                $attributes = $this->convertAttributesFromData($data);
-                $attributeValues = $this->convertAttributeValuesFromData($data, $attributeCollection);
+                //$attributeTransferCollection = $this->convertAttributeTransferFromData($data, $attributeCollection);
+                $attributeValues = $this->convertAttributeArrayFromData($data);
 
-                ddd($attributes, $attributeValues, $form->getData(), $_POST);
-                $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
-                $matrixGenerator = new MatrixGenerator();
-                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
-
+                $productAbstractTransfer = $this->buildProductAbstractTransferFromData($data, $attributeValues);
+                //$matrixGenerator = new MatrixGenerator();
+                //$concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection, $attributeValues);
+                //ddd($productAbstractTransfer->toArray(), $attributeValues, $attributeCollection, $form->getData(), $_POST);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
-                    ->addProduct($productAbstractTransfer, $concreteProductCollection);
+                    ->addProduct($productAbstractTransfer, []);
 
                 $this->addSuccessMessage('The product was added successfully.');
 
@@ -95,17 +99,30 @@ class AddController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function buildProductAbstractTransferFromData(array $formData)
+    protected function buildProductAbstractTransferFromData(array $formData, array $attributeValues)
     {
-        $productAbstractTransfer = $this->createProductAbstractTransfer($formData);
+        $localeCollection = ProductFormAdd::getLocaleCollection(false);
+        $productAbstractTransfer = $this->createProductAbstractTransfer(
+            $formData,
+            $attributeValues[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]
+        );
 
-        $attributeData = $formData[ProductFormAdd::GENERAL];
-        foreach ($attributeData as $localeCode => $localizedAttributesData) {
-            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
+        $localizedData = [];
+        foreach ($localeCollection as $code) {
+            $formName = ProductFormAdd::getGeneralFormName($code);
+            $localizedData[$code] = $formData[$formName];
+        }
 
+        foreach ($localeCollection as $code) {
+            $formName = ProductFormAdd::getSeoFormName($code);
+            $localizedData[$code] = array_merge($localizedData[$code], $formData[$formName]);
+        }
+
+        foreach ($localizedData as $code => $data) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($code);
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
-                $localizedAttributesData,
-                [],
+                $data,
+                $attributeValues[$code],
                 $localeTransfer
             );
 
@@ -151,13 +168,18 @@ class AddController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer(array $data)
+    protected function createProductAbstractTransfer(array $data, array $attributes)
     {
+        $attributes = array_filter($attributes);
         $productAbstractTransfer = new ProductAbstractTransfer();
 
         $productAbstractTransfer->setSku(
             $this->slugify($data[ProductFormAdd::FIELD_SKU])
         );
+
+        $productAbstractTransfer->setAttributes($attributes);
+
+        $productAbstractTransfer->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -171,10 +193,14 @@ class AddController extends AbstractController
      */
     protected function createLocalizedAttributesTransfer(array $data, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
     {
+        $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
         $localizedAttributesTransfer->setName($data[ProductFormAdd::FIELD_NAME]);
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
+        $localizedAttributesTransfer->setMetaTitle($data[ProductFormSeo::FIELD_META_TITLE]);
+        $localizedAttributesTransfer->setMetaKeywords($data[ProductFormSeo::FIELD_META_KEYWORDS]);
+        $localizedAttributesTransfer->setMetaDescription($data[ProductFormSeo::FIELD_META_DESCRIPTION]);
 
         return $localizedAttributesTransfer;
     }
@@ -202,7 +228,7 @@ class AddController extends AbstractController
      *
      * @return array
      */
-    protected function convertAttributesFromData(array $data)
+    protected function convertAttributeArrayFromData(array $data)
     {
         $attributes = [];
         $localeCollection = ProductFormAdd::getLocaleCollection(true);
@@ -218,47 +244,65 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array $formData
      * @param array $attributeCollection
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
-    protected function convertAttributeValuesFromData(array $data, array $attributeCollection)
+    protected function convertAttributeTransferFromData(array $formData, array $attributeCollection)
     {
-        $attributes = [];
+        $attributeValues = $this->convertAttributeArrayFromData($formData);
+
+        $attributeProcessor = new AttributeProcessor();
         $localeCollection = ProductFormAdd::getLocaleCollection(true);
 
-        foreach ($localeCollection as $code) {
-            $formName = ProductFormAdd::getAbstractAttributeFormName($code);
-            foreach ($data[$formName] as $type => $values) {
+        foreach ($formData[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] as $type => $itemData) {
+            /* @var  ProductManagementAttributeTransfer $attributeTransfer */
+            $attributeTransfer = $attributeCollection[$type];
 
+            $nameCheckbox = $itemData[ProductFormAttributeAbstract::FIELD_NAME];
+            $value = $itemData[ProductFormAttributeAbstract::FIELD_VALUE];
+            $idValue = (int)$itemData[ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID];
+
+            if (!$nameCheckbox) {
+                continue;
+            }
+
+            $valueTransfer = (new ProductManagementAttributeValueTransfer())
+                ->setFkProductManagementAttribute($attributeTransfer->getIdProductManagementAttribute())
+                ->setIdProductManagementAttributeValue($idValue)
+                ->setValue($value);
+
+            $attributeTransfer->addValue($valueTransfer);
+        }
+
+        unset($formData[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]);
+
+        foreach ($localeCollection as $code) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($code);
+            $formName = ProductFormAdd::getAbstractAttributeFormName($code);
+            foreach ($formData[$formName] as $type => $itemData) {
                 /* @var  ProductManagementAttributeTransfer $attributeTransfer */
                 $attributeTransfer = $attributeCollection[$type];
 
-                $nameCheckbox = $values[ProductFormAttributeAbstract::FIELD_NAME];
-                $value = $values[ProductFormAttributeAbstract::FIELD_VALUE];
-                $idValue = (int)$values[ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID];
-                $isValueNew = $idValue <= 0;
+                $nameCheckbox = $itemData[ProductFormAttributeAbstract::FIELD_NAME];
+                $value = $itemData[ProductFormAttributeAbstract::FIELD_VALUE];
+                $idValue = (int)$itemData[ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID];
 
-                $valueTransfer = new ProductManagementAttributeValueTransfer();
-                $valueTransfer->setFkProductManagementAttribute($attributeTransfer->getIdProductManagementAttribute());
-
-                if ($isValueNew) {
-                    $valueTransfer->setValue($value);
-                } else {
-                    $valueTransfer->setIdProductManagementAttributeValue($idValue);
+                if (!$nameCheckbox) {
+                    continue;
                 }
 
-                sd($valueTransfer->toArray(), $attributeTransfer->toArray());
+                $localizedValue = (new ProductManagementAttributeValueTranslationTransfer())
+                    ->setIdProductManagementAttributeValue($attributeTransfer->getIdProductManagementAttribute())
+                    ->setFkLocale($localeTransfer->getIdLocale())
+                    ->setTranslation($value);
 
-                $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
-                if (!empty($values)) {
-                    $attributes[$type] = $values;
-                }
+                $attributeTransfer->addLoca($valueTransfer);
             }
         }
 
-        return $attributes;
+        return $attributeCollection;
     }
 
     /**

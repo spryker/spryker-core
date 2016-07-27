@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
@@ -23,7 +24,6 @@ class AbstractProductFormDataProvider
 {
 
     const LOCALE_NAME = 'locale_name';
-    const DEFAULT_LOCALE = 'default';
 
     const FORM_FIELD_ID = 'id';
     const FORM_FIELD_VALUE = 'value';
@@ -221,7 +221,7 @@ class AbstractProductFormDataProvider
             $result[$key] = $data;
         }
 
-        $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, self::DEFAULT_LOCALE);
+        $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         $result[$defaultKey] = $data;
 
         return $result;

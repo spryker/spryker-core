@@ -12,4 +12,6 @@ interface ProductManagementConstants
 
     const PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
 
+    const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
+
 }

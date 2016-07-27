@@ -74,4 +74,11 @@ interface AttributeProcessorInterface
      */
     public function mergeConcreteAttributes();
 
+    /**
+     * @param array $values
+     *
+     * @return array
+     */
+    public function generateAttributeValues(array $values);
+
 }
