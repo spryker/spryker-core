@@ -21,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ReadOnlyAttributeTranslatio
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
+use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -322,6 +323,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createAttributeTranslationFormTransferGenerator()
     {
         return new AttributeTranslationFormTransferGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator
+     */
+    public function createProductFormTransferGenerator()
+    {
+        return new ProductFormTransferGenerator(
+            $this->getLocaleFacade()
+        );
     }
 
 }
