@@ -16,12 +16,14 @@ namespace Money;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class FunctionalTester extends \Codeception\Actor
 {
+
     use _generated\FunctionalTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }
