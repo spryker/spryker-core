@@ -27,7 +27,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
-     * @return callable
+     * @return callable|null
      */
     public function onKernelController(FilterControllerEvent $event)
     {

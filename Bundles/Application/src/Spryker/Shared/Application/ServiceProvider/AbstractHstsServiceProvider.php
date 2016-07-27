@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Shared\Application\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -16,8 +16,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * HTTP Strict Transport Security support as a ServiceProvider
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
- *
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider instead
  */
 abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 {
@@ -86,15 +84,15 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
     {
         $headerParts = [];
         if (!empty($hstsConfig[static::HSTS_CONFIG_MAXAGE])) {
-            $headerParts[] = "max-age=" . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
+            $headerParts[] = 'max-age=' . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_INCLUDE_SUBDOMAINS])) {
-            $headerParts[] = "includeSubDomains";
+            $headerParts[] = 'includeSubDomains';
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_PRELOAD])) {
-            $headerParts[] = "preload";
+            $headerParts[] = 'preload';
         }
 
         if ($headerParts) {
