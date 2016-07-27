@@ -74,6 +74,7 @@
     <transfer name="FactFinderCsv">
         <property name="locale" type="string" />
         <property name="type" type="string" />
+        <property name="number" type="string" />
         <property name="contents" type="string" />
     </transfer>
 

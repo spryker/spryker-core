@@ -34,10 +34,12 @@ class CsvNameGenerator implements NameGeneratorInterface
     }
 
     /**
+     * @param string $number
+     *
      * @return string
      */
-    public function generateFileName()
+    public function generateFileName($number = '')
     {
-        return $this->type . '_' . $this->localeTransfer->getLocaleName() . '.csv';
+        return $this->type . '_' . $this->localeTransfer->getLocaleName() . $number . '.csv';
     }
 }

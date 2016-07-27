@@ -25,7 +25,8 @@ class CsvController extends AbstractController
     public function productsAction(Request $request)
     {
         $locale = $request->get('locale', $this->getLocale());
-        $response = $this->getClient()->getProductCsv($locale)->getContents();
+        $number = $request->get('number', '');
+        $response = $this->getClient()->getProductCsv($locale, $number)->getContents();
 
         return $this->streamedResponse(
             function () use ($response) {

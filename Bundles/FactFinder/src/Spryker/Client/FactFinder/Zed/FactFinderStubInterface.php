@@ -15,10 +15,11 @@ interface FactFinderStubInterface
     /**
      * @param string $locale
      * @param string $type
+     * @param string $number
      *
      * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
      */
-    public function getExportedCsv($locale, $type);
+    public function getExportedCsv($locale, $type, $number = '');
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

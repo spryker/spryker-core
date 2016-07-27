@@ -12,17 +12,19 @@ interface FactFinderClientInterface
 
     /**
      * @param string $locale
+     * @param string $number
      *
      * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
      */
-    public function getProductCsv($locale);
+    public function getProductCsv($locale, $number = '');
 
     /**
      * @param string $locale
+     * @param string $number
      *
      * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
      */
-    public function getCategoryCsv($locale);
+    public function getCategoryCsv($locale, $number = '');
 
     /**
      * @api

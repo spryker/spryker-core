@@ -30,13 +30,19 @@ class FactFinderStub implements FactFinderStubInterface
     /**
      * @param string $locale
      * @param string $type
+     * @param string $number
      *
      * @return \Generated\Shared\Transfer\FactFinderCsvTransfer
      */
-    public function getExportedCsv($locale, $type)
+    public function getExportedCsv($locale, $type, $number = '')
     {
         $factFinderTransfer = new FactFinderCsvTransfer();
-        $factFinderTransfer->setType($type)->setLocale($locale);
+        $factFinderTransfer
+            ->setType($type)
+            ->setLocale($locale)
+            ->setNumber($number)
+        ;
+
         return $this->zedStub->call('/fact-finder/gateway/get-fact-finder-csv', $factFinderTransfer);
     }
 

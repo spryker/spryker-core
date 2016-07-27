@@ -43,17 +43,18 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
     /**
      * @param string $locale
      * @param string $type
+     * @param string $number
      *
      * @return mixed
      */
-    public function getFactFinderCsv($locale, $type)
+    public function getFactFinderCsv($locale, $type, $number = '')
     {
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($locale);
 
         $fileName = $this->getFactory()
             ->getCollectorFacade()
-            ->getCsvFileName($type, $localeTransfer);
+            ->getCsvFileName($type, $localeTransfer, $number);
 
         $directory = $this->getFactory()
             ->getFactFinderConfig()

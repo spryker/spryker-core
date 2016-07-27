@@ -39,7 +39,8 @@ class GatewayController extends AbstractGatewayController
         return $csvTransfer->setContents(
             $this->getFacade()->getFactFinderCsv(
                 $csvTransfer->getLocale(),
-                $csvTransfer->getType()
+                $csvTransfer->getType(),
+                $csvTransfer->getNumber()
             )
         );
     }
