@@ -121,19 +121,23 @@ class StorageInstanceBuilder
             case self::KV_ADAPTER_REDIS:
                 $config = [
                     'protocol' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PROTOCOL, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
-                    'port' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PORT, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
-                    'host' => Config::get(StorageConstants::YVES_STORAGE_REDIS_HOST, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+                    'port' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PORT, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT)),
+                    'host' => Config::get(StorageConstants::YVES_STORAGE_REDIS_HOST, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
                 ];
 
+                // TODO: Remove elseif, only there for BC
                 if (Config::hasKey(StorageConstants::YVES_STORAGE_REDIS_PASSWORD)) {
                     $config['password'] = Config::get(StorageConstants::YVES_STORAGE_REDIS_PASSWORD);
                 } elseif (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
-                $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
-            }
+                    $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+                }
 
+                // TODO: Remove elseif, only there for BC
                 $config['persistent'] = false;
                 if (Config::hasKey(StorageConstants::YVES_STORAGE_PERSISTENT_CONNECTION)) {
                     $config['persistent'] = (bool)Config::get(StorageConstants::YVES_STORAGE_PERSISTENT_CONNECTION);
+                } elseif (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
+                    $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
                 }
                 break;
 
