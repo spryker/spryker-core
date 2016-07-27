@@ -46,8 +46,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
         $app['session.storage.options'] = [
-            'name' => str_replace('.', '-', Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME)),
-            'cookie_lifetime' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE),
+            'name' => str_replace('.', '-', Config::get(SessionConstants::ZED_SESSION_COOKIE_NAME)),
+            'cookie_lifetime' => Config::get(SessionConstants::ZED_SESSION_TIME_TO_LIVE),
             'cookie_secure' => $this->secureCookie(),
             'cookie_httponly' => true,
             'use_only_cookies' => true,
@@ -120,20 +120,20 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
             $path = sprintf(
                 '%s://%s:%s?database=%s',
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
-                Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_DATABASE, 0)
+                Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
+                Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
+                Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
+                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, 0)
             );
 
-            if (Config::hasKey(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD)) {
+            if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
                 $path = sprintf(
                     '%s://h:%s@%s:%s?database=%s',
-                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD),
-                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
-                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
-                    Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_DATABASE, 0)
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, 0)
                 );
             }
 
@@ -141,7 +141,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         }
 
         if (SessionConstants::SESSION_HANDLER_FILE === $saveHandler) {
-            $path = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_FILE_PATH);
+            $path = Config::get(SessionConstants::ZED_SESSION_FILE_PATH);
         }
 
         return $path;
@@ -157,7 +157,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     protected function secureCookie()
     {
         if (Config::get(ApplicationConstants::ZED_SSL_ENABLED, false)
-            && Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_SECURE, true)
+            && Config::get(SessionConstants::ZED_SESSION_COOKIE_SECURE, true)
         ) {
             return true;
         }

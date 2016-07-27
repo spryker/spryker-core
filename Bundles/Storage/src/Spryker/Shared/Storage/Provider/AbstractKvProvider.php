@@ -70,18 +70,18 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(SessionConstants::YVES_SESSION_REDIS_PORT),
+            'host' => Config::get(SessionConstants::YVES_SESSION_REDIS_HOST),
         ];
 
-        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+        if (Config::hasKey(SessionConstants::YVES_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(SessionConstants::YVES_SESSION_REDIS_PASSWORD);
         }
 
         $config['persistent'] = false;
-        if (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
-            $config['persistent'] = (bool)Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+        if (Config::hasKey(SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION)) {
+            $config['persistent'] = (bool)Config::get(SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION);
         }
 
         return $config;

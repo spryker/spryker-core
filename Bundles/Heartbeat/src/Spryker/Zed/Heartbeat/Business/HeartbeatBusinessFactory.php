@@ -11,6 +11,8 @@ use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
@@ -112,14 +114,14 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_PROTOCOL, Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL)),
-            'port' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_PORT, Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT)),
-            'host' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_HOST, Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST)),
-            'database' => Config::get(ApplicationConstants::ZED_STORAGE_REDIS_DATABASE, 0),
+            'protocol' => Config::get(StorageConstants::ZED_STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(StorageConstants::ZED_STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
+            'host' => Config::get(StorageConstants::ZED_STORAGE_REDIS_HOST, Config::get(SessionConstants::ZED_SESSION_REDIS_HOST)),
+            'database' => Config::get(StorageConstants::ZED_STORAGE_REDIS_DATABASE, 0),
         ];
 
-        if (Config::hasKey(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD);
+        if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD);
         }
 
         return $config;

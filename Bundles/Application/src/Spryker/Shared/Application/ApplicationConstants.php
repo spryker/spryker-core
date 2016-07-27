@@ -60,49 +60,77 @@ interface ApplicationConstants
     const CORE_NAMESPACES = 'CORE_NAMESPACES';
 
     /**
-     * @deprecated Use Storage bundle StorageConstants class constants.
-     */
-    const YVES_STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
-    const YVES_STORAGE_REDIS_PASSWORD = 'YVES_STORAGE_REDIS_PASSWORD';
-    const YVES_STORAGE_REDIS_HOST = 'YVES_STORAGE_REDIS_HOST';
-    const YVES_STORAGE_REDIS_PORT = 'YVES_STORAGE_REDIS_PORT';
-    const YVES_STORAGE_PERSISTENT_CONNECTION = 'YVES_STORAGE_PERSISTENT_CONNECTION';
-    const YVES_STORAGE_REDIS_DATABASE = 'YVES_STORAGE_REDIS_DATABASE';
-
-    /**
-     * @deprecated Use Session bundle SessionConstants class constants.
+     * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PROTOCOL = 'YVES_STORAGE_SESSION_REDIS_PROTOCOL';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_PASSWORD = 'YVES_STORAGE_SESSION_REDIS_PASSWORD';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_HOST = 'YVES_STORAGE_SESSION_REDIS_HOST';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_PORT = 'YVES_STORAGE_SESSION_REDIS_PORT';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_DATABASE = 'YVES_STORAGE_SESSION_REDIS_DATABASE';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_FILE_PATH = 'YVES_STORAGE_SESSION_FILE_PATH';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = 'YVES_STORAGE_SESSION_PERSISTENT_CONNECTION';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_TIME_TO_LIVE = 'YVES_STORAGE_SESSION_TIME_TO_LIVE';
 
     /**
-     * @deprecated Use Storage bundle StorageConstants class constants.
-     */
-    const ZED_STORAGE_REDIS_PROTOCOL = 'ZED_STORAGE_REDIS_PROTOCOL';
-    const ZED_STORAGE_REDIS_PASSWORD = 'ZED_STORAGE_REDIS_PASSWORD';
-    const ZED_STORAGE_REDIS_HOST = 'ZED_STORAGE_REDIS_HOST';
-    const ZED_STORAGE_REDIS_PORT = 'ZED_STORAGE_REDIS_PORT';
-    const ZED_STORAGE_PERSISTENT_CONNECTION = 'ZED_STORAGE_PERSISTENT_CONNECTION';
-    const ZED_STORAGE_REDIS_DATABASE = 'ZED_STORAGE_REDIS_DATABASE';
-
-    /**
-     * @deprecated Use Session bundle SessionConstants class constants.
+     * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_REDIS_PROTOCOL = 'ZED_STORAGE_SESSION_REDIS_PROTOCOL';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_REDIS_HOST = 'ZED_STORAGE_SESSION_REDIS_HOST';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_REDIS_PORT = 'ZED_STORAGE_SESSION_REDIS_PORT';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_REDIS_PASSWORD = 'ZED_STORAGE_SESSION_REDIS_PASSWORD';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_REDIS_DATABASE = 'ZED_STORAGE_SESSION_REDIS_DATABASE';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_FILE_PATH = 'ZED_STORAGE_SESSION_FILE_PATH';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_PERSISTENT_CONNECTION = 'ZED_STORAGE_SESSION_PERSISTENT_CONNECTION';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_TIME_TO_LIVE = 'ZED_STORAGE_SESSION_TIME_TO_LIVE';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_COOKIE_NAME = 'ZED_STORAGE_SESSION_COOKIE_NAME';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const ZED_STORAGE_SESSION_COOKIE_SECURE = 'ZED_COOKIE_SECURE';
 
     const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
