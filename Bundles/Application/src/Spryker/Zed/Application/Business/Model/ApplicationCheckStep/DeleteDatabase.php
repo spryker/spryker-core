@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
+use PDO;
+use RuntimeException;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Symfony\Component\Process\Process;
@@ -45,7 +47,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
     }
 
@@ -68,7 +70,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
     }
 
@@ -77,7 +79,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
      */
     protected function deleteMysqlDatabaseIfExists()
     {
-        $con = new \PDO(
+        $con = new PDO(
             Config::get(ApplicationConstants::ZED_DB_ENGINE)
             . ':host='
             . Config::get(ApplicationConstants::ZED_DB_HOST)
