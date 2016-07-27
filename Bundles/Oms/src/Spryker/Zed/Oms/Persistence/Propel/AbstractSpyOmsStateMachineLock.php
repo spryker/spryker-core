@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Persistence\Propel;
 
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLock as BaseSpyStateMachineLock;
+use Orm\Zed\Oms\Persistence\Base\SpyOmsStateMachineLock as BaseSpyOmsStateMachineLock;
 
-abstract class AbstractSpyOmsStateMachineLock extends BaseSpyStateMachineLock
+abstract class AbstractSpyOmsStateMachineLock extends BaseSpyOmsStateMachineLock
 {
 }
