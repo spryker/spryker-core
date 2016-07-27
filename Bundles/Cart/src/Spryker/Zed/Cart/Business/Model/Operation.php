@@ -38,12 +38,12 @@ class Operation implements OperationInterface
     /**
      * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
-    protected $itemExpanderPlugins;
+    protected $itemExpanderPlugins = [];
 
     /**
      * @var \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
      */
-    protected $postSavePlugins;
+    protected $postSavePlugins = [];
 
     /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider

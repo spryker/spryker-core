@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOption\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOption\Communication\Form\GeneralForm;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionForm;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -15,4 +17,30 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductOptionForm()
+    {
+        $productOptionFormType = new ProductOptionForm();
+
+        return $this->getFormFactory()->create(
+            $productOptionFormType,
+            null
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createGeneralForm()
+    {
+        $generalFormType = new GeneralForm();
+
+        return $this->getFormFactory()->create(
+            $generalFormType,
+            null
+        );
+    }
 }

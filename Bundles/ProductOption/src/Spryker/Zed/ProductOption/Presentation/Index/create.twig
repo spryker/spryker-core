@@ -1,0 +1,73 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create product option' | trans %}
+
+{% block action %}
+    {{ backActionButton('/product-option/index/list', 'Back to list' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create product option' } %}
+
+        {% block widget_content %}
+            <div class="tabs-container tabs-manager">
+                <ul id="product-option-tabs" class="nav nav-tabs">
+                    <li class="active"><a class="tab-item" data-toggle="tab" href="#general">{{ 'General information' | trans }}</a></li>
+                    <li><a class="tab-item" data-toggle="tab" href="#translations">{{ 'Translations' | trans }}</a></li>
+                    <li><a class="tab-item" data-toggle="tab" href="#products">{{ 'Products' | trans }}</a></li>
+                </ul>
+                <div class="tab-content ">
+                    <div id="general" class="tab-pane active">
+                        <div class="panel-body">
+                            <a href="#" class="btn btn-primary" id="add-another-option">Add option</a>
+                            {{ form_start(generalForm) }}
+                                <div id="option-value-list" data-prototype="
+                                       {% filter escape %}
+                                          {{ include ('@ProductOption/Index/_product-option-template.twig', { 'productOptionForm': generalForm.values.vars.prototype }) }}
+                                       {% endfilter %}"
+                                >
+                                    {% for valueForm in generalForm.values %}
+                                        <div>
+                                            {{ include ('@ProductOption/Index/_product-option-template.twig', { 'productOptionForm': valueForm }) }}
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+
+                                {{ form_row(generalForm.fkTaxSet) }}
+                            <input type="submit" id="create-discount-button" class="btn btn-create" value="{{ 'Save' | trans }}" />
+                            {{ form_end(generalForm) }}
+                            {% include '@ProductOption/Index/partial/general.twig' %}
+                        </div>
+                    </div>
+                    <div id="translations" class="tab-pane">
+                        <div class="panel-body">
+                            {% include '@ProductOption/Index/partial/translations.twig' %}
+                        </div>
+                    </div>
+                    <div id="products" class="tab-pane">
+                        <div class="panel-body">
+                            {% include '@ProductOption/Index/partial/products.twig' %}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                {% include '@ProductOption/Index/_form-submit.twig' %}
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-option-main.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-product-option-main.js"></script>
+{% endblock %}
+

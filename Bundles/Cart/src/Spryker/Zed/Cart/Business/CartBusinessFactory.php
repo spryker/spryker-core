@@ -27,7 +27,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
-            $this->getItemExpanderPlugins()
+            $this->getItemExpanderPlugins(),
+            $this->getPostSavePlugins()
         );
     }
 

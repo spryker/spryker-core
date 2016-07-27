@@ -34,9 +34,9 @@
         <column name="value" required="true" type="VARCHAR" size="255"/>
         <column name="fk_product_option_group" type="integer" required="true"/>
 
-        <index name="spy_product_option_value-sku">
-            <index-column name="sku"/>
-        </index>
+        <unique name="spy_product_option_value-sku">
+            <unique-column name="sku"/>
+        </unique>
 
         <foreign-key name="spy_product_option_value-fk_product_option_group" foreignTable="spy_product_option_group">
             <reference local="fk_product_option_group" foreign="id_product_option_group"/>
