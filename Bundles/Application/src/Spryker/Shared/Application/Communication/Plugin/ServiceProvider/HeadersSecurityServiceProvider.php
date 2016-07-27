@@ -12,6 +12,9 @@ use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * @deprecated Use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider instead
+ */
 class HeadersSecurityServiceProvider implements ServiceProviderInterface
 {
 

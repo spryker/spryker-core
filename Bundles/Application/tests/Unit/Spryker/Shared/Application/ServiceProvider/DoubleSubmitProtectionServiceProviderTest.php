@@ -5,33 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Symfony\Plugin\ServiceProvider;
+namespace Unit\Spryker\Shared\Application\ServiceProvider;
 
 use Codeception\TestCase\Test;
 use Silex\Application;
+use Spryker\Shared\Application\ServiceProvider\DoubleSubmitProtectionServiceProvider;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
-use Spryker\Shared\Symfony\Plugin\ServiceProvider\DoubleSubmitProtectionServiceProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Shared
- * @group Symfony
- * @group Form
- * @group Extension
- * @group DoubleSubmitProtectionExtensionTest
+ * @group Application
+ * @group ServiceProvider
+ * @group DoubleSubmitProtectionServiceProvider
  */
 class DoubleSubmitProtectionServiceProviderTest extends Test
 {
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $application;
-
-    /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage
-     */
-    protected $sessionStorage;
 
     /**
      * @return void

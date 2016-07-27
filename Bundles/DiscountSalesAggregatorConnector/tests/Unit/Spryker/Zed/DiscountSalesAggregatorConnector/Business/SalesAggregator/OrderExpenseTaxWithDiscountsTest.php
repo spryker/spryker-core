@@ -34,8 +34,8 @@ class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
         $orderExpenseWithDiscounts->aggregate($orderTransfer);
 
-        $this->assertEquals(10, $orderTransfer->getExpenses()[0]->getUnitTaxAmountWithDiscounts());
-        $this->assertEquals(20, $orderTransfer->getExpenses()[0]->getSumTaxAmountWithDiscounts());
+        $this->assertSame(10, $orderTransfer->getExpenses()[0]->getUnitTaxAmountWithDiscounts());
+        $this->assertSame(20, $orderTransfer->getExpenses()[0]->getSumTaxAmountWithDiscounts());
     }
 
     /**

@@ -15,12 +15,14 @@ namespace Kernel;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class YvesUnitTester extends \Codeception\Actor
 {
+
     use _generated\YvesUnitTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

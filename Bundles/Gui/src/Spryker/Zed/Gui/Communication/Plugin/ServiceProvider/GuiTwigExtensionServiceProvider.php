@@ -11,6 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
@@ -40,7 +41,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      * @param \Twig_Environment $twig
      * @return void
      */
-    protected function registerTwigFunctions(\Twig_Environment $twig)
+    protected function registerTwigFunctions(Twig_Environment $twig)
     {
         foreach ($this->getTwigFunctions() as $function) {
             $twig->addFunction($function);
@@ -51,7 +52,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      * @param \Twig_Environment $twig
      * @return void
      */
-    protected function registerTwigFilters(\Twig_Environment $twig)
+    protected function registerTwigFilters(Twig_Environment $twig)
     {
         foreach ($this->getTwigFilters() as $filter) {
             $twig->addFilter($filter);

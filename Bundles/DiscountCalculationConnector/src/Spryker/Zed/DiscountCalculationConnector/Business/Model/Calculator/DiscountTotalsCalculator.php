@@ -37,7 +37,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
         $discountTotalAmount = $this->calculateItemDiscounts($quoteTransfer);
         $discountTotalAmount += $this->calculateExpenseTotalDiscountAmount($quoteTransfer);
 
-        return $discountTotalAmount;
+        return (int)round($discountTotalAmount);
     }
 
     /**
@@ -47,12 +47,18 @@ class DiscountTotalsCalculator implements CalculatorInterface
      */
     protected function calculateItemDiscounts(QuoteTransfer $quoteTransfer)
     {
-        $discountAmount = 0;
+        $itemTotalDiscountAmount = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $discountAmount += $this->getItemTotalDiscountAmount($itemTransfer);
+
+            $itemDiscountAmount = $this->getItemTotalDiscountAmount($itemTransfer);
+            if ($itemDiscountAmount > $itemTransfer->getSumGrossPrice()) {
+                $itemDiscountAmount = $itemTransfer->getSumGrossPrice();
+            }
+
+            $itemTotalDiscountAmount += $itemDiscountAmount;
         }
 
-        return $discountAmount;
+        return $itemTotalDiscountAmount;
     }
 
     /**
@@ -89,7 +95,12 @@ class DiscountTotalsCalculator implements CalculatorInterface
     {
         $totalDiscountSumGrossAmount = 0;
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+
             $sumAmount = $this->getCalculatedDiscountsSumGrossAmount($expenseTransfer->getCalculatedDiscounts());
+            if ($sumAmount > $expenseTransfer->getSumGrossPrice()) {
+                $sumAmount = $expenseTransfer->getSumGrossPrice();
+            }
+
             $totalDiscountSumGrossAmount += $sumAmount;
         }
 

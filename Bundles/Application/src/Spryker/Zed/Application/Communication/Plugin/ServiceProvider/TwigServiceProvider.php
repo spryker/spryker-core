@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use FilesystemIterator;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
@@ -19,6 +20,7 @@ use Spryker\Zed\Library\Twig\Loader\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig_Loader_Chain;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
@@ -61,7 +63,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         });
 
         $app['twig.loader'] = $app->share(function ($app) {
-            return new \Twig_Loader_Chain(
+            return new Twig_Loader_Chain(
                 [
                     $app['twig.loader.zed'],
                     $app['twig.loader.filesystem'],
@@ -175,7 +177,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             $path
         );
 
-        $files = new \FilesystemIterator($path, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::KEY_AS_PATHNAME);
+        $files = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME);
 
         $typeTemplates = [];
         foreach ($files as $file) {

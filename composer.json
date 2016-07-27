@@ -38,6 +38,7 @@
       "Spryker\\Zed\\Auth\\": "Bundles/Auth/src",
       "Unit\\Spryker\\Zed\\Auth\\": "Bundles/Auth/tests",
       "Functional\\Spryker\\Zed\\Auth\\": "Bundles/Auth/tests",
+      "Acceptance\\Auth\\Login\\": "Bundles/Auth/tests",
       "Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/src",
       "Unit\\Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/tests",
       "Spryker\\Zed\\Availability\\": "Bundles/Availability/src",
@@ -49,6 +50,7 @@
       "Spryker\\Client\\Braintree\\": "Bundles/Braintree/src",
       "Unit\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
       "Functional\\Spryker\\Client\\Braintree\\": "Bundles/Braintree/tests",
+      "Acceptance\\Braintree\\": "Bundles/Braintree/tests",
       "Spryker\\Shared\\Braintree\\": "Bundles/Braintree/src",
       "Unit\\Spryker\\Shared\\Braintree\\": "Bundles/Braintree/tests",
       "Functional\\Spryker\\Shared\\Braintree\\": "Bundles/Braintree/tests",
@@ -123,6 +125,7 @@
       "Spryker\\Shared\\Customer\\": "Bundles/Customer/src",
       "Unit\\Spryker\\Shared\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Shared\\Customer\\": "Bundles/Customer/tests",
+      "Acceptance\\Customer\\": "Bundles/Customer/tests",
       "Spryker\\Zed\\Customer\\": "Bundles/Customer/src",
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
@@ -357,6 +360,7 @@
       "Spryker\\Client\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
       "Functional\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
+      "Acceptance\\Sales\\": "Bundles/Sales/tests",
       "Spryker\\Shared\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Shared\\Sales\\": "Bundles/Sales/tests",
       "Functional\\Spryker\\Shared\\Sales\\": "Bundles/Sales/tests",
@@ -490,11 +494,15 @@
       "Functional\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests"
     },
     "psr-4": {
-      "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",
-      "Propel\\Module\\": "Bundles/Propel/tests/_support/Module",
+      "Application\\Module\\": "Bundles/Application/tests/_support/Module",
+      "Braintree\\Module\\": "Bundles/Braintree/tests/_support/Module",
       "Config\\Module\\": "Bundles/Config/tests/_support/Module",
-      "Transfer\\Module\\": "Bundles/Transfer/tests/_support/Module",
-      "Application\\Module\\": "Bundles/Application/tests/_support/Module"
+      "Customer\\Module\\": "Bundles/Customer/tests/_support/Module",
+      "Oms\\Module\\": "Bundles/Oms/tests/_support/Module",
+      "Propel\\Module\\": "Bundles/Propel/tests/_support/Module",
+      "Sales\\Module\\": "Bundles/Sales/tests/_support/Module",
+      "Testify\\Module\\": "Bundles/Testify/tests/_support/Module",
+      "Transfer\\Module\\": "Bundles/Transfer/tests/_support/Module"
     },
     "files": [
       "Bundles/Config/src/Spryker/Shared/Config.php"

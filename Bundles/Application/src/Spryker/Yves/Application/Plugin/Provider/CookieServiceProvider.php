@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
+use ArrayObject;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -29,7 +30,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     {
         $this->app = $app;
         $app['cookies'] = $app->share(function () {
-            return new \ArrayObject();
+            return new ArrayObject();
         });
     }
 

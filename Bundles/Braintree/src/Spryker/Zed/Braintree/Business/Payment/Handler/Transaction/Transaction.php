@@ -451,7 +451,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     protected function getRequestOptions()
     {
         return [
-            BraintreeTransaction::THREE_D_SECURE => [
+            'threeDSecure' => [
                 'required' => $this->config->getIs3DSecure()
             ],
             'storeInVault' => $this->config->getIsVaulted()

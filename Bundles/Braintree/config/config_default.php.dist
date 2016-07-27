@@ -12,7 +12,7 @@ $config[BraintreeConstants::PUBLIC_KEY] = '';
 $config[BraintreeConstants::PRIVATE_KEY] = '';
 $config[BraintreeConstants::ENVIRONMENT] = '';
 $config[BraintreeConstants::ACCOUNT_ID] = '';
-$config[BraintreeConstants::ACCOUNT_UNIQUE_IDENTIFIER] = '';​
+$config[BraintreeConstants::ACCOUNT_UNIQUE_IDENTIFIER] = '';
 $config[BraintreeConstants::IS_VAULTED] = true;
 $config[BraintreeConstants::IS_3D_SECURE] = true;
 
