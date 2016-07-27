@@ -348,7 +348,7 @@
 
       "Spryker\\Shared\\Refund\\": "Bundles/Refund/src",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
-      "Acceptance\\Spryker\\": "Bundles/Refund/tests",
+      "Acceptance\\Refund\\": "Bundles/Refund/tests",
       "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Unit\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
 

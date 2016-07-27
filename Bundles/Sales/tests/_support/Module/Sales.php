@@ -13,11 +13,13 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Shared\Shipment\ShipmentConstants;
 
 class Sales extends Module
 {
@@ -37,7 +39,19 @@ class Sales extends Module
 
         $salesOrderEntity->save();
 
+        $this->addExpenses($salesOrderEntity);
+
         return $salesOrderEntity->getIdSalesOrder();
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addExpenses(SpySalesOrder $salesOrderEntity)
+    {
+        $this->addShipmentExpense($salesOrderEntity);
     }
 
     /**
@@ -222,7 +236,25 @@ class Sales extends Module
         $billingAddressEntity->setCity('City');
         $billingAddressEntity->setZipCode('12345');
         $billingAddressEntity->save();
+
         return $billingAddressEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addShipmentExpense(SpySalesOrder $salesOrderEntity)
+    {
+        $shipmentEntity = $salesOrderEntity->getShipmentMethod();
+        $shipmentExpense = new SpySalesExpense();
+        $shipmentExpense->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $shipmentExpense->setName($shipmentEntity->getName());
+        $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense->setGrossPrice($shipmentEntity->getDefaultPrice());
+
+        $shipmentExpense->save();
     }
 
 }

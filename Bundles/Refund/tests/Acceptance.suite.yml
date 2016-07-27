@@ -8,4 +8,6 @@ modules:
 
         - \Application\Module\Yves
         - \Application\Module\Zed
+        - \Sales\Module\Sales
+        - \Oms\Module\Oms
         - Asserts

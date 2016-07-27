@@ -10,7 +10,7 @@ namespace Acceptance\Refund\Refund\Zed\PageObject;
 class RefundListPage
 {
 
-    const URL = '/refund';
+    const URL = '/refund/table';
 
     const SELECTOR_TABLE = '.dataTables_wrapper';
 

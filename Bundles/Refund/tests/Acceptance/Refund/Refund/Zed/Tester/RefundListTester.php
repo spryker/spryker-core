@@ -13,10 +13,14 @@ use Refund\AcceptanceTester;
 class RefundListTester extends AcceptanceTester
 {
 
+    /**
+     * @return void
+     */
     public function canOpenRefundListPage()
     {
         $i = $this;
         $i->amOnPage(RefundListPage::URL);
+        $i->seeElement(RefundListPage::SELECTOR_TABLE);
     }
 
 }
