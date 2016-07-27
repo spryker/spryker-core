@@ -10,11 +10,14 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeAbstract;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -49,12 +52,15 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                sd($form->getData(), $_POST);
-                //$attributes = $this->convertAttributesFromData($form->getData());
-                $attributeValues = $this->convertAttributeValuesFromData($form->getData(), $attributeCollection);
+                $data = $form->getData();
+                $attributes = $this->convertAttributesFromData($data);
+                $attributeValues = $this->convertAttributeValuesFromData($data, $attributeCollection);
+
+                ddd($attributes, $attributeValues, $form->getData(), $_POST);
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
                 $matrixGenerator = new MatrixGenerator();
                 $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
+
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
@@ -72,8 +78,8 @@ class AddController extends AbstractController
             }
         }
 
-        $localeCollection = $this->getFactory()->getLocaleFacade()->getAvailableLocales();
-        $attributeLocaleCollection = ['default' => 'default'] + $localeCollection;
+        $localeCollection = ProductFormAdd::getLocaleCollection();
+        $attributeLocaleCollection = ProductFormAdd::getLocaleCollection(true);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -199,8 +205,13 @@ class AddController extends AbstractController
     protected function convertAttributesFromData(array $data)
     {
         $attributes = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTE_ABSTRACT] as $type => $values) {
-            $attributes[$type] = $values['value'];
+        $localeCollection = ProductFormAdd::getLocaleCollection(true);
+
+        foreach ($localeCollection as $code) {
+            $formName = ProductFormAdd::getAbstractAttributeFormName($code);
+            foreach ($data[$formName] as $type => $values) {
+                $attributes[$code][$type] = $values['value'];
+            }
         }
 
         return $attributes;
@@ -215,10 +226,35 @@ class AddController extends AbstractController
     protected function convertAttributeValuesFromData(array $data, array $attributeCollection)
     {
         $attributes = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTE_VARIANT] as $type => $values) {
-            $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
-            if (!empty($values)) {
-                $attributes[$type] = $values;
+        $localeCollection = ProductFormAdd::getLocaleCollection(true);
+
+        foreach ($localeCollection as $code) {
+            $formName = ProductFormAdd::getAbstractAttributeFormName($code);
+            foreach ($data[$formName] as $type => $values) {
+
+                /* @var  ProductManagementAttributeTransfer $attributeTransfer */
+                $attributeTransfer = $attributeCollection[$type];
+
+                $nameCheckbox = $values[ProductFormAttributeAbstract::FIELD_NAME];
+                $value = $values[ProductFormAttributeAbstract::FIELD_VALUE];
+                $idValue = (int)$values[ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID];
+                $isValueNew = $idValue <= 0;
+
+                $valueTransfer = new ProductManagementAttributeValueTransfer();
+                $valueTransfer->setFkProductManagementAttribute($attributeTransfer->getIdProductManagementAttribute());
+
+                if ($isValueNew) {
+                    $valueTransfer->setValue($value);
+                } else {
+                    $valueTransfer->setIdProductManagementAttributeValue($idValue);
+                }
+
+                sd($valueTransfer->toArray(), $attributeTransfer->toArray());
+
+                $values = $this->getAttributeValues($values['value'], $attributeCollection[$type]);
+                if (!empty($values)) {
+                    $attributes[$type] = $values;
+                }
             }
         }
 

@@ -42,7 +42,7 @@ class ProductFormAdd extends AbstractType
     /**
      * @var array
      */
-    protected $localeCollection;
+    protected static $localeCollection;
 
 
     /**
@@ -50,7 +50,7 @@ class ProductFormAdd extends AbstractType
      */
     public function __construct(array $localeCollection)
     {
-        $this->localeCollection = $localeCollection;
+        self::$localeCollection = $localeCollection;
     }
 
     /**
@@ -121,7 +121,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = $this->getLocaleCollection();
+        $localeCollection = self::getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getGeneralFormName($localeCode);
             $this->addGeneralForm($builder, $name);
@@ -138,7 +138,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = $this->getLocaleCollection();
+        $localeCollection = self::getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getSeoFormName($localeCode);
             $this->addSeoForm($builder, $name, $options);
@@ -155,7 +155,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = $this->getLocaleCollection(true);
+        $localeCollection = self::getLocaleCollection(true);
         foreach ($localeCollection as $localeCode) {
             $name = self::getAbstractAttributeFormName($localeCode);
             $this->addAttributeAbstractForm($builder, $name, $options);
@@ -397,16 +397,19 @@ class ProductFormAdd extends AbstractType
      *
      * @return array
      */
-    public function getLocaleCollection($includeDefault = false)
+    public static function getLocaleCollection($includeDefault = false)
     {
         $result = [];
-        foreach ($this->localeCollection as $localeCode => $localeTransfer) {
-            $result[] = $localeCode;
-        }
 
         if ($includeDefault) {
             $result[] = AbstractProductFormDataProvider::DEFAULT_LOCALE;
         }
+
+        foreach (self::$localeCollection as $localeCode => $localeTransfer) {
+            $result[] = $localeCode;
+        }
+
+
 
         return $result;
     }

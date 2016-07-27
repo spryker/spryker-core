@@ -126,7 +126,7 @@
                                                                     {{ form_label(inputCollection.name) }} {{ form_label(inputCollection.value) }}
                                                                     {{ form_widget(inputCollection.name) }} {{ form_widget(inputCollection.value) }}
                                                                     {{ form_errors(inputCollection.name) }} {{ form_errors(inputCollection.value) }}
-                                                                    {{ form_widget(inputCollection.value_hidden) }}
+                                                                    {{ form_widget(inputCollection.value_hidden_id) }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -156,7 +156,7 @@
                         {% for input in form.attribute_variant %}
                             <div class='col-md-10 col-sm-12 col-lg-6'>
                                 <div class='row vertical-align attribute_metadata_row col-lg-12'>
-                                    <div class='pull-right'><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }} {{ form_row(input.value_hidden) }}</nobr></div>
+                                    <div class='pull-right'><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }} {{ form_row(input.value_hidden_id) }}</nobr></div>
                                 </div>
                             </div>
                         {% endfor %}

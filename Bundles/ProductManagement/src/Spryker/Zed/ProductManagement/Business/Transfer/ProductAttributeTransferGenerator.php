@@ -56,7 +56,6 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
         $attributeTransfer->setKey($productAttributeEntity->getSpyProductAttributeKey()->getKey());
 
         $attributeTransfer = $this->setLocalizedAttributeKeys($attributeTransfer);
-        $attributeTransfer = $this->setAttributeValues($attributeTransfer, $productAttributeEntity);
 
         return $attributeTransfer;
     }
@@ -102,29 +101,6 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
         }
 
         return $transferList;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute $productAttributeEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
-     */
-    protected function setAttributeValues(ProductManagementAttributeTransfer $attributeTransfer, SpyProductManagementAttribute $productAttributeEntity)
-    {
-        foreach ($productAttributeEntity->getSpyProductManagementAttributeValues() as $attributeValueEntity) {
-            $attributeValueTransferData = $attributeValueEntity->toArray();
-            $attributeValueTransferData[ProductManagementAttributeValueTransfer::LOCALIZED_VALUES] = $attributeValueEntity
-                ->getSpyProductManagementAttributeValueTranslations()
-                ->toArray();
-
-            $attributeValueTransfer = (new ProductManagementAttributeValueTransfer())
-                ->fromArray($attributeValueTransferData, true);
-
-            $attributeTransfer->addValue($attributeValueTransfer);
-        }
-
-        return $attributeTransfer;
     }
 
     /**

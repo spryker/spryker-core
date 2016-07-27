@@ -25,7 +25,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
 
     const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
-    const FIELD_VALUE_HIDDEN = 'value_hidden';
+    const FIELD_VALUE_HIDDEN_ID = 'value_hidden_id';
 
     const LABEL = 'label';
     const MULTIPLE = 'multiple';
@@ -112,7 +112,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
         $this
             ->addCheckboxNameField($builder, $options)
             ->addValueField($builder, $options)
-            ->addValueHiddenField($builder, $options);
+            ->addValueIdHiddenField($builder, $options);
     }
 
     /**
@@ -153,10 +153,10 @@ class ProductFormAttributeAbstract extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addValueHiddenField(FormBuilderInterface $builder, array $options)
+    protected function addValueIdHiddenField(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(self::FIELD_VALUE_HIDDEN, 'hidden', []);
+            ->add(self::FIELD_VALUE_HIDDEN_ID, 'hidden', []);
 
         return $this;
     }
