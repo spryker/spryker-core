@@ -22,6 +22,7 @@
     "spryker/new-relic": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/redis": "^2.0.0",
+    "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/symfony": "^2.0.0",
