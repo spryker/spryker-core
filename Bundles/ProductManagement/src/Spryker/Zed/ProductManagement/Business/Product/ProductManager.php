@@ -132,23 +132,32 @@ class ProductManager implements ProductManagerInterface
      */
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $sku = $productAbstractTransfer->getSku();
-        $this->checkProductAbstractDoesNotExist($sku);
+        $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
+        try {
+            $sku = $productAbstractTransfer->getSku();
+            $this->checkProductAbstractDoesNotExist($sku);
 
-        $productAbstract = new SpyProductAbstract();
-        $productAbstract
-            ->setAttributes($jsonAttributes)
-            ->setSku($sku);
+            $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
 
-        $productAbstract->save();
+            $productAbstract = new SpyProductAbstract();
+            $productAbstract
+                ->setAttributes($jsonAttributes)
+                ->setSku($sku);
 
-        $idProductAbstract = $productAbstract->getPrimaryKey();
-        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $this->createProductAbstractLocalizedAttributes($productAbstractTransfer);
+            $productAbstract->save();
 
-        return $idProductAbstract;
+            $idProductAbstract = $productAbstract->getPrimaryKey();
+            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+            $this->createProductAbstractLocalizedAttributes($productAbstractTransfer);
+
+            $this->productQueryContainer->getConnection()->commit();
+            return $idProductAbstract;
+
+        } catch (\Exception $e) {
+            $this->productQueryContainer->getConnection()->rollBack();
+            return 0;
+        }
     }
 
     /**
@@ -161,47 +170,58 @@ class ProductManager implements ProductManagerInterface
      */
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $sku = $productAbstractTransfer->getSku();
-        $idProductAbstract = $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $productAbstract = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->findOne();
+        try {
+            $sku = $productAbstractTransfer->getSku();
+            $idProductAbstract = (int) $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
 
-        if (!$productAbstract) {
-            throw new MissingProductException(sprintf(
-                'Tried to retrieve an product abstract with id %s, but it does not exist.',
-                $idProductAbstract
-            ));
-        }
+            $productAbstract = $this->productQueryContainer
+                ->queryProductAbstract()
+                ->filterByIdProductAbstract($idProductAbstract)
+                ->findOne();
 
-        $existingAbstractSku = $this->productQueryContainer
-            ->queryProductAbstractBySku($sku)
-            ->findOne();
-
-        if ($existingAbstractSku) {
-            if ($idProductAbstract !== (int)$existingAbstractSku->getIdProductAbstract()) {
-                throw new ProductAbstractExistsException(sprintf(
-                    'Tried to create an product abstract with sku %s that already exists',
-                    $sku
+            if (!$productAbstract) {
+                throw new MissingProductException(sprintf(
+                    'Tried to retrieve an product abstract with id %s, but it does not exist.',
+                    $idProductAbstract
                 ));
             }
+
+            $existingAbstractSku = $this->productQueryContainer
+                ->queryProductAbstractBySku($sku)
+                ->findOne();
+
+            if ($existingAbstractSku) {
+                if ($idProductAbstract !== (int)$existingAbstractSku->getIdProductAbstract()) {
+                    throw new ProductAbstractExistsException(sprintf(
+                        'Tried to create an product abstract with sku %s that already exists',
+                        $sku
+                    ));
+                }
+            }
+
+            $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
+            $productAbstract
+                ->setAttributes($jsonAttributes)
+                ->setSku($sku);
+
+            $this->priceFacade->persistAbstractProductPrice($productAbstractTransfer->getPrice());
+
+            $productAbstract->save();
+
+            $idProductAbstract = $productAbstract->getPrimaryKey();
+            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+            $this->saveProductAbstractLocalizedAttributes($productAbstractTransfer);
+
+            $this->productQueryContainer->getConnection()->commit();
+
+            return $idProductAbstract;
         }
-
-        $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
-
-        $productAbstract
-            ->setAttributes($jsonAttributes)
-            ->setSku($sku);
-
-        $productAbstract->save();
-
-        $idProductAbstract = $productAbstract->getPrimaryKey();
-        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $this->saveProductAbstractLocalizedAttributes($productAbstractTransfer);
-
-        return $idProductAbstract;
+        catch (\Exception $e) {
+            $this->productQueryContainer->getConnection()->rollBack();
+            return 0;
+        }
     }
 
     /**

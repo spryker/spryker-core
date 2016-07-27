@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
+
 class ProductManagementToPriceBridge implements ProductManagementToPriceInterface
 {
 
@@ -47,6 +49,18 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     public function getProductConcretePrice($idProduct, $priceType = null)
     {
         return $this->priceFacade->getProductConcretePrice($idProduct, $priceType);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     *
+     * @return int
+     */
+    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null)
+    {
+        return $this->priceFacade->persistAbstractProductPrice($priceTransfer, $priceType);
     }
 
 }

@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -29,10 +31,16 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     protected $localeProvider;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      */
-    public function __construct(LocaleProvider $localeProvider)
+    public function __construct(ProductManagementToLocaleInterface $localeFacade, LocaleProvider $localeProvider)
     {
+        $this->localeFacade = $localeFacade;
         $this->localeProvider = $localeProvider;
     }
 
@@ -55,7 +63,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedData = $this->generateLocalizedData($localeCollection, $formData);
 
         foreach ($localizedData as $code => $data) {
-            $localeTransfer = $this->localeProvider->getLocale($code);
+            $localeTransfer = $this->localeFacade->getLocale($code);
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
                 $data,
                 $attributeValues[$code],
@@ -64,6 +72,10 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
+
+        $priceTransfer = $this->buildProductPriceTransfer($form);
+
+        $productAbstractTransfer->setPrice($priceTransfer);
 
         return $productAbstractTransfer;
     }
@@ -129,15 +141,16 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     protected function createProductAbstractTransfer(array $data, array $attributes)
     {
         $attributes = array_filter($attributes);
-        $productAbstractTransfer = new ProductAbstractTransfer();
 
-        $productAbstractTransfer->setSku(
-            $this->slugify($data[ProductFormAdd::FIELD_SKU])
-        );
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
+            ->setSku(
+                $this->slugify($data[ProductFormAdd::FIELD_SKU])
+            )
+            ->setAttributes($attributes)
+            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE])
+        ;
 
-        $productAbstractTransfer->setAttributes($attributes);
-
-        $productAbstractTransfer->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -189,7 +202,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     protected function convertAttributeArrayFromData(array $data)
     {
         $attributes = [];
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->localeProvider->getLocaleCollection(true);
 
         foreach ($localeCollection as $code) {
             $formName = ProductFormAdd::getAbstractAttributeFormName($code);
@@ -199,6 +212,24 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         }
 
         return $attributes;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer
+     */
+    public function buildProductPriceTransfer(FormInterface $form)
+    {
+        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ProductFormPrice::FIELD_PRICE)->getData();
+        $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+
+        $priceTransfer = (new ZedProductPriceTransfer())
+            ->setIdProduct($idProductAbstract)
+            ->setPrice($price);
+
+        return $priceTransfer;
+
     }
 
 }

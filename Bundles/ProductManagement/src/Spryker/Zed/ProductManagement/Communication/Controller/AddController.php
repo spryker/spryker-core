@@ -59,11 +59,11 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                //$attributeTransferCollection = $this->convertAttributeTransferFromData($data, $attributeCollection);
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
                     ->buildProductAbstractTransfer($form);
 
+                //$attributeTransferCollection = $this->convertAttributeTransferFromData($data, $attributeCollection);
                 //$matrixGenerator = new MatrixGenerator();
                 //$concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection, $attributeValues);
                 //ddd($productAbstractTransfer->toArray(), $attributeValues, $attributeCollection, $form->getData(), $_POST);

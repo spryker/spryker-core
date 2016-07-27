@@ -21,6 +21,7 @@ class ProductFormAdd extends AbstractType
 {
 
     const FIELD_SKU = 'sku';
+    const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     const ATTRIBUTE_ABSTRACT = 'attribute_abstract';
     const ATTRIBUTE_VARIANT = 'attribute_variant';
@@ -105,6 +106,7 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
+            ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
             ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
@@ -189,6 +191,19 @@ class ProductFormAdd extends AbstractType
                     ]),
                 ],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductAbstractIdHiddenField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, 'hidden', []);
 
         return $this;
     }

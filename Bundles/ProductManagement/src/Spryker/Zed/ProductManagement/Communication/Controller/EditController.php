@@ -64,16 +64,13 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             try {
-                $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
-                $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-                $attributeValues = $this->convertAttributeTransferFromData($form->getData(), $attributeCollection);
-
-                $matrixGenerator = new MatrixGenerator();
-                $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
+                $productAbstractTransfer = $this->getFactory()
+                    ->createProductFormTransferGenerator()
+                    ->buildProductAbstractTransfer($form);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
-                    ->saveProduct($productAbstractTransfer, $matrix);
+                    ->saveProduct($productAbstractTransfer, []);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
