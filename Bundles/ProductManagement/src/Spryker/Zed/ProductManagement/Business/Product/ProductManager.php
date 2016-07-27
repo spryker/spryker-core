@@ -839,7 +839,7 @@ class ProductManager implements ProductManagerInterface
             $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
             $localizedAttributesTransfer = $this->attributeManager->createLocalizedAttributesTransfer(
-                $attributeEntity->getName(),
+                $attributeEntity->toArray(),
                 $attributeEntity->getAttributes(),
                 $localeTransfer
             );
@@ -894,7 +894,7 @@ class ProductManager implements ProductManagerInterface
             $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
             $localizedAttributesTransfer = $this->attributeManager->createLocalizedAttributesTransfer(
-                $attributeEntity->getName(),
+                $attributeEntity->toArray(),
                 $attributeEntity->getAttributes(),
                 $localeTransfer
             );

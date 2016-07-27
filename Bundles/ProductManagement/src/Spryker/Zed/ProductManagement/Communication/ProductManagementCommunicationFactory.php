@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -40,7 +41,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAdd(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormAdd($this->getLocaleFacade()->getLocaleCollection());
+        $formType = new ProductFormAdd($this->createLocaleProvider());
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
@@ -53,7 +54,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormEdit();
+        $formType = new ProductFormEdit($this->createLocaleProvider());
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
@@ -63,13 +64,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAddDataProvider()
     {
+        $currentLocale = $this->getLocaleFacade()->getCurrentLocale();
+
         return new ProductFormAddDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
-            $this->getLocaleFacade(),
+            $this->createLocaleProvider(),
+            $currentLocale,
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection()
         );
@@ -80,13 +84,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEditDataProvider()
     {
+        $currentLocale = $this->getLocaleFacade()->getCurrentLocale();
+
         return new ProductFormEditDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
-            $this->getLocaleFacade(),
+            $this->createLocaleProvider(),
+            $currentLocale,
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection()
         );
@@ -331,6 +338,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductFormTransferGenerator()
     {
         return new ProductFormTransferGenerator(
+            $this->createLocaleProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
+     */
+    public function createLocaleProvider()
+    {
+        return new LocaleProvider(
             $this->getLocaleFacade()
         );
     }

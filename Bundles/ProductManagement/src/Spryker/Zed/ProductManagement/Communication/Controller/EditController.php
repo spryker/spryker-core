@@ -60,6 +60,8 @@ class EditController extends AddController
             $this->getFactory()->getProductAttributeCollection()
         );
 
+        $localeProvider = $this->getFactory()->createLocaleProvider();
+
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->buildProductAbstractTransferFromData($form->getData());
@@ -93,8 +95,8 @@ class EditController extends AddController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'matrix' => [],
-            'concretes' => $this->someToView($idProductAbstract, $concreteProductCollection),
-            'attributeValueCollection' => $attributeCollection,
+            'localeCollection' => $localeProvider->getLocaleCollection(),
+            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
         ]);
     }
 

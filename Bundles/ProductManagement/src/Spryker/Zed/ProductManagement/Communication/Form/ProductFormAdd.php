@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -20,8 +20,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class ProductFormAdd extends AbstractType
 {
 
-    const FIELD_DESCRIPTION = 'description';
-    const FIELD_NAME = 'name';
     const FIELD_SKU = 'sku';
 
     const ATTRIBUTE_ABSTRACT = 'attribute_abstract';
@@ -41,17 +39,16 @@ class ProductFormAdd extends AbstractType
     const SUB_FORM_NAME = 'sub_form_name';
 
     /**
-     * @var array
+     * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
-    protected static $localeCollection;
-
+    protected $localeCollector;
 
     /**
-     * @param array $localeCollection
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeCollection
      */
-    public function __construct(array $localeCollection)
+    public function __construct(LocaleProvider $localeCollection)
     {
-        self::$localeCollection = $localeCollection;
+        $this->localeCollector = $localeCollection;
     }
 
     /**
@@ -122,7 +119,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = self::getLocaleCollection();
+        $localeCollection = $this->localeCollector->getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getGeneralFormName($localeCode);
             $this->addGeneralForm($builder, $name);
@@ -139,7 +136,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = self::getLocaleCollection();
+        $localeCollection = $this->localeCollector->getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getSeoFormName($localeCode);
             $this->addSeoForm($builder, $name, $options);
@@ -156,7 +153,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = self::getLocaleCollection(true);
+        $localeCollection = $this->localeCollector->getLocaleCollection(true);
         foreach ($localeCollection as $localeCode) {
             $name = self::getAbstractAttributeFormName($localeCode);
             $this->addAttributeAbstractForm($builder, $name, $options);
@@ -244,8 +241,8 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
-                    return;
-                    sd($attributes);
+                            return;
+                            sd($attributes);
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
@@ -285,7 +282,7 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
-                    return;
+                            return;
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
@@ -391,28 +388,6 @@ class ProductFormAdd extends AbstractType
     public static function getAbstractAttributeFormName($localeCode)
     {
         return self::getLocalizedPrefixName(self::ATTRIBUTE_ABSTRACT, $localeCode);
-    }
-
-    /**
-     * @param bool $includeDefault
-     *
-     * @return array
-     */
-    public static function getLocaleCollection($includeDefault = false)
-    {
-        $result = [];
-
-        if ($includeDefault) {
-            $result[] = ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE;
-        }
-
-        foreach (self::$localeCollection as $localeCode => $localeTransfer) {
-            $result[] = $localeCode;
-        }
-
-
-
-        return $result;
     }
 
 }

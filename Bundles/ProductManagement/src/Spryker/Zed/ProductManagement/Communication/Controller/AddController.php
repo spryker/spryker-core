@@ -55,6 +55,8 @@ class AddController extends AbstractController
             $this->getFactory()->getProductAttributeCollection()
         );
 
+        $localeProvider = $this->getFactory()->createLocaleProvider();
+
         if ($form->isValid()) {
             try {
                 //$attributeTransferCollection = $this->convertAttributeTransferFromData($data, $attributeCollection);
@@ -82,15 +84,12 @@ class AddController extends AbstractController
             }
         }
 
-        $localeCollection = ProductFormAdd::getLocaleCollection();
-        $attributeLocaleCollection = ProductFormAdd::getLocaleCollection(true);
-
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'matrix' => [],
-            'localeCollection' => $localeCollection,
-            'attributeLocaleCollection' => $attributeLocaleCollection
+            'localeCollection' => $localeProvider->getLocaleCollection(),
+            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
         ]);
     }
 

@@ -29,6 +29,7 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
 
         $attributes = $this->decodeAttributes($productAbstractEntity->getAttributes());
         $productAbstractTransfer->setAttributes($attributes);
+        $productAbstractTransfer->setTaxSetId($productAbstractEntity->getFkTaxSet());
 
         return $productAbstractTransfer;
     }

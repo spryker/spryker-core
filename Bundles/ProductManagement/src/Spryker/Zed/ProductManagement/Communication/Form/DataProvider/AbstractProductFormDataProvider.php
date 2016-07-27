@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -47,14 +49,14 @@ class AbstractProductFormDataProvider
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
+     * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
-    protected $localeFacade;
+    protected $localeProvider;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected $locale;
+    protected $currentLocale;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
@@ -88,17 +90,18 @@ class AbstractProductFormDataProvider
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
-        ProductManagementToLocaleInterface $localeFacade,
+        LocaleProvider $localeProvider,
+        LocaleTransfer $currentLocale,
         array $attributeCollection,
         array $taxCollection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
-        $this->localeFacade = $localeFacade;
+        $this->localeProvider = $localeProvider;
         $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
-        $this->locale = $localeFacade->getCurrentLocale();
+        $this->currentLocale = $currentLocale;
         $this->attributeTransferCollection = $attributeCollection;
         $this->taxCollection = $taxCollection;
     }
@@ -117,7 +120,7 @@ class AbstractProductFormDataProvider
         $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
 
         $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
-        $formOptions[ProductFormAdd::ID_LOCALE] = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        $formOptions[ProductFormAdd::ID_LOCALE] = $this->currentLocale->getIdLocale();
 
         return $formOptions;
     }
@@ -163,14 +166,14 @@ class AbstractProductFormDataProvider
      */
     public function getGeneralAttributesDefaultFields()
     {
-        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $availableLocales = $this->localeProvider->getLocaleCollection();
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
             $key = ProductFormAdd::getGeneralFormName($localeCode);
             $result[$key] = [
-                ProductFormAdd::FIELD_NAME => null,
-                ProductFormAdd::FIELD_DESCRIPTION => null,
+                ProductFormGeneral::FIELD_NAME => null,
+                ProductFormGeneral::FIELD_DESCRIPTION => null,
             ];
         }
 
@@ -182,7 +185,7 @@ class AbstractProductFormDataProvider
      */
     public function getSeoDefaultFields()
     {
-        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $availableLocales = $this->localeProvider->getLocaleCollection();
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
@@ -211,7 +214,7 @@ class AbstractProductFormDataProvider
      */
     public function getAttributeAbstractDefaultFields()
     {
-        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $availableLocales = $this->localeProvider->getLocaleCollection();
         $attributeProcessor = $this->getAttributesForAbstractProduct(null);
         $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, true);
 

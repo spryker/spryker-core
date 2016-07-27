@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -22,16 +24,16 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 {
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
+     * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
-    protected $localeFacade;
+    protected $localeProvider;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      */
-    public function __construct(ProductManagementToLocaleInterface $localeFacade)
+    public function __construct(LocaleProvider $localeProvider)
     {
-        $this->localeFacade = $localeFacade;
+        $this->localeProvider = $localeProvider;
     }
 
     /**
@@ -43,7 +45,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     {
         $formData = $form->getData();
         $attributeValues = $this->convertAttributeArrayFromData($formData);
-        $localeCollection = ProductFormAdd::getLocaleCollection(false);
+        $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $productAbstractTransfer = $this->createProductAbstractTransfer(
             $formData,
@@ -53,7 +55,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedData = $this->generateLocalizedData($localeCollection, $formData);
 
         foreach ($localizedData as $code => $data) {
-            $localeTransfer = $this->localeFacade->getLocale($code);
+            $localeTransfer = $this->localeProvider->getLocale($code);
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
                 $data,
                 $attributeValues[$code],
@@ -105,7 +107,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         $attributeData = $formData[ProductFormAdd::GENERAL];
         foreach ($attributeData as $localeCode => $localizedAttributesData) {
-            $localeTransfer = $this->localeFacade->getLocale($localeCode);
+            $localeTransfer = $this->localeProvider->getLocale($localeCode);
 
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
                 $localizedAttributesData,
@@ -152,7 +154,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
-        $localizedAttributesTransfer->setName($data[ProductFormAdd::FIELD_NAME]);
+        $localizedAttributesTransfer->setName($data[ProductFormGeneral::FIELD_NAME]);
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
         $localizedAttributesTransfer->setMetaTitle($data[ProductFormSeo::FIELD_META_TITLE]);
         $localizedAttributesTransfer->setMetaKeywords($data[ProductFormSeo::FIELD_META_KEYWORDS]);
@@ -187,7 +189,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     protected function convertAttributeArrayFromData(array $data)
     {
         $attributes = [];
-        $localeCollection = ProductFormAdd::getLocaleCollection(true);
+        $localeCollection = $this->localeProvider->getLocaleCollection();
 
         foreach ($localeCollection as $code) {
             $formName = ProductFormAdd::getAbstractAttributeFormName($code);

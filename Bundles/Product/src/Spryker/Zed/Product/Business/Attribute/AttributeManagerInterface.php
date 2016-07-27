@@ -50,12 +50,12 @@ interface AttributeManagerInterface
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
 
     /**
-     * @param string $name
+     * @param array $data
      * @param string $attributeJson
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    public function createLocalizedAttributesTransfer($name, $attributeJson, LocaleTransfer $localeTransfer);
+    public function createLocalizedAttributesTransfer(array $data, $attributeJson, LocaleTransfer $localeTransfer);
 
 }
