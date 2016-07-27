@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Generated\Client\Ide\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -104,7 +105,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->localeProvider->getLocaleCollection(true);
         $abstractAttributesData = $productAbstractTransfer->getLocalizedAttributes();
 
         foreach ($abstractAttributesData as $localizedAttributesTransfer) {
@@ -123,6 +124,15 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
                 $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE] = $value;
                 $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID] = null;
             }
+        }
+
+        $formName = ProductFormAdd::getAbstractAttributeFormName(ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $attributes = $productAbstractTransfer->getAttributes();
+
+        foreach ($attributes as $key => $value) {
+            $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_NAME] = isset($value);
+            $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE] = $value;
+            $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID] = null;
         }
 
         return $formData;
