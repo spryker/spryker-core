@@ -25,16 +25,6 @@ class DoubleSubmitProtectionServiceProviderTest extends Test
 {
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $application;
-
-    /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage
-     */
-    protected $sessionStorage;
-
-    /**
      * @return void
      */
     public function testServiceProviderInApplicationRegistration()
