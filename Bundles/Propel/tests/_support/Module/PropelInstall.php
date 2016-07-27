@@ -21,7 +21,7 @@ class PropelInstall extends Module
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @param array|null $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
@@ -132,7 +132,7 @@ class PropelInstall extends Module
     }
 
     /**
-     * @param $command
+     * @param string $command
      *
      * @return void
      */
@@ -170,13 +170,17 @@ class PropelInstall extends Module
 
         $finder = $this->getBundleSchemaFinder($testBundleSchemaDirectory);
 
-        if ($finder->count() > 0) {
-            $pathForSchemas = $this->getTargetSchemaDirectory();
-            $filesystem = new Filesystem();
-            foreach ($finder as $file) {
-                $path = $pathForSchemas . DIRECTORY_SEPARATOR . $file->getFileName();
-                $filesystem->dumpFile($path, $file->getContents());
-            }
+        if ($finder->count() === 0) {
+            return;
+        }
+
+        $pathForSchemas = $this->getTargetSchemaDirectory();
+        $filesystem = new Filesystem();
+
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        foreach ($finder as $file) {
+            $path = $pathForSchemas . DIRECTORY_SEPARATOR . $file->getFilename();
+            $filesystem->dumpFile($path, $file->getContents());
         }
     }
 

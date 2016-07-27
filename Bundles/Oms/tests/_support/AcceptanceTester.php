@@ -1,5 +1,6 @@
 <?php
 namespace Oms;
+
 use Codeception\Scenario;
 
 /**
@@ -16,14 +17,15 @@ use Codeception\Scenario;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class AcceptanceTester extends \Codeception\Actor
 {
+
     use _generated\AcceptanceTesterActions;
 
     /**
-    * @param \Codeception\Scenario $scenario
-    */
+     * @param \Codeception\Scenario $scenario
+     */
     public function __construct(Scenario $scenario)
     {
         parent::__construct($scenario);
@@ -32,4 +34,5 @@ class AcceptanceTester extends \Codeception\Actor
         $i->amZed();
         $i->amLoggedInUser();
     }
+
 }
