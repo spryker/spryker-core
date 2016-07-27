@@ -373,6 +373,4 @@ class OrderSaver implements OrderSaverInterface
             ->requireTotals();
     }
 
-
-
 }
