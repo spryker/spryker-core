@@ -17,7 +17,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;

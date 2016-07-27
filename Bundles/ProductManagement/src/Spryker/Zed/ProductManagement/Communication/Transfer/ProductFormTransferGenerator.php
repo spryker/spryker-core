@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
@@ -148,9 +147,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                 $this->slugify($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
-            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE])
-        ;
-
+            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -230,7 +227,6 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
             ->setPrice($price);
 
         return $priceTransfer;
-
     }
 
 }

@@ -7,18 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAttributeAbstract extends AbstractSubForm
 {
@@ -196,8 +190,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
             if ($allowInput) {
                 $config['attr']['tags'] = true;
             }
-        }
-        else {
+        } else {
             if ($allowInput) {
                 $config['attr']['class'] .= ' kv_attribute_autocomplete';
             } else {

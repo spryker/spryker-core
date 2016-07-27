@@ -17,8 +17,8 @@ use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\ProductManagementBusinessFactory;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacade;
@@ -154,14 +154,14 @@ class ProductManagementFacadeAttributeTest extends Test
      */
     public function testUpdateProductManagementAttributeUpdatesExistingAttributeValueEntities()
     {
-        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a','b','c']);
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
 
         $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
             ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute())
             ->setKey('foo')
             ->setInputType('bar');
 
-        $updatedValues = ['a','b','d'];
+        $updatedValues = ['a', 'b', 'd'];
         foreach ($updatedValues as $updatedValue) {
             $productManagementAttributeTransfer
                 ->addValue((new ProductManagementAttributeValueTransfer())->setValue($updatedValue));
@@ -221,7 +221,7 @@ class ProductManagementFacadeAttributeTest extends Test
 
         $this->productManagementFacade->setFactory($productManagementBusinessFactoryMock);
 
-        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a','b','c']);
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
 
         $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
             ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute());
@@ -233,12 +233,10 @@ class ProductManagementFacadeAttributeTest extends Test
             $productManagementAttributeValueTransfer
                 ->addLocalizedValue((new ProductManagementAttributeValueTranslationTransfer())
                     ->setFkLocale($this->getLocale('aa_AA')->getIdLocale())
-                    ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
-                )
+                    ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language'))
                 ->addLocalizedValue((new ProductManagementAttributeValueTranslationTransfer())
                     ->setFkLocale($this->getLocale('bb_BB')->getIdLocale())
-                    ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
-                );
+                    ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language'));
             $productManagementAttributeTransfer->addValue($productManagementAttributeValueTransfer);
         }
 
@@ -258,7 +256,7 @@ class ProductManagementFacadeAttributeTest extends Test
      */
     public function testGetProductManagementAttributeReturnsFullyHydratedTransfer()
     {
-        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a','b','c']);
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
 
         $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
             ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute());

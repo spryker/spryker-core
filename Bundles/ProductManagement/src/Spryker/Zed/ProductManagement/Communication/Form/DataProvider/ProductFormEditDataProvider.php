@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Generated\Client\Ide\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -138,4 +137,5 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         return $formData;
     }
+
 }

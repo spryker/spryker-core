@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInt
 
 class LocaleProvider
 {
+
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
      */

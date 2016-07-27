@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Spryker\Shared\Library\Collection\Collection;
-use Spryker\Shared\Library\Collection\CollectionInterface;
-
 class AttributeInputManager
 {
 
@@ -33,4 +30,5 @@ class AttributeInputManager
                 return 'text';
         }
     }
+
 }

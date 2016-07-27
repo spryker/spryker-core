@@ -50,5 +50,4 @@ class AttributeFormTransferGenerator implements AttributeFormTransferGeneratorIn
         }
     }
 
-
 }

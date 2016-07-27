@@ -7,22 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
-use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
-use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeAbstract;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

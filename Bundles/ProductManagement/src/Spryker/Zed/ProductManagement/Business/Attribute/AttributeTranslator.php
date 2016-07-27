@@ -195,7 +195,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getLocaleByName($localeName)
     {
