@@ -40,7 +40,6 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     public function testItemDiscountsWhenDiscountAmountIsBiggerThanItemAmountShouldNotApplyBiggerThatItemAmount()
     {
         $discountCollection = $this->createDiscountCollection();
-
         $discountCollection->get(0)->setAmount(1000);
 
         $itemsDiscountsAggregator = $this->createItemDiscountsAggregator($discountCollection);
@@ -58,7 +57,8 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     public function testAggregateShouldSubtractCalculatedDiscountAmountFromItemRefundableAmount()
     {
-        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator();
+        $discountCollection = $this->createDiscountCollection();
+        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator($discountCollection);
         $orderTransfer = $this->createOrderTransfer();
 
         $itemsDiscountsAggregator->aggregate($orderTransfer);

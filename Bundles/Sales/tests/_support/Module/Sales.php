@@ -67,19 +67,7 @@ class Sales extends Module
     {
         $billingAddressEntity = $salesOrderEntity->getBillingAddress();
         if ($billingAddressEntity === null) {
-            $billingAddressEntity = new SpySalesOrderAddress();
-
-            $countryEntity = $this->getCountryEntity();
-            $billingAddressEntity->setCountry($countryEntity);
-
-            $billingAddressEntity->setSalutation(SpySalesOrderAddressTableMap::COL_SALUTATION_MR);
-            $billingAddressEntity->setFirstName('FirstName');
-            $billingAddressEntity->setLastName('LastName');
-            $billingAddressEntity->setAddress1('Address1');
-            $billingAddressEntity->setAddress2('Address2');
-            $billingAddressEntity->setCity('City');
-            $billingAddressEntity->setZipCode('12345');
-            $billingAddressEntity->save();
+            $billingAddressEntity = $this->createBillingAddress();
             $salesOrderEntity->setBillingAddress($billingAddressEntity);
         }
 
@@ -214,6 +202,27 @@ class Sales extends Module
         $omsOrderProcessEntity->save();
 
         return $omsOrderProcessEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
+     */
+    protected function createBillingAddress()
+    {
+        $billingAddressEntity = new SpySalesOrderAddress();
+
+        $countryEntity = $this->getCountryEntity();
+        $billingAddressEntity->setCountry($countryEntity);
+
+        $billingAddressEntity->setSalutation(SpySalesOrderAddressTableMap::COL_SALUTATION_MR);
+        $billingAddressEntity->setFirstName('FirstName');
+        $billingAddressEntity->setLastName('LastName');
+        $billingAddressEntity->setAddress1('Address1');
+        $billingAddressEntity->setAddress2('Address2');
+        $billingAddressEntity->setCity('City');
+        $billingAddressEntity->setZipCode('12345');
+        $billingAddressEntity->save();
+        return $billingAddressEntity;
     }
 
 }

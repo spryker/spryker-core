@@ -345,10 +345,13 @@
       "Spryker\\Zed\\Propel\\": "Bundles/Propel/src",
       "Unit\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
       "Functional\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
+
       "Spryker\\Shared\\Refund\\": "Bundles/Refund/src",
-      "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
+      "Acceptance\\Spryker\\": "Bundles/Refund/tests",
+      "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Unit\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
+
       "Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/src",
       "Spryker\\Yves\\Ratepay\\": "Bundles/Ratepay/src",
       "Spryker\\Shared\\Ratepay\\": "Bundles/Ratepay/src",
