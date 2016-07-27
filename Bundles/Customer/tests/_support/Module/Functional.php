@@ -6,12 +6,12 @@
 
 namespace Customer\Module;
 
-use Codeception\TestCase;
 use Codeception\Module;
+use Codeception\TestCase;
 use Propel\Runtime\Propel;
 use Silex\Provider\FormServiceProvider;
-use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
@@ -85,7 +85,8 @@ class Functional extends Module
     }
 
     /**
-     * @param TestCase $test
+     * @param \Codeception\TestCase $test
+     * @return void
      */
     public function _before(TestCase $test)
     {
@@ -95,7 +96,8 @@ class Functional extends Module
     }
 
     /**
-     * @param TestCase $test
+     * @param \Codeception\TestCase $test
+     * @return void
      */
     public function _after(TestCase $test)
     {
@@ -109,8 +111,9 @@ class Functional extends Module
     }
 
     /**
-     * @param TestCase $test
+     * @param \Codeception\TestCase $test
      * @apram $fail
+     * @return void
      */
     public function _failed(TestCase $test, $fail)
     {

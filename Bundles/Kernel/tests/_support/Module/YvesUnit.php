@@ -10,5 +10,4 @@ use Codeception\Module;
 
 class YvesUnit extends Module
 {
-
 }

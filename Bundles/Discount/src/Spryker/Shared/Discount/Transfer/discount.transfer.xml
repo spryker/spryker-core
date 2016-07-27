@@ -21,6 +21,7 @@
     </transfer>
 
     <transfer name="calculatedDiscount">
+        <property name="idDiscount" type="int" />
         <property name="displayName" type="string" />
         <property name="description" type="string" />
         <property name="voucherCode" type="string"/>

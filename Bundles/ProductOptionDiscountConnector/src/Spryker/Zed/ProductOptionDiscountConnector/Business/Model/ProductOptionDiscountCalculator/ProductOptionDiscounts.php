@@ -258,8 +258,14 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
     protected function getCalculatedDiscountUnitGrossAmount(\ArrayObject $calculatedDiscounts)
     {
         $totalUnitGrossDiscountAmount = 0;
+        $appliedDiscounts = [];
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
+            if (isset($appliedDiscounts[$idDiscount])) {
+                continue;
+            }
             $totalUnitGrossDiscountAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
+            $appliedDiscounts[$idDiscount] = true;
         }
 
         return $totalUnitGrossDiscountAmount;

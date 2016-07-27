@@ -9,7 +9,6 @@ namespace Application\Module;
 
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
 use Codeception\Module;
-use Codeception\Module\WebDriver;
 
 class Zed extends Module
 {
@@ -57,7 +56,7 @@ class Zed extends Module
     /**
      * @throws \Codeception\Exception\ModuleException
      *
-     * @return WebDriver
+     * @return \Codeception\Module\WebDriver
      */
     protected function getWebDriver()
     {
