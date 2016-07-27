@@ -15,7 +15,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use \Spryker\Shared\Application\Communication\Plugin\ServiceProvider\DoubleSubmitProtectionServiceProvider instead.
+ * @deprecated Use \Spryker\Shared\Application\ServiceProvider\DoubleSubmitProtectionServiceProvider instead.
  */
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

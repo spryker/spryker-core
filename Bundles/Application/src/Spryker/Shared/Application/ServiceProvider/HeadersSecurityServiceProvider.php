@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Shared\Application\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider instead
- */
 class HeadersSecurityServiceProvider implements ServiceProviderInterface
 {
 
