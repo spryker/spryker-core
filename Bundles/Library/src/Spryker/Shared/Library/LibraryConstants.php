@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Session\SessionConstants;
 
 interface LibraryConstants
 {
@@ -49,23 +48,23 @@ interface LibraryConstants
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
-    const YVES_STORAGE_SESSION_REDIS_HOST = SessionConstants::YVES_SESSION_REDIS_HOST;
+    const YVES_STORAGE_SESSION_REDIS_HOST = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST;
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
-    const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION;
+    const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION;
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
-    const YVES_STORAGE_SESSION_REDIS_PORT = SessionConstants::YVES_SESSION_REDIS_PORT;
+    const YVES_STORAGE_SESSION_REDIS_PORT = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT;
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
-    const YVES_STORAGE_SESSION_REDIS_PROTOCOL = SessionConstants::YVES_SESSION_REDIS_PROTOCOL;
+    const YVES_STORAGE_SESSION_REDIS_PROTOCOL = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL;
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
-    const YVES_STORAGE_SESSION_REDIS_PASSWORD = SessionConstants::YVES_SESSION_REDIS_PASSWORD;
+    const YVES_STORAGE_SESSION_REDIS_PASSWORD = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD;
 
     const ZED_ERROR_PAGE = ApplicationConstants::ZED_ERROR_PAGE;
     const ZED_SHOW_EXCEPTION_STACK_TRACE = ApplicationConstants::ZED_SHOW_EXCEPTION_STACK_TRACE;

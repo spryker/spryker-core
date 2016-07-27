@@ -10,6 +10,7 @@ namespace Spryker\Shared\Library\Storage;
 use Elastica\Client;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
+use Spryker\Shared\Storage\StorageConstants;
 
 class StorageInstanceBuilder
 {
@@ -119,18 +120,20 @@ class StorageInstanceBuilder
         switch ($kvAdapter) {
             case self::KV_ADAPTER_REDIS:
                 $config = [
-                    'protocol' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+                    'protocol' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PROTOCOL, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+                    'port' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PORT, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+                    'host' => Config::get(StorageConstants::YVES_STORAGE_REDIS_HOST, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
                 ];
 
-                if (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
-                    $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
-                }
+                if (Config::hasKey(StorageConstants::YVES_STORAGE_REDIS_PASSWORD)) {
+                    $config['password'] = Config::get(StorageConstants::YVES_STORAGE_REDIS_PASSWORD);
+                } elseif (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+                $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
+            }
 
                 $config['persistent'] = false;
-                if (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
-                    $config['persistent'] = (bool)Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+                if (Config::hasKey(StorageConstants::YVES_STORAGE_PERSISTENT_CONNECTION)) {
+                    $config['persistent'] = (bool)Config::get(StorageConstants::YVES_STORAGE_PERSISTENT_CONNECTION);
                 }
                 break;
 
