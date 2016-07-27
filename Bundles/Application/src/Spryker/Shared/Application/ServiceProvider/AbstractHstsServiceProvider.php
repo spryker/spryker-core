@@ -84,15 +84,15 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
     {
         $headerParts = [];
         if (!empty($hstsConfig[static::HSTS_CONFIG_MAXAGE])) {
-            $headerParts[] = "max-age=" . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
+            $headerParts[] = 'max-age=' . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_INCLUDE_SUBDOMAINS])) {
-            $headerParts[] = "includeSubDomains";
+            $headerParts[] = 'includeSubDomains';
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_PRELOAD])) {
-            $headerParts[] = "preload";
+            $headerParts[] = 'preload';
         }
 
         if ($headerParts) {
