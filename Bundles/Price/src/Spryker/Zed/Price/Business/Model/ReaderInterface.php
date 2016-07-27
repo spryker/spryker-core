@@ -98,4 +98,11 @@ interface ReaderInterface
      */
     public function getProductPriceIdBySku($sku, $priceTypeName);
 
+    /**
+     * @param string|null $priceType
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     */
+    public function handleDefaultPriceType($priceType = null);
+
 }

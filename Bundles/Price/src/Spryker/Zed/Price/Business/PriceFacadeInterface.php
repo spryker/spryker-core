@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Price\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface PriceFacadeInterface
@@ -112,5 +113,14 @@ interface PriceFacadeInterface
      * @return int
      */
     public function getIdPriceProduct($sku, $priceType);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     *
+     * @return int
+     */
+    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
 
 }

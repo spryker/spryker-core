@@ -318,7 +318,7 @@ class Reader implements ReaderInterface
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
-    protected function handleDefaultPriceType($priceType = null)
+    public function handleDefaultPriceType($priceType = null)
     {
         if ($priceType === null) {
             $priceType = $this->priceConfig->getPriceTypeDefaultName();

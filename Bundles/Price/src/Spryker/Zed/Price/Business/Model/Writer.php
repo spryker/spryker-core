@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
+use Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
@@ -255,6 +257,40 @@ class Writer implements WriterInterface
             ->queryPriceEntityForProductConcrete($transferPriceProduct->getSkuProduct(), $priceType);
 
         return $priceEntities->count() > 0;
+    }
+
+    /**
+     * @param ZedProductPriceTransfer $priceTransfer
+     * @param null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null)
+    {
+        $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
+        $priceTypeEntity = $this->queryContainer
+            ->queryPriceType($priceTypeName)
+            ->findOne();
+
+        if (!$priceTypeEntity) {
+            throw new UndefinedPriceTypeException('Undefined product price type: '. $priceTypeName);
+        }
+
+        $priceEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($priceTransfer->getIdProduct())
+            ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
+            ->findOneOrCreate();
+
+        $priceEntity->setFkProductAbstract($priceTransfer->getIdProduct());
+        $priceEntity->setFkPriceType($priceTypeEntity->getIdPriceType());
+        $priceEntity->setPrice($priceTransfer->getPrice());
+
+        $priceEntity->save();
+
+        return $priceEntity->getIdPriceProduct();
     }
 
 }

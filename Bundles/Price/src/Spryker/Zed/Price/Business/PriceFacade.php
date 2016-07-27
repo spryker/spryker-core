@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Price\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -148,6 +149,18 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getIdPriceProduct($sku, $priceType)
     {
         return $this->getFactory()->createReaderModel()->getProductPriceIdBySku($sku, $priceType);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     *
+     * @return int
+     */
+    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null)
+    {
+        return $this->getFactory()->createWriterModel()->persistAbstractProductPrice($priceTransfer, $priceType);
     }
 
 }
