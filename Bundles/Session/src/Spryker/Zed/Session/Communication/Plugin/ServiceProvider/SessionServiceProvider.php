@@ -45,6 +45,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     public function register(Application $app)
     {
         $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
+
         $app['session.storage.options'] = [
             'name' => str_replace('.', '-', Config::get(SessionConstants::ZED_SESSION_COOKIE_NAME)),
             'cookie_lifetime' => Config::get(SessionConstants::ZED_SESSION_TIME_TO_LIVE),

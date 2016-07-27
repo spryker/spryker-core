@@ -11,6 +11,8 @@ use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Storage\StorageConstants;
 
 class StorageFactory extends AbstractFactory
 {
