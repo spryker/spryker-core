@@ -22,6 +22,8 @@ use Spryker\Zed\Session\Business\Model\SessionFactory;
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+    const DEFAULT_DATABASE = 0;
+
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
      */
@@ -124,7 +126,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, 0)
+                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, static::DEFAULT_DATABASE)
             );
 
             if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
@@ -134,7 +136,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, 0)
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, static::DEFAULT_DATABASE)
                 );
             }
 
