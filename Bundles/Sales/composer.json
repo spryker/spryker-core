@@ -5,13 +5,14 @@
       "Spryker": "src/",
       "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Sales\\Module\\": "tests/"
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
+    "spryker/application": "^2.4.4",
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0",
     "spryker/gui": "^2.0.0",

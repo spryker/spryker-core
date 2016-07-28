@@ -24,13 +24,33 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     public function testItemDiscountsShouldBeHydratedFromEntities()
     {
-        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator();
+        $discountCollection = $this->createDiscountCollection();
+        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator($discountCollection);
         $orderTransfer = $this->createOrderTransfer();
 
         $itemsDiscountsAggregator->aggregate($orderTransfer);
 
         $itemCalculatedDiscounts = $orderTransfer->getItems()[0]->getCalculatedDiscounts();
-        $this->assertEquals(100, $itemCalculatedDiscounts[0]->getSumGrossAmount());
+        $this->assertSame(100, $itemCalculatedDiscounts[0]->getSumGrossAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testItemDiscountsWhenDiscountAmountIsBiggerThanItemAmountShouldNotApplyBiggerThatItemAmount()
+    {
+        $discountCollection = $this->createDiscountCollection();
+
+        $discountCollection->get(0)->setAmount(1000);
+
+        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator($discountCollection);
+        $orderTransfer = $this->createOrderTransfer();
+
+        $itemsDiscountsAggregator->aggregate($orderTransfer);
+
+        $itemTransfer = $orderTransfer->getItems()[0];
+        $this->assertSame(0, $itemTransfer->getUnitGrossPriceWithDiscounts());
+        $this->assertSame(0, $itemTransfer->getSumGrossPriceWithDiscounts());
     }
 
     /**
@@ -56,31 +76,19 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $discountCollection
+     *
      * @return \Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\ItemDiscounts
      */
-    protected function createItemDiscountsAggregator()
+    protected function createItemDiscountsAggregator(ObjectCollection $discountCollection)
     {
         $discountQueryContainer = $this->createDiscountQueryContainer();
         $discountQueryMock = $this->createDiscountQueryMock();
 
-        $objectCollection = new ObjectCollection();
-
-        $salesDiscountEntity = new SpySalesDiscount();
-        $salesDiscountEntity->setDisplayName('test');
-        $salesDiscountEntity->setFkSalesOrderItem(1);
-        $salesDiscountEntity->setAmount(100);
-        $objectCollection->append($salesDiscountEntity);
-
-        $salesDiscountEntity = new SpySalesDiscount();
-        $salesDiscountEntity->setDisplayName('test');
-        $salesDiscountEntity->setFkSalesExpense(1);
-        $salesDiscountEntity->setAmount(200);
-        $objectCollection->append($salesDiscountEntity);
-
         $discountQueryMock
             ->expects($this->once())
             ->method('find')
-            ->willReturn($objectCollection);
+            ->willReturn($discountCollection);
 
         $discountQueryMock->expects($this->once())
             ->method('filterByFkSalesOrderItem')
@@ -113,6 +121,28 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)
             ->disableArgumentCloning()
             ->getMock();
+    }
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function createDiscountCollection()
+    {
+        $objectCollection = new ObjectCollection();
+
+        $salesDiscountEntity = new SpySalesDiscount();
+        $salesDiscountEntity->setDisplayName('test');
+        $salesDiscountEntity->setFkSalesOrderItem(1);
+        $salesDiscountEntity->setAmount(100);
+        $objectCollection->append($salesDiscountEntity);
+
+        $salesDiscountEntity = new SpySalesDiscount();
+        $salesDiscountEntity->setDisplayName('test');
+        $salesDiscountEntity->setFkSalesExpense(1);
+        $salesDiscountEntity->setAmount(200);
+        $objectCollection->append($salesDiscountEntity);
+
+        return $objectCollection;
     }
 
 }

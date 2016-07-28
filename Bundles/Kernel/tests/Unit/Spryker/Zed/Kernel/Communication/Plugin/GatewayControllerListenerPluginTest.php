@@ -7,11 +7,14 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin;
 
+use ReflectionClass;
+use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
@@ -46,7 +49,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function unsetLocator()
     {
-        $reflectionClass = new \ReflectionClass(AbstractLocatorLocator::class);
+        $reflectionClass = new ReflectionClass(AbstractLocatorLocator::class);
         $reflectedProperty = $reflectionClass->getProperty('instance');
         $reflectedProperty->setAccessible(true);
         $reflectedProperty->setValue(null);
@@ -140,7 +143,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\LogicException', 'Only transfer classes are allowed in yves action as parameter');
 
-        $transfer = new \StdClass();
+        $transfer = new stdClass();
         $controllerCallable = $this->executeMockedListenerTest('notTransferAction', $transfer);
         call_user_func($controllerCallable);
     }
@@ -222,7 +225,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function resetSingleton($oldTransferServer)
     {
-        $refObject = new \ReflectionObject($oldTransferServer);
+        $refObject = new ReflectionObject($oldTransferServer);
         $refProperty = $refObject->getProperty('instance');
         $refProperty->setAccessible(true);
         $refProperty->setValue(null);

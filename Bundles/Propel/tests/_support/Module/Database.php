@@ -8,8 +8,8 @@ namespace Propel\Module;
 
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module\Db;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 
 class Database extends Db
 {

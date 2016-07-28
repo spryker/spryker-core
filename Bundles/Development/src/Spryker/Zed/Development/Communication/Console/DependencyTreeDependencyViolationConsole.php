@@ -57,6 +57,7 @@ class DependencyTreeDependencyViolationConsole extends Console
         $bundles = $this->getFacade()->getAllBundles();
         $this->info(sprintf('Checking all %d bundles for dependency issues', count($bundles)));
 
+        $count = 0;
         foreach ($bundles as $bundle) {
             $violations = [];
             $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundle);
@@ -85,7 +86,11 @@ class DependencyTreeDependencyViolationConsole extends Console
             foreach ($violations as $violation) {
                 $this->info(' - ' . $violation);
             }
+
+            $count += count($violations);
         }
+
+        $this->info(sprintf('%d bundle dependency issues found', $count));
     }
 
 }

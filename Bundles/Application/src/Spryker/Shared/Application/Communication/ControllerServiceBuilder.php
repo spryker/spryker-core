@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Application\Communication;
 
+use Pimple;
 use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
@@ -23,7 +24,7 @@ class ControllerServiceBuilder
      * @return string
      */
     public function createServiceForController(
-        \Pimple $application,
+        Pimple $application,
         BundleControllerActionInterface $bundleControllerAction,
         AbstractControllerResolver $controllerResolver,
         RouteNameResolverInterface $routeNameResolver

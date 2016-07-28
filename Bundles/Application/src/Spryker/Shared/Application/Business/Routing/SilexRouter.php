@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Application\Business\Routing;
 
+use Pimple;
 use Psr\Log\LoggerInterface;
 use Silex\RedirectableUrlMatcher;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -39,7 +40,7 @@ class SilexRouter implements RouterInterface
      * @param \Pimple $app
      * @param \Psr\Log\LoggerInterface|null $logger
      */
-    public function __construct(\Pimple $app, LoggerInterface $logger = null)
+    public function __construct(Pimple $app, LoggerInterface $logger = null)
     {
         $this->app = $app;
         $this->logger = $logger;

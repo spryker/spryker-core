@@ -54,14 +54,13 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorI
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return int
-     *
      */
     protected function getTotalDiscountAmountWithProductOptions(TotalsTransfer $totalsTransfer, \ArrayObject $items)
     {
         $currentTotalDiscountAmount = $totalsTransfer->getDiscountTotal();
         $discountTotalAmountForProductOptions = $this->getSumTotalGrossDiscountAmount($items);
 
-        return $currentTotalDiscountAmount + $discountTotalAmountForProductOptions;
+        return (int)round($currentTotalDiscountAmount + $discountTotalAmountForProductOptions);
     }
 
     /**
@@ -96,14 +95,21 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface, CalculatorI
      */
     protected function getProductOptionCalculatedDiscounts(ItemTransfer $itemTransfer)
     {
-        $productOptionSumAmount = 0;
+        $productOptionSumTotalAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionSumAmount += $this->getCalculatedDiscountSumGrossAmount(
+
+            $productOptionSum = $this->getCalculatedDiscountSumGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
+
+            if ($productOptionSum > $productOptionTransfer->getSumGrossPrice()) {
+                $productOptionSum = $productOptionTransfer->getSumGrossPrice();
+            }
+
+            $productOptionSumTotalAmount += $productOptionSum;
         }
 
-        return $productOptionSumAmount;
+        return $productOptionSumTotalAmount;
     }
 
     /**

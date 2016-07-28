@@ -110,38 +110,50 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptions
      *
      * @return int
      */
-    protected function getProductOptionGrossUnitTotalAmount(\ArrayObject $productOptionTransfer)
+    protected function getProductOptionGrossUnitTotalAmount(\ArrayObject $productOptions)
     {
         $totalDiscountUnitGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+        $totalUnitGrossAmount = 0;
+        foreach ($productOptions as $productOptionTransfer) {
+            $this->setCalculatedDiscountsSumGrossAmount($productOptionTransfer->getCalculatedDiscounts());
 
-            $unitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $optionTransfer->setUnitGrossPriceWithDiscounts($optionTransfer->getUnitGrossPrice() - $unitDiscountAmount);
+            $unitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($productOptionTransfer->getCalculatedDiscounts());
+            $productOptionTransfer->setUnitGrossPriceWithDiscounts($productOptionTransfer->getUnitGrossPrice() - $unitDiscountAmount);
             $totalDiscountUnitGrossAmount += $unitDiscountAmount;
+            $totalUnitGrossAmount += $productOptionTransfer->getUnitGrossPrice();
+        }
+
+        if ($totalDiscountUnitGrossAmount > $totalUnitGrossAmount) {
+            $totalDiscountUnitGrossAmount = $totalUnitGrossAmount;
         }
 
         return $totalDiscountUnitGrossAmount;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptions
      *
      * @return int
      */
-    protected function getProductOptionGrossSumTotalAmount(\ArrayObject $productOptionTransfer)
+    protected function getProductOptionGrossSumTotalAmount(\ArrayObject $productOptions)
     {
         $totalDiscountSumGrossAmount = 0;
-        foreach ($productOptionTransfer as $optionTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($optionTransfer->getCalculatedDiscounts());
+        $totalSumAmount = 0;
+        foreach ($productOptions as $productOptionTransfer) {
+            $this->setCalculatedDiscountsSumGrossAmount($productOptionTransfer->getCalculatedDiscounts());
 
-            $sumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($optionTransfer->getCalculatedDiscounts());
-            $optionTransfer->setSumGrossPriceWithDiscounts($optionTransfer->getSumGrossPrice() - $sumDiscountAmount);
+            $sumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($productOptionTransfer->getCalculatedDiscounts());
+            $productOptionTransfer->setSumGrossPriceWithDiscounts($productOptionTransfer->getSumGrossPrice() - $sumDiscountAmount);
             $totalDiscountSumGrossAmount += $sumDiscountAmount;
+            $totalSumAmount += $productOptionTransfer->getSumGrossPrice();
+        }
+
+        if ($totalDiscountSumGrossAmount > $totalSumAmount) {
+            $totalDiscountSumGrossAmount = $totalSumAmount;
         }
 
         return $totalDiscountSumGrossAmount;
@@ -246,8 +258,14 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
     protected function getCalculatedDiscountUnitGrossAmount(\ArrayObject $calculatedDiscounts)
     {
         $totalUnitGrossDiscountAmount = 0;
+        $appliedDiscounts = [];
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
+            if (isset($appliedDiscounts[$idDiscount])) {
+                continue;
+            }
             $totalUnitGrossDiscountAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
+            $appliedDiscounts[$idDiscount] = true;
         }
 
         return $totalUnitGrossDiscountAmount;
@@ -262,18 +280,18 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
     {
         foreach ($items as $itemTransfer) {
 
-            $totalItemSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
-            $productOptionSumAmount = $this->getProductOptionSumAmount($itemTransfer);
-            $sumDiscountAmountWithOptions = $totalItemSumDiscountAmount + $productOptionSumAmount;
+            $totalItemSumDiscountAmount = $itemTransfer->getSumTotalDiscountAmount();
+            $productOptionsSumDiscountAmount = $this->getProductOptionSumAmount($itemTransfer);
+            $sumDiscountAmountWithOptions = $totalItemSumDiscountAmount + $productOptionsSumDiscountAmount;
 
             if (!$sumDiscountAmountWithOptions) {
                 $this->setItemDiscountDefaults($itemTransfer);
                 continue;
             }
 
-            $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
-            $productOptionUnitAmount = $this->getProductOptionUnitAmount($itemTransfer);
-            $unitDiscountAmountWithOptions = $totalItemUnitDiscountAmount + $productOptionUnitAmount;
+            $totalItemUnitDiscountAmount = $itemTransfer->getUnitTotalDiscountAmount();
+            $productOptionsUnitDiscountAmount = $this->getProductOptionUnitAmount($itemTransfer);
+            $unitDiscountAmountWithOptions = $totalItemUnitDiscountAmount + $productOptionsUnitDiscountAmount;
 
             $itemTransfer->setUnitTotalDiscountAmountWithProductOption($unitDiscountAmountWithOptions);
             $itemTransfer->setSumTotalDiscountAmountWithProductOption($sumDiscountAmountWithOptions);
@@ -330,6 +348,10 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
                 $productOptionTransfer->getCalculatedDiscounts()
             );
 
+            if ($productOptionUnitDiscountAmount > $productOptionTransfer->getUnitGrossPrice()) {
+                $productOptionUnitDiscountAmount = $productOptionTransfer->getUnitGrossPrice();
+            }
+
             $productOptionTransfer->setUnitGrossPriceWithDiscounts(
                 $productOptionTransfer->getUnitGrossPrice() - $productOptionUnitDiscountAmount
             );
@@ -353,6 +375,10 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
             $productOptionSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
+
+            if ($productOptionSumDiscountAmount > $productOptionTransfer->getSumGrossPrice()) {
+                $productOptionSumDiscountAmount = $productOptionTransfer->getSumGrossPrice();
+            }
 
             $productOptionTransfer->setSumGrossPriceWithDiscounts(
                 $productOptionTransfer->getSumGrossPrice() - $productOptionSumDiscountAmount

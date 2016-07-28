@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Container;
 class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_SALES_AGGREGATOR = 'sales aggregor facade';
+    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

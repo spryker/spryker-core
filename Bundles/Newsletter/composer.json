@@ -12,6 +12,7 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
+    "spryker/customer": "^2.0.0",
     "spryker/glossary": "^2.0.0",
     "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",

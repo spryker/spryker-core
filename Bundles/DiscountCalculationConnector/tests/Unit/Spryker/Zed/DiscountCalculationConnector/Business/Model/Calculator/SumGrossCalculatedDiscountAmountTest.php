@@ -38,9 +38,9 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 
         $itemTransfer = $quoteTransfer->getItems()[0];
 
-        $this->assertEquals(160, $itemTransfer->getSumGrossPriceWithDiscounts());
+        $this->assertSame(160, $itemTransfer->getSumGrossPriceWithDiscounts());
 
-        $this->assertEquals(
+        $this->assertSame(
             40,
             $itemTransfer->getSumTotalDiscountAmount()
         );
@@ -64,12 +64,37 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 
         $itemTransfer = $quoteTransfer->getItems()[0];
 
-        $this->assertEquals(80, $itemTransfer->getUnitGrossPriceWithDiscounts());
+        $this->assertSame(80, $itemTransfer->getUnitGrossPriceWithDiscounts());
 
-        $this->assertEquals(
+        $this->assertSame(
             20,
             $itemTransfer->getUnitTotalDiscountAmount()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountsWhenDiscountIsOverItemAmountShouldNotBeMoreThatItemAmount()
+    {
+        $discountTotalsCalculator = $this->createSumGrossCalculatedDiscountAmountCalculator();
+
+        $calculatedDiscountFixtures = $this->getCalculatedDiscountFixtures();
+
+        $calculatedDiscountFixtures[0]['unitGrossAmount'] = 1000;
+        $calculatedDiscountFixtures[1]['unitGrossAmount'] = 1000;
+
+        $quoteTransfer = $this->createQuoteTransferWithFixtureData(
+            self::ITEM_QUANTITY,
+            $calculatedDiscountFixtures
+        );
+
+        $discountTotalsCalculator->recalculate($quoteTransfer);
+
+        $itemTransfer = $quoteTransfer->getItems()[0];
+
+        $this->assertSame(0, $itemTransfer->getUnitGrossPriceWithDiscounts());
+        $this->assertSame(100, $itemTransfer->getUnitTotalDiscountAmount());
     }
 
     /**
@@ -91,6 +116,7 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 
         foreach ($calculatedDiscounts as $calculatedDiscount) {
             $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
+            $calculatedDiscountTransfer->setIdDiscount($calculatedDiscount['idDiscount']);
             $calculatedDiscountTransfer->setQuantity($calculatedDiscount['quantity']);
             $calculatedDiscountTransfer->setUnitGrossAmount($calculatedDiscount['unitGrossAmount']);
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
@@ -111,10 +137,12 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
+                'idDiscount' => 1,
                 'quantity' => 2,
                 'unitGrossAmount' => 10,
             ],
             [
+                'idDiscount' => 2,
                 'quantity' => 2,
                 'unitGrossAmount' => 10,
             ],
