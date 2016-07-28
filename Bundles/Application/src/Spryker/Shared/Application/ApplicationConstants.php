@@ -37,18 +37,34 @@ interface ApplicationConstants
     const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
     const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
     const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
+    /**
+     * @deprecated Use Session bundle SessionConstants::YVES_SESSION_SAVE_HANDLER instead.
+     */
     const YVES_SESSION_SAVE_HANDLER = 'YVES_SESSION_SAVE_HANDLER';
+    /**
+     * @deprecated Use Session bundle SessionConstants::YVES_SESSION_COOKIE_NAME instead.
+     */
     const YVES_SESSION_NAME = 'YVES_SESSION_NAME';
+    /**
+     * @deprecated Use Session bundle SessionConstants::YVES_SESSION_COOKIE_DOMAIN instead.
+     */
     const YVES_SESSION_COOKIE_DOMAIN = 'YVES_SESSION_COOKIE_DOMAIN';
-    const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
-    const YVES_SHOW_EXCEPTION_STACK_TRACE = 'YVES_SHOW_EXCEPTION_STACK_TRACE';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constants instead.
+     */
+    const YVES_COOKIE_DOMAIN = 'YVES_COOKIE_DOMAIN';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constants instead.
+     */
+    const YVES_COOKIE_SECURE = 'YVES_COOKIE_SECURE';
 
     const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
     const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
     const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
     const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
-    const YVES_COOKIE_DOMAIN = 'YVES_COOKIE_DOMAIN';
-    const YVES_COOKIE_SECURE = 'YVES_COOKIE_SECURE';
+
+    const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
+    const YVES_SHOW_EXCEPTION_STACK_TRACE = 'YVES_SHOW_EXCEPTION_STACK_TRACE';
 
     const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
     const TRANSFER_PASSWORD = 'TRANSFER_PASSWORD';
@@ -146,7 +162,7 @@ interface ApplicationConstants
     const JENKINS_DIRECTORY = 'JENKINS_DIRECTORY';
 
     /**
-     * Sessions
+     * @deprecated Use Session bundle SessionConstants::ZED_SESSION_SAVE_HANDLER instead.
      */
     const ZED_SESSION_SAVE_HANDLER = 'ZED_SESSION_SAVE_HANDLER';
 
