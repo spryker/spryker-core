@@ -26,6 +26,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class HeartbeatBusinessFactory extends AbstractBusinessFactory
 {
 
+    const DEFAULT_DATABASE = 0;
+
     /**
      * @return \Spryker\Zed\Heartbeat\Business\Ambulance\Doctor
      */
@@ -114,10 +116,10 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(StorageConstants::ZED_STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
-            'port' => Config::get(StorageConstants::ZED_STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
-            'host' => Config::get(StorageConstants::ZED_STORAGE_REDIS_HOST, Config::get(SessionConstants::ZED_SESSION_REDIS_HOST)),
-            'database' => Config::get(StorageConstants::ZED_STORAGE_REDIS_DATABASE, 0),
+            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
+            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(SessionConstants::ZED_SESSION_REDIS_HOST)),
+            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_DATABASE),
         ];
 
         if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {

@@ -21,6 +21,7 @@ class StorageInstanceBuilder
     const ADAPTER_READ = 'Read';
     const ADAPTER_LOCAL = 'Local';
     const KV_ADAPTER_REDIS = 'redis';
+    const DEFAULT_DATABASE = 0;
 
     /**
      * @var \Spryker\Shared\Library\Storage\AdapterInterface[]
@@ -118,30 +119,31 @@ class StorageInstanceBuilder
         $config = null;
 
         switch ($kvAdapter) {
-            case self::KV_ADAPTER_REDIS:
+            case static::KV_ADAPTER_REDIS:
                 $config = [
-                    'protocol' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PROTOCOL, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
-                    'port' => Config::get(StorageConstants::YVES_STORAGE_REDIS_PORT, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT)),
-                    'host' => Config::get(StorageConstants::YVES_STORAGE_REDIS_HOST, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
+                    'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+                    'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT)),
+                    'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
+                    'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_DATABASE),
                 ];
 
                 // TODO: Remove elseif, only there for BC
-                if (Config::hasKey(StorageConstants::YVES_STORAGE_REDIS_PASSWORD)) {
-                    $config['password'] = Config::get(StorageConstants::YVES_STORAGE_REDIS_PASSWORD);
+                if (Config::hasKey(StorageConstants::STORAGE_REDIS_PASSWORD)) {
+                    $config['password'] = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD);
                 } elseif (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
                     $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
                 }
 
                 // TODO: Remove elseif, only there for BC
                 $config['persistent'] = false;
-                if (Config::hasKey(StorageConstants::YVES_STORAGE_PERSISTENT_CONNECTION)) {
-                    $config['persistent'] = (bool)Config::get(StorageConstants::YVES_STORAGE_PERSISTENT_CONNECTION);
+                if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {
+                    $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);
                 } elseif (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
                     $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
                 }
                 break;
 
-            case self::SEARCH_ELASTICA_ADAPTER:
+            case static::SEARCH_ELASTICA_ADAPTER:
                 $config = [
                     'transport' => ucfirst(Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT)),
                     'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
