@@ -4,7 +4,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/product-management/attributes'), 'Back to List' | trans) }}
+    {{ backActionButton(url('/product-management/attribute'), 'Back to List' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Attribute #' ~ app.request.query.get('id') } %}
         {% block widget_content %}
 
-            {% include '@ProductManagement/Attributes/partials/attribute-form.twig' %}
+            {% include '@ProductManagement/Attribute/partials/attribute-form.twig' %}
 
         {% endblock %}
     {% endembed %}
@@ -21,5 +21,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-productmanagement-attributes.js"></script>
+    <script src="/assets/js/spryker-zed-productmanagement-attribute.js"></script>
 {% endblock %}

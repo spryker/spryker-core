@@ -18,7 +18,7 @@
                 <label>Attributes</label>
                 <title>Attributes</title>
                 <bundle>product-management</bundle>
-                <controller>attributes</controller>
+                <controller>attribute</controller>
                 <action>index</action>
                 <icon>fa-bolt</icon>
             </attributes>

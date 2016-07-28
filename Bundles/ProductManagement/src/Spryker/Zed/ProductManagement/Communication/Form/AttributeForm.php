@@ -129,7 +129,7 @@ class AttributeForm extends AbstractType
     {
         $builder->add(self::FIELD_KEY, new AutosuggestType(), [
             'label' => 'Attribute key',
-            'url' => '/product-management/attributes/keys',
+            'url' => '/product-management/attribute/keys',
             'constraints' => [
                 new NotBlank(),
                 new Callback([

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
-class AttributesController extends AbstractController
+class AttributeController extends AbstractController
 {
 
     const PARAM_ID = 'id';
@@ -77,7 +77,7 @@ class AttributesController extends AbstractController
                 ->createProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
-                '/product-management/attributes/translate?id=%d',
+                '/product-management/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
@@ -115,7 +115,7 @@ class AttributesController extends AbstractController
             $this->getFacade()->translateProductManagementAttribute($productManagementAttributeTransfer);
 
             return $this->redirectResponse(sprintf(
-                '/product-management/attributes/view?id=%d',
+                '/product-management/attribute/view?id=%d',
                 $idProductManagementAttribute
             ));
         }
@@ -168,7 +168,7 @@ class AttributesController extends AbstractController
                 ->updateProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
-                '/product-management/attributes/translate?id=%d',
+                '/product-management/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
@@ -191,7 +191,7 @@ class AttributesController extends AbstractController
             ->getProductManagementAttribute($idProductManagementAttribute);
 
         if (!$attributeTransfer) {
-            return $this->redirectResponse('/product-management/attributes');
+            return $this->redirectResponse('/product-management/attribute');
         }
 
         return $this->viewResponse([

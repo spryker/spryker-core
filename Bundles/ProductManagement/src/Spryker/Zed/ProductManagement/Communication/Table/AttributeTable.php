@@ -105,14 +105,14 @@ class AttributeTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->generateViewButton(
-            Url::generate('/product-management/attributes/view', [
+            Url::generate('/product-management/attribute/view', [
                 'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
             'View'
         );
 
         $urls[] = $this->generateEditButton(
-            Url::generate('/product-management/attributes/edit', [
+            Url::generate('/product-management/attribute/edit', [
                 'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
             'Edit'
