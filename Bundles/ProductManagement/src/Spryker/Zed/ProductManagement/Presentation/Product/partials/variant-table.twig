@@ -36,7 +36,9 @@
                 {% else %}
                     <td>-</td>
                 {% endif %}
-                <td class="center no-sort">[activate]</td>
+                <td class="center no-sort">
+                    <a href="/product-management/edit/variant?id-product={{ product.idProductConcrete }}&id-product-abstract={{ product.fkProductAbstract }}" target="_blank">Edit</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

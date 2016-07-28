@@ -20,6 +20,7 @@ class EditController extends AddController
 {
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -94,6 +95,35 @@ class EditController extends AddController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function variantAction(Request $request)
+    {
+        $idProductAbstract = $this->castId($request->get(
+            self::PARAM_ID_PRODUCT_ABSTRACT
+        ));
+
+        $idProduct = $this->castId($request->get(
+            self::PARAM_ID_PRODUCT
+        ));
+
+        $productTransfer = $this->getFactory()
+            ->getProductManagementFacade()
+            ->getProductConcreteById($idProduct);
+
+        if (!$productTransfer) {
+            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProduct));
+
+            return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
+        }
+
+        sd($productTransfer->toArray());
+
     }
 
 }

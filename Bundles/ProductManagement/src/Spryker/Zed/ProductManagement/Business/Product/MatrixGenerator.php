@@ -229,7 +229,9 @@ class MatrixGenerator
             ->setSku($concreteSku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
-            ->setAttributes($attributeTokens);
+            ->setAttributes($attributeTokens)
+            ->setIsActive(false)
+        ;
     }
 
 }

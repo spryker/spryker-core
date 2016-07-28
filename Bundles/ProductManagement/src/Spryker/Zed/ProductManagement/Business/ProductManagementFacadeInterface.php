@@ -67,6 +67,17 @@ interface ProductManagementFacadeInterface
     /**
      * @api
      *
+     * @param int $idProduct
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     */
+    public function getProductConcreteById($idProduct);
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface

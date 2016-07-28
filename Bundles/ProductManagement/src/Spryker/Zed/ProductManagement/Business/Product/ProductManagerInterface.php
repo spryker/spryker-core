@@ -152,9 +152,9 @@ interface ProductManagerInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer|null
      */
-    public function getProductById($idProduct);
+    public function getProductConcreteById($idProduct);
 
     /**
      * @param string $sku
