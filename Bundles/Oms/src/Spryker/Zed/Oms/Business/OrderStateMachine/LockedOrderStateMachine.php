@@ -171,9 +171,10 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     protected function buildIdentifierForOrderItemIdsLock(array $orderItemIds)
     {
         $orderItemIds = array_unique($orderItemIds);
-        array_walk($orderItemIds, 'intval');
         asort($orderItemIds);
         $identifier = implode('-', $orderItemIds);
+        $identifier = hash('sha512', $identifier);
+
         return $identifier;
     }
 
