@@ -69,7 +69,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return;
         }
 
-        $saveHandler = Config::get(ApplicationConstants::ZED_SESSION_SAVE_HANDLER);
+        $saveHandler = Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER);
         $savePath = $this->getSavePath($saveHandler);
 
         $sessionHelper = new SessionFactory();
