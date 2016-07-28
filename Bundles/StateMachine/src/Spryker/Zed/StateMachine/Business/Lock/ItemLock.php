@@ -55,10 +55,14 @@ class ItemLock implements ItemLockInterface
         try {
             $affectedRows = $stateMachineLockEntity->save();
         } catch (PropelException $exception) {
-            throw new LockException(sprintf(
-                'State machine trigger is locked. Propel exception: %s',
-                $exception->getMessage()
-            ));
+            throw new LockException(
+                sprintf(
+                    'State machine trigger is locked. Propel exception: %s',
+                    $exception->getMessage()
+                ),
+                $exception->getCode(),
+                $exception
+            );
         }
 
         return $affectedRows > 0;
