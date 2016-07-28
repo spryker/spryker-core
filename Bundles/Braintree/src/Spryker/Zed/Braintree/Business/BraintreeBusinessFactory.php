@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Braintree\Business;
 
+use Spryker\Zed\Braintree\BraintreeDependencyProvider;
 use Spryker\Zed\Braintree\Business\Hook\PostSaveHook;
 use Spryker\Zed\Braintree\Business\Log\TransactionStatusLog;
 use Spryker\Zed\Braintree\Business\Order\Saver;
@@ -57,6 +58,14 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
         return new PostSaveHook(
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToSalesAggregatorInterface
+     */
+    public function getSalesAggregator()
+    {
+        return $this->getProvidedDependency(BraintreeDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
 }
