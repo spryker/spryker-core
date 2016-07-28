@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Kernel;
 
+use LogicException;
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
 
 class BundleProxy
@@ -65,7 +66,7 @@ class BundleProxy
         $locatorClass = get_class($locator);
         $matcherClass = $locatorClass . self::LOCATOR_MATCHER_SUFFIX;
         if (!class_exists($matcherClass)) {
-            throw new \LogicException(sprintf('Could not find a "%s"!', $matcherClass));
+            throw new LogicException(sprintf('Could not find a "%s"!', $matcherClass));
         }
         $matcher = new $matcherClass();
 
@@ -92,7 +93,7 @@ class BundleProxy
             }
         }
 
-        throw new \LogicException(sprintf('Could not map method "%s" to a locator!', $method));
+        throw new LogicException(sprintf('Could not map method "%s" to a locator!', $method));
     }
 
 }

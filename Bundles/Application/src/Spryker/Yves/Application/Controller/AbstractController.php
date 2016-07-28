@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Application\Controller;
 
+use LogicException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
@@ -179,7 +180,7 @@ abstract class AbstractController
             return $security->isGranted($role);
         }
 
-        throw new \LogicException('Security is not enabled!');
+        throw new LogicException('Security is not enabled!');
     }
 
     /**
@@ -214,7 +215,7 @@ abstract class AbstractController
     {
         $securityContext = $this->getApplication()['security'];
         if ($securityContext === null) {
-            throw new \LogicException('Security is not enabled!');
+            throw new LogicException('Security is not enabled!');
         }
 
         return $securityContext;
@@ -241,7 +242,7 @@ abstract class AbstractController
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
         if ($token === null) {
-            throw new \LogicException('No logged in user found.');
+            throw new LogicException('No logged in user found.');
         }
 
         return $token->getUser();

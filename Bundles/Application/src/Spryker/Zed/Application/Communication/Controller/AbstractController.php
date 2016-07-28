@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use LogicException;
 use Silex\Application;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -304,7 +305,7 @@ abstract class AbstractController
     {
         $twig = $this->getApplication()['twig'];
         if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
+            throw new LogicException('Twig environment not set up.');
         }
 
         return $twig;
