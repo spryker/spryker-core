@@ -10,6 +10,7 @@ namespace Spryker\Yves\FactFinder\Controller;
 use Spryker\Yves\Application\Controller\AbstractController;
 use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 /**
  * @method \Spryker\Client\FactFinder\FactFinderClient getClient()

@@ -29,7 +29,7 @@ interface FactFinderClientInterface
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function search();
 

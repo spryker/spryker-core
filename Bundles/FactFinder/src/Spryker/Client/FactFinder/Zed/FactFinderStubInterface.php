@@ -24,7 +24,7 @@ interface FactFinderStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function search(QuoteTransfer $quoteTransfer);
 

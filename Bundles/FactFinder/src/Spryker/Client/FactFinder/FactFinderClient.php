@@ -46,7 +46,7 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function search()
     {

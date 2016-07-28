@@ -14,7 +14,7 @@ class FactFinderControllerProvider extends AbstractYvesControllerProvider
 {
 
     const ROUTE_FACT_FINDER = 'fact-finder';
-    const FACT_FINDER_CSV_PATH = 'fact_finder/csv/';
+    const FACT_FINDER_CSV_PATH = 'fact-finder/csv/';
 
     /**
      * @param \Silex\Application $app

@@ -18,11 +18,11 @@ class SearchRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FfSearchResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $searchRequestTransfer = $quoteTransfer->getFfSearchRequest();
+        $searchRequestTransfer = $quoteTransfer->getFactFinderSearchRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
@@ -65,7 +65,7 @@ class SearchRequest extends AbstractRequest implements RequestInterface
 
         $this->logInfo($quoteTransfer, $searchAdapter);
         
-        // convert to FFSearchResponseTransfer
+        // convert to FactFinderSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createSearchResponseConverter($searchAdapter)
             ->convert();

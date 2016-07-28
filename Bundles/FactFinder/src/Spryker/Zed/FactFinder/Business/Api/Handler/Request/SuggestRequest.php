@@ -22,7 +22,7 @@ class SuggestRequest extends AbstractRequest implements RequestInterface
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $suggestRequestTransfer = $quoteTransfer->getFfSuggestRequest();
+        $suggestRequestTransfer = $quoteTransfer->getFactFinderSuggestRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);

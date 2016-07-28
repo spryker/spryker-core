@@ -18,11 +18,11 @@ class ProductCampaignRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FfProductCampaignResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderProductCampaignResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $productCampaignRequestTransfer = $quoteTransfer->getFfProductCampaignRequest();
+        $productCampaignRequestTransfer = $quoteTransfer->getFactFinderProductCampaignRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
@@ -32,7 +32,7 @@ class ProductCampaignRequest extends AbstractRequest implements RequestInterface
         
         $this->logInfo($quoteTransfer, $productCampaignAdapter);
         
-        // convert to FFSearchResponseTransfer
+        // convert to FactFinderSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createProductCampaignResponseConverter($productCampaignAdapter)
             ->convert();

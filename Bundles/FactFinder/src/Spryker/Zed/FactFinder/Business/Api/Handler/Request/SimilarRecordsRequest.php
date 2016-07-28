@@ -18,11 +18,11 @@ class SimilarRecordsRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FfSimilarRecordsResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSimilarRecordsResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $similarRecordsRequestTransfer = $quoteTransfer->getFfSimilarRecordsRequest();
+        $similarRecordsRequestTransfer = $quoteTransfer->getFactFinderSimilarRecordsRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);

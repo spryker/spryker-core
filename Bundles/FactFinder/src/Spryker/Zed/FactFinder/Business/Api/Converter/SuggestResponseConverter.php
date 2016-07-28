@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
-use Generated\Shared\Transfer\FfSuggestResponseTransfer;
+use Generated\Shared\Transfer\FactFinderSuggestResponseTransfer;
 
 class SuggestResponseConverter extends BaseConverter
 {
@@ -27,11 +27,11 @@ class SuggestResponseConverter extends BaseConverter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FfSuggestResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
     public function convert()
     {
-        $responseTransfer = new FfSuggestResponseTransfer();
+        $responseTransfer = new FactFinderSuggestResponseTransfer();
 //        $responseTransfer->set();
 
         return $responseTransfer;

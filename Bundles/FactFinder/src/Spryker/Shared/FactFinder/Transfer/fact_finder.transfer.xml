@@ -6,68 +6,68 @@
 >
 
     <transfer name="Quote">
-        <property name="FfSearchRequest" type="FfSearchRequest"/>
-        <property name="FfRecommendationRequest" type="FfRecommendationRequest"/>
-        <property name="FfSuggestRequest" type="FfSuggestRequest"/>
-        <property name="FfTagCloudRequest" type="FfTagCloudRequest"/>
-        <property name="FfTrackingRequest" type="FfTrackingRequest"/>
-        <property name="FfSimilarRecordsRequest" type="FfSimilarRecordsRequest"/>
-        <property name="FfProductCampaignRequest" type="FfProductCampaignRequest"/>
+        <property name="FactFinderSearchRequest" type="FactFinderSearchRequest"/>
+        <property name="FactFinderRecommendationRequest" type="FactFinderRecommendationRequest"/>
+        <property name="FactFinderSuggestRequest" type="FactFinderSuggestRequest"/>
+        <property name="FactFinderTagCloudRequest" type="FactFinderTagCloudRequest"/>
+        <property name="FactFinderTrackingRequest" type="FactFinderTrackingRequest"/>
+        <property name="FactFinderSimilarRecordsRequest" type="FactFinderSimilarRecordsRequest"/>
+        <property name="FactFinderProductCampaignRequest" type="FactFinderProductCampaignRequest"/>
     </transfer>
 
-    <transfer name="FfSearchRequest">
+    <transfer name="FactFinderSearchRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfSearchResponse">
+    <transfer name="FactFinderSearchResponse">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfRecommendationRequest">
+    <transfer name="FactFinderRecommendationRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfRecommendationResponse">
+    <transfer name="FactFinderRecommendationResponse">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfSuggestRequest">
+    <transfer name="FactFinderSuggestRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfSuggestResponse">
+    <transfer name="FactFinderSuggestResponse">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfTagCloudRequest">
+    <transfer name="FactFinderTagCloudRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfTagCloudResponse">
+    <transfer name="FactFinderTagCloudResponse">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfTrackingRequest">
+    <transfer name="FactFinderTrackingRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfTrackingResponse">
+    <transfer name="FactFinderTrackingResponse">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfSimilarRecordsRequest">
+    <transfer name="FactFinderSimilarRecordsRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfSimilarRecordsResponse">
+    <transfer name="FactFinderSimilarRecordsResponse">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfProductCampaignRequest">
+    <transfer name="FactFinderProductCampaignRequest">
         <property name="temp" type="string"/>
     </transfer>
 
-    <transfer name="FfProductCampaignResponse">
+    <transfer name="FactFinderProductCampaignResponse">
         <property name="temp" type="string"/>
     </transfer>
 

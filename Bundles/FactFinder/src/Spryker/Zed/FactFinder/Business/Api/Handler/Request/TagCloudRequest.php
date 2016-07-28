@@ -18,11 +18,11 @@ class TagCloudRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FfTagCloudResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderTagCloudResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $tagCloudRequestTransfer = $quoteTransfer->getFfTagCloudRequest();
+        $tagCloudRequestTransfer = $quoteTransfer->getFactFinderTagCloudRequest();
 
         // @todo @Artem : check do we need send request? 
         // $request = mapper->map($searchRequestTransfer);
