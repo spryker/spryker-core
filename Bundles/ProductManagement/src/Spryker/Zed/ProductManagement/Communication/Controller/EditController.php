@@ -128,10 +128,12 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProduct),
-                $dataProvider->getOptions($idProduct)
+                $dataProvider->getData($idProductAbstract, $idProduct),
+                $dataProvider->getOptions($idProductAbstract, $idProduct)
             )
             ->handleRequest($request);
+
+
 
 
 

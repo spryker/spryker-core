@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductVariantFormEdit extends ProductFormAdd
@@ -33,11 +32,28 @@ class ProductVariantFormEdit extends ProductFormAdd
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
+            ->addSkuField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
             ->addPriceForm($builder, $options[self::TAX_SET]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSkuField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_SKU, 'text', [
+                'label' => 'SKU',
+                'read_only' => true
+            ]);
+
+        return $this;
     }
 
     /**
