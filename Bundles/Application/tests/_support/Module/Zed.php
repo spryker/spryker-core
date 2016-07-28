@@ -38,10 +38,10 @@ class Zed extends Module
     {
         $i = $this->getWebDriver();
 
-        $cookie = $i->grabCookie(self::I_WAS_HERE);
-        if ($cookie) {
-            return;
-        }
+//        $cookie = $i->grabCookie(self::I_WAS_HERE);
+//        if ($cookie) {
+//            return;
+//        }
 
         $i->amOnPage(LoginPage::URL);
 
@@ -49,8 +49,8 @@ class Zed extends Module
         $i->fillField(LoginPage::SELECTOR_PASSWORD_FIELD, $password);
         $i->click(LoginPage::SELECTOR_SUBMIT_BUTTON);
 
-        $i->setCookie(self::I_WAS_HERE, true);
-        $i->saveSessionSnapshot('LoginZed');
+//        $i->setCookie(self::I_WAS_HERE, true);
+//        $i->saveSessionSnapshot('LoginZed');
     }
 
     /**
