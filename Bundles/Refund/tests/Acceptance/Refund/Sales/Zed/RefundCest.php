@@ -96,7 +96,4 @@ class RefundCest
         $i->assertSame($grandTotal, $i->grabTotalRefundedAmount());
     }
 
-
-
-
 }
