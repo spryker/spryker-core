@@ -5,4 +5,4 @@
 
 'use strict';
 
-require('./modules/attributes');
+require('./modules/attribute');
