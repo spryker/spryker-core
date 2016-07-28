@@ -1,0 +1,83 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Product Concrete Edit' | trans %}
+{% endif %}
+
+{% if submit_title is not defined %}
+    {% set submit_title = 'Edit' | trans %}
+{% endif %}
+
+{% if idProduct is not defined %}
+    {% set idProduct = 0 %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title | trans }} {% if idProduct > 0 %} [{{ idProduct }}] {% endif %}
+{%- endblock %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/product-management', 'List Products' | trans) }}
+{% endblock %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <label for="{{ id }}">{{ label|trans }}</label>&nbsp;<input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% import _self as forms %}
+
+{% form_theme form _self %}
+
+{% block content %}
+
+    {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Specification' } %}
+
+        {% block widget_content %}
+
+            {{ form_errors(form) }}
+
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
+                    <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Taxes</a></li>
+                    <li class=""><a href="#tab_abstract_attributes" data-toggle="tab">Attributes</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab_general" class="tab-pane active">
+                        {% include '@ProductManagement/Variant/partials/general-tab.twig' %}
+                    </div>
+
+                    <div id="tab_abstract_attributes" class="tab-pane">
+                        {% include '@ProductManagement/Variant/partials/abstract-attribute-tab.twig' %}
+                    </div>
+
+                    <div id="tab_price_and_stock" class="tab-pane">
+                        {% include '@ProductManagement/Variant/partials/price-tab.twig' %}
+                    </div>
+                </div>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+    <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productmanagement-main.js"></script>
+{% endblock %}

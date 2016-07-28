@@ -122,7 +122,26 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
-        sd($productTransfer->toArray());
+        $localeProvider = $this->getFactory()->createLocaleProvider();
+
+        $dataProvider = $this->getFactory()->createProductVariantFormEditDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createProductVariantFormEdit(
+                $dataProvider->getData($idProduct),
+                $dataProvider->getOptions($idProduct)
+            )
+            ->handleRequest($request);
+
+
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+            'currentProduct' => $productTransfer->toArray(),
+            'localeCollection' => $localeProvider->getLocaleCollection(),
+            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
+        ]);
 
     }
 
