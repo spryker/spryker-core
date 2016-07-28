@@ -25,16 +25,15 @@ class IndexController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $generalForm = $this->getFactory()->createGeneralForm();
+        $dataProvider = $this->getFactory()->createGeneralFormDataProvider();
+
+        $generalForm = $this->getFactory()->createGeneralForm($dataProvider->getData(), $dataProvider->getOptions());
 
         $generalForm->handleRequest($request);
 
-        $data = $generalForm->getData();
-
-        $br = 1;
-
         if ($generalForm->isValid()) {
-
+            $data = $generalForm->getData();
+            $idProductOptionGroup = $this->getFacade()->saveProductOptionGroup($data);
         }
 
         return [

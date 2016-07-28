@@ -7,15 +7,34 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProductOptionForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
+    const FIELD_VALUE = 'value';
     const FIELD_SKU = 'sku';
     const FIELD_PRICE = 'price';
+    const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+
+    /**
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
+     */
+    protected $productOptionQueryContainer;
+
+    /**
+     * @param ProductOptionQueryContainerInterface $productOptionQueryContainer
+     */
+    public function __construct(ProductOptionQueryContainerInterface $productOptionQueryContainer)
+    {
+        $this->productOptionQueryContainer = $productOptionQueryContainer;
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -27,7 +46,18 @@ class ProductOptionForm extends AbstractType
     {
         $this->addNameField($builder)
             ->addSkuField($builder)
-            ->addPrice($builder);
+            ->addPrice($builder)
+            ->addIdProductOptionValue($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => ProductOptionValueTransfer::class
+        ]);
     }
 
     /**
@@ -37,8 +67,9 @@ class ProductOptionForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
+        $builder->add(self::FIELD_VALUE, 'text', [
             'label' => 'Name *',
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -56,8 +87,12 @@ class ProductOptionForm extends AbstractType
     {
         $builder->add(self::FIELD_SKU, 'text', [
             'label' => 'Sku *',
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
+                new UniqueOptionValueSku([
+                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer
+                ])
             ],
         ]);
 
@@ -73,10 +108,26 @@ class ProductOptionForm extends AbstractType
     {
         $builder->add(self::FIELD_PRICE, 'text', [
             'label' => 'Price *',
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
+                new Regex([
+                    'pattern' => '/[0-9\.\,]+/'
+                ]),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdProductOptionValue(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_PRODUCT_OPTION_VALUE, 'hidden');
 
         return $this;
     }

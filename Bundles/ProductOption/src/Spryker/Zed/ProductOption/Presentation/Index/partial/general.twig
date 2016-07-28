@@ -1,0 +1,37 @@
+{{ form_start(generalForm) }}
+    <h3>{{ 'Options' | trans }}</h3>
+    <hr />
+    <p>
+        {{ 'Create a product option by entering a name, sku and price. By adding more than 1 option bellow, you will create an option group. With an option group your customer can choose one option from the group.' | trans }}
+    </p>
+    {{ form_row(generalForm.name) }}
+    <div class="form-group">
+        <a href="#" class="btn btn-primary" id="add-another-option">Add option</a>
+    </div>
+    <div class="form-group">
+        <div id="option-value-list"
+             class="option-value-list"
+             data-value-count="{{ generalForm.productOptionValues|length  }}"
+             data-prototype="
+               {% filter escape %}
+                  {{ include ('@ProductOption/Index/_product-option-template.twig', { 'productOptionForm': generalForm.productOptionValues.vars.prototype }) }}
+               {% endfilter %}">
+
+            {% for valueForm in generalForm.productOptionValues %}
+                <div>
+                    {{ include ('@ProductOption/Index/_product-option-template.twig', { 'productOptionForm': valueForm }) }}
+                </div>
+            {% endfor %}
+            {% do generalForm.productOptionValues.setRendered %}
+        </div>
+    </div>
+
+    <h3>{{ 'Tax set' | trans }}</h3>
+    <hr />
+    <p>
+        {{ 'Define which tax set should be applied to this option or option group.' | trans }}
+    </p>
+
+    {{ form_row(generalForm.fkTaxSet) }}
+    <input type="submit" id="create-discount-button" class="btn btn-create" value="{{ 'Save' | trans }}" />
+{{ form_end(generalForm) }}

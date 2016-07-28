@@ -91,6 +91,11 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToProductBridge($container->getLocator()->product()->facade());
         };
 
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+
         return $container;
     }
 

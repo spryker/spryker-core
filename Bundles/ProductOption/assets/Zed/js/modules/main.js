@@ -6,19 +6,48 @@
 'use strict';
 
 require('ZedGui');
+require('../../sass/main.scss');
 
 $(document).ready(function() {
 
-    var valueCount = 0;
-    $('#add-another-option').click(function(e) {
-        e.preventDefault();
+    var valueList = $('#option-value-list');
+    var valueCount = parseInt(valueList.data('value-count'));
 
-        var valueList = $('#option-value-list');
+    if (valueCount > 0) {
+        $('.form-product-option-row').each(function(index, element) {
+            addOptionFormActions($(element));
+        });
+    }
 
-        var newOptionWidget = valueList.data('prototype');
-        newOptionWidget = newOptionWidget.replace(/__name__/g, valueCount);
+    $('#add-another-option').click(function(event) {
+        event.preventDefault();
+
+        var newOptionFormHTML = valueList.data('prototype');
+
         valueCount++;
 
-        valueList.append(newOptionWidget);
+        newOptionFormHTML = newOptionFormHTML.replace(/__name__/g, valueCount);
+        var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML));
+
+        addOptionFormActions(newOptionForm);
+
+        valueList.append(newOptionForm);
+
     });
+
+    function addOptionFormActions(newOptionForm)
+    {
+        newOptionForm.find('.btn-remove').on('click', function(event) {
+            $(event.target).parent().parent().remove();
+        });
+
+        var skuElement = newOptionForm.find("input[id$='sku']");
+        newOptionForm.find("input[id$='value']").on('keyup', function(event) {
+
+            var nameElementValue = $(event.target).val();
+            var formattedValue = nameElementValue.toLowerCase().replace(/\s/g, '_');
+
+            skuElement.val('OP_' + formattedValue);
+        });
+    }
 });

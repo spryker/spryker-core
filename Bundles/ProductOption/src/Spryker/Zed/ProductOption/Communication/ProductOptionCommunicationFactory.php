@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductOption\Communication;
 
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOption\Communication\Form\DataProvider\GeneralFormDataProvider;
 use Spryker\Zed\ProductOption\Communication\Form\GeneralForm;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionForm;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -21,26 +24,42 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductOptionForm()
+    public function createGeneralForm($data, $options)
     {
-        $productOptionFormType = new ProductOptionForm();
+        $productOptionForm = $this->createProductOptionForm();
+
+        $generalFormType = new GeneralForm($productOptionForm);
 
         return $this->getFormFactory()->create(
-            $productOptionFormType,
-            null
+            $generalFormType,
+            null,
+            array_merge(['data_class'  => ProductOptionGroupTransfer::class], $options)
         );
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionForm
      */
-    public function createGeneralForm()
+    public function createProductOptionForm()
     {
-        $generalFormType = new GeneralForm();
+        return new ProductOptionForm($this->getQueryContainer());
+    }
 
-        return $this->getFormFactory()->create(
-            $generalFormType,
-            null
+    /**
+     * @return \Spryker\Zed\ProductOption\Communication\Form\DataProvider\GeneralFormDataProvider
+     */
+    public function createGeneralFormDataProvider()
+    {
+        return new GeneralFormDataProvider(
+            $this->getTaxFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface
+     */
+    public function getTaxFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX);
     }
 }

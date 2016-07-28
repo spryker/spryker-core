@@ -1,17 +1,29 @@
-<div class="form-inline">
-    <div class="form-group">
-        {{ form_label(productOptionForm.name) }}
-        {{ form_widget(productOptionForm.name) }}
+<div class="form-inline form-product-option-row" id="{{ productOptionForm.vars.id }}">
+    <div class="form-group {% if productOptionForm.value.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(productOptionForm.value) }}
+        {{ form_widget(productOptionForm.value) }}
+        {{ form_errors(productOptionForm.value) }}
     </div>
 
-    <div class="form-group">
+    <div class="form-group form-product-sku {% if productOptionForm.sku.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_label(productOptionForm.sku) }}
         {{ form_widget(productOptionForm.sku) }}
+        {{ form_errors(productOptionForm.sku) }}
     </div>
 
-    <div class="form-group">
+    <div class="form-group form-product-price {% if productOptionForm.price.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_label(productOptionForm.price) }}
-        {{ form_widget(productOptionForm.price) }}
+        <div class="input-group">
+            {{ form_widget(productOptionForm.price) }}
+            <div class="input-group-addon">&euro;</div>
+        </div>
+        {{ form_errors(productOptionForm.price) }}
     </div>
+
+    {{ form_row(productOptionForm.idProductOptionValue) }}
+    <div class="form-group">
+       <input type="button" value="Remove"  class="btn btn-sm btn-outline btn-remove"/>
+    </div>
+    <br />
 </div>
-<br />
+

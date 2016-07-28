@@ -35,6 +35,13 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionByValueId($idProductOptionValue);
 
     /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionValueBySku($sku);
+
+    /**
      * @api
      *
      * @param int[] $allIdOptionValueUsages
