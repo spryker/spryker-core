@@ -50,7 +50,7 @@ $(document).ready(function() {
         tags: false,
         preLoaded: false,
         ajax: {
-            url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
+            url: 'http://zed.de.spryker.dev/product-management/attribute/suggest/',
             dataType: 'json',
             delay: 250,
             cache: true,
@@ -71,7 +71,7 @@ $(document).ready(function() {
     $('.spryker-form-select2combobox.ajax.tags').select2({
         tags: true,
         ajax: {
-            url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
+            url: 'http://zed.de.spryker.dev/product-management/attribute/suggest/',
             dataType: 'json',
             delay: 250,
             cache: true,
