@@ -125,7 +125,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                 Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_DATABASE)
+                Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
             );
 
             if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
@@ -135,7 +135,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_HOST),
                     Config::get(SessionConstants::ZED_SESSION_REDIS_PORT),
-                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_DATABASE)
+                    Config::get(SessionConstants::ZED_SESSION_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE)
                 );
             }
 

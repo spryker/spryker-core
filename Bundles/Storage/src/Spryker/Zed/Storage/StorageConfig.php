@@ -17,6 +17,6 @@ class StorageConfig extends AbstractBundleConfig
      *
      * @const int
      */
-    const DEFAULT_DATABASE = 0;
+    const DEFAULT_REDIS_DATABASE = 0;
 
 }

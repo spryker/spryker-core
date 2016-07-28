@@ -118,7 +118,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
             'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
             'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(SessionConstants::ZED_SESSION_REDIS_HOST)),
-            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, StorageConfig::DEFAULT_DATABASE),
+            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE),
         ];
 
         if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {

@@ -21,7 +21,7 @@ class StorageInstanceBuilder
     const ADAPTER_READ = 'Read';
     const ADAPTER_LOCAL = 'Local';
     const KV_ADAPTER_REDIS = 'redis';
-    const DEFAULT_DATABASE = 0;
+    const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @var \Spryker\Shared\Library\Storage\AdapterInterface[]
@@ -124,7 +124,7 @@ class StorageInstanceBuilder
                     'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
                     'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT)),
                     'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
-                    'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_DATABASE),
+                    'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
                 ];
 
                 // TODO: Remove elseif, only there for BC
