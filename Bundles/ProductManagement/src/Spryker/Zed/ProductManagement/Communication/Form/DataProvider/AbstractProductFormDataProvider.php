@@ -14,9 +14,9 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormGeneral;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormPrice;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -136,9 +136,9 @@ class AbstractProductFormDataProvider
             ProductFormAdd::ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
             ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
             ProductFormAdd::PRICE_AND_STOCK => [
-                ProductFormPrice::FIELD_PRICE => 0,
-                ProductFormPrice::FIELD_TAX_RATE => 0,
-                ProductFormPrice::FIELD_STOCK => 0
+                FormPrice::FIELD_PRICE => 0,
+                FormPrice::FIELD_TAX_RATE => 0,
+                FormPrice::FIELD_STOCK => 0
             ]
         ];
 
@@ -171,8 +171,8 @@ class AbstractProductFormDataProvider
         foreach ($availableLocales as $id => $localeCode) {
             $key = ProductFormAdd::getGeneralFormName($localeCode);
             $result[$key] = [
-                ProductFormGeneral::FIELD_NAME => null,
-                ProductFormGeneral::FIELD_DESCRIPTION => null,
+                FormGeneral::FIELD_NAME => null,
+                FormGeneral::FIELD_DESCRIPTION => null,
             ];
         }
 
@@ -190,9 +190,9 @@ class AbstractProductFormDataProvider
         foreach ($availableLocales as $id => $localeCode) {
             $key = ProductFormAdd::getSeoFormName($localeCode);
             $result[$key] = [
-                ProductFormSeo::FIELD_META_TITLE => null,
-                ProductFormSeo::FIELD_META_KEYWORDS => null,
-                ProductFormSeo::FIELD_META_DESCRIPTION => null,
+                FormSeo::FIELD_META_TITLE => null,
+                FormSeo::FIELD_META_KEYWORDS => null,
+                FormSeo::FIELD_META_DESCRIPTION => null,
             ];
         }
 

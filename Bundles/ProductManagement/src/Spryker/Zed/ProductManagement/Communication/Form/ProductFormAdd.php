@@ -9,6 +9,11 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormAttributeAbstract;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormAttributeVariant;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormGeneral;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormPrice;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormSeo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -216,15 +221,15 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormGeneral(self::GENERAL), [
+            ->add($name, new FormGeneral(self::GENERAL), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
                             $selectedAttributes = array_filter(array_values($dataToValidate));
-                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), ProductFormGeneral::$errorFieldsDisplayed)) {
+                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), FormGeneral::$errorFieldsDisplayed)) {
                                 $context->addViolation('Please enter at least Sku and Name of the product in every locale under General', [$context->getGroup()]);
-                                ProductFormGeneral::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                FormGeneral::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],
@@ -246,9 +251,9 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new ProductFormAttributeAbstract(self::ATTRIBUTE_ABSTRACT),
+                'type' => new FormAttributeAbstract(self::ATTRIBUTE_ABSTRACT),
                 'options' => [
-                    ProductFormAttributeAbstract::OPTION_ATTRIBUTE => $options,
+                    FormAttributeAbstract::OPTION_ATTRIBUTE => $options,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
@@ -264,9 +269,9 @@ class ProductFormAdd extends AbstractType
                                 }
                             }
 
-                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), ProductFormGeneral::$errorFieldsDisplayed)) {
+                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), FormGeneral::$errorFieldsDisplayed)) {
                                 $context->addViolation('Please select at least one attribute and its value under Attributes');
-                                ProductFormGeneral::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                FormGeneral::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],
@@ -287,9 +292,9 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::ATTRIBUTE_VARIANT, 'collection', [
-                'type' => new ProductFormAttributeVariant(self::ATTRIBUTE_ABSTRACT),
+                'type' => new FormAttributeVariant(self::ATTRIBUTE_ABSTRACT),
                 'options' => [
-                    ProductFormAttributeVariant::OPTION_ATTRIBUTE => $options,
+                    FormAttributeVariant::OPTION_ATTRIBUTE => $options,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
@@ -325,16 +330,16 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, new ProductFormPrice($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
+            ->add(self::PRICE_AND_STOCK, new FormPrice($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            if ((int)$dataToValidate[ProductFormPrice::FIELD_PRICE] <= 0) {
+                            if ((int)$dataToValidate[FormPrice::FIELD_PRICE] <= 0) {
                                 $context->addViolation('Please Price information under Price & Taxes');
                             }
 
-                            if ((int)$dataToValidate[ProductFormPrice::FIELD_TAX_RATE] <= 0) {
+                            if ((int)$dataToValidate[FormPrice::FIELD_TAX_RATE] <= 0) {
                                 $context->addViolation('Please Tax information under Price & Taxes');
                             }
                         },
@@ -356,7 +361,7 @@ class ProductFormAdd extends AbstractType
     protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new ProductFormSeo(self::SEO), [
+            ->add($name, new FormSeo(self::SEO), [
                 'label' => false,
             ]);
 

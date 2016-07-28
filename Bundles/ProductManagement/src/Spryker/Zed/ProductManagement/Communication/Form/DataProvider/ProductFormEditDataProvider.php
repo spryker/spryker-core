@@ -10,10 +10,10 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeAbstract;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormAttributeAbstract;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormGeneral;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormPrice;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormSeo;
 
 class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
@@ -67,12 +67,12 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
                 continue;
             }
 
-            $formData[$generalFormName][ProductFormGeneral::FIELD_NAME] = $localizedAttributesTransfer->getName();
-            $formData[$generalFormName][ProductFormGeneral::FIELD_DESCRIPTION] = $localizedAttributesTransfer->getDescription();
+            $formData[$generalFormName][FormGeneral::FIELD_NAME] = $localizedAttributesTransfer->getName();
+            $formData[$generalFormName][FormGeneral::FIELD_DESCRIPTION] = $localizedAttributesTransfer->getDescription();
 
-            $formData[$seoFormName][ProductFormSeo::FIELD_META_TITLE] = $localizedAttributesTransfer->getMetaTitle();
-            $formData[$seoFormName][ProductFormSeo::FIELD_META_KEYWORDS] = $localizedAttributesTransfer->getMetaKeywords();
-            $formData[$seoFormName][ProductFormSeo::FIELD_META_DESCRIPTION] = $localizedAttributesTransfer->getMetaDescription();
+            $formData[$seoFormName][FormSeo::FIELD_META_TITLE] = $localizedAttributesTransfer->getMetaTitle();
+            $formData[$seoFormName][FormSeo::FIELD_META_KEYWORDS] = $localizedAttributesTransfer->getMetaKeywords();
+            $formData[$seoFormName][FormSeo::FIELD_META_DESCRIPTION] = $localizedAttributesTransfer->getMetaDescription();
         }
 
         return $formData;
@@ -86,12 +86,12 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $formData[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
+        $formData[ProductFormAdd::PRICE_AND_STOCK][FormPrice::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
 
         $priceTransfer = $this->priceFacade->getProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
         if ($priceTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_PRICE] = $priceTransfer->getPrice();
-            $formData[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_STOCK] = $productAbstractTransfer->getTaxSetId();
+            $formData[ProductFormAdd::PRICE_AND_STOCK][FormPrice::FIELD_PRICE] = $priceTransfer->getPrice();
+            $formData[ProductFormAdd::PRICE_AND_STOCK][FormPrice::FIELD_STOCK] = $productAbstractTransfer->getTaxSetId();
         }
 
         return $formData;
@@ -120,9 +120,9 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $attributes = $localizedAttributesTransfer->getAttributes();
 
             foreach ($attributes as $key => $value) {
-                $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_NAME] = isset($value);
-                $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE] = $value;
-                $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID] = null;
+                $formData[$formName][$key][FormAttributeAbstract::FIELD_NAME] = isset($value);
+                $formData[$formName][$key][FormAttributeAbstract::FIELD_VALUE] = $value;
+                $formData[$formName][$key][FormAttributeAbstract::FIELD_VALUE_HIDDEN_ID] = null;
             }
         }
 
@@ -130,9 +130,9 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $attributes = $productAbstractTransfer->getAttributes();
 
         foreach ($attributes as $key => $value) {
-            $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_NAME] = isset($value);
-            $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE] = $value;
-            $formData[$formName][$key][ProductFormAttributeAbstract::FIELD_VALUE_HIDDEN_ID] = null;
+            $formData[$formName][$key][FormAttributeAbstract::FIELD_NAME] = isset($value);
+            $formData[$formName][$key][FormAttributeAbstract::FIELD_VALUE] = $value;
+            $formData[$formName][$key][FormAttributeAbstract::FIELD_VALUE_HIDDEN_ID] = null;
         }
 
         return $formData;

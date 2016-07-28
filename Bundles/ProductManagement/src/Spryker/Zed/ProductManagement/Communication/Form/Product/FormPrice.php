@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProductFormPrice extends AbstractType
+class FormPrice extends AbstractType
 {
 
     const FIELD_PRICE = 'price';
@@ -45,7 +45,7 @@ class ProductFormPrice extends AbstractType
      */
     public function getName()
     {
-        return 'ProductFormPrice';
+        return 'FormPrice';
     }
 
     /**

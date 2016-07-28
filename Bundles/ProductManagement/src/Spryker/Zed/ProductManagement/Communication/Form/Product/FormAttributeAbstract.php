@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
+use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProductFormAttributeAbstract extends AbstractSubForm
+class FormAttributeAbstract extends AbstractSubForm
 {
 
     const FIELD_NAME = 'name';
@@ -117,7 +118,7 @@ class ProductFormAttributeAbstract extends AbstractSubForm
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $options[ProductFormAttributeAbstract::OPTION_ATTRIBUTE];
+        $attributes = $options[FormAttributeAbstract::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $label = $name;

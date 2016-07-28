@@ -17,10 +17,10 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeVariant;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormAttributeVariant;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormGeneral;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormPrice;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\FormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -163,7 +163,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                 $this->slugify($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
-            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][ProductFormPrice::FIELD_TAX_RATE]);
+            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][FormPrice::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -180,12 +180,12 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
-        $localizedAttributesTransfer->setName($data[ProductFormGeneral::FIELD_NAME]);
-        $localizedAttributesTransfer->setDescription($data[ProductFormGeneral::FIELD_DESCRIPTION]);
+        $localizedAttributesTransfer->setName($data[FormGeneral::FIELD_NAME]);
+        $localizedAttributesTransfer->setDescription($data[FormGeneral::FIELD_DESCRIPTION]);
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
-        $localizedAttributesTransfer->setMetaTitle($data[ProductFormSeo::FIELD_META_TITLE]);
-        $localizedAttributesTransfer->setMetaKeywords($data[ProductFormSeo::FIELD_META_KEYWORDS]);
-        $localizedAttributesTransfer->setMetaDescription($data[ProductFormSeo::FIELD_META_DESCRIPTION]);
+        $localizedAttributesTransfer->setMetaTitle($data[FormSeo::FIELD_META_TITLE]);
+        $localizedAttributesTransfer->setMetaKeywords($data[FormSeo::FIELD_META_KEYWORDS]);
+        $localizedAttributesTransfer->setMetaDescription($data[FormSeo::FIELD_META_DESCRIPTION]);
 
         return $localizedAttributesTransfer;
     }
@@ -258,9 +258,9 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     protected function getVariantValues(array $variantData, ProductManagementAttributeTransfer $attributeTransfer)
     {
-        $hasValue = $variantData[ProductFormAttributeVariant::FIELD_NAME];
-        $hiddenValueId = (int)$variantData[ProductFormAttributeVariant::FIELD_VALUE_HIDDEN_ID];
-        $valueIds = (array)$variantData[ProductFormAttributeVariant::FIELD_VALUE];
+        $hasValue = $variantData[FormAttributeVariant::FIELD_NAME];
+        $hiddenValueId = (int)$variantData[FormAttributeVariant::FIELD_VALUE_HIDDEN_ID];
+        $valueIds = (array)$variantData[FormAttributeVariant::FIELD_VALUE];
 
         if (!$hasValue) {
             return null;
@@ -298,7 +298,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductPriceTransfer(FormInterface $form)
     {
-        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ProductFormPrice::FIELD_PRICE)->getData();
+        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(FormPrice::FIELD_PRICE)->getData();
         $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
         $priceTransfer = (new ZedProductPriceTransfer())

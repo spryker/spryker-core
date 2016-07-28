@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ProductFormGeneral extends AbstractSubForm
+class FormGeneral extends AbstractSubForm
 {
 
     const FIELD_NAME = 'name';

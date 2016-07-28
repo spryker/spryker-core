@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductFormAttributeVariant extends ProductFormAttributeAbstract
+class FormAttributeVariant extends FormAttributeAbstract
 {
 
     /**
