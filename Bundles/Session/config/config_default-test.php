@@ -1,6 +1,5 @@
 <?php
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Session\SessionConstants;
 
 $config[SessionConstants::YVES_SESSION_TIME_TO_LIVE] = SessionConstants::SESSION_LIFETIME_1_HOUR;
