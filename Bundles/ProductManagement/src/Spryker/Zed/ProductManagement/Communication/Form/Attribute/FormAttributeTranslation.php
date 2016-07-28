@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Attribute;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AttributeTranslationForm extends AbstractType
+class FormAttributeTranslation extends AbstractType
 {
 
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
@@ -48,7 +48,7 @@ class AttributeTranslationForm extends AbstractType
                 $submittedData = $form->getData();
 
                 if (isset($submittedData[self::FIELD_TRANSLATE_VALUES]) && $submittedData[self::FIELD_TRANSLATE_VALUES]) {
-                    return [Constraint::DEFAULT_GROUP, AttributeValueTranslationForm::GROUP_VALUE_TRANSLATIONS];
+                    return [Constraint::DEFAULT_GROUP, FormAttributeValueTranslation::GROUP_VALUE_TRANSLATIONS];
                 }
 
                 return [Constraint::DEFAULT_GROUP];
@@ -140,7 +140,7 @@ class AttributeTranslationForm extends AbstractType
     {
         $builder->add(self::FIELD_VALUE_TRANSLATIONS, 'collection', [
             'label' => 'Predefined value translations',
-            'type' => new AttributeValueTranslationForm(),
+            'type' => new FormAttributeValueTranslation(),
             'allow_add' => true,
             'allow_delete' => true,
             'delete_empty' => true,

@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Attribute;
 
+use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReadOnlyAttributeTranslationFormCollection extends AttributeTranslationFormCollection
+class FormReadOnlyAttribute extends AttributeForm
 {
 
     /**

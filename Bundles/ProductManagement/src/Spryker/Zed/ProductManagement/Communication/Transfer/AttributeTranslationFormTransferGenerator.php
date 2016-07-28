@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationForm;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeValueTranslationForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormAttributeTranslation;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormAttributeValueTranslation;
 use Symfony\Component\Form\FormInterface;
 
 class AttributeTranslationFormTransferGenerator implements AttributeTranslationFormTransferGeneratorInterface
@@ -50,8 +50,8 @@ class AttributeTranslationFormTransferGenerator implements AttributeTranslationF
     protected function setGeneralAttributeData(ProductManagementAttributeTransfer $attributeTransfer, array $firstTranslationFormData)
     {
         $attributeTransfer
-            ->setIdProductManagementAttribute($firstTranslationFormData[AttributeTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE])
-            ->setKey($firstTranslationFormData[AttributeTranslationForm::FIELD_KEY]);
+            ->setIdProductManagementAttribute($firstTranslationFormData[FormAttributeTranslation::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE])
+            ->setKey($firstTranslationFormData[FormAttributeTranslation::FIELD_KEY]);
 
         return $attributeTransfer;
     }
@@ -68,7 +68,7 @@ class AttributeTranslationFormTransferGenerator implements AttributeTranslationF
             $localizedKeyTransfer = new LocalizedProductManagementAttributeKeyTransfer();
             $localizedKeyTransfer
                 ->setLocaleName($locale)
-                ->setKeyTranslation($translateFormData[AttributeTranslationForm::FIELD_KEY_TRANSLATION]);
+                ->setKeyTranslation($translateFormData[FormAttributeTranslation::FIELD_KEY_TRANSLATION]);
 
             $attributeTransfer->addLocalizedKey($localizedKeyTransfer);
         }
@@ -85,13 +85,13 @@ class AttributeTranslationFormTransferGenerator implements AttributeTranslationF
      */
     protected function setAttributeValues(ProductManagementAttributeTransfer $attributeTransfer, array $firstTranslationFormData, array $translationFormData)
     {
-        foreach ($firstTranslationFormData[AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS] as $index => $valueTranslationData) {
+        foreach ($firstTranslationFormData[FormAttributeTranslation::FIELD_VALUE_TRANSLATIONS] as $index => $valueTranslationData) {
             $attributeValueTransfer = new ProductManagementAttributeValueTransfer();
             $attributeValueTransfer
-                ->setIdProductManagementAttributeValue($valueTranslationData[AttributeValueTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE])
-                ->setValue($valueTranslationData[AttributeValueTranslationForm::FIELD_VALUE]);
+                ->setIdProductManagementAttributeValue($valueTranslationData[FormAttributeValueTranslation::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE])
+                ->setValue($valueTranslationData[FormAttributeValueTranslation::FIELD_VALUE]);
 
-            if ($firstTranslationFormData[AttributeTranslationForm::FIELD_TRANSLATE_VALUES]) {
+            if ($firstTranslationFormData[FormAttributeTranslation::FIELD_TRANSLATE_VALUES]) {
                 $attributeValueTransfer = $this->setLocalizedAttributeValues($attributeValueTransfer, $translationFormData, $index);
             }
 
@@ -111,7 +111,7 @@ class AttributeTranslationFormTransferGenerator implements AttributeTranslationF
     protected function setLocalizedAttributeValues(ProductManagementAttributeValueTransfer $attributeValueTransfer, array $translationFormData, $index)
     {
         foreach ($translationFormData as $translateFormData) {
-            $localizedValueData = $translateFormData[AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS][$index];
+            $localizedValueData = $translateFormData[FormAttributeTranslation::FIELD_VALUE_TRANSLATIONS][$index];
 
             $attributeValueTranslationTransfer = new ProductManagementAttributeValueTranslationTransfer();
             $attributeValueTranslationTransfer->fromArray($localizedValueData, true);
