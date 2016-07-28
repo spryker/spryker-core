@@ -2,11 +2,13 @@
 {% set submit_title = 'Save' | trans %}
 {% set widget_title = 'Product Edit' | trans %}
 {% set widget_title = widget_title ~ ': ' ~ currentProduct.sku %}
+{% set variant_tpl = '@ProductManagement/Product/partials/variant-tab-editing.twig' %}
 
 {% block action %}
     {{ parent() }}
     {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
 {% endblock %}
+
 
 {% block footer_js %}
     {{ parent() }}

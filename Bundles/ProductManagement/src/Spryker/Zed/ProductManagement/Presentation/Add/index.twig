@@ -21,6 +21,9 @@
     {{ backActionButton('/product-management', 'List Products' | trans) }}
 {% endblock %}
 
+{% if variant_tpl is not defined %}
+{% set variant_tpl = '@ProductManagement/Product/partials/variant-tab-adding.twig' %}
+{% endif %}
 
 {% block checkbox_widget %}
     {% spaceless %}
@@ -68,7 +71,7 @@
                     </div>
 
                     <div id="tab_variants" class="tab-pane">
-                        {% include '@ProductManagement/Product/partials/variant-tab.twig' %}
+                        {% include variant_tpl %}
                     </div>
 
                     <div id="tab_price_and_stock" class="tab-pane">
