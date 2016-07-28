@@ -17,6 +17,8 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
 {
 
     /**
+     * @api
+     *
      * @param string $locale
      * @param string $number
      *
@@ -30,6 +32,8 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     }
 
     /**
+     * @api
+     *
      * @param string $locale
      * @param string $number
      *

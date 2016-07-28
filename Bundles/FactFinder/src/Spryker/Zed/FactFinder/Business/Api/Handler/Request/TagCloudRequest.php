@@ -12,7 +12,7 @@ use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
 class TagCloudRequest extends AbstractRequest implements RequestInterface
 {
-    
+
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_TAG_CLOUD;
 
     /**
@@ -24,14 +24,14 @@ class TagCloudRequest extends AbstractRequest implements RequestInterface
     {
         $tagCloudRequestTransfer = $quoteTransfer->getFactFinderTagCloudRequest();
 
-        // @todo @Artem : check do we need send request? 
+        // @todo @Artem : check do we need send request?
         // $request = mapper->map($searchRequestTransfer);
         $tagCloudAdapter = $this->ffConnector->createTagCloudAdapter();
         // @todo check
         $tagCloud = $tagCloudAdapter->getTagCloud();
 
         $this->logInfo($quoteTransfer, $tagCloudAdapter);
-        
+
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createTagCloudResponseConverter($tagCloudAdapter)

@@ -9,5 +9,4 @@ namespace Spryker\Zed\FactFinder\Business;
 
 interface FactFinderFacadeInterface
 {
-
 }

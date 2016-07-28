@@ -37,8 +37,8 @@ abstract class AbstractRequest implements RequestInterface
     public function __construct(
         FactFinderConnector $ffConnector,
         ConverterFactory $converterFactory
-    )
-    {
+    ) {
+
         $this->ffConnector = $ffConnector;
         $this->converterFactory = $converterFactory;
     }
@@ -52,8 +52,8 @@ abstract class AbstractRequest implements RequestInterface
     protected function logInfo(
         QuoteTransfer $quoteTransfer,
         AbstractAdapter $ffAdapter
-    )
-    {
+    ) {
+
         $context = [
             'transaction_type' => static::TRANSACTION_TYPE,
 //
@@ -71,5 +71,5 @@ abstract class AbstractRequest implements RequestInterface
 
         $this->getLogger()->info(static::TRANSACTION_TYPE, $context);
     }
-    
+
 }

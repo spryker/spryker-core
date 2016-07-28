@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class FactFinderFactory extends AbstractFactory
 {
+
     /**
      * @return \Spryker\Client\FactFinder\Zed\FactFinderStubInterface
      */

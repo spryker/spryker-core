@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\FactFinder\Business\Collector\File;
@@ -135,13 +135,14 @@ class FactFinderProductCollector extends StorageProductCollector
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterInterface $storeWriter
+     * @return void
      */
     protected function iterateFileName(FileWriterInterface $storeWriter)
     {
         $fileName = $storeWriter->getFileName();
         $fileInfo = new \SplFileInfo($fileName);
         $fileExtension = $fileInfo->getExtension();
-        preg_match('/(.*?)(\d*)\.'.$fileExtension.'$/', $fileName, $matches);
+        preg_match('/(.*?)(\d*)\.' . $fileExtension . '$/', $fileName, $matches);
 
         $iterate = (int)$matches[2] + 1;
         $newFileName = $matches[1] . $iterate . '.' . $fileExtension;

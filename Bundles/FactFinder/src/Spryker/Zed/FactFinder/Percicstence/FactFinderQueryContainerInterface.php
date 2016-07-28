@@ -11,6 +11,4 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface FactFinderQueryContainerInterface extends QueryContainerInterface
 {
-    
-
 }

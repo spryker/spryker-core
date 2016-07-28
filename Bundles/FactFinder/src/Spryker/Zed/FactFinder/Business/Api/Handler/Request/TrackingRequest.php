@@ -12,7 +12,7 @@ use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
 class TrackingRequest extends AbstractRequest implements RequestInterface
 {
-    
+
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SEARCH;
 
     /**
@@ -24,14 +24,14 @@ class TrackingRequest extends AbstractRequest implements RequestInterface
     {
         $trackingRequestTransfer = $quoteTransfer->getFactFinderTrackingRequest();
 
-        // @todo @Artem : check do we need send request? 
+        // @todo @Artem : check do we need send request?
         // $request = mapper->map($searchRequestTransfer);
         $trackingAdapter = $this->ffConnector->createTrackingAdapter();
         // @todo check
         $trackingAdapter->doTrackingFromRequest();
 
         $this->logInfo($quoteTransfer, $trackingAdapter);
-        
+
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createTrackingResponseConverter($trackingAdapter)

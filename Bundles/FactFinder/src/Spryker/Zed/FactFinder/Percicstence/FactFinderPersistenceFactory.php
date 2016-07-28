@@ -15,5 +15,4 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class FactFinderPersistenceFactory extends AbstractPersistenceFactory
 {
-
 }

@@ -20,7 +20,7 @@ class ConverterFactory
 
     /**
      * @param \FACTFinder\Adapter\Search $searchAdapter
-     * 
+     *
      * @return \Spryker\Zed\FactFinder\Business\Api\Converter\SearchResponseConverter
      */
     public function createSearchResponseConverter(FFSearchAdapter $searchAdapter)

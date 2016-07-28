@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator;
 
-
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class CsvNameGeneratorBuilder
@@ -23,4 +22,5 @@ class CsvNameGeneratorBuilder
     {
         return new CsvNameGenerator($type, $localeTransfer);
     }
+
 }

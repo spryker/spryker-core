@@ -12,7 +12,7 @@ use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
 class ProductCampaignRequest extends AbstractRequest implements RequestInterface
 {
-    
+
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_PRODUCT_CAMPAIGN;
 
     /**
@@ -24,14 +24,14 @@ class ProductCampaignRequest extends AbstractRequest implements RequestInterface
     {
         $productCampaignRequestTransfer = $quoteTransfer->getFactFinderProductCampaignRequest();
 
-        // @todo @Artem : check do we need send request? 
+        // @todo @Artem : check do we need send request?
         // $request = mapper->map($searchRequestTransfer);
         $productCampaignAdapter = $this->ffConnector->createProductCampaignAdapter();
         // @todo check
         $campaigns = $productCampaignAdapter->getCampaigns();
-        
+
         $this->logInfo($quoteTransfer, $productCampaignAdapter);
-        
+
         // convert to FactFinderSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createProductCampaignResponseConverter($productCampaignAdapter)

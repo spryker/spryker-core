@@ -7,7 +7,6 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Builder;
 
 use Generated\Shared\Transfer\FactFinderRequestTransfer;
-use Spryker\Zed\FactFinder\Business\Api\Constants;
 
 /**
  * @method \Spryker\Zed\FactFinder\Persistence\FactFinderQueryContainerInterface getQueryContainer()

@@ -12,7 +12,7 @@ use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
 class SearchRequest extends AbstractRequest implements RequestInterface
 {
-    
+
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_SEARCH;
 
     /**
@@ -24,7 +24,7 @@ class SearchRequest extends AbstractRequest implements RequestInterface
     {
         $searchRequestTransfer = $quoteTransfer->getFactFinderSearchRequest();
 
-        // @todo @Artem : check do we need send request? 
+        // @todo @Artem : check do we need send request?
         // $request = mapper->map($searchRequestTransfer);
 
         $searchAdapter = $this->ffConnector->createSearchAdapter();
@@ -64,7 +64,7 @@ class SearchRequest extends AbstractRequest implements RequestInterface
         $error = $searchAdapter->getError();
 
         $this->logInfo($quoteTransfer, $searchAdapter);
-        
+
         // convert to FactFinderSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createSearchResponseConverter($searchAdapter)

@@ -9,5 +9,4 @@ namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 abstract class BaseConverter implements ConverterInterface
 {
-    
 }

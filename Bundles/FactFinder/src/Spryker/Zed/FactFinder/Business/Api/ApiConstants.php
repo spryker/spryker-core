@@ -11,7 +11,7 @@ class ApiConstants
 {
 
     const REQUEST_FORMAT = 'json';
-    
+
     const TRANSACTION_TYPE_SEARCH = 'search';
     const TRANSACTION_TYPE_RECOMMENDATION = 'recommendation';
     const TRANSACTION_TYPE_SUGGEST = 'suggest';

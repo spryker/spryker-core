@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\FactFinder\Business\Api;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\FactFinder\Business\Api\Builder\BuilderFactory;
 use Spryker\Zed\FactFinder\Business\Api\Model\RequestModelFactory;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class ApiRequestFactory extends AbstractBusinessFactory
 {
@@ -35,9 +35,7 @@ class ApiRequestFactory extends AbstractBusinessFactory
      */
     public function createRequestModelFactory()
     {
-        $factory = (new RequestModelFactory())
-//            ->registerBuilder(ApiConstants::REQUEST_MODEL_PAYMENT_INIT, $this->createInitModel())
-        ;
+        $factory = (new RequestModelFactory());
         return $factory;
     }
 

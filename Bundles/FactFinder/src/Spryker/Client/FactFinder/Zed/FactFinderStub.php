@@ -40,8 +40,7 @@ class FactFinderStub implements FactFinderStubInterface
         $factFinderTransfer
             ->setType($type)
             ->setLocale($locale)
-            ->setNumber($number)
-        ;
+            ->setNumber($number);
 
         return $this->zedStub->call('/fact-finder/gateway/get-fact-finder-csv', $factFinderTransfer);
     }

@@ -12,7 +12,7 @@ use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 
 class RecommendationRequest extends AbstractRequest implements RequestInterface
 {
-    
+
     const TRANSACTION_TYPE = ApiConstants::TRANSACTION_TYPE_RECOMMENDATION;
 
     /**
@@ -24,14 +24,14 @@ class RecommendationRequest extends AbstractRequest implements RequestInterface
     {
         $recommendationRequestTransfer = $quoteTransfer->getFactFinderRecommendationRequest();
 
-        // @todo @Artem : check do we need send request? 
+        // @todo @Artem : check do we need send request?
         // $request = mapper->map($searchRequestTransfer);
         $recommendationAdapter = $this->ffConnector->createRecommendationAdapter();
         // @todo check
         $recommendationAdapter->getRawRecommendations();
 
         $this->logInfo($quoteTransfer, $recommendationAdapter);
-        
+
         // convert to FFSearchResponseTransfer
         $responseTransfer = $this->converterFactory
             ->createRecommendationResponseConverter($recommendationAdapter)

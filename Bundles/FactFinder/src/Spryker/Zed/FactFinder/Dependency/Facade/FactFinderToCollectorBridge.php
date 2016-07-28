@@ -5,71 +5,50 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\FactFinder\Business;
+namespace Spryker\Zed\FactFinder\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @method \Spryker\Zed\FactFinder\Business\FactFinderBusinessFactory getFactory()
- */
-class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterface
+class FactFinderToCollectorBridge implements FactFinderToCollectorInterface
 {
 
     /**
-     * Specification:
-     * - search request
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
+     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
-    public function search(QuoteTransfer $quoteTransfer)
+    protected $collectorFacade;
+
+    /**
+     * @param \Pyz\Zed\Collector\Business\CollectorFacadeInterface $collectorFacade
+     */
+    public function __construct($collectorFacade)
     {
-        $this->getFactory()
-            ->createSearchRequest()
-            ->request($quoteTransfer);
+        $this->collectorFacade = $collectorFacade;
     }
 
     /**
+     * Specification:
+     * - Composes filename for given collector type
+     *
      * @api
      *
-     * @param string $locale
      * @param string $type
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $number
      *
-     * @return mixed
+     * @return string
      */
-    public function getFactFinderCsv($locale, $type, $number = '')
+    public function getCsvFileName($type, LocaleTransfer $locale, $number = '')
     {
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName($locale);
-
-        $fileName = $this->getFactory()
-            ->getCollectorFacade()
-            ->getCsvFileName($type, $localeTransfer, $number);
-
-        $directory = $this->getFactory()
-            ->getFactFinderConfig()
-            ->getCsvDirectory();
-
-        return file_get_contents(
-            $directory . '/' . $fileName
-        );
+        $this->collectorFacade->getCsvFileName($type, $locale, $number);
     }
 
     /**
-     * @api
-     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
@@ -80,68 +59,59 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
      *
      * @return void
      */
-    public function runFactFinderCategoryCollector(
+    public function runFileCategoryCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
+        OutputInterface $output,
+        $collectorClass
     ) {
-
-        $collectorClass = $this->getFactory()
-            ->getFactFinderCategoryCollectorClassName();
-
-        $this->getFactory()->getCollectorFacade()
-            ->runFileCategoryCollector(
-                $baseQuery,
-                $localeTransfer,
-                $result,
-                $dataReader,
-                $dataWriter,
-                $touchUpdater,
-                $output,
-                $collectorClass
-            );
+        $this->collectorFacade->runFileCategoryCollector(
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output,
+            $collectorClass
+        );
     }
 
     /**
-     * @api
-     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param string $collectorClass
      *
      * @return void
      */
-    public function runFactFinderProductCollector(
+    public function runFileProductCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
-        OutputInterface $output
+        OutputInterface $output,
+        $collectorClass
     ) {
-
-        $collectorClass = $this->getFactory()
-            ->getFactFinderProductCollectorClassName();
-
-        $this->getFactory()->getCollectorFacade()
-            ->runFileProductCollector(
-                $baseQuery,
-                $localeTransfer,
-                $result,
-                $dataReader,
-                $dataWriter,
-                $touchUpdater,
-                $output,
-                $collectorClass
-            );
+        $this->collectorFacade->runFileProductCollector(
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output,
+            $collectorClass
+        );
     }
 
 }

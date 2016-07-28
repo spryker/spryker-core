@@ -17,7 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Business
  * @group CsvWriterAdapter
  */
-class CsvWriterAdapterTest extends \PHPUnit_Framework_TestCase
+class CsvAdapterTest extends \PHPUnit_Framework_TestCase
 {
 
     const TEST_DATA = [

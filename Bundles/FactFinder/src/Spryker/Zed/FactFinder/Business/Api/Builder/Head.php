@@ -20,7 +20,7 @@ class Head extends AbstractBuilder implements BuilderInterface
             'system-id' => $this->requestTransfer->getHead()->getSystemId(),
             'transaction-id' => $this->requestTransfer->getHead()->getTransactionId(),
         ];
-        
+
         return $return;
     }
 

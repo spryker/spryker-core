@@ -9,5 +9,4 @@ namespace Spryker\Zed\FactFinder\Business\Api\Mapper;
 
 abstract class BaseMapper implements MapperInterface
 {
-
 }

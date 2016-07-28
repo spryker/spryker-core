@@ -14,5 +14,4 @@ use Spryker\Yves\Kernel\AbstractFactory;
  */
 class FactFinderFactory extends AbstractFactory
 {
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\FactFinder\Business\Api\Adapter\Http;
 
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException;
-use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 use Spryker\Zed\FactFinder\Business\Exception\ApiHttpRequestException;
 
 class Guzzle extends AbstractHttpAdapter

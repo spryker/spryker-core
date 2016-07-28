@@ -11,6 +11,8 @@ interface FactFinderClientInterface
 {
 
     /**
+     * @api
+     *
      * @param string $locale
      * @param string $number
      *
@@ -19,6 +21,8 @@ interface FactFinderClientInterface
     public function getProductCsv($locale, $number = '');
 
     /**
+     * @api
+     *
      * @param string $locale
      * @param string $number
      *

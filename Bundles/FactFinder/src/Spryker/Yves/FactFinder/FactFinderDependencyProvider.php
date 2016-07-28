@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Container;
 
 class FactFinderDependencyProvider extends AbstractBundleDependencyProvider
 {
-    
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *

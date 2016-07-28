@@ -321,24 +321,24 @@ class FactFinderConnector
 
     protected function init()
     {
-        $this->dic['loggerClass'] = function($c) {
+        $this->dic['loggerClass'] = function ($c) {
             $loggerClass = FF::getClassName('Util\Log4PhpLogger');
             $loggerClass::configure($this->getLog4phpConfigXml());
             return $loggerClass;
         };
 
-        $this->dic['configuration'] = function($c) {
+        $this->dic['configuration'] = function ($c) {
             return FF::getInstance(
                 'Core\ManualConfiguration',
                 $this->factFinderConfig->getFFConfiguration()
             );
         };
 
-        $this->dic['request'] = $this->dic->factory(function($c) {
+        $this->dic['request'] = $this->dic->factory(function ($c) {
             return $c['requestFactory']->getRequest();
         });
 
-        $this->dic['requestFactory'] = function($c) {
+        $this->dic['requestFactory'] = function ($c) {
             return FF::getInstance(
                 'Core\Server\MultiCurlRequestFactory',
                 $c['loggerClass'],
@@ -347,7 +347,7 @@ class FactFinderConnector
             );
         };
 
-        $this->dic['clientUrlBuilder'] = function($c) {
+        $this->dic['clientUrlBuilder'] = function ($c) {
             return FF::getInstance(
                 'Core\Client\UrlBuilder',
                 $c['loggerClass'],
@@ -357,7 +357,7 @@ class FactFinderConnector
             );
         };
 
-        $this->dic['requestParser'] = function($c) {
+        $this->dic['requestParser'] = function ($c) {
             return FF::getInstance(
                 'Core\Client\RequestParser',
                 $c['loggerClass'],
@@ -366,10 +366,10 @@ class FactFinderConnector
             );
         };
 
-        $this->dic['encodingConverter'] = function($c) {
+        $this->dic['encodingConverter'] = function ($c) {
             if (extension_loaded('iconv'))
                 $type = 'Core\IConvEncodingConverter';
-            else if (function_exists('utf8_encode')
+            elseif (function_exists('utf8_encode')
                 && function_exists('utf8_decode'))
                 $type = 'Core\Utf8EncodingConverter';
             else

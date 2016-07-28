@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\FactFinder\Plugin\Provider;
 
-use Spryker\Shared\FactFinder\FactFinderConstants;
 use Pyz\Yves\Application\Plugin\Provider\AbstractServiceProvider;
 use Silex\Application;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\FactFinder\FactFinderConstants;
 use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
 
 class FactFinderSecurityServiceProvider extends AbstractServiceProvider

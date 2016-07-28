@@ -51,10 +51,8 @@ class FileExporter extends AbstractExporter
         FailedResultInterface $failedResultPrototype,
         BatchResultInterface $batchResultPrototype,
         TouchUpdaterInterface $touchUpdater,
-        $collectorPlugins = null,
+        $collectorPlugins,
         CsvNameGeneratorBuilder $csvNameGeneratorBuilder
-
-
     ) {
         parent::__construct(
             $queryContainer,

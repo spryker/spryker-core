@@ -32,4 +32,5 @@ class FactFinderDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
+
 }

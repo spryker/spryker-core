@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\FactFinder\Communication\Plugin\Request;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 

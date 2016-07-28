@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator;
 
-
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class CsvNameGenerator implements NameGeneratorInterface
@@ -42,4 +41,5 @@ class CsvNameGenerator implements NameGeneratorInterface
     {
         return $this->type . '_' . $this->localeTransfer->getLocaleName() . $number . '.csv';
     }
+
 }

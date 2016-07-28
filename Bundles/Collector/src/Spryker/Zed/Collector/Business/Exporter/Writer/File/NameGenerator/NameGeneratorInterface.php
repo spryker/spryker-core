@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\File\NameGenerator;
 
-
 interface NameGeneratorInterface
 {
 
@@ -15,4 +14,5 @@ interface NameGeneratorInterface
      * @return string
      */
     public function generateFileName();
+
 }

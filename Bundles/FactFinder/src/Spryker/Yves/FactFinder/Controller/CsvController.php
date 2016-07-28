@@ -1,16 +1,15 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\FactFinder\Controller;
 
 use Spryker\Yves\Application\Controller\AbstractController;
-use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use \Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Client\FactFinder\FactFinderClient getClient()

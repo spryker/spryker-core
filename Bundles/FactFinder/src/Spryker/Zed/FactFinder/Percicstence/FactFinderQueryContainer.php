@@ -14,7 +14,4 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class FactFinderQueryContainer extends AbstractQueryContainer implements FactFinderQueryContainerInterface
 {
-
-
-
 }

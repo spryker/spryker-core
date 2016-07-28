@@ -8,12 +8,9 @@
 namespace Spryker\Zed\FactFinder\Business;
 
 use Spryker\Shared\Library\Reader\Csv\CsvReader;
-use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\FactFinder\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Zed\FactFinder\Business\Api\Handler\Request\SearchRequest;
-use Spryker\Zed\FactFinder\Business\Collector\File\FactFinderCategoryCollector;
-use Spryker\Zed\FactFinder\Business\Collector\File\FactFinderProductCollector;
 use Spryker\Zed\FactFinder\FactFinderDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -80,7 +77,7 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     /**
      * @return string
      */
-    public function createFactFinderCategoryCollectorClassName()
+    public function getFactFinderCategoryCollectorClassName()
     {
         return '\Spryker\Zed\FactFinder\Business\Collector\File\FactFinderCategoryCollector';
     }
@@ -88,7 +85,7 @@ class FactFinderBusinessFactory extends AbstractBusinessFactory
     /**
      * @return string
      */
-    public function createFactFinderProductCollectorClassName()
+    public function getFactFinderProductCollectorClassName()
     {
         return '\Spryker\Zed\FactFinder\Business\Collector\File\FactFinderProductCollector';
     }
