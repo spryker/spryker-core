@@ -1,0 +1,75 @@
+<div class="panel-body">
+    <h3>Manage product variants</h3>
+    <p>For the creation of product variants, start by selecting attributes and value that define the difference between your variations.</p>
+    <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
+
+    <div class="well">
+        <div class="row">
+            {% for input in form.attribute_variant %}
+                <div class='col-md-10 col-sm-12 col-lg-6'>
+                    <div class='row vertical-align attribute_metadata_row col-lg-12'>
+                        <div class='pull-right'><nobr>{{ form_row(input.name) }} {{ form_row(input.value) }} {{ form_row(input.value_hidden_id) }}</nobr></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <br/>
+        <br/>
+        <button type="button" class="btn btn-w-m btn-default">Preview</button>
+    </div>
+</div>
+
+<div class="panel-body">
+    <div class="table-responsive">
+        <table
+                id="productMatrixTable"
+                class="table table-striped table-bordered table-hover gui-table-data"
+                data-page-size="4"
+                data-order='[["0", "asc"]]'
+                data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
+                data-state-save="false"
+        >
+            <thead>
+            <tr>
+                <th>Sku</th>
+                <th class="center">Price</th>
+                <th class="center">Stock</th>
+                <th class="no-sort">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in matrix %}
+                <tr class="gradeX">
+                    {# --------------------------------------- SKU --------------------------------------- #}
+                    <td>{{ product.sku }}</td>
+                    {# --------------------------------------- ATTRIBUTES --------------------------------------- #}
+
+
+                    {# --------------------------------------- PRICE --------------------------------------- #}
+                    {% if product.price is defined and product.price.price is defined %}
+                        <td class="center">{{ product.price.price|number_format }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+
+                    {# --------------------------------------- STOCK --------------------------------------- #}
+                    {% if product.stock > 0 %}
+                        <td class="center">{{ product.stock }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                    <td class="center no-sort">[activate]</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Sku</th>
+                <th class="center">Price</th>
+                <th class="center">Stock</th>
+                <th class="no-sort">Action</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

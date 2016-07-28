@@ -1,0 +1,22 @@
+<div class="panel-body">
+    <h3>Lorem ipsum sku name</h3>
+    <p>Lorem ipsum locales, lorem sku and description</p>
+</div>
+
+<div class="panel-body">
+    <div class="well">
+        {{ form_row(form.sku) }}
+
+        <div class="tabs-container">
+            <div class="tabs-top">
+                {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
+                formPrefix: 'general',
+                localeCollection: localeCollection,
+                activeLocale: currentLocale,
+                form: form
+                } %}
+                {% endembed %}
+            </div>
+        </div>
+    </div>
+</div>
