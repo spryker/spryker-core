@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FormSeo extends AbstractSubForm
+class SeoForm extends AbstractSubForm
 {
 
     const FIELD_META_TITLE = 'meta_title';

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormAttributeTranslationCollection;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -106,7 +106,7 @@ class AttributesController extends AbstractController
             ->handleRequest($request);
 
         if ($attributeTranslateFormCollection->isValid()) {
-            $translationForms = $attributeTranslateFormCollection->get(FormAttributeTranslationCollection::FIELD_TRANSLATIONS);
+            $translationForms = $attributeTranslateFormCollection->get(AttributeTranslationCollectionForm::FIELD_TRANSLATIONS);
 
             $productManagementAttributeTransfer = $this->getFactory()
                 ->createAttributeTranslationFormTransferGenerator()

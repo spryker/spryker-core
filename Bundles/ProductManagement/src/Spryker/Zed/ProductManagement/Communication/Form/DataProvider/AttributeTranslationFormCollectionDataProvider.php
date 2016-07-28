@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormAttributeTranslation;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormAttributeTranslationCollection;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -56,7 +56,7 @@ class AttributeTranslationFormCollectionDataProvider
     public function getData($idProductManagementAttribute)
     {
         return [
-            FormAttributeTranslationCollection::FIELD_TRANSLATIONS => $this->getTranslationFields($idProductManagementAttribute),
+            AttributeTranslationCollectionForm::FIELD_TRANSLATIONS => $this->getTranslationFields($idProductManagementAttribute),
         ];
     }
 
@@ -86,11 +86,11 @@ class AttributeTranslationFormCollectionDataProvider
                 ->setLocaleName($localeName);
 
             $fields[$localeName] = [
-                FormAttributeTranslation::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $idProductManagementAttribute,
-                FormAttributeTranslation::FIELD_KEY => $attributeKey,
-                FormAttributeTranslation::FIELD_KEY_TRANSLATION => $this->getAttributeKeyTranslation($attributeKey, $localeTransfer),
-                FormAttributeTranslation::FIELD_TRANSLATE_VALUES => $this->getTranslateValues($idProductManagementAttribute),
-                FormAttributeTranslation::FIELD_VALUE_TRANSLATIONS => $this->getValueTranslations($idProductManagementAttribute, $idLocale),
+                AttributeTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $idProductManagementAttribute,
+                AttributeTranslationForm::FIELD_KEY => $attributeKey,
+                AttributeTranslationForm::FIELD_KEY_TRANSLATION => $this->getAttributeKeyTranslation($attributeKey, $localeTransfer),
+                AttributeTranslationForm::FIELD_TRANSLATE_VALUES => $this->getTranslateValues($idProductManagementAttribute),
+                AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS => $this->getValueTranslations($idProductManagementAttribute, $idLocale),
             ];
         }
 

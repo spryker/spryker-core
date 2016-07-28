@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormAttributeTranslationCollection;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
@@ -18,8 +18,8 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAdd
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormReadOnlyAttribute;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\FormReadOnlyAttributeTranslationCollection;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
@@ -252,7 +252,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createReadOnlyAttributeFormType()
     {
-        return new FormReadOnlyAttribute($this->getQueryContainer());
+        return new ReadOnlyAttributeForm($this->getQueryContainer());
     }
 
     /**
@@ -294,7 +294,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAttributeTranslationFormCollectionType()
     {
-        return new FormAttributeTranslationCollection();
+        return new AttributeTranslationCollectionForm();
     }
 
     /**
@@ -302,7 +302,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createReadOnlyAttributeTranslationFormCollectionType()
     {
-        return new FormReadOnlyAttributeTranslationCollection();
+        return new ReadOnlyAttributeTranslationCollectionForm();
     }
 
     /**

@@ -11,7 +11,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class FormGeneral extends AbstractSubForm
+class GeneralForm extends AbstractSubForm
 {
 
     const FIELD_NAME = 'name';

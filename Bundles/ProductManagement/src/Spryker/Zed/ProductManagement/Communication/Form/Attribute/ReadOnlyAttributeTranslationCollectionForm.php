@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Attribute;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FormReadOnlyAttributeTranslationCollection extends FormAttributeTranslationCollection
+class ReadOnlyAttributeTranslationCollectionForm extends AttributeTranslationCollectionForm
 {
 
     /**

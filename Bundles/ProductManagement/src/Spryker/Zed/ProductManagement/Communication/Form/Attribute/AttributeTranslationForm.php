@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class FormAttributeTranslation extends AbstractType
+class AttributeTranslationForm extends AbstractType
 {
 
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
@@ -48,7 +48,7 @@ class FormAttributeTranslation extends AbstractType
                 $submittedData = $form->getData();
 
                 if (isset($submittedData[self::FIELD_TRANSLATE_VALUES]) && $submittedData[self::FIELD_TRANSLATE_VALUES]) {
-                    return [Constraint::DEFAULT_GROUP, FormAttributeValueTranslation::GROUP_VALUE_TRANSLATIONS];
+                    return [Constraint::DEFAULT_GROUP, AttributeValueTranslationForm::GROUP_VALUE_TRANSLATIONS];
                 }
 
                 return [Constraint::DEFAULT_GROUP];
@@ -140,7 +140,7 @@ class FormAttributeTranslation extends AbstractType
     {
         $builder->add(self::FIELD_VALUE_TRANSLATIONS, 'collection', [
             'label' => 'Predefined value translations',
-            'type' => new FormAttributeValueTranslation(),
+            'type' => new AttributeValueTranslationForm(),
             'allow_add' => true,
             'allow_delete' => true,
             'delete_empty' => true,

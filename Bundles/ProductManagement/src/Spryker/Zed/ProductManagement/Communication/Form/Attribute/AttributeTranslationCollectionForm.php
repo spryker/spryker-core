@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Attribute;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FormAttributeTranslationCollection extends AbstractType
+class AttributeTranslationCollectionForm extends AbstractType
 {
 
     const FIELD_TRANSLATIONS = 'translations';
@@ -43,7 +43,7 @@ class FormAttributeTranslationCollection extends AbstractType
     protected function addTranslationsFields(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_TRANSLATIONS, 'collection', [
-            'type' => new FormAttributeTranslation(),
+            'type' => new AttributeTranslationForm(),
             'options' => [],
         ]);
 

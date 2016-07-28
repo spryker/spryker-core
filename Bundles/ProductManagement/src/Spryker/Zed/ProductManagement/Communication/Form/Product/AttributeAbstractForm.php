@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class FormAttributeAbstract extends AbstractSubForm
+class AttributeAbstractForm extends AbstractSubForm
 {
 
     const FIELD_NAME = 'name';
@@ -118,7 +118,7 @@ class FormAttributeAbstract extends AbstractSubForm
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $options[FormAttributeAbstract::OPTION_ATTRIBUTE];
+        $attributes = $options[AttributeAbstractForm::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $label = $name;

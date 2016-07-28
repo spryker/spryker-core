@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class FormPrice extends AbstractType
+class PriceForm extends AbstractType
 {
 
     const FIELD_PRICE = 'price';
@@ -45,7 +45,7 @@ class FormPrice extends AbstractType
      */
     public function getName()
     {
-        return 'FormPrice';
+        return 'PriceForm';
     }
 
     /**

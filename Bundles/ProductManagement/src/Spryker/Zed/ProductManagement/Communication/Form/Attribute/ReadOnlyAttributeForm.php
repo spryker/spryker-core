@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Attribute;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FormReadOnlyAttribute extends AttributeForm
+class ReadOnlyAttributeForm extends AttributeForm
 {
 
     /**

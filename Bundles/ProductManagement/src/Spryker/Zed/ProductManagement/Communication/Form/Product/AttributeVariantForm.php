@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FormAttributeVariant extends FormAttributeAbstract
+class AttributeVariantForm extends AttributeAbstractForm
 {
 
     /**
