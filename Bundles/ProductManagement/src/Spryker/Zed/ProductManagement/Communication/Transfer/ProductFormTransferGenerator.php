@@ -281,7 +281,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         $values = [];
         foreach ($valueEntities as $entity) {
-            $values[] = $entity->getValue();
+            $values[$entity->getValue()] = $entity->getValue();
         }
 
         if (empty($values)) {

@@ -52,6 +52,13 @@ class MatrixController extends AbstractController
             $localizedAttributes[$locale] = Json::decode($localizedJson, true) ?: [];
         }
 
+        $attributes = [
+            'color' => ['red' => 'red', 'blue' => 'blue'],
+            'flavour' => ['sweet' => 'sweet'],
+            'size' => [40 => 40, 41 => 41, 42 => 42, 43 => 43],
+        ];
+        print_r($attributes);
+
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku($sku);
         $productAbstractTransfer->setAttributes([]);

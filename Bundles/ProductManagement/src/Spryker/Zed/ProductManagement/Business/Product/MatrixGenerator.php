@@ -138,6 +138,7 @@ class MatrixGenerator
      */
     public function generateTokens(array $tokenAttributeCollection)
     {
+        print_r($tokenAttributeCollection);
         $attributeCount = count($tokenAttributeCollection);
         $current = array_pad([], $attributeCount, 0);
         $changeIndex = 0;
@@ -163,6 +164,25 @@ class MatrixGenerator
     }
 
     /**
+     * $attributeCollection = Array
+     *  (
+     *     [color] => Array
+     *      (
+     *          [red] => Red
+     *          [blue] => Blue
+     *      )
+     *     [flavour] => Array
+     *      (
+     *          [sweet] => Cakes
+     *      )
+     *     [size] => Array
+     *      (
+     *          [40] => 40
+     *          [41] => 41
+     *          [42] => 42
+     *          )
+     *      )
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *

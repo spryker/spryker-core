@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeTranslationFormCollection;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
@@ -352,6 +353,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new LocaleProvider(
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator
+     */
+    public function createProductMatrixGenerator()
+    {
+        return new MatrixGenerator();
     }
 
 }
