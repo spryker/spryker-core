@@ -1,4 +1,4 @@
-namespace: DummyPaymet
+namespace: DummyPayment
 actor: Tester
 paths:
     tests: tests

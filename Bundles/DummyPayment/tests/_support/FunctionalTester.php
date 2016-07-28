@@ -1,6 +1,6 @@
 <?php
 
-namespace DummyPaymet;
+namespace DummyPayment;
 
 /**
  * Inherited Methods

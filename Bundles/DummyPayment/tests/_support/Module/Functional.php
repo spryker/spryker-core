@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace DummyPaymet\Module;
+namespace DummyPayment\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;
