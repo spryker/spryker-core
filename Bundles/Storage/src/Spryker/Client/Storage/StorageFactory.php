@@ -17,6 +17,8 @@ use Spryker\Shared\Storage\StorageConstants;
 class StorageFactory extends AbstractFactory
 {
 
+    const DEFAULT_REDIS_DATABASE = 0;
+
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -70,7 +72,7 @@ class StorageFactory extends AbstractFactory
             'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL)),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(SessionConstants::YVES_SESSION_REDIS_PORT)),
             'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(SessionConstants::YVES_SESSION_REDIS_HOST)),
-            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, 0),
+            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
         ];
 
         // TODO: Remove elseif. Only for BC.
