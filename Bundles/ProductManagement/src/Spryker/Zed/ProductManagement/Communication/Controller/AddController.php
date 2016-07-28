@@ -77,7 +77,7 @@ class AddController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
-            'matrix' => [],
+            'concreteProductCollection' => [],
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
         ]);
