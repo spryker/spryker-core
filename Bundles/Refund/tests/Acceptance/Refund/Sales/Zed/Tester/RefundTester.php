@@ -18,20 +18,16 @@ class RefundTester extends AcceptanceTester
      *
      * @return void
      */
-    public function moveItemUntilItIsRefunded($idSalesOrderItem)
+    public function refundItem($idSalesOrderItem)
     {
         $i = $this;
 
-        $triggerStatemachineButton = '//td/a[@data-id-item=' . $idSalesOrderItem . ']';
-        $stateSelector = '//td[@data-qa-item-current-state=' . $idSalesOrderItem . ']';
+        $i->setItemState($idSalesOrderItem, SalesDetailPage::STATE_RETURNED);
+        $i->reloadPage();
+        $i->click(SalesDetailPage::BUTTON_REFUND);
 
-        $i->click($triggerStatemachineButton);
-        $i->click($triggerStatemachineButton);
-        $i->click($triggerStatemachineButton);
-        $i->click($triggerStatemachineButton);
-        $i->click($triggerStatemachineButton);
-
-        $i->assertSame('refunded', $i->grabTextFrom($stateSelector));
+        $currentStateSelector = SalesDetailPage::getCurrentStateSelector($idSalesOrderItem);
+        $i->assertSame(SalesDetailPage::STATE_REFUNDED, $i->grabTextFrom($currentStateSelector));
     }
 
     /**
@@ -42,8 +38,7 @@ class RefundTester extends AcceptanceTester
     public function seeNumberOfRefunds($expectedNumberOfRefundRows)
     {
         $i = $this;
-        $refundRowSelector = '//table[@data-qa="refund-list"]/tbody/tr[@data-qa="refund-row"]';
-        $rows = $i->grabMultiple($refundRowSelector);
+        $rows = $i->grabMultiple(SalesDetailPage::SELECTOR_REFUND_ROW);
 
         $this->assertEquals($expectedNumberOfRefundRows, count($rows));
     }
@@ -51,7 +46,7 @@ class RefundTester extends AcceptanceTester
     /**
      * @return int
      */
-    public function getTotalRefundedAmount()
+    public function grabTotalRefundedAmount()
     {
         $i = $this;
         $refundTotals = $i->grabMultiple(SalesDetailPage::REFUND_TOTAL_AMOUNT_SELECTOR, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);

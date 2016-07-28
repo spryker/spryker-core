@@ -12,8 +12,13 @@ use Acceptance\Sales\Order\Zed\PageObject\SalesDetailPage as BaseSalesDetailPage
 class SalesDetailPage extends BaseSalesDetailPage
 {
 
-    const REFUND_ROW_SELECTOR = '//table[@data-qa="refund-list"]/tbody/tr[@data-qa="refund-row"]';
-    const REFUND_TOTAL_AMOUNT_SELECTOR = self::REFUND_ROW_SELECTOR . '/td[@data-qa="refund-amount-raw"]';
+    const SELECTOR_REFUND_ROW = '//table[@data-qa="refund-list"]/tbody/tr[@data-qa="refund-row"]';
+    const REFUND_TOTAL_AMOUNT_SELECTOR = self::SELECTOR_REFUND_ROW . '/td[@data-qa="refund-amount-raw"]';
+
+    const BUTTON_REFUND = 'refund';
+    const STATE_RETURNED = 'returned';
+    const STATE_REFUNDED = 'refunded';
 
     const ATTRIBUTE_REFUND_TOTAL_RAW = 'data-qa-raw';
+
 }

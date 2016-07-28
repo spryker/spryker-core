@@ -9,6 +9,8 @@ namespace Oms\Module;
 
 use Codeception\Module;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Symfony\Component\Process\Process;
 
@@ -40,6 +42,24 @@ class Oms extends Module
         $dateTime->sub($timeout);
         $omsEventTimeout->setTimeout($dateTime);
         $omsEventTimeout->save();
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param string $stateName
+     *
+     * @return void
+     */
+    public function setItemState($idSalesOrderItem, $stateName)
+    {
+        $salesOrderItemQuery = new SpySalesOrderItemQuery();
+        $salesOrderItemEntity = $salesOrderItemQuery->findOneByIdSalesOrderItem($idSalesOrderItem);
+
+        $orderItemStateQuery = new SpyOmsOrderItemStateQuery();
+        $orderItemStateEntity = $orderItemStateQuery->findOneByName($stateName);
+
+        $salesOrderItemEntity->setState($orderItemStateEntity);
+        $salesOrderItemEntity->save();
     }
 
     /**

@@ -25,7 +25,7 @@ class RefundCest
      *
      * @return void
      */
-    public function testRefundOneOfTwoItemsShouldNotIncludeExpenses(RefundTester $i)
+    public function testRefundOneItemOfOrderRefundedAmountShouldBeSameAsItemGrandTotal(RefundTester $i)
     {
         $idSalesOrder = $i->createOrder();
         $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
@@ -35,13 +35,40 @@ class RefundCest
         $salesDetailPageUrl = SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder);
         $i->amOnPage($salesDetailPageUrl);
 
-        $i->moveItemUntilItIsRefunded($idSalesOrderItemA);
+        $i->refundItem($idSalesOrderItemA);
         $i->seeNumberOfRefunds(1);
 
         $itemTotalElementSelector = SalesDetailPage::getItemTotalElementSelector($idSalesOrderItemA);
         $expectedItemRefundAmount = (int)$i->grabAttributeFrom($itemTotalElementSelector, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);
 
-        $i->assertSame($expectedItemRefundAmount, $i->getTotalRefundedAmount());
+        $i->assertSame($expectedItemRefundAmount, $i->grabTotalRefundedAmount());
+    }
+
+    /**
+     * @group single
+     * @param \Acceptance\Refund\Sales\Zed\Tester\RefundTester $i
+     *
+     * @return void
+     */
+    public function testRefundOneItemOfOrderWithDiscountRefundedAmountShouldBeSameAsItemGrandTotal(RefundTester $i)
+    {
+        $idSalesOrder = $i->createOrder();
+        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
+        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
+
+        $i->createDiscountForSalesOrderItem($idSalesOrderItemA);
+        $i->triggerEventForNewOrderItems([$idSalesOrderItemA, $idSalesOrderItemB]);
+
+        $salesDetailPageUrl = SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder);
+        $i->amOnPage($salesDetailPageUrl);
+
+        $i->refundItem($idSalesOrderItemA);
+        $i->seeNumberOfRefunds(1);
+
+        $itemTotalElementSelector = SalesDetailPage::getItemTotalElementSelector($idSalesOrderItemA);
+        $expectedItemRefundAmount = (int)$i->grabAttributeFrom($itemTotalElementSelector, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);
+
+        $i->assertSame($expectedItemRefundAmount, $i->grabTotalRefundedAmount());
     }
 
     /**
@@ -49,7 +76,7 @@ class RefundCest
      *
      * @return void
      */
-    public function testRefundTwoOfTwoItemsShouldIncludeExpenses(RefundTester $i)
+    public function testWhenRefundAllItemsOfOrderRefundedAmountShouldBeSameAsGrandTotal(RefundTester $i)
     {
         $idSalesOrder = $i->createOrder();
         $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
@@ -60,18 +87,15 @@ class RefundCest
         $salesDetailPageUrl = SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder);
         $i->amOnPage($salesDetailPageUrl);
 
-        $i->moveItemUntilItIsRefunded($idSalesOrderItemA);
-        $i->moveItemUntilItIsRefunded($idSalesOrderItemB);
+        $i->refundItem($idSalesOrderItemA);
+        $i->refundItem($idSalesOrderItemB);
         $i->seeNumberOfRefunds(2);
 
-        $itemTotalElementSelector = SalesDetailPage::getItemTotalElementSelector($idSalesOrderItemA);
-        $expectedItemRefundAmount = (int)$i->grabAttributeFrom($itemTotalElementSelector, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);
+        $grandTotal = (int)$i->grabAttributeFrom(SalesDetailPage::SELECTOR_GRAND_TOTAL, SalesDetailPage::ATTRIBUTE_GRAND_TOTAL_RAW);
 
-        $itemTotalElementSelector = SalesDetailPage::getItemTotalElementSelector($idSalesOrderItemA);
-        $expectedItemRefundAmount += (int)$i->grabAttributeFrom($itemTotalElementSelector, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);
-
-        $i->assertSame($expectedItemRefundAmount, $i->getTotalRefundedAmount());
+        $i->assertSame($grandTotal, $i->grabTotalRefundedAmount());
     }
+
 
 
 

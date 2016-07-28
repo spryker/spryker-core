@@ -13,6 +13,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -180,6 +181,30 @@ class Sales extends Module
         $salesOrderItemEntity->setFkOmsOrderProcess($omsOrderProcessEntity->getIdOmsOrderProcess());
 
         return $salesOrderItemEntity;
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     * @param array $discount
+     *
+     * @return void
+     */
+    public function createDiscountForSalesOrderItem($idSalesOrderItem, array $discount = [])
+    {
+        $salesOrderDiscountEntity = new SpySalesDiscount();
+        $salesOrderDiscountEntity->fromArray($discount);
+        $salesOrderDiscountEntity->setFkSalesOrderItem($idSalesOrderItem);
+        if ($salesOrderDiscountEntity->getName() === null) {
+            $salesOrderDiscountEntity->setName('discount name');
+        }
+        if ($salesOrderDiscountEntity->getDisplayName() === null) {
+            $salesOrderDiscountEntity->setDisplayName('discount display name');
+        }
+        if ($salesOrderDiscountEntity->getAmount() === null) {
+            $salesOrderDiscountEntity->setAmount(33);
+        }
+
+        $salesOrderDiscountEntity->save();
     }
 
     /**
