@@ -14,7 +14,7 @@ class RefundTester extends AcceptanceTester
 {
 
     /**
-     * @param $idSalesOrderItem
+     * @param int $idSalesOrderItem
      *
      * @return void
      */

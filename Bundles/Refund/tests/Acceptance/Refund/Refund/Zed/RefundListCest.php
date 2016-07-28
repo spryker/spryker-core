@@ -9,6 +9,12 @@ namespace Acceptance\Refund\Refund\Zed;
 
 use Acceptance\Refund\Refund\Zed\Tester\RefundListTester;
 
+/**
+ * @group Acceptance
+ * @group Refund
+ * @group Zed
+ * @group RefundList
+ */
 class RefundListCest
 {
 
