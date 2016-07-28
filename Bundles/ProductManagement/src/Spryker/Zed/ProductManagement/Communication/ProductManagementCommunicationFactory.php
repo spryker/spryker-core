@@ -338,6 +338,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductFormTransferGenerator()
     {
         return new ProductFormTransferGenerator(
+            $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->createLocaleProvider()
         );

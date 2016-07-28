@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -49,14 +50,19 @@ class AddController extends AbstractController
                     ->createProductFormTransferGenerator()
                     ->buildProductAbstractTransfer($form);
 
-                //$attributeTransferCollection = $this->convertAttributeTransferFromData($data, $attributeCollection);
-                //$matrixGenerator = new MatrixGenerator();
-                //$concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeCollection, $attributeValues);
-                //ddd($productAbstractTransfer->toArray(), $attributeValues, $attributeCollection, $form->getData(), $_POST);
+
+                $data = $form->getData();
+
+                $attributeValues = $this->getFactory()
+                    ->createProductFormTransferGenerator()
+                    ->generateVariantAttributeArrayFromData($data, $attributeCollection);
+
+                $matrixGenerator = new MatrixGenerator();
+                $concreteProductCollection = $matrixGenerator->generate($productAbstractTransfer, $attributeValues);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
-                    ->addProduct($productAbstractTransfer, []);
+                    ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
                 $this->addSuccessMessage('The product was added successfully.');
 

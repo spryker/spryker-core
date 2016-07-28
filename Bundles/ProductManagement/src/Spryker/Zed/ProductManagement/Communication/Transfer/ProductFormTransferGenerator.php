@@ -10,19 +10,29 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAttributeVariant;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormGeneral;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormPrice;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormSeo;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
+use \Exception;
 
 class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterface
 {
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     */
+    protected $productManagementQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
@@ -35,10 +45,16 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     protected $localeFacade;
 
     /**
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      */
-    public function __construct(ProductManagementToLocaleInterface $localeFacade, LocaleProvider $localeProvider)
-    {
+    public function __construct(
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
+        ProductManagementToLocaleInterface $localeFacade,
+        LocaleProvider $localeProvider
+    ) {
+        $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->localeProvider = $localeProvider;
     }
@@ -51,7 +67,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     public function buildProductAbstractTransfer(FormInterface $form)
     {
         $formData = $form->getData();
-        $attributeValues = $this->convertAttributeArrayFromData($formData);
+        $attributeValues = $this->generateAbstractAttributeArrayFromData($formData);
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $productAbstractTransfer = $this->createProductAbstractTransfer(
@@ -197,7 +213,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      *
      * @return array
      */
-    protected function convertAttributeArrayFromData(array $data)
+    public function generateAbstractAttributeArrayFromData(array $data)
     {
         $attributes = [];
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
@@ -210,6 +226,69 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         }
 
         return $attributes;
+    }
+
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeTransferCollection
+     *
+     * @return array
+     */
+    public function generateVariantAttributeArrayFromData(array $data, array $attributeTransferCollection)
+    {
+        $result = [];
+        foreach ($data[ProductFormAdd::ATTRIBUTE_VARIANT] as $type => $values) {
+            $attributeValues = $this->getVariantValues($values, $attributeTransferCollection[$type]);
+            if ($attributeValues) {
+                $result[$type] = $attributeValues;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $variantData
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
+     *
+     * @throws \Exception
+     *
+     * @return array|null
+     */
+    protected function getVariantValues(array $variantData, ProductManagementAttributeTransfer $attributeTransfer)
+    {
+        $hasValue = $variantData[ProductFormAttributeVariant::FIELD_NAME];
+        $hiddenValueId = (int)$variantData[ProductFormAttributeVariant::FIELD_VALUE_HIDDEN_ID];
+        $valueIds = (array)$variantData[ProductFormAttributeVariant::FIELD_VALUE];
+
+        if (!$hasValue) {
+            return null;
+        }
+
+        if ($hiddenValueId > 0) {
+            $valueIds = [$hiddenValueId];
+        }
+
+        if (empty($valueIds)) {
+            return null;
+        }
+
+        $valueEntities = $this->productManagementQueryContainer
+            ->queryProductManagementAttributeValue()
+            ->filterByIdProductManagementAttributeValue($valueIds, Criteria::IN)
+            ->find();
+
+        $values = [];
+        foreach ($valueEntities as $entity) {
+            $values[] = $entity->getValue();
+        }
+
+        if (empty($values)) {
+            throw new Exception('Undefined values for product management attribute: ' . $attributeTransfer->getKey());
+        }
+
+        return $values;
     }
 
     /**
