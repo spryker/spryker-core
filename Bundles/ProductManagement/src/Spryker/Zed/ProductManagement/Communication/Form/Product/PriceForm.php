@@ -87,6 +87,9 @@ class PriceForm extends AbstractType
         $builder->add(self::FIELD_PRICE, 'text', [
             'label' => 'Price',
             'required' => true,
+            'attr' => [
+                'class' => 'touchspin2'
+            ],
             'constraints' => [
                 new NotBlank(),
             ],

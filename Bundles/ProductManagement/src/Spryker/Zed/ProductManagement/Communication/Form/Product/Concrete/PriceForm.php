@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm as AbstractPriceForm;
 
 class PriceForm extends AbstractPriceForm
