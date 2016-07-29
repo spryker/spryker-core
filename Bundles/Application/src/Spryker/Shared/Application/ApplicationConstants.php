@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Application;
 
+use Spryker\Shared\Session\SessionConstants;
+
 interface ApplicationConstants
 {
 
@@ -35,18 +37,34 @@ interface ApplicationConstants
     const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
     const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
     const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
+    /**
+     * @deprecated Use Session bundle SessionConstants::YVES_SESSION_SAVE_HANDLER instead.
+     */
     const YVES_SESSION_SAVE_HANDLER = 'YVES_SESSION_SAVE_HANDLER';
+    /**
+     * @deprecated Use Session bundle SessionConstants::YVES_SESSION_COOKIE_NAME instead.
+     */
     const YVES_SESSION_NAME = 'YVES_SESSION_NAME';
+    /**
+     * @deprecated Use Session bundle SessionConstants::YVES_SESSION_COOKIE_DOMAIN instead.
+     */
     const YVES_SESSION_COOKIE_DOMAIN = 'YVES_SESSION_COOKIE_DOMAIN';
-    const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
-    const YVES_SHOW_EXCEPTION_STACK_TRACE = 'YVES_SHOW_EXCEPTION_STACK_TRACE';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constants instead.
+     */
+    const YVES_COOKIE_DOMAIN = 'YVES_COOKIE_DOMAIN';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constants instead.
+     */
+    const YVES_COOKIE_SECURE = 'YVES_COOKIE_SECURE';
 
     const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
     const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
     const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
     const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
-    const YVES_COOKIE_DOMAIN = 'YVES_COOKIE_DOMAIN';
-    const YVES_COOKIE_SECURE = 'YVES_COOKIE_SECURE';
+
+    const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
+    const YVES_SHOW_EXCEPTION_STACK_TRACE = 'YVES_SHOW_EXCEPTION_STACK_TRACE';
 
     const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
     const TRANSFER_PASSWORD = 'TRANSFER_PASSWORD';
@@ -59,23 +77,79 @@ interface ApplicationConstants
     const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
     const CORE_NAMESPACES = 'CORE_NAMESPACES';
 
-    const YVES_STORAGE_SESSION_TIME_TO_LIVE = 'YVES_STORAGE_SESSION_TIME_TO_LIVE';
-    const YVES_STORAGE_SESSION_REDIS_PROTOCOL = 'YVES_STORAGE_SESSION_REDIS_PROTOCOL';
-    const YVES_STORAGE_SESSION_REDIS_PASSWORD = 'YVES_STORAGE_SESSION_REDIS_PASSWORD';
-    const YVES_STORAGE_SESSION_REDIS_HOST = 'YVES_STORAGE_SESSION_REDIS_HOST';
-    const YVES_STORAGE_SESSION_REDIS_PORT = 'YVES_STORAGE_SESSION_REDIS_PORT';
-    const YVES_STORAGE_SESSION_FILE_PATH = 'YVES_STORAGE_SESSION_FILE_PATH';
-    const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = 'YVES_STORAGE_SESSION_PERSISTENT_CONNECTION';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_REDIS_PROTOCOL = SessionConstants::YVES_SESSION_REDIS_PROTOCOL;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_REDIS_PASSWORD = SessionConstants::YVES_SESSION_REDIS_PASSWORD;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_REDIS_HOST = SessionConstants::YVES_SESSION_REDIS_HOST;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_REDIS_PORT = SessionConstants::YVES_SESSION_REDIS_PORT;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_REDIS_DATABASE = SessionConstants::YVES_SESSION_REDIS_DATABASE;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_FILE_PATH = SessionConstants::YVES_SESSION_FILE_PATH;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const YVES_STORAGE_SESSION_TIME_TO_LIVE = SessionConstants::YVES_SESSION_TIME_TO_LIVE;
 
-    const ZED_STORAGE_SESSION_TIME_TO_LIVE = 'ZED_STORAGE_SESSION_TIME_TO_LIVE';
-    const ZED_STORAGE_SESSION_COOKIE_NAME = 'ZED_STORAGE_SESSION_COOKIE_NAME';
-    const ZED_STORAGE_SESSION_COOKIE_SECURE = 'ZED_COOKIE_SECURE';
-    const ZED_STORAGE_SESSION_REDIS_PROTOCOL = 'ZED_STORAGE_SESSION_REDIS_PROTOCOL';
-    const ZED_STORAGE_SESSION_REDIS_HOST = 'ZED_STORAGE_SESSION_REDIS_HOST';
-    const ZED_STORAGE_SESSION_REDIS_PORT = 'ZED_STORAGE_SESSION_REDIS_PORT';
-    const ZED_STORAGE_SESSION_REDIS_PASSWORD = 'ZED_STORAGE_SESSION_REDIS_PASSWORD';
-    const ZED_STORAGE_SESSION_FILE_PATH = 'ZED_STORAGE_SESSION_FILE_PATH';
-    const ZED_STORAGE_SESSION_PERSISTENT_CONNECTION = 'ZED_STORAGE_SESSION_PERSISTENT_CONNECTION';
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_REDIS_PROTOCOL = SessionConstants::ZED_SESSION_REDIS_PROTOCOL;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_REDIS_HOST = SessionConstants::ZED_SESSION_REDIS_HOST;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_REDIS_PORT = SessionConstants::ZED_SESSION_REDIS_PORT;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_REDIS_PASSWORD = SessionConstants::ZED_SESSION_REDIS_PASSWORD;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_REDIS_DATABASE = SessionConstants::ZED_SESSION_REDIS_DATABASE;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_FILE_PATH = SessionConstants::ZED_SESSION_FILE_PATH;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_PERSISTENT_CONNECTION = SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_TIME_TO_LIVE = SessionConstants::ZED_SESSION_TIME_TO_LIVE;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_COOKIE_NAME = SessionConstants::ZED_SESSION_COOKIE_NAME;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
+    const ZED_STORAGE_SESSION_COOKIE_SECURE = SessionConstants::ZED_SESSION_COOKIE_SECURE;
 
     const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
     const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
@@ -88,7 +162,7 @@ interface ApplicationConstants
     const JENKINS_DIRECTORY = 'JENKINS_DIRECTORY';
 
     /**
-     * Sessions
+     * @deprecated Use Session bundle SessionConstants::ZED_SESSION_SAVE_HANDLER instead.
      */
     const ZED_SESSION_SAVE_HANDLER = 'ZED_SESSION_SAVE_HANDLER';
 
