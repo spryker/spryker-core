@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderItemSplitController extends AbstractController
 {
 
-    const SALES_ORDER_DETAIL_URL = '/sales/details?id-sales-order=%d';
+    const SALES_ORDER_DETAIL_URL = '/sales/detail?id-sales-order=%d';
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
     /**
@@ -36,10 +36,16 @@ class OrderItemSplitController extends AbstractController
         $formData = $orderItemForm->getData();
 
         if ($orderItemForm->isValid()) {
-            $this->getFacade()->splitSalesOrderItem(
+            $itemSplitResponseTransfer = $this->getFacade()->splitSalesOrderItem(
                 $formData[OrderItemSplitForm::FIELD_ID_ORDER_ITEM],
                 $formData[OrderItemSplitForm::FIELD_QUANTITY]
             );
+
+            if (!$itemSplitResponseTransfer->getSuccess()) {
+                foreach ($itemSplitResponseTransfer->getValidationMessages() as $message) {
+                    $this->addErrorMessage($message);
+                }
+            }
         }
 
         return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $formData[OrderItemSplitForm::FIELD_ID_ORDER]));

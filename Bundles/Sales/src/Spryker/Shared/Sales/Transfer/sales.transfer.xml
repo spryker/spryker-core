@@ -90,7 +90,6 @@
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
         <property name="fkOmsOrderItemState" type="int" />
-        <property name="fkRefund" type="int" />
         <property name="name" type="string" />
         <property name="process" type="string" />
         <property name="sku" type="string" />
@@ -102,14 +101,12 @@
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="variety" type="string" />
         <property name="state" type="ItemState" />
-        <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
     </transfer>
 
     <transfer name="Expense">
-        <property name="refundableAmount" type="int"/>
-        <property name="canceledAmount" type="int"/>
+        <property name="unitGrossPrice" type="int" />
     </transfer>
 
     <transfer name="TaxSet">

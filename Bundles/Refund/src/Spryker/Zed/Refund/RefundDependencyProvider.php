@@ -7,25 +7,25 @@
 
 namespace Spryker\Zed\Refund;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Shared\Library\Context;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToPayoneBridge;
+use Spryker\Zed\Refund\Communication\Plugin\RefundableExpenseAmountCalculatorPlugin;
+use Spryker\Zed\Refund\Communication\Plugin\RefundableItemAmountCalculatorPlugin;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesSplitBridge;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const QUERY_CONTAINER_REFUND = 'QUERY_CONTAINER_REFUND';
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    const FACADE_SALES_AGGREGATOR = 'sales aggregator facade';
+    const QUERY_CONTAINER_SALES = 'sales query container';
+    const PLUGIN_ITEM_REFUND_CALCULATOR = 'item refund calculator plugin';
+    const PLUGIN_EXPENSE_REFUND_CALCULATOR = 'expense refund calculator plugin';
 
-    const FACADE_OMS = 'FACADE_OMS';
-    const FACADE_PAYONE = 'payone facade';
-    const FACADE_SALES_AGGREGATOR  = 'FACADE_SALES_AGGREGATOR';
-    const FACADE_SALES_SPLIT = 'FACADE_SALES_SPLIT';
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
+    const CURRENCY_MANAGER = 'currency manager';
+    const DATE_FORMATTER = 'date formatter';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,25 +34,10 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
-            return new RefundToOmsBridge($container->getLocator()->oms()->facade());
-        };
-
-        $container[static::FACADE_PAYONE] = function (Container $container) {
-            return new RefundToPayoneBridge($container->getLocator()->payone()->facade());
-        };
-
-        $container[static::QUERY_CONTAINER_REFUND] = function (Container $container) {
-            return $container->getLocator()->refund()->queryContainer();
-        };
-
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->queryContainer();
-        };
-
-        $container[self::FACADE_SALES_SPLIT] = function (Container $container) {
-            return new RefundToSalesSplitBridge($container->getLocator()->salesSplit()->facade());
-        };
+        $container = $this->addItemRefundCalculatorPlugin($container);
+        $container = $this->addExpenseRefundCalculatorPlugin($container);
+        $container = $this->addSalesAggregatorFacade($container);
+        $container = $this->addSalesQueryContainer($container);
 
         return $container;
     }
@@ -64,20 +49,91 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_REFUND] = function (Container $container) {
-            return $container->getLocator()->refund()->queryContainer();
+        $container = $this->addCurrencyManager($container);
+        $container = $this->addDateFormatter($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addItemRefundCalculatorPlugin(Container $container)
+    {
+        $container[self::PLUGIN_ITEM_REFUND_CALCULATOR] = function () {
+            return new RefundableItemAmountCalculatorPlugin();
         };
 
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->queryContainer();
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addExpenseRefundCalculatorPlugin(Container $container)
+    {
+        $container[self::PLUGIN_EXPENSE_REFUND_CALCULATOR] = function () {
+            return new RefundableExpenseAmountCalculatorPlugin();
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesAggregatorFacade(Container $container)
+    {
         $container[self::FACADE_SALES_AGGREGATOR] = function (Container $container) {
             return new RefundToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
         };
 
-        $container[self::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyManager(Container $container)
+    {
+        $container[self::CURRENCY_MANAGER] = function () {
+            return CurrencyManager::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDateFormatter(Container $container)
+    {
+        $container[self::DATE_FORMATTER] = function () {
+            return new DateFormatter(Context::getInstance(Context::CONTEXT_ZED));
         };
 
         return $container;

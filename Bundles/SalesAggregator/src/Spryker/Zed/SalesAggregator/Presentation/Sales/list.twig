@@ -5,7 +5,7 @@
 
             {% block widget_content %}
 
-                <table class="footable table table-striped toggle-arrow-tiny">
+                <table class="footable table table-striped toggle-arrow-tiny" data-qa="totals-list">
                     <tbody>
                     {% for orderItem in order.items %}
                         <tr>
@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
-                        <td class="text-right">{{ order.totals.grandTotal|currency }}</td>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal|currency }}</td>
                         <td></td>
                     </tr>
                     </tbody>
