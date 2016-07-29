@@ -37,7 +37,7 @@ class StorageFacadeTest extends Test
      */
     protected function skipIfCircleCi()
     {
-        if (getenv('CIRCLECI')) {
+        if (getenv('CIRCLECI') || getenv('TRAVIS')) {
             $this->markTestSkipped('Circle ci not set up properly');
         }
     }
