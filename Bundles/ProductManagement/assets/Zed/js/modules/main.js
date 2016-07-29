@@ -138,7 +138,7 @@ $(document).ready(function() {
             minLength: 0,
             source: function(request, response) {
                 $.ajax({
-                    url: 'http://zed.de.spryker.dev/product-management/attributes/suggest/',
+                    url: 'http://zed.de.spryker.dev/product-management/attribute/suggest/',
                     dataType: "json",
                     data: {
                         q: request.term,
