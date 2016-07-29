@@ -16,12 +16,12 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTrans
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductVariantFormEditDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeTranslationCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductVariantFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
@@ -70,7 +70,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductVariantFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductVariantFormEdit($this->createLocaleProvider());
+        $formType = new ProductConcreteFormEdit($this->createLocaleProvider());
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
@@ -116,13 +116,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductVariantFormEditDataProvider
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider
      */
     public function createProductVariantFormEditDataProvider()
     {
         $currentLocale = $this->getLocaleFacade()->getCurrentLocale();
 
-        return new ProductVariantFormEditDataProvider(
+        return new ProductConcreteFormEditDataProvider(
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getPriceFacade(),

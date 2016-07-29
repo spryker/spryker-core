@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as PriceConcreteForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class ProductVariantFormEdit extends ProductFormAdd
+class ProductConcreteFormEdit extends ProductFormAdd
 {
 
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -20,7 +24,7 @@ class ProductVariantFormEdit extends ProductFormAdd
      */
     public function getName()
     {
-        return 'ProductVariantFormEdit';
+        return 'ProductConcreteFormEdit';
     }
 
     /**
@@ -78,6 +82,36 @@ class ProductVariantFormEdit extends ProductFormAdd
     {
         $builder
             ->add(self::FIELD_ID_PRODUCT_CONCRETE, 'hidden', []);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::PRICE_AND_STOCK, new PriceConcreteForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
+                'label' => false,
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($dataToValidate, ExecutionContextInterface $context) {
+                            if ((int)$dataToValidate[PriceForm::FIELD_PRICE] <= 0) {
+                                $context->addViolation('Please Price information under Price & Taxes');
+                            }
+
+                            if ((int)$dataToValidate[PriceForm::FIELD_TAX_RATE] <= 0) {
+                                $context->addViolation('Please Tax information under Price & Taxes');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
+                ])]
+            ]);
 
         return $this;
     }

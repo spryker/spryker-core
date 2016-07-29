@@ -16,7 +16,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 
-class ProductVariantFormEditDataProvider extends AbstractProductFormDataProvider
+class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
 {
 
     /**
