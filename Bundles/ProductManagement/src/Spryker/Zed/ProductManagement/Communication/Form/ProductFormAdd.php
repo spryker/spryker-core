@@ -90,10 +90,7 @@ class ProductFormAdd extends AbstractType
             'cascade_validation' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) use ($validationGroups) {
-                return [
-                    self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
-                    self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
-                ];
+                return $validationGroups;
             },
             'compound' => true,
         ]);

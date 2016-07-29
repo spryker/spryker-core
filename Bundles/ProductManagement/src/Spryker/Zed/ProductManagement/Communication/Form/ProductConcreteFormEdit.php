@@ -101,11 +101,11 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
                             if ((int)$dataToValidate[PriceForm::FIELD_PRICE] <= 0) {
-                                $context->addViolation('Please Price information under Price & Taxes');
+                                $context->addViolation('Please enter Price information under Price & Stock');
                             }
 
-                            if ((int)$dataToValidate[PriceForm::FIELD_TAX_RATE] <= 0) {
-                                $context->addViolation('Please Tax information under Price & Taxes');
+                            if ((int)$dataToValidate[PriceForm::FIELD_STOCK] <= 0) {
+                                $context->addViolation('Please enter Stock information under Price & Stock');
                             }
                         },
                     ],
