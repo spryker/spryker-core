@@ -29,9 +29,11 @@ class SearchRequest extends AbstractRequest implements RequestInterface
 
         $searchAdapter = $this->ffConnector->createSearchAdapter();
         // @todo check
+        $searchAdapter->setQuery('test');
+//        $searchAdapter->setSid($_SERVER)
 
-        $error = $searchAdapter->getError();
         $status = $searchAdapter->getStatus();
+        $error = $searchAdapter->getError();
 
         $campaigns = $searchAdapter->getCampaigns();
         if ($campaigns->hasRedirect()) {
