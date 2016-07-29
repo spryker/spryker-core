@@ -30,7 +30,7 @@ class Persistence implements PersistenceInterface
     protected $persistedStates;
 
     /**
-     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainer
+     * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainer
      */
     protected $stateMachineQueryContainer;
 
