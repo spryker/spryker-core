@@ -60,7 +60,7 @@ class CodeStyleSniffer
      */
     public function checkCodeStyle($bundle, array $options = [])
     {
-        $path = $this->resolvePath($bundle);
+        $path = $this->resolvePath($bundle, $options['path']);
 
         if (!is_dir($path)) {
             $message = 'This path does not exist';
@@ -68,7 +68,7 @@ class CodeStyleSniffer
                 $message = 'This bundle does not exist';
             }
 
-            throw new \ErrorException($message);
+            throw new \ErrorException($message . ': ' . $path);
         }
 
         $defaults = [
@@ -93,10 +93,11 @@ class CodeStyleSniffer
 
     /**
      * @param string $bundle
+     * @param string|null $path
      *
      * @return string
      */
-    protected function resolvePath($bundle)
+    protected function resolvePath($bundle, $path = null)
     {
         if ($bundle) {
             if ($bundle === self::BUNDLE_ALL) {
@@ -108,7 +109,9 @@ class CodeStyleSniffer
             return $this->getPathToBundle($bundle);
         }
 
-        return $this->applicationRoot;
+        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        return $this->applicationRoot . $path;
     }
 
     /**
