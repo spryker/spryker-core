@@ -11,6 +11,12 @@
     <h3>Stock</h3>
     <p>Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.</p>
     <div class="well">
-        {{ form_row(form.price_and_stock.stock) }}
+        {% for inputCollection in form.price_and_stock %}
+            {{ form_row(inputCollection.id_stock_product) }}
+            {{ form_row(inputCollection.fk_stock) }}
+
+            {{ form_row(inputCollection.name) }}
+            {{ form_row(inputCollection.quantity) }}
+        {% endfor %}
     </div>
 </div>

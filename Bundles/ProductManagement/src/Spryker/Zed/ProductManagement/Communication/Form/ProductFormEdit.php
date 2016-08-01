@@ -33,7 +33,7 @@ class ProductFormEdit extends ProductFormAdd
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
-            ->addPriceForm($builder, $options[self::TAX_SET])
+            ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
             ->addSeoLocalizedForms($builder, $options);
     }
 

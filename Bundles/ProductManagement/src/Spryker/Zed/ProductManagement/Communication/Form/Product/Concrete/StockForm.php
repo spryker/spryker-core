@@ -14,7 +14,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class StockForm extends AbstractType
 {
 
-    const FIELD_STOCK = 'stock';
+    const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
+    const FIELD_HIDDEN_FK_STOCK = 'fk_stock';
+
+    const FIELD_NAME = 'name';
+    const FIELD_QUANTITY = 'quantity';
+    const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+
 
     /**
      * @return string
@@ -33,7 +39,11 @@ class StockForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addStockField($builder, $options);
+            ->addStockIdHiddenField($builder, $options)
+            ->addProductStockIdHiddenField($builder, $options)
+            ->addNameField($builder, $options)
+            ->addQuantityField($builder, $options)
+        ;
     }
 
     /**
@@ -41,10 +51,53 @@ class StockForm extends AbstractType
      *
      * @return $this
      */
-    protected function addStockField(FormBuilderInterface $builder, array $options)
+    protected function addStockIdHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_STOCK, 'text', [
-            'label' => 'Stock',
+        $builder->add(self::FIELD_HIDDEN_FK_STOCK, 'hidden', []);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductStockIdHiddenField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_HIDDEN_STOCK_PRODUCT_ID, 'hidden', []);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNameField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_NAME, 'text', [
+            'label' => 'Stock Name',
+            'required' => true,
+            'read_only' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_QUANTITY, 'text', [
+            'label' => 'Quantity',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

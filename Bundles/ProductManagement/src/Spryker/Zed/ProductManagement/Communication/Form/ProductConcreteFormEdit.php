@@ -42,7 +42,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
-            ->addPriceForm($builder, $options[self::TAX_SET])
+            ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
             ->addStockForm($builder);
     }
 
@@ -97,7 +97,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_TAX, new ConcretePriceForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
+            ->add(self::PRICE_AND_TAX, new ConcretePriceForm($options), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -123,12 +123,13 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addStockForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, new StockForm($options, self::VALIDATION_GROUP_PRICE_AND_STOCK), [
+            ->add(self::PRICE_AND_STOCK, 'collection', [
+                'type' => new StockForm(),
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            if ((int)$dataToValidate[StockForm::FIELD_STOCK] <= 0) {
+                            if ((int)$dataToValidate[StockForm::FIELD_QUANTITY] <= 0) {
                                 $context->addViolation('Please enter Stock information under Price & Stock');
                             }
                         },

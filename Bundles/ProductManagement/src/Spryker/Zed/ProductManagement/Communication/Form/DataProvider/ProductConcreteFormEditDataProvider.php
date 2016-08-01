@@ -30,9 +30,9 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     {
         $data = parent::getDefaultFormFields($idProductAbstract);
 
-        $data[ProductFormAdd::PRICE_AND_STOCK] = [
+        $data[ProductFormAdd::PRICE_AND_STOCK][] = [
             ConcretePriceForm::FIELD_PRICE => 0,
-            StockForm::FIELD_STOCK => 0,
+            StockForm::FIELD_QUANTITY => 0,
         ];
 
         unset($data[ProductFormAdd::PRICE_AND_TAX]);
@@ -108,7 +108,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $stockTransfer = $productTransfer->getStock();
         if ($stockTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_STOCK][StockForm::FIELD_STOCK] = $stockTransfer->getQuantity();
+            $formData[ProductFormAdd::PRICE_AND_STOCK][StockForm::FIELD_NAME] = $stockTransfer->getQuantity();
+            $formData[ProductFormAdd::PRICE_AND_STOCK][StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
         }
 
         return $formData;

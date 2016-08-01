@@ -20,23 +20,16 @@ class PriceForm extends AbstractType
     const FIELD_TAX_RATE = 'tax_rate';
 
     /**
-     * @var string
-     */
-    protected $validationGroup;
-
-    /**
      * @var array
      */
     protected $taxCollection;
 
     /**
      * @param array $taxCollection
-     * @param string $validationGroup
      */
-    public function __construct(array $taxCollection, $validationGroup)
+    public function __construct(array $taxCollection)
     {
         $this->taxCollection = $taxCollection;
-        $this->validationGroup = $validationGroup;
     }
 
     /**

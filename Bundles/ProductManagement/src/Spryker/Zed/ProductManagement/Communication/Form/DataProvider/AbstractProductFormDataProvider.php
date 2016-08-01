@@ -118,8 +118,11 @@ class AbstractProductFormDataProvider
         $formOptions[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
         $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
 
-        $formOptions[ProductFormAdd::TAX_SET] = $this->taxCollection;
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->currentLocale->getIdLocale();
+        $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
+
+        s($formOptions);
+        ob_flush();
 
         return $formOptions;
     }

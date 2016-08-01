@@ -354,7 +354,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductStockTransfer(FormInterface $form, $idProduct)
     {
-        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(StockForm::FIELD_STOCK)->getData();
+        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(StockForm::FIELD_QUANTITY)->getData();
         $sku = $form->get(ProductFormAdd::FIELD_SKU);
 
         $stockTransfer = (new StockProductTransfer())

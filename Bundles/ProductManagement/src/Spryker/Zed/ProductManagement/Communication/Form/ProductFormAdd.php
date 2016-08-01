@@ -45,6 +45,8 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
+    const OPTION_TAX_RATES = 'option_tax_rates';
+
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
@@ -75,10 +77,10 @@ class ProductFormAdd extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setRequired(self::TAX_SET);
         $resolver->setRequired(self::ID_LOCALE);
         $resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
         $resolver->setRequired(self::ATTRIBUTE_VARIANT);
+        $resolver->setRequired(self::OPTION_TAX_RATES);
 
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
@@ -114,7 +116,7 @@ class ProductFormAdd extends AbstractType
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
             ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
-            ->addPriceForm($builder, $options[self::TAX_SET])
+            ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
             ->addSeoLocalizedForms($builder, $options);
     }
 
@@ -331,7 +333,7 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_TAX, new PriceForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
+            ->add(self::PRICE_AND_TAX, new PriceForm($options), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
