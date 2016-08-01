@@ -103,7 +103,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     {
         $priceTransfer = $this->priceFacade->getProductConcretePrice($productTransfer->getIdProductConcrete());
         if ($priceTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_STOCK][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
+            $formData[ProductFormAdd::PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }
 
         $stockTransfer = $productTransfer->getStock();

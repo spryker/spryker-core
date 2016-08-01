@@ -105,10 +105,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
                             if ((int)$dataToValidate[PriceForm::FIELD_PRICE] <= 0) {
                                 $context->addViolation('Please enter Price information under Price & Taxes');
                             }
-
-                            if ((int)$dataToValidate[PriceForm::FIELD_TAX_RATE] <= 0) {
-                                $context->addViolation('Please enter Tax information under Price & Taxes');
-                            }
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]

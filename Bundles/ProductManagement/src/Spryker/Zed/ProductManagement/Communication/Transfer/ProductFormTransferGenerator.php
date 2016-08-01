@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
@@ -337,7 +338,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductConcretePriceTransfer(FormInterface $form, $idProduct)
     {
-        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ConcretePriceForm::FIELD_PRICE)->getData();
+        $price = $form->get(ProductFormAdd::PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
 
         $priceTransfer = (new ZedProductPriceTransfer())
             ->setIdProduct($idProduct)
@@ -353,7 +354,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductStockTransfer(FormInterface $form, $idProduct)
     {
-        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ConcretePriceForm::FIELD_PRICE)->getData();
+        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(StockForm::FIELD_STOCK)->getData();
         $sku = $form->get(ProductFormAdd::FIELD_SKU);
 
         $stockTransfer = (new StockProductTransfer())
