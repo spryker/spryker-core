@@ -156,9 +156,8 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $priceTransfer = $this->buildProductConcretePriceTransfer($form, $productConcreteTransfer->getIdProductConcrete());
         $productConcreteTransfer->setPrice($priceTransfer);
 
-        $stockTransfer = $this->buildProductStockTransfer($form, $productConcreteTransfer->getIdProductConcrete());
-        sd($stockTransfer);
-        $productConcreteTransfer->setStock($stockTransfer);
+        $stockCollection = $this->buildProductStockCollectionTransfer($form);
+        $productConcreteTransfer->setStock(new \ArrayObject($stockCollection));
 
         return $productConcreteTransfer;
     }
@@ -351,20 +350,26 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function buildProductStockTransfer(FormInterface $form, $idProduct)
+    public function buildProductStockCollectionTransfer(FormInterface $form)
     {
-        die('stock build');
-        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(StockForm::FIELD_QUANTITY)->getData();
-        $sku = $form->get(ProductFormAdd::FIELD_SKU);
+        $result = [];
+        $sku = $form->get(ProductFormAdd::FIELD_SKU)->getData();
 
-        $stockTransfer = (new StockProductTransfer())
-            ->setIdStockProduct($idProduct)
-            ->setSku($sku)
-            ->setQuantity($stock);
+        foreach ($form->get(ProductFormAdd::PRICE_AND_STOCK) as $stockForm) {
+            $stockData = $stockForm->getData();
+            $type = $stockForm->get(StockForm::FIELD_TYPE)->getData();
 
-        return $stockTransfer;
+            $stockTransfer = (new StockProductTransfer())
+                ->fromArray($stockData, true)
+                ->setSku($sku)
+                ->setStockType($type);
+
+            $result[] = $stockTransfer;
+        }
+
+        return $result;
     }
 
 }

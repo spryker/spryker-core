@@ -31,8 +31,12 @@
                 {% endif %}
 
                 {# --------------------------------------- STOCK --------------------------------------- #}
-                {% if product.stock > 0 %}
-                    <td class="center">{{ product.stock }}</td>
+                {% if product.stock|length > 0 %}
+                    <td class="center">
+                        {% for stock in product.stock %}
+                            {{ stock.stockType }} : {{ stock.quantity|number_format }} <br />
+                        {% endfor %}
+                    </td>
                 {% else %}
                     <td>-</td>
                 {% endif %}

@@ -48,4 +48,14 @@ class ProductManagementToStockBridge implements ProductManagementToStockInterfac
         return $this->stockFacade->updateStockProduct($stockProductTransfer);
     }
 
+    /**
+     * @param string $sku
+     * @param string $stockType
+     *
+     * @return bool
+     */
+    public function hasStockProduct($sku, $stockType)
+    {
+        return $this->stockFacade->hasStockProduct($sku, $stockType);
+    }
 }

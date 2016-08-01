@@ -27,4 +27,12 @@ interface ProductManagementToStockInterface
      */
     public function updateStockProduct(StockProductTransfer $stockProductTransfer);
 
+    /**
+     * @param string $sku
+     * @param string $stockType
+     *
+     * @return bool
+     */
+    public function hasStockProduct($sku, $stockType);
+
 }

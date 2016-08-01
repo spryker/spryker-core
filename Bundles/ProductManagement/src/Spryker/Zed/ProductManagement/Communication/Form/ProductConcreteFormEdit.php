@@ -129,8 +129,10 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            if ((int)$dataToValidate[StockForm::FIELD_QUANTITY] <= 0) {
-                                $context->addViolation('Please enter Stock information under Price & Stock');
+                            foreach ($dataToValidate as $data) {
+                                if ((int)$data[StockForm::FIELD_QUANTITY] <= 0) {
+                                    $context->addViolation('Please enter Stock information under Price & Stock');
+                                }
                             }
                         },
                     ],

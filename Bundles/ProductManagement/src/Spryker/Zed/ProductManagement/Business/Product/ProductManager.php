@@ -498,17 +498,14 @@ class ProductManager implements ProductManagerInterface
                 $this->priceFacade->persistConcreteProductPrice($priceTransfer);
             }
 
-            /* @var StockProductTransfer $stockTransfer */
-            $stockTransfer = $productConcreteTransfer->getStock();
-            sd($stockTransfer);
-            $stockEntity = $this->stockQueryContainer
-                ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
-                ->findOne();
-
-            if (!$stockEntity) {
-                //$this->stockFacade->createStockProduct($stockTransfer);
-            } else {
-                //$this->stockFacade->updateStockProduct($stockTransfer);
+            /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
+            $stockCollection = $productConcreteTransfer->getStock();
+            foreach ($stockCollection as $stockTransfer) {
+                if (!$this->stockFacade->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
+                    $this->stockFacade->createStockProduct($stockTransfer);
+                } else {
+                    $this->stockFacade->updateStockProduct($stockTransfer);
+                }
             }
 
             $this->productQueryContainer->getConnection()->commit();
