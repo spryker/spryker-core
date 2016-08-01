@@ -6,7 +6,6 @@
         <column name="fk_sales_order" required="true" type="INTEGER"/>
 
         <column name="amount" required="true" type="INTEGER"/>
-        <column name="adjustment_fee" type="INTEGER"/>
         <column name="comment" type="VARCHAR"/>
 
         <foreign-key name="spy_refund-fk_sales_order" foreignTable="spy_sales_order">

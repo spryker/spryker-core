@@ -26,7 +26,7 @@ class RefundToSalesAggregatorBridge implements RefundToSalesAggregatorInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalsByIdSalesOrder($idSalesOrder)
     {

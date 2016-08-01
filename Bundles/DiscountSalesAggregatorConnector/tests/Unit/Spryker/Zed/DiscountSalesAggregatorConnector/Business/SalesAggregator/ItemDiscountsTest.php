@@ -40,7 +40,6 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     public function testItemDiscountsWhenDiscountAmountIsBiggerThanItemAmountShouldNotApplyBiggerThatItemAmount()
     {
         $discountCollection = $this->createDiscountCollection();
-
         $discountCollection->get(0)->setAmount(1000);
 
         $itemsDiscountsAggregator = $this->createItemDiscountsAggregator($discountCollection);
@@ -51,6 +50,21 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemTransfer = $orderTransfer->getItems()[0];
         $this->assertSame(0, $itemTransfer->getUnitGrossPriceWithDiscounts());
         $this->assertSame(0, $itemTransfer->getSumGrossPriceWithDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAggregateShouldSubtractCalculatedDiscountAmountFromItemRefundableAmount()
+    {
+        $discountCollection = $this->createDiscountCollection();
+        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator($discountCollection);
+        $orderTransfer = $this->createOrderTransfer();
+
+        $itemsDiscountsAggregator->aggregate($orderTransfer);
+
+        $itemCalculatedRefundableAmount = $orderTransfer->getItems()[0]->getRefundableAmount();
+        $this->assertEquals(900, $itemCalculatedRefundableAmount);
     }
 
     /**
@@ -65,6 +79,8 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(1);
         $itemTransfer->setIdSalesOrderItem(1);
+        $itemTransfer->setRefundableAmount(1000);
+
         $orderTransfer->addItem($itemTransfer);
 
         $expenseTransfer = new ExpenseTransfer();

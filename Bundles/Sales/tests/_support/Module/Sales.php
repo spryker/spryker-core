@@ -13,11 +13,14 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Shared\Shipment\ShipmentConstants;
 
 class Sales extends Module
 {
@@ -37,7 +40,19 @@ class Sales extends Module
 
         $salesOrderEntity->save();
 
+        $this->addExpenses($salesOrderEntity);
+
         return $salesOrderEntity->getIdSalesOrder();
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addExpenses(SpySalesOrder $salesOrderEntity)
+    {
+        $this->addShipmentExpense($salesOrderEntity);
     }
 
     /**
@@ -67,19 +82,7 @@ class Sales extends Module
     {
         $billingAddressEntity = $salesOrderEntity->getBillingAddress();
         if ($billingAddressEntity === null) {
-            $billingAddressEntity = new SpySalesOrderAddress();
-
-            $countryEntity = $this->getCountryEntity();
-            $billingAddressEntity->setCountry($countryEntity);
-
-            $billingAddressEntity->setSalutation(SpySalesOrderAddressTableMap::COL_SALUTATION_MR);
-            $billingAddressEntity->setFirstName('FirstName');
-            $billingAddressEntity->setLastName('LastName');
-            $billingAddressEntity->setAddress1('Address1');
-            $billingAddressEntity->setAddress2('Address2');
-            $billingAddressEntity->setCity('City');
-            $billingAddressEntity->setZipCode('12345');
-            $billingAddressEntity->save();
+            $billingAddressEntity = $this->createBillingAddress();
             $salesOrderEntity->setBillingAddress($billingAddressEntity);
         }
 
@@ -181,6 +184,30 @@ class Sales extends Module
     }
 
     /**
+     * @param int $idSalesOrderItem
+     * @param array $discount
+     *
+     * @return void
+     */
+    public function createDiscountForSalesOrderItem($idSalesOrderItem, array $discount = [])
+    {
+        $salesOrderDiscountEntity = new SpySalesDiscount();
+        $salesOrderDiscountEntity->fromArray($discount);
+        $salesOrderDiscountEntity->setFkSalesOrderItem($idSalesOrderItem);
+        if ($salesOrderDiscountEntity->getName() === null) {
+            $salesOrderDiscountEntity->setName('discount name');
+        }
+        if ($salesOrderDiscountEntity->getDisplayName() === null) {
+            $salesOrderDiscountEntity->setDisplayName('discount display name');
+        }
+        if ($salesOrderDiscountEntity->getAmount() === null) {
+            $salesOrderDiscountEntity->setAmount(33);
+        }
+
+        $salesOrderDiscountEntity->save();
+    }
+
+    /**
      * @param array $salesOrderItem
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -214,6 +241,45 @@ class Sales extends Module
         $omsOrderProcessEntity->save();
 
         return $omsOrderProcessEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
+     */
+    protected function createBillingAddress()
+    {
+        $billingAddressEntity = new SpySalesOrderAddress();
+
+        $countryEntity = $this->getCountryEntity();
+        $billingAddressEntity->setCountry($countryEntity);
+
+        $billingAddressEntity->setSalutation(SpySalesOrderAddressTableMap::COL_SALUTATION_MR);
+        $billingAddressEntity->setFirstName('FirstName');
+        $billingAddressEntity->setLastName('LastName');
+        $billingAddressEntity->setAddress1('Address1');
+        $billingAddressEntity->setAddress2('Address2');
+        $billingAddressEntity->setCity('City');
+        $billingAddressEntity->setZipCode('12345');
+        $billingAddressEntity->save();
+
+        return $billingAddressEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addShipmentExpense(SpySalesOrder $salesOrderEntity)
+    {
+        $shipmentEntity = $salesOrderEntity->getShipmentMethod();
+        $shipmentExpense = new SpySalesExpense();
+        $shipmentExpense->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $shipmentExpense->setName($shipmentEntity->getName());
+        $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense->setGrossPrice($shipmentEntity->getDefaultPrice());
+
+        $shipmentExpense->save();
     }
 
 }

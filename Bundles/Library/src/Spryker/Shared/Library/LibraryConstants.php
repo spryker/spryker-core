@@ -44,10 +44,26 @@ interface LibraryConstants
 
     const YVES_ERROR_PAGE = ApplicationConstants::YVES_ERROR_PAGE;
     const YVES_SHOW_EXCEPTION_STACK_TRACE = ApplicationConstants::YVES_SHOW_EXCEPTION_STACK_TRACE;
+
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_HOST = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_PORT = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_PROTOCOL = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL;
+    /**
+     * @deprecated Use Session bundle SessionConstants class constant.
+     */
     const YVES_STORAGE_SESSION_REDIS_PASSWORD = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD;
 
     const ZED_ERROR_PAGE = ApplicationConstants::ZED_ERROR_PAGE;

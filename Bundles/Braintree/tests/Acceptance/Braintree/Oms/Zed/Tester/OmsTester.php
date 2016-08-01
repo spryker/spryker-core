@@ -60,7 +60,6 @@ class OmsTester extends ZedAcceptanceTester
         $i->waitForText('capture succeeded', 2);
         $i->click('start refund process');
         $i->waitForText('closed', 2);
-        // when refund bundle released, add check that refund is visible in /sales/detail
     }
 
     /**
@@ -71,7 +70,7 @@ class OmsTester extends ZedAcceptanceTester
         $i = $this;
         $i->amOnPage(SalesListPage::URL);
         $i->seeCurrentUrlEquals(SalesListPage::URL);
-        $i->wait(2);
+        $i->wait(5);
         $salesOrderIds = $i->grabMultiple(SalesListPage::SELECTOR_ID_SALES_ORDER_ROWS);
         $latestOrderId = $salesOrderIds[0];
         $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);

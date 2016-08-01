@@ -13,21 +13,13 @@ interface RefundQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
-     * @api
+     * Specification:
+     * - Returns SpyRefundQuery ordered by id descending.
      *
-     * @param int $idOrder
+     * @api
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
-    public function queryRefundsByIdSalesOrder($idOrder);
-
-    /**
-     * @api
-     *
-     * @param int $idMethod
-     *
-     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
-     */
-    public function queryRefundByIdRefund($idMethod);
+    public function queryRefunds();
 
 }

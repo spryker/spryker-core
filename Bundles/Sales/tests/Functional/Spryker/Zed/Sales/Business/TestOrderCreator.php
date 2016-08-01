@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Sales\Business;
 
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
@@ -97,7 +98,10 @@ class TestOrderCreator
     {
         $shipmentMethodEntity = SpyShipmentMethodQuery::create()->findOne();
 
+        $customerEntity = $this->createCustomer();
+
         $salesOrderEntity = new SpySalesOrder();
+        $salesOrderEntity->setCustomer($customerEntity);
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setShipmentMethod($shipmentMethodEntity);
@@ -105,6 +109,22 @@ class TestOrderCreator
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected function createCustomer()
+    {
+        $customerEntity = new SpyCustomer();
+        $customerEntity->setFirstName('First');
+        $customerEntity->setLastName('Last');
+        $customerEntity->setCompany('Company');
+        $customerEntity->setEmail('email@email.tld');
+        $customerEntity->setCustomerReference('testing-customer');
+        $customerEntity->save();
+
+        return $customerEntity;
     }
 
     /**
