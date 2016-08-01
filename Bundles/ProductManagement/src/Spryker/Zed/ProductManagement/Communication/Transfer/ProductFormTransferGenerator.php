@@ -157,6 +157,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $productConcreteTransfer->setPrice($priceTransfer);
 
         $stockTransfer = $this->buildProductStockTransfer($form, $productConcreteTransfer->getIdProductConcrete());
+        sd($stockTransfer);
         $productConcreteTransfer->setStock($stockTransfer);
 
         return $productConcreteTransfer;
@@ -354,6 +355,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductStockTransfer(FormInterface $form, $idProduct)
     {
+        die('stock build');
         $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(StockForm::FIELD_QUANTITY)->getData();
         $sku = $form->get(ProductFormAdd::FIELD_SKU);
 

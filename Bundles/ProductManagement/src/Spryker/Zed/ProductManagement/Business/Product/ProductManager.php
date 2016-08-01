@@ -500,6 +500,7 @@ class ProductManager implements ProductManagerInterface
 
             /* @var StockProductTransfer $stockTransfer */
             $stockTransfer = $productConcreteTransfer->getStock();
+            sd($stockTransfer);
             $stockEntity = $this->stockQueryContainer
                 ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
                 ->findOne();
@@ -835,20 +836,22 @@ class ProductManager implements ProductManagerInterface
      */
     protected function loadStockForProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        $stockEntity = $this->stockQueryContainer
+        $stockCollection = $this->stockQueryContainer
             ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
-            ->findOne();
+            ->innerJoinStock()
+            ->find();
 
-        if ($stockEntity === null) {
+        if ($stockCollection === null) {
             return $productConcreteTransfer;
         }
 
-        $stockTransfer = (new StockProductTransfer())
-            ->fromArray($stockEntity->toArray(), true);
+        foreach ($stockCollection as $stockEntity) {
+            $stockTransfer = (new StockProductTransfer())
+                ->fromArray($stockEntity->toArray(), true)
+                ->setStockType($stockEntity->getStock()->getName());
 
-        sd($stockTransfer->toArray());
-
-        $productConcreteTransfer->setStock($stockEntity);
+            $productConcreteTransfer->addStock($stockTransfer);
+        }
 
         return $productConcreteTransfer;
     }
@@ -975,6 +978,7 @@ class ProductManager implements ProductManagerInterface
 
         $productTransfer = $this->loadProductConcreteLocalizedAttributes($productTransfer);
         $this->loadPriceForProductConcrete($productTransfer);
+        $this->loadStockForProductConcrete($productTransfer);
 
         return $productTransfer;
     }

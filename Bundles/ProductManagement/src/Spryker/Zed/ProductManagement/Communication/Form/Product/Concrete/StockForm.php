@@ -17,7 +17,7 @@ class StockForm extends AbstractType
     const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
     const FIELD_HIDDEN_FK_STOCK = 'fk_stock';
 
-    const FIELD_NAME = 'name';
+    const FIELD_TYPE = 'type';
     const FIELD_QUANTITY = 'quantity';
     const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
@@ -41,7 +41,7 @@ class StockForm extends AbstractType
         $this
             ->addStockIdHiddenField($builder, $options)
             ->addProductStockIdHiddenField($builder, $options)
-            ->addNameField($builder, $options)
+            ->addTypeField($builder, $options)
             ->addQuantityField($builder, $options)
         ;
     }
@@ -75,10 +75,10 @@ class StockForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder, array $options)
+    protected function addTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
-            'label' => 'Stock Name',
+        $builder->add(self::FIELD_TYPE, 'text', [
+            'label' => 'Type',
             'required' => true,
             'read_only' => true,
             'constraints' => [

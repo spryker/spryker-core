@@ -12,11 +12,25 @@
     <p>Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.</p>
     <div class="well">
         {% for inputCollection in form.price_and_stock %}
-            {{ form_row(inputCollection.id_stock_product) }}
-            {{ form_row(inputCollection.fk_stock) }}
+            {% set form_group_errors_css = '' %}
 
-            {{ form_row(inputCollection.name) }}
-            {{ form_row(inputCollection.quantity) }}
+            {% if inputCollection.quantity.vars.errors|length %}
+                {% set form_group_errors_css = 'has-error' %}
+            {% endif %}
+
+            <div class="row">
+                <div class='col-lg-12'>
+                    <div class='row vertical-align col-lg-12'>
+                        <div class='form-group {{ form_group_errors_css }}'>
+                            {{ form_row(inputCollection.id_stock_product) }}
+                            {{ form_row(inputCollection.fk_stock) }}
+
+                            {{ form_row(inputCollection.type) }}
+                            {{ form_row(inputCollection.quantity) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </div>
 </div>

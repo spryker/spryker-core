@@ -31,7 +31,10 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         $data = parent::getDefaultFormFields($idProductAbstract);
 
         $data[ProductFormAdd::PRICE_AND_STOCK][] = [
-            ConcretePriceForm::FIELD_PRICE => 0,
+            StockForm::FIELD_HIDDEN_FK_STOCK => 0,
+            StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID => 0,
+            StockForm::FIELD_IS_NEVER_OUT_OF_STOCK => 0,
+            StockForm::FIELD_TYPE => null,
             StockForm::FIELD_QUANTITY => 0,
         ];
 
@@ -106,10 +109,17 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData[ProductFormAdd::PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }
 
-        $stockTransfer = $productTransfer->getStock();
-        if ($stockTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_STOCK][StockForm::FIELD_NAME] = $stockTransfer->getQuantity();
-            $formData[ProductFormAdd::PRICE_AND_STOCK][StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
+        $formData[ProductFormAdd::PRICE_AND_STOCK] = [];
+        $stockCollection = $productTransfer->getStock();
+
+        foreach ($stockCollection as $stockTransfer) {
+            $stock[StockForm::FIELD_HIDDEN_FK_STOCK] = $stockTransfer->getFkStock();
+            $stock[StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID] = $stockTransfer->getIdStockProduct();
+            $stock[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK] = $stockTransfer->getIsNeverOutOfStock();
+            $stock[StockForm::FIELD_TYPE] = $stockTransfer->getStockType();
+            $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
+
+            $formData[ProductFormAdd::PRICE_AND_STOCK][] = $stock;
         }
 
         return $formData;
