@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
@@ -46,6 +47,11 @@ class AbstractProductFormDataProvider
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
+     */
+    protected $stockQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
@@ -86,6 +92,7 @@ class AbstractProductFormDataProvider
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
+        StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
@@ -96,6 +103,7 @@ class AbstractProductFormDataProvider
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
+        $this->stockQueryContainer = $stockQueryContainer;
         $this->localeProvider = $localeProvider;
         $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;

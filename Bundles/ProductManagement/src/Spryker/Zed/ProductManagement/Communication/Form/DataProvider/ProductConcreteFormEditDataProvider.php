@@ -30,20 +30,32 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     {
         $data = parent::getDefaultFormFields($idProductAbstract);
 
-        $data[ProductFormAdd::PRICE_AND_STOCK][] = [
-            StockForm::FIELD_HIDDEN_FK_STOCK => 0,
-            StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID => 0,
-            StockForm::FIELD_IS_NEVER_OUT_OF_STOCK => 0,
-            StockForm::FIELD_TYPE => null,
-            StockForm::FIELD_QUANTITY => 0,
-        ];
-
         unset($data[ProductFormAdd::PRICE_AND_TAX]);
         $data[ProductFormAdd::PRICE_AND_TAX] = [
             ConcretePriceForm::FIELD_PRICE => 0,
         ];
 
+        $data[ProductFormAdd::PRICE_AND_STOCK] = $this->getDefaultStockFields();
+
         return $data;
+    }
+
+    protected function getDefaultStockFields()
+    {
+        $result = [];
+        $stockTypeCollection = $this->stockQueryContainer->queryAllStockTypes()->find();
+
+        foreach ($stockTypeCollection as $stockTypEntity) {
+            $result[] = [
+                StockForm::FIELD_HIDDEN_FK_STOCK => $stockTypEntity->getIdStock(),
+                StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID => 0,
+                StockForm::FIELD_IS_NEVER_OUT_OF_STOCK => 0,
+                StockForm::FIELD_TYPE => $stockTypEntity->getName(),
+                StockForm::FIELD_QUANTITY => 0,
+            ];
+        }
+
+        return $result;
     }
 
     /**
@@ -109,8 +121,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData[ProductFormAdd::PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }
 
-        $formData[ProductFormAdd::PRICE_AND_STOCK] = [];
         $stockCollection = $productTransfer->getStock();
+
+        if (count($stockCollection)) {
+            $formData[ProductFormAdd::PRICE_AND_STOCK] = [];
+        }
 
         foreach ($stockCollection as $stockTransfer) {
             $stock[StockForm::FIELD_HIDDEN_FK_STOCK] = $stockTransfer->getFkStock();

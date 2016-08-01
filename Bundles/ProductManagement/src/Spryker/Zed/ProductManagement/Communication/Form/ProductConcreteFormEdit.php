@@ -9,8 +9,12 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -129,10 +133,14 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
+                            $stockCount = 0;
                             foreach ($dataToValidate as $data) {
-                                if ((int)$data[StockForm::FIELD_QUANTITY] <= 0) {
-                                    $context->addViolation('Please enter Stock information under Price & Stock');
-                                }
+                                $stockCount += (int)$data[StockForm::FIELD_QUANTITY];
+                            }
+
+                            if ($stockCount === 0 && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
+                                $context->addViolation('Please enter Stock information under Price & Stock', [$context->getGroup()]);
+                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],

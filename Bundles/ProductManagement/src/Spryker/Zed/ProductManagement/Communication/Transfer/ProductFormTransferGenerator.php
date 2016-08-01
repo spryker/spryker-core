@@ -81,11 +81,13 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         $localizedData = $this->generateLocalizedData($localeCollection, $formData);
 
-        foreach ($localizedData as $code => $data) {
-            $localeTransfer = $this->localeFacade->getLocale($code);
+        foreach ($localizedData as $localeCode => $data) {
+            $formName = ProductFormAdd::getGeneralFormName($localeCode);
+            $localeTransfer = $this->localeFacade->getLocale($localeCode);
+
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
-                $data,
-                $attributeValues[$code],
+                $form->get($formName),
+                $attributeValues[$localeCode],
                 $localeTransfer
             );
 

@@ -89,7 +89,7 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_PRICE_AND_STOCK,
             self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
             self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
-            self::VALIDATION_GROUP_SEO
+            self::VALIDATION_GROUP_SEO,
         ];
 
         $resolver->setDefaults([
