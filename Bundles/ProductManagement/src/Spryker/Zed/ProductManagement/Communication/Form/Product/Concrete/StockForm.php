@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class StockForm extends AbstractType
@@ -45,8 +42,7 @@ class StockForm extends AbstractType
             ->addStockIdHiddenField($builder, $options)
             ->addProductStockIdHiddenField($builder, $options)
             ->addTypeField($builder, $options)
-            ->addQuantityField($builder, $options)
-        ;
+            ->addQuantityField($builder, $options);
     }
 
     /**

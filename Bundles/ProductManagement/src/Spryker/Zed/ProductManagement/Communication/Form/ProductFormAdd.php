@@ -11,7 +11,6 @@ use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;

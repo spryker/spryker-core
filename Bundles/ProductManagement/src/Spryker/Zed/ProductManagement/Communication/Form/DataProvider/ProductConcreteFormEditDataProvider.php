@@ -10,12 +10,11 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
@@ -40,6 +39,9 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         return $data;
     }
 
+    /**
+     * @return array
+     */
     protected function getDefaultStockFields()
     {
         $result = [];
@@ -59,8 +61,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     }
 
     /**
-     * @param $idProductAbstract
-     * @param $idProduct
+     * @param int $idProductAbstract
+     * @param int $idProduct
      *
      * @return array
      */
@@ -79,6 +81,13 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         return $formData;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param array $formData
+     *
+     * @return array
+     */
     protected function appendVariantGeneralAndSeoData(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
@@ -110,6 +119,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array
@@ -142,6 +152,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array

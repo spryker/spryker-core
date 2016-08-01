@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm as AbstractPriceForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class PriceForm extends AbstractPriceForm
 {

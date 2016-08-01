@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

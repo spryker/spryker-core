@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;

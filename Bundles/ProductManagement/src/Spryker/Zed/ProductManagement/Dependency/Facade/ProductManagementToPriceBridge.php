@@ -74,4 +74,5 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     {
         return $this->priceFacade->persistConcreteProductPrice($priceTransfer, $priceType);
     }
+
 }

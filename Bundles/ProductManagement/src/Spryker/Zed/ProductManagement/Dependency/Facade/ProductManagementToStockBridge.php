@@ -58,4 +58,5 @@ class ProductManagementToStockBridge implements ProductManagementToStockInterfac
     {
         return $this->stockFacade->hasStockProduct($sku, $stockType);
     }
+
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 interface ProductManagementToStockInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
