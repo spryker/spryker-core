@@ -26,22 +26,18 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     public function getData($idProductAbstract)
     {
         $formData = $this->getDefaultFormFields();
-        $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
         $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
 
         if ($productAbstractTransfer) {
             $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);
-            $formData = $this->appendPriceAndStock($productAbstractTransfer, $formData);
+            $formData = $this->appendPriceAndTax($productAbstractTransfer, $formData);
             $formData = $this->appendAbstractAttributes($productAbstractTransfer, $formData);
         }
-
-        //$attributeValueCollection = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor);
 
         $formData[ProductFormAdd::ATTRIBUTE_VARIANT] = [];
 
         return $formData;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -84,14 +80,13 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function appendPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, array $formData)
+    protected function appendPriceAndTax(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $formData[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
+        $formData[ProductFormAdd::PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
 
         $priceTransfer = $this->priceFacade->getProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
         if ($priceTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
-            $formData[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_STOCK] = 1;
+            $formData[ProductFormAdd::PRICE_AND_TAX][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }
 
         return $formData;

@@ -176,7 +176,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                 $this->slugify($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
-            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_TAX_RATE]);
+            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -320,7 +320,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductAbstractPriceTransfer(FormInterface $form)
     {
-        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(PriceForm::FIELD_PRICE)->getData();
+        $price = $form->get(ProductFormAdd::PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
         $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
         $priceTransfer = (new ZedProductPriceTransfer())
@@ -337,7 +337,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductConcretePriceTransfer(FormInterface $form, $idProduct)
     {
-        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(PriceForm::FIELD_PRICE)->getData();
+        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ConcretePriceForm::FIELD_PRICE)->getData();
 
         $priceTransfer = (new ZedProductPriceTransfer())
             ->setIdProduct($idProduct)
@@ -353,7 +353,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductStockTransfer(FormInterface $form, $idProduct)
     {
-        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ConcretePriceForm::FIELD_STOCK)->getData();
+        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ConcretePriceForm::FIELD_PRICE)->getData();
         $sku = $form->get(ProductFormAdd::FIELD_SKU);
 
         $stockTransfer = (new StockProductTransfer())

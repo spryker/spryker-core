@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as PriceConcreteForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -41,7 +42,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
-            ->addPriceForm($builder, $options[self::TAX_SET]);
+            ->addPriceForm($builder, $options[self::TAX_SET])
+            ->addStockForm($builder);
     }
 
     /**
@@ -95,21 +97,47 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, new PriceConcreteForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
+            ->add(self::PRICE_AND_TAX, new ConcretePriceForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
                             if ((int)$dataToValidate[PriceForm::FIELD_PRICE] <= 0) {
-                                $context->addViolation('Please enter Price information under Price & Stock');
+                                $context->addViolation('Please enter Price information under Price & Taxes');
                             }
 
-                            if ((int)$dataToValidate[PriceForm::FIELD_STOCK] <= 0) {
-                                $context->addViolation('Please enter Stock information under Price & Stock');
+                            if ((int)$dataToValidate[PriceForm::FIELD_TAX_RATE] <= 0) {
+                                $context->addViolation('Please enter Tax information under Price & Taxes');
                             }
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
+                ])]
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addStockForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::PRICE_AND_STOCK, new StockForm($options, self::VALIDATION_GROUP_PRICE_AND_STOCK), [
+                'label' => false,
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($dataToValidate, ExecutionContextInterface $context) {
+                            if ((int)$dataToValidate[StockForm::FIELD_STOCK] <= 0) {
+                                $context->addViolation('Please enter Stock information under Price & Stock');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_STOCK]
                 ])]
             ]);
 

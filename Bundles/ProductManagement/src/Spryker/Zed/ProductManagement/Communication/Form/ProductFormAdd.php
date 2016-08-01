@@ -11,6 +11,7 @@ use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
@@ -32,6 +33,7 @@ class ProductFormAdd extends AbstractType
     const ATTRIBUTE_VARIANT = 'attribute_variant';
     const GENERAL = 'general';
     const ID_LOCALE = 'id_locale';
+    const PRICE_AND_TAX = 'price_and_tax';
     const PRICE_AND_STOCK = 'price_and_stock';
     const TAX_SET = 'tax_set';
     const SEO = 'seo';
@@ -40,6 +42,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_ATTRIBUTE_VARIANT = 'validation_group_attribute_variant';
     const VALIDATION_GROUP_GENERAL = 'validation_group_general';
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
+    const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
     /**
@@ -81,6 +84,7 @@ class ProductFormAdd extends AbstractType
             Constraint::DEFAULT_GROUP,
             self::VALIDATION_GROUP_GENERAL,
             self::VALIDATION_GROUP_PRICE_AND_TAX,
+            self::VALIDATION_GROUP_PRICE_AND_STOCK,
             self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
             self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO
@@ -327,17 +331,17 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, new PriceForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
+            ->add(self::PRICE_AND_TAX, new PriceForm($options, self::VALIDATION_GROUP_PRICE_AND_TAX), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
                             if ((int)$dataToValidate[PriceForm::FIELD_PRICE] <= 0) {
-                                $context->addViolation('Please Price information under Price & Taxes');
+                                $context->addViolation('Please enter Price information under Price & Taxes');
                             }
 
                             if ((int)$dataToValidate[PriceForm::FIELD_TAX_RATE] <= 0) {
-                                $context->addViolation('Please Tax information under Price & Taxes');
+                                $context->addViolation('Please enter Tax information under Price & Taxes');
                             }
                         },
                     ],

@@ -134,12 +134,10 @@ class AbstractProductFormDataProvider
         $data = [
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
-            ProductFormAdd::TAX_SET => $this->getPriceAndStockDefaultFields(),
-            ProductFormAdd::PRICE_AND_STOCK => [
+            ProductFormAdd::PRICE_AND_TAX => [
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,
-                PriceForm::FIELD_STOCK => 0
-            ]
+            ],
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());

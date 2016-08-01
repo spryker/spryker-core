@@ -10,14 +10,38 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
 {
+
+    /**
+     * @param int|null $idProductAbstract
+     *
+     * @return array
+     */
+    protected function getDefaultFormFields($idProductAbstract = null)
+    {
+        $data = parent::getDefaultFormFields($idProductAbstract);
+
+        $data[ProductFormAdd::PRICE_AND_STOCK] = [
+            ConcretePriceForm::FIELD_PRICE => 0,
+            StockForm::FIELD_STOCK => 0,
+        ];
+
+        unset($data[ProductFormAdd::PRICE_AND_TAX]);
+        $data[ProductFormAdd::PRICE_AND_TAX] = [
+            ConcretePriceForm::FIELD_PRICE => 0,
+        ];
+
+        return $data;
+    }
 
     /**
      * @param $idProductAbstract
@@ -28,7 +52,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     public function getData($idProductAbstract, $idProduct)
     {
         $formData = $this->getDefaultFormFields();
-        $attributeProcessor = $this->getAttributesForAbstractProduct($idProductAbstract);
         $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
         $productTransfer = $this->productManagementFacade->getProductConcreteById($idProduct);
 
@@ -37,8 +60,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantAbstractAttributes($productAbstractTransfer, $productTransfer, $formData);
         }
-
-        $formData[ProductFormAdd::ATTRIBUTE_VARIANT] = [];
 
         return $formData;
     }
@@ -80,12 +101,14 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
     {
-        $formData[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
-
         $priceTransfer = $this->priceFacade->getProductConcretePrice($productTransfer->getIdProductConcrete());
         if ($priceTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
-            $formData[ProductFormAdd::PRICE_AND_STOCK][PriceForm::FIELD_STOCK] = 11;
+            $formData[ProductFormAdd::PRICE_AND_STOCK][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
+        }
+
+        $stockTransfer = $productTransfer->getStock();
+        if ($stockTransfer) {
+            $formData[ProductFormAdd::PRICE_AND_STOCK][StockForm::FIELD_STOCK] = $stockTransfer->getQuantity();
         }
 
         return $formData;
