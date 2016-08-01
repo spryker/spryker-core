@@ -45,6 +45,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
 
     const OPTION_TAX_RATES = 'option_tax_rates';
+    const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
 
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
@@ -77,7 +78,7 @@ class ProductFormAdd extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(self::ID_LOCALE);
-        $resolver->setRequired(self::ATTRIBUTE_ABSTRACT);
+        $resolver->setRequired(self::OPTION_ATTRIBUTE_ABSTRACT);
         $resolver->setRequired(self::ATTRIBUTE_VARIANT);
         $resolver->setRequired(self::OPTION_TAX_RATES);
 
@@ -113,7 +114,7 @@ class ProductFormAdd extends AbstractType
             ->addSkuField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
-            ->addAttributeAbstractForms($builder, $options[self::ATTRIBUTE_ABSTRACT])
+            ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
             ->addSeoLocalizedForms($builder, $options);

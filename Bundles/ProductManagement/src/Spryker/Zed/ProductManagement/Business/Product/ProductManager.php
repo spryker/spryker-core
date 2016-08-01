@@ -1182,12 +1182,12 @@ class ProductManager implements ProductManagerInterface
         }
 
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
-        $localizedAttributeCollection = new Collection([]);
+        $localizedAttributeCollection = [];
 
         foreach ($concreteProductCollection as $productTransfer) {
-            $attributeProcessor->setConcreteAttributes(new Collection(
+            $attributeProcessor->setConcreteAttributes(
                 $productTransfer->getAttributes()
-            ));
+            );
 
             foreach ($productTransfer->getLocalizedAttributes() as $localizedAttribute) {
                 $localizedData = [];
@@ -1195,19 +1195,19 @@ class ProductManager implements ProductManagerInterface
                     $localeName = $localizedAttribute->getLocale()->getLocaleName();
                     $localizedData[$localeName][$name] = $value;
                 }
-                $localizedAttributeCollection->appendArray($localizedData);
+                $localizedAttributeCollection += $localizedData;
             }
         }
 
         $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributeCollection);
 
-        $attributeProcessor->setAbstractAttributes(new Collection(
+        $attributeProcessor->setAbstractAttributes(
             $productAbstractTransfer->getAttributes()
-        ));
+        );
 
-        $attributeProcessor->setAbstractLocalizedAttributes(new Collection(
+        $attributeProcessor->setAbstractLocalizedAttributes(
             (array)$productAbstractTransfer->getLocalizedAttributes()
-        ));
+        );
 
         return $attributeProcessor;
     }

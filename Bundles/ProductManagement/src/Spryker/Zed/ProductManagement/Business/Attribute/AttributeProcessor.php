@@ -7,30 +7,29 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Spryker\Shared\Library\Collection\Collection;
-use Spryker\Shared\Library\Collection\CollectionInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 
 class AttributeProcessor implements AttributeProcessorInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     * @var array
      */
     protected $abstractAttributes;
 
     /**
-     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     * @var array
      */
     protected $abstractLocalizedAttributes;
 
     /**
-     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     * @var array
      */
     protected $concreteAttributes;
 
     /**
-     * @var \Spryker\Shared\Library\Collection\CollectionInterface
+     * @var array
      */
     protected $concreteLocalizedAttributes;
 
@@ -46,14 +45,14 @@ class AttributeProcessor implements AttributeProcessorInterface
         array $localizedAttributes = [],
         array $abstractLocalizedAttributes = []
     ) {
-        $this->abstractAttributes = new Collection($abstractAttributes);
-        $this->concreteAttributes =  new Collection($attributes);
-        $this->concreteLocalizedAttributes =  new Collection($localizedAttributes);
-        $this->abstractLocalizedAttributes =  new Collection($abstractLocalizedAttributes);
+        $this->abstractAttributes = $abstractAttributes;
+        $this->concreteAttributes =  $attributes;
+        $this->concreteLocalizedAttributes = $localizedAttributes;
+        $this->abstractLocalizedAttributes = $abstractLocalizedAttributes;
     }
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return array
      */
     public function getAbstractAttributes()
     {
@@ -61,11 +60,11 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractAttributes
+     * @param array $abstractAttributes
      *
      * @return $this
      */
-    public function setAbstractAttributes(CollectionInterface $abstractAttributes)
+    public function setAbstractAttributes(array $abstractAttributes)
     {
         $this->abstractAttributes = $abstractAttributes;
 
@@ -73,7 +72,7 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return array
      */
     public function getConcreteAttributes()
     {
@@ -81,11 +80,11 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteAttributes
+     * @param array $concreteAttributes
      *
      * @return $this
      */
-    public function setConcreteAttributes(CollectionInterface $concreteAttributes)
+    public function setConcreteAttributes(array $concreteAttributes)
     {
         $this->concreteAttributes = $concreteAttributes;
 
@@ -93,7 +92,7 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return array
      */
     public function getConcreteLocalizedAttributes()
     {
@@ -101,11 +100,11 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteLocalizedAttributes
+     * @param array $concreteLocalizedAttributes
      *
      * @return $this
      */
-    public function setConcreteLocalizedAttributes(CollectionInterface $concreteLocalizedAttributes)
+    public function setConcreteLocalizedAttributes(array $concreteLocalizedAttributes)
     {
         $this->concreteLocalizedAttributes = $concreteLocalizedAttributes;
 
@@ -113,7 +112,7 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
      */
     public function getAbstractLocalizedAttributes()
     {
@@ -121,11 +120,11 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractLocalizedAttributes
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $abstractLocalizedAttributes
      *
      * @return $this
      */
-    public function setAbstractLocalizedAttributes(CollectionInterface $abstractLocalizedAttributes)
+    public function setAbstractLocalizedAttributes(array $abstractLocalizedAttributes)
     {
         $this->abstractLocalizedAttributes = $abstractLocalizedAttributes;
 
@@ -137,30 +136,55 @@ class AttributeProcessor implements AttributeProcessorInterface
      */
     public function mergeAttributes()
     {
-        $abstractAttributes = $this->mergeAbstractAttributes();
-        $concreteAttributes = $this->mergeConcreteAttributes();
+        sd('fix me');
+        $attributes = $this->mergeAbstractLocalizedAttributes();
+        $localizedAttributes = $this->mergeLocalizedAttributes();
 
-        return array_merge($abstractAttributes, $concreteAttributes);
+        return array_merge($attributes, $localizedAttributes);
+    }
+
+    /**
+     * @param null|string $localeCode
+     *
+     * @return array
+     */
+    public function mergeAbstractLocalizedAttributes($localeCode = null)
+    {
+        $mergedAttributes = [];
+        foreach ($this->getAbstractLocalizedAttributes() as $transfer) {
+            if ($localeCode === $transfer->getLocale()->getLocaleName()) {
+                $mergedAttributes[$transfer->getLocale()->getLocaleName()] = $transfer->getAttributes();
+            }
+        }
+
+        return $mergedAttributes;
     }
 
     /**
      * @return array
      */
-    public function mergeAbstractAttributes()
+    public function getAllAbstractKeys()
     {
-        $abstractAttributes = $this->getAbstractAttributes()->toArray(true);
-        $abstractLocalizedAttributes = $this->getAbstractLocalizedAttributes()->toArray(true);
+        $mergedAttributes = [];
+        foreach ($this->getAbstractLocalizedAttributes() as $transfer) {
+            $mergedAttributes += $transfer->getAttributes();
+        }
 
-        return array_merge($abstractAttributes, $abstractLocalizedAttributes);
+        $mergedAttributes += $this->getAbstractAttributes();
+
+        return array_combine(
+            array_keys($mergedAttributes),
+            array_fill(0, count($mergedAttributes), null)
+        );
     }
 
     /**
      * @return array
      */
-    public function mergeConcreteAttributes()
+    public function mergeLocalizedAttributes()
     {
-        $concreteAttributes = $this->getConcreteAttributes()->toArray(true);
-        $concreteLocalizedAttributes = $this->getConcreteLocalizedAttributes()->toArray(true);
+        $concreteAttributes = $this->getConcreteAttributes();
+        $concreteLocalizedAttributes = $this->getConcreteLocalizedAttributes();
 
         return array_merge($concreteAttributes, $concreteLocalizedAttributes);
     }

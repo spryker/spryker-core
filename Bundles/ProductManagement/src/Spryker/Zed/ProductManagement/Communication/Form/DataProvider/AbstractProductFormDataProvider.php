@@ -123,7 +123,7 @@ class AbstractProductFormDataProvider
         $isNew = $idProductAbstract === null;
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
 
-        $formOptions[ProductFormAdd::ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
         $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
 
         $formOptions[ProductFormAdd::ID_LOCALE] = $this->currentLocale->getIdLocale();
@@ -221,16 +221,16 @@ class AbstractProductFormDataProvider
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
         $attributeProcessor = $this->getAttributesForAbstractProduct(null);
-        $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, true);
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
             $key = ProductFormAdd::getAbstractAttributeFormName($localeCode);
+            $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, $localeCode, true);
             $result[$key] = $data;
         }
 
         $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
-        $result[$defaultKey] = $data;
+        $result[$defaultKey] = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, null, true);
 
         return $result;
     }
@@ -265,34 +265,38 @@ class AbstractProductFormDataProvider
 
     /**
      * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param string $localeCode
      * @param bool|false $isNew
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    protected function convertAbstractLocalizedAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
+        if ($localeCode === null) {
+            $attributes = $attributeProcessor->getAbstractAttributes();
+        }  else {
+            $attributes = $attributeProcessor->mergeAbstractLocalizedAttributes($localeCode);
+        }
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-            $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
+            $attributeValue = isset($attributes[$type]) ? $attributes[$type] : null;
 
             if ($isNew) {
-                $value = null;
+                $attributeValue = null;
             }
 
-            if ($isMultiple && !is_array($value)) {
-                $value = [$value];
+            if ($attributeTransfer->getIsMultiple() && !is_array($attributeValue)) {
+                $attributeValue = [$attributeValue];
             }
 
             $values[$type] = [
-                self::FORM_FIELD_NAME => null,
-                self::FORM_FIELD_VALUE => $value,
+                self::FORM_FIELD_NAME => isset($attributeValue),
+                self::FORM_FIELD_VALUE => $attributeValue,
             ];
         }
 
-        $productValues = $this->getProductAttributesFormValues($productAttributes);
+        $productValues = $this->getProductAttributesFormValues($attributes);
 
         return array_merge($productValues, $values);
     }
@@ -305,12 +309,12 @@ class AbstractProductFormDataProvider
      */
     protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
+        $productAttributeKeys = $attributeProcessor->getAllAbstractKeys();
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributes);
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : 'foo';
+            $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributeKeys);
+            $value = isset($productAttributeKeys[$type]) ? $productAttributeKeys[$type] : 'foo';
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
             $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
             $valueDisabled = true;
@@ -332,7 +336,7 @@ class AbstractProductFormDataProvider
             ];
         }
 
-        $productValues = $this->getProductAttributesFormOptions($productAttributes);
+        $productValues = $this->getProductAttributesFormOptions($productAttributeKeys);
 
         return array_merge($productValues, $values);
     }
@@ -345,7 +349,7 @@ class AbstractProductFormDataProvider
      */
     protected function convertVariantAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
+        $productAttributes = $attributeProcessor->getAbstractAttributes();
 
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -376,7 +380,7 @@ class AbstractProductFormDataProvider
      */
     protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAbstractAttributes()->toArray(true);
+        $productAttributes = $attributeProcessor->getAllAbstractKeys();
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -421,29 +425,26 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $productAttributes
+     * @param array $productAttributeKeys
      *
      * @return array
      */
-    protected function getProductAttributesFormOptions(array $productAttributes)
+    protected function getProductAttributesFormOptions(array $productAttributeKeys)
     {
         $values = [];
-        foreach ($productAttributes as $key => $value) {
-            $isMultiple = isset($value) && is_array($value);
-            if (!array_key_exists($key, $values)) {
-                $values[$key] = [
-                    self::FORM_FIELD_ID => null,
-                    self::FORM_FIELD_VALUE => $value,
-                    self::FORM_FIELD_NAME => false,
-                    self::FORM_FIELD_PRODUCT_SPECIFIC => true,
-                    self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
-                    self::FORM_FIELD_MULTIPLE => $isMultiple,
-                    self::FORM_FIELD_INPUT_TYPE => 'text',
-                    self::FORM_FIELD_VALUE_DISABLED => true,
-                    self::FORM_FIELD_NAME_DISABLED => true,
-                    self::FORM_FIELD_ALLOW_INPUT => false
-                ];
-            }
+        foreach ($productAttributeKeys as $key => $value) {
+            $values[$key] = [
+                self::FORM_FIELD_ID => null,
+                self::FORM_FIELD_VALUE => null,
+                self::FORM_FIELD_NAME => false,
+                self::FORM_FIELD_PRODUCT_SPECIFIC => true,
+                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
+                self::FORM_FIELD_MULTIPLE => false,
+                self::FORM_FIELD_INPUT_TYPE => 'text',
+                self::FORM_FIELD_VALUE_DISABLED => true,
+                self::FORM_FIELD_NAME_DISABLED => true,
+                self::FORM_FIELD_ALLOW_INPUT => false
+            ];
         }
 
         return $values;

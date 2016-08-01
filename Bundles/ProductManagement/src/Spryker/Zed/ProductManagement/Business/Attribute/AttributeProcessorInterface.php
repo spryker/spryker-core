@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,58 +7,58 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Spryker\Shared\Library\Collection\CollectionInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface AttributeProcessorInterface
 {
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return array
      */
     public function getAbstractAttributes();
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractAttributes
+     * @param array $abstractAttributes
      *
      * @return $this
      */
-    public function setAbstractAttributes(CollectionInterface $abstractAttributes);
+    public function setAbstractAttributes(array $abstractAttributes);
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return array
      */
     public function getConcreteAttributes();
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteAttributes
+     * @param array $concreteAttributes
      *
      * @return $this
      */
-    public function setConcreteAttributes(CollectionInterface $concreteAttributes);
+    public function setConcreteAttributes(array $concreteAttributes);
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return array
      */
     public function getConcreteLocalizedAttributes();
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $concreteLocalizedAttributes
+     * @param array $concreteLocalizedAttributes
      *
      * @return $this
      */
-    public function setConcreteLocalizedAttributes(CollectionInterface $concreteLocalizedAttributes);
+    public function setConcreteLocalizedAttributes(array $concreteLocalizedAttributes);
 
     /**
-     * @return \Spryker\Shared\Library\Collection\CollectionInterface
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
      */
     public function getAbstractLocalizedAttributes();
 
     /**
-     * @param \Spryker\Shared\Library\Collection\CollectionInterface $abstractLocalizedAttributes
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $abstractLocalizedAttributes
      *
      * @return $this
      */
-    public function setAbstractLocalizedAttributes(CollectionInterface $abstractLocalizedAttributes);
+    public function setAbstractLocalizedAttributes(array $abstractLocalizedAttributes);
 
     /**
      * @return array
@@ -65,14 +66,21 @@ interface AttributeProcessorInterface
     public function mergeAttributes();
 
     /**
+     * @param null|string $localeCode
+     *
      * @return array
      */
-    public function mergeAbstractAttributes();
+    public function mergeAbstractLocalizedAttributes($localeCode = null);
 
     /**
      * @return array
      */
-    public function mergeConcreteAttributes();
+    public function getAllAbstractKeys();
+
+    /**
+     * @return array
+     */
+    public function mergeLocalizedAttributes();
 
     /**
      * @param array $values

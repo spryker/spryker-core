@@ -50,7 +50,7 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected function getValueFieldConfig($name, $attributes)
     {
-        $isDisabled = $attributes[$name][self::VALUE_DISABLED];
+        $isDisabled = $attributes[$name][self::NAME_DISABLED];
 
         return [
             'read_only' => $isDisabled,
@@ -122,13 +122,9 @@ class AttributeAbstractForm extends AbstractSubForm
         $attributes = $options[AttributeAbstractForm::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
-        $label = $name;
-        $isDisabled = true;
-
-        if (isset($attributes[$name])) {
-            $label = $attributes[$name][self::LABEL];
-            $isDisabled = $attributes[$name][self::NAME_DISABLED];
-        }
+        $label = $attributes[$name][self::LABEL];
+        $isDisabled = $attributes[$name][self::NAME_DISABLED];
+        $isProductSpecific = $attributes[$name][self::PRODUCT_SPECIFIC];
 
         $builder
             ->add(self::FIELD_NAME, 'checkbox', [
@@ -136,7 +132,7 @@ class AttributeAbstractForm extends AbstractSubForm
                 'read_only' => $isDisabled,
                 'attr' => [
                     'class' => 'attribute_metadata_checkbox',
-                    'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
+                    'product_specific' => $isProductSpecific,
                 ],
             ]);
 
@@ -167,11 +163,11 @@ class AttributeAbstractForm extends AbstractSubForm
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
 
+        $inputManager = new AttributeInputManager();
         $inputType = $attributes[$name][self::INPUT_TYPE];
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
         $isMultiple = $attributes[$name][self::MULTIPLE];
 
-        $inputManager = new AttributeInputManager();
         $input = $inputManager->getSymfonyInputType($inputType);
         $config = $this->getValueFieldConfig($name, $attributes);
         $config['attr']['style'] .= ' width: 250px';
@@ -181,7 +177,7 @@ class AttributeAbstractForm extends AbstractSubForm
             $input = new Select2ComboBoxType();
         }
 
-        if ($isMultiple) {
+        if ($isMultiple || !$allowInput) {
             $input = new Select2ComboBoxType();
 
             $config['multiple'] = $isMultiple;
@@ -193,11 +189,7 @@ class AttributeAbstractForm extends AbstractSubForm
                 $config['attr']['tags'] = true;
             }
         } else {
-            if ($allowInput) {
-                $config['attr']['class'] .= ' kv_attribute_autocomplete';
-            } else {
-                $config['read_only'] = true;
-            }
+            $config['attr']['class'] .= ' kv_attribute_autocomplete';
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
