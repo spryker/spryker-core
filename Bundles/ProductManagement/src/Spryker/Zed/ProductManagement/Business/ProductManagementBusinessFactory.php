@@ -36,7 +36,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getUrlFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->getStockFacade()
         );
     }
 
@@ -86,6 +87,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockInterface
+     */
+    protected function getStockFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STOCK);
     }
 
     /**

@@ -47,4 +47,14 @@ interface WriterInterface
      */
     public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null);
 
+    /**
+     * @param ZedProductPriceTransfer $priceTransfer
+     * @param null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null);
+
 }

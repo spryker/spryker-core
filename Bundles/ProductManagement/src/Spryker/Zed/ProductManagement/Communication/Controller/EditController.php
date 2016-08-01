@@ -68,6 +68,8 @@ class EditController extends AddController
                     ->createProductFormTransferGenerator()
                     ->buildProductAbstractTransfer($form);
 
+                $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
                 $idProductAbstract = $this->getFactory()
                     ->getProductManagementFacade()
                     ->saveProduct($productAbstractTransfer, []);
@@ -133,9 +135,34 @@ class EditController extends AddController
             )
             ->handleRequest($request);
 
+        if ($form->isValid()) {
+            try {
+                $productAbstractTransfer = $this->getFactory()
+                    ->getProductManagementFacade()
+                    ->getProductAbstractById($idProductAbstract);
 
+                $productConcreteTransfer = $this->getFactory()
+                    ->createProductFormTransferGenerator()
+                    ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
+                $idProduct = $this->getFactory()
+                    ->getProductManagementFacade()
+                    ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
 
+                $this->addSuccessMessage(sprintf(
+                    'The product [%s] was saved successfully.',
+                    $idProduct
+                ));
+
+                return $this->redirectResponse(sprintf(
+                    '/product-management/edit?%s=%d#tab_variants',
+                    self::PARAM_ID_PRODUCT_ABSTRACT,
+                    $idProductAbstract
+                ));
+            } catch (CategoryUrlExistsException $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
+        };
 
         return $this->viewResponse([
             'form' => $form->createView(),

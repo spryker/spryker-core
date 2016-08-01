@@ -13,12 +13,12 @@ class ProductManagementToUrlBridge implements ProductManagementToUrlInterface
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
     protected $urlFacade;
 
     /**
-     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacadeInterface $urlFacade
      */
     public function __construct($urlFacade)
     {

@@ -15,6 +15,7 @@ use Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
 
 class Writer implements WriterInterface
 {
@@ -285,6 +286,41 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $priceEntity->setFkProductAbstract($priceTransfer->getIdProduct());
+        $priceEntity->setFkPriceType($priceTypeEntity->getIdPriceType());
+        $priceEntity->setPrice($priceTransfer->getPrice());
+
+        $priceEntity->save();
+
+        return $priceEntity->getIdPriceProduct();
+    }
+
+    /**
+     * @param ZedProductPriceTransfer $priceTransfer
+     * @param null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null)
+    {
+        $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
+        $priceTypeEntity = $this->queryContainer
+            ->queryPriceType($priceTypeName)
+            ->findOne();
+
+        if (!$priceTypeEntity) {
+            throw new UndefinedPriceTypeException('Undefined product price type: '. $priceTypeName);
+        }
+
+        $priceEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProduct($priceTransfer->getIdProduct())
+            ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
+            ->filterByFkProductAbstract(null, Criteria::ISNULL)
+            ->findOneOrCreate();
+
+        $priceEntity->setFkProduct($priceTransfer->getIdProduct());
         $priceEntity->setFkPriceType($priceTypeEntity->getIdPriceType());
         $priceEntity->setPrice($priceTransfer->getPrice());
 

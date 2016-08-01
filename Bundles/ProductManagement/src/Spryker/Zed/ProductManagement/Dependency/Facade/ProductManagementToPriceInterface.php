@@ -41,4 +41,14 @@ interface ProductManagementToPriceInterface
      */
     public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
 
+    /**
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null);
+
 }

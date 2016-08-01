@@ -163,4 +163,15 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
         return $this->getFactory()->createWriterModel()->persistAbstractProductPrice($priceTransfer, $priceType);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     *
+     * @return int
+     */
+    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null)
+    {
+        return $this->getFactory()->createWriterModel()->persistConcreteProductPrice($priceTransfer, $priceType);
+    }
 }

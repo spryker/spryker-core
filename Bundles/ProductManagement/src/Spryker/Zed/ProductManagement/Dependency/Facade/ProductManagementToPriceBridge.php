@@ -63,4 +63,15 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
         return $this->priceFacade->persistAbstractProductPrice($priceTransfer, $priceType);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     *
+     * @return int
+     */
+    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null)
+    {
+        return $this->priceFacade->persistConcreteProductPrice($priceTransfer, $priceType);
+    }
 }

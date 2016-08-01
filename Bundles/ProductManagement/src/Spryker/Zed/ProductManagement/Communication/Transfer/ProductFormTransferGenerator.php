@@ -11,11 +11,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
@@ -25,6 +27,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInt
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use \Exception;
+use \Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 
 class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterface
 {
@@ -88,7 +91,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
-        $priceTransfer = $this->buildProductPriceTransfer($form);
+        $priceTransfer = $this->buildProductAbstractPriceTransfer($form);
 
         $productAbstractTransfer->setPrice($priceTransfer);
 
@@ -119,31 +122,41 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $formData
+     * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
      */
-    public function buildProductConcreteTransferFromData(ProductAbstractTransfer $productAbstractTransfer, array $formData)
+    public function buildProductConcreteTransfer(ProductAbstractTransfer $productAbstractTransfer, FormInterface $form, $idProduct)
     {
+        $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
+
         $productConcreteTransfer = new ZedProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete($idProduct);
         $productConcreteTransfer->setAttributes([]);
-        $productConcreteTransfer->setSku($productAbstractTransfer->getSku() . '-' . rand(1, 999));
+        $productConcreteTransfer->setSku($sku);
         $productConcreteTransfer->setIsActive(false);
         $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
         $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
-        $attributeData = $formData[ProductFormAdd::GENERAL];
-        foreach ($attributeData as $localeCode => $localizedAttributesData) {
-            $localeTransfer = $this->localeProvider->getLocale($localeCode);
+        $localeCollection = $this->localeProvider->getLocaleCollection();
+        foreach ($localeCollection as $localeCode) {
+            $formName = ProductFormAdd::getGeneralFormName($localeCode);
+            $localeTransfer = $this->localeFacade->getLocale($localeCode);
 
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
-                $localizedAttributesData,
+                $form->get($formName),
                 [],
                 $localeTransfer
             );
 
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
+
+        $priceTransfer = $this->buildProductConcretePriceTransfer($form, $productConcreteTransfer->getIdProductConcrete());
+        $productConcreteTransfer->setPrice($priceTransfer);
+
+        $stockTransfer = $this->buildProductStockTransfer($form, $productConcreteTransfer->getIdProductConcrete());
+        $productConcreteTransfer->setStock($stockTransfer);
 
         return $productConcreteTransfer;
     }
@@ -169,23 +182,32 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     }
 
     /**
-     * @param array $data
+     * @param \Symfony\Component\Form\FormInterface $form
      * @param array $abstractLocalizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    protected function createLocalizedAttributesTransfer(array $data, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
+    protected function createLocalizedAttributesTransfer(FormInterface $form, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
     {
         $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
-        $localizedAttributesTransfer->setName($data[GeneralForm::FIELD_NAME]);
-        $localizedAttributesTransfer->setDescription($data[GeneralForm::FIELD_DESCRIPTION]);
+        $localizedAttributesTransfer->setName($form->get(GeneralForm::FIELD_NAME)->getData());
+        $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION));
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
-        $localizedAttributesTransfer->setMetaTitle($data[SeoForm::FIELD_META_TITLE]);
-        $localizedAttributesTransfer->setMetaKeywords($data[SeoForm::FIELD_META_KEYWORDS]);
-        $localizedAttributesTransfer->setMetaDescription($data[SeoForm::FIELD_META_DESCRIPTION]);
+
+        if ($form->has(SeoForm::FIELD_META_TITLE)) {
+            $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE));
+        }
+
+        if ($form->has(SeoForm::FIELD_META_KEYWORDS)) {
+            $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS));
+        }
+
+        if ($form->has(SeoForm::FIELD_META_DESCRIPTION)) {
+            $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION));
+        }
 
         return $localizedAttributesTransfer;
     }
@@ -296,7 +318,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      *
      * @return \Generated\Shared\Transfer\ZedProductPriceTransfer
      */
-    public function buildProductPriceTransfer(FormInterface $form)
+    public function buildProductAbstractPriceTransfer(FormInterface $form)
     {
         $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(PriceForm::FIELD_PRICE)->getData();
         $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
@@ -306,6 +328,40 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
             ->setPrice($price);
 
         return $priceTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer
+     */
+    public function buildProductConcretePriceTransfer(FormInterface $form, $idProduct)
+    {
+        $price = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(PriceForm::FIELD_PRICE)->getData();
+
+        $priceTransfer = (new ZedProductPriceTransfer())
+            ->setIdProduct($idProduct)
+            ->setPrice($price);
+
+        return $priceTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer
+     */
+    public function buildProductStockTransfer(FormInterface $form, $idProduct)
+    {
+        $stock = $form->get(ProductFormAdd::PRICE_AND_STOCK)->get(ConcretePriceForm::FIELD_STOCK)->getData();
+        $sku = $form->get(ProductFormAdd::FIELD_SKU);
+
+        $stockTransfer = (new StockProductTransfer())
+            ->setIdStockProduct($idProduct)
+            ->setSku($sku)
+            ->setQuantity($stock);
+
+        return $stockTransfer;
     }
 
 }

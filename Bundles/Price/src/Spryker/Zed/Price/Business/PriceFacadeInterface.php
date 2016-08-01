@@ -123,4 +123,13 @@ interface PriceFacadeInterface
      */
     public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     *
+     * @return int
+     */
+    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
+
 }
