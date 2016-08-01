@@ -7,9 +7,12 @@
 
 namespace Functional\Spryker\Zed\Braintree\Business;
 
+use Braintree\Result\Error;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\TransactionMetaTransfer;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintree;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLogQuery;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery;
@@ -19,7 +22,12 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Zed\Braintree\BraintreeConfig;
+use Spryker\Zed\Braintree\BraintreeDependencyProvider;
+use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
 use Spryker\Zed\Braintree\Business\BraintreeFacade;
+use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @group Functional
@@ -65,6 +73,29 @@ class AbstractFacadeTest extends Test
     }
 
     /**
+     * @param \Spryker\Zed\Braintree\Business\BraintreeBusinessFactory $braintreeBusinessFactoryMock
+     *
+     * @return \Spryker\Zed\Braintree\Business\BraintreeFacade
+     */
+    protected function getBraintreeFacade(BraintreeBusinessFactory $braintreeBusinessFactoryMock)
+    {
+        $braintreeFacade = new BraintreeFacade();
+        $braintreeFacade->setFactory($braintreeBusinessFactoryMock);
+
+        return $braintreeFacade;
+    }
+
+    /**
+     * @return \Braintree\Result\Error
+     */
+    protected function getErrorResponse()
+    {
+        $response = new Error(['errors' => [], 'message' => 'Error']);
+
+        return $response;
+    }
+
+    /**
      * @return void
      */
     protected function setUpSalesOrderTestData()
@@ -103,6 +134,56 @@ class AbstractFacadeTest extends Test
     }
 
     /**
+     * @return \Generated\Shared\Transfer\TransactionMetaTransfer
+     */
+    protected function getTransactionMetaTransfer()
+    {
+        $transactionMetaTransfer = new TransactionMetaTransfer();
+        $transactionMetaTransfer->setIdSalesOrder($this->getOrderEntity()->getIdSalesOrder());
+
+        return $transactionMetaTransfer;
+    }
+
+    /**
+     * @param array $methods
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeBusinessFactory
+     */
+    protected function getFactoryMock(array $methods)
+    {
+        $factoryMock = $this->getFactory($methods);
+        $factoryMock->setContainer($this->getContainer());
+        $factoryMock->setQueryContainer(new BraintreeQueryContainer());
+        $factoryMock->setConfig(new BraintreeConfig());
+
+        return $factoryMock;
+    }
+
+    /**
+     * @param array $methods
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeBusinessFactory
+     */
+    protected function getFactory(array $methods)
+    {
+        $factoryMock = $this->getMockBuilder(BraintreeBusinessFactory::class)->setMethods($methods)->getMock();
+
+        return $factoryMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        $container = new Container();
+        $braintreeDependencyProvider = new BraintreeDependencyProvider();
+        $braintreeDependencyProvider->provideBusinessLayerDependencies($container);
+
+        return $container;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
@@ -112,6 +193,10 @@ class AbstractFacadeTest extends Test
         $totalsTransfer->setGrandTotal(1000);
         $orderTransfer->setTotals($totalsTransfer);
         $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
+
+        $addressTransfer = new AddressTransfer();
+        $orderTransfer->setBillingAddress($addressTransfer);
+        $orderTransfer->setShippingAddress($addressTransfer);
 
         return $orderTransfer;
     }

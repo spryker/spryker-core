@@ -7,24 +7,37 @@
 
 namespace Spryker\Zed\Braintree;
 
-use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToSalesAggregatorBridge;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
+    const FACADE_SALES_AGGREGATOR = 'sales aggregator facade';
+    const FACADE_REFUND = 'refund facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_SALES_AGGREGATOR] = function (Container $container) {
-            return new BraintreeToSalesAggregatorBridge($container->getLocator()->salesAggregator()->facade());
+        $container = $this->addRefundFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRefundFacade(Container $container)
+    {
+        $container[static::FACADE_REFUND] = function (Container $container) {
+            return new BraintreeToRefundBridge($container->getLocator()->refund()->facade());
         };
 
         return $container;

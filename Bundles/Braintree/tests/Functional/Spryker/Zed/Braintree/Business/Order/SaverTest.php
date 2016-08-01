@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintree;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeQuery;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -29,7 +30,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
 use Spryker\Zed\Braintree\Business\Order\Saver;
 
 /**
@@ -51,7 +51,7 @@ class SaverTest extends Test
     {
         $checkoutResponseTransfer = $this->createCheckoutResponse();
         $quoteTransfer = $this->getQuoteTransfer($checkoutResponseTransfer);
-        $orderManager = new Saver($this->getBraintreeBusinessBusinessFactory());
+        $orderManager = new Saver();
 
         $orderManager->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
 
@@ -71,7 +71,7 @@ class SaverTest extends Test
     {
         $checkoutResponseTransfer = $this->createCheckoutResponse();
         $quoteTransfer = $this->getQuoteTransfer($checkoutResponseTransfer);
-        $orderManager = new Saver($this->getBraintreeBusinessBusinessFactory());
+        $orderManager = new Saver();
 
         $orderManager->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
 
@@ -94,21 +94,11 @@ class SaverTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Braintree\Business\BraintreeBusinessFactory
-     */
-    private function getBraintreeBusinessBusinessFactory()
-    {
-        $businessFactory = new BraintreeBusinessFactory();
-
-        return $businessFactory;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    private function getQuoteTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
+    protected function getQuoteTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $orderEntity = $this->createOrderEntity();
 
@@ -167,36 +157,13 @@ class SaverTest extends Test
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    private function createOrderEntity()
+    protected function createOrderEntity()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
+        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code('DE');
+        $billingAddressEntity = $this->createAndGetAddressEntity($countryEntity);
+        $customerEntity = $this->createAndGetCustomerEntity();
 
-        $billingAddress = (new SpySalesOrderAddress())
-            ->setFkCountry($country->getIdCountry())
-            ->setFirstName('John')
-            ->setLastName('Doe')
-            ->setAddress1('Straße des 17. Juni 135')
-            ->setCity('Berlin')
-            ->setZipCode('10623');
-        $billingAddress->save();
-
-        $customer = (new SpyCustomer())
-            ->setFirstName('John')
-            ->setLastName('Doe')
-            ->setEmail('john@doe.com')
-            ->setDateOfBirth('1970-01-01')
-            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setCustomerReference('braintree-pre-authorization-test');
-        $customer->save();
-
-        $orderEntity = (new SpySalesOrder())
-            ->setEmail('john@doe.com')
-            ->setIsTest(true)
-            ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
-            ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())
-            ->setCustomer($customer)
-            ->setOrderReference('foo-bar-baz-2');
-        $orderEntity->save();
+        $orderEntity = $this->createAndGetOrderEntity($billingAddressEntity, $customerEntity);
 
         $this->createOrderItemEntity($orderEntity->getIdSalesOrder());
 
@@ -208,7 +175,7 @@ class SaverTest extends Test
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    private function createOrderItemEntity($idSalesOrder)
+    protected function createOrderItemEntity($idSalesOrder)
     {
         $stateEntity = $this->createOrderItemStateEntity();
         $processEntity = $this->createOrderProcessEntity();
@@ -232,7 +199,7 @@ class SaverTest extends Test
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
-    private function createOrderItemStateEntity()
+    protected function createOrderItemStateEntity()
     {
         $stateEntity = new SpyOmsOrderItemState();
         $stateEntity->setName('test item state');
@@ -244,7 +211,7 @@ class SaverTest extends Test
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    private function createOrderProcessEntity()
+    protected function createOrderProcessEntity()
     {
         $processEntity = new SpyOmsOrderProcess();
         $processEntity->setName('test process');
@@ -256,7 +223,7 @@ class SaverTest extends Test
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
      */
-    private function createOrderItemBundleEntity()
+    protected function createOrderItemBundleEntity()
     {
         $bundleEntity = new SpySalesOrderItemBundle();
         $bundleEntity
@@ -288,6 +255,62 @@ class SaverTest extends Test
         $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
+     */
+    protected function createAndGetAddressEntity(SpyCountry $countryEntity)
+    {
+        $billingAddressEntity = (new SpySalesOrderAddress())
+            ->setFkCountry($countryEntity->getIdCountry())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setAddress1('Straße des 17. Juni 135')
+            ->setCity('Berlin')
+            ->setZipCode('10623');
+        $billingAddressEntity->save();
+
+        return $billingAddressEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected function createAndGetCustomerEntity()
+    {
+        $customerEntity = (new SpyCustomer())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setEmail('john@doe.com')
+            ->setDateOfBirth('1970-01-01')
+            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
+            ->setCustomerReference('braintree-pre-authorization-test');
+        $customerEntity->save();
+
+        return $customerEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $billingAddressEntity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function createAndGetOrderEntity(SpySalesOrderAddress $billingAddressEntity, SpyCustomer $customerEntity)
+    {
+        $orderEntity = (new SpySalesOrder())
+            ->setEmail('john@doe.com')
+            ->setIsTest(true)
+            ->setFkSalesOrderAddressBilling($billingAddressEntity->getIdSalesOrderAddress())
+            ->setFkSalesOrderAddressShipping($billingAddressEntity->getIdSalesOrderAddress())
+            ->setCustomer($customerEntity)
+            ->setOrderReference('foo-bar-baz-2');
+        $orderEntity->save();
+
+        return $orderEntity;
     }
 
 }

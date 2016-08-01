@@ -84,4 +84,16 @@
         <property name="braintreeCreditCard" type="BraintreePayment"/>
     </transfer>
 
+    <transfer name="Refund">
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="TransactionMeta">
+        <property name="idSalesOrder" type="int"/>
+        <property name="idPayment" type="int"/>
+        <property name="transactionIdentifier" type="string"/>
+        <property name="refund" type="Refund"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfer>

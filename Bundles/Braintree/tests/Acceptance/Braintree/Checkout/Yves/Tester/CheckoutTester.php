@@ -184,8 +184,7 @@ class CheckoutTester extends YvesAcceptanceTester
         $i->fillField('#email', 'payment.test-123@spryker.com');
         $i->fillField('#password', 'spryker123');
         $i->click('#btnLogin');
-        $i->wait(10);
-        $i->seeElement('#confirmButtonTop');
+        $i->waitForElement('#confirmButtonTop', 30);
         $i->click('#confirmButtonTop');
         $i->switchToWindow();
         $i->wait(10);
