@@ -60,6 +60,7 @@
                     <li class=""><a href="#tab_abstract_attributes" data-toggle="tab">Attributes</a></li>
                     <li class=""><a href="#tab_variants" data-toggle="tab">Variants</a></li>
                     <li class=""><a href="#tab_seo" data-toggle="tab">SEO</a></li>
+                    <li class=""><a href="#tab_image" data-toggle="tab">Image</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab_general" class="tab-pane active">
@@ -80,6 +81,10 @@
 
                     <div id="tab_seo" class="tab-pane">
                         {% include '@ProductManagement/Product/partials/seo-tab.twig' %}
+                    </div>
+
+                    <div id="tab_image" class="tab-pane">
+                        {% include '@ProductManagement/Product/partials/image-tab.twig' %}
                     </div>
                 </div>
             </div>

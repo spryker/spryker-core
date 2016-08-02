@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Symfony\Component\Form\AbstractType;
@@ -36,6 +37,7 @@ class ProductFormAdd extends AbstractType
     const PRICE_AND_STOCK = 'price_and_stock';
     const TAX_SET = 'tax_set';
     const SEO = 'seo';
+    const IMAGE = 'image';
 
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_VARIANT = 'validation_group_attribute_variant';
@@ -43,6 +45,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
+    const VALIDATION_GROUP_IMAGE = 'validation_group_image';
 
     const OPTION_TAX_RATES = 'option_tax_rates';
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
@@ -90,6 +93,7 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
             self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO,
+            self::VALIDATION_GROUP_IMAGE,
         ];
 
         $resolver->setDefaults([
@@ -117,7 +121,8 @@ class ProductFormAdd extends AbstractType
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addAttributeVariantForm($builder, $options[self::ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
-            ->addSeoLocalizedForms($builder, $options);
+            ->addSeoLocalizedForms($builder)
+            ->addImageForm($builder);
     }
 
     /**
@@ -348,6 +353,43 @@ class ProductFormAdd extends AbstractType
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
+                ])]
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addImageForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder
+            ->add(self::IMAGE, 'collection', [
+                'type' => new ImageForm(self::IMAGE),
+                'options' => [],
+                'label' => false,
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($attributes, ExecutionContextInterface $context) {
+                            return;
+                            $selectedAttributes = [];
+                            foreach ($attributes as $type => $valueSet) {
+                                if (!empty($valueSet['value'])) {
+                                    $selectedAttributes[] = $valueSet['value'];
+                                    break;
+                                }
+                            }
+
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please select at least one variant attribute value');
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_IMAGE]
                 ])]
             ]);
 

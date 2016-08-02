@@ -13,6 +13,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
@@ -146,6 +147,17 @@ class AbstractProductFormDataProvider
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,
             ],
+            ProductFormAdd::IMAGE => [[
+                ImageForm::FIELD_SET_ID => null,
+                ImageForm::FIELD_SET_NAME => null,
+                ImageForm::FIELD_SET_FK_LOCALE => null,
+                ImageForm::FIELD_SET_FK_PRODUCT => null,
+                ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
+                ImageForm::FIELD_ID_PRODUCT_IMAGE => null,
+                ImageForm::FIELD_IMAGE_SMALL => null,
+                ImageForm::FIELD_IMAGE_BIG => null,
+                ImageForm::FIELD_ORDER => null,
+            ]],
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());

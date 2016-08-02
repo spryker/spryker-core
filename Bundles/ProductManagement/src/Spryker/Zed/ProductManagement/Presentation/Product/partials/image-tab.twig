@@ -1,0 +1,27 @@
+<div class="panel-body">
+    <h3>Catalog and product detail page Image(s)</h3>
+    <p>
+        For each image to be displayed in the shop one image set must be created. An image set has a name for identification and may contain a small and a large version of the image. The order of your image sets can be changed via drag and drop. The product variants inherit these product image sets, but can be changed there on an individual level.
+    </p>
+
+    <p>
+        <i>Note: The first image will be the image displayed in the catalog. The full image set will be displayed on the product detail page before the customer has configured what variant he wants.</i>
+    </p>
+</div>
+
+<div class="panel-body">
+    <div class="well">
+            {% for inputCollection in form.image %}
+                {{ form_row(inputCollection.id_product_image_set) }}
+                {{ form_row(inputCollection.id_product_image) }}
+                {{ form_row(inputCollection.fk_locale) }}
+                {{ form_row(inputCollection.fk_product) }}
+                {{ form_row(inputCollection.fk_product_abstract) }}
+
+                {{ form_row(inputCollection.name) }}
+                {{ form_row(inputCollection.external_url_small) }}
+                {{ form_row(inputCollection.external_url_large) }}
+                {{ form_row(inputCollection.order) }}
+            {% endfor %}
+    </div>
+</div>
