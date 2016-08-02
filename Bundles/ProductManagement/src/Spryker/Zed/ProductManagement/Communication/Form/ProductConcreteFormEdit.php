@@ -98,7 +98,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_TAX, new ConcretePriceForm($options), [
+            ->add(self::FORM_PRICE_AND_TAX, new ConcretePriceForm($options), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -124,7 +124,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addStockForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRICE_AND_STOCK, 'collection', [
+            ->add(self::FORM_PRICE_AND_STOCK, 'collection', [
                 'type' => new StockForm(),
                 'label' => false,
                 'constraints' => [new Callback([

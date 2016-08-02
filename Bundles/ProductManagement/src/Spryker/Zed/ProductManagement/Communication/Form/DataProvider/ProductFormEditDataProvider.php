@@ -34,7 +34,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData = $this->appendAbstractAttributes($productAbstractTransfer, $formData);
         }
 
-        $formData[ProductFormAdd::ATTRIBUTE_VARIANT] = [];
+        $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
 
         return $formData;
     }
@@ -82,11 +82,11 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendPriceAndTax(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $formData[ProductFormAdd::PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
+        $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
 
         $priceTransfer = $this->priceFacade->getProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
         if ($priceTransfer) {
-            $formData[ProductFormAdd::PRICE_AND_TAX][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
+            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }
 
         return $formData;

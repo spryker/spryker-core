@@ -179,7 +179,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                 $this->slugify($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
-            ->setTaxSetId($data[ProductFormAdd::PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
+            ->setTaxSetId($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -263,7 +263,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     public function generateVariantAttributeArrayFromData(array $data, array $attributeTransferCollection)
     {
         $result = [];
-        foreach ($data[ProductFormAdd::ATTRIBUTE_VARIANT] as $type => $values) {
+        foreach ($data[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] as $type => $values) {
             $attributeValues = $this->getVariantValues($values, $attributeTransferCollection[$type]);
             if ($attributeValues) {
                 $result[$type] = $attributeValues;
@@ -323,7 +323,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductAbstractPriceTransfer(FormInterface $form)
     {
-        $price = $form->get(ProductFormAdd::PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
+        $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
         $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
         $priceTransfer = (new ZedProductPriceTransfer())
@@ -340,7 +340,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     public function buildProductConcretePriceTransfer(FormInterface $form, $idProduct)
     {
-        $price = $form->get(ProductFormAdd::PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
+        $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
 
         $priceTransfer = (new ZedProductPriceTransfer())
             ->setIdProduct($idProduct)
@@ -359,7 +359,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $result = [];
         $sku = $form->get(ProductFormAdd::FIELD_SKU)->getData();
 
-        foreach ($form->get(ProductFormAdd::PRICE_AND_STOCK) as $stockForm) {
+        foreach ($form->get(ProductFormAdd::FORM_PRICE_AND_STOCK) as $stockForm) {
             $stockData = $stockForm->getData();
             $type = $stockForm->get(StockForm::FIELD_TYPE)->getData();
 

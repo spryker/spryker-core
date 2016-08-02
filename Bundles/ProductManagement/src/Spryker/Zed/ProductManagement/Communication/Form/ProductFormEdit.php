@@ -28,13 +28,16 @@ class ProductFormEdit extends ProductFormAdd
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this
+        parent::buildForm($builder, $options);
+
+        /*$this
             ->addSkuField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
-            ->addSeoLocalizedForms($builder, $options);
+            ->addSeoLocalizedForms($builder, $options)
+            ->addImageForm($builder);*/
     }
 
 }

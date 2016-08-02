@@ -86,6 +86,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
+            $this->getProductImageQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
@@ -107,6 +108,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
+            $this->getProductImageQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
@@ -128,6 +130,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
+            $this->getProductImageQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductManagementFacade(),
@@ -160,6 +163,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getStockQueryContainer()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_STOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
+     */
+    public function getProductImageQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
     }
 
     /**

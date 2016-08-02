@@ -10,12 +10,13 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
@@ -53,6 +54,11 @@ class AbstractProductFormDataProvider
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
     protected $stockQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
+     */
+    protected $productImageQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
@@ -94,6 +100,7 @@ class AbstractProductFormDataProvider
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
+        ProductImageQueryContainerInterface $productImageQueryContainer,
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementFacadeInterface $productManagementFacade,
@@ -105,6 +112,7 @@ class AbstractProductFormDataProvider
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
+        $this->productImageQueryContainer = $productImageQueryContainer;
         $this->localeProvider = $localeProvider;
         $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
@@ -125,9 +133,9 @@ class AbstractProductFormDataProvider
         $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
 
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
-        $formOptions[ProductFormAdd::ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
 
-        $formOptions[ProductFormAdd::ID_LOCALE] = $this->currentLocale->getIdLocale();
+        $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
 
         return $formOptions;
@@ -142,12 +150,12 @@ class AbstractProductFormDataProvider
     {
         $data = [
             ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
-            ProductFormAdd::PRICE_AND_TAX => [
+            ProductFormAdd::FORM_ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
+            ProductFormAdd::FORM_PRICE_AND_TAX => [
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,
             ],
-            ProductFormAdd::IMAGE => [[
+            ProductFormAdd::FORM_IMAGE => [[
                 ImageForm::FIELD_SET_ID => null,
                 ImageForm::FIELD_SET_NAME => null,
                 ImageForm::FIELD_SET_FK_LOCALE => null,
@@ -241,7 +249,7 @@ class AbstractProductFormDataProvider
             $result[$key] = $data;
         }
 
-        $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         $result[$defaultKey] = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, null, true);
 
         return $result;
