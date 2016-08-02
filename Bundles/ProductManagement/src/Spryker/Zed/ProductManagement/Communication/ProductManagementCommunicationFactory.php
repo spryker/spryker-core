@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
+use Spryker\Zed\ProductManagement\Business\Product\VariantGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeForm;
@@ -402,11 +402,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator
+     * @return \Spryker\Zed\ProductManagement\Business\Product\VariantGenerator
      */
     public function createProductMatrixGenerator()
     {
-        return new MatrixGenerator();
+        return new VariantGenerator();
     }
 
 }

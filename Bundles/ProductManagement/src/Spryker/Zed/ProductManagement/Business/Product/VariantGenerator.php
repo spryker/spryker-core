@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 
-class MatrixGenerator
+class VariantGenerator
 {
 
     const TOKENS = 'tokens';

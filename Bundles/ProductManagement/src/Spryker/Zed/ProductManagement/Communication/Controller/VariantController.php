@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductManagement\Business\Product\MatrixGenerator;
+use Spryker\Zed\ProductManagement\Business\Product\VariantGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
-class MatrixController extends AbstractController
+class VariantController extends AbstractController
 {
 
     const PARAM_SKU = 'sku';
@@ -52,19 +52,12 @@ class MatrixController extends AbstractController
             $localizedAttributes[$locale] = Json::decode($localizedJson, true) ?: [];
         }
 
-        $attributes = [
-            'color' => ['red' => 'red', 'blue' => 'blue'],
-            'flavour' => ['sweet' => 'sweet'],
-            'size' => [40 => 40, 41 => 41, 42 => 42, 43 => 43],
-        ];
-        print_r($attributes);
-
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku($sku);
         $productAbstractTransfer->setAttributes([]);
         $productAbstractTransfer->setLocalizedAttributes(new \ArrayObject($localizedAttributes));
 
-        $matrixGenerator = new MatrixGenerator();
+        $matrixGenerator = new VariantGenerator();
         $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributes);
 
         $a = [];
