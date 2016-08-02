@@ -5,6 +5,8 @@
  */
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductOptionToGlossaryInterface
 {
     /**
@@ -16,4 +18,60 @@ interface ProductOptionToGlossaryInterface
      * @return string
      */
     public function translate($keyName, array $data = []);
+
+    /**
+     * @param string $keyName
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return string
+     */
+    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
+
+    /**
+     * @param string $glossaryKey
+     *
+     * @return bool
+     */
+    public function hasKey($glossaryKey);
+
+    /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    public function createKey($keyName);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
+
 }

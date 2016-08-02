@@ -95,6 +95,10 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
         };
 
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
 
         return $container;
     }

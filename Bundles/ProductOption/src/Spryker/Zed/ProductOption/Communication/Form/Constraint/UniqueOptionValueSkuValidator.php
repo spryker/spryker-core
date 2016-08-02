@@ -34,7 +34,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
         }
 
         if (!$this->isUniqueSku($value, $constraint)) {
-            $this->buildViolation('Discount with this name is already used.')
+            $this->buildViolation('Product option with this sku is already used.')
                 ->addViolation();
         }
     }
@@ -66,7 +66,6 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
         $root = $this->context->getRoot();
 
         $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submittedSku);
-
         if (!$idProductOptionValue) {
             return true;
         }

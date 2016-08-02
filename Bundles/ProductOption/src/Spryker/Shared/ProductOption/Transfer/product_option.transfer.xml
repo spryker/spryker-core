@@ -73,6 +73,14 @@
         <property name="sku" type="string" />
         <property name="fkProductOptionGroup" type="int" />
         <property name="value" type="string" />
+        <property name="optionHash" type="string" />
+    </transfer>
+
+    <transfer name="ProductOptionValueTranslation">
+        <property name="name" type="string" />
+        <property name="key" type="string" />
+        <property name="localeCode" type="string" />
+        <property name="relatedOptionHash" type="string" />
     </transfer>
 
     <transfer name="ProductOptionGroup">
@@ -80,7 +88,11 @@
         <property name="fkTaxSet" type="int" />
         <property name="active" type="bool" />
         <property name="name" type="string" />
+        <property name="productsToBeAssigned" type="array" />
+        <property name="productsToBeDeassigned" type="array" />
+
         <property name="productOptionValues" type="ProductOptionValue[]" singular="productOptionValue"/>
+        <property name="productOptionValueTranslations" type="ProductOptionValueTranslation[]" singular="productOptionValueTranslation"/>
     </transfer>
 
     <transfer name="ProductOptionGroups">

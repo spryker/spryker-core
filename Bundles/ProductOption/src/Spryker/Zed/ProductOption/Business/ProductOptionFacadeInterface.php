@@ -75,16 +75,43 @@ interface ProductOptionFacadeInterface
     public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * @api
+     *
      * Specification:
      *  - Calculate tax rate for current quote
      *  - Set tax rate perecentage
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
     public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @api
+     *
+     *  Specification:
+     *  - Get product option group from persistence
+     *  - Get all related product option values
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    public function getProductOptionGroupById($idProductOptionGroup);
+
+    /**
+     *  @api
+     *
+     *  Specification:
+     *  - Store translation and update touch table
+     *
+     * @param string $key
+     * @param string $value
+     * @param string $localeCode
+     *
+     * @return void
+     */
+    public function saveProductOptionValueTranslation($key, $value, $localeCode);
 
 }

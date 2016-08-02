@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductOptionQueryContainerInterface
 {
     /**
@@ -50,5 +52,31 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
+
+    /**
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupById($idProductOptionGroup);
+
+    /**
+     * @param int $idProductOptionGroup
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryAbstractProductsByOptionGroupId($idProductOptionGroup, LocaleTransfer $localeTransfer);
+
+    /**
+     * @api
+     *
+     * @param string $term
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
+
 
 }

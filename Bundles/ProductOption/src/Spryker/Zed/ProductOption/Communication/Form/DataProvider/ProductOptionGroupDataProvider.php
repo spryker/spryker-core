@@ -6,10 +6,11 @@
  */
 namespace Spryker\Zed\ProductOption\Communication\Form\DataProvider;
 
-use Spryker\Zed\ProductOption\Communication\Form\GeneralForm;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
 
-class GeneralFormDataProvider
+class ProductOptionGroupDataProvider
 {
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
@@ -17,11 +18,20 @@ class GeneralFormDataProvider
     protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
+     * @var \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function __construct(ProductOptionToTaxInterface $taxFacade)
-    {
+    protected $productOptionGroupTransfer;
+
+    /**
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     */
+    public function __construct(
+        ProductOptionToTaxInterface $taxFacade,
+        ProductOptionGroupTransfer $productOptionGroupTransfer = null
+    ) {
         $this->taxFacade = $taxFacade;
+        $this->productOptionGroupTransfer = $productOptionGroupTransfer;
     }
 
     /**
@@ -30,18 +40,16 @@ class GeneralFormDataProvider
     public function getOptions()
     {
         return [
-            GeneralForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
+            ProductOptionGroupForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
         ];
     }
 
     /**
-     * @param int|null $idMethod
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function getData($idMethod = null)
+    public function getData()
     {
-        return [];
+        return $this->productOptionGroupTransfer;
     }
 
     /**

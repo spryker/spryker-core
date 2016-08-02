@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
 {
 
@@ -33,5 +35,76 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
     public function translate($keyName, array $data = [])
     {
         return $this->glossaryFacade->translate($keyName, $data);
+    }
+
+    /**
+     * @param string $keyName
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return string
+     */
+    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
+    {
+        return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
+    }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value)
+    {
+        return $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value);
+    }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
+    {
+       return $this->glossaryFacade->updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
+    }
+
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasKey($keyName)
+    {
+        return $this->glossaryFacade->hasKey($keyName);
+    }
+
+    /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    public function createKey($keyName)
+    {
+       return $this->glossaryFacade->createKey($keyName);
+    }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer)
+    {
+       return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
 }

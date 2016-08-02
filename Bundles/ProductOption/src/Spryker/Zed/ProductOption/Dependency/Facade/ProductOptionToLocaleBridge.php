@@ -45,4 +45,30 @@ class ProductOptionToLocaleBridge implements ProductOptionToLocaleInterface
         return $this->localeFacade->getLocale($localeName);
     }
 
+    /**
+     * @param string $localeCode
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleByCode($localeCode)
+    {
+        return $this->localeFacade->getLocaleByCode($localeCode);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection()
+    {
+        return $this->localeFacade->getLocaleCollection();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this->localeFacade->getCurrentLocale();
+    }
+
 }

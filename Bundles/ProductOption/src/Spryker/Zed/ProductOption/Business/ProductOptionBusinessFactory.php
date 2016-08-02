@@ -15,6 +15,7 @@ use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
+use Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupReader;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -24,11 +25,28 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupReader
+     */
+    public function createProductOptionGroupReader()
+    {
+        return new ProductOptionGroupReader(
+            $this->getQueryContainer(),
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupSaver
      */
     public function createProductOptionGroupSaver()
     {
-       return new ProductOptionGroupSaver($this->getQueryContainer(), $this->getTouchFacade());
+       return new ProductOptionGroupSaver(
+           $this->getQueryContainer(),
+           $this->getTouchFacade(),
+           $this->getGlossaryFacade(),
+           $this->getLocaleFacade()
+       );
     }
 
     /**

@@ -16,12 +16,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class ProductOptionForm extends AbstractType
+class ProductOptionValueForm extends AbstractType
 {
     const FIELD_VALUE = 'value';
     const FIELD_SKU = 'sku';
     const FIELD_PRICE = 'price';
     const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+    const FIELD_OPTION_HASH = 'optionHash';
 
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
@@ -47,11 +48,14 @@ class ProductOptionForm extends AbstractType
         $this->addNameField($builder)
             ->addSkuField($builder)
             ->addPrice($builder)
-            ->addIdProductOptionValue($builder);
+            ->addIdProductOptionValue($builder)
+            ->addFormHash($builder);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -68,10 +72,14 @@ class ProductOptionForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALUE, 'text', [
-            'label' => 'Name *',
+            'label' => 'Translation key *',
             'required' => false,
             'constraints' => [
                 new NotBlank(),
+                new Regex([
+                    'pattern' => '/^[a-z0-9\.]+$/',
+                    'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".".'
+                ]),
             ],
         ]);
 
@@ -112,7 +120,8 @@ class ProductOptionForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Regex([
-                    'pattern' => '/[0-9\.\,]+/'
+                    'pattern' => '/[0-9\.\,]+/',
+                    'message' => 'Invalid price provided. Valid values "0-9", ".", ",".'
                 ]),
             ],
         ]);
@@ -128,6 +137,19 @@ class ProductOptionForm extends AbstractType
     protected function addIdProductOptionValue(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_PRODUCT_OPTION_VALUE, 'hidden');
+
+        return $this;
+    }
+
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFormHash(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_OPTION_HASH, 'hidden');
 
         return $this;
     }

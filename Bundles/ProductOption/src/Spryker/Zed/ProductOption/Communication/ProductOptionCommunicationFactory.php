@@ -9,9 +9,12 @@ namespace Spryker\Zed\ProductOption\Communication;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOption\Communication\Form\DataProvider\GeneralFormDataProvider;
-use Spryker\Zed\ProductOption\Communication\Form\GeneralForm;
-use Spryker\Zed\ProductOption\Communication\Form\ProductOptionForm;
+use Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueTranslationForm;
+use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
+use Spryker\Zed\ProductOption\Communication\Table\ProductTable;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -22,37 +25,91 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
+     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createGeneralForm($data, $options)
-    {
-        $productOptionForm = $this->createProductOptionForm();
+    public function createProductOptionGroup(
+        ProductOptionGroupDataProvider $productOptionGroupDataProvider = null
+    ){
+        $productOptionValueForm = $this->createProductOptionValueForm();
+        $productOptionValueTranslationForm = $this->createProductOptionValueTranslationForm();
 
-        $generalFormType = new GeneralForm($productOptionForm);
+        $productOptionGroupFormType = new ProductOptionGroupForm(
+            $productOptionValueForm,
+            $productOptionValueTranslationForm
+        );
 
         return $this->getFormFactory()->create(
-            $generalFormType,
-            null,
-            array_merge(['data_class'  => ProductOptionGroupTransfer::class], $options)
+            $productOptionGroupFormType,
+            $productOptionGroupDataProvider->getData(),
+            array_merge([
+                'data_class'  => ProductOptionGroupTransfer::class
+            ],
+                $productOptionGroupDataProvider->getOptions()
+            )
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionForm
+     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm
      */
-    public function createProductOptionForm()
+    public function createProductOptionValueForm()
     {
-        return new ProductOptionForm($this->getQueryContainer());
+        return new ProductOptionValueForm($this->getQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\DataProvider\GeneralFormDataProvider
+     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueTranslationForm
      */
-    public function createGeneralFormDataProvider()
+    public function createProductOptionValueTranslationForm()
     {
-        return new GeneralFormDataProvider(
-            $this->getTaxFacade()
+        return new ProductOptionValueTranslationForm();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider
+     */
+    public function createGeneralFormDataProvider(ProductOptionGroupTransfer $productOptionGroupTransfer = null)
+    {
+        return new ProductOptionGroupDataProvider(
+            $this->getTaxFacade(),
+            $productOptionGroupTransfer
         );
+    }
+
+    /**
+     * @param int $idProductOptionGroup
+     *
+     * @return \Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable
+     */
+    public function createProductOptionTable($idProductOptionGroup)
+    {
+        return new ProductOptionTable($this->getQueryContainer(), $this->getCurrentLocale(), $idProductOptionGroup);
+    }
+
+    /**
+     * @param int $idProductOptionGroup
+     *
+     * @return \Spryker\Zed\ProductOption\Communication\Table\ProductTable
+     */
+    public function createProductTable($idProductOptionGroup = null)
+    {
+        return new ProductTable(
+            $this->getQueryContainer(),
+            $this->getCurrentLocale(),
+            $idProductOptionGroup
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this->getLocaleFacade()->getCurrentLocale();
     }
 
     /**
@@ -61,5 +118,13 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE);
     }
 }

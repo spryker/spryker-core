@@ -85,6 +85,39 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     /**
      *
      * Specification:
+     *  - Get product option group from persistence
+     *  - Get all related product option values
+     *
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    public function getProductOptionGroupById($idProductOptionGroup)
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupReader()
+            ->getProductOptionGroupById($idProductOptionGroup);
+    }
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @param string $localeCode
+     *
+     * @return void
+     */
+    public function saveProductOptionValueTranslation($key, $value, $localeCode)
+    {
+        $this->getFactory()
+            ->createProductOptionGroupSaver()
+            ->saveProductOptionValueTranslation($key, $value, $localeCode);
+    }
+
+    /**
+     *
+     * Specification:
      *  - Loops over all items and calculates gross amount for each items
      *  - Data is read from sales order persistence
      *
