@@ -32,6 +32,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);
             $formData = $this->appendPriceAndTax($productAbstractTransfer, $formData);
             $formData = $this->appendAbstractAttributes($productAbstractTransfer, $formData);
+            $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
         }
 
         $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
@@ -129,6 +130,20 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = null;
         }
+
+        return $formData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function appendAbstractProductImages(ProductAbstractTransfer $productAbstractTransfer, array $formData)
+    {
+        $imageSetCollection = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());
+        $formData[ProductFormAdd::FORM_IMAGE] = $imageSetCollection;
 
         return $formData;
     }

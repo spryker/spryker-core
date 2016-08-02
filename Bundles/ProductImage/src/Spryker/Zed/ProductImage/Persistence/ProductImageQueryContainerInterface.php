@@ -19,4 +19,29 @@ interface ProductImageQueryContainerInterface
      */
     public function queryImagesByIdProductImageSet($idProductImageSet);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageProduct();
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageSetByProductAbstractId($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageSetByProductId($idProduct);
+
 }

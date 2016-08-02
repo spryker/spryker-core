@@ -10,8 +10,8 @@
 </div>
 
 <div class="panel-body">
-    <div class="well">
-        {% for inputCollection in form.image %}
+    {% for inputCollection in form.image %}
+        <div class="well">
             {{ form_row(inputCollection.id_product_image_set) }}
             {{ form_row(inputCollection.id_product_image) }}
             {{ form_row(inputCollection.fk_locale) }}
@@ -22,6 +22,6 @@
             {{ form_row(inputCollection.external_url_small) }}
             {{ form_row(inputCollection.external_url_large) }}
             {{ form_row(inputCollection.order) }}
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 </div>

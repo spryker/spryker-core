@@ -27,10 +27,66 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     {
         return $this->getFactory()
             ->createProductImageSetToProductImageQuery()
-            ->useSpyProductImageQuery()
-            ->endUse()
+                ->useSpyProductImageQuery()
+                ->endUse()
             ->filterByFkProductImageSet($idProductImageSet)
             ->orderBySort(Criteria::DESC);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageProduct()
+    {
+        return $this->getFactory()
+            ->createProductImageSetQuery()
+            ->useSpyProductImageSetToProductImageQuery()
+                ->useSpyProductImageQuery()
+                ->endUse()
+            ->orderBySort(Criteria::DESC)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    public function queryImageSetByProductAbstractId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductImageQuery()
+                ->useSpyProductImageSetToProductImageQuery()
+                    ->useSpyProductImageSetQuery()
+                        ->filterByFkProductAbstract($idProductAbstract)
+                    ->endUse()
+                ->orderBySort(Criteria::DESC)
+                ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryImageSetByProductId($idProduct)
+    {
+        return $this->queryImageProduct()
+            ->filterByFkProduct($idProduct);
     }
 
 }

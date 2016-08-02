@@ -40,6 +40,8 @@ class AbstractProductFormDataProvider
     const FORM_FIELD_NAME_DISABLED = 'name_disabled';
     const FORM_FIELD_ALLOW_INPUT = 'allow_input';
 
+    const IMAGES = 'images';
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -184,6 +186,37 @@ class AbstractProductFormDataProvider
     {
         return $this->productManagementFacade
             ->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductImagesForAbstractProduct($idProductAbstract)
+    {
+        $imageCollection = $this->productImageQueryContainer
+            ->queryImageSetByProductAbstractId($idProductAbstract)
+            ->find();
+
+        $result = [];
+        foreach ($imageCollection as $image) {
+            $item = $image->toArray();
+            $imageSet = $image->getSpyProductImageSetToProductImages();
+
+            foreach ($imageSet as $setEntity) {
+                $item[ImageForm::FIELD_SET_ID] = $setEntity->getSpyProductImageSet()->getIdProductImageSet();
+                $item[ImageForm::FIELD_SET_NAME] = $setEntity->getSpyProductImageSet()->getName();
+                $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
+                $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
+                $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
+                $item[ImageForm::FIELD_ORDER] = $setEntity->getSort();
+            }
+
+            $result[] = $item;
+        }
+
+        return $result;
     }
 
     /**
