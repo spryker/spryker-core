@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ImageForm extends AbstractSubForm
 {
@@ -20,10 +23,7 @@ class ImageForm extends AbstractSubForm
     const FIELD_SET_FK_PRODUCT = 'fk_product';
     const FIELD_SET_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
-    const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
-    const FIELD_IMAGE_SMALL = 'external_url_small';
-    const FIELD_IMAGE_BIG = 'external_url_large';
-    const FIELD_ORDER = 'order';
+    const IMAGE_COLLECTION = 'image_collection';
 
 
     /**
@@ -42,10 +42,7 @@ class ImageForm extends AbstractSubForm
             ->addLocaleHiddenField($builder)
             ->addProductHiddenField($builder)
             ->addProductAbstractHiddenField($builder)
-            ->addProductImageIdHiddenField($builder)
-            ->addImageSmallField($builder)
-            ->addImageBigField($builder)
-            ->addOrderHiddenField($builder);
+            ->addImageForm($builder);
     }
 
     /**
@@ -71,7 +68,10 @@ class ImageForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_SET_NAME, 'text', [
                 'required' => false,
-                'label' => 'Image Set Name'
+                'label' => 'Image Set Name',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]);
 
         return $this;
@@ -121,61 +121,36 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addProductImageIdHiddenField(FormBuilderInterface $builder)
+    protected function addImageForm(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_IMAGE, 'hidden', []);
+            ->add(self::IMAGE_COLLECTION, 'collection', [
+                'type' => new ImageCollectionForm(ProductFormAdd::FORM_IMAGE_COLLECTION),
+                'options' => [],
+                'label' => false,
+                //'allow_add' => true,
+                //'allow_delete' => true,
+                //'prototype' => true,
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($attributes, ExecutionContextInterface $context) {
+                            return;
+                            $selectedAttributes = [];
+                            foreach ($attributes as $type => $valueSet) {
+                                if (!empty($valueSet['value'])) {
+                                    $selectedAttributes[] = $valueSet['value'];
+                                    break;
+                                }
+                            }
 
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addImageSmallField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_IMAGE_SMALL, 'text', [
-                'required' => true,
-                'label' => 'Small',
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                            if (empty($selectedAttributes)) {
+                                $context->addViolation('Please select at least one variant attribute value');
+                            }
+                        },
+                    ],
+                    'groups' => [ProductFormAdd::VALIDATION_GROUP_IMAGE]
+                ])]
             ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addImageBigField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_IMAGE_BIG, 'text', [
-                'required' => true,
-                'label' => 'Large',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addOrderHiddenField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_ORDER, 'hidden', []);
 
         return $this;
     }

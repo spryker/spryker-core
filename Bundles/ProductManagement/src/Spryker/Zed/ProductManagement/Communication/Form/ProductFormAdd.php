@@ -36,7 +36,8 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
-    const FORM_IMAGE = 'image';
+    const FORM_IMAGE_SET = 'image_set';
+    const FORM_IMAGE_COLLECTION = 'image_collection';
 
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     const OPTION_ATTRIBUTE_VARIANT = 'option_attribute_variant';
@@ -369,8 +370,8 @@ class ProductFormAdd extends AbstractType
     protected function addImageForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_IMAGE, 'collection', [
-                'type' => new ImageForm(self::FORM_IMAGE),
+            ->add(self::FORM_IMAGE_SET, 'collection', [
+                'type' => new ImageForm(self::FORM_IMAGE_SET),
                 'options' => [],
                 'label' => false,
                 //'allow_add' => true,

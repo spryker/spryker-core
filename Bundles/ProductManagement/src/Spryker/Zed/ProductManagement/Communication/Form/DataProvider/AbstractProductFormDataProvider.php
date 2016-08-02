@@ -14,6 +14,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
@@ -157,16 +158,16 @@ class AbstractProductFormDataProvider
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,
             ],
-            ProductFormAdd::FORM_IMAGE => [[
+            ProductFormAdd::FORM_IMAGE_SET => [[
                 ImageForm::FIELD_SET_ID => null,
                 ImageForm::FIELD_SET_NAME => null,
                 ImageForm::FIELD_SET_FK_LOCALE => null,
                 ImageForm::FIELD_SET_FK_PRODUCT => null,
                 ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
-                ImageForm::FIELD_ID_PRODUCT_IMAGE => null,
-                ImageForm::FIELD_IMAGE_SMALL => null,
-                ImageForm::FIELD_IMAGE_BIG => null,
-                ImageForm::FIELD_ORDER => null,
+                ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
+                ImageCollectionForm::FIELD_IMAGE_SMALL => null,
+                ImageCollectionForm::FIELD_IMAGE_BIG => null,
+                ImageCollectionForm::FIELD_ORDER => null,
             ]],
         ];
 
@@ -210,7 +211,7 @@ class AbstractProductFormDataProvider
                 $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
                 $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
                 $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
-                $item[ImageForm::FIELD_ORDER] = $setEntity->getSort();
+                $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
             }
 
             $result[] = $item;
