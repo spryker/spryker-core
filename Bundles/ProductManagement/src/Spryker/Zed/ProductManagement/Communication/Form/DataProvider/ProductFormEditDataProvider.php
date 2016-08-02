@@ -145,25 +145,33 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     protected function appendAbstractProductImages(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
         $imageSetCollection = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());
+        $localeCollection = $this->localeProvider->getLocaleCollection();
 
-        $imageData = [];
-        $setData = [];
-        foreach ($imageSetCollection as $data) {
-            $setId = $data[ImageForm::FIELD_SET_ID];
-            $imageData[$setId][] = $data;
+        foreach ($localeCollection as $localeCode) {
+            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
 
-            $setId = $data[ImageForm::FIELD_SET_ID];
-            $item = [];
-            $item[ImageForm::FIELD_SET_ID] = $setId;
-            $item[ImageForm::FIELD_SET_NAME] = $data[ImageForm::FIELD_SET_NAME];
-            $setData[$setId] = $item;
+            $imageData = [];
+            $setData = [];
+            foreach ($imageSetCollection[$localeCode] as $data) {
+                $setId = $data[ImageForm::FIELD_SET_ID];
+                $imageData[$setId][] = $data;
+
+                $setId = $data[ImageForm::FIELD_SET_ID];
+                $item = [];
+                $item[ImageForm::FIELD_SET_ID] = $setId;
+                $item[ImageForm::FIELD_SET_NAME] = $data[ImageForm::FIELD_SET_NAME];
+                $setData[$setId] = $item;
+            }
+
+            foreach ($setData as $setId => $data) {
+                $setData[$setId][ImageForm::IMAGE_COLLECTION] = $imageData[$setId];
+            }
+
+            $formData[$formName] = $setData;
         }
 
-        foreach ($setData as $setId => $data) {
-            $setData[$setId][ImageForm::IMAGE_COLLECTION] = $imageData[$setId];
-        }
-
-        $formData[ProductFormAdd::FORM_IMAGE_SET] = $setData;
+        sd($formData);
+        ob_flush();
 
         return $formData;
     }

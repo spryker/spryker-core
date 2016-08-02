@@ -124,7 +124,7 @@ class ProductFormAdd extends AbstractType
             ->addAttributeVariantForm($builder, $options[self::OPTION_ATTRIBUTE_VARIANT])
             ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
             ->addSeoLocalizedForms($builder)
-            ->addImageForm($builder);
+            ->addImageLocalizedForms($builder);
     }
 
     /**
@@ -185,6 +185,25 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
+    protected function addImageLocalizedForms(FormBuilderInterface $builder)
+    {
+        $localeCollection = $this->localeCollector->getLocaleCollection(true);
+        foreach ($localeCollection as $localeCode) {
+            $name = self::getAbstractImagesFormName($localeCode);
+            $this->addImageForm($builder, $name);
+        }
+
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $this->addImageForm($builder, $defaultName);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder
@@ -231,7 +250,7 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new GeneralForm(self::FORM_GENERAL), [
+            ->add($name, new GeneralForm($name), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -261,7 +280,7 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new AttributeAbstractForm(self::FORM_ATTRIBUTE_ABSTRACT),
+                'type' => new AttributeAbstractForm($name),
                 'options' => [
                     AttributeAbstractForm::OPTION_ATTRIBUTE => $options,
                 ],
@@ -363,39 +382,20 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $name
      * @param array $options
      *
      * @return $this
      */
-    protected function addImageForm(FormBuilderInterface $builder, array $options = [])
+    protected function addImageForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add(self::FORM_IMAGE_SET, 'collection', [
-                'type' => new ImageForm(self::FORM_IMAGE_SET),
-                'options' => [],
+            ->add($name, 'collection', [
+                'type' => new ImageForm($name),
                 'label' => false,
                 //'allow_add' => true,
                 //'allow_delete' => true,
                 //'prototype' => true,
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            return;
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
-                                    break;
-                                }
-                            }
-
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one variant attribute value');
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_IMAGE]
-                ])]
             ]);
 
         return $this;
@@ -411,7 +411,7 @@ class ProductFormAdd extends AbstractType
     protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new SeoForm(self::FORM_SEO), [
+            ->add($name, new SeoForm($name), [
                 'label' => false,
             ]);
 
@@ -456,6 +456,16 @@ class ProductFormAdd extends AbstractType
     public static function getAbstractAttributeFormName($localeCode)
     {
         return self::getLocalizedPrefixName(self::FORM_ATTRIBUTE_ABSTRACT, $localeCode);
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    public static function getAbstractImagesFormName($localeCode)
+    {
+        return self::getLocalizedPrefixName(self::FORM_IMAGE_SET, $localeCode);
     }
 
 }

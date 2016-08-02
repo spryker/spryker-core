@@ -126,12 +126,11 @@ class ImageForm extends AbstractSubForm
         $builder
             ->add(self::IMAGE_COLLECTION, 'collection', [
                 'type' => new ImageCollectionForm(ProductFormAdd::FORM_IMAGE_COLLECTION),
-                'options' => [],
                 'label' => false,
                 //'allow_add' => true,
                 //'allow_delete' => true,
                 //'prototype' => true,
-                'constraints' => [new Callback([
+/*                'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
                             return;
@@ -149,7 +148,7 @@ class ImageForm extends AbstractSubForm
                         },
                     ],
                     'groups' => [ProductFormAdd::VALIDATION_GROUP_IMAGE]
-                ])]
+                ])]*/
             ]);
 
         return $this;

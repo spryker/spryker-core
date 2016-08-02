@@ -157,23 +157,13 @@ class AbstractProductFormDataProvider
             ProductFormAdd::FORM_PRICE_AND_TAX => [
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,
-            ],
-            ProductFormAdd::FORM_IMAGE_SET => [[
-                ImageForm::FIELD_SET_ID => null,
-                ImageForm::FIELD_SET_NAME => null,
-                ImageForm::FIELD_SET_FK_LOCALE => null,
-                ImageForm::FIELD_SET_FK_PRODUCT => null,
-                ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
-                ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
-                ImageCollectionForm::FIELD_IMAGE_SMALL => null,
-                ImageCollectionForm::FIELD_IMAGE_BIG => null,
-                ImageCollectionForm::FIELD_ORDER => null,
-            ]],
+            ]
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
         $data = array_merge($data, $this->getSeoDefaultFields());
         $data = array_merge($data, $this->getAttributeAbstractDefaultFields());
+        $data = array_merge($data, $this->getAbstractImagesDefaultFields());
 
         return $data;
     }
@@ -200,22 +190,63 @@ class AbstractProductFormDataProvider
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
+
+        $localeCollection = $this->localeProvider->getLocaleCollection();
+
         $result = [];
+        foreach ($localeCollection as $localeCode) {
+            $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
+
+            $localizedData = [];
+            foreach ($imageCollection as $image) {
+                $imageSet = $image->getSpyProductImageSetToProductImages();
+
+                foreach ($imageSet as $setEntity) {
+                    $idSet = (int)$setEntity->getSpyProductImageSet()->getIdProductImageSet();
+                    $fkLocale = (int)$setEntity->getSpyProductImageSet()->getFkLocale();
+
+                    if ((int)$localeTransfer->getIdLocale() !== $fkLocale) {
+                        continue;
+                    }
+
+                    $item = $image->toArray();
+                    $item[ImageForm::FIELD_SET_ID] = $idSet;
+                    $item[ImageForm::FIELD_SET_NAME] = $setEntity->getSpyProductImageSet()->getName();
+                    $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
+                    $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
+                    $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
+                    $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
+                    $localizedData[] = $item;
+                }
+            }
+
+            $result[$localeCode] = $localizedData;
+        }
+
+        $defaults = [];
         foreach ($imageCollection as $image) {
-            $item = $image->toArray();
             $imageSet = $image->getSpyProductImageSetToProductImages();
 
             foreach ($imageSet as $setEntity) {
-                $item[ImageForm::FIELD_SET_ID] = $setEntity->getSpyProductImageSet()->getIdProductImageSet();
+                $idSet = (int)$setEntity->getSpyProductImageSet()->getIdProductImageSet();
+                $fkLocale = $setEntity->getSpyProductImageSet()->getFkLocale();
+                if ($fkLocale !== null) {
+                    continue;
+                }
+
+                $item = $image->toArray();
+                $item[ImageForm::FIELD_SET_ID] = $idSet;
                 $item[ImageForm::FIELD_SET_NAME] = $setEntity->getSpyProductImageSet()->getName();
                 $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
                 $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
                 $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
                 $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
+                $defaults[] = $item;
             }
-
-            $result[] = $item;
         }
+
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $result[$defaultName] = $defaults;
 
         return $result;
     }
@@ -285,6 +316,38 @@ class AbstractProductFormDataProvider
 
         $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         $result[$defaultKey] = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, null, true);
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAbstractImagesDefaultFields()
+    {
+        $availableLocales = $this->localeProvider->getLocaleCollection();
+        $data = [
+            ImageForm::FIELD_SET_ID => null,
+            ImageForm::FIELD_SET_NAME => null,
+            ImageForm::IMAGE_COLLECTION => [
+                ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
+                ImageCollectionForm::FIELD_IMAGE_SMALL => null,
+                ImageCollectionForm::FIELD_IMAGE_BIG => null,
+                ImageCollectionForm::FIELD_ORDER => null,
+                ImageForm::FIELD_SET_FK_LOCALE => null,
+                ImageForm::FIELD_SET_FK_PRODUCT => null,
+                ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
+            ]
+        ];
+
+        $result = [];
+        foreach ($availableLocales as $id => $localeCode) {
+            $key = ProductFormAdd::getAbstractImagesFormName($localeCode);
+            $result[$key] = [null => $data];
+        }
+
+        $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $result[$defaultKey] = [null => $data];
 
         return $result;
     }
@@ -410,14 +473,17 @@ class AbstractProductFormDataProvider
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
 
-            $value = 'shit';
+            if ($isNew) {
+                $value = null;
+            }
+
             if ($isMultiple && !is_array($value)) {
                 $value = [$value];
             }
 
             $result[$type] = [
                 self::FORM_FIELD_NAME => null,
-                self::FORM_FIELD_VALUE => []
+                self::FORM_FIELD_VALUE => $value
             ];
         }
 

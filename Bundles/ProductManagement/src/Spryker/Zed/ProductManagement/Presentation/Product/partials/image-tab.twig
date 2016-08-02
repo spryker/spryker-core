@@ -10,27 +10,27 @@
 </div>
 
 <div class="panel-body">
-    {% for setId,imageSet in form.image_set %}
-        <div class="well">
-            {{ form_row(imageSet.id_product_image_set) }}
-            {{ form_row(imageSet.fk_locale) }}
-            {{ form_row(imageSet.fk_product) }}
-            {{ form_row(imageSet.fk_product_abstract) }}
-            {{ form_row(imageSet.name) }}
+    <div class="well">
+        <div class="row ">
+            <div class="tabs-container">
+                <div class="tabs-top">
+                    {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
+                    formPrefix: 'image_set',
+                    localeCollection: attributeLocaleCollection,
+                    activeLocale: 'default',
+                    form: form
+                    } %}
+                    {% endembed %}
 
-                {% for productImage in imageSet.image_collection %}
-                    <div class="row">
-                        <div class="col-md-4 col-lg-2">
-                            <img src="http://www.de.spryker.dev{{ productImage.external_url_small.vars.value }}" />
-                        </div>
-                        <div class="col-xs-12 col-md-8 col-lg-10">
-                            {{ form_row(productImage.id_product_image) }}
-                            {{ form_row(productImage.external_url_small) }}
-                            {{ form_row(productImage.external_url_large) }}
-                            {{ form_row(productImage.order) }}
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
+                    formPrefix: 'image_set',
+                    localeCollection: attributeLocaleCollection,
+                    activeLocale: 'default',
+                    form: form
+                    } %}
+                    {% endembed %}
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </div>
 </div>
