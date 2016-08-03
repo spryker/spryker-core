@@ -10,13 +10,11 @@
         <div id="content_form_tab_{{ formKey }}" class="tab-pane {{ activeCss }}">
             {% block tabContentRow %}
                 <div class="panel-body">
-                    <div class="well">
                         {% if form is defined and form[formKey] is defined %}
                             {% for input in form[formKey] %}
                                 {% block formInput %}{{ form_row(input) }}{% endblock %}
                             {% endfor %}
                         {% endif %}
-                    </div>
                 </div>
             {% endblock %}
         </div>

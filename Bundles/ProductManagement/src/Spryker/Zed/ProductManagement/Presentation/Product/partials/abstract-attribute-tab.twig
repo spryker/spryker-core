@@ -1,7 +1,6 @@
 <div class="panel-body">
     <h3>Configurable Product Attributes</h3>
     <p>Select attributes and corresponding values.</p>
-    <div class="well">
         <div class="row ">
             <div class="tabs-container">
                 <div class="tabs-top">
@@ -21,7 +20,6 @@
                     } %}
                         {% block tabContentRow %}
                             <div class="panel-body">
-                                <div class="well">
                                     <div class="row">
                                         {% for inputCollection in form[formKey] %}
                                             {% set form_group_errors_css = '' %}
@@ -42,12 +40,10 @@
                                             </div>
                                         {% endfor %}
                                     </div>
-                                </div>
                             </div>
                         {% endblock  %}
                     {% endembed %}
                 </div>
             </div>
         </div>
-    </div>
 </div>
