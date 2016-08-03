@@ -24,8 +24,12 @@ ul.locale > li {
   margin: 0px !important;
 }
 
-div.tabs-container.locale div.tabs-left div.panel-body {
+/*div.tabs-container.locale div.tabs-left div.panel-body {
   margin-left: 100px !important;
+}*/
+
+.panel-body.second {
+  background-color: #f8f8f8;
 }
 
 /* TODO select2 example remove */
