@@ -20,9 +20,6 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
 
         $formData = array_merge($defaults, $formData);
 
-        s($formData);
-        ob_flush();
-
         return $formData;
     }
 
