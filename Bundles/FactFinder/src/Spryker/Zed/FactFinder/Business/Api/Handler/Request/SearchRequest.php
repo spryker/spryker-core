@@ -29,7 +29,7 @@ class SearchRequest extends AbstractRequest implements RequestInterface
 
         $searchAdapter = $this->ffConnector->createSearchAdapter();
         // @todo check
-        $searchAdapter->setQuery('test');
+        $searchAdapter->setQuery($searchRequestTransfer->getQuery());
 //        $searchAdapter->setSid($_SERVER)
 
         $status = $searchAdapter->getStatus();

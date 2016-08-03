@@ -16,12 +16,69 @@
     </transfer>
 
     <transfer name="FactFinderSearchRequest">
-        <property name="temp" type="string"/>
+        <property name="query" type="string"/>
     </transfer>
 
     <transfer name="FactFinderSearchResponse">
-        <property name="temp" type="string"/>
+        <property name="FactFinderDataCampaigns" type="FactFinderDataCampaign[]"/>
+        <property name="FactFinderDataFilterGroups" type="FactFinderDataFilterGroup[]"/>
+        <property name="FactFinderDataBreadCrumbs" type="FactFinderDataBreadCrumb[]"/>
     </transfer>
+
+    <!--FACTFinder\Data\.. Objects-->
+
+    <transfer name="FactFinderDataCampaign">
+        <property name="name" type="string"/>
+        <property name="category" type="string"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="pushedProducts" type="FactFinderDataRecord[]"/>
+        <property name="feedback" type="array"/>
+        <property name="activeQuestions" type="FactFinderDataAdvisorQuestion[]"/>
+        <property name="advisorTree" type="FactFinderDataAdvisorQuestion[]"/>
+        <property name="hasRedirect" type="bool"/>
+    </transfer>
+
+    <transfer name="FactFinderDataFilterGroup">
+        <property name="name" type="string"/>
+        <property name="detailedLinkCount" type="int"/>
+        <property name="unit" type="string"/>
+        <property name="isRegularStyle" type="bool"/>
+        <property name="isSliderStyle" type="bool"/>
+        <property name="isTreeStyle" type="bool"/>
+        <property name="isMultiSelectStyle" type="bool"/>
+        <property name="hasPreviewImages" type="bool"/>
+        <property name="hasSelectedItems" type="bool"/>
+        <property name="isSingleHideUnselectedType" type="bool"/>
+        <property name="isSingleShowUnselectedType" type="bool"/>
+        <property name="isMultiSelectOrType" type="bool"/>
+        <property name="isMultiSelectAndType" type="bool"/>
+        <property name="isTextType" type="bool"/>
+        <property name="isNumberType" type="bool"/>
+    </transfer>
+
+    <transfer name="FactFinderDataItem">
+        <property name="label" type="string"/>
+        <property name="url" type="string"/>
+        <property name="selected" type="bool"/>
+    </transfer>
+
+    <transfer name="FactFinderDataBreadCrumb">
+        <property name="FactFinderDataItem" type="FactFinderDataItem"/>
+
+        <property name="isSearchBreadCrumb" type="bool"/>
+        <property name="isFilterBreadCrumb" type="bool"/>
+        <property name="fieldName" type="string"/>
+    </transfer>
+
+    <transfer name="FactFinderDataRecord">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="FactFinderDataAdvisorQuestion">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <!--END FACTFinder\Data\.. Objects-->
 
     <transfer name="FactFinderRecommendationRequest">
         <property name="temp" type="string"/>

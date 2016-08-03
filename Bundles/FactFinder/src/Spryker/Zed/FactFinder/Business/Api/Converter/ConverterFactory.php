@@ -14,6 +14,9 @@ use FACTFinder\Adapter\SimilarRecords as FFSimilarRecordsAdapter;
 use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
 use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
 use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
+use FACTFinder\Data\Item;
+use Spryker\Zed\FactFinder\Business\Api\Converter\Data\ItemConverter;
+use Spryker\Zed\FactFinder\Business\Api\Converter\Data\RecordConverter;
 
 class ConverterFactory
 {
@@ -25,7 +28,11 @@ class ConverterFactory
      */
     public function createSearchResponseConverter(FFSearchAdapter $searchAdapter)
     {
-        return new SearchResponseConverter($searchAdapter);
+        return new SearchResponseConverter(
+            $searchAdapter,
+            $this->createDataItemConverter(),
+            $this->createDataRecordConverter()
+        );
     }
 
     /**
@@ -81,11 +88,27 @@ class ConverterFactory
     /**
      * @param \FACTFinder\Adapter\ProductCampaign $productCampaignAdapter
      *
-     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\SearchResponseConverter
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\ProductCampaignResponseConverter
      */
     public function createProductCampaignResponseConverter(FFProductCampaignAdapter $productCampaignAdapter)
     {
         return new ProductCampaignResponseConverter($productCampaignAdapter);
+    }
+
+    /**
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\Data\ItemConverter
+     */
+    public function createDataItemConverter()
+    {
+        return new ItemConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\Data\RecordConverter
+     */
+    public function createDataRecordConverter()
+    {
+        return new RecordConverter();
     }
 
 }
