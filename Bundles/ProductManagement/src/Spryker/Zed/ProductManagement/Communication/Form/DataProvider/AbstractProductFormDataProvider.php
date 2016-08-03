@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSet;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
@@ -190,7 +193,6 @@ class AbstractProductFormDataProvider
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $result = [];
@@ -216,10 +218,10 @@ class AbstractProductFormDataProvider
                     $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
                     $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
                     $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
+
                     $localizedData[] = $item;
                 }
             }
-
             $result[$localeCode] = $localizedData;
         }
 
@@ -329,7 +331,7 @@ class AbstractProductFormDataProvider
         $data = [
             ImageForm::FIELD_SET_ID => null,
             ImageForm::FIELD_SET_NAME => null,
-            ImageForm::IMAGE_COLLECTION => [
+            ImageForm::IMAGE_COLLECTION => [[
                 ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
                 ImageCollectionForm::FIELD_IMAGE_SMALL => null,
                 ImageCollectionForm::FIELD_IMAGE_BIG => null,
@@ -337,17 +339,17 @@ class AbstractProductFormDataProvider
                 ImageForm::FIELD_SET_FK_LOCALE => null,
                 ImageForm::FIELD_SET_FK_PRODUCT => null,
                 ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
-            ]
+            ]]
         ];
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
             $key = ProductFormAdd::getAbstractImagesFormName($localeCode);
-            $result[$key] = [null => $data];
+            $result[$key] = [$data];
         }
 
         $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
-        $result[$defaultKey] = [null => $data];
+        $result[$defaultKey] = [$data]; //setting it to null breaks symfony
 
         return $result;
     }

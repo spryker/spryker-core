@@ -147,6 +147,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $imageSetCollection = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
+        //group by set ids
+        $imageDataCollection = [];
         foreach ($localeCollection as $localeCode) {
             $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
 
@@ -167,11 +169,23 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
                 $setData[$setId][ImageForm::IMAGE_COLLECTION] = $imageData[$setId];
             }
 
-            $formData[$formName] = $setData;
+            $imageDataCollection[$formName] = $setData;
         }
 
-        sd($formData);
-        ob_flush();
+        //remove set ids
+        $result = [];
+        foreach ($imageDataCollection as $formKey => $setFormData) {
+            foreach ($setFormData as $setId => $setData) {
+                $result[$formKey][] = $setData;
+            }
+
+        }
+
+        //assign to form data and overwrite defaults
+        foreach ($localeCollection as $localeCode) {
+            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
+            $formData[$formName] = $result[$formName];
+        }
 
         return $formData;
     }
