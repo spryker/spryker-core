@@ -319,6 +319,8 @@
       "Functional\\Spryker\\Zed\\ProductOption\\": "Bundles/ProductOption/tests",
       "Spryker\\Shared\\ProductImage\\": "Bundles/ProductImage/src",
       "Spryker\\Zed\\ProductImage\\": "Bundles/ProductImage/src",
+      "Unit\\Spryker\\Shared\\ProductImage\\": "Bundles/ProductImage/tests",
+      "Functional\\Spryker\\Shared\\ProductImage\\": "Bundles/ProductImage/tests",
       "Spryker\\Shared\\ProductOptionCartConnector\\": "Bundles/ProductOptionCartConnector/src",
       "Unit\\Spryker\\Shared\\ProductOptionCartConnector\\": "Bundles/ProductOptionCartConnector/tests",
       "Functional\\Spryker\\Shared\\ProductOptionCartConnector\\": "Bundles/ProductOptionCartConnector/tests",
