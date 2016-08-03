@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
+use Spryker\Zed\ProductImage\Business\Model\Writer;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator;
 use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
 
@@ -25,6 +26,16 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     public function createProductImageReader()
     {
         return new Reader(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Business\Model\WriterInterface
+     */
+    public function createProductImageWriter()
+    {
+        return new Writer(
             $this->getQueryContainer()
         );
     }

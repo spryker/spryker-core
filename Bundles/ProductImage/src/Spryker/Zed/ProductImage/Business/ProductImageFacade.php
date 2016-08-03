@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +16,47 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductImagesByProductAbstractId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesByProductAbstractId($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function persistProductImage(ProductImageTransfer $productImageTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->persistProductImage($productImageTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->persistProductImageSet($productImageSetTransfer);
+    }
+
 }

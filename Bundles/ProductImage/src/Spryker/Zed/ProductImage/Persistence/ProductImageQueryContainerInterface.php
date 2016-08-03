@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
-interface ProductImageQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface ProductImageQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
@@ -22,9 +24,16 @@ interface ProductImageQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    public function queryProductImage();
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    public function queryImageProduct();
+    public function queryProductImageSet();
 
     /**
      * @api

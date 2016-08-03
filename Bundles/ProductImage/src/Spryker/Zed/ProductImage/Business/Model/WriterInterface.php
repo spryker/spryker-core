@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImage\Business;
+namespace Spryker\Zed\ProductImage\Business\Model;
 
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
-interface ProductImageFacadeInterface
+interface WriterInterface
 {
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
@@ -23,10 +21,9 @@ interface ProductImageFacadeInterface
     public function persistProductImage(ProductImageTransfer $productImageTransfer);
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
+     * @throws \Exception
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
     public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer);

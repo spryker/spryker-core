@@ -36,17 +36,23 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
      */
-    public function queryImageProduct()
+    public function queryProductImage()
     {
         return $this->getFactory()
-            ->createProductImageSetQuery()
-            ->useSpyProductImageSetToProductImageQuery()
-                ->useSpyProductImageQuery()
-                ->endUse()
-            ->orderBySort(Criteria::DESC)
-            ->endUse();
+            ->createProductImageQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryProductImageSet()
+    {
+        return $this->getFactory()
+            ->createProductImageSetQuery();
     }
 
     /**
@@ -96,7 +102,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
      */
     public function queryImageSetByProductId($idProduct)
     {
-        return $this->queryImageProduct()
+        return $this->queryProductImage()
             ->filterByFkProduct($idProduct);
     }
 
