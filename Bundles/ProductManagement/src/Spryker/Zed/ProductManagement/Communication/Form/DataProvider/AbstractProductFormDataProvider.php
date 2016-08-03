@@ -190,7 +190,7 @@ class AbstractProductFormDataProvider
     public function getProductImagesForAbstractProduct($idProductAbstract)
     {
         $imageCollection = $this->productImageQueryContainer
-            ->queryImageSetByProductAbstractId($idProductAbstract)
+            ->queryImageCollectionByProductAbstractId($idProductAbstract)
             ->find();
 
         $localeCollection = $this->localeProvider->getLocaleCollection();

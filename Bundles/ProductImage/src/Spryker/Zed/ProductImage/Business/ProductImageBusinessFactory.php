@@ -8,11 +8,43 @@
 namespace Spryker\Zed\ProductImage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductImage\Business\Model\Reader;
+use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator;
+use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
- * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
 class ProductImageBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Business\Model\ReaderInterface
+     */
+    public function createProductImageReader()
+    {
+        return new Reader(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return ProductImageTransferGenerator
+     */
+    public function createTransferGenerator()
+    {
+        return new ProductImageTransferGenerator(
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade()
+    {
+        $this->getProvidedDependency(ProductImageDependencyProvider::FACADE_LOCALE);
+    }
+
 }

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Container;
 class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
@@ -22,6 +24,10 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->facade();
+        };
+
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
         };

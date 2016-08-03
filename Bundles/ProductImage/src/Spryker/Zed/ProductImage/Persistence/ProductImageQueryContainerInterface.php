@@ -33,6 +33,15 @@ interface ProductImageQueryContainerInterface
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
+    public function queryImageCollectionByProductAbstractId($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
     public function queryImageSetByProductAbstractId($idProductAbstract);
 
     /**
