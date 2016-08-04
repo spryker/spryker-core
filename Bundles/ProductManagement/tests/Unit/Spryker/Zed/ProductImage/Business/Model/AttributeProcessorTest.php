@@ -99,6 +99,7 @@ class AttributeProcessorTest extends Test
             'locale' => $this->enLocale,
             'attributes' => [
                 'material' => 'stone',
+                'english_only' => true
             ],
         ]);
 
@@ -154,6 +155,7 @@ class AttributeProcessorTest extends Test
         $expected = [
             'battery' => 8,
             'color' => 'red',
+            'english_only' => true,
             'foo' => 'bar',
             'material' => 'stone',
             'size' => 'XL'
@@ -172,6 +174,7 @@ class AttributeProcessorTest extends Test
         $expected = [
             'material' => null,
             'color' => null,
+            'english_only' => null,
             'battery' => null,
             'size' => null,
             'foo' => null,
