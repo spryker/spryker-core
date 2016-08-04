@@ -44,28 +44,25 @@ class ProductImageTransferGeneratorTest extends Test
 
     protected function setUp()
     {
-        $this->reader = new Reader(
-            new ProductImageQueryContainer()
-        );
-
+        $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade =  new LocaleFacade();
-
         $this->transferGenerator = new ProductImageTransferGenerator(
             $this->localeFacade
+        );
+
+        $this->reader = new Reader(
+            $this->queryContainer,
+            $this->transferGenerator
         );
     }
 
     public function testConvertProductImageSetEntitiesIntoTransfer()
     {
-        $imageCollection = $this->reader
-            ->getProductImagesByProductAbstractId(1);
-
-        $transferCollection = $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+        $transferCollection = $this->reader
+            ->getProductImagesSetByProductAbstractId(1);
 
         foreach ($transferCollection as $transfer) {
-            $this->assertTrue(
-                ($transfer instanceof ProductImageSetTransfer)
-            );
+            $this->assertInstanceOf(ProductImageSetTransfer::class, $transfer);
 
             $this->assertNotEmpty(
                 $transfer->getProductImages()

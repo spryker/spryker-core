@@ -24,5 +24,4 @@ class ProductImageFacadeTest extends Test
         $this->facade = new ProductImageFacade();
     }
 
-
 }

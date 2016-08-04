@@ -114,5 +114,4 @@ class ProductImageTransferGenerator implements ProductImageTransferGeneratorInte
         return $transferList;
     }
 
-
 }

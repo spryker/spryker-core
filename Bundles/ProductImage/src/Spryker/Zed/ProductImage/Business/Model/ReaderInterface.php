@@ -7,17 +7,14 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
-use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
-
-
 interface ReaderInterface
 {
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getProductImagesByProductAbstractId($idProductAbstract);
+    public function getProductImagesSetByProductAbstractId($idProductAbstract);
 
 }

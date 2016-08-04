@@ -7,57 +7,45 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
+use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
-
 
 class Reader implements ReaderInterface
 {
 
     /**
-     * @var ProductImageQueryContainerInterface
+     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
     protected $productImageContainer;
 
     /**
-     * @param ProductImageQueryContainerInterface $productImageContainer
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
      */
-    public function __construct(ProductImageQueryContainerInterface $productImageContainer)
-    {
+    protected $transferGenerator;
+
+    /**
+     * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
+     */
+    public function __construct(
+        ProductImageQueryContainerInterface $productImageContainer,
+        ProductImageTransferGeneratorInterface $transferGenerator
+    ) {
         $this->productImageContainer = $productImageContainer;
+        $this->transferGenerator = $transferGenerator;
     }
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getProductImagesByProductAbstractId($idProductAbstract)
+    public function getProductImagesSetByProductAbstractId($idProductAbstract)
     {
         $imageCollection = $this->productImageContainer
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-        return $imageCollection;
-
-        $data = [];
-        foreach ($imageCollection as $image) {
-            $imageSet = $image->getSpyProductImageSetToProductImages();
-
-            foreach ($imageSet as $setEntity) {
-                $idSet = (int)$setEntity->getSpyProductImageSet()->getIdProductImageSet();
-                $fkLocale = (int)$setEntity->getSpyProductImageSet()->getFkLocale();
-
-                $item = $image->toArray();
-                $item[ImageForm::FIELD_SET_ID] = $idSet;
-                $item[ImageForm::FIELD_SET_NAME] = $setEntity->getSpyProductImageSet()->getName();
-                $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
-                $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
-                $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
-                $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
-
-                $data[] = $item;
-            }
-        }
+        return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
     }
 
 }

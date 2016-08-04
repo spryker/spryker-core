@@ -26,7 +26,8 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     public function createProductImageReader()
     {
         return new Reader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createTransferGenerator()
         );
     }
 
@@ -41,7 +42,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductImageTransferGenerator
+     * @return \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator
      */
     public function createTransferGenerator()
     {
