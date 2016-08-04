@@ -37,9 +37,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
         }
 
-        s($formData);
-        ob_flush();
-
         $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
 
         return $formData;

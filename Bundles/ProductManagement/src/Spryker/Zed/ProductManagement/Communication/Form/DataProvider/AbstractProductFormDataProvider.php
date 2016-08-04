@@ -207,7 +207,7 @@ class AbstractProductFormDataProvider
         $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         $result[$defaultName] = array_values($defaults);
 
-        return $result;
+         return $result;
     }
 
     /**
