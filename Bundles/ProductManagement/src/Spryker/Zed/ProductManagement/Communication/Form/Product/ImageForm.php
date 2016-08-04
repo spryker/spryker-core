@@ -8,11 +8,8 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ImageForm extends AbstractSubForm
 {

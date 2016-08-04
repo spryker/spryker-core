@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface AttributeProcessorInterface
 {
 

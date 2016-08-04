@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
-
 class AttributeProcessor implements AttributeProcessorInterface
 {
 
@@ -145,7 +142,6 @@ class AttributeProcessor implements AttributeProcessorInterface
             $abstractLocalizedAttributes = $this->getAbstractLocalizedAttributesByLocaleCode($localeCode);
             $abstractAttributes = array_merge($abstractAttributes, $abstractLocalizedAttributes);
 
-
             $concreteLocalizedAttributes = $this->getConcreteLocalizedAttributesByLocaleCode($localeCode);
             $concreteAttributes = array_merge($concreteAttributes, $concreteLocalizedAttributes);
         }
@@ -154,7 +150,6 @@ class AttributeProcessor implements AttributeProcessorInterface
         ksort($result);
 
         return $result;
-
     }
 
     /**

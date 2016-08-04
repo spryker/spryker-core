@@ -211,7 +211,7 @@ class AbstractProductFormDataProvider
                     continue;
                 }
 
-                $fkLocale = (int) $imageSetTransfer->getLocale()->getIdLocale();
+                $fkLocale = (int)$imageSetTransfer->getLocale()->getIdLocale();
                 if ($fkLocale !== (int)$localeTransfer->getIdLocale()) {
                     continue;
                 }
@@ -369,7 +369,7 @@ class AbstractProductFormDataProvider
     {
         if ($localeCode === null) {
             $attributes = $attributeProcessor->getAbstractAttributes();
-        }  else {
+        } else {
             $attributes = $attributeProcessor->mergeAttributes($localeCode);
         }
 

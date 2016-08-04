@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
@@ -358,7 +357,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
             $formName = ProductFormAdd::getImagesFormName($localeCode);
 
             $imageSetCollection = $form->get($formName);
-            foreach ($imageSetCollection  as $imageSet) {
+            foreach ($imageSetCollection as $imageSet) {
                 $imageSetTransfer = (new ProductImageSetTransfer())
                     ->fromArray($imageSet->getData(), true);
 

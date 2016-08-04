@@ -36,12 +36,12 @@ class AttributeProcessorTest extends Test
     protected $concreteLocalizedAttributes;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $deLocale;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $enLocale;
 
@@ -133,7 +133,8 @@ class AttributeProcessorTest extends Test
         ];
 
         $this->assertEquals(
-            $actual, $expected
+            $actual,
+            $expected
         );
     }
 
@@ -157,7 +158,8 @@ class AttributeProcessorTest extends Test
         ];
 
         $this->assertEquals(
-            $actual, $expected
+            $actual,
+            $expected
         );
     }
 
@@ -181,7 +183,8 @@ class AttributeProcessorTest extends Test
         ];
 
         $this->assertEquals(
-            $actual, $expected
+            $actual,
+            $expected
         );
     }
 

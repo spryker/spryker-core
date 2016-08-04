@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
