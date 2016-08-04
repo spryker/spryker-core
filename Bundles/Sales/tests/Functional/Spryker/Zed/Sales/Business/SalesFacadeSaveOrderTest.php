@@ -254,6 +254,28 @@ class SalesFacadeSaveOrderTest extends Test
     /**
      * @return void
      */
+    public function testSaveOrderWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData()
+    {
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+
+        $customerCreatedAt = new \DateTime('Yesterday');
+        $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
+
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+        $orderQuery = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
+
+        $orderEntity = $orderQuery->findOne();
+        $this->assertNotNull($orderEntity);
+
+        $this->assertNotEquals($customerCreatedAt->format('Y-m-d'), $orderEntity->getCreatedAt('Y-m-d'));
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesAndFillsOrderItems()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();

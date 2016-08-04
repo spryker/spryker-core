@@ -53,7 +53,7 @@ class Config
         }
 
         if (!self::hasValue($key) && $default !== null) {
-            self::$config[$key] = $default;
+            return $default;
         }
 
         if (!self::hasValue($key)) {

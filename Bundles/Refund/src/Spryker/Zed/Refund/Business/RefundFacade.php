@@ -9,8 +9,8 @@ namespace Spryker\Zed\Refund\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Refund\Business\RefundBusinessFactory getFactory()
@@ -19,77 +19,72 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
+     * - Adds refundable amount to RefundTransfer.
+     * - Adds items with canceled amount to RefundTransfer.
+     * - Uses calculator plugin stack for calculation.
+     *
      * @api
      *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
+    {
+        return $this->getFactory()->createRefundCalculator()->calculateRefund($salesOrderItems, $salesOrderEntity);
+    }
+
+    /**
+     * Specification:
+     * - Calculates refundable item amount.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
-    public function calculateRefundableAmount(OrderTransfer $orderTransfer)
+    public function calculateRefundableItemAmount(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
     {
-        return $this->getFactory()
-            ->createRefundManager()
-            ->calculateRefundableAmount($orderTransfer);
+        return $this->getFactory()->createItemRefundCalculator()->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
     }
 
     /**
+     * Specification:
+     * - Calculates refundable expense amount.
+     *
      * @api
      *
-     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
      *
-     * @return \Generated\Shared\Transfer\RefundTransfer[]
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
-    public function getRefundsByIdSalesOrder($idSalesOrder)
+    public function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems)
     {
-        $refundQueryContainer = $this->getFactory()->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_REFUND);
-
-        $refunds = $refundQueryContainer->queryRefundsByIdSalesOrder($idSalesOrder)->find();
-
-        $result = [];
-        /** @var \Orm\Zed\Refund\Persistence\SpyRefund $refund */
-        foreach ($refunds as $refund) {
-            $result[] = (new RefundTransfer())->fromArray($refund->toArray(), true);
-        }
-
-        return $result;
+        return $this->getFactory()->createExpenseRefundCalculator()->calculateRefund($refundTransfer, $orderTransfer, $salesOrderItems);
     }
 
     /**
+     * Specification:
+     * - Persists calculated Refund amount.
+     * - Sets calculated refund amount as canceled amount to each sales order item.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @return \Generated\Shared\Transfer\RefundTransfer
+     * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {
-        return $this->getFactory()
-            ->createRefundModel()
-            ->saveRefund($refundTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]
-     */
-    public function getRefundableItems($idOrder)
-    {
-        return $this->getFactory()->createRefundModel()->getRefundableItems($idOrder);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
-     */
-    public function getRefundableExpenses($idOrder)
-    {
-        return $this->getFactory()->createRefundModel()->getRefundableExpenses($idOrder);
+        return $this->getFactory()->createRefundSaver()->saveRefund($refundTransfer);
     }
 
 }

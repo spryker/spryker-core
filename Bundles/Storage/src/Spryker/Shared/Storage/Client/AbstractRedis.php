@@ -11,6 +11,8 @@ use Predis\Client;
 use Predis\Connection\ConnectionException;
 
 /**
+ * @deprecated Not used anymore.
+ *
  * @property \Predis\Client $resource
  *
  * @method \Predis\Client getResource()

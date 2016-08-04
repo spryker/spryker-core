@@ -86,9 +86,7 @@ class SalesFacadeTest extends Test
         $orderItemDiscountEntity->save();
 
         $salesFacade = $this->createSalesFacade();
-
         $orderListTransfer = new OrderListTransfer();
-
         $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
 
         $orderTransfer = $orderListTransfer->getOrders()[0];
