@@ -190,12 +190,12 @@ class AttributeProcessor implements AttributeProcessorInterface
     public function getAllKeys()
     {
         $mergedAttributes = [];
-        foreach ($this->getAbstractLocalizedAttributes() as $transfer) {
+        foreach ($this->getAbstractLocalizedAttributes() as $localeCode => $transfer) {
             $mergedAttributes += $transfer->getAttributes();
         }
 
-        foreach ($this->getConcreteLocalizedAttributes() as $localeCode => $localizedAttributes) {
-            $mergedAttributes += $localizedAttributes;
+        foreach ($this->getConcreteLocalizedAttributes() as $localeCode => $transfer) {
+            $mergedAttributes += $transfer->getAttributes();
         }
 
         $mergedAttributes += $this->getAbstractAttributes();

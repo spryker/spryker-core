@@ -368,9 +368,9 @@ class AbstractProductFormDataProvider
     protected function convertAbstractLocalizedAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
     {
         if ($localeCode === null) {
-            $attributes = $attributeProcessor->getAbstractAttributes();
+            $attributes = $attributeProcessor->getAllKeys();
         } else {
-            $attributes = $attributeProcessor->mergeAttributes($localeCode);
+            $attributes = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
         }
 
         $values = [];
