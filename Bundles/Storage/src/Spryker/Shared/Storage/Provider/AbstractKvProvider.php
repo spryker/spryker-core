@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Storage\Provider;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
+use Spryker\Shared\Storage\StorageConstants;
 
 /**
  * @deprecated Not used anymore.
@@ -30,7 +30,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
      */
     protected function createZedClient()
     {
-        $kvName = Config::get(ApplicationConstants::STORAGE_KV_SOURCE);
+        $kvName = Config::get(StorageConstants::STORAGE_KV_SOURCE);
         $kvConfig = $this->getConfigByKvName($kvName);
         $methodName = $this->createMethodName($kvName);
 
@@ -61,6 +61,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
             case self::KV_ADAPTER_REDIS:
                 return $this->getConnectionParameters();
         }
+
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);
     }
 
@@ -70,18 +71,18 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(SessionConstants::YVES_SESSION_REDIS_PORT),
-            'host' => Config::get(SessionConstants::YVES_SESSION_REDIS_HOST),
+            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
+            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
+            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
         ];
 
-        if (Config::hasKey(SessionConstants::YVES_SESSION_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(SessionConstants::YVES_SESSION_REDIS_PASSWORD);
+        if (Config::hasKey(StorageConstants::STORAGE_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD);
         }
 
         $config['persistent'] = false;
-        if (Config::hasKey(SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION)) {
-            $config['persistent'] = (bool)Config::get(SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION);
+        if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {
+            $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);
         }
 
         return $config;
