@@ -188,4 +188,29 @@ class AttributeProcessorTest extends Test
         );
     }
 
+    public function testGetAllKeys()
+    {
+        $attributeProcessor = new AttributeProcessor(
+            $this->abstractAttributes,
+            $this->concreteAttributes,
+            $this->abstractLocalizedAttributes,
+            $this->concreteLocalizedAttributes
+        );
+
+        $actual = $attributeProcessor->getAllKeys();
+
+        $expected = [
+            'material' => null,
+            'color' => null,
+            'battery' => null,
+            'size' => null,
+            'foo' => null,
+        ];
+
+        $this->assertEquals(
+            $actual,
+            $expected
+        );
+    }
+
 }
