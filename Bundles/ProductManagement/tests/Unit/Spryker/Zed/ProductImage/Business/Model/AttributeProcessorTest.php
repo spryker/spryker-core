@@ -67,11 +67,6 @@ class AttributeProcessorTest extends Test
 
         $deAbstractLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
             'locale' => $this->deLocale,
-            'name' => 'name de',
-            'description' => 'description de',
-            'metaTitle' => 'metaTitle de',
-            'metaDescription' => 'metaDescription de',
-            'metaKeywords' => 'metaKeywords de',
             'attributes' => [
                 'material' => 'stein',
             ],
@@ -79,11 +74,6 @@ class AttributeProcessorTest extends Test
 
         $enAbstractLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
             'locale' => $this->enLocale,
-            'name' => 'name en',
-            'description' => 'description en',
-            'metaTitle' => 'metaTitle en',
-            'metaDescription' => 'metaDescription en',
-            'metaKeywords' => 'metaKeywords en',
             'attributes' => [
                 'color' => 'red',
             ],
@@ -95,8 +85,6 @@ class AttributeProcessorTest extends Test
 
         $deConcreteLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
             'locale' => $this->deLocale,
-            'name' => 'name de',
-            'description' => 'description de',
             'attributes' => [
                 'color' => 'rot',
             ],
@@ -104,8 +92,6 @@ class AttributeProcessorTest extends Test
 
         $enConcreteLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
             'locale' => $this->enLocale,
-            'name' => 'name en',
-            'description' => 'description en',
             'attributes' => [
                 'material' => 'stone',
             ],
