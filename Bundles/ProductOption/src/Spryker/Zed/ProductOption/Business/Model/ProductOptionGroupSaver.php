@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Propel\Runtime\Collection\Collection;
+use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
-class ProductOptionGroupSaver
+class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 {
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
@@ -43,6 +43,8 @@ class ProductOptionGroupSaver
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
@@ -63,34 +65,48 @@ class ProductOptionGroupSaver
      */
     public function saveProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
-        $relatedAbstractProducts = null;
-        if ($productOptionGroupTransfer->getIdProductOptionGroup()) {
-            $productOptionGroupEntity = $this->productOptionQueryContainer
-                ->queryProductOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup())
-                ->findOne();
-
-            $relatedAbstractProducts = $productOptionGroupEntity->getSpyProductAbstracts();
-            $productOptionGroupEntity->setSpyProductOptionValues(new Collection());
-
-        } else {
-            $productOptionGroupEntity = $this->createProductOptionGroupEntity();
-        }
-
+        $productOptionGroupEntity = $this->getProductOptionGroupEntity($productOptionGroupTransfer);
         $this->hydrateProductOptionGroupEntity($productOptionGroupTransfer, $productOptionGroupEntity);
         $productOptionGroupEntity->save();
 
         $this->saveOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
-
+        $this->removeOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
         $this->assignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
-        //$this->deAssignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
+        $this->deAssignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
+        $this->addTranslations($productOptionGroupTransfer);
+
+        $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
 
         $productOptionGroupEntity->save();
 
-        if ($relatedAbstractProducts) {
-            $productOptionGroupEntity->setSpyProductAbstracts($relatedAbstractProducts);
+        return $productOptionGroupEntity->getIdProductOptionGroup();
+    }
+
+    /**
+     * @param int $idProductOptionGroup
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
+     * @return bool
+     */
+    public function toggleOptionActive($idProductOptionGroup, $isActive)
+    {
+        $productOptionGroupEntity = $this->productOptionQueryContainer
+            ->queryProductOptionGroupById($idProductOptionGroup)
+            ->findOne();
+
+        if (!$productOptionGroupEntity) {
+            throw new ProductOptionGroupNotFoundException(
+              sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
+            );
         }
 
-        return $productOptionGroupEntity->getIdProductOptionGroup();
+        $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
+
+        $productOptionGroupEntity->setActive($isActive);
+
+        return $productOptionGroupEntity->save() > 0;
     }
 
     /**
@@ -120,9 +136,11 @@ class ProductOptionGroupSaver
         SpyProductOptionGroup $productOptionGroupEntity
     ) {
         foreach ($productOptionGroupTransfer->getProductsToBeAssigned() as $idProductAbstract) {
-            $productAbstractProductOptionGroupEntity = new SpyProductAbstractProductOptionGroup();
-            $productAbstractProductOptionGroupEntity->setFkProductAbstract((int)$idProductAbstract);
-            $productAbstractProductOptionGroupEntity->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
+            if ($this->isProductAlreadyInGroup($productOptionGroupEntity, $idProductAbstract)) {
+                continue;
+            }
+
+            $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity($productOptionGroupEntity, $idProductAbstract);
             $productOptionGroupEntity->addSpyProductAbstractProductOptionGroup($productAbstractProductOptionGroupEntity);
         }
     }
@@ -137,12 +155,50 @@ class ProductOptionGroupSaver
         ProductOptionGroupTransfer $productOptionGroupTransfer,
         SpyProductOptionGroup $productOptionGroupEntity
     ) {
-        foreach ($productOptionGroupTransfer->getProductsToBeDeassigned() as $idProductAbstract) {
-            $productAbstractProductOptionGroupEntity = new SpyProductAbstractProductOptionGroup();
-            $productAbstractProductOptionGroupEntity->setFkProductAbstract((int)$idProductAbstract);
-            $productAbstractProductOptionGroupEntity->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
+        foreach ($productOptionGroupTransfer->getProductsToBeDeAssigned() as $idProductAbstract) {
+            $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity($productOptionGroupEntity, $idProductAbstract);
             $productOptionGroupEntity->removeSpyProductAbstractProductOptionGroup($productAbstractProductOptionGroupEntity);
+
+            $this->touchFacade->touchActive(
+                ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
+                $idProductAbstract
+            );
         }
+
+    }
+
+    /**
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param SpyProductOptionGroup  $productOptionGroupEntity
+     *
+     * @return void
+     */
+    protected function removeOptionValues(
+        ProductOptionGroupTransfer $productOptionGroupTransfer,
+        SpyProductOptionGroup $productOptionGroupEntity
+    ) {
+        foreach ($productOptionGroupTransfer->getProductOptionValuesToBeRemoved() as $idProductOptionValue) {
+            $productOptionValueEntity = $this->getProductOptionValueEntity($idProductOptionValue);
+
+            $this->glossaryFacade->deleteKey($productOptionValueEntity->getValue());
+
+            $productOptionGroupEntity->removeSpyProductOptionValue($productOptionValueEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup
+     */
+    protected function createProductAbstractProductOptionGroupEntity(SpyProductOptionGroup $productOptionGroupEntity, $idProductAbstract)
+    {
+        $productAbstractProductOptionGroupEntity = new SpyProductAbstractProductOptionGroup();
+        $productAbstractProductOptionGroupEntity->setFkProductAbstract((int)$idProductAbstract);
+        $productAbstractProductOptionGroupEntity->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
+
+        return $productAbstractProductOptionGroupEntity;
     }
 
     /**
@@ -152,13 +208,8 @@ class ProductOptionGroupSaver
      */
     protected function addTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
-        foreach ($productOptionGroupTransfer->getProductOptionValueTranslations() as $productOptionValueTranslationTransfer) {
-            $this->saveProductOptionValueTranslation(
-                $productOptionValueTranslationTransfer->getKey(),
-                $productOptionValueTranslationTransfer->getName(),
-                $productOptionValueTranslationTransfer->getLocaleCode()
-            );
-        }
+        $this->addValueTranslations($productOptionGroupTransfer);
+        $this->addGroupNameTranslations($productOptionGroupTransfer);
     }
 
     /**
@@ -168,14 +219,8 @@ class ProductOptionGroupSaver
      *
      * @return void
      */
-    public function saveProductOptionValueTranslation($key, $value, $localeCode)
+    protected function saveProductOptionTranslation($key, $value, $localeCode)
     {
-        if (!$value) {
-            $value = $key;
-        }
-
-        $key = ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $key;
-
         if (!$this->glossaryFacade->hasKey($key)) {
             $this->glossaryFacade->createKey($key);
         }
@@ -229,6 +274,7 @@ class ProductOptionGroupSaver
 
     }
 
+
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
@@ -241,10 +287,8 @@ class ProductOptionGroupSaver
             ->requireSku()
             ->requireValue();
 
-        $producOptionValueEntity = $this->createProductOptionValueEntity();
-
+        $producOptionValueEntity = $this->getProductOptionValueEntity($productOptionValueTransfer->getIdProductOptionValue());
         $this->hydrateOptionValueEntity($producOptionValueEntity, $productOptionValueTransfer);
-
         $producOptionValueEntity->save();
 
         return $producOptionValueEntity->getIdProductOptionValue();
@@ -260,9 +304,17 @@ class ProductOptionGroupSaver
         ProductOptionGroupTransfer $productOptionGroupTransfer,
         SpyProductOptionGroup $productOptionGroupEntity
     ) {
+
+        if ($productOptionGroupTransfer->getName() &&
+            strpos($productOptionGroupTransfer->getName(), ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === false) {
+
+            $productOptionGroupTransfer->setName(
+                ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $productOptionGroupTransfer->getName()
+            );
+        }
+
         $productOptionGroupEntity->fromArray($productOptionGroupTransfer->toArray());
     }
-
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $producOptionValueEntity
@@ -274,6 +326,12 @@ class ProductOptionGroupSaver
         SpyProductOptionValue $producOptionValueEntity,
         ProductOptionValueTransfer $productOptionValueTransfer
     ) {
+        if (!$producOptionValueEntity->getValue()) {
+            $productOptionValueTransfer->setValue(
+                ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue()
+            );
+        }
+
         $producOptionValueEntity->fromArray($productOptionValueTransfer->toArray());
     }
 
@@ -293,6 +351,125 @@ class ProductOptionGroupSaver
         return new SpyProductOptionValue();
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
+     */
+    protected function getProductOptionGroupEntity(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    {
+        if ($productOptionGroupTransfer->getIdProductOptionGroup()) {
+            return $this->productOptionQueryContainer
+                ->queryProductOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup())
+                ->findOne();
+        }
+
+        return $this->createProductOptionGroupEntity();
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     */
+    protected function getProductOptionValueEntity($idProductOptionValue = null)
+    {
+        if ($idProductOptionValue) {
+            return $this->productOptionQueryContainer
+                ->queryProductOptionByValueId((int)$idProductOptionValue)
+                ->findOne();
+        }
+
+        return $this->createProductOptionValueEntity();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
+     *
+     * @return void
+     */
+    protected function touchProductOptionGroupAbstractProducts(SpyProductOptionGroup $productOptionGroupEntity)
+    {
+        foreach ($productOptionGroupEntity->getSpyProductAbstracts() as $productAbstractEntity) {
+            $this->touchFacade->touchActive(
+                ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
+                $productAbstractEntity->getIdProductAbstract()
+            );
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAlreadyInGroup(SpyProductOptionGroup $productOptionGroupEntity, $idProductAbstract)
+    {
+        foreach ($productOptionGroupEntity->getSpyProductAbstracts() as $productAbstractEntity) {
+            if ((int)$productAbstractEntity->getIdProductAbstract() === (int)$idProductAbstract) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    protected function addValueTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    {
+        foreach ($productOptionGroupTransfer->getProductOptionValueTranslations() as $productOptionTranslationTransfer) {
+
+            $value = $productOptionTranslationTransfer->getName();
+            $key = $productOptionTranslationTransfer->getKey();
+
+            if (!$value) {
+                $value = $key;
+            }
+
+            if (strpos($key, ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false) {
+                $key = ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $key;
+            }
+
+            $this->saveProductOptionTranslation(
+                $key,
+                $value,
+                $productOptionTranslationTransfer->getLocaleCode()
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    protected function addGroupNameTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    {
+        if (!$productOptionGroupTransfer->getName()) {
+            return;
+        }
+
+        foreach ($productOptionGroupTransfer->getGroupNameTranslations() as $groupNameTranslationTransfer) {
+
+            $value = $groupNameTranslationTransfer->getName();
+            $key = $productOptionGroupTransfer->getName();
+
+            if (!$value) {
+                $value = $key;
+            }
+
+            $this->saveProductOptionTranslation(
+                $key,
+                $value,
+                $groupNameTranslationTransfer->getLocaleCode()
+            );
+        }
+    }
 
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption;
 
+use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
@@ -26,6 +27,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+
+    const CURRENCY_MANAGER = 'CURRENCY_MANAGER';
 
 
     /**
@@ -99,8 +102,24 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
+        $container[self::CURRENCY_MANAGER] = function (Container $container) {
+            return $this->getCurrencyManager();
+        };
+
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new ProductOptionToGlossaryBridge($container->getLocator()->glossary()->facade());
+        };
 
         return $container;
     }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    protected function getCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
+    }
+
 
 }

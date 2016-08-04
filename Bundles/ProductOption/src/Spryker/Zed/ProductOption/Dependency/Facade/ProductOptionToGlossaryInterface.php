@@ -74,4 +74,11 @@ interface ProductOptionToGlossaryInterface
      */
     public function getTranslation($keyName, LocaleTransfer $localeTransfer);
 
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function deleteKey($keyName);
+
 }

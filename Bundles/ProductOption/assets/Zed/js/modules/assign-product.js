@@ -7,7 +7,6 @@
 
 require('./main');
 
-var productOrder;
 var allProductsTable;
 var productOptionTable;
 
@@ -186,7 +185,7 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
 
 $(document).ready(function() {
     allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'select', 'product_option_general_products_to_be_assigned');
-    productOptionTable = new TableHandler($('#product-option-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'deselect', 'product_option_general_products_to_be_deassigned');
+    productOptionTable = new TableHandler($('#product-option-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'deselect', 'product_option_general_products_to_be_de_assigned');
 
     $('#product-table').dataTable({
         destroy: true,

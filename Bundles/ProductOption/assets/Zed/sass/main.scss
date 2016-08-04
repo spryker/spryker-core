@@ -6,12 +6,8 @@
 
 .form-product-option-row, .form-product-option-translation-row {
 
-  .form-product-sku {
-     margin-left: 50px;
-  }
+  .input {
 
-  .form-product-price {
-     margin-left: 50px;
   }
 
   .form-group {
@@ -24,6 +20,18 @@
 
 table.dataTable.gui-table-data {
   width: 100% !important;
+}
+
+.translation-tabs {
+   .tabs-left > .nav-tabs,
+   .tabs-right > .nav-tabs {
+      width: 5%;
+  }
+
+  .tabs-left .panel-body {
+    width: 95%;
+    margin-left: 5%;
+  }
 }
 
 

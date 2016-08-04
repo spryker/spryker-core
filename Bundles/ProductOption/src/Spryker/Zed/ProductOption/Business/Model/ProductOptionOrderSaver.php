@@ -43,7 +43,11 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
 
-                $productOptionTransfer->setValue($this->glossaryFacade->translate($productOptionTransfer->getValue()));
+                if ($this->glossaryFacade->hasTranslation($productOptionTransfer->getValue())) {
+                    $productOptionTransfer->setValue(
+                        $this->glossaryFacade->translate($productOptionTransfer->getValue())
+                    );
+                }
 
                 $this->hydrateSalesOrderItemEntity($salesOrderItemOptionEntity, $productOptionTransfer, $itemTransfer);
 

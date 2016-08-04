@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Controller;
 
-use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,112 +19,33 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
     const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
+    const URL_PARAM_ACTIVE = 'active';
+    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    const URL_PARAM_TABLE_CONTEXT = 'table-context';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createAction(Request $request)
+    public function toggleActiveAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createGeneralFormDataProvider();
+        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
+        $isActive = $request->query->get(self::URL_PARAM_ACTIVE);
+        $redirectUrl = $request->query->get(self::URL_PARAM_REDIRECT_URL);
 
-        $productOptionGroupForm = $this->getFactory()->createProductOptionGroup($dataProvider);
-        $productOptionGroupForm->handleRequest($request);
+        $isChanged = $this->getFacade()->toggleOptionActive($idDiscount, (bool)$isActive);
 
-        if ($productOptionGroupForm->isValid()) {
-            $productOptionGroupTransfer = $productOptionGroupForm->getData();
-            $idProductOptionGroup = $this->getFacade()->saveProductOptionGroup($productOptionGroupTransfer);
-
-            $redirectUrl = Url::generate(
-                '/product-option/index/edit',
-                [
-                    self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup
-                ]
-            )->build();
-
-            return $this->redirectResponse($redirectUrl);
+        if ($isChanged === false) {
+            $this->addErrorMessage('Could not activate option.');
+        } else {
+            $this->addSuccessMessage(sprintf(
+                'Option successfully %s.',
+                $isActive ? 'activated' : 'deactivated'
+            ));
         }
 
-        $productTable = $this->getFactory()->createProductTable();
-
-        return [
-            'generalForm' => $productOptionGroupForm->createView(),
-            'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-            'productsTable' => $productTable->render(),
-        ];
-    }
-
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function editAction(Request $request)
-    {
-        $idProductOptionGroup = $this->castId($request->query->get(self::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-
-        $productOptionGroupTransfer = $this->getFacade()->getProductOptionGroupById($idProductOptionGroup);
-        $dataProvider = $this->getFactory()->createGeneralFormDataProvider($productOptionGroupTransfer);
-
-        $productOptionGroupForm = $this->getFactory()->createProductOptionGroup($dataProvider);
-        $productOptionGroupForm->handleRequest($request);
-
-        if ($productOptionGroupForm->isValid()) {
-            $this->getFacade()->saveProductOptionGroup($productOptionGroupForm->getData());
-
-            $redirectUrl = Url::generate(
-                '/product-option/index/edit',
-                [
-                    self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup
-                ]
-            )->build();
-
-            return $this->redirectResponse($redirectUrl);
-        }
-
-        $productOptionsTable = $this->getFactory()->createProductOptionTable($idProductOptionGroup);
-        $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
-
-        return [
-            'productOptionTable' => $productOptionsTable->render(),
-            'productsTable' => $productTable->render(),
-            'generalForm' => $productOptionGroupForm->createView(),
-            'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function productOptionTableAction(Request $request)
-    {
-        $idProductOptionGroup = $this->castId($request->get(self::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-
-        $productOptionsTable = $this->getFactory()->createProductOptionTable($idProductOptionGroup);
-
-        return $this->jsonResponse(
-            $productOptionsTable->fetchData()
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function productTableAction(Request $request)
-    {
-        $idProductOptionGroup = $this->castId($request->get(self::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-
-        $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
-
-        return $this->jsonResponse(
-            $productTable->fetchData()
-        );
+        return new RedirectResponse($redirectUrl);
     }
 
 }

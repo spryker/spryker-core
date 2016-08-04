@@ -7,7 +7,9 @@
 namespace Spryker\Zed\ProductOption\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
 
 class ProductOptionGroupDataProvider
@@ -23,15 +25,23 @@ class ProductOptionGroupDataProvider
     protected $productOptionGroupTransfer;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      */
     public function __construct(
         ProductOptionToTaxInterface $taxFacade,
+        ProductOptionToLocaleInterface $localeFacade,
         ProductOptionGroupTransfer $productOptionGroupTransfer = null
     ) {
         $this->taxFacade = $taxFacade;
         $this->productOptionGroupTransfer = $productOptionGroupTransfer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -49,7 +59,27 @@ class ProductOptionGroupDataProvider
      */
     public function getData()
     {
+        if (!$this->productOptionGroupTransfer) {
+            return $this->getDefaultProductOptionGroupTransfer();
+        }
+
+        if ($this->productOptionGroupTransfer->getGroupNameTranslations()->count() === 0) {
+            return $this->addDefaultGroupNameTranslations($this->productOptionGroupTransfer);
+        }
+
         return $this->productOptionGroupTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    protected function getDefaultProductOptionGroupTransfer()
+    {
+        $productOptionGroupTransfer = new ProductOptionGroupTransfer();
+
+        $this->addDefaultGroupNameTranslations($productOptionGroupTransfer);
+
+        return $productOptionGroupTransfer;
     }
 
     /**
@@ -68,5 +98,22 @@ class ProductOptionGroupDataProvider
         }
 
         return $taxSetList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    protected function addDefaultGroupNameTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    {
+        $availableLocales = $this->localeFacade->getLocaleCollection();
+        foreach ($availableLocales as $localeTransfer) {
+            $productOptionGroupNameTranslationTransfer = new ProductOptionTranslationTransfer();
+            $productOptionGroupNameTranslationTransfer->setLocaleCode($localeTransfer->getLocaleName());
+            $productOptionGroupTransfer->addGroupNameTranslation($productOptionGroupNameTranslationTransfer);
+        }
+
+        return $productOptionGroupTransfer;
     }
 }

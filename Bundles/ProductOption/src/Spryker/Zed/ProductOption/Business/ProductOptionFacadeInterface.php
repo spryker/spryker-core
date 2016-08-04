@@ -11,13 +11,17 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
  */
 interface ProductOptionFacadeInterface
 {
-
     /**
+     * Specification:
+     *  - Persist new product option group
+     *  - Persist option values if provided
+     *
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return int
@@ -25,6 +29,9 @@ interface ProductOptionFacadeInterface
     public function saveProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer);
 
     /**
+     * Specification:
+     *  - Persist new product option value
+     *
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
      * @return int
@@ -32,6 +39,9 @@ interface ProductOptionFacadeInterface
     public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer);
 
     /**
+     * Specification:
+     *  - Attach abstract product to existing product group
+     *
      * @param string $abstractSku
      * @param int $idProductOptionGroup
      *
@@ -40,6 +50,9 @@ interface ProductOptionFacadeInterface
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup);
 
     /**
+     * Specification:
+     *  - Read product option from persistence
+     *
      * @param int $idProductOptionValue
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
@@ -47,6 +60,25 @@ interface ProductOptionFacadeInterface
     public function getProductOptionValue($idProductOptionValue);
 
     /**
+     *
+     * Specification:
+     *  - Get product option group from persistence
+     *  - Get all related product option values
+     *
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    public function getProductOptionGroupById($idProductOptionGroup);
+
+    /**
+     *
+     * Specification:
+     *  - Loops over all items and calculates gross amount for each items
+     *  - Data is read from sales order persistence
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -56,6 +88,9 @@ interface ProductOptionFacadeInterface
     public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     *  - Loops over all items and calculates subtotal
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -65,6 +100,10 @@ interface ProductOptionFacadeInterface
     public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     *  - Persist product option sales data
+     *  - Used by sales saver plugin
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -75,11 +114,11 @@ interface ProductOptionFacadeInterface
     public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
-     * @api
-     *
      * Specification:
      *  - Calculate tax rate for current quote
      *  - Set tax rate perecentage
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -88,30 +127,13 @@ interface ProductOptionFacadeInterface
     public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     *  - Toggle option active/inactive
+     *
      * @api
      *
-     *  Specification:
-     *  - Get product option group from persistence
-     *  - Get all related product option values
-     *
      * @param int $idProductOptionGroup
-     *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     * @param bool $isActive
      */
-    public function getProductOptionGroupById($idProductOptionGroup);
-
-    /**
-     *  @api
-     *
-     *  Specification:
-     *  - Store translation and update touch table
-     *
-     * @param string $key
-     * @param string $value
-     * @param string $localeCode
-     *
-     * @return void
-     */
-    public function saveProductOptionValueTranslation($key, $value, $localeCode);
-
+    public function toggleOptionActive($idProductOptionGroup, $isActive);
 }

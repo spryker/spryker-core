@@ -7,14 +7,13 @@
 namespace Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Generated\Shared\Transfer\ProductOptionValueTranslationTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
-use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionGroupReader
 {
@@ -85,54 +84,66 @@ class ProductOptionGroupReader
         $productOptionGroupTransfer->fromArray($productOptionGroupEntity->toArray(), true);
 
         $availableLocales = $this->localeFacade->getLocaleCollection();
+
+        $productOptionValueTranslations = [];
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $productOptionValueTransfer = new ProductOptionValueTransfer();
-            $productOptionValueTransfer->setOptionHash(
-                $this->createOptionHash($productOptionValueEntity->getIdProductOptionValue())
-            );
-            $translationKeys[] = $productOptionValueEntity->getValue();
             $productOptionValueTransfer->fromArray($productOptionValueEntity->toArray(), true);
 
-            $this->hydrateValueTranslations($availableLocales, $productOptionValueTransfer, $productOptionGroupTransfer);
+            $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
+            $productOptionValueTransfer->setOptionHash($relatedOptionHash);
 
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+            $valueTranslations = $this->getOptionTranslations(
+                $availableLocales,
+                $productOptionValueTransfer->getValue(),
+                $relatedOptionHash
+            );
+
+            $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
         }
+
+        $productOptionGroupTransfer->setProductOptionValueTranslations(new \ArrayObject($productOptionValueTranslations));
+
+        $groupNameTranslations = $this->getOptionTranslations(
+            $availableLocales,
+            $productOptionGroupTransfer->getName(),
+            $this->createRelatedKeyHash($productOptionGroupTransfer->getName())
+        );
+
+        $productOptionGroupTransfer->setGroupNameTranslations(new \ArrayObject($groupNameTranslations));
 
         return $productOptionGroupTransfer;
     }
 
     /**
      * @param array $availableLocales
-     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param string $translationKey
+     * @param string $relatedOptionHash
+     *
+     * @return array
      */
-    protected function hydrateValueTranslations(
-        array $availableLocales,
-        ProductOptionValueTransfer $productOptionValueTransfer,
-        ProductOptionGroupTransfer $productOptionGroupTransfer
-    ) {
+    protected function getOptionTranslations(array $availableLocales, $translationKey, $relatedOptionHash)
+    {
+        $translations = [];
         foreach ($availableLocales as $localeTransfer) {
-            $translationKeyWithPrefix = ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue();
-            if (!$this->glossaryFacade->hasTranslation($translationKeyWithPrefix, $localeTransfer)) {
+            if (!$this->glossaryFacade->hasTranslation($translationKey, $localeTransfer)) {
                 continue;
             }
 
-            $translationTransfer = $this->glossaryFacade->getTranslation(
-                $translationKeyWithPrefix,
-                $localeTransfer
-            );
+            $translationTransfer = $this->glossaryFacade->getTranslation($translationKey, $localeTransfer);
 
-            $productOptionValueTranslationTransfer = new ProductOptionValueTranslationTransfer();
-            $productOptionValueTranslationTransfer->setName($translationTransfer->getValue());
-            $productOptionValueTranslationTransfer->setKey($productOptionValueTransfer->getValue());
-            $productOptionValueTranslationTransfer->setLocaleCode($localeTransfer->getLocaleName());
-            $productOptionValueTranslationTransfer->setRelatedOptionHash(
-                $this->createOptionHash($productOptionValueTransfer->getIdProductOptionValue())
-            );
+            $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
+            $productOptionTranslationTransfer->setName($translationTransfer->getValue());
+            $productOptionTranslationTransfer->setKey($translationKey);
+            $productOptionTranslationTransfer->setLocaleCode($localeTransfer->getLocaleName());
+            $productOptionTranslationTransfer->setRelatedOptionHash($relatedOptionHash);
 
-            $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionValueTranslationTransfer);
-
+            $translations[] = $productOptionTranslationTransfer;
         }
+
+        return $translations;
     }
 
     /**
@@ -140,7 +151,7 @@ class ProductOptionGroupReader
      *
      * @return string
      */
-    protected function createOptionHash($identifier)
+    protected function createRelatedKeyHash($identifier)
     {
         return hash('sha256', $identifier);
     }

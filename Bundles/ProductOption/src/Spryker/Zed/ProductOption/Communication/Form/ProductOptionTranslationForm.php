@@ -6,12 +6,12 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
-use Generated\Shared\Transfer\ProductOptionValueTranslationTransfer;
+use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductOptionValueTranslationForm extends AbstractType
+class ProductOptionTranslationForm extends AbstractType
 {
     const FIELD_NAME = 'name';
     const FIELD_LOCALE_CODE = 'localeCode';
@@ -38,7 +38,7 @@ class ProductOptionValueTranslationForm extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ProductOptionValueTranslationTransfer::class
+            'data_class' => ProductOptionTranslationTransfer::class
         ]);
     }
 

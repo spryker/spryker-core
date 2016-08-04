@@ -1,0 +1,38 @@
+<div class="form-inline row form-product-option-row" id="{{ productOptionForm.vars.id }}">
+
+    {% set readOnly = {} %}
+    {% if productOptionForm.vars.data and productOptionForm.vars.data.idProductOptionValue %}
+        {% set readOnly = {'readonly' : 'readonly'} %}
+    {% endif %}
+
+    <div class="form-group col-md-3 {% if productOptionForm.value.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(productOptionForm.value) }}
+        {{ form_widget(productOptionForm.value, {attr:readOnly}) }}
+        {{ form_errors(productOptionForm.value) }}
+    </div>
+
+    <div class="form-group col-md-2 {% if productOptionForm.sku.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(productOptionForm.sku) }}
+        {{ form_widget(productOptionForm.sku, {attr:readOnly}) }}
+        {{ form_errors(productOptionForm.sku) }}
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group {% if productOptionForm.price.vars.errors|length > 0 %}has-error{% endif %}">
+            {{ form_label(productOptionForm.price) }}
+            <div class="input-group">
+                {{ form_widget(productOptionForm.price) }}
+                <div class="input-group-addon">&euro;</div>
+            </div>
+            {{ form_errors(productOptionForm.price) }}
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="Remove"  class="btn btn-sm btn-outline btn-remove"/>
+        </div>
+    </div>
+
+    {{ form_row(productOptionForm.idProductOptionValue) }}
+    {{ form_row(productOptionForm.optionHash) }}
+</div>
+

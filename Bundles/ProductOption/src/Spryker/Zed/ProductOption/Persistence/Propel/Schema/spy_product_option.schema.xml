@@ -11,6 +11,8 @@
             <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
 
+        <behavior name="timestampable"/>
+
         <id-method-parameter value="spy_product_option_group_pk_seq"/>
     </table>
 
@@ -37,6 +39,8 @@
         <unique name="spy_product_option_value-sku">
             <unique-column name="sku"/>
         </unique>
+
+        <behavior name="timestampable"/>
 
         <foreign-key name="spy_product_option_value-fk_product_option_group" foreignTable="spy_product_option_group">
             <reference local="fk_product_option_group" foreign="id_product_option_group"/>

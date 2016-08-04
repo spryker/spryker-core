@@ -7,3 +7,5 @@
 
 require('./modules/main');
 require('./modules/assign-product');
+require('./modules/navigation');
+require('./modules/product-option-value-form-handler');

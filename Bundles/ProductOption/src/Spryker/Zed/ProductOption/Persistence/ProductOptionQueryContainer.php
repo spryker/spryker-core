@@ -200,6 +200,16 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithValues()
+    {
+        return $this->getFactory()->createProductOptionGroupQuery()
+            ->joinSpyProductOptionValue()
+            ->groupByIdProductOptionGroup();
+    }
+
+    /**
      *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code

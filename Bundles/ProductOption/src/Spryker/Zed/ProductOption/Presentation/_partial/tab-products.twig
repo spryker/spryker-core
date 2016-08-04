@@ -1,5 +1,5 @@
 
-{% if productOptionTable is defined %}
+{% if productOptionsTable is defined %}
 <div class="tabs-container">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab-11">{{ 'Products with this option' | trans }}</a></li>
@@ -8,7 +8,7 @@
     <div class="tab-content">
         <div id="tab-11" class="tab-pane active">
             <div class="panel-body">
-                {{ productOptionTable | raw }}
+                {{ productOptionsTable | raw }}
 
                 <div class="prcat-deselect-all">
                     <a href="#" class="btn btn-primary ">{{ 'Deselect All' | trans }}</a>

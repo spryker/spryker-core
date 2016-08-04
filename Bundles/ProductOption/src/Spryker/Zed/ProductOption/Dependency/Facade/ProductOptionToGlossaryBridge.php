@@ -107,4 +107,14 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
     {
        return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
+
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function deleteKey($keyName)
+    {
+       return $this->glossaryFacade->deleteKey($keyName);
+    }
 }

@@ -18,4 +18,5 @@ interface ProductOptionToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $idItem, $keyChange = false);
+
 }

@@ -12,9 +12,14 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm;
-use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueTranslationForm;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm;
+use Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer;
+use Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer;
+use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer;
+use Spryker\Zed\ProductOption\Communication\Table\ProductOptionListTable;
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
 use Spryker\Zed\ProductOption\Communication\Table\ProductTable;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -33,11 +38,13 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
         ProductOptionGroupDataProvider $productOptionGroupDataProvider = null
     ){
         $productOptionValueForm = $this->createProductOptionValueForm();
-        $productOptionValueTranslationForm = $this->createProductOptionValueTranslationForm();
+        $createProductOptionTranslationForm = $this->createProductOptionTranslationForm();
 
         $productOptionGroupFormType = new ProductOptionGroupForm(
             $productOptionValueForm,
-            $productOptionValueTranslationForm
+            $createProductOptionTranslationForm,
+            $this->createArrayToArrayObjectTransformer(),
+            $this->createStringToArrayTransformer()
         );
 
         return $this->getFormFactory()->create(
@@ -56,15 +63,15 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductOptionValueForm()
     {
-        return new ProductOptionValueForm($this->getQueryContainer());
+        return new ProductOptionValueForm($this->getQueryContainer(), $this->createPriceTranformer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueTranslationForm
+     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm
      */
-    public function createProductOptionValueTranslationForm()
+    public function createProductOptionTranslationForm()
     {
-        return new ProductOptionValueTranslationForm();
+        return new ProductOptionTranslationForm();
     }
 
     /**
@@ -76,18 +83,25 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductOptionGroupDataProvider(
             $this->getTaxFacade(),
+            $this->getLocaleFacade(),
             $productOptionGroupTransfer
         );
     }
 
     /**
      * @param int $idProductOptionGroup
+     * @param string $tableContext
      *
      * @return \Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable
      */
-    public function createProductOptionTable($idProductOptionGroup)
+    public function createProductOptionTable($idProductOptionGroup, $tableContext)
     {
-        return new ProductOptionTable($this->getQueryContainer(), $this->getCurrentLocale(), $idProductOptionGroup);
+        return new ProductOptionTable(
+            $this->getQueryContainer(),
+            $this->getCurrentLocale(),
+            $idProductOptionGroup,
+            $tableContext
+        );
     }
 
     /**
@@ -105,11 +119,46 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOption\Communication\Table\ProductOptionListTable
+     */
+    public function createProductOptionListTable()
+    {
+        return new ProductOptionListTable(
+            $this->getQueryContainer(),
+            $this->getCurrencyManager()
+        );
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer
+     */
+    protected function createArrayToArrayObjectTransformer()
+    {
+        return new ArrayToArrayObjectTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer
+     */
+    protected function createStringToArrayTransformer()
+    {
+        return new StringToArrayTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer
+     */
+    protected function createPriceTranformer()
+    {
+        return new PriceTransformer($this->getCurrencyManager());
     }
 
     /**
@@ -126,5 +175,21 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    public function getCurrencyManager()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::CURRENCY_MANAGER);
+    }
+
+    /**
+     * @return ProductOptionToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
     }
 }

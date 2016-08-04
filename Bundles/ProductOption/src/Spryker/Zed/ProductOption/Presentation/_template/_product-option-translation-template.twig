@@ -1,11 +1,13 @@
 <div class="form-inline form-product-option-translation-row" id="{{ productOptionTranslationForm.vars.id }}">
     <div class="form-group {% if productOptionTranslationForm.name.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_label(productOptionTranslationForm.name) }}
-
+        {{ form_label(productOptionTranslationForm.name, label) }}
         {{ form_widget(productOptionTranslationForm.name) }}
         {{ form_errors(productOptionTranslationForm.name) }}
     </div>
 
+    <div class="form-group">
+        <a href="#" class="copy-language">{{ 'Copy to other languages' | trans }}</a>
+    </div>
     {{ form_row(productOptionTranslationForm.key) }}
     {{ form_row(productOptionTranslationForm.localeCode) }}
     {{ form_row(productOptionTranslationForm.relatedOptionHash) }}

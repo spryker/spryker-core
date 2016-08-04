@@ -51,4 +51,15 @@ class ProductOptionToTaxBridge implements ProductOptionToTaxInterface
     {
         return $this->taxFacade->getTaxSets();
     }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
+    public function getTaxSet($id)
+    {
+       return $this->taxFacade->getTaxSet($id);
+    }
+
 }

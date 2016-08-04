@@ -17,7 +17,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-table';
     const COL_CHECKBOX = 'checkbox';
 

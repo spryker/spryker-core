@@ -102,20 +102,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     * @param string $localeCode
-     *
-     * @return void
-     */
-    public function saveProductOptionValueTranslation($key, $value, $localeCode)
-    {
-        $this->getFactory()
-            ->createProductOptionGroupSaver()
-            ->saveProductOptionValueTranslation($key, $value, $localeCode);
-    }
-
-    /**
      *
      * Specification:
      *  - Loops over all items and calculates gross amount for each items
@@ -186,6 +172,22 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         $this->getFactory()
             ->createProductOptionTaxRateCalculator()
             ->recalculate($quoteTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Toggle option active/inactive
+     *
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     * @param bool $isActive
+     */
+    public function toggleOptionActive($idProductOptionGroup, $isActive)
+    {
+        $this->getFactory()
+            ->createProductOptionGroupSaver()
+            ->toggleOptionActive($idProductOptionGroup, $isActive);
     }
 
 }
