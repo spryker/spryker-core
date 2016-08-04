@@ -46,6 +46,7 @@
                     <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
                     <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Stock</a></li>
                     <li class=""><a href="#tab_abstract_attributes" data-toggle="tab">Attributes</a></li>
+                    <li class=""><a href="#tab_image" data-toggle="tab">Image</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab_general" class="tab-pane active">
@@ -58,6 +59,10 @@
 
                     <div id="tab_price_and_stock" class="tab-pane">
                         {% include '@ProductManagement/Variant/partials/price-tab.twig' %}
+                    </div>
+
+                    <div id="tab_image" class="tab-pane">
+                        {% include '@ProductManagement/Product/partials/image-tab.twig' %}
                     </div>
                 </div>
             </div>

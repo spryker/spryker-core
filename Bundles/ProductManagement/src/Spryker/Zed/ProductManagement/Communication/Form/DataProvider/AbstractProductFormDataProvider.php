@@ -163,7 +163,7 @@ class AbstractProductFormDataProvider
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
         $data = array_merge($data, $this->getSeoDefaultFields());
         $data = array_merge($data, $this->getAttributeAbstractDefaultFields());
-        $data = array_merge($data, $this->getAbstractImagesDefaultFields());
+        $data = array_merge($data, $this->getImagesDefaultFields());
 
         return $data;
     }
@@ -173,11 +173,30 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    public function getProductImagesForAbstractProduct($idProductAbstract)
+    protected function getProductImagesForAbstractProduct($idProductAbstract)
     {
-        $imageSetTransferCollection = $this->productImageFacade
-            ->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+        $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+        return $this->getProductImageSetCollection($imageSetTransferCollection);
+    }
 
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    protected function getProductImagesForConcreteProduct($idProduct)
+    {
+        $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
+        return $this->getProductImageSetCollection($imageSetTransferCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSetTransferCollection
+     *
+     * @return array
+     */
+    protected function getProductImageSetCollection($imageSetTransferCollection)
+    {
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $result = [];
@@ -200,20 +219,20 @@ class AbstractProductFormDataProvider
                 $data[$imageSetTransfer->getIdProductImageSet()] = $imageSetTransfer->toArray(true);
             }
 
-            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
+            $formName = ProductFormAdd::getImagesFormName($localeCode);
             $result[$formName] = array_values($data);
         }
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         $result[$defaultName] = array_values($defaults);
 
-         return $result;
+        return $result;
     }
 
     /**
      * @return array
      */
-    public function getGeneralAttributesDefaultFields()
+    protected function getGeneralAttributesDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
 
@@ -232,7 +251,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getSeoDefaultFields()
+    protected function getSeoDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
 
@@ -252,7 +271,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getAttributeVariantDefaultFields()
+    protected function getAttributeVariantDefaultFields()
     {
         $attributeProcessor = new AttributeProcessor();
         return $this->convertVariantAttributesToFormValues($attributeProcessor, true);
@@ -261,7 +280,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getAttributeAbstractDefaultFields()
+    protected function getAttributeAbstractDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
         $attributeProcessor = $this->productManagementFacade->getProductAttributesByAbstractProductId(null);
@@ -282,7 +301,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getAbstractImagesDefaultFields()
+    protected function getImagesDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
         $data = [
@@ -301,12 +320,12 @@ class AbstractProductFormDataProvider
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
-            $key = ProductFormAdd::getAbstractImagesFormName($localeCode);
+            $key = ProductFormAdd::getImagesFormName($localeCode);
             $result[$key] = [$data];
         }
 
         $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
-        $result[$defaultKey] = [$data]; //setting it to null breaks symfony
+        $result[$defaultKey] = [$data];
 
         return $result;
     }
@@ -314,7 +333,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public function getPriceAndStockDefaultFields()
+    protected function getPriceAndStockDefaultFields()
     {
         return $this->convertToFormValues($this->taxCollection);
     }

@@ -34,4 +34,11 @@ interface ProductManagementToProductImageInterface
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
 
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductId($idProduct);
+
 }

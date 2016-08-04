@@ -56,4 +56,15 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
     }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductId($idProduct)
+    {
+        return $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
+    }
+
 }

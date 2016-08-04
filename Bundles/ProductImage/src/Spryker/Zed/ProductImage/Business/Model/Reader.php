@@ -48,4 +48,18 @@ class Reader implements ReaderInterface
         return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
     }
 
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductId($idProduct)
+    {
+        $imageCollection = $this->productImageContainer
+            ->queryImageSetByProductId($idProduct)
+            ->find();
+
+        return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+    }
+
 }

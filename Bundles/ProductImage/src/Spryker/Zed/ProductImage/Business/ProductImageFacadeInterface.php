@@ -40,4 +40,13 @@ interface ProductImageFacadeInterface
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
 
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductId($idProduct);
+
 }

@@ -99,7 +99,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $priceTransfer = $this->buildProductAbstractPriceTransfer($form);
         $productAbstractTransfer->setPrice($priceTransfer);
 
-        $imageSetCollection = $this->buildProductAbstractImageSetCollection($form);
+        $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImagesSets(
             new \ArrayObject($imageSetCollection)
         );
@@ -166,6 +166,11 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
         $productConcreteTransfer->setStock(new \ArrayObject($stockCollection));
+
+        $imageSetCollection = $this->buildProductImageSetCollection($form);
+        $productConcreteTransfer->setImagesSets(
+            new \ArrayObject($imageSetCollection)
+        );
 
         return $productConcreteTransfer;
     }
@@ -344,13 +349,13 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function buildProductAbstractImageSetCollection(FormInterface $form)
+    public function buildProductImageSetCollection(FormInterface $form)
     {
         $transferCollection = [];
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
 
         foreach ($localeCollection as $localeCode) {
-            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
+            $formName = ProductFormAdd::getImagesFormName($localeCode);
 
             $imageSetCollection = $form->get($formName);
             foreach ($imageSetCollection  as $imageSet) {

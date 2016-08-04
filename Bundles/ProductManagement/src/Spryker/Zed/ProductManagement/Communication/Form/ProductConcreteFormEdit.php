@@ -44,7 +44,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
-            ->addStockForm($builder);
+            ->addStockForm($builder)
+            ->addImageLocalizedForms($builder);
     }
 
     /**

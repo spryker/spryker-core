@@ -76,6 +76,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantAbstractAttributes($productAbstractTransfer, $productTransfer, $formData);
+            $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
         }
 
         return $formData;
@@ -187,6 +188,28 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = null;
+        }
+
+        return $formData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function appendConcreteProductImages(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
+    {
+        $availableLocales = $this->localeProvider->getLocaleCollection(true);
+        $data = $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete());
+
+        foreach ($availableLocales as $id => $localeCode) {
+            $key = ProductFormAdd::getImagesFormName($localeCode);
+            $formData[$key] = array_merge(
+                $formData[$key], $data[$key]
+            );
         }
 
         return $formData;

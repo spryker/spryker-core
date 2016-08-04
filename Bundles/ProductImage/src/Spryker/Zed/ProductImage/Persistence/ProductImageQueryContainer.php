@@ -102,8 +102,14 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
      */
     public function queryImageSetByProductId($idProduct)
     {
-        return $this->queryProductImage()
-            ->filterByFkProduct($idProduct);
+        return $this->getFactory()
+            ->createProductImageSetQuery()
+                ->filterByFkProduct($idProduct)
+                ->useSpyProductImageSetToProductImageQuery()
+                    ->useSpyProductImageQuery()
+                    ->endUse()
+                ->orderBySort(Criteria::DESC)
+                ->endUse();
     }
 
 }

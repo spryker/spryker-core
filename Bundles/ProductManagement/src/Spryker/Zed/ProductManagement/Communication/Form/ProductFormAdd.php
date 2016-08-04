@@ -91,8 +91,8 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_GENERAL,
             self::VALIDATION_GROUP_PRICE_AND_TAX,
             self::VALIDATION_GROUP_PRICE_AND_STOCK,
-            //self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
-            //self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
+            self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
+            self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO,
             self::VALIDATION_GROUP_IMAGE,
         ];
@@ -188,7 +188,7 @@ class ProductFormAdd extends AbstractType
     {
         $localeCollection = $this->localeCollector->getLocaleCollection(true);
         foreach ($localeCollection as $localeCode) {
-            $name = self::getAbstractImagesFormName($localeCode);
+            $name = self::getImagesFormName($localeCode);
             $this->addImageForm($builder, $name);
         }
 
@@ -462,7 +462,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return string
      */
-    public static function getAbstractImagesFormName($localeCode)
+    public static function getImagesFormName($localeCode)
     {
         return self::getLocalizedPrefixName(self::FORM_IMAGE_SET, $localeCode);
     }
