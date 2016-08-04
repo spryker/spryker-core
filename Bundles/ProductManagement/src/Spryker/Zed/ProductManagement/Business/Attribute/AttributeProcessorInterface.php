@@ -61,32 +61,29 @@ interface AttributeProcessorInterface
     public function setAbstractLocalizedAttributes(array $abstractLocalizedAttributes);
 
     /**
-     * @return array
-     */
-    public function mergeAttributes();
-
-    /**
      * @param null|string $localeCode
      *
      * @return array
      */
-    public function mergeAbstractLocalizedAttributes($localeCode = null);
+    public function mergeAttributes($localeCode = null);
 
     /**
-     * @return array
-     */
-    public function getAllAbstractKeys();
-
-    /**
-     * @return array
-     */
-    public function mergeLocalizedAttributes();
-
-    /**
-     * @param array $values
+     * @param string $localeCode
      *
      * @return array
      */
-    public function generateAttributeValues(array $values);
+    public function getAbstractLocalizedAttributesByLocaleCode($localeCode);
+
+    /**
+     * @param string $localeCode
+     *
+     * @return array
+     */
+    public function getConcreteLocalizedAttributesByLocaleCode($localeCode);
+
+    /**
+     * @return array
+     */
+    public function getAllKeys();
 
 }

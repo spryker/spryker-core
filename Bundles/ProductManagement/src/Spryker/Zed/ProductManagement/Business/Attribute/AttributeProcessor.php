@@ -35,20 +35,20 @@ class AttributeProcessor implements AttributeProcessorInterface
 
     /**
      * @param array $abstractAttributes
-     * @param array $attributes
-     * @param array $localizedAttributes
+     * @param array $concreteAttributes
      * @param array $abstractLocalizedAttributes
+     * @param array $concreteLocalizedAttributes
      */
     public function __construct(
         array $abstractAttributes = [],
-        array $attributes = [],
-        array $localizedAttributes = [],
-        array $abstractLocalizedAttributes = []
+        array $concreteAttributes = [],
+        array $abstractLocalizedAttributes = [],
+        array $concreteLocalizedAttributes = []
     ) {
         $this->abstractAttributes = $abstractAttributes;
-        $this->concreteAttributes =  $attributes;
-        $this->concreteLocalizedAttributes = $localizedAttributes;
+        $this->concreteAttributes =  $concreteAttributes;
         $this->abstractLocalizedAttributes = $abstractLocalizedAttributes;
+        $this->concreteLocalizedAttributes = $concreteLocalizedAttributes;
     }
 
     /**
@@ -132,38 +132,67 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @return array
-     */
-    public function mergeAttributes()
-    {
-        sd('fix me');
-        $attributes = $this->mergeAbstractLocalizedAttributes();
-        $localizedAttributes = $this->mergeLocalizedAttributes();
-
-        return array_merge($attributes, $localizedAttributes);
-    }
-
-    /**
      * @param null|string $localeCode
      *
      * @return array
      */
-    public function mergeAbstractLocalizedAttributes($localeCode = null)
+    public function mergeAttributes($localeCode = null)
     {
-        $mergedAttributes = [];
+        $abstractAttributes = $this->getAbstractAttributes();
+        $concreteAttributes = $this->getConcreteAttributes();
+
+        if ($localeCode !== null) {
+            $abstractLocalizedAttributes = $this->getAbstractLocalizedAttributesByLocaleCode($localeCode);
+            $abstractAttributes = array_merge($abstractAttributes, $abstractLocalizedAttributes);
+
+
+            $concreteLocalizedAttributes = $this->getConcreteLocalizedAttributesByLocaleCode($localeCode);
+            $concreteAttributes = array_merge($concreteAttributes, $concreteLocalizedAttributes);
+        }
+
+        $result = array_merge($abstractAttributes, $concreteAttributes);
+        ksort($result);
+
+        return $result;
+
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return array
+     */
+    public function getAbstractLocalizedAttributesByLocaleCode($localeCode)
+    {
         foreach ($this->getAbstractLocalizedAttributes() as $transfer) {
-            if ($localeCode === $transfer->getLocale()->getLocaleName()) {
-                $mergedAttributes[$transfer->getLocale()->getLocaleName()] = $transfer->getAttributes();
+            if ($transfer->getLocale()->getLocaleName() === $localeCode) {
+                return $transfer->getAttributes();
             }
         }
 
-        return $mergedAttributes;
+        return [];
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return array
+     */
+    public function getConcreteLocalizedAttributesByLocaleCode($localeCode)
+    {
+        foreach ($this->getConcreteLocalizedAttributes() as $transfer) {
+            if ($transfer->getLocale()->getLocaleName() === $localeCode) {
+                return $transfer->getAttributes();
+            }
+        }
+
+        return [];
     }
 
     /**
      * @return array
      */
-    public function getAllAbstractKeys()
+    public function getAllKeys()
     {
         $mergedAttributes = [];
         foreach ($this->getAbstractLocalizedAttributes() as $transfer) {
@@ -181,34 +210,6 @@ class AttributeProcessor implements AttributeProcessorInterface
             array_keys($mergedAttributes),
             array_fill(0, count($mergedAttributes), null)
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function mergeLocalizedAttributes()
-    {
-        $concreteAttributes = $this->getConcreteAttributes();
-        $concreteLocalizedAttributes = $this->getConcreteLocalizedAttributes();
-
-        return array_merge($concreteAttributes, $concreteLocalizedAttributes);
-    }
-
-    /**
-     * @param array $values
-     *
-     * @return array
-     */
-    public function generateAttributeValues(array $values)
-    {
-        $defaults = $values[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE];
-        unset($values[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]);
-
-        foreach ($values as $localeCode => $data) {
-            $values[$localeCode] = array_merge($data, $defaults);
-        }
-
-        return $values;
     }
 
 }

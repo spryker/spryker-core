@@ -370,7 +370,7 @@ class AbstractProductFormDataProvider
         if ($localeCode === null) {
             $attributes = $attributeProcessor->getAbstractAttributes();
         }  else {
-            $attributes = $attributeProcessor->mergeAbstractLocalizedAttributes($localeCode);
+            $attributes = $attributeProcessor->mergeAttributes($localeCode);
         }
 
         $values = [];
@@ -404,7 +404,7 @@ class AbstractProductFormDataProvider
      */
     protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributeKeys = $attributeProcessor->getAllAbstractKeys();
+        $productAttributeKeys = $attributeProcessor->getAllKeys();
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -478,7 +478,7 @@ class AbstractProductFormDataProvider
      */
     protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAllAbstractKeys();
+        $productAttributes = $attributeProcessor->getAllKeys();
 
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
