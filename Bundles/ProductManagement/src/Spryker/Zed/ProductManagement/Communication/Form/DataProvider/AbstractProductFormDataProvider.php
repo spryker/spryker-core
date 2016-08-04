@@ -133,10 +133,10 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $isNew = $idProductAbstract === null;
-        $attributes = $this->productManagementFacade->getProductAttributesByAbstractProductId($idProductAbstract);
+        $attributeProcessor = $this->productManagementFacade->getProductAttributesByAbstractProductId($idProductAbstract);
 
-        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
-        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, $isNew);
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributeProcessor, $isNew);
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
