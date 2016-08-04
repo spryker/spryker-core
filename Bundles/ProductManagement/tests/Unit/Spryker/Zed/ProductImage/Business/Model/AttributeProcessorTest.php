@@ -45,6 +45,11 @@ class AttributeProcessorTest extends Test
      */
     protected $enLocale;
 
+    /**
+     * @var \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     */
+    protected $attributeProcessor;
+
 
     protected function setUp()
     {
@@ -100,18 +105,18 @@ class AttributeProcessorTest extends Test
         $this->concreteLocalizedAttributes = [
             $deConcreteLocalizedAttribute, $enConcreteLocalizedAttribute
         ];
-    }
 
-    public function testMergeAttributesWithoutLocalizedData()
-    {
-        $attributeProcessor = new AttributeProcessor(
+        $this->attributeProcessor = new AttributeProcessor(
             $this->abstractAttributes,
             $this->concreteAttributes,
             $this->abstractLocalizedAttributes,
             $this->concreteLocalizedAttributes
         );
+    }
 
-        $actual = $attributeProcessor->mergeAttributes();
+    public function testMergeAttributesWithoutLocalizedData()
+    {
+        $actual = $this->attributeProcessor->mergeAttributes();
         $expected = [
             'battery' => 8,
             'size' => 'XL',
@@ -126,14 +131,7 @@ class AttributeProcessorTest extends Test
 
     public function testMergeAttributesWihGermanLocale()
     {
-        $attributeProcessor = new AttributeProcessor(
-            $this->abstractAttributes,
-            $this->concreteAttributes,
-            $this->abstractLocalizedAttributes,
-            $this->concreteLocalizedAttributes
-        );
-
-        $actual = $attributeProcessor->mergeAttributes('de_DE');
+        $actual = $this->attributeProcessor->mergeAttributes('de_DE');
 
         $expected = [
             'battery' => 8,
@@ -151,14 +149,7 @@ class AttributeProcessorTest extends Test
 
     public function testMergeAttributesWihEnglishLocale()
     {
-        $attributeProcessor = new AttributeProcessor(
-            $this->abstractAttributes,
-            $this->concreteAttributes,
-            $this->abstractLocalizedAttributes,
-            $this->concreteLocalizedAttributes
-        );
-
-        $actual = $attributeProcessor->mergeAttributes('en_US');
+        $actual = $this->attributeProcessor->mergeAttributes('en_US');
 
         $expected = [
             'battery' => 8,
@@ -176,14 +167,7 @@ class AttributeProcessorTest extends Test
 
     public function testGetAllKeys()
     {
-        $attributeProcessor = new AttributeProcessor(
-            $this->abstractAttributes,
-            $this->concreteAttributes,
-            $this->abstractLocalizedAttributes,
-            $this->concreteLocalizedAttributes
-        );
-
-        $actual = $attributeProcessor->getAllKeys();
+        $actual = $this->attributeProcessor->getAllKeys();
 
         $expected = [
             'material' => null,
