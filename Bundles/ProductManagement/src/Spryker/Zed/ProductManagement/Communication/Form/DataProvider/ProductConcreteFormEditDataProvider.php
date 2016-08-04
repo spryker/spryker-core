@@ -202,17 +202,10 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendConcreteProductImages(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
     {
-        $availableLocales = $this->localeProvider->getLocaleCollection(true);
-        $data = $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete());
-
-        foreach ($availableLocales as $id => $localeCode) {
-            $key = ProductFormAdd::getImagesFormName($localeCode);
-            $formData[$key] = array_merge(
-                $formData[$key], $data[$key]
-            );
-        }
-
-        return $formData;
+        return array_merge(
+            $formData,
+            $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete())
+        );
     }
 
 }
