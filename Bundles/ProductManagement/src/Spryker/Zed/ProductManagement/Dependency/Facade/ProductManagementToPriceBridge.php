@@ -8,26 +8,25 @@
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
+use Spryker\Zed\Price\Business\PriceFacadeInterface;
 
 class ProductManagementToPriceBridge implements ProductManagementToPriceInterface
 {
 
     /**
-     * @var \Spryker\Zed\Price\Business\PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
     protected $priceFacade;
 
     /**
-     * @param \Spryker\Zed\Price\Business\PriceFacade $priceFacade
+     * @param \Spryker\Zed\Price\Business\PriceFacadeInterface $priceFacade
      */
-    public function __construct($priceFacade)
+    public function __construct(PriceFacadeInterface $priceFacade)
     {
         $this->priceFacade = $priceFacade;
     }
 
     /**
-     * @api
-     *
      * @param int $idAbstractProduct
      * @param null $priceType
      *
@@ -39,8 +38,6 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @api
-     *
      * @param int $idProduct
      * @param null $priceType
      *
@@ -52,8 +49,6 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
      *
      * @return int
@@ -64,8 +59,6 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
      *
      * @return int

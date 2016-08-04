@@ -13,8 +13,6 @@ interface ProductManagementToPriceInterface
 {
 
     /**
-     * @api
-     *
      * @param int $idAbstractProduct
      * @param null $priceType
      *
@@ -23,8 +21,6 @@ interface ProductManagementToPriceInterface
     public function getProductAbstractPrice($idAbstractProduct, $priceType = null);
 
     /**
-     * @api
-     *
      * @param int $idProduct
      * @param null $priceType
      *
@@ -33,8 +29,6 @@ interface ProductManagementToPriceInterface
     public function getProductConcretePrice($idProduct, $priceType = null);
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
      *
      * @return int

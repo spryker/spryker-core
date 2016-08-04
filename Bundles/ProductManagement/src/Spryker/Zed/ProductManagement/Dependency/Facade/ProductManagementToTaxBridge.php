@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Spryker\Zed\Tax\Business\TaxFacadeInterface;
+
 class ProductManagementToTaxBridge implements ProductManagementToTaxInterface
 {
 
     /**
-     * @var \Spryker\Zed\Tax\Business\TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
     protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\Tax\Business\TaxFacade $taxFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
      */
-    public function __construct($taxFacade)
+    public function __construct(TaxFacadeInterface $taxFacade)
     {
         $this->taxFacade = $taxFacade;
     }

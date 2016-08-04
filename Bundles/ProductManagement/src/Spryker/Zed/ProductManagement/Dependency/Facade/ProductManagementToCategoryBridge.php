@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Spryker\Zed\Category\Business\CategoryFacadeInterface;
+
 class ProductManagementToCategoryBridge implements ProductManagementToCategoryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryFacade
+     * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
     protected $categoryFacade;
 
     /**
-     * @param \Spryker\Zed\Category\Business\CategoryFacade $categoryFacade
+     * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
      */
-    public function __construct($categoryFacade)
+    public function __construct(CategoryFacadeInterface $categoryFacade)
     {
         $this->categoryFacade = $categoryFacade;
     }

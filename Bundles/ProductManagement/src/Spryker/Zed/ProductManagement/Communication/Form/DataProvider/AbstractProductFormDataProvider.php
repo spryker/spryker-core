@@ -62,11 +62,6 @@ class AbstractProductFormDataProvider
     protected $stockQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
-     */
-    protected $productImageQueryContainer;
-
-    /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
     protected $localeProvider;
@@ -80,6 +75,11 @@ class AbstractProductFormDataProvider
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
     protected $productFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface
+     */
+    protected $productImageFacade;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
@@ -106,10 +106,10 @@ class AbstractProductFormDataProvider
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
-        ProductImageQueryContainerInterface $productImageQueryContainer,
-        ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
+        ProductManagementToProductImageInterface $productImageQueryContainer,
         ProductManagementFacadeInterface $productManagementFacade,
+        ProductManagementToPriceInterface $priceFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
@@ -118,7 +118,7 @@ class AbstractProductFormDataProvider
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
-        $this->productImageQueryContainer = $productImageQueryContainer;
+        $this->productImageFacade = $productImageQueryContainer;
         $this->localeProvider = $localeProvider;
         $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
@@ -189,9 +189,15 @@ class AbstractProductFormDataProvider
      */
     public function getProductImagesForAbstractProduct($idProductAbstract)
     {
-        $imageCollection = $this->productImageQueryContainer
+        $imageCollection = $this->productImageFacade
             ->queryImageCollectionByProductAbstractId($idProductAbstract)
             ->find();
+
+        $imageTransferCollection = $this->productImageFacade
+            ->queryImageCollectionByProductAbstractId($idProductAbstract)
+            ->find();
+
+        sd($imageCollection->toArray());
 
         $localeCollection = $this->localeProvider->getLocaleCollection();
 

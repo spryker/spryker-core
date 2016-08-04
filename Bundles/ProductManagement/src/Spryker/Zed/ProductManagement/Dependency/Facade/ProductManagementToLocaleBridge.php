@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+
 class ProductManagementToLocaleBridge implements ProductManagementToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * ProductCategoryToLocaleBridge constructor.
-     *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct($localeFacade)
+    public function __construct(LocaleFacadeInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

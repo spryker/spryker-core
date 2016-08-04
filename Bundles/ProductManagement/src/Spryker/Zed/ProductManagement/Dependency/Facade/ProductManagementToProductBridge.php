@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
 
 class ProductManagementToProductBridge implements ProductManagementToProductInterface
 {
@@ -20,7 +21,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     /**
      * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      */
-    public function __construct($productFacade)
+    public function __construct(ProductFacadeInterface $productFacade)
     {
         $this->productFacade = $productFacade;
     }
