@@ -34,7 +34,7 @@ class RefundTransactionHandler extends AbstractTransactionHandler
     }
 
     /**
-     * @param array $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
@@ -59,7 +59,7 @@ class RefundTransactionHandler extends AbstractTransactionHandler
     }
 
     /**
-     * @param array $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return \Generated\Shared\Transfer\RefundTransfer

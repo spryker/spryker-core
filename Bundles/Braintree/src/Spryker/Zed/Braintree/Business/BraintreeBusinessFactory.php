@@ -113,7 +113,15 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPreCheckTransaction()
     {
-        return new PreCheckTransaction($this->getConfig());
+        return new PreCheckTransaction($this->getConfig(), $this->getCurrencyManager());
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    protected function getCurrencyManager()
+    {
+        return $this->getProvidedDependency(BraintreeDependencyProvider::CURRENCY_MANAGER);
     }
 
     /**
@@ -133,7 +141,7 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
      */
     protected function createRefundTransaction()
     {
-        return new RefundTransaction($this->getConfig());
+        return new RefundTransaction($this->getConfig(), $this->getCurrencyManager());
     }
 
     /**

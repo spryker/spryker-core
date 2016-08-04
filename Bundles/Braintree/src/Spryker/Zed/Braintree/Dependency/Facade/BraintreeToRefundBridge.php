@@ -27,7 +27,7 @@ class BraintreeToRefundBridge implements BraintreeToRefundInterface
     }
 
     /**
-     * @param array $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return \Generated\Shared\Transfer\RefundTransfer

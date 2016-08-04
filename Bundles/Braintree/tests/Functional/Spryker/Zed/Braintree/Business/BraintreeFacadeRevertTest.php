@@ -12,7 +12,6 @@ use Braintree\Transaction;
 use Braintree\Transaction\StatusDetails;
 use DateTime;
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Braintree\Business\BraintreeFacade;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\RevertTransaction;
 
 /**
@@ -31,12 +30,11 @@ class BraintreeFacadeRevertTest extends AbstractFacadeTest
      */
     public function testRevertPaymentWithSuccessResponse()
     {
-        $braintreeFacade = new BraintreeFacade();
         $factoryMock = $this->getFactoryMock(['createRevertTransaction']);
         $factoryMock->expects($this->once())->method('createRevertTransaction')->willReturn(
             $this->getRevertTransactionMock()
         );
-        $braintreeFacade->setFactory($factoryMock);
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
 
         $transactionMetaTransfer = $this->getTransactionMetaTransfer();
 
@@ -71,10 +69,8 @@ class BraintreeFacadeRevertTest extends AbstractFacadeTest
     {
         $revertTransactionMock = $this
             ->getMockBuilder(RevertTransaction::class)
-            ->setMethods(['revert'])
-            ->setConstructorArgs(
-                [new BraintreeConfig()]
-            )
+            ->setMethods(['revert', 'initializeBraintree'])
+            ->setConstructorArgs([new BraintreeConfig()])
             ->getMock();
 
         if ($success) {

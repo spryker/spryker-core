@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\PreCheckTransaction;
 
@@ -75,9 +76,9 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
     {
         $preCheckTransactionMock = $this
             ->getMockBuilder(PreCheckTransaction::class)
-            ->setMethods(['preCheck'])
+            ->setMethods(['preCheck', 'initializeBraintree'])
             ->setConstructorArgs(
-                [new BraintreeConfig()]
+                [new BraintreeConfig(), CurrencyManager::getInstance()]
             )
             ->getMock();
 

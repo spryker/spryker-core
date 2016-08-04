@@ -12,10 +12,28 @@ use Braintree\Transaction as BraintreeTransaction;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
+use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 
 class PreCheckTransaction extends AbstractTransaction
 {
+
+    /**
+     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Zed\Braintree\BraintreeConfig $brainTreeConfig
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     */
+    public function __construct(BraintreeConfig $brainTreeConfig, CurrencyManagerInterface $currencyManager)
+    {
+        parent::__construct($brainTreeConfig);
+
+        $this->currencyManager = $currencyManager;
+    }
 
     /**
      * @return string
@@ -125,7 +143,9 @@ class PreCheckTransaction extends AbstractTransaction
      */
     protected function getAmount()
     {
-        return $this->getQuote()->requireTotals()->getTotals()->getGrandTotal() / 100;
+        $grandTotal = $this->getQuote()->requireTotals()->getTotals()->getGrandTotal();
+
+        return $this->currencyManager->convertCentToDecimal($grandTotal);
     }
 
     /**
@@ -239,10 +259,9 @@ class PreCheckTransaction extends AbstractTransaction
     }
 
     /**
-     * @param \Braintree\Result\Successful|\Braintree\Result\Error|\Braintree\Transaction $response
+     * @param \Braintree\Result\Successful $response
      *
      * @return void
-     * @param \Braintree\Result\Successful|\Braintree\Result\Error|\Braintree\Transaction $response
      */
     protected function updatePaymentForSuccessfulResponse($response)
     {

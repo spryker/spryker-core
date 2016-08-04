@@ -135,16 +135,16 @@ abstract class AbstractTransaction implements TransactionInterface
     protected function getSuccessResponseTransfer($response)
     {
         $transaction = $response->transaction;
-        $braintreeTransactionResponseTransfer = $this->getResponseTransfer();
-        $braintreeTransactionResponseTransfer->setIsSuccess(true);
-        $braintreeTransactionResponseTransfer->setTransactionId($transaction->id);
-        $braintreeTransactionResponseTransfer->setCode($transaction->processorResponseCode);
-        $braintreeTransactionResponseTransfer->setMessage($transaction->processorResponseText);
-        $braintreeTransactionResponseTransfer->setProcessingTimestamp($transaction->createdAt->getTimestamp());
-        $braintreeTransactionResponseTransfer->setTransactionStatus($transaction->status);
-        $braintreeTransactionResponseTransfer->setTransactionType($transaction->type);
-        $braintreeTransactionResponseTransfer->setTransactionAmount($transaction->amount);
-        $braintreeTransactionResponseTransfer->setMerchantAccount($transaction->merchantAccountId);
+        $braintreeTransactionResponseTransfer = $this->getResponseTransfer()
+            ->setIsSuccess(true)
+            ->setTransactionId($transaction->id)
+            ->setCode($transaction->processorResponseCode)
+            ->setMessage($transaction->processorResponseText)
+            ->setProcessingTimestamp($transaction->createdAt->getTimestamp())
+            ->setTransactionStatus($transaction->status)
+            ->setTransactionType($transaction->type)
+            ->setTransactionAmount($transaction->amount)
+            ->setMerchantAccount($transaction->merchantAccountId);
 
         return $braintreeTransactionResponseTransfer;
     }
@@ -156,9 +156,9 @@ abstract class AbstractTransaction implements TransactionInterface
      */
     protected function getErrorResponseTransfer($response)
     {
-        $braintreeTransactionResponseTransfer = $this->getResponseTransfer();
-        $braintreeTransactionResponseTransfer->setIsSuccess(false);
-        $braintreeTransactionResponseTransfer->setMessage($response->message);
+        $braintreeTransactionResponseTransfer = $this->getResponseTransfer()
+            ->setIsSuccess(false)
+            ->setMessage($response->message);
 
         return $braintreeTransactionResponseTransfer;
     }
@@ -169,8 +169,9 @@ abstract class AbstractTransaction implements TransactionInterface
     protected function getResponseTransfer()
     {
         $braintreeTransactionResponseTransfer = new BraintreeTransactionResponseTransfer();
-        $braintreeTransactionResponseTransfer->setTransactionId($this->getTransactionIdentifier());
-        $braintreeTransactionResponseTransfer->setTransactionCode($this->getTransactionCode());
+        $braintreeTransactionResponseTransfer
+            ->setTransactionId($this->getTransactionIdentifier())
+            ->setTransactionCode($this->getTransactionCode());
 
         return $braintreeTransactionResponseTransfer;
     }
@@ -210,9 +211,10 @@ abstract class AbstractTransaction implements TransactionInterface
     {
         if (count($logs) > 0) {
             $log = array_pop($logs);
-            $responseTransfer->setTransactionStatus($log->status);
-            $responseTransfer->setTransactionAmount($log->amount);
-            $responseTransfer->setProcessingTimestamp($log->timestamp->getTimestamp());
+            $responseTransfer
+                ->setTransactionStatus($log->status)
+                ->setTransactionAmount($log->amount)
+                ->setProcessingTimestamp($log->timestamp->getTimestamp());
         }
 
         $logEntity = new SpyPaymentBraintreeTransactionStatusLog();

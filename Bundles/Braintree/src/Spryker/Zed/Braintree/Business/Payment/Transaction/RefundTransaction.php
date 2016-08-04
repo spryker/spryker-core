@@ -8,10 +8,28 @@
 namespace Spryker\Zed\Braintree\Business\Payment\Transaction;
 
 use Braintree\Transaction as BraintreeTransaction;
+use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
+use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 
 class RefundTransaction extends AbstractTransaction
 {
+
+    /**
+     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     */
+    protected $currencyManager;
+
+    /**
+     * @param \Spryker\Zed\Braintree\BraintreeConfig $brainTreeConfig
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     */
+    public function __construct(BraintreeConfig $brainTreeConfig, CurrencyManagerInterface $currencyManager)
+    {
+        parent::__construct($brainTreeConfig);
+
+        $this->currencyManager = $currencyManager;
+    }
 
     /**
      * @return string
@@ -64,7 +82,7 @@ class RefundTransaction extends AbstractTransaction
             return null;
         }
 
-        return ($refundTransfer->getAmount() / 100);
+        return $this->currencyManager->convertCentToDecimal($refundTransfer->getAmount());
     }
 
     /**

@@ -29,7 +29,7 @@ class PayPalGuestHappyCaseCest
     {
         $checkoutTester = $i->haveFriend('checkoutTester', CheckoutTester::class);
         $checkoutTester->does(function (CheckoutTester $i) {
-            $i->addToCart('/en/samsung-gear-s2-79');
+            $i->addToCart('/en/samsung-sm-t550-133');
             $i->checkoutWithPayPalAsGuest();
         });
         $checkoutTester->leave();

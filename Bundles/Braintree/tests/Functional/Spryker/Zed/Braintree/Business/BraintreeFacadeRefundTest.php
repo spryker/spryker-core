@@ -12,6 +12,7 @@ use Braintree\Transaction;
 use Braintree\Transaction\StatusDetails;
 use DateTime;
 use Generated\Shared\Transfer\RefundTransfer;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\RefundTransaction;
@@ -72,11 +73,8 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
     protected function getRefundTransactionMock($success = true)
     {
         $refundTransactionMockBuilder = $this->getMockBuilder(RefundTransaction::class);
-        $refundTransactionMockBuilder->setMethods(['refund']);
-
-        $refundTransactionMockBuilder->setConstructorArgs([
-            new BraintreeConfig()
-        ]);
+        $refundTransactionMockBuilder->setMethods(['refund', 'initializeBraintree']);
+        $refundTransactionMockBuilder->setConstructorArgs([new BraintreeConfig(), CurrencyManager::getInstance()]);
 
         if ($success) {
             $response = $this->getSuccessResponse();

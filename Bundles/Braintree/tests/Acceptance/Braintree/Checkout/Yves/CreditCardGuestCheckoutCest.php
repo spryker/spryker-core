@@ -27,7 +27,7 @@ class CreditCardGuestCheckoutCest
     public function creditCardCheckoutAsGuest(CheckoutTester $i)
     {
         $i->wantToTest('That i can go through credit card checkout as guest');
-        $i->addToCart('/en/samsung-gear-s2-79');
+        $i->addToCart('/en/samsung-sm-t550-133');
         $i->checkoutWithCreditCardAsGuest();
     }
 

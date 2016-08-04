@@ -12,7 +12,6 @@ use Braintree\Transaction;
 use Braintree\Transaction\StatusDetails;
 use DateTime;
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Braintree\Business\BraintreeFacade;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\AuthorizeTransaction;
 
 /**
@@ -31,12 +30,11 @@ class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
      */
     public function testAuthorizePaymentWithSuccessResponse()
     {
-        $braintreeFacade = new BraintreeFacade();
         $factoryMock = $this->getFactoryMock(['createAuthorizeTransaction']);
         $factoryMock->expects($this->once())->method('createAuthorizeTransaction')->willReturn(
             $this->getAuthorizeTransactionMock()
         );
-        $braintreeFacade->setFactory($factoryMock);
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
 
         $transactionMetaTransfer = $this->getTransactionMetaTransfer();
 
@@ -71,7 +69,7 @@ class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
     {
         $authorizeTransactionMock = $this
             ->getMockBuilder(AuthorizeTransaction::class)
-            ->setMethods(['findTransaction'])
+            ->setMethods(['findTransaction', 'initializeBraintree'])
             ->setConstructorArgs(
                 [new BraintreeConfig()]
             )
@@ -99,7 +97,7 @@ class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
             'id' => 123,
             'processorResponseCode' => '1000',
             'processorResponseText' => 'Approved',
-            'createdAt' => new \DateTime(),
+            'createdAt' => new DateTime(),
             'status' => 'authorized',
             'type' => 'sale',
             'amount' => $orderTransfer->getTotals()->getGrandTotal() / 100,

@@ -64,7 +64,7 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
     {
         $captureTransactionMock = $this
             ->getMockBuilder(CaptureTransaction::class)
-            ->setMethods(['capture'])
+            ->setMethods(['capture', 'initializeBraintree'])
             ->setConstructorArgs(
                 [new BraintreeConfig()]
             )

@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\TransactionMetaTransfer;
 use Orm\Zed\Braintree\Persistence\SpyPaymentBraintree;
-use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLogQuery;
-use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -51,25 +49,14 @@ class AbstractFacadeTest extends Test
     protected $paymentEntity;
 
     /**
-     * @var \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLogQuery
-     */
-    protected $requestLogQuery;
-
-    /**
-     * @var \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery
-     */
-    protected $statusLogQuery;
-
-    /**
      * @return void
      */
     protected function _before()
     {
         parent::_before();
+
         $this->setUpSalesOrderTestData();
         $this->setUpPaymentTestData();
-        $this->requestLogQuery = new SpyPaymentBraintreeTransactionRequestLogQuery();
-        $this->statusLogQuery = new SpyPaymentBraintreeTransactionStatusLogQuery();
     }
 
     /**
@@ -77,10 +64,12 @@ class AbstractFacadeTest extends Test
      *
      * @return \Spryker\Zed\Braintree\Business\BraintreeFacade
      */
-    protected function getBraintreeFacade(BraintreeBusinessFactory $braintreeBusinessFactoryMock)
+    protected function getBraintreeFacade(BraintreeBusinessFactory $braintreeBusinessFactoryMock = null)
     {
         $braintreeFacade = new BraintreeFacade();
-        $braintreeFacade->setFactory($braintreeBusinessFactoryMock);
+        if ($braintreeBusinessFactoryMock) {
+            $braintreeFacade->setFactory($braintreeBusinessFactoryMock);
+        }
 
         return $braintreeFacade;
     }
@@ -131,6 +120,26 @@ class AbstractFacadeTest extends Test
             ->setOrderReference('foo-bar-baz-2');
 
         $this->orderEntity->save();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpPaymentTestData()
+    {
+        $this->paymentEntity = (new SpyPaymentBraintree())
+            ->setFkSalesOrder($this->getOrderEntity()->getIdSalesOrder())
+            ->setPaymentType(BraintreeConstants::METHOD_PAY_PAL)
+            ->setTransactionId('abc')
+            ->setClientIp('127.0.0.1')
+            ->setEmail('jane@family-doe.org')
+            ->setCountryIso2Code('DE')
+            ->setCity('Berlin')
+            ->setStreet('Straße des 17. Juni 135')
+            ->setZipCode('10623')
+            ->setLanguageIso2Code('DE')
+            ->setCurrencyIso3Code('EUR');
+        $this->paymentEntity->save();
     }
 
     /**
@@ -202,80 +211,11 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return void
-     */
-    private function setUpPaymentTestData()
-    {
-        $this->paymentEntity = (new SpyPaymentBraintree())
-            ->setFkSalesOrder($this->getOrderEntity()->getIdSalesOrder())
-            ->setPaymentType(BraintreeConstants::METHOD_PAY_PAL)
-            ->setTransactionId('abc')
-            ->setClientIp('127.0.0.1')
-            ->setEmail('jane@family-doe.org')
-            ->setCountryIso2Code('DE')
-            ->setCity('Berlin')
-            ->setStreet('Straße des 17. Juni 135')
-            ->setZipCode('10623')
-            ->setLanguageIso2Code('DE')
-            ->setCurrencyIso3Code('EUR');
-        $this->paymentEntity->save();
-    }
-
-    /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function getOrderEntity()
     {
         return $this->orderEntity;
-    }
-
-    /**
-     * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintree
-     */
-    protected function getPaymentEntity()
-    {
-        return $this->paymentEntity;
-    }
-
-    /**
-     * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLogQuery
-     */
-    protected function getRequestLogQuery()
-    {
-        return $this->requestLogQuery;
-    }
-
-    /**
-     * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLogQuery
-     */
-    protected function getStatusLogQuery()
-    {
-        return $this->statusLogQuery;
-    }
-
-    /**
-     * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function getRequestLogCollectionForPayment()
-    {
-        return $this
-            ->getRequestLogQuery()
-            ->findByFkPaymentBraintree($this->getPaymentEntity()->getIdPaymentBraintree());
-    }
-
-    /**
-     * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function getStatusLogCollectionForPayment()
-    {
-        return $this
-            ->getStatusLogQuery()
-            ->findByFkPaymentBraintree($this->getPaymentEntity()->getIdPaymentBraintree());
-    }
-
-    protected function getFacade()
-    {
-        return new BraintreeFacade();
     }
 
 }
