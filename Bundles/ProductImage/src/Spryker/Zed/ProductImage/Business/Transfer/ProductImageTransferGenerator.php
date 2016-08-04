@@ -14,20 +14,20 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 
 class ProductImageTransferGenerator implements ProductImageTransferGeneratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @var \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct(ProductImageToLocaleInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

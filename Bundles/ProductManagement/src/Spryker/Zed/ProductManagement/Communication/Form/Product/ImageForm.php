@@ -23,7 +23,7 @@ class ImageForm extends AbstractSubForm
     const FIELD_SET_FK_PRODUCT = 'fk_product';
     const FIELD_SET_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
-    const IMAGE_COLLECTION = 'image_collection';
+    const PRODUCT_IMAGES = 'product_images';
 
 
     /**
@@ -124,7 +124,7 @@ class ImageForm extends AbstractSubForm
     protected function addImageForm(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::IMAGE_COLLECTION, 'collection', [
+            ->add(self::PRODUCT_IMAGES, 'collection', [
                 'type' => new ImageCollectionForm(ProductFormAdd::FORM_IMAGE_COLLECTION),
                 'label' => false,
                 //'allow_add' => true,

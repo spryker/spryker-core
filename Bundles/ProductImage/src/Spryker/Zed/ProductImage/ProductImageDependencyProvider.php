@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 
 class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -25,7 +26,7 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            return new ProductImageToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {

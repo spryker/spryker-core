@@ -59,7 +59,7 @@ class ProductImageTransferGeneratorTest extends Test
     public function testConvertProductImageSetEntitiesIntoTransfer()
     {
         $transferCollection = $this->reader
-            ->getProductImagesSetByProductAbstractId(1);
+            ->getProductImagesSetCollectionByProductAbstractId(1);
 
         foreach ($transferCollection as $transfer) {
             $this->assertInstanceOf(ProductImageSetTransfer::class, $transfer);

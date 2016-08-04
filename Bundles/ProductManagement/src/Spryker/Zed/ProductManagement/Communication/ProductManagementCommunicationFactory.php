@@ -86,9 +86,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->getProductImageQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
+            $this->getProductImageFacade(),
             $this->getProductManagementFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
@@ -108,9 +108,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->getProductImageQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
+            $this->getProductImageFacade(),
             $this->getProductManagementFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
@@ -130,9 +130,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getCategoryQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->getProductImageQueryContainer(),
             $this->getPriceFacade(),
             $this->getProductFacade(),
+            $this->getProductImageFacade(),
             $this->getProductManagementFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
@@ -195,6 +195,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface
+     */
+    public function getProductImageFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 
     /**

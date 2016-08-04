@@ -8,22 +8,19 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSet;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -106,10 +103,10 @@ class AbstractProductFormDataProvider
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
-        ProductManagementToProductInterface $productFacade,
-        ProductManagementToProductImageInterface $productImageQueryContainer,
-        ProductManagementFacadeInterface $productManagementFacade,
         ProductManagementToPriceInterface $priceFacade,
+        ProductManagementToProductInterface $productFacade,
+        ProductManagementToProductImageInterface $productImageFacade,
+        ProductManagementFacadeInterface $productManagementFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
@@ -118,7 +115,7 @@ class AbstractProductFormDataProvider
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
-        $this->productImageFacade = $productImageQueryContainer;
+        $this->productImageFacade = $productImageFacade;
         $this->localeProvider = $localeProvider;
         $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
@@ -136,7 +133,7 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $isNew = $idProductAbstract === null;
-        $attributes = $this->getAttributesForAbstractProduct($idProductAbstract);
+        $attributes = $this->productManagementFacade->getProductAttributesByAbstractProductId($idProductAbstract);
 
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributes, $isNew);
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributes, $isNew);
@@ -174,87 +171,41 @@ class AbstractProductFormDataProvider
     /**
      * @param int $idProductAbstract
      *
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getAttributesForAbstractProduct($idProductAbstract = null)
-    {
-        return $this->productManagementFacade
-            ->getProductAttributesByAbstractProductId($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return array
      */
     public function getProductImagesForAbstractProduct($idProductAbstract)
     {
-        $imageCollection = $this->productImageFacade
-            ->queryImageCollectionByProductAbstractId($idProductAbstract)
-            ->find();
-
-        $imageTransferCollection = $this->productImageFacade
-            ->queryImageCollectionByProductAbstractId($idProductAbstract)
-            ->find();
-
-        sd($imageCollection->toArray());
+        $imageSetTransferCollection = $this->productImageFacade
+            ->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
 
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
         $result = [];
+        $defaults = [];
         foreach ($localeCollection as $localeCode) {
             $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
 
-            $localizedData = [];
-            foreach ($imageCollection as $image) {
-                $imageSet = $image->getSpyProductImageSetToProductImages();
-
-                foreach ($imageSet as $setEntity) {
-                    $idSet = (int)$setEntity->getSpyProductImageSet()->getIdProductImageSet();
-                    $fkLocale = (int)$setEntity->getSpyProductImageSet()->getFkLocale();
-
-                    if ((int)$localeTransfer->getIdLocale() !== $fkLocale) {
-                        continue;
-                    }
-
-                    $item = $image->toArray();
-                    $item[ImageForm::FIELD_SET_ID] = $idSet;
-                    $item[ImageForm::FIELD_SET_NAME] = $setEntity->getSpyProductImageSet()->getName();
-                    $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
-                    $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
-                    $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
-                    $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
-
-                    $localizedData[] = $item;
-                }
-            }
-            $result[$localeCode] = $localizedData;
-        }
-
-        $defaults = [];
-        foreach ($imageCollection as $image) {
-            $imageSet = $image->getSpyProductImageSetToProductImages();
-
-            foreach ($imageSet as $setEntity) {
-                $idSet = (int)$setEntity->getSpyProductImageSet()->getIdProductImageSet();
-                $fkLocale = $setEntity->getSpyProductImageSet()->getFkLocale();
-                if ($fkLocale !== null) {
+            $data = [];
+            foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                if ($imageSetTransfer->getLocale() === null) {
+                    $defaults[$imageSetTransfer->getIdProductImageSet()] = $imageSetTransfer->toArray(true);
                     continue;
                 }
 
-                $item = $image->toArray();
-                $item[ImageForm::FIELD_SET_ID] = $idSet;
-                $item[ImageForm::FIELD_SET_NAME] = $setEntity->getSpyProductImageSet()->getName();
-                $item[ImageForm::FIELD_SET_FK_LOCALE] = $setEntity->getSpyProductImageSet()->getFkLocale();
-                $item[ImageForm::FIELD_SET_FK_PRODUCT] = $setEntity->getSpyProductImageSet()->getFkProduct();
-                $item[ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT] = $setEntity->getSpyProductImageSet()->getFkProductAbstract();
-                $item[ImageCollectionForm::FIELD_ORDER] = $setEntity->getSort();
-                $defaults[] = $item;
+                $fkLocale = (int) $imageSetTransfer->getLocale()->getIdLocale();
+                if ($fkLocale !== (int)$localeTransfer->getIdLocale()) {
+                    continue;
+                }
+
+                $data[$imageSetTransfer->getIdProductImageSet()] = $imageSetTransfer->toArray(true);
             }
+
+            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
+            $result[$formName] = array_values($data);
         }
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
-        $result[$defaultName] = $defaults;
+        $result[$defaultName] = array_values($defaults);
 
         return $result;
     }
@@ -313,7 +264,7 @@ class AbstractProductFormDataProvider
     public function getAttributeAbstractDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
-        $attributeProcessor = $this->getAttributesForAbstractProduct(null);
+        $attributeProcessor = $this->productManagementFacade->getProductAttributesByAbstractProductId(null);
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
@@ -337,7 +288,7 @@ class AbstractProductFormDataProvider
         $data = [
             ImageForm::FIELD_SET_ID => null,
             ImageForm::FIELD_SET_NAME => null,
-            ImageForm::IMAGE_COLLECTION => [[
+            ImageForm::PRODUCT_IMAGES => [[
                 ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
                 ImageCollectionForm::FIELD_IMAGE_SMALL => null,
                 ImageCollectionForm::FIELD_IMAGE_BIG => null,

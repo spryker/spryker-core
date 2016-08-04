@@ -45,4 +45,18 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->persistProductImageSet($productImageSetTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+    }
+
 }

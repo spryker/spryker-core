@@ -57,7 +57,7 @@ class ProductImageReaderTest extends Test
     public function testGetProductImagesByProductAbstractId()
     {
         $imageCollection = $this->reader
-            ->getProductImagesSetByProductAbstractId(1);
+            ->getProductImagesSetCollectionByProductAbstractId(1);
 
         $this->assertNotEmpty($imageCollection);
     }

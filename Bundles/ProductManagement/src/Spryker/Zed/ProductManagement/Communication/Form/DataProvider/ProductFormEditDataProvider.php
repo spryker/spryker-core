@@ -37,6 +37,9 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
         }
 
+        s($formData);
+        ob_flush();
+
         $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
 
         return $formData;
@@ -144,50 +147,10 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendAbstractProductImages(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $imageSetCollection = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());
-        $localeCollection = $this->localeProvider->getLocaleCollection();
-
-        //group by set ids
-        $imageDataCollection = [];
-        foreach ($localeCollection as $localeCode) {
-            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
-
-            $imageData = [];
-            $setData = [];
-            foreach ($imageSetCollection[$localeCode] as $data) {
-                $setId = $data[ImageForm::FIELD_SET_ID];
-                $imageData[$setId][] = $data;
-
-                $setId = $data[ImageForm::FIELD_SET_ID];
-                $item = [];
-                $item[ImageForm::FIELD_SET_ID] = $setId;
-                $item[ImageForm::FIELD_SET_NAME] = $data[ImageForm::FIELD_SET_NAME];
-                $setData[$setId] = $item;
-            }
-
-            foreach ($setData as $setId => $data) {
-                $setData[$setId][ImageForm::IMAGE_COLLECTION] = $imageData[$setId];
-            }
-
-            $imageDataCollection[$formName] = $setData;
-        }
-
-        //remove set ids
-        $result = [];
-        foreach ($imageDataCollection as $formKey => $setFormData) {
-            foreach ($setFormData as $setId => $setData) {
-                $result[$formKey][] = $setData;
-            }
-
-        }
-
-        //assign to form data and overwrite defaults
-        foreach ($localeCollection as $localeCode) {
-            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
-            $formData[$formName] = $result[$formName];
-        }
-
-        return $formData;
+        return array_merge(
+            $formData,
+            $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract())
+        );
     }
 
 }

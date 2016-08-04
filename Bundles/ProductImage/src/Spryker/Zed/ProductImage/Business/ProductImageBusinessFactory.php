@@ -52,11 +52,11 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @return \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface
      */
     protected function getLocaleFacade()
     {
-        $this->getProvidedDependency(ProductImageDependencyProvider::FACADE_LOCALE);
+        return $this->getProvidedDependency(ProductImageDependencyProvider::FACADE_LOCALE);
     }
 
 }

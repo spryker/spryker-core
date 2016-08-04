@@ -15,6 +15,6 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getProductImagesSetByProductAbstractId($idProductAbstract);
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
 
 }

@@ -39,7 +39,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getProductImagesSetByProductAbstractId($idProductAbstract)
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {
         $imageCollection = $this->productImageContainer
             ->queryImageSetByProductAbstractId($idProductAbstract)
