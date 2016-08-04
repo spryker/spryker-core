@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
@@ -95,8 +97,12 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         }
 
         $priceTransfer = $this->buildProductAbstractPriceTransfer($form);
-
         $productAbstractTransfer->setPrice($priceTransfer);
+
+        $imageSetCollection = $this->buildProductAbstractImageSetCollection($form);
+        $productAbstractTransfer->setImagesSets(
+            new \ArrayObject($imageSetCollection)
+        );
 
         return $productAbstractTransfer;
     }
@@ -332,6 +338,32 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         return $priceTransfer;
     }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function buildProductAbstractImageSetCollection(FormInterface $form)
+    {
+        $transferCollection = [];
+        $localeCollection = $this->localeProvider->getLocaleCollection(true);
+
+        foreach ($localeCollection as $localeCode) {
+            $formName = ProductFormAdd::getAbstractImagesFormName($localeCode);
+
+            $imageSetCollection = $form->get($formName);
+            foreach ($imageSetCollection  as $imageSet) {
+                $imageSetTransfer = (new ProductImageSetTransfer())
+                    ->fromArray($imageSet->getData(), true);
+
+                $transferCollection[] = $imageSetTransfer;
+            }
+        }
+
+        return $transferCollection;
+    }
+
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form

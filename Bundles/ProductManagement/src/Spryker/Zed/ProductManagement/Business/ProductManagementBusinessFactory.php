@@ -37,7 +37,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getUrlFacade(),
             $this->getLocaleFacade(),
             $this->getPriceFacade(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
+            $this->getProductImageFacade()
         );
     }
 
@@ -119,6 +120,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getStockQueryContainer()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::QUERY_CONTAINER_STOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface
+     */
+    protected function getProductImageFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 
     /**

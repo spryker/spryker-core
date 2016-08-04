@@ -81,7 +81,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $resolver->setRequired(self::OPTION_ATTRIBUTE);
 
         $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups22' => function (FormInterface $form) {
                 $groups = [ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT];
                 $originalData = $form->getConfig()->getData();
                 $submittedData = $form->getData();

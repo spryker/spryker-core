@@ -23,7 +23,7 @@
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />
         <property name="taxRate" type="float" />
-        <property name="productImagesSets" type="ProductImageSet[]" singular="productImageSet" />
+        <property name="imagesSets" type="ProductImageSet[]" singular="imageSet" />
         <property name="taxSetId" type="int" />
         <property name="price" type="ZedProductPrice" />
     </transfer>

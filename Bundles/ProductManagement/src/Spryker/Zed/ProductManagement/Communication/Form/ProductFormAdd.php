@@ -37,7 +37,6 @@ class ProductFormAdd extends AbstractType
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
     const FORM_IMAGE_SET = 'image_set';
-    const FORM_IMAGE_COLLECTION = 'image_collection';
 
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     const OPTION_ATTRIBUTE_VARIANT = 'option_attribute_variant';
@@ -92,8 +91,8 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_GENERAL,
             self::VALIDATION_GROUP_PRICE_AND_TAX,
             self::VALIDATION_GROUP_PRICE_AND_STOCK,
-            self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
-            self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
+            //self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
+            //self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO,
             self::VALIDATION_GROUP_IMAGE,
         ];

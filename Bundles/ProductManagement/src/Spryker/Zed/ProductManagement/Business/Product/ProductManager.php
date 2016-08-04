@@ -16,12 +16,12 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
@@ -36,14 +36,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
-
-    const COL_ID_PRODUCT_CONCRETE = 'SpyProduct.IdProduct';
-
-    const COL_ABSTRACT_SKU = 'SpyProductAbstract.Sku';
-
-    const COL_ID_PRODUCT_ABSTRACT = 'SpyProductAbstract.IdProductAbstract';
-
-    const COL_NAME = 'SpyProductLocalizedAttributes.Name';
 
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
@@ -91,6 +83,11 @@ class ProductManager implements ProductManagerInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface
+     */
+    protected $productImageFacade;
+
+    /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected $productAbstractCollectionBySkuCache = [];
@@ -113,7 +110,8 @@ class ProductManager implements ProductManagerInterface
         ProductManagementToUrlInterface $urlFacade,
         ProductManagementToLocaleInterface $localeFacade,
         ProductManagementToPriceInterface $priceFacade,
-        ProductManagementToStockInterface $stockFacade
+        ProductManagementToStockInterface $stockFacade,
+        ProductManagementToProductImageInterface $productImageFacade
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -123,6 +121,7 @@ class ProductManager implements ProductManagerInterface
         $this->priceFacade = $priceFacade;
         $this->stockFacade = $stockFacade;
         $this->stockQueryContainer = $stockQueryContainer;
+        $this->productImageFacade = $productImageFacade;
     }
 
     /**
@@ -238,6 +237,13 @@ class ProductManager implements ProductManagerInterface
             if ($priceTransfer !== null) {
                 $priceTransfer->setIdProduct($idProductAbstract);
                 $this->priceFacade->persistAbstractProductPrice($priceTransfer);
+            }
+
+            $imageSetTransferCollection = $productAbstractTransfer->getImagesSets();
+            if ($imageSetTransferCollection) {
+                foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                    $this->productImageFacade->persistProductImageSet($imageSetTransfer);
+                }
             }
 
             $this->productQueryContainer->getConnection()->commit();
@@ -438,9 +444,8 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Exception
+     *
      * @return int
      */
     public function saveProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
@@ -496,6 +501,13 @@ class ProductManager implements ProductManagerInterface
             $priceTransfer = $productConcreteTransfer->getPrice();
             if ($priceTransfer) {
                 $this->priceFacade->persistConcreteProductPrice($priceTransfer);
+            }
+
+            $imageSetTransferCollection = $productConcreteTransfer->getImagesSets();
+            if ($imageSetTransferCollection) {
+                foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                    $this->productImageFacade->persistProductImageSet($imageSetTransfer);
+                }
             }
 
             /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
