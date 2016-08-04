@@ -19,7 +19,7 @@ use Spryker\Zed\Braintree\Business\Payment\Transaction\Handler\PreCheckTransacti
 use Spryker\Zed\Braintree\Business\Payment\Transaction\Handler\RefundTransactionHandler;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\Handler\RevertTransactionHandler;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\PaymentTransactionMetaVisitor;
-use Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorCollection;
+use Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorComposite;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\PreCheckTransaction;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\RefundTransaction;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\RevertTransaction;
@@ -52,22 +52,22 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorCollection
+     * @return \Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorComposite
      */
     protected function createDefaultTransactionMetaVisitor()
     {
-        $transactionMetaVisitorCollection = $this->createTransactionMetaVisitorCollection();
-        $transactionMetaVisitorCollection->addVisitor($this->createPaymentTransactionMetaVisitor());
+        $transactionMetaVisitorComposite = $this->createTransactionMetaVisitorComposite();
+        $transactionMetaVisitorComposite->addVisitor($this->createPaymentTransactionMetaVisitor());
 
-        return $transactionMetaVisitorCollection;
+        return $transactionMetaVisitorComposite;
     }
 
     /**
-     * @return \Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorCollection
+     * @return \Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorComposite
      */
-    protected function createTransactionMetaVisitorCollection()
+    protected function createTransactionMetaVisitorComposite()
     {
-        return new TransactionMetaVisitorCollection();
+        return new TransactionMetaVisitorComposite();
     }
 
     /**

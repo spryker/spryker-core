@@ -9,7 +9,7 @@ namespace Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor;
 
 use Generated\Shared\Transfer\TransactionMetaTransfer;
 
-class TransactionMetaVisitorCollection implements TransactionMetaVisitorInterface
+class TransactionMetaVisitorComposite implements TransactionMetaVisitorInterface
 {
 
     /**
