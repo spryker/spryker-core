@@ -173,7 +173,11 @@ class ProductFormAdd extends AbstractType
             $this->addAttributeAbstractForm($builder, $name, $options);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(
+            ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT,
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+        );
+
         $this->addAttributeAbstractForm($builder, $defaultName, $options);
 
         return $this;
@@ -192,7 +196,11 @@ class ProductFormAdd extends AbstractType
             $this->addImageForm($builder, $name);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_IMAGE_SET, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(
+            ProductFormAdd::FORM_IMAGE_SET,
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+        );
+
         $this->addImageForm($builder, $defaultName);
 
         return $this;
@@ -394,6 +402,7 @@ class ProductFormAdd extends AbstractType
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'prototype' => true,
             ]);
 
         return $this;
