@@ -23,12 +23,15 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
+use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
+ * @TODO Move attribute and form methods into separate factories
+ *
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -426,6 +429,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductMatrixGenerator()
     {
         return new VariantGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
+     */
+    public function createProductTable()
+    {
+        return new ProductTable($this->getProductQueryContainer());
     }
 
 }

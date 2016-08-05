@@ -24,7 +24,27 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+        $productTable = $this
+            ->getFactory()
+            ->createProductTable();
 
+        return $this->viewResponse([
+            'productTable' => $productTable->render(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction()
+    {
+        $productTable = $this
+            ->getFactory()
+            ->createProductTable();
+
+        return $this->jsonResponse(
+            $productTable->fetchData()
+        );
     }
 
 }
