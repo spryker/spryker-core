@@ -117,6 +117,8 @@ OptionValueFormHandler.prototype.addOptionFormActions = function(productOptionVa
         productOptionValueFormSelector.getSkuField().val(valueWithPrefix);
 
     });
+
+    this.addCopyTranslationTrigger();
 };
 
 OptionValueFormHandler.prototype.addOptionTranslations = function addOptionTranslations(idOfRelatedOption, productOptionValueFormSelector) {
@@ -150,6 +152,28 @@ OptionValueFormHandler.prototype.addOptionTranslations = function addOptionTrans
     });
 };
 
+OptionValueFormHandler.prototype.addCopyTranslationTrigger = function() {
+
+    $('.copy-language').on('click', function (event) {
+        event.preventDefault();
+
+        var valueTranslationForm = $(event.target).parent().parent();
+
+        var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(valueTranslationForm));
+
+        var translationKey = productOptionValueTranslationFormSelector.getKeyField().val();
+        var translationVal = productOptionValueTranslationFormSelector.getNameField().val();
+
+        $('.translation-tabs').find('.form-product-option-translation-row').each(function (index, element) {
+
+            var productOptionTranslationSelector = new ProductOptionTranslationFormSelector($(element));
+            if (translationKey && productOptionTranslationSelector.getKeyField().val() == translationKey) {
+                productOptionTranslationSelector.getNameField().val(translationVal);
+            }
+        });
+    });
+};
+
 function ProductOptionValueFormSelector(form) {
     this.form = form;
 }
@@ -177,8 +201,6 @@ ProductOptionValueFormSelector.prototype.getSkuField = function() {
 ProductOptionValueFormSelector.prototype.getRemoveButton = function() {
     return this.form.find(".btn-remove")
 };
-
-
 
 function ProductOptionTranslationFormSelector(form) {
     this.form = form;

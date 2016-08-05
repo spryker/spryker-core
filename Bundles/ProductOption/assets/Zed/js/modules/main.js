@@ -25,19 +25,4 @@ $(document).ready(function() {
     if ($('#create-product-option').length) {
         $('#add-another-option').trigger('click');
     }
-
-    $('.copy-language').on('click', function() {
-        event.preventDefault();
-
-        var translationFormContainer = $(event.target).parent().parent();
-
-        var translationKey = translationFormContainer.find("input[id$='key']").val();
-        var translationVal = translationFormContainer.find("input[id$='name']").val();
-
-        $('.translation-tabs').find('.form-product-option-translation-row').each(function(index, element) {
-            if ($(element).find("input[id$='key']").val() == translationKey) {
-                $(element).find("input[id$='name']").val(translationVal);
-            }
-        });
-    });
 });

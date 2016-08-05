@@ -44,14 +44,6 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface
-     */
-    public function getProductOptionsFacade()
-    {
-        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_PRODUCT_OPTION);
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     public function getUrlFacade()

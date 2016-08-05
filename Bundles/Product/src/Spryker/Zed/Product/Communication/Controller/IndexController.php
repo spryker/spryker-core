@@ -140,19 +140,11 @@ class IndexController extends AbstractController
     {
         $productConcreteCollection = [];
         foreach ($productConcreteCollectionCollection as $productConcrete) {
-            $productOptions = $this->getFactory()
-                ->getProductOptionsFacade()
-                ->getProductOptionsByIdProduct(
-                    $productConcrete->getIdProduct(),
-                    $this->getCurrentLocale()->getIdLocale()
-                );
-
             $productConcreteCollection[] = [
                 'sku' => $productConcrete->getSku(),
                 'idProduct' => $productConcrete->getIdProduct(),
                 'isActive' => $productConcrete->getIsActive(),
                 'priceList' => $this->getProductPriceList($productConcrete),
-                'productOptions' => $productOptions,
             ];
         }
 
