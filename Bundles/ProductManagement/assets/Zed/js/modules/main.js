@@ -132,7 +132,7 @@ $(document).ready(function() {
 
     $('.kv_attribute_autocomplete').each(function(key, value) {
         var input = $(value);
-        var id = input.attr('id_attribute') || null;
+        var id = this.attr('id_attribute') || null;
 
         input.autocomplete({
             minLength: 0,
@@ -180,5 +180,21 @@ $(document).ready(function() {
             var name = hidden.attr('name');
                 hidden.val(inputValue);
         });
+    });
+
+    $('#add-another-option').click(function(event) {
+        event.preventDefault();
+
+        var valueList = $('#image-set-list');
+        var valueCount = valueList.data('data-value-count');
+        var newOptionFormHTML = valueList.data('prototype');
+            newOptionFormHTML = newOptionFormHTML.replace(/__name__/g, valueCount);
+        var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
+
+        valueList.append(newOptionForm);
+
+        valueCount++;
+        valueList.attr('data-value-count', valueCount);
+
     });
 });
