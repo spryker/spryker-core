@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\FactFinder\Business\Api\Converter\Data;
 
-use FACTFinder\Data\Item;
 use FACTFinder\Data\Record;
-use Generated\Shared\Transfer\FactFinderDataItemTransfer;
 use Generated\Shared\Transfer\FactFinderDataRecordTransfer;
 use Spryker\Zed\FactFinder\Business\Api\Converter\BaseConverter;
 
@@ -35,6 +33,12 @@ class RecordConverter extends BaseConverter
     public function convert()
     {
         $factFinderDataRecordTransfer = new FactFinderDataRecordTransfer();
+        $factFinderDataRecordTransfer->setId($this->record->getID());
+        //$factFinderDataRecordTransfer->setFields($this->record->getField());
+        $factFinderDataRecordTransfer->setSimilarity($this->record->getSimilarity());
+        $factFinderDataRecordTransfer->setPosition($this->record->getPosition());
+        $factFinderDataRecordTransfer->setSeoPath($this->record->getSeoPath());
+        $factFinderDataRecordTransfer->setKeywords($this->record->getKeywords());
 
         return $factFinderDataRecordTransfer;
     }

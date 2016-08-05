@@ -15,7 +15,9 @@ use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
 use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
 use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
 use FACTFinder\Data\Item;
+use Spryker\Zed\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\ItemConverter;
+use Spryker\Zed\FactFinder\Business\Api\Converter\Data\PagingConverter;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\RecordConverter;
 
 class ConverterFactory
@@ -30,8 +32,10 @@ class ConverterFactory
     {
         return new SearchResponseConverter(
             $searchAdapter,
+            $this->createDataPagingConverter(),
             $this->createDataItemConverter(),
-            $this->createDataRecordConverter()
+            $this->createDataRecordConverter(),
+            $this->createDataAdvisorQuestionConverter()
         );
     }
 
@@ -104,11 +108,31 @@ class ConverterFactory
     }
 
     /**
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\Data\PagingConverter
+     */
+    public function createDataPagingConverter()
+    {
+        return new PagingConverter(
+            $this->createDataItemConverter()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\FactFinder\Business\Api\Converter\Data\RecordConverter
      */
     public function createDataRecordConverter()
     {
         return new RecordConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter
+     */
+    public function createDataAdvisorQuestionConverter()
+    {
+        return new AdvisorQuestionConverter(
+            $this->createDataItemConverter()
+        );
     }
 
 }

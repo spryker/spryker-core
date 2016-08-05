@@ -33,6 +33,9 @@ class ItemConverter extends BaseConverter
     public function convert()
     {
         $factFinderDataItemTransfer = new FactFinderDataItemTransfer();
+        $factFinderDataItemTransfer->setLabel($this->item->getLabel());
+        $factFinderDataItemTransfer->setUrl($this->item->getUrl());
+        $factFinderDataItemTransfer->setSelected($this->item->isSelected());
 
         return $factFinderDataItemTransfer;
     }

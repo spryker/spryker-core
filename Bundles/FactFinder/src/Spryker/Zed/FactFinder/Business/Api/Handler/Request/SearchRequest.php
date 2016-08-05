@@ -29,41 +29,42 @@ class SearchRequest extends AbstractRequest implements RequestInterface
 
         $searchAdapter = $this->ffConnector->createSearchAdapter();
         // @todo check
-        $searchAdapter->setQuery($searchRequestTransfer->getQuery());
+        $searchAdapter->setQuery('test');
+//        $searchAdapter->setQuery($searchRequestTransfer->getQuery());
 //        $searchAdapter->setSid($_SERVER)
 
-        $status = $searchAdapter->getStatus();
-        $error = $searchAdapter->getError();
-
-        $campaigns = $searchAdapter->getCampaigns();
-        if ($campaigns->hasRedirect()) {
-            //throw new RedirectException($campaigns->getRedirectUrl());
-            $redirectUrl = $campaigns->getRedirectUrl();
-        }
-
-        $error = $searchAdapter->getError();
-        $afterSerchNavigation = $searchAdapter->getAfterSearchNavigation();
-        $error = $searchAdapter->getError();
-        $articleNumberStatus = $searchAdapter->getArticleNumberStatus();
-        $error = $searchAdapter->getError();
-        $breadCrumbTrail = $searchAdapter->getBreadCrumbTrail();
-        $error = $searchAdapter->getError();
-        $paging = $searchAdapter->getPaging();
-        $error = $searchAdapter->getError();
-        $result = $searchAdapter->getResult();
-        $error = $searchAdapter->getError();
-        $resultsPerPageOptions = $searchAdapter->getResultsPerPageOptions();
-        $error = $searchAdapter->getError();
-        $singleWordSearch = $searchAdapter->getSingleWordSearch();
-        $error = $searchAdapter->getError();
-        $sorting = $searchAdapter->getSorting();
-
-        try {
-            $followSearchValue = $searchAdapter->getFollowSearchValue();
-        } catch (\Exception $e) {
-            $tt = 11;
-        }
-        $error = $searchAdapter->getError();
+//        $status = $searchAdapter->getStatus();
+//        $error = $searchAdapter->getError();
+//
+//        $campaigns = $searchAdapter->getCampaigns();
+//        if ($campaigns->hasRedirect()) {
+//            //throw new RedirectException($campaigns->getRedirectUrl());
+//            $redirectUrl = $campaigns->getRedirectUrl();
+//        }
+//
+//        $error = $searchAdapter->getError();
+//        $afterSerchNavigation = $searchAdapter->getAfterSearchNavigation();
+//        $error = $searchAdapter->getError();
+//        $articleNumberStatus = $searchAdapter->getArticleNumberStatus();
+//        $error = $searchAdapter->getError();
+//        $breadCrumbTrail = $searchAdapter->getBreadCrumbTrail();
+//        $error = $searchAdapter->getError();
+//        $paging = $searchAdapter->getPaging();
+//        $error = $searchAdapter->getError();
+//        $result = $searchAdapter->getResult();
+//        $error = $searchAdapter->getError();
+//        $resultsPerPageOptions = $searchAdapter->getResultsPerPageOptions();
+//        $error = $searchAdapter->getError();
+//        $singleWordSearch = $searchAdapter->getSingleWordSearch();
+//        $error = $searchAdapter->getError();
+//        $sorting = $searchAdapter->getSorting();
+//
+//        try {
+//            $followSearchValue = $searchAdapter->getFollowSearchValue();
+//        } catch (\Exception $e) {
+//            $tt = 11;
+//        }
+//        $error = $searchAdapter->getError();
 
         $this->logInfo($quoteTransfer, $searchAdapter);
 
