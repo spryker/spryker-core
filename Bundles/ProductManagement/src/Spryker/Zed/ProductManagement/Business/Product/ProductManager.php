@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
@@ -220,6 +221,7 @@ class ProductManager implements ProductManagerInterface
             }
 
             $jsonAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
+
             $productAbstract
                 ->setAttributes($jsonAttributes)
                 ->setSku($sku)
@@ -908,7 +910,6 @@ class ProductManager implements ProductManagerInterface
 
         $transferGenerator = new ProductTransferGenerator();
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
-
         $productAbstractTransfer = $this->loadProductAbstractLocalizedAttributes($productAbstractTransfer);
         $productAbstractTransfer = $this->loadProductAbstractPrice($productAbstractTransfer);
         $productAbstractTransfer = $this->loadTaxRate($productAbstractTransfer);
@@ -1194,31 +1195,44 @@ class ProductManager implements ProductManagerInterface
         }
 
         $concreteProductCollection = $this->getConcreteProductsByAbstractProductId($idProductAbstract);
-        $localizedAttributeCollection = [];
+        $abstractLocalizedAttributes = [];
 
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            /* @var \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttribute */
+            $localeCode = $localizedAttribute->getLocale()->getLocaleName();
+            if (!array_key_exists($localeCode, $abstractLocalizedAttributes)) {
+                $abstractLocalizedAttributes[$localeCode] = $localizedAttribute->getAttributes();
+            } else {
+                $abstractLocalizedAttributes[$localeCode] = array_merge($abstractLocalizedAttributes[$localeCode], $localizedAttribute->getAttributes());
+            }
+        }
+
+
+        $localizedAttributes = [];
         foreach ($concreteProductCollection as $productTransfer) {
             $attributeProcessor->setConcreteAttributes(
                 $productTransfer->getAttributes()
             );
 
             foreach ($productTransfer->getLocalizedAttributes() as $localizedAttribute) {
-                $localizedData = [];
-                foreach ($localizedAttribute->getAttributes() as $name => $value) {
-                    $localeName = $localizedAttribute->getLocale()->getLocaleName();
-                    $localizedData[$localeName][$name] = $value;
+                /* @var \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttribute */
+                $localeCode = $localizedAttribute->getLocale()->getLocaleName();
+                if (!array_key_exists($localeCode, $localizedAttributes)) {
+                    $localizedAttributes[$localeCode] = $localizedAttribute->getAttributes();
+                } else {
+                    $localizedAttributes[$localeCode] = array_merge($localizedAttributes[$localeCode], $localizedAttribute->getAttributes());
                 }
-                $localizedAttributeCollection += $localizedData;
             }
         }
 
-        $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributeCollection);
+        $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributes);
 
         $attributeProcessor->setAbstractAttributes(
             $productAbstractTransfer->getAttributes()
         );
 
         $attributeProcessor->setAbstractLocalizedAttributes(
-            (array)$productAbstractTransfer->getLocalizedAttributes()
+            $abstractLocalizedAttributes
         );
 
         return $attributeProcessor;

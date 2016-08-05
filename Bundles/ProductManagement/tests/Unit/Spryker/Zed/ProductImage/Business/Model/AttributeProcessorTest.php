@@ -70,41 +70,31 @@ class AttributeProcessorTest extends Test
             'foo' => 'bar'
         ];
 
-        $deAbstractLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
-            'locale' => $this->deLocale,
-            'attributes' => [
-                'material' => 'stein',
-            ],
-        ]);
-
-        $enAbstractLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
-            'locale' => $this->enLocale,
-            'attributes' => [
-                'color' => 'red',
-            ],
-        ]);
-
-        $this->abstractLocalizedAttributes = [
-            $deAbstractLocalizedAttribute, $enAbstractLocalizedAttribute
+        $deAbstractLocalizedAttribute = [
+            'material' => 'stein',
         ];
 
-        $deConcreteLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
-            'locale' => $this->deLocale,
-            'attributes' => [
-                'color' => 'rot',
-            ],
-        ]);
+        $enAbstractLocalizedAttribute = [
+            'color' => 'red',
+        ];
 
-        $enConcreteLocalizedAttribute = (new LocalizedAttributesTransfer())->fromArray([
-            'locale' => $this->enLocale,
-            'attributes' => [
-                'material' => 'stone',
-                'english_only' => true
-            ],
-        ]);
+        $this->abstractLocalizedAttributes = [
+            'de_DE' => $deAbstractLocalizedAttribute,
+            'en_US' => $enAbstractLocalizedAttribute
+        ];
+
+        $deConcreteLocalizedAttribute = [
+            'color' => 'rot',
+        ];
+
+        $enConcreteLocalizedAttribute = [
+            'material' => 'stone',
+            'english_only' => true
+        ];
 
         $this->concreteLocalizedAttributes = [
-            $deConcreteLocalizedAttribute, $enConcreteLocalizedAttribute
+            'de_DE' => $deConcreteLocalizedAttribute,
+            'en_US' => $enConcreteLocalizedAttribute
         ];
 
         $this->attributeProcessor = new AttributeProcessor(

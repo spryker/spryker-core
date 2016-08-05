@@ -57,6 +57,8 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
+     * Key value pairs, eg. ['foo' => 'bar']
+     *
      * @param array $abstractAttributes
      *
      * @return $this
@@ -77,6 +79,8 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
+     * Key value pairs, eg. ['foo' => 'bar']
+     *
      * @param array $concreteAttributes
      *
      * @return $this
@@ -97,6 +101,8 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
+     * Key value pairs, with locale names as primary keys, eg. [ 'de_DE' => ['foo' => 'bar']]
+     *
      * @param array $concreteLocalizedAttributes
      *
      * @return $this
@@ -109,7 +115,7 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array
      */
     public function getAbstractLocalizedAttributes()
     {
@@ -117,7 +123,9 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $abstractLocalizedAttributes
+     * Key value pairs, eg. ['foo' => 'bar']
+     *
+     * @param array $abstractLocalizedAttributes
      *
      * @return $this
      */
@@ -159,10 +167,8 @@ class AttributeProcessor implements AttributeProcessorInterface
      */
     public function getAbstractLocalizedAttributesByLocaleCode($localeCode)
     {
-        foreach ($this->getAbstractLocalizedAttributes() as $transfer) {
-            if ($transfer->getLocale()->getLocaleName() === $localeCode) {
-                return $transfer->getAttributes();
-            }
+        if (array_key_exists($localeCode, $this->getAbstractLocalizedAttributes())) {
+            return $this->getAbstractLocalizedAttributes()[$localeCode];
         }
 
         return [];
@@ -175,10 +181,8 @@ class AttributeProcessor implements AttributeProcessorInterface
      */
     public function getConcreteLocalizedAttributesByLocaleCode($localeCode)
     {
-        foreach ($this->getConcreteLocalizedAttributes() as $transfer) {
-            if ($transfer->getLocale()->getLocaleName() === $localeCode) {
-                return $transfer->getAttributes();
-            }
+        if (array_key_exists($localeCode, $this->getConcreteLocalizedAttributes())) {
+            return $this->getConcreteLocalizedAttributes()[$localeCode];
         }
 
         return [];
@@ -190,12 +194,12 @@ class AttributeProcessor implements AttributeProcessorInterface
     public function getAllKeys()
     {
         $mergedAttributes = [];
-        foreach ($this->getAbstractLocalizedAttributes() as $localeCode => $transfer) {
-            $mergedAttributes += $transfer->getAttributes();
+        foreach ($this->getAbstractLocalizedAttributes() as $localeCode => $data) {
+            $mergedAttributes += $data;
         }
 
-        foreach ($this->getConcreteLocalizedAttributes() as $localeCode => $transfer) {
-            $mergedAttributes += $transfer->getAttributes();
+        foreach ($this->getConcreteLocalizedAttributes() as $localeCode => $data) {
+            $mergedAttributes += $data;
         }
 
         $mergedAttributes += $this->getAbstractAttributes();

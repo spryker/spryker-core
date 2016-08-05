@@ -392,9 +392,8 @@ class ProductFormAdd extends AbstractType
             ->add($name, 'collection', [
                 'type' => new ImageForm($name),
                 'label' => false,
-                //'allow_add' => true,
-                //'allow_delete' => true,
-                //'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
             ]);
 
         return $this;

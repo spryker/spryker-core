@@ -130,6 +130,7 @@ class AttributeAbstractForm extends AbstractSubForm
             ->add(self::FIELD_NAME, 'checkbox', [
                 'label' => $label,
                 'read_only' => $isDisabled,
+                'disabled' => $isDisabled,
                 'attr' => [
                     'class' => 'attribute_metadata_checkbox',
                     'product_specific' => $isProductSpecific,
@@ -167,6 +168,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $inputType = $attributes[$name][self::INPUT_TYPE];
         $allowInput = $attributes[$name][self::ALLOW_INPUT];
         $isMultiple = $attributes[$name][self::MULTIPLE];
+        $isDisabled = $attributes[$name][self::NAME_DISABLED];
 
         $input = $inputManager->getSymfonyInputType($inputType);
         $config = $this->getValueFieldConfig($name, $attributes);
@@ -190,6 +192,12 @@ class AttributeAbstractForm extends AbstractSubForm
             }
         } else {
             $config['attr']['class'] .= ' kv_attribute_autocomplete';
+        }
+
+        if ($isDisabled) {
+            $config = $this->getValueFieldConfig($name, $attributes);
+            $config['read_only'] = true;
+            $input = $inputManager->getSymfonyInputType(null);
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);

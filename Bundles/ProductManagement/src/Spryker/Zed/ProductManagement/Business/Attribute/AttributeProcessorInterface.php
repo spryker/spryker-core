@@ -16,6 +16,8 @@ interface AttributeProcessorInterface
     public function getAbstractAttributes();
 
     /**
+     * Key value pairs, eg. ['foo' => 'bar']
+     *
      * @param array $abstractAttributes
      *
      * @return $this
@@ -28,6 +30,8 @@ interface AttributeProcessorInterface
     public function getConcreteAttributes();
 
     /**
+     * Key value pairs, eg. ['foo' => 'bar']
+     *
      * @param array $concreteAttributes
      *
      * @return $this
@@ -40,6 +44,8 @@ interface AttributeProcessorInterface
     public function getConcreteLocalizedAttributes();
 
     /**
+     * Key value pairs, with locale names as primary keys, eg. [ 'de_DE' => ['foo' => 'bar']]
+     *
      * @param array $concreteLocalizedAttributes
      *
      * @return $this
@@ -52,7 +58,9 @@ interface AttributeProcessorInterface
     public function getAbstractLocalizedAttributes();
 
     /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $abstractLocalizedAttributes
+     * Key value pairs, eg. ['foo' => 'bar']
+     *
+     * @param array $abstractLocalizedAttributes
      *
      * @return $this
      */

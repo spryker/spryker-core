@@ -64,9 +64,8 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
         $productTransfer->setIdProductConcrete($productEntity->getIdProduct());
 
         if ($productEntity->getSpyProductAbstract()) {
-            $abstractTransfer = $this->convertProductAbstract($productEntity->getSpyProductAbstract());
-            $productTransfer->setAbstractSku($abstractTransfer->getSku());
-            $productTransfer->setFkProductAbstract($abstractTransfer->getIdProductAbstract());
+            $productTransfer->setAbstractSku($productEntity->getSpyProductAbstract()->getSku());
+            $productTransfer->setFkProductAbstract($productEntity->getSpyProductAbstract()->getIdProductAbstract());
         }
 
         return $productTransfer;

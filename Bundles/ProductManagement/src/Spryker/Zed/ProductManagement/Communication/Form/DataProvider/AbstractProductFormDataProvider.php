@@ -411,7 +411,7 @@ class AbstractProductFormDataProvider
             $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributeKeys);
             $value = isset($productAttributeKeys[$type]) ? $productAttributeKeys[$type] : 'foo';
             $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
-            $checkboxDisabled = $attributeTransfer->getAllowInput() === false;
+            $checkboxDisabled = $attributeTransfer->getAllowInput() === false || $isProductSpecificAttribute;
             $valueDisabled = true;
 
             if ($isProductSpecificAttribute) {
