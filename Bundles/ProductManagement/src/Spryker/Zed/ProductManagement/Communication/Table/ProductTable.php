@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -20,13 +21,13 @@ class ProductTable extends AbstractTable
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_NAME = 'name';
     const COL_SKU = 'sku';
-    const COL_PRICE = '';
-    const COL_TAX_SET = '';
-    const COL_VARIANT_COUNT = '';
-    const COL_STOCK = '';
-    const COL_CATEGORIES = '';
-    const COL_AVAILABILITY = '';
-    const COL_STATUS = '';
+    const COL_PRICE = 'price';
+    const COL_TAX_SET = 'tax_set';
+    const COL_VARIANT_COUNT = 'variants';
+    const COL_STOCK = 'stock';
+    const COL_CATEGORIES = 'categories';
+    const COL_AVAILABILITY = 'availability';
+    const COL_STATUS = 'status';
 
     const COL_ACTIONS = 'actions';
 
@@ -90,8 +91,11 @@ class ProductTable extends AbstractTable
         $query = $this
             ->productQueryQueryContainer
             ->queryProductAbstract()
+            ->innerJoinSpyTaxSet()
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
+            ->withColumn(SpyProductAbstractTableMap::COL_FK_TAX_SET, static::COL_TAX_SET)
+            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
         ;
 
         $queryResults = $this->runQuery($query, $config);
@@ -112,11 +116,11 @@ class ProductTable extends AbstractTable
     protected function generateItem(array $item)
     {
         return [
-            static::COL_ID_PRODUCT_ABSTRACT  => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-            static::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
+            static::COL_ID_PRODUCT_ABSTRACT  => $item[static::COL_ID_PRODUCT_ABSTRACT],
+            static::COL_SKU => $item[static::COL_SKU],
             static::COL_NAME => 'Name',
             static::COL_PRICE => 'Price',
-            static::COL_TAX_SET => 'Tax Set',
+            static::COL_TAX_SET => $item[static::COL_TAX_SET],
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STOCK => 'Stock',
             static::COL_CATEGORIES => 'Categories',
