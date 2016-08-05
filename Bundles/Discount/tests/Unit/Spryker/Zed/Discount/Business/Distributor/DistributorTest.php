@@ -178,7 +178,56 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return void
+     */
+    public function testDistributeWithRoundingErrorShouldMoveCentToNextItem()
+    {
+        $distributor = $this->createDistributor();
+
+        $discountableItemTransfer = new DiscountableItemTransfer();
+        $discountableItemTransfer->setUnitGrossPrice(50);
+        $discountableItems[] = $discountableItemTransfer;
+
+        $discountableItemTransfer = new DiscountableItemTransfer();
+        $discountableItemTransfer->setUnitGrossPrice(50);
+        $discountableItems[] = $discountableItemTransfer;
+
+        $discountableItemTransfer = new DiscountableItemTransfer();
+        $discountableItemTransfer->setUnitGrossPrice(50);
+        $discountableItems[] = $discountableItemTransfer;
+
+        $collectedDiscountTransfer = new CollectedDiscountTransfer();
+        $discountTransfer = $this->createDiscountTransfer(100);
+        $collectedDiscountTransfer->setDiscount($discountTransfer);
+        $collectedDiscountTransfer->setDiscountableItems(new \ArrayObject($discountableItems));
+
+        $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
+
+        $totalAmount = 0;
+        foreach ($discountableItems as $discountableObject) {
+            if (count($discountableObject->getOriginalItemCalculatedDiscounts()) === 0) {
+                continue;
+            }
+            $totalAmount += $discountableObject->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
+        }
+
+        $discountableItemTransfer = $discountableItems[0];
+        $unitGrossPrice = $discountableItemTransfer->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
+        $this->assertSame(33, $unitGrossPrice);
+
+        $discountableItemTransfer = $discountableItems[1];
+        $unitGrossPrice = $discountableItemTransfer->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
+        $this->assertSame(34, $unitGrossPrice);
+
+        $discountableItemTransfer = $discountableItems[2];
+        $unitGrossPrice = $discountableItemTransfer->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
+        $this->assertSame(33, $unitGrossPrice);
+
+        $this->assertEquals(100, $totalAmount);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]|\ArrayObject
      */
     protected function createDiscountableObjects($items = [])
     {

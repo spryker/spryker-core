@@ -341,9 +341,11 @@
       "Spryker\\Zed\\Propel\\": "Bundles/Propel/src",
       "Unit\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
       "Functional\\Spryker\\Zed\\Propel\\": "Bundles/Propel/tests",
+
       "Spryker\\Shared\\Refund\\": "Bundles/Refund/src",
-      "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Spryker\\Zed\\Refund\\": "Bundles/Refund/src",
+      "Acceptance\\Refund\\": "Bundles/Refund/tests",
+      "Unit\\Spryker\\Shared\\Refund\\": "Bundles/Refund/tests",
       "Unit\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
 
       "Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/src",
@@ -352,7 +354,7 @@
       "Spryker\\Client\\Ratepay\\": "Bundles/Ratepay/src",
       "Functional\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
       "Unit\\Spryker\\Zed\\Ratepay\\": "Bundles/Ratepay/tests",
-
+      "Functional\\Spryker\\Zed\\Refund\\": "Bundles/Refund/tests",
       "Spryker\\Client\\Sales\\": "Bundles/Sales/src",
       "Unit\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",
       "Functional\\Spryker\\Client\\Sales\\": "Bundles/Sales/tests",

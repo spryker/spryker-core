@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Business\Exception;
 
+use Exception;
 use Spryker\Zed\Application\Communication\Console\BuildNavigationConsole;
 
 abstract class AbstractNavigationCacheException extends \Exception
@@ -20,7 +21,7 @@ abstract class AbstractNavigationCacheException extends \Exception
      * @param int $code
      * @param \Exception|null $previous = null
      */
-    public function __construct($message = '', $code = 0, \Exception $previous = null)
+    public function __construct($message = '', $code = 0, Exception $previous = null)
     {
         $message .= PHP_EOL . PHP_EOL . self::MESSAGE;
 

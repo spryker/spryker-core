@@ -49,6 +49,8 @@ class LockedTrigger implements TriggerInterface
             $stateMachineProcessTransfer->getProcessName()
         );
 
+        $lockIdentifier = $this->hashIdentifier($lockIdentifier);
+
         $this->itemLock->acquire($lockIdentifier);
 
         try {
@@ -113,7 +115,17 @@ class LockedTrigger implements TriggerInterface
             );
         }
 
-        return $identifier;
+        return $this->hashIdentifier($identifier);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return string
+     */
+    protected function hashIdentifier($identifier)
+    {
+        return hash('sha512', $identifier);
     }
 
     /**

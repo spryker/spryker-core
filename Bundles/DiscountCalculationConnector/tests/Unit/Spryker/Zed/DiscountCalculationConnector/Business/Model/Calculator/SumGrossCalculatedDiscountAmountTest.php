@@ -116,6 +116,7 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 
         foreach ($calculatedDiscounts as $calculatedDiscount) {
             $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
+            $calculatedDiscountTransfer->setIdDiscount($calculatedDiscount['idDiscount']);
             $calculatedDiscountTransfer->setQuantity($calculatedDiscount['quantity']);
             $calculatedDiscountTransfer->setUnitGrossAmount($calculatedDiscount['unitGrossAmount']);
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
@@ -136,10 +137,12 @@ class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
+                'idDiscount' => 1,
                 'quantity' => 2,
                 'unitGrossAmount' => 10,
             ],
             [
+                'idDiscount' => 2,
                 'quantity' => 2,
                 'unitGrossAmount' => 10,
             ],

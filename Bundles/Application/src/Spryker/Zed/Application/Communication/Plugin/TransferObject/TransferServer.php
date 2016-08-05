@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
+use LogicException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -107,7 +108,7 @@ class TransferServer
     private function getHttpRequest()
     {
         if ($this->httpRequest === null) {
-            throw new \LogicException('No Http Request found in TransferServer. Maybe you try to access data from it before the request object is injected.');
+            throw new LogicException('No Http Request found in TransferServer. Maybe you try to access data from it before the request object is injected.');
         }
 
         return $this->httpRequest;

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Application\Communication\Plugin\ServiceProvider\AbstractHstsServiceProvider;
+use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider;
 use Spryker\Shared\Config\Config;
 
 /**

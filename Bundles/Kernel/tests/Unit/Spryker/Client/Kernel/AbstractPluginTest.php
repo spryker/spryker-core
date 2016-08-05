@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use ReflectionClass;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\AbstractFactory;
 use Unit\Spryker\Client\Kernel\Fixtures\Plugin\FooPlugin;
@@ -27,7 +28,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     {
         $plugin = new FooPlugin();
 
-        $pluginReflection = new \ReflectionClass($plugin);
+        $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
         $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractFactory::class, null, [], '', false));
@@ -44,7 +45,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     {
         $plugin = new FooPlugin();
 
-        $pluginReflection = new \ReflectionClass($plugin);
+        $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('client');
         $communicationFactoryProperty->setAccessible(true);
         $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractClient::class, null, [], '', false));

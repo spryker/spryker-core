@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * HTTP Strict Transport Security support as a ServiceProvider
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+ *
+ * @deprecated Use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider instead
  */
 abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 {

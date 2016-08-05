@@ -11,6 +11,9 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
+/**
+ * @deprecated Use Spryker\Shared\Application\ServiceProvider\RoutingServiceProvider instead
+ */
 class RoutingServiceProvider implements ServiceProviderInterface
 {
 

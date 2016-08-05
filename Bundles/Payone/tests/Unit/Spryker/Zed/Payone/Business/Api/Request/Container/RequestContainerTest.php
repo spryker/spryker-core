@@ -40,38 +40,89 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankA
 class RequestContainerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var int
+     */
     protected $amount = 9900;
 
+    /**
+     * @var string
+     */
     protected $encoding = 'UTF-8';
 
+    /**
+     * @var string
+     */
     protected $currency = 'EUR';
 
+    /**
+     * @var int
+     */
     protected $sequenceNumber = 2;
 
+    /**
+     * @var string
+     */
     protected $mode = 'test';
 
+    /**
+     * @var string
+     */
     protected $txId = '123456789';
 
+    /**
+     * @var string
+     */
     protected $portalId = '12345';
 
+    /**
+     * @var string
+     */
     protected $mid = '123';
 
+    /**
+     * @var string
+     */
     protected $aid = '1234';
 
+    /**
+     * @var string
+     */
     protected $integratorName = 'integrator-name';
 
+    /**
+     * @var string
+     */
     protected $integratorVersion = '1.0';
 
+    /**
+     * @var string
+     */
     protected $solutionName = 'solution-name';
 
+    /**
+     * @var string
+     */
     protected $solutionVersion = '2.0';
 
+    /**
+     * @var string
+     */
     protected $key = '123456789-test-key';
 
+    /**
+     * @var string
+     */
     protected $reference = 'DE000000001';
 
+    /**
+     * @var string
+     */
     protected $clearingType = 'pre';
 
+    /**
+     * @var string
+     */
     protected $narrativeText = 'some-text';
 
     /**

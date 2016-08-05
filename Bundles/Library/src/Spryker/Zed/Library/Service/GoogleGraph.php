@@ -15,46 +15,109 @@ class GoogleGraph
 
     const URI = 'https://chart.googleapis.com/chart';
 
+    /**
+     * @var string
+     */
     protected $chf;
 
+    /**
+     * @var string
+     */
     protected $chtt;
 
+    /**
+     * @var string
+     */
     protected $cht;
 
+    /**
+     * @var string
+     */
     protected $chof;
 
+    /**
+     * @var string
+     */
     protected $chl;
 
+    /**
+     * @var string
+     */
     protected $chd;
 
+    /**
+     * @var string
+     */
     protected $chs;
 
+    /**
+     * @var string
+     */
     protected $chld;
 
+    /**
+     * @var string
+     */
     protected $chdl;
 
+    /**
+     * @var string
+     */
     protected $chdlp;
 
+    /**
+     * @var string
+     */
     protected $chdls;
 
+    /**
+     * @var string
+     */
     protected $chco;
 
+    /**
+     * @var string
+     */
     protected $chxl;
 
+    /**
+     * @var string
+     */
     protected $chxr;
 
+    /**
+     * @var string
+     */
     protected $chxt;
 
+    /**
+     * @var string
+     */
     protected $chds;
 
+    /**
+     * @var string
+     */
     protected $chls;
 
+    /**
+     * @var string
+     */
     protected $chg;
 
+    /**
+     * @var string
+     */
     protected $chm;
 
+    /**
+     * @var string
+     */
     protected $chxp;
 
+    /**
+     * @var string
+     */
     protected $chbh;
 
     /**
