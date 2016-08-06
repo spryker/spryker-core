@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
@@ -27,16 +28,18 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function getDefaultFormFields($idProductAbstract = null)
     {
-        $data = parent::getDefaultFormFields($idProductAbstract);
+        $formData = parent::getDefaultFormFields($idProductAbstract);
 
-        unset($data[ProductFormAdd::FORM_PRICE_AND_TAX]);
-        $data[ProductFormAdd::FORM_PRICE_AND_TAX] = [
+        unset($formData[ProductFormAdd::FORM_PRICE_AND_TAX]);
+        $formData[ProductFormAdd::FORM_PRICE_AND_TAX] = [
             ConcretePriceForm::FIELD_PRICE => 0,
         ];
 
-        $data[ProductFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
+        $formData[ProductFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
 
-        return $data;
+        $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = null;
+
+        return $formData;
     }
 
     /**

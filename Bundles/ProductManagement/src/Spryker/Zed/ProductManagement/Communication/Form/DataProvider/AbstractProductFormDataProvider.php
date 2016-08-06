@@ -152,6 +152,7 @@ class AbstractProductFormDataProvider
     protected function getDefaultFormFields($idProductAbstract = null)
     {
         $data = [
+            ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::FORM_ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
             ProductFormAdd::FORM_PRICE_AND_TAX => [

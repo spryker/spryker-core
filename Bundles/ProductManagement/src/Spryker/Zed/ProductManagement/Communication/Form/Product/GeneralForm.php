@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class GeneralForm extends AbstractSubForm
 {
@@ -43,7 +45,14 @@ class GeneralForm extends AbstractSubForm
             ->add(self::FIELD_NAME, 'text', [
                 'required' => true,
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL]
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9\.\-\_\s*]+$/',
+                        'message' => 'Invalid value provided. Valid characters: "a-z A-Z", "0-9", ". - _"',
+                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL]
+                    ]),
                 ],
             ]);
 

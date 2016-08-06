@@ -33,9 +33,13 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData = $this->appendPriceAndTax($productAbstractTransfer, $formData);
             $formData = $this->appendAbstractAttributes($productAbstractTransfer, $formData);
             $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
+
+            $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
         }
 
         $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
+
+
 
         return $formData;
     }

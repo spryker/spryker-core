@@ -47,7 +47,10 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAdd(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormAdd($this->createLocaleProvider());
+        $formType = new ProductFormAdd(
+            $this->createLocaleProvider(),
+            $this->getProductQueryContainer()
+        );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
@@ -60,7 +63,10 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormEdit($this->createLocaleProvider());
+        $formType = new ProductFormEdit(
+            $this->createLocaleProvider(),
+            $this->getProductQueryContainer()
+        );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
@@ -73,7 +79,10 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductVariantFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductConcreteFormEdit($this->createLocaleProvider());
+        $formType = new ProductConcreteFormEdit(
+            $this->createLocaleProvider(),
+            $this->getProductQueryContainer()
+        );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }

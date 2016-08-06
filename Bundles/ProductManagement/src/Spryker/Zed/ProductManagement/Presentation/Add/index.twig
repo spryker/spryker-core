@@ -1,11 +1,11 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Product Add' | trans %}
+    {% set widget_title = 'Create a Product' | trans %}
 {% endif %}
 
 {% if submit_title is not defined %}
-    {% set submit_title = 'Add' | trans %}
+    {% set submit_title = 'Save' | trans %}
 {% endif %}
 
 {% if idProduct is not defined %}
@@ -72,7 +72,7 @@
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
-                    <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Taxes</a></li>
+                    <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Tax</a></li>
                     <li class=""><a href="#tab_abstract_attributes" data-toggle="tab">Attributes</a></li>
                     <li class=""><a href="#tab_variants" data-toggle="tab">Variants</a></li>
                     <li class=""><a href="#tab_seo" data-toggle="tab">SEO</a></li>

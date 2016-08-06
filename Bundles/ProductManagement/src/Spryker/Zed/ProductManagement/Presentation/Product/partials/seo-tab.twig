@@ -1,16 +1,15 @@
 <div class="panel-body">
-    <h3>Search Engine Optimization</h3>
+    <h3>SEO (Meta Information)</h3>
     <p>Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as "natural," "organic," or "earned" results.</p>
+    <p><i>Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</i></p>
 </div>
 
 <div class="panel-body second">
-        <h3>Meta Information</h3>
-        <p>Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.</p>
-        {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
-        formPrefix: 'seo',
-        localeCollection: localeCollection,
-        activeLocale: currentLocale,
-        form: form
-        } %}
-        {% endembed %}
+    {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
+    formPrefix: 'seo',
+    localeCollection: localeCollection,
+    activeLocale: currentLocale,
+    form: form
+    } %}
+    {% endembed %}
 </div>

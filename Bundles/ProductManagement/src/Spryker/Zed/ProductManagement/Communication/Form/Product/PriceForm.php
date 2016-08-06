@@ -81,9 +81,6 @@ class PriceForm extends AbstractType
             'attr' => [
                 'class' => 'touchspin2'
             ],
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
 
         return $this;

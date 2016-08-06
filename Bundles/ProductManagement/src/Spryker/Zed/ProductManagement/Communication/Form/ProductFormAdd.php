@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
@@ -15,12 +19,15 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAdd extends AbstractType
@@ -43,6 +50,7 @@ class ProductFormAdd extends AbstractType
     const OPTION_ID_LOCALE = 'option_id_locale';
     const OPTION_TAX_RATES = 'option_tax_rates';
 
+    const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_VARIANT = 'validation_group_attribute_variant';
     const VALIDATION_GROUP_GENERAL = 'validation_group_general';
@@ -57,11 +65,18 @@ class ProductFormAdd extends AbstractType
     protected $localeCollector;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeCollection
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
-    public function __construct(LocaleProvider $localeCollection)
+    protected $productQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeCollection
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     */
+    public function __construct(LocaleProvider $localeCollection, ProductQueryContainerInterface $productQueryContainer)
     {
         $this->localeCollector = $localeCollection;
+        $this->productQueryContainer = $productQueryContainer;
     }
 
     /**
@@ -88,6 +103,7 @@ class ProductFormAdd extends AbstractType
 
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
+            self::VALIDATION_GROUP_UNIQUE_SKU,
             self::VALIDATION_GROUP_GENERAL,
             self::VALIDATION_GROUP_PRICE_AND_TAX,
             self::VALIDATION_GROUP_PRICE_AND_STOCK,
@@ -215,18 +231,44 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::FIELD_SKU, 'text', [
-                'label' => 'SKU',
+                'label' => 'SKU Prefix',
                 'required' => true,
                 'constraints' => [
+                    new NotBlank([
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9\.\-\_\s*]+$/',
+                        'message' => 'Invalid value provided. Valid characters: "a-z A-Z", "0-9", ". - _"',
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                    ]),
                     new Callback([
                         'methods' => [
-                            function ($dataToValidate, ExecutionContextInterface $context) {
-                                //TODO more sophisticated validation
-                                if (!($dataToValidate)) {
-                                    $context->addViolation('Please enter valid SKU, it may consist of alphanumeric characters with dashes or dots.');
+                            function ($sku, ExecutionContextInterface $context) {
+                                $form = $context->getRoot();
+                                $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+
+                                if (!($sku)) {
+                                    $context->addViolation('Please enter only alphanumeric characters with dashes or dots.');
+                                }
+
+                                $skuCount = $this->productQueryContainer
+                                    ->queryProduct()
+                                    ->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
+                                    ->filterBySku($sku)
+                                    ->_or()
+                                    ->useSpyProductAbstractQuery()
+                                        ->filterBySku($sku)
+                                    ->endUse()
+                                    ->count()
+                                ;
+
+                                if ($skuCount > 0) {
+                                    $context->addViolation('This SKU is already used');
                                 }
                             },
                         ],
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
                     ]),
                 ],
             ]);
