@@ -132,7 +132,7 @@ $(document).ready(function() {
 
     $('.kv_attribute_autocomplete').each(function(key, value) {
         var input = $(value);
-        var id = this.attr('id_attribute') || null;
+        var id = input.attr('id_attribute') || null;
 
         input.autocomplete({
             minLength: 0,
