@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Storage\Provider;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\Storage\StorageConstants;
@@ -17,8 +18,19 @@ use Spryker\Shared\Storage\StorageConstants;
 abstract class AbstractKvProvider extends AbstractClientProvider
 {
 
+    /**
+     * @deprecated Not used.
+     */
     const METHOD_PREFIX = 'createClient';
+
     const KV_ADAPTER_REDIS = 'redis';
+
+    /**
+     * Default Redis database number
+     *
+     * @const int
+     */
+    const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @var string
@@ -70,19 +82,27 @@ abstract class AbstractKvProvider extends AbstractClientProvider
      */
     protected function getConnectionParameters()
     {
+        //TODO: Remove BC defaults
         $config = [
-            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
-            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
-            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
+            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT)),
+            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST)),
+            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
         ];
 
+        //TODO: Remove BC elseif
         if (Config::hasKey(StorageConstants::STORAGE_REDIS_PASSWORD)) {
             $config['password'] = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD);
+        } elseif (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD);
         }
 
+        //TODO: Remove BC elseif
         $config['persistent'] = false;
         if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {
             $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);
+        } elseif (Config::hasKey(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
+            $config['password'] = Config::get(ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
         }
 
         return $config;
