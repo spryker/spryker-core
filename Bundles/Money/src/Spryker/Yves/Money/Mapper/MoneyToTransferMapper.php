@@ -9,20 +9,20 @@ namespace Spryker\Yves\Money\Mapper;
 
 use Money\Money;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapper as SharedMoneyToTransferMapper;
-use Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin;
+use Spryker\Yves\Currency\Plugin\CurrencyPluginInterface;
 
 class MoneyToTransferMapper extends SharedMoneyToTransferMapper
 {
 
     /**
-     * @var \Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin
+     * @var \Spryker\Yves\Currency\Plugin\CurrencyPlugin
      */
     protected $currencyPlugin;
 
     /**
-     * @param \Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin $currencyPlugin
+     * @param \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface $currencyPlugin
      */
-    public function __construct(CurrencyPlugin $currencyPlugin)
+    public function __construct(CurrencyPluginInterface $currencyPlugin)
     {
         $this->currencyPlugin = $currencyPlugin;
     }

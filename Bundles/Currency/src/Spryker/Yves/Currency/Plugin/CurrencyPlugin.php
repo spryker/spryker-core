@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Currency\Plugin\Currency;
+namespace Spryker\Yves\Currency\Plugin;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
  */
-class CurrencyPlugin extends AbstractPlugin
+class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {
 
     /**

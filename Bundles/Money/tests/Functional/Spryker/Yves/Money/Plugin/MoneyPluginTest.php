@@ -9,7 +9,7 @@ namespace Functional\Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Yves\Money\Plugin\Money\MoneyPlugin;
+use Spryker\Yves\Money\Plugin\MoneyPlugin;
 
 /**
  * @group Functional

@@ -18,12 +18,12 @@ class PriceFilter extends AbstractPlugin
 {
 
     /**
-     * @deprecated
+     * @deprecated MoneyPlugin is used, this stays only for BC
      */
     const DECIMALS = 2;
 
     /**
-     * @deprecated
+     * @deprecated MoneyPlugin is used, this stays only for BC
      */
     const DIVIDER = 100;
 

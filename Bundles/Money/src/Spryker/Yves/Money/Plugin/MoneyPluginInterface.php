@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Money\Plugin\Money;
+namespace Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Money\MoneyConstants;
-use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
  */
-class MoneyPlugin extends AbstractPlugin
+interface MoneyPluginInterface
 {
 
     /**
@@ -23,10 +21,7 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
-    {
-        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $isoCode);
-    }
+    public function fromInteger($amount, $isoCode = null);
 
     /**
      * @param float $amount
@@ -34,10 +29,7 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $isoCode = null)
-    {
-        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $isoCode);
-    }
+    public function fromFloat($amount, $isoCode = null);
 
     /**
      * @param string $amount
@@ -45,10 +37,7 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $isoCode = null)
-    {
-        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $isoCode);
-    }
+    public function fromString($amount, $isoCode = null);
 
     /**
      * This method will return formatted string representation of the given MoneyTransfer object with currency symbol
@@ -59,10 +48,7 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
-    {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITH_SYMBOL);
-    }
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer);
 
     /**
      * This method will return float representation of the given MoneyTransfer object without symbol
@@ -73,29 +59,20 @@ class MoneyPlugin extends AbstractPlugin
      *
      * @return string
      */
-    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
-    {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
-    }
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
 
     /**
      * @param int $value
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value)
-    {
-        return $this->getFactory()->createIntegerToDecimalConverter()->convert($value);
-    }
+    public function convertIntegerToDecimal($value);
 
     /**
      * @param float $value
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
-    {
-        return $this->getFactory()->createDecimalToIntegerConverter()->convert($value);
-    }
+    public function convertDecimalToInteger($value);
 
 }

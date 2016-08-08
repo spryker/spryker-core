@@ -17,7 +17,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\MoneyConstants;
-use Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin;
+use Spryker\Yves\Currency\Plugin\CurrencyPlugin;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Money\Mapper\MoneyToTransferMapper;
 
@@ -70,7 +70,7 @@ class MoneyFactory extends AbstractFactory
      */
     protected function getStore()
     {
-        return Store::getInstance();
+        return $this->getProvidedDependency(MoneyDependencyProvider::STORE);
     }
 
     /**
@@ -84,7 +84,7 @@ class MoneyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin
+     * @return \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface
      */
     protected function getCurrencyPlugin()
     {

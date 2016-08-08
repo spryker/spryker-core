@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Currency\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
  */
-class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
+interface CurrencyPluginInterface
 {
 
     /**
@@ -20,17 +18,11 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode)
-    {
-        return $this->getFacade()->fromIsoCode($isoCode);
-    }
+    public function fromIsoCode($isoCode);
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
-    {
-        return $this->getFacade()->getCurrent();
-    }
+    public function getCurrent();
 
 }

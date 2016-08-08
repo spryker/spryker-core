@@ -18,7 +18,7 @@ class PriceCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Money\Communication\Plugin\MoneyPlugin
+     * @return \Spryker\Zed\Money\Communication\Plugin\MoneyPluginInterface
      */
     public function getMoneyPlugin()
     {

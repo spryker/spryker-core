@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Yves\Currency\Plugin;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Spryker\Yves\Currency\Plugin\Currency\CurrencyPlugin;
+use Spryker\Yves\Currency\Plugin\CurrencyPlugin;
 
 /**
  * @group Functional

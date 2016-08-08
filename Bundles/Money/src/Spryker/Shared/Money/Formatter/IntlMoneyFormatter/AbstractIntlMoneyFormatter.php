@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 
 use Generated\Shared\Transfer\MoneyTransfer;
+use Money\Currencies\ISOCurrencies;
 use Money\Formatter\IntlMoneyFormatter as InnerFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
@@ -67,7 +68,8 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
     protected function getInnerFormatter($localeName)
     {
         return new InnerFormatter(
-            $this->getNumberFormatter($localeName)
+            $this->getNumberFormatter($localeName),
+            $this->getIsoCurrencies()
         );
     }
 
@@ -77,5 +79,13 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
      * @return \NumberFormatter
      */
     abstract protected function getNumberFormatter($localeName);
+
+    /**
+     * @return \Money\Currencies\ISOCurrencies
+     */
+    protected function getIsoCurrencies()
+    {
+        return new ISOCurrencies();
+    }
 
 }

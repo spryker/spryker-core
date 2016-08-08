@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Money\Communication\Plugin;
+namespace Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
+ * @method \Spryker\Yves\Money\MoneyFactory getFactory()
  */
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
 {
@@ -24,7 +25,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function fromInteger($amount, $isoCode = null)
     {
-        return $this->getFacade()->fromInteger($amount, $isoCode);
+        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $isoCode);
     }
 
     /**
@@ -35,7 +36,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function fromFloat($amount, $isoCode = null)
     {
-        return $this->getFacade()->fromFloat($amount, $isoCode);
+        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $isoCode);
     }
 
     /**
@@ -46,7 +47,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function fromString($amount, $isoCode = null)
     {
-        return $this->getFacade()->fromString($amount, $isoCode);
+        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $isoCode);
     }
 
     /**
@@ -60,7 +61,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function formatWithSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFacade()->formatWithSymbol($moneyTransfer);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITH_SYMBOL);
     }
 
     /**
@@ -74,7 +75,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFacade()->formatWithoutSymbol($moneyTransfer);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
     }
 
     /**
@@ -84,7 +85,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function convertIntegerToDecimal($value)
     {
-        return $this->getFacade()->convertIntegerToDecimal($value);
+        return $this->getFactory()->createIntegerToDecimalConverter()->convert($value);
     }
 
     /**
@@ -94,7 +95,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function convertDecimalToInteger($value)
     {
-        return $this->getFacade()->convertDecimalToInteger($value);
+        return $this->getFactory()->createDecimalToIntegerConverter()->convert($value);
     }
 
 }

@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Money\Communication\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
  */
-class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
+interface MoneyPluginInterface
 {
 
     /**
@@ -22,10 +21,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
-    {
-        return $this->getFacade()->fromInteger($amount, $isoCode);
-    }
+    public function fromInteger($amount, $isoCode = null);
 
     /**
      * @param float $amount
@@ -33,10 +29,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $isoCode = null)
-    {
-        return $this->getFacade()->fromFloat($amount, $isoCode);
-    }
+    public function fromFloat($amount, $isoCode = null);
 
     /**
      * @param string $amount
@@ -44,10 +37,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $isoCode = null)
-    {
-        return $this->getFacade()->fromString($amount, $isoCode);
-    }
+    public function fromString($amount, $isoCode = null);
 
     /**
      * This method will return formatted string representation of the given MoneyTransfer object with currency symbol
@@ -58,10 +48,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
-    {
-        return $this->getFacade()->formatWithSymbol($moneyTransfer);
-    }
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer);
 
     /**
      * This method will return float representation of the given MoneyTransfer object without symbol
@@ -72,29 +59,20 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      *
      * @return string
      */
-    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
-    {
-        return $this->getFacade()->formatWithoutSymbol($moneyTransfer);
-    }
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
 
     /**
      * @param int $value
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value)
-    {
-        return $this->getFacade()->convertIntegerToDecimal($value);
-    }
+    public function convertIntegerToDecimal($value);
 
     /**
      * @param float $value
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
-    {
-        return $this->getFacade()->convertDecimalToInteger($value);
-    }
+    public function convertDecimalToInteger($value);
 
 }
