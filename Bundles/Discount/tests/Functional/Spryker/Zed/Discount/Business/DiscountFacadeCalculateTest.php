@@ -141,7 +141,6 @@ class DiscountFacadeCalculateTest extends Test
 
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
         $this->assertEquals($code1, $discountTransfer->getVoucherCode());
-
     }
 
     /**
