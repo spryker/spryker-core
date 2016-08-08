@@ -116,22 +116,22 @@ class DiscountFacadeCalculateTest extends Test
              DiscountConstants::TYPE_VOUCHER
          );
 
-        $code1 = 'codetesting';
-        $code2 = 'testingcode';
-        $code3 = 'testingtcode';
+        $codeTestingVoucher = 'codetesting';
+        $testingCodeVoucher = 'testingcode';
+        $codeTestingCodeVoucher = 'codetestingcode';
 
-        $this->createVoucherCode($code1, $discountEntity);
-        $this->createVoucherCode($code2, $discountEntity);
-        $this->createVoucherCode($code3, $discountEntity);
+        $this->createVoucherCode($codeTestingVoucher, $discountEntity);
+        $this->createVoucherCode($testingCodeVoucher, $discountEntity);
+        $this->createVoucherCode($codeTestingCodeVoucher, $discountEntity);
 
         $quoteTransfer = $this->createQuoteTransfer();
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode($code1);
+        $discountTransfer->setVoucherCode($codeTestingVoucher);
         $quoteTransfer->addVoucherDiscount($discountTransfer);
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode($code2);
+        $discountTransfer->setVoucherCode($testingCodeVoucher);
         $quoteTransfer->addVoucherDiscount($discountTransfer);
 
         $discountFacade = new DiscountFacade();
@@ -140,7 +140,7 @@ class DiscountFacadeCalculateTest extends Test
         $discountTransfer = $quoteTransfer->getVoucherDiscounts()[0];
 
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
-        $this->assertEquals($code1, $discountTransfer->getVoucherCode());
+        $this->assertEquals($codeTestingVoucher, $discountTransfer->getVoucherCode());
 
     }
 
