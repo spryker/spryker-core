@@ -9,6 +9,7 @@ namespace Spryker\Yves\Kernel;
 
 use Pyz\Yves\Application\Plugin\Pimple;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
@@ -45,7 +46,18 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function getContainer()
     {
-        return new Container();
+        $containerGlobals = $this->getContainerGlobals();
+        $container = new Container($containerGlobals->getContainerGlobals());
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ContainerGlobals
+     */
+    protected function getContainerGlobals()
+    {
+        return new ContainerGlobals();
     }
 
     /**
@@ -87,6 +99,8 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
+     * @deprecated Use `$container[ApplicationConstants::APPLICATION_FORM_FACTORY]` within your `DependencyProvider` to get the form factory
+     *
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
     protected function getFormFactory()

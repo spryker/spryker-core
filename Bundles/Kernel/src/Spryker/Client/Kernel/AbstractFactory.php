@@ -9,6 +9,7 @@ namespace Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Shared\Kernel\ContainerGlobals;
 
 abstract class AbstractFactory
 {
@@ -40,10 +41,7 @@ abstract class AbstractFactory
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $dependencyProvider = $this->resolveDependencyProvider();
-            $container = new Container();
-            $this->provideExternalDependencies($dependencyProvider, $container);
-            $this->container = $container;
+            $this->container = $this->getContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -51,6 +49,37 @@ abstract class AbstractFactory
         }
 
         return $this->container[$key];
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function getContainerWithProvidedDependencies()
+    {
+        $container = $this->getContainer();
+        $dependencyProvider = $this->resolveDependencyProvider();
+        $this->provideExternalDependencies($dependencyProvider, $container);
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        $containerGlobals = $this->getContainerGlobals();
+        $container = new Container($containerGlobals->getContainerGlobals());
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ContainerGlobals
+     */
+    protected function getContainerGlobals()
+    {
+        return new ContainerGlobals();
     }
 
     /**

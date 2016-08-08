@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
@@ -72,7 +73,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
-     * @return \Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector
      */
     protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
@@ -122,7 +123,18 @@ trait BundleDependencyProviderResolverAwareTrait
      */
     protected function getContainer()
     {
-        return new Container();
+        $containerGlobals = $this->getContainerGlobals();
+        $container = new Container($containerGlobals->getContainerGlobals());
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ContainerGlobals
+     */
+    protected function getContainerGlobals()
+    {
+        return new ContainerGlobals();
     }
 
     /**

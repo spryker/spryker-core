@@ -29,7 +29,7 @@ class Application extends \Silex\Application
      * Returns a form.
      *
      * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
+     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::APPLICATION_FORM_FACTORY)->create(FooFormType::class);
      *
      * @see createBuilder()
      *
