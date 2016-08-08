@@ -150,6 +150,7 @@ class DiscountFacadeCalculateTest extends Test
     protected function createQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setAbstractSku('123');
         $itemTransfer->setSku('123');
@@ -179,14 +180,14 @@ class DiscountFacadeCalculateTest extends Test
         $collectorQueryString,
         $discountType = DiscountConstants::TYPE_CART_RULE
     ) {
-        $discountEntity = new SpyDiscount();
-        $discountEntity->setAmount(100);
 
         $discountVoucherPool = new SpyDiscountVoucherPool();
         $discountVoucherPool->setIsActive(true);
         $discountVoucherPool->setName('test');
         $discountVoucherPool->save();
 
+        $discountEntity = new SpyDiscount();
+        $discountEntity->setAmount(100);
         $discountEntity->setFkDiscountVoucherPool($discountVoucherPool->getIdDiscountVoucherPool());
         $discountEntity->setDecisionRuleQueryString($decisionRuleQueryString);
         $discountEntity->setCollectorQueryString($collectorQueryString);

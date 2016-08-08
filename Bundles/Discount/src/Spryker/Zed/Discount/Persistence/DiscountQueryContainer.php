@@ -84,6 +84,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 ->useDiscountVoucherQuery()
                     ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
                     ->filterByCode(array_unique($voucherCodes), Criteria::IN)
+                    ->orderByCode()
                 ->endUse()
             ->endUse();
 
