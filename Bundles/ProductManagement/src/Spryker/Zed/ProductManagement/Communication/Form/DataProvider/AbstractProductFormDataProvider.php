@@ -239,7 +239,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param ProductImageSetTransfer $imageSetTransfer
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $imageSetTransfer
      *
      * @return array
      */
@@ -247,11 +247,10 @@ class AbstractProductFormDataProvider
     {
         $item = $imageSetTransfer->toArray();
         $itemImages = [];
+
         foreach ($imageSetTransfer->getProductImages() as $imageTransfer) {
             $image = $imageTransfer->toArray();
-            $image[ImageCollectionForm::FIELD_IMAGE_SMALL] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
-            $image[ImageCollectionForm::FIELD_IMAGE_LARGE] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
-            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
             $itemImages[] = $image;
         }
 
@@ -340,6 +339,7 @@ class AbstractProductFormDataProvider
             ImageForm::FIELD_SET_NAME => null,
             ImageForm::PRODUCT_IMAGES => [[
                 ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
+                ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
                 ImageCollectionForm::FIELD_IMAGE_SMALL => null,
                 ImageCollectionForm::FIELD_IMAGE_LARGE => null,
                 ImageCollectionForm::FIELD_ORDER => null,
