@@ -231,7 +231,9 @@ interface ApplicationConstants
     const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
-    /* @deprecated Use LogConstants::LOG_LEVEL instead */
+    /**
+     * @deprecated Use LogConstants::LOG_LEVEL instead
+     */
     const LOG_LEVEL = 'LOG_LEVEL';
 
     const ERROR_LEVEL = 'ERROR_LEVEL';
@@ -240,6 +242,9 @@ interface ApplicationConstants
     const PROPEL_DEBUG = 'PROPEL_DEBUG';
     const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
 
+    /**
+     * @deprecated Use StorageConstants::STORAGE_KV_SOURCE instead
+     */
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
     const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
     const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
