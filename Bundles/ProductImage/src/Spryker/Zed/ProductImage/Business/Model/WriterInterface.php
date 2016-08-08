@@ -28,4 +28,12 @@ interface WriterInterface
      */
     public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
+    /**
+     * @param int $idProductImageSet
+     * @param int $idProductImage
+     *
+     * @return int
+     */
+    public function persistProductImageRelation($idProductImageSet, $idProductImage);
+
 }

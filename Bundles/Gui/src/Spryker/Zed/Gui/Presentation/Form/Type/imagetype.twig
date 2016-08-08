@@ -25,8 +25,13 @@
         {% set form_group_errors_css = 'has-error' %}
     {% endif %}
 
+    {% set value = form.vars.value %}
+    {% if value is iterable %}
+        {% set value = form.vars.value|first %}
+    {% endif %}
+
     <div class='form-group {{ form_group_errors_css }}'>
-        <img src="{{ form.vars.value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css|raw }}" {{ img_title|raw }} />
+        <img src="{{ value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css|raw }}" {{ img_title|raw }} />
         {{ form_label(form) }}
         {{ form_errors(form) }}
     </div>

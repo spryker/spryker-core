@@ -54,7 +54,7 @@ class ProductImageWriterTest extends Test
     {
         $imageTransfer = new ProductImageTransfer();
         $imageTransfer
-            ->setSort(11)
+            ->setSortOrder(11)
             ->setExternalUrlLarge('large')
             ->setExternalUrlSmall('small');
 
@@ -70,7 +70,7 @@ class ProductImageWriterTest extends Test
     {
         $imageTransfer = new ProductImageTransfer();
         $imageTransfer
-            ->setSort(7)
+            ->setSortOrder(7)
             ->setExternalUrlLarge('large')
             ->setExternalUrlSmall('small');
 

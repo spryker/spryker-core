@@ -31,6 +31,13 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryProductImageSetToProductImage();
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryProductImageSet();

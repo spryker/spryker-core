@@ -279,7 +279,7 @@ class ProductManager implements ProductManagerInterface
         $productImageSetToProductImageEntity = new SpyProductImageSetToProductImage();
         $productImageSetToProductImageEntity->setFkProductImageSet($idProductImageSet);
         $productImageSetToProductImageEntity->setFkProductImage($idProductImage);
-        $productImageSetToProductImageEntity->setSort($productImage->getSort());
+        $productImageSetToProductImageEntity->setSortOrder($productImage->getSortOrder());
 
         $productImageSetToProductImageEntity->save();
     }

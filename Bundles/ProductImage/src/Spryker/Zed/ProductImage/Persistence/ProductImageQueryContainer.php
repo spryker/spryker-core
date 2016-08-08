@@ -30,7 +30,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->useSpyProductImageQuery()
                 ->endUse()
             ->filterByFkProductImageSet($idProductImageSet)
-            ->orderBySort(Criteria::DESC);
+            ->orderBySortOrder(Criteria::DESC);
     }
 
     /**
@@ -42,6 +42,17 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
     {
         return $this->getFactory()
             ->createProductImageQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryProductImageSetToProductImage()
+    {
+        return $this->getFactory()
+            ->createProductImageSetToProductImageQuery();
     }
 
     /**
@@ -70,7 +81,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                     ->useSpyProductImageSetQuery()
                         ->filterByFkProductAbstract($idProductAbstract)
                     ->endUse()
-                ->orderBySort(Criteria::DESC)
+                ->orderBySortOrder(Criteria::DESC)
                 ->endUse();
     }
 
@@ -89,7 +100,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->useSpyProductImageSetToProductImageQuery()
                     ->useSpyProductImageQuery()
                     ->endUse()
-                ->orderBySort(Criteria::DESC)
+                ->orderBySortOrder(Criteria::DESC)
                 ->endUse();
     }
 
@@ -108,7 +119,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->useSpyProductImageSetToProductImageQuery()
                     ->useSpyProductImageQuery()
                     ->endUse()
-                ->orderBySort(Criteria::DESC)
+                ->orderBySortOrder(Criteria::DESC)
                 ->endUse();
     }
 

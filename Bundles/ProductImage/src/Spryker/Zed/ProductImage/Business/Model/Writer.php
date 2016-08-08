@@ -43,7 +43,9 @@ class Writer implements WriterInterface
         }
 
         $productImageEntity = $query->findOneOrCreate();
+        $id = $productImageEntity->getIdProductImage();
         $productImageEntity->fromArray($productImageTransfer->toArray());
+        $productImageEntity->setIdProductImage($id);
         $productImageEntity->save();
 
         $productImageTransfer->setIdProductImage($productImageEntity->getIdProductImage());
@@ -73,11 +75,15 @@ class Writer implements WriterInterface
             $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
             $productImageSetEntity->save();
 
-            $productImageSetTransfer->setIdProductImageSet($productImageSetEntity->getIdProductImageSet());
+            $productImageSetTransfer->setIdProductImageSet(
+                $productImageSetEntity->getIdProductImageSet()
+            );
 
             $updatedImageCollection = [];
             foreach ($productImageSetTransfer->getProductImages() as $imageTransfer) {
                 $imageTransfer = $this->persistProductImage($imageTransfer);
+                $this->persistProductImageRelation($productImageSetTransfer->getIdProductImageSet(), $imageTransfer->getIdProductImage());
+
                 $updatedImageCollection[] = $imageTransfer;
             }
 
@@ -93,6 +99,31 @@ class Writer implements WriterInterface
             $this->productImageContainer->getConnection()->beginTransaction();
             throw $e;
         }
+    }
+
+    /**
+     * @param int $idProductImageSet
+     * @param int $idProductImage
+     * @param int|null $order
+     *
+     * @return int
+     */
+    public function persistProductImageRelation($idProductImageSet, $idProductImage, $order = null)
+    {
+        $query = $this->productImageContainer
+            ->queryProductImageSetToProductImage()
+            ->filterByFkProductImageSet($idProductImageSet)
+            ->filterByFkProductImage($idProductImage);
+
+        $productImageRelationEntity = $query->findOneOrCreate();
+        $productImageRelationEntity->setSortOrder((int)$order);
+        $productImageRelationEntity->save();
+
+        $productImageRelationEntity->setIdProductImageSetToProductImage(
+            $productImageRelationEntity->getIdProductImageSetToProductImage()
+        );
+
+        return $productImageRelationEntity->getIdProductImageSetToProductImage();
     }
 
 }

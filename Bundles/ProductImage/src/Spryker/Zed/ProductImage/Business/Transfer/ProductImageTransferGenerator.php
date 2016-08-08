@@ -55,8 +55,8 @@ class ProductImageTransferGenerator implements ProductImageTransferGeneratorInte
         $transferList = [];
         foreach ($productImageEntityCollection as $productImageEntity) {
             $productImageTransfer = $this->convertProductImage($productImageEntity);
-            $productImageTransfer->setSort(
-                $productImageEntity->getSpyProductImageSetToProductImages()->getFirst()->getSort()
+            $productImageTransfer->setSortOrder(
+                (int) $productImageEntity->getSpyProductImageSetToProductImages()->getFirst()->getSortOrder()
             ); //getFirst since it's many to many while from this side it should be one to many
 
             $transferList[] = $productImageTransfer;
@@ -85,7 +85,7 @@ class ProductImageTransferGenerator implements ProductImageTransferGeneratorInte
         $productImageSetTransfer->setIdProduct($productImageSetEntity->getFkProduct());
 
         $criteria = new Criteria();
-        $criteria->addDescendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT);
+        $criteria->addDescendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT_ORDER);
 
         $imageEntityCollection = [];
         foreach ($productImageSetEntity->getSpyProductImageSetToProductImagesJoinSpyProductImage($criteria) as $entity) {
