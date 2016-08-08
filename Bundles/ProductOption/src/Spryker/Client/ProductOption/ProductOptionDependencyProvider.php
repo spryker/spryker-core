@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\Container;
 
 class ProductOptionDependencyProvider extends AbstractDependencyProvider
 {
+
     const KV_STORAGE = 'kv storage';
 
     /**
@@ -26,4 +27,5 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
+
 }

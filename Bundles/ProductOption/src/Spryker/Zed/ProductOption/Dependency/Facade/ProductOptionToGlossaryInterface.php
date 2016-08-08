@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductOptionToGlossaryInterface
 {
+
     /**
      * @param string $keyName
      * @param array $data
@@ -21,7 +22,7 @@ interface ProductOptionToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *

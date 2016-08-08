@@ -12,13 +12,14 @@ use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class ProductOptionValueForm extends AbstractType
 {
+
     const FIELD_VALUE = 'value';
     const FIELD_SKU = 'sku';
     const FIELD_PRICE = 'price';
@@ -36,7 +37,7 @@ class ProductOptionValueForm extends AbstractType
     protected $priceTransformer;
 
     /**
-     * @param ProductOptionQueryContainerInterface $productOptionQueryContainer
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer $priceTransformer
      */
     public function __construct(
@@ -176,4 +177,5 @@ class ProductOptionValueForm extends AbstractType
     {
         return 'product_option';
     }
+
 }

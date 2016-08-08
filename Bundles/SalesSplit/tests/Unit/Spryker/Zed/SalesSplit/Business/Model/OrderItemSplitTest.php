@@ -224,15 +224,15 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem->setGrossPrice(100);
 
         $spySalesOrderItemOption = new SpySalesOrderItemOptionMock();
-        $spySalesOrderItemOption->setLabelOptionType('X');
-        $spySalesOrderItemOption->setLabelOptionValue('Y');
+        $spySalesOrderItemOption->setGroupName('X');
+        $spySalesOrderItemOption->setValue('Y');
         $spySalesOrderItemOption->setGrossPrice(5);
 
         $spySalesOrderItem->addOption($spySalesOrderItemOption);
 
         $spySalesOrderItemOption = new SpySalesOrderItemOptionMock();
-        $spySalesOrderItemOption->setLabelOptionType('XX');
-        $spySalesOrderItemOption->setLabelOptionValue('YY');
+        $spySalesOrderItemOption->setGroupName('XX');
+        $spySalesOrderItemOption->setValue('YY');
         $spySalesOrderItemOption->setGrossPrice(30);
         $spySalesOrderItemOption->setTaxRate(15);
 

@@ -4,18 +4,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 namespace Spryker\Client\ProductOption;
-use Generated\Shared\Transfer\ProductOptionGroupsTransfer;
 
 /**
  * @method \Spryker\Client\ProductOption\ProductOptionFactory getFactory()
  */
 interface ProductOptionClientInterface
 {
+
     /**
+     * @api
+     *
      * @param int $idAbstractProduct
      * @param int $localeName
      *
-     * @return ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
      */
     public function getProductOptions($idAbstractProduct, $localeName);
+
 }

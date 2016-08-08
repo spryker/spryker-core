@@ -11,15 +11,14 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
-use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm;
+use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer;
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionListTable;
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
 use Spryker\Zed\ProductOption\Communication\Table\ProductTable;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -36,7 +35,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductOptionGroup(
         ProductOptionGroupDataProvider $productOptionGroupDataProvider = null
-    ){
+    ) {
         $productOptionValueForm = $this->createProductOptionValueForm();
         $createProductOptionTranslationForm = $this->createProductOptionTranslationForm();
 
@@ -50,9 +49,10 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             $productOptionGroupFormType,
             $productOptionGroupDataProvider->getData(),
-            array_merge([
+            array_merge(
+                [
                 'data_class'  => ProductOptionGroupTransfer::class
-            ],
+                ],
                 $productOptionGroupDataProvider->getOptions()
             )
         );
@@ -186,10 +186,11 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductOptionToGlossaryInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
     }
+
 }

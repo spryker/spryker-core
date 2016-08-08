@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductOption;
 
-use Generated\Shared\Transfer\ProductOptionGroupsTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,11 +14,14 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductOptionClient extends AbstractClient implements ProductOptionClientInterface
 {
+
     /**
+     * @api
+     *
      * @param int $idAbstractProduct
      * @param int $localeName
      *
-     * @return ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
      */
     public function getProductOptions($idAbstractProduct, $localeName)
     {
@@ -27,4 +29,5 @@ class ProductOptionClient extends AbstractClient implements ProductOptionClientI
             ->createProductOptionStorage($localeName)
             ->get($idAbstractProduct);
     }
+
 }

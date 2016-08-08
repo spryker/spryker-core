@@ -51,7 +51,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     /**
      * @param int $idAbstractProduct
      *
-     * @return ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
      */
     public function get($idAbstractProduct)
     {
@@ -87,7 +87,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
 
     /**
      * @param array $values
-     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */
@@ -101,4 +101,5 @@ class ProductOptionStorage implements ProductOptionStorageInterface
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
         }
     }
+
 }

@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProductOptionTranslationForm extends AbstractType
 {
+
     const FIELD_NAME = 'name';
     const FIELD_LOCALE_CODE = 'localeCode';
     const FIELD_KEY = 'key';
@@ -34,6 +35,7 @@ class ProductOptionTranslationForm extends AbstractType
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -102,4 +104,5 @@ class ProductOptionTranslationForm extends AbstractType
     {
         return 'product_option_value_translation';
     }
+
 }

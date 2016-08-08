@@ -52,6 +52,8 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

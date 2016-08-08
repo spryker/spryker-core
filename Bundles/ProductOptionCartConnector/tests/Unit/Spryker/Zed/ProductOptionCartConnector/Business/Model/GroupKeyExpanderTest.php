@@ -23,8 +23,8 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->createCartChangeTransfer(
             [
                 'cartItem1' => [
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(2),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(1),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(2),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(1),
                 ],
             ]
         );
@@ -44,8 +44,8 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->createCartChangeTransfer(
             [
                 'cartItem1' => [
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(2),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(1),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(2),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(1),
                 ],
             ]
         );
@@ -67,16 +67,16 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->createCartChangeTransfer(
             [
                 'cartItem1' => [
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(1),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(3),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage('A'),
-                   (new ProductOptionTransfer())->setIdOptionValueUsage(2),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(1),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(3),
+                   (new ProductOptionTransfer())->setIdProductOptionValue('A'),
+                   (new ProductOptionTransfer())->setIdProductOptionValue(2),
                 ],
                 'cartItem2' => [
-                    (new ProductOptionTransfer())->setIdOptionValueUsage(2),
-                    (new ProductOptionTransfer())->setIdOptionValueUsage(1),
-                    (new ProductOptionTransfer())->setIdOptionValueUsage(3),
-                    (new ProductOptionTransfer())->setIdOptionValueUsage('A'),
+                    (new ProductOptionTransfer())->setIdProductOptionValue(2),
+                    (new ProductOptionTransfer())->setIdProductOptionValue(1),
+                    (new ProductOptionTransfer())->setIdProductOptionValue(3),
+                    (new ProductOptionTransfer())->setIdProductOptionValue('A'),
                 ],
             ]
         );

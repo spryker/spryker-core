@@ -17,6 +17,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionListTable extends AbstractTable
 {
+
     const TABLE_COL_PRICE = 'price';
     const TABLE_COL_SKU = 'sku';
     const TABLE_COL_NAME = 'name';
@@ -178,7 +179,7 @@ class ProductOptionListTable extends AbstractTable
      */
     protected function wrapInlineCellItem($item)
     {
-        return '<p>' . $item .'</p>';
+        return '<p>' . $item . '</p>';
     }
 
     /**
@@ -279,4 +280,5 @@ class ProductOptionListTable extends AbstractTable
 
         return $this->generateViewButton($viewDiscountUrl, 'Activate');
     }
+
 }

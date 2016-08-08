@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -62,4 +63,5 @@ class ViewController extends AbstractController
             $productOptionsTable->fetchData()
         );
     }
+
 }

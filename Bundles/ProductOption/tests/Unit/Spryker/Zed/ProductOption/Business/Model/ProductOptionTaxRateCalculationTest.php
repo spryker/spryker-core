@@ -6,19 +6,18 @@
 
 namespace Unit\Spryker\Zed\Tax\Business\Model;
 
-use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**
  * @group ProductOptionTaxRate
  */
-class ProductOptionTaxRateCalculationTest
-    //extends \PHPUnit_Framework_TestCase
+class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -51,7 +50,7 @@ class ProductOptionTaxRateCalculationTest
     protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
-        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueUsageAndCountryIso2Code')->willReturn($mockData);
+        $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueAndCountryIso2Code')->willReturn($mockData);
 
         $productItemTaxRateCalculatorMock->recalculate($quoteTransfer);
         $taxAverage = $this->getProductItemsTaxRateAverage($quoteTransfer);
@@ -64,7 +63,7 @@ class ProductOptionTaxRateCalculationTest
      */
     protected function createProductItemTaxRateCalculator()
     {
-        return $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountryIso2Code'], [
+        return $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueAndCountryIso2Code'], [
             $this->createQueryContainerMock(),
             $this->createProductOptionToTaxBridgeMock()
         ]);
@@ -183,7 +182,7 @@ class ProductOptionTaxRateCalculationTest
     {
         return [
             [
-                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 1,
+                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE => 1,
                 ProductOptionQueryContainer::COL_MAX_TAX_RATE => 11,
             ]
         ];
@@ -196,11 +195,11 @@ class ProductOptionTaxRateCalculationTest
     {
         return [
             [
-                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 1,
+                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE => 1,
                 ProductOptionQueryContainer::COL_MAX_TAX_RATE => 20,
             ],
             [
-                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE => 2,
+                ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE => 2,
                 ProductOptionQueryContainer::COL_MAX_TAX_RATE => 14,
             ],
         ];
@@ -214,7 +213,7 @@ class ProductOptionTaxRateCalculationTest
     protected function createProductOption($idOptionValueUsage)
     {
         $productOption1 = new ProductOptionTransfer();
-        $productOption1->setIdOptionValueUsage($idOptionValueUsage);
+        $productOption1->setIdProductOptionValue($idOptionValueUsage);
 
         return $productOption1;
     }

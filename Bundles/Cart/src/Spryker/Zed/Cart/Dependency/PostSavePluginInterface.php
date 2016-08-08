@@ -10,10 +10,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PostSavePluginInterface
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function postSave(QuoteTransfer $quoteTransfer);
+
 }

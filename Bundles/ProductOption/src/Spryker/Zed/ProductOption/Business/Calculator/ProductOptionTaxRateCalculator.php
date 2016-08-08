@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOption\Business\Model;
+namespace Spryker\Zed\ProductOption\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -103,7 +103,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected function getEffectiveTaxRate(array $taxRates, $idOptionValue)
     {
         foreach ($taxRates as $taxRate) {
-            if ((int)$taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE_USAGE] === (int)$idOptionValue) {
+            if ((int)$taxRate[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE] === (int)$idOptionValue) {
                 return (float)$taxRate[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
             }
         }
@@ -147,10 +147,10 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     protected function findTaxRatesByIdOptionValueAndCountryIso2Code(array $productOptionValueIds, $countryIso2Code)
     {
-        /*return $this->queryContainer->queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($productOptionValueIds, $countryIso2Code)
+        return $this->queryContainer
+            ->queryTaxSetByIdProductOptionValueAndCountryIso2Code($productOptionValueIds, $countryIso2Code)
             ->find()
-            ->toArray();*/
-        return [];  //@todo implement
+            ->toArray();
     }
 
 }

@@ -5,14 +5,14 @@
  */
 namespace Spryker\Client\ProductOption\Storage;
 
-use Generated\Shared\Transfer\ProductOptionGroupsTransfer;
-
 interface ProductOptionStorageInterface
 {
+
     /**
      * @param int $idAbstractProduct
      *
-     * @return ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
      */
     public function get($idAbstractProduct);
+
 }

@@ -8,6 +8,7 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 interface ProductOptionToTouchInterface
 {
+
     /**
      * @api
      *

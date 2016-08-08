@@ -39,7 +39,7 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
@@ -74,7 +74,7 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-       return $this->glossaryFacade->updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
+        return $this->glossaryFacade->updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
@@ -94,7 +94,7 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      */
     public function createKey($keyName)
     {
-       return $this->glossaryFacade->createKey($keyName);
+        return $this->glossaryFacade->createKey($keyName);
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      */
     public function getTranslation($keyName, LocaleTransfer $localeTransfer)
     {
-       return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
+        return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
 
     /**
@@ -115,6 +115,7 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      */
     public function deleteKey($keyName)
     {
-       return $this->glossaryFacade->deleteKey($keyName);
+        return $this->glossaryFacade->deleteKey($keyName);
     }
+
 }

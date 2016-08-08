@@ -21,9 +21,9 @@ class ProductOptionFactory extends AbstractFactory
     public function createProductOptionStorage($localeName)
     {
         return new ProductOptionStorage(
-              $this->getStorage(),
-              $this->createKeyBuilder(),
-              $localeName
+            $this->getStorage(),
+            $this->createKeyBuilder(),
+            $localeName
         );
     }
 
@@ -42,4 +42,5 @@ class ProductOptionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::KV_STORAGE);
     }
+
 }

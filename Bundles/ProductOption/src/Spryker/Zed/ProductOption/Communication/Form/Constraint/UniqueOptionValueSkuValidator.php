@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ProductOption\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -19,9 +18,10 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @api
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
@@ -41,7 +41,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
 
     /**
      * @param string $sku
-     * @param UniqueOptionValueSku $constraint
+     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku $constraint
      *
      * @return bool
      */
@@ -56,7 +56,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
 
     /**
      * @param string $submittedSku
-     * @param UniqueOptionValueSku $constraint
+     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku $constraint
      *
      * @return bool
      */

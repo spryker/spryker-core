@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductOptionQueryContainerInterface
 {
+
     /**
+     * @api
+     *
      * @param int $idProductOptionGroup
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
@@ -21,6 +24,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionGroupByIdProductOptionGroup($idProductOptionGroup);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
@@ -30,6 +35,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductAbstractBySku($sku);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -37,6 +44,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionByValueId($idProductOptionValue);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -51,9 +60,11 @@ interface ProductOptionQueryContainerInterface
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionGroup
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
@@ -61,6 +72,8 @@ interface ProductOptionQueryContainerInterface
     public function queryProductOptionGroupById($idProductOptionGroup);
 
     /**
+     * @api
+     *
      * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -69,6 +82,8 @@ interface ProductOptionQueryContainerInterface
     public function queryAbstractProductsByOptionGroupId($idProductOptionGroup, LocaleTransfer $localeTransfer);
 
     /**
+     * @api
+     *
      * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -77,9 +92,10 @@ interface ProductOptionQueryContainerInterface
     public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
     public function queryProductOptionGroupWithValues();
-
 
 }

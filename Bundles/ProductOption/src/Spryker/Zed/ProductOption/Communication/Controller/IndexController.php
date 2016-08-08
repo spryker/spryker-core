@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+
     const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
     const URL_PARAM_ACTIVE = 'active';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';

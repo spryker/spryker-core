@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Tax\TaxConstants;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory getFactory()
@@ -21,9 +25,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 {
 
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
-    const COL_ID_PRODUCT_OPTION_VALUE_USAGE = 'IdProductOptionValueUsage';
+    const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
     /**
+     * @api
+     *
      * @param int $idProductOptionGroup
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
@@ -39,6 +45,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
@@ -53,6 +61,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -65,6 +75,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
@@ -77,6 +89,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionGroup
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
@@ -89,6 +103,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -143,6 +159,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -200,6 +218,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
     public function queryProductOptionGroupWithValues()
@@ -211,13 +231,37 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      *
+     * @api
+     *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
     {
+        $this->getFactory()->createProductOptionValueQuery()
+            ->filterByIdProductOptionValue($allIdOptionValueUsages, Criteria::IN)
+            ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, self::COL_ID_PRODUCT_OPTION_VALUE)
+            ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
+            ->useSpyProductOptionGroupQuery()
+                ->useSpyTaxSetQuery()
+                    ->useSpyTaxSetTaxQuery()
+                        ->useSpyTaxRateQuery()
+                            ->useCountryQuery()
+                                ->filterByIso2Code($countryIso2Code)
+                            ->endUse()
+                            ->_or()
+                               ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
+                            ->endUse()
+                        ->endUse()
+                    ->withColumn(SpyTaxSetTableMap::COL_NAME)
+                    ->groupBy(SpyTaxSetTableMap::COL_NAME)
+                ->endUse()
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
+            ->endUse()
+            ->select([self::COL_MAX_TAX_RATE]);
+
         /*return $this->getFactory()->createProductOptionValueUsageQuery()
             ->filterByIdProductOptionValueUsage($allIdOptionValueUsages, Criteria::IN)
             ->withColumn(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE, self::COL_ID_PRODUCT_OPTION_VALUE_USAGE)

@@ -8,10 +8,11 @@ namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 
 use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class PriceTransformer implements DataTransformerInterface
 {
+
+
     /**
      * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
@@ -50,7 +51,7 @@ class PriceTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function transform($value)
     {
@@ -82,7 +83,7 @@ class PriceTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the original representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function reverseTransform($value)
     {
@@ -90,4 +91,5 @@ class PriceTransformer implements DataTransformerInterface
             str_replace(',', '.', $value)
         );
     }
+
 }

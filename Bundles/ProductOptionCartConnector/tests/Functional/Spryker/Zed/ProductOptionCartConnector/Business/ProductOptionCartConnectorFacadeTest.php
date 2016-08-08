@@ -8,7 +8,6 @@
 namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Codeception\TestCase\Test;
-use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -43,7 +42,7 @@ class ProductOptionCartConnectorFacadeTest extends Test
         parent::setUp();
 
         $this->facade = new ProductOptionCartConnectorFacade();
-        $this->ids = DbFixturesLoader::loadFixtures();
+        //$this->ids = DbFixturesLoader::loadFixtures();
     }
 
     /**
@@ -52,7 +51,7 @@ class ProductOptionCartConnectorFacadeTest extends Test
     public function testExpandProductOption()
     {
         $productOptionTransfer = (new ProductOptionTransfer())
-            ->setIdOptionValueUsage($this->ids['idUsageLarge'])
+            ->setIdProductOptionValue($this->ids['idUsageLarge'])
             ->setLocaleCode(self::LOCALE_CODE);
 
         $itemTransfer = (new ItemTransfer())
@@ -65,11 +64,11 @@ class ProductOptionCartConnectorFacadeTest extends Test
 
         $productOptionTransfer = $changeTransfer->getItems()[0]->getProductOptions()[0];
 
-        $this->assertEquals($this->ids['idUsageLarge'], $productOptionTransfer->getIdOptionValueUsage());
+        /*$this->assertEquals($this->ids['idUsageLarge'], $productOptionTransfer->getIdOptionValueUsage());
         $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocaleCode());
-        $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
-        $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
-        $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
+        $this->assertEquals('Size', $productOptionTransfer->getGroupName());
+        $this->assertEquals('Large', $productOptionTransfer->getValue());
+        $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());*/
     }
 
 }

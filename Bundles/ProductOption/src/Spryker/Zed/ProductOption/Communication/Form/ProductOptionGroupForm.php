@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProductOptionGroupForm extends AbstractType
 {
+
     const FIELD_TAX_SET_FIELD = 'fkTaxSet';
     const FIELD_VALUES = 'productOptionValues';
     const FIELD_ID_PRODUCT_OPTION_GROUP = 'idProductOptionGroup';
@@ -26,7 +27,6 @@ class ProductOptionGroupForm extends AbstractType
     const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
     const PRODUCTS_TO_BE_DE_ASSIGNED = 'products_to_be_de_assigned';
     const PRODUCT_OPTION_VALUES_TO_BE_REMOVED = 'product_option_values_to_be_removed';
-
 
     /**
      * @var \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm
@@ -117,12 +117,12 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addValuesFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUES, 'collection', array(
+        $builder->add(self::FIELD_VALUES, 'collection', [
             'type' => $this->productOptionForm,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
-        ));
+        ]);
 
         $builder->get(self::FIELD_VALUES)
             ->addModelTransformer($this->arrayToArrayObjectTransformer);
@@ -137,12 +137,12 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addValueTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE_TRANSLATIONS, 'collection', array(
+        $builder->add(self::FIELD_VALUE_TRANSLATIONS, 'collection', [
             'type' => $this->productOptionTranslationForm,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
-        ));
+        ]);
 
         $builder->get(self::FIELD_VALUE_TRANSLATIONS)
             ->addModelTransformer($this->arrayToArrayObjectTransformer);
@@ -157,12 +157,12 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addGroupNameTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GROUP_NAME_TRANSLATIONS, 'collection', array(
+        $builder->add(self::FIELD_GROUP_NAME_TRANSLATIONS, 'collection', [
             'type' => $this->productOptionTranslationForm,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
-        ));
+        ]);
 
         $builder->get(self::FIELD_GROUP_NAME_TRANSLATIONS)
             ->addModelTransformer($this->arrayToArrayObjectTransformer);
@@ -272,4 +272,5 @@ class ProductOptionGroupForm extends AbstractType
     {
         return 'product_option_general';
     }
+
 }

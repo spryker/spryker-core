@@ -11,16 +11,18 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
  */
 interface ProductOptionFacadeInterface
 {
+
     /**
      * Specification:
      *  - Persist new product option group
      *  - Persist option values if provided
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
@@ -32,6 +34,8 @@ interface ProductOptionFacadeInterface
      * Specification:
      *  - Persist new product option value
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
      * @return int
@@ -41,6 +45,8 @@ interface ProductOptionFacadeInterface
     /**
      * Specification:
      *  - Attach abstract product to existing product group
+     *
+     * @api
      *
      * @param string $abstractSku
      * @param int $idProductOptionGroup
@@ -52,6 +58,8 @@ interface ProductOptionFacadeInterface
     /**
      * Specification:
      *  - Read product option from persistence
+     *
+     * @api
      *
      * @param int $idProductOptionValue
      *
@@ -136,4 +144,5 @@ interface ProductOptionFacadeInterface
      * @param bool $isActive
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive);
+
 }

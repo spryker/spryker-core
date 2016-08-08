@@ -63,5 +63,4 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
         return $this->localeFacade->getLocaleByCode($localeCode);
     }
 
-
 }

@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
-
 /**
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
@@ -39,4 +37,5 @@ class ListController extends IndexController
             $productOptionListTable->fetchData()
         );
     }
+
 }

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueOptionValueSku extends SymfonyConstraint
 {
+
     const OPTION_PRODUCT_OPTION_QUERY_CONTAINER = 'productOptionQueryContainer';
 
     /**
@@ -26,4 +27,5 @@ class UniqueOptionValueSku extends SymfonyConstraint
     {
         return $this->productOptionQueryContainer;
     }
+
 }

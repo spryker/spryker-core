@@ -121,5 +121,4 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         return CurrencyManager::getInstance();
     }
 
-
 }

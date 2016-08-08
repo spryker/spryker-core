@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class StringToArrayTransformer implements DataTransformerInterface
 {
@@ -38,7 +37,7 @@ class StringToArrayTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function transform($value)
     {
@@ -71,7 +70,7 @@ class StringToArrayTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the original representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function reverseTransform($value)
     {
@@ -81,4 +80,5 @@ class StringToArrayTransformer implements DataTransformerInterface
 
         return explode(',', $value);
     }
+
 }

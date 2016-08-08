@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice;
-use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupSaver;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionValueReader;
+use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
+use Spryker\Zed\ProductOption\Business\SaleAggregator\ItemProductOptionGrossPrice;
+use Spryker\Zed\ProductOption\Business\SaleAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupReader;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -25,7 +25,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupReader
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader
      */
     public function createProductOptionGroupReader()
     {
@@ -37,28 +37,25 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionGroupSaver
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver
      */
     public function createProductOptionGroupSaver()
     {
-       return new ProductOptionGroupSaver(
-           $this->getQueryContainer(),
-           $this->getTouchFacade(),
-           $this->getGlossaryFacade(),
-           $this->getLocaleFacade()
-       );
+        return new ProductOptionGroupSaver(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice
-     */
     public function createItemProductOptionGrossPriceAggregator()
     {
         return new ItemProductOptionGrossPrice($this->getSalesQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaverInterface
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
      */
     public function createProductOptionOrderSaver()
     {
@@ -66,7 +63,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionValueReader
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader
      */
     public function createProductOptionValueReader()
     {
@@ -74,7 +71,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions
+     * @return \Spryker\Zed\ProductOption\Business\SaleAggregator\SubtotalWithProductOptions
      */
     public function createSubtotalWithProductOption()
     {
@@ -82,7 +79,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
      */
     public function createProductOptionTaxRateCalculator()
     {

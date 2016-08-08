@@ -9,10 +9,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductOptionCartQuantityInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function changeQuantity(QuoteTransfer $quoteTransfer);
+
 }

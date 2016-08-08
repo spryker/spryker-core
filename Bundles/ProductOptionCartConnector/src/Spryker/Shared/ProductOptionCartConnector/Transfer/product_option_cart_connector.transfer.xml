@@ -13,10 +13,8 @@
 
     <transfer name="ProductOption">
         <property name="idSalesOrderItemOption" type="int" />
-        <property name="idOptionValueUsage" type="int" />
+        <property name="idProductOptionValue" type="int" />
         <property name="localeCode" type="string " />
-        <property name="labelOptionType" type="string" />
-        <property name="labelOptionValue" type="string" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="quantity" type="int" />

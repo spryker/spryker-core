@@ -39,4 +39,5 @@ interface ProductOptionToTaxInterface
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
     public function getTaxSet($id);
+
 }

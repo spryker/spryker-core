@@ -25,13 +25,15 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *  - Persist new product option group
      *  - Persist option values if provided
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return int
      */
     public function saveProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
-       return $this->getFactory()
+        return $this->getFactory()
            ->createProductOptionGroupSaver()
            ->saveProductOptionGroup($productOptionGroupTransfer);
     }
@@ -39,6 +41,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     /**
      * Specification:
      *  - Persist new product option value
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
@@ -55,6 +59,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * Specification:
      *  - Attach abstract product to existing product group
      *
+     * @api
+     *
      * @param string $abstractSku
      * @param int $idProductOptionGroup
      *
@@ -70,6 +76,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     /**
      * Specification:
      *  - Read product option from persistence
+     *
+     * @api
      *
      * @param int $idProductOptionValue
      *
@@ -182,6 +190,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @param int $idProductOptionGroup
      * @param bool $isActive
+     * @return void
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {

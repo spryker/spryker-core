@@ -18,6 +18,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionTable extends AbstractTable
 {
+
     const TABLE_IDENTIFIER = 'product-option-table';
 
     const COL_CHECKBOX = 'checkbox';
@@ -150,11 +151,11 @@ class ProductOptionTable extends AbstractTable
      */
     protected function buildHeaderActionByTableContext()
     {
-         if ($this->tableContext === self::TABLE_CONTEXT_EDIT) {
-             return [
-                 self::COL_CHECKBOX => 'Selected',
-             ];
-         }
+        if ($this->tableContext === self::TABLE_CONTEXT_EDIT) {
+            return [
+               self::COL_CHECKBOX => 'Selected',
+            ];
+        }
 
          return [
              self::COL_ACTIONS => 'Actions',

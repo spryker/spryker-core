@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ArrayToArrayObjectTransformer implements DataTransformerInterface
 {
@@ -38,7 +37,7 @@ class ArrayToArrayObjectTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function transform($value)
     {
@@ -70,10 +69,11 @@ class ArrayToArrayObjectTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the original representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function reverseTransform($value)
     {
         return new \ArrayObject($value);
     }
+
 }
