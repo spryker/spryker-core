@@ -42,11 +42,6 @@ class Discount implements DiscountInterface
     protected $voucherValidator;
 
     /**
-     * @var array
-     */
-    protected $previousVoucherCodes = [];
-
-    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
@@ -132,7 +127,7 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscount[] $voucherDiscounts
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection $voucherDiscounts
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
@@ -140,11 +135,12 @@ class Discount implements DiscountInterface
     {
         $uniqueVoucherDiscounts = new ObjectCollection();
         foreach ($voucherDiscounts as $discountEntity) {
-            if (isset($uniqueVoucherDiscounts[$discountEntity->getIdDiscount()])) {
+            $idDiscount = $discountEntity->getIdDiscount();
+            if (isset($uniqueVoucherDiscounts[$idDiscount])) {
                 continue;
             }
 
-            $uniqueVoucherDiscounts[$discountEntity->getIdDiscount()] = $discountEntity;
+            $uniqueVoucherDiscounts[$idDiscount] = $discountEntity;
         }
 
         return $uniqueVoucherDiscounts;
