@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement;
 
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductManagementConfig extends AbstractBundleConfig
@@ -27,6 +28,14 @@ class ProductManagementConfig extends AbstractBundleConfig
             'datetime' => 'datetime',
             'select' => 'select',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUrlPrefix()
+    {
+        return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
     }
 
 }

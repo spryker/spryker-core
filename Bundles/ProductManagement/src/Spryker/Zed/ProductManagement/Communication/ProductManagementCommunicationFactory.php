@@ -105,7 +105,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
-            $this->getProductTaxCollection()
+            $this->getProductTaxCollection(),
+            $this->getConfig()->getImageUrlPrefix()
         );
     }
 
@@ -127,7 +128,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
-            $this->getProductTaxCollection()
+            $this->getProductTaxCollection(),
+            $this->getConfig()->getImageUrlPrefix()
         );
     }
 
@@ -149,7 +151,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
-            $this->getProductTaxCollection()
+            $this->getProductTaxCollection(),
+            $this->getConfig()->getImageUrlPrefix()
         );
     }
 

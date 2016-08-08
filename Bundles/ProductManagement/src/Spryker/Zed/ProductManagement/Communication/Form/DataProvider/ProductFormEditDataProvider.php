@@ -39,7 +39,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
 
-
+        s($formData);
+        ob_flush();
 
         return $formData;
     }

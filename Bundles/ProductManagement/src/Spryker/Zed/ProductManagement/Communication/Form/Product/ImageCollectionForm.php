@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -16,8 +17,10 @@ class ImageCollectionForm extends AbstractSubForm
 
     const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
     const FIELD_IMAGE_SMALL = 'external_url_small';
-    const FIELD_IMAGE_BIG = 'external_url_large';
+    const FIELD_IMAGE_LARGE = 'external_url_large';
     const FIELD_ORDER = 'order';
+
+    const FIELD_IMAGE_PREVIEW = 'image_preview';
 
 
     /**
@@ -32,6 +35,7 @@ class ImageCollectionForm extends AbstractSubForm
 
         $this
             ->addProductImageIdHiddenField($builder)
+            ->addImagePreviewField($builder)
             ->addImageSmallField($builder)
             ->addImageBigField($builder)
             ->addOrderHiddenField($builder);
@@ -46,6 +50,26 @@ class ImageCollectionForm extends AbstractSubForm
     {
         $builder
             ->add(self::FIELD_ID_PRODUCT_IMAGE, 'hidden', []);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addImagePreviewField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_IMAGE_PREVIEW, new ImageType(), [
+                'required' => false,
+                'label' => false,
+                'width' => 150,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
 
         return $this;
     }
@@ -77,7 +101,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageBigField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_IMAGE_BIG, 'text', [
+            ->add(self::FIELD_IMAGE_LARGE, 'text', [
                 'required' => true,
                 'label' => 'Large',
                 'constraints' => [

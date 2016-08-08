@@ -197,4 +197,9 @@ $(document).ready(function() {
         valueList.attr('data-value-count', valueCount);
 
     });
+
+    $('.spryker-form-image').slick({
+        dots: true
+    });
+
 });

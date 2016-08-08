@@ -1,4 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
+{% import _self as forms %}
+{% form_theme form _self %}
 
 {% if widget_title is not defined %}
     {% set widget_title = 'Create a Product' | trans %}
@@ -31,21 +33,6 @@
     {% endspaceless %}
 {% endblock checkbox_widget %}
 
-{% macro widget_prototype(widget, remove_text) %}
-    {% if widget.get('prototype') %}
-        {% set form = widget.get('prototype') %}
-        {% set name = widget.get('prototype').get('name') %}
-    {% else %}
-        {% set form = widget %}
-        {% set name = widget.get('full_name') %}
-    {% endif %}
-
-    <div data-content="{{ name }}">
-        <a class="btn-remove" data-related="{{ name }}">{{ remove_text }}</a>
-        {{ form_widget(form) }}
-    </div>
-{% endmacro %}
-
 
 {#
 
@@ -54,10 +41,6 @@
 {% endblock select2_widget %}
 
 #}
-
-{% import _self as forms %}
-
-{% form_theme form _self %}
 
 {% block content %}
 

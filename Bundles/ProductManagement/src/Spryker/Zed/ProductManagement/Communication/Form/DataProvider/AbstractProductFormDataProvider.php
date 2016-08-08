@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
@@ -98,6 +99,11 @@ class AbstractProductFormDataProvider
      */
     protected $taxCollection = [];
 
+    /**
+     * @var string
+     */
+    protected $imageUrlPrefix;
+
 
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -110,7 +116,8 @@ class AbstractProductFormDataProvider
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
-        array $taxCollection
+        array $taxCollection,
+        $imageUrlPrefix
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
@@ -123,6 +130,7 @@ class AbstractProductFormDataProvider
         $this->currentLocale = $currentLocale;
         $this->attributeTransferCollection = $attributeCollection;
         $this->taxCollection = $taxCollection;
+        $this->imageUrlPrefix = $imageUrlPrefix;
     }
 
     /**
@@ -208,7 +216,7 @@ class AbstractProductFormDataProvider
             $data = [];
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
-                    $defaults[$imageSetTransfer->getIdProductImageSet()] = $imageSetTransfer->toArray(true);
+                    $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
                     continue;
                 }
 
@@ -217,7 +225,7 @@ class AbstractProductFormDataProvider
                     continue;
                 }
 
-                $data[$imageSetTransfer->getIdProductImageSet()] = $imageSetTransfer->toArray(true);
+                $data[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
             }
 
             $formName = ProductFormAdd::getImagesFormName($localeCode);
@@ -228,6 +236,28 @@ class AbstractProductFormDataProvider
         $result[$defaultName] = array_values($defaults);
 
         return $result;
+    }
+
+    /**
+     * @param ProductImageSetTransfer $imageSetTransfer
+     *
+     * @return array
+     */
+    protected function convertProductImageSet(ProductImageSetTransfer $imageSetTransfer)
+    {
+        $item = $imageSetTransfer->toArray();
+        $itemImages = [];
+        foreach ($imageSetTransfer->getProductImages() as $imageTransfer) {
+            $image = $imageTransfer->toArray();
+            $image[ImageCollectionForm::FIELD_IMAGE_SMALL] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
+            $image[ImageCollectionForm::FIELD_IMAGE_LARGE] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
+            $itemImages[] = $image;
+        }
+
+        $item[ImageForm::PRODUCT_IMAGES] = $itemImages;
+
+        return $item;
     }
 
     /**
@@ -311,7 +341,7 @@ class AbstractProductFormDataProvider
             ImageForm::PRODUCT_IMAGES => [[
                 ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
                 ImageCollectionForm::FIELD_IMAGE_SMALL => null,
-                ImageCollectionForm::FIELD_IMAGE_BIG => null,
+                ImageCollectionForm::FIELD_IMAGE_LARGE => null,
                 ImageCollectionForm::FIELD_ORDER => null,
                 ImageForm::FIELD_SET_FK_LOCALE => null,
                 ImageForm::FIELD_SET_FK_PRODUCT => null,

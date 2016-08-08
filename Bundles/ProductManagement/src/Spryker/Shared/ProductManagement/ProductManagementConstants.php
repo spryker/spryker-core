@@ -7,11 +7,15 @@
 
 namespace Spryker\Shared\ProductManagement;
 
+use Spryker\Shared\Application\ApplicationConstants;
+
 interface ProductManagementConstants
 {
 
     const PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
 
     const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
+
+    const PRODUCT_MANAGEMENT_URL_PREFIX = ApplicationConstants::HOST_YVES;
 
 }
