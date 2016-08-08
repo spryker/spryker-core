@@ -42,7 +42,8 @@ abstract class AbstractKvProvider extends AbstractClientProvider
      */
     protected function createZedClient()
     {
-        $kvName = Config::get(StorageConstants::STORAGE_KV_SOURCE);
+        //TODO: Remove BC default.
+        $kvName = Config::get(StorageConstants::STORAGE_KV_SOURCE, Config::get(ApplicationConstants::STORAGE_KV_SOURCE));
         $kvConfig = $this->getConfigByKvName($kvName);
         $methodName = $this->createMethodName($kvName);
 
