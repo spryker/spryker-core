@@ -65,7 +65,7 @@ class ImageCollectionForm extends AbstractSubForm
             ->add(self::FIELD_IMAGE_PREVIEW, new ImageType(), [
                 'required' => false,
                 'label' => false,
-                'width' => 150,
+                'img_width' => 150,
                 'constraints' => [
                     new NotBlank(),
                 ],

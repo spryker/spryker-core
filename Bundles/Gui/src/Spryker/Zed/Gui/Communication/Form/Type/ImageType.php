@@ -24,9 +24,9 @@ class ImageType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['width'] = $options['width'];
-        $view->vars['height'] = $options['height'];
-        $view->vars['title'] = $options['title'];
+        $view->vars['img_width'] = $options['img_width'];
+        $view->vars['img_height'] = $options['img_height'];
+        $view->vars['img_title'] = $options['img_title'];
     }
 
     /**
@@ -37,9 +37,9 @@ class ImageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'width' => null,
-            'height' => null,
-            'title' => null,
+            'img_width' => null,
+            'img_height' => null,
+            'img_title' => null,
         ]);
     }
 

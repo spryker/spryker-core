@@ -2,13 +2,18 @@
     {% set css = 'spryker-form-image' %}
     {% set img_width = '' %}
     {% set img_height = '' %}
+    {% set img_title = '' %}
 
-    {% if form.vars.width is defined and form.vars.width %}
-        {% set img_width = 'width="' ~ form.vars.width ~ '"' %}
+    {% if form.vars.img_width is defined and form.vars.img_width %}
+        {% set img_width = 'width="' ~ form.vars.img_width ~ '"' %}
     {% endif %}
 
-    {% if form.vars.height is defined and form.vars.height %}
-        {% set img_height = 'height="' ~ form.vars.height  ~ '"' %}
+    {% if form.vars.img_height is defined and form.vars.img_height %}
+        {% set img_height = 'height="' ~ form.vars.img_height  ~ '"' %}
+    {% endif %}
+
+    {% if form.vars.img_title is defined and form.vars.img_title %}
+        {% set img_title = 'title="' ~ form.vars.img_title  ~ '" alt="' ~ form.vars.img_title  ~ '"' %}
     {% endif %}
 
     {% set form_group_errors_css = '' %}
@@ -21,7 +26,7 @@
     {% endif %}
 
     <div class='form-group {{ form_group_errors_css }}'>
-        <img src="{{ form.vars.value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css }}" />
+        <img src="{{ form.vars.value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css|raw }}" {{ img_title|raw }} />
         {{ form_label(form) }}
         {{ form_errors(form) }}
     </div>
