@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -102,7 +103,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
             ->willReturn($discountQueryMock);
 
         $discountQueryMock2 = $this->createDiscountQueryMock();
-        $discountQueryMock2->method('find')->willReturn([]);
+        $discountQueryMock2->method('find')->willReturn(new ObjectCollection());
 
         $discounts[] = $this->createDiscountEntity(100, 123);
         $queryContainerMock->expects($this->once())
