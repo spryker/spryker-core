@@ -186,16 +186,16 @@ $(document).ready(function() {
         event.preventDefault();
 
         var valueList = $('#image-set-list');
-        var valueCount = valueList.data('data-value-count');
+        var valueCount = valueList.data('valuecount');
         var newOptionFormHTML = valueList.data('prototype');
             newOptionFormHTML = newOptionFormHTML.replace(/__name__/g, valueCount);
         var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
+        newOptionForm.attr('class', 'sep_down');
 
-        valueList.append(newOptionForm);
+        valueList.parent(valueList).append(newOptionForm);
 
         valueCount++;
-        valueList.attr('data-value-count', valueCount);
-
+        valueList.data('valuecount', valueCount);
     });
 
     $('.spryker-form-image').slick({

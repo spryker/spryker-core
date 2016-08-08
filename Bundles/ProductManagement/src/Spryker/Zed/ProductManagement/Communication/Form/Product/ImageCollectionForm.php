@@ -18,7 +18,7 @@ class ImageCollectionForm extends AbstractSubForm
     const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
     const FIELD_IMAGE_SMALL = 'external_url_small';
     const FIELD_IMAGE_LARGE = 'external_url_large';
-    const FIELD_ORDER = 'order';
+    const FIELD_SORT_ORDER = 'sort_order';
 
     const FIELD_IMAGE_PREVIEW = 'image_preview';
 
@@ -66,9 +66,7 @@ class ImageCollectionForm extends AbstractSubForm
                 'required' => false,
                 'label' => false,
                 'img_width' => 150,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'img_title' => 'foo',
             ]);
 
         return $this;
@@ -120,7 +118,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addOrderHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ORDER, 'hidden', []);
+            ->add(self::FIELD_SORT_ORDER, 'hidden', []);
 
         return $this;
     }

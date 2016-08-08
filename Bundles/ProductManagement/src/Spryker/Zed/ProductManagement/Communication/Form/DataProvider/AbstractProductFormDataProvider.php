@@ -342,7 +342,7 @@ class AbstractProductFormDataProvider
                 ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
                 ImageCollectionForm::FIELD_IMAGE_SMALL => null,
                 ImageCollectionForm::FIELD_IMAGE_LARGE => null,
-                ImageCollectionForm::FIELD_ORDER => null,
+                ImageCollectionForm::FIELD_SORT_ORDER => null,
                 ImageForm::FIELD_SET_FK_LOCALE => null,
                 ImageForm::FIELD_SET_FK_PRODUCT => null,
                 ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,

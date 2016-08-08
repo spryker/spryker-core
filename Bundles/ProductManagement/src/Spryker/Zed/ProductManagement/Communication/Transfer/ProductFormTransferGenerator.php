@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
@@ -18,16 +19,19 @@ use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
+use \ArrayObject;
 use \Exception;
 use \Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 
@@ -100,7 +104,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImagesSets(
-            new \ArrayObject($imageSetCollection)
+            new ArrayObject($imageSetCollection)
         );
 
         return $productAbstractTransfer;
@@ -164,11 +168,11 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $productConcreteTransfer->setPrice($priceTransfer);
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
-        $productConcreteTransfer->setStock(new \ArrayObject($stockCollection));
+        $productConcreteTransfer->setStock(new ArrayObject($stockCollection));
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productConcreteTransfer->setImagesSets(
-            new \ArrayObject($imageSetCollection)
+            new ArrayObject($imageSetCollection)
         );
 
         return $productConcreteTransfer;
@@ -361,6 +365,12 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                 $imageSetTransfer = (new ProductImageSetTransfer())
                     ->fromArray($imageSet->getData(), true);
 
+                $productImages = $this->buildProductImageCollection(
+                    $imageSet->get(ImageForm::PRODUCT_IMAGES)->getData()
+                );
+                $object = new ArrayObject($productImages);
+                $imageSetTransfer->setProductImages($object);
+
                 $transferCollection[] = $imageSetTransfer;
             }
         }
@@ -368,6 +378,26 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         return $transferCollection;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function buildProductImageCollection(array $data)
+    {
+        $result = [];
+        foreach ($data as $imageData) {
+            $imageTransfer = new ProductImageTransfer();
+            $imageData[ImageCollectionForm::FIELD_SORT_ORDER] = (int) $imageData[ImageCollectionForm::FIELD_SORT_ORDER];
+            $imageTransfer->fromArray($imageData, true);
+
+            $result[] = $imageTransfer;
+        }
+
+        s($result);
+
+        return $result;
+    }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
