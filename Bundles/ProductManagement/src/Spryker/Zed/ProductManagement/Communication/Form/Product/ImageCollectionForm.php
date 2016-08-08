@@ -66,7 +66,6 @@ class ImageCollectionForm extends AbstractSubForm
                 'required' => false,
                 'label' => false,
                 'img_width' => 150,
-                'img_title' => 'foo',
             ]);
 
         return $this;
