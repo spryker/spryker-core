@@ -7,61 +7,11 @@
 
 namespace Spryker\Client\Catalog\Plugin\ResultFormatter\Elasticsearch;
 
-use Elastica\ResultSet;
-use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\CatalogSearchResultFormatterPlugin as CorrectCatalogSearchResultFormatterPlugin;
 
 /**
- * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
+ * @deprecated Use \Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\CatalogSearchResultFormatterPlugin instead.
  */
-class CatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class CatalogSearchResultFormatterPlugin extends CorrectCatalogSearchResultFormatterPlugin
 {
-
-    const NAME = 'products';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return self::NAME;
-    }
-
-    /**
-     * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
-     *
-     * @return array
-     */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
-    {
-        $catalogModel = $this->getFactory()->createCatalogModel();
-
-        $products = [];
-        $productIds = $this->extractProductIdsFromResultSet($searchResult);
-        if ($productIds) {
-            $products = $catalogModel->getProductDataByIds($productIds);
-        }
-
-        return $products;
-    }
-
-    /**
-     * @param \Elastica\ResultSet $resultSet
-     *
-     * @return array
-     */
-    public function extractProductIdsFromResultSet(ResultSet $resultSet)
-    {
-        $ids = [];
-        foreach ($resultSet->getResults() as $result) {
-            $product = $result->getSource();
-            if (isset($product[PageIndexMap::SEARCH_RESULT_DATA]['id_product_abstract'])) {
-                $ids[] = $product[PageIndexMap::SEARCH_RESULT_DATA]['id_product_abstract'];
-            }
-        }
-
-        return $ids;
-    }
-
 }

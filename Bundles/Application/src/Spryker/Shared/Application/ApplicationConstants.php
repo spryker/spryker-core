@@ -151,6 +151,7 @@ interface ApplicationConstants
      */
     const ZED_STORAGE_SESSION_COOKIE_SECURE = SessionConstants::ZED_SESSION_COOKIE_SECURE;
 
+    // TODO: deprecate these and add them in SearchConstants instead
     const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
     const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
     const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
