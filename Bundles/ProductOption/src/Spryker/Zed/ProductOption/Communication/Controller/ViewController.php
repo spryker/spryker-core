@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Controller;
 
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +35,11 @@ class ViewController extends AbstractController
 
         $productOptionGroupTransfer = $this->getFacade()->getProductOptionGroupById($idProductOptionGroup);
         $availableLocales = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
-        $taxSetTransfer = $this->getFactory()->getTaxFacade()->getTaxSet($productOptionGroupTransfer->getFkTaxSet());
+
+        $taxSetTransfer = new TaxSetTransfer();
+        if ($productOptionGroupTransfer->getFkTaxSet()) {
+            $taxSetTransfer = $this->getFactory()->getTaxFacade()->getTaxSet($productOptionGroupTransfer->getFkTaxSet());
+        }
 
         return [
             'productOptionGroup' => $productOptionGroupTransfer,

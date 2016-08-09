@@ -47,7 +47,7 @@ OptionValueFormHandler.prototype.initialiseExistingProductValueForms = function(
         relatedTranslationElements.each(function(index, element) {
             var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(element).parent());
 
-            var translationLabel = productOptionValueTranslationFormSelector.getNameField().prev();
+            var translationLabel = productOptionValueTranslationFormSelector.getTranslationLabel();
             translationLabel.text(numRow + '. ' + translationLabel.text());
         })
     });
@@ -143,7 +143,7 @@ OptionValueFormHandler.prototype.addOptionTranslations = function addOptionTrans
 
         productOptionValueTranslationFormSelector.getRelatedOptionHashKeyField().val(idOfRelatedOption);
 
-        var nameLabelElement = productOptionValueTranslationFormSelector.getNameField().prev();
+        var nameLabelElement = productOptionValueTranslationFormSelector.getTranslationLabel();
         var currentLabelText = nameLabelElement.text();
 
         nameLabelElement.text(self.optionValueCount + '. ' + currentLabelText);
@@ -216,6 +216,10 @@ ProductOptionTranslationFormSelector.prototype.getKeyField = function() {
 
 ProductOptionTranslationFormSelector.prototype.getRelatedOptionHashKeyField = function() {
     return this.form.find("input[id$='relatedOptionHash']")
+};
+
+ProductOptionTranslationFormSelector.prototype.getTranslationLabel = function() {
+    return $(this.form.find(".label-translation").children()[0])
 };
 
 ProductOptionTranslationFormSelector.prototype.getNameField = function() {

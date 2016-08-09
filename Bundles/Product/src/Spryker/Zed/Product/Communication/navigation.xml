@@ -13,7 +13,7 @@
                 <controller>index</controller>
                 <action>index</action>
                 <order>0</order>
-                <visible>0</visible>
+                <visible>1</visible>
             </product>
             <import>
                 <label>Import/Update</label>

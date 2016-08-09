@@ -4,7 +4,7 @@
 
 {% block action %}
 
-    {{ backActionButton('/product-option/index/list', 'Back to list' | trans) }}
+    {{ backActionButton('/product-option/list/index', 'Back to list' | trans) }}
 
     {{ editActionButton(url('/product-option/edit/index', {'id-product-option-group': productOptionGroup.idProductOptionGroup}), 'Edit' | trans) }}
 
@@ -36,6 +36,10 @@
                     </tr>
                 {% endfor %}
             </table>
+
+            <p>
+                <strong>{{ 'Group name translation key' | trans }}</strong>: {{ productOptionGroup.name }}
+            </p>
 
             <p>
                 <strong>{{ 'Tax set' | trans }}</strong>: {{ taxSet.name }}
