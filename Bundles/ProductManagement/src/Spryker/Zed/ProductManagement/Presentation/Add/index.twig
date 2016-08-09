@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% if variant_tpl is not defined %}
-{% set variant_tpl = '@ProductManagement/Product/partials/variant-tab-adding.twig' %}
+{% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-adding.twig' %}
 {% endif %}
 
 {% block checkbox_widget %}
@@ -63,11 +63,11 @@
                 </ul>
                 <div class="tab-content">
                     <div id="tab_general" class="tab-pane active">
-                        {% include '@ProductManagement/Product/partials/general-tab.twig' %}
+                        {% include '@ProductManagement/Product/_partials/general-tab.twig' %}
                     </div>
 
                     <div id="tab_abstract_attributes" class="tab-pane">
-                        {% include '@ProductManagement/Product/partials/abstract-attribute-tab.twig' %}
+                        {% include '@ProductManagement/Product/_partials/abstract-attribute-tab.twig' %}
                     </div>
 
                     <div id="tab_variants" class="tab-pane">
@@ -75,15 +75,15 @@
                     </div>
 
                     <div id="tab_price_and_stock" class="tab-pane">
-                        {% include '@ProductManagement/Product/partials/price-tab.twig' %}
+                        {% include '@ProductManagement/Product/_partials/price-tab.twig' %}
                     </div>
 
                     <div id="tab_seo" class="tab-pane">
-                        {% include '@ProductManagement/Product/partials/seo-tab.twig' %}
+                        {% include '@ProductManagement/Product/_partials/seo-tab.twig' %}
                     </div>
 
                     <div id="tab_image" class="tab-pane">
-                        {% include '@ProductManagement/Product/partials/image-tab.twig' %}
+                        {% include '@ProductManagement/Product/_partials/image-tab.twig' %}
                     </div>
                 </div>
             </div>
