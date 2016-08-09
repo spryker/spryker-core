@@ -37,7 +37,6 @@ abstract class AbstractSaverTest extends AbstractBusinessTest
         $this->assertEquals($paymentMethodTransfer->getDeviceFingerprint(), $this->paymentEntity->getDeviceFingerprint());
         $this->assertEquals($paymentMethodTransfer->getPaymentType(), $this->paymentEntity->getPaymentType());
         $this->assertEquals($paymentMethodTransfer->getIpAddress(), $this->paymentEntity->getIpAddress());
-
     }
 
 }

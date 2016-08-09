@@ -45,7 +45,6 @@ class InitPaymentTransaction extends BaseTransaction implements QuoteTransaction
         }
 
         return $initResponseTransfer;
-
     }
 
 }

@@ -167,7 +167,6 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testReleaseCodesNotVouchersFoundShouldReturnZeroUpdatedItems()
     {
-
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->method('find')->willReturn([]);
 

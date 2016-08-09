@@ -199,7 +199,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
         $combinedOperators = $comparatorOperators->getCompoundComparatorExpressions();
 
         $this->assertCount(2, $combinedOperators);
-
     }
 
     /**

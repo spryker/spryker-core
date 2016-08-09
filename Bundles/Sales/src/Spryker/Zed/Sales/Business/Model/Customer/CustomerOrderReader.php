@@ -86,7 +86,6 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         }
 
         return $orders;
-
     }
 
 }

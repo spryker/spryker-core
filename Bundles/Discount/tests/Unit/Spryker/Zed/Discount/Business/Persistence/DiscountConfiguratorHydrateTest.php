@@ -124,7 +124,6 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
             ->setIsExclusive(true);
 
         return $discountEntity;
-
     }
 
     /**

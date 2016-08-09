@@ -36,7 +36,6 @@ class StatusTest extends \PHPUnit_Framework_TestCase
             );
             $this->assertEquals($expectedResult, $statusTransaction->isPaymentConfirmed($this->getOrderTransfer()));
         }
-
     }
 
     /**

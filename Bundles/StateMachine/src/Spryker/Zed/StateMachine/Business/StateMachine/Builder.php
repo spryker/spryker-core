@@ -119,7 +119,6 @@ class Builder implements BuilderInterface
         self::$processBuffer[$processIdentifier] = $mainProcess;
 
         return $mainProcess;
-
     }
 
     /**

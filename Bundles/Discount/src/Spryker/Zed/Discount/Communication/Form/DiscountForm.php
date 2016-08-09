@@ -57,7 +57,6 @@ class DiscountForm extends AbstractType
         $this->addGeneralSubForm($builder)
             ->addCalculatorSubForm($builder)
             ->addConditionsSubForm($builder);
-
     }
 
     /**

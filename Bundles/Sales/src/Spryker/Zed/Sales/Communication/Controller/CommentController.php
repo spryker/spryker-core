@@ -90,7 +90,6 @@ class CommentController extends AbstractController
                 $this->addErrorMessage($error->getMessage());
             }
         }
-
     }
 
 }

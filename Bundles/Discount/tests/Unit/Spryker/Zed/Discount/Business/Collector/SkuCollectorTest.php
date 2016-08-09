@@ -48,7 +48,6 @@ class SkuCollectorTest extends BaseRuleTester
      */
     protected function createItemSkuCollector(ComparatorOperatorsInterface $comparatorMock = null)
     {
-
         if (!$comparatorMock) {
             $comparatorMock = $this->createComparatorMock();
         }

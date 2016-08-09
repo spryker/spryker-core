@@ -79,7 +79,6 @@ class BasePaymentTest extends Test
      */
     protected function getTransactionHandlerObject($className, $additionalMockMethods = [])
     {
-
         $executionAdapter = $this->getMockBuilder(Guzzle::class)
             ->disableOriginalConstructor()
             ->setMethods(['sendRequest', 'getMethodMapper'])

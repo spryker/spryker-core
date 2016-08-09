@@ -209,7 +209,6 @@ class CalculatorForm extends AbstractType
             Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins plugin stack?',
             $pluginName
         ));
-
     }
 
     /**

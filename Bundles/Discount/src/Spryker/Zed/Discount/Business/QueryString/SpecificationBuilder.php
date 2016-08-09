@@ -281,7 +281,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected function isLogicalComparator($token)
     {
         return in_array($token, [LogicalComparators::COMPARATOR_AND, LogicalComparators::COMPARATOR_OR], true);
-
     }
 
     /**
