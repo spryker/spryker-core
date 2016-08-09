@@ -49,7 +49,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         $formType = new ProductFormAdd(
             $this->createLocaleProvider(),
-            $this->getProductQueryContainer()
+            $this->getProductQueryContainer(),
+            $this->getQueryContainer()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -65,7 +66,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         $formType = new ProductFormEdit(
             $this->createLocaleProvider(),
-            $this->getProductQueryContainer()
+            $this->getProductQueryContainer(),
+            $this->getQueryContainer()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -81,7 +83,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         $formType = new ProductConcreteFormEdit(
             $this->createLocaleProvider(),
-            $this->getProductQueryContainer()
+            $this->getProductQueryContainer(),
+            $this->getQueryContainer()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);

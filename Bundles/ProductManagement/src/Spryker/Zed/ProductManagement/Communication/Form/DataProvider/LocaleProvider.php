@@ -56,4 +56,12 @@ class LocaleProvider
         return $this->localeFacade->getLocale($localeCode);
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this->localeFacade->getCurrentLocale();
+    }
+
 }

@@ -46,6 +46,13 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     */
+    public function queryProductManagementAttributeValueQuery();
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslation();

@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
@@ -20,6 +18,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -62,7 +61,7 @@ class ProductFormAdd extends AbstractType
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
-    protected $localeCollector;
+    protected $localeProvider;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -70,13 +69,24 @@ class ProductFormAdd extends AbstractType
     protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeCollection
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
      */
-    public function __construct(LocaleProvider $localeCollection, ProductQueryContainerInterface $productQueryContainer)
-    {
-        $this->localeCollector = $localeCollection;
+    protected $productManagementQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     */
+    public function __construct(
+        LocaleProvider $localeProvider,
+        ProductQueryContainerInterface $productQueryContainer,
+        ProductManagementQueryContainerInterface $productManagementQueryContainer
+    ) {
+
+        $this->localeProvider = $localeProvider;
         $this->productQueryContainer = $productQueryContainer;
+        $this->productManagementQueryContainer = $productManagementQueryContainer;
     }
 
     /**
@@ -149,7 +159,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = $this->localeCollector->getLocaleCollection();
+        $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getGeneralFormName($localeCode);
             $this->addGeneralForm($builder, $name);
@@ -166,7 +176,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = $this->localeCollector->getLocaleCollection();
+        $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getSeoFormName($localeCode);
             $this->addSeoForm($builder, $name, $options);
@@ -183,10 +193,11 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = $this->localeCollector->getLocaleCollection(true);
+        $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $name = self::getAbstractAttributeFormName($localeCode);
-            $this->addAttributeAbstractForm($builder, $name, $options);
+            $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
+            $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options);
         }
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(
@@ -194,7 +205,7 @@ class ProductFormAdd extends AbstractType
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
-        $this->addAttributeAbstractForm($builder, $defaultName, $options);
+        $this->addAttributeAbstractForm($builder, $defaultName, null, $options);
 
         return $this;
     }
@@ -206,7 +217,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addImageLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = $this->localeCollector->getLocaleCollection(true);
+        $localeCollection = $this->localeProvider->getLocaleCollection(true);
         foreach ($localeCollection as $localeCode) {
             $name = self::getImagesFormName($localeCode);
             $this->addImageForm($builder, $name);
@@ -260,8 +271,7 @@ class ProductFormAdd extends AbstractType
                                     ->useSpyProductAbstractQuery()
                                         ->filterBySku($sku)
                                     ->endUse()
-                                    ->count()
-                                ;
+                                    ->count();
 
                                 if ($skuCount > 0) {
                                     $context->addViolation('This SKU is already used');
@@ -321,15 +331,21 @@ class ProductFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param array $options
      *
      * @return $this
      */
-    protected function addAttributeAbstractForm(FormBuilderInterface $builder, $name, array $options = [])
+    protected function addAttributeAbstractForm(FormBuilderInterface $builder, $name, LocaleTransfer $localeTransfer = null, array $options = [])
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new AttributeAbstractForm($name),
+                'type' => new AttributeAbstractForm(
+                    $name,
+                    $this->productManagementQueryContainer,
+                    $this->localeProvider,
+                    $localeTransfer
+                ),
                 'options' => [
                     AttributeAbstractForm::OPTION_ATTRIBUTE => $options,
                 ],
@@ -370,7 +386,11 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add(self::FORM_ATTRIBUTE_VARIANT, 'collection', [
-                'type' => new AttributeVariantForm(self::FORM_ATTRIBUTE_ABSTRACT),
+                'type' => new AttributeVariantForm(
+                    self::FORM_ATTRIBUTE_VARIANT,
+                    $this->productManagementQueryContainer,
+                    $this->localeProvider
+                ),
                 'options' => [
                     AttributeVariantForm::OPTION_ATTRIBUTE => $options,
                 ],

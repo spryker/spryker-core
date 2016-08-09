@@ -53,12 +53,10 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             ->createProductManagementAttributeValueQuery()
             ->clearSelectColumns()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)
-            ->addJoin(
-                [
+            ->addJoin([
                     SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     (int)$idLocale
-                ],
-                [
+                ],[
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE
                 ],
@@ -78,6 +76,17 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     public function queryProductAttributeKey()
     {
         return $this->getFactory()->createProductAttributeKeyQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     */
+    public function queryProductManagementAttributeValueQuery()
+    {
+        return $this->getFactory()
+            ->createProductManagementAttributeValueQuery();
     }
 
     /**

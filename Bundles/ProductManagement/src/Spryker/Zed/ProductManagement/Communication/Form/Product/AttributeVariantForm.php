@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class AttributeVariantForm extends AttributeAbstractForm
@@ -22,7 +23,7 @@ class AttributeVariantForm extends AttributeAbstractForm
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
-        $isDisabled = $attributes[$name][self::NAME_DISABLED];
+        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
         $config = $this->getValueFieldConfig($name, $attributes);
 
         $input = new Select2ComboBoxType();

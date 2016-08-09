@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -23,15 +27,6 @@ class AttributeAbstractForm extends AbstractSubForm
     const FIELD_VALUE = 'value';
     const FIELD_VALUE_HIDDEN_ID = 'value_hidden_id';
 
-    const LABEL = 'label';
-    const MULTIPLE = 'multiple';
-    const PRODUCT_SPECIFIC = 'product_specific';
-    const NAME_DISABLED = 'name_disabled';
-    const VALUE_DISABLED = 'value_disabled';
-    const INPUT_TYPE = 'input_type';
-    const ALLOW_INPUT = 'allow_input';
-    const ID = 'id';
-
     const OPTION_ATTRIBUTE = 'option_attribute';
 
     const VALIDATION_GROUP_ATTRIBUTE_VALUE = 'validation_group_attribute_value';
@@ -41,6 +36,38 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected $attributeValues;
 
+    /**
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     */
+    protected $productManagementQueryContainer;
+
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected $localeTransfer;
+
+    /**
+     * @var LocaleProvider
+     */
+    protected $localeProvider;
+
+    /**
+     * @param string $name
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     */
+    public function __construct(
+        $name,
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
+        LocaleProvider $localeProvider,
+        LocaleTransfer $localeTransfer = null
+    ) {
+        parent::__construct($name);
+
+        $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->localeProvider = $localeProvider;
+        $this->localeTransfer = $localeTransfer;
+    }
 
     /**
      * @param string $name
@@ -50,7 +77,7 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected function getValueFieldConfig($name, $attributes)
     {
-        $isDisabled = $attributes[$name][self::NAME_DISABLED];
+        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
 
         return [
             'read_only' => $isDisabled,
@@ -58,8 +85,8 @@ class AttributeAbstractForm extends AbstractSubForm
             'attr' => [
                 'class' => 'attribute_metadata_value',
                 'style' => '',
-                'product_specific' => $attributes[$name][self::PRODUCT_SPECIFIC],
-                'id_attribute' => $attributes[$name][self::ID]
+                'product_specific' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC],
+                'id_attribute' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ID]
             ],
             'constraints' => [
                 new NotBlank([
@@ -122,9 +149,9 @@ class AttributeAbstractForm extends AbstractSubForm
         $attributes = $options[AttributeAbstractForm::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
-        $label = $attributes[$name][self::LABEL];
-        $isDisabled = $attributes[$name][self::NAME_DISABLED];
-        $isProductSpecific = $attributes[$name][self::PRODUCT_SPECIFIC];
+        $label = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_LABEL];
+        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
+        $isProductSpecific = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC];
 
         $builder
             ->add(self::FIELD_NAME, 'checkbox', [
@@ -165,10 +192,10 @@ class AttributeAbstractForm extends AbstractSubForm
         $attributes = $options[self::OPTION_ATTRIBUTE];
 
         $inputManager = new AttributeInputManager();
-        $inputType = $attributes[$name][self::INPUT_TYPE];
-        $allowInput = $attributes[$name][self::ALLOW_INPUT];
-        $isMultiple = $attributes[$name][self::MULTIPLE];
-        $isDisabled = $attributes[$name][self::NAME_DISABLED];
+        $inputType = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_INPUT_TYPE];
+        $allowInput = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT];
+        $isMultiple = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE];
+        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
 
         $input = $inputManager->getSymfonyInputType($inputType);
         $config = $this->getValueFieldConfig($name, $attributes);
@@ -179,19 +206,23 @@ class AttributeAbstractForm extends AbstractSubForm
             $input = new Select2ComboBoxType();
         }
 
-        if ($isMultiple || !$allowInput) {
-            $input = new Select2ComboBoxType();
+        $useSelect2 = $isMultiple || !$allowInput;
 
+        if ($useSelect2) {
+            $input = new Select2ComboBoxType();
             $config['multiple'] = $isMultiple;
             $config['attr']['style'] .= ' width: 250px';
-            $config['choices'] = [];
-            $config['attr']['class'] .= ' ajax';
-
+            $config['choices'] = $this->getChoiceList($name, $attributes[$name]);
             if ($allowInput) {
                 $config['attr']['tags'] = true;
             }
+            else {
+                //$config['attr']['class'] .= ' ajax';
+            }
         } else {
-            $config['attr']['class'] .= ' kv_attribute_autocomplete';
+            if ($allowInput) {
+                $config['attr']['class'] .= ' kv_attribute_autocomplete';
+            }
         }
 
         if ($isDisabled) {
@@ -203,6 +234,42 @@ class AttributeAbstractForm extends AbstractSubForm
         $builder->add(self::FIELD_VALUE, $input, $config);
 
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param array $attributes
+     *
+     * @return array
+     */
+    protected function getChoiceList($name, array $attributes)
+    {
+        $result = [];
+        $valueCollection = null;
+        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+
+        if ($this->localeTransfer instanceof LocaleTransfer) {
+            $idLocale = $this->localeTransfer->getIdLocale();
+        }
+
+        $valueCollection = $this->productManagementQueryContainer
+            ->queryProductManagementAttributeValueWithTranslation(
+                $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID],
+                $idLocale
+            )
+            ->find();
+
+        foreach ($valueCollection as $entity) {
+            $data = $entity->toArray();
+            $value = $data['value'];
+            if (isset($data['translation'])) {
+                $value = $data['translation'];
+            }
+
+            $result[$entity->getIdProductManagementAttributeValue()] = $value;
+        }
+
+        return $result;
     }
 
 }
