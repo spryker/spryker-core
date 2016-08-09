@@ -9,6 +9,7 @@ namespace Spryker\Zed\FactFinder\Business\Api\Converter\Data;
 
 use FACTFinder\Data\Record;
 use Generated\Shared\Transfer\FactFinderDataRecordTransfer;
+use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 use Spryker\Zed\FactFinder\Business\Api\Converter\BaseConverter;
 
 class RecordConverter extends BaseConverter
@@ -34,13 +35,26 @@ class RecordConverter extends BaseConverter
     {
         $factFinderDataRecordTransfer = new FactFinderDataRecordTransfer();
         $factFinderDataRecordTransfer->setId($this->record->getID());
-        //$factFinderDataRecordTransfer->setFields($this->record->getField());
         $factFinderDataRecordTransfer->setSimilarity($this->record->getSimilarity());
         $factFinderDataRecordTransfer->setPosition($this->record->getPosition());
         $factFinderDataRecordTransfer->setSeoPath($this->record->getSeoPath());
         $factFinderDataRecordTransfer->setKeywords($this->record->getKeywords());
 
+        $this->convertFields($factFinderDataRecordTransfer);
+
         return $factFinderDataRecordTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FactFinderDataRecordTransfer $factFinderDataRecordTransfer
+     */
+    protected function convertFields(FactFinderDataRecordTransfer $factFinderDataRecordTransfer)
+    {
+        $fields = [];
+        foreach (ApiConstants::ITEM_FIELDS as $itemFieldName) {
+            $fields[$itemFieldName] = $this->record->getField($itemFieldName);
+        }
+        $factFinderDataRecordTransfer->setFields($fields);
     }
 
 }

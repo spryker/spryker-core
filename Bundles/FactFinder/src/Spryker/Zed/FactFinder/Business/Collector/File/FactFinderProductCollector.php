@@ -15,6 +15,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class FactFinderProductCollector extends StorageProductCollector
@@ -60,28 +61,35 @@ class FactFinderProductCollector extends StorageProductCollector
     protected function collectItem($touchKey, array $collectItemData)
     {
         $abstractAttributes = $this->getAbstractAttributes($collectItemData);
-        $generatedCategories = $this->generateCategories($collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID]);
+        if (!isset($collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID])){
+            return [];
+        }
+        $generatedCategories = $this->generateCategories((int)$collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID]);
         $category = '';
         $categoryPaths = [];
         foreach ($generatedCategories as $generatedCategory) {
             $category = $generatedCategory['name'];
             $categoryPaths[] = $generatedCategory['name'];
         }
-        $imgs = $this->generateImages($collectItemData[self::ID_IMAGE_SET]);
+        if (isset($collectItemData[self::ID_IMAGE_SET])) {
+            $imgs = $this->generateImages($collectItemData[self::ID_IMAGE_SET]);
+        } else {
+            $imgs = [];
+        }
         $imageURL = '';
         if (count($imgs)) {
             $imageURL = $this->getConfig()->getHostYves() . $imgs[0]['external_url_large'];
         }
         return [
-            'ProductNumber' => $collectItemData[self::ABSTRACT_SKU],
-            'Name' => $collectItemData[self::ABSTRACT_NAME],
-            'Price' => $this->getPriceBySku($collectItemData[self::ABSTRACT_SKU]),
-            'Stock' =>  (int)$collectItemData[self::QUANTITY],
-            'Category' => $category,
-            'CategoryPath' => implode('/', array_keys($categoryPaths)),
-            'ProductURL' =>  $this->getConfig()->getHostYves() . $collectItemData[self::ABSTRACT_URL],
-            'ImageURL' => $imageURL,
-            'Description' => $abstractAttributes[self::ABSTRACT_ATTRIBUTES_LONG_DESCRIPTION],
+            ApiConstants::ITEM_PRODUCT_NUMBER => $collectItemData[self::ABSTRACT_SKU],
+            ApiConstants::ITEM_NAME => $collectItemData[self::ABSTRACT_NAME],
+            ApiConstants::ITEM_PRICE => $this->getPriceBySku($collectItemData[self::ABSTRACT_SKU]),
+            ApiConstants::ITEM_STOCK =>  (int)$collectItemData[self::QUANTITY],
+            ApiConstants::ITEM_CATEGORY => $category,
+            ApiConstants::ITEM_CATEGORY_PATH => implode('/', $categoryPaths),
+            ApiConstants::ITEM_PRODUCT_URL =>  $this->getConfig()->getHostYves() . $collectItemData[self::ABSTRACT_URL],
+            ApiConstants::ITEM_IMAGE_URL => $imageURL,
+            ApiConstants::ITEM_DESCRIPTION => $abstractAttributes[self::ABSTRACT_ATTRIBUTES_LONG_DESCRIPTION],
         ];
     }
 

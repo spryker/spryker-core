@@ -26,9 +26,11 @@ class IndexController extends AbstractController
     {
         $searchString = $request->query->get('q', '');
 
-        $ffSearchResponseTransfer = $this->getClient()->search();
+        $ffSearchResponseTransfer = $this->getClient()->search($searchString);
 
-        return [];
+        return [
+            'searchResponse' => $ffSearchResponseTransfer
+        ];
     }
 
 }

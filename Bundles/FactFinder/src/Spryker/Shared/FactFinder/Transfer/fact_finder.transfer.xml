@@ -20,14 +20,14 @@
     </transfer>
 
     <transfer name="FactFinderSearchResponse">
-        <property name="FactFinderDataCampaignIterator" type="FactFinderDataCampaignIterator"/>
-        <property name="FactFinderDataAfterSearchNavigation" type="FactFinderDataAfterSearchNavigation"/>
-        <property name="FactFinderDataBreadCrumbs" type="FactFinderDataBreadCrumb[]"/>
-        <property name="FactFinderDataPaging" type="FactFinderDataPaging"/>
-        <property name="FactFinderDataResult" type="FactFinderDataResult"/>
-        <property name="FactFinderDataResultsPerPageOptions" type="FactFinderDataResultsPerPageOptions"/>
-        <property name="FactFinderDataSingleWordSearchItems" type="FactFinderDataSingleWordSearchItem[]"/>
-        <property name="SortingItems" type="FactFinderDataItem[]"/>
+        <property name="campaignIterator" type="FactFinderDataCampaignIterator"/>
+        <property name="afterSearchNavigation" type="FactFinderDataAfterSearchNavigation"/>
+        <property name="breadCrumbs" type="FactFinderDataBreadCrumb[]"/>
+        <property name="paging" type="FactFinderDataPaging"/>
+        <property name="result" type="FactFinderDataResult"/>
+        <property name="resultsPerPageOptions" type="FactFinderDataResultsPerPageOptions"/>
+        <property name="singleWordSearchItems" type="FactFinderDataSingleWordSearchItem[]"/>
+        <property name="sortingItems" type="FactFinderDataItem[]"/>
         <property name="isSearchTimedOut" type="bool"/>
         <property name="followSearchValue" type="int"/>
     </transfer>
@@ -46,7 +46,7 @@
         <property name="hasAdvisorTree" type="bool"/>
         <property name="advisorTree" type="FactFinderDataRecord[]"/>
 
-        <property name="FactFinderDataCampaigns" type="FactFinderDataCampaign[]"/>
+        <property name="campaigns" type="FactFinderDataCampaign[]"/>
     </transfer>
 
     <transfer name="FactFinderDataCampaign">
@@ -63,7 +63,7 @@
     <transfer name="FactFinderDataAfterSearchNavigation">
         <property name="hasPreviewImages" type="bool"/>
 
-        <property name="FactFinderDataFilterGroups" type="FactFinderDataFilterGroup[]"/>
+        <property name="filterGroups" type="FactFinderDataFilterGroup[]"/>
     </transfer>
 
     <transfer name="FactFinderDataFilterGroup">
@@ -91,7 +91,7 @@
     </transfer>
 
     <transfer name="FactFinderDataBreadCrumb">
-        <property name="FactFinderDataItem" type="FactFinderDataItem"/>
+        <property name="item" type="FactFinderDataItem"/>
 
         <property name="isSearchBreadCrumb" type="bool"/>
         <property name="isFilterBreadCrumb" type="bool"/>
@@ -108,7 +108,7 @@
     </transfer>
 
     <transfer name="FactFinderDataPage">
-        <property name="FactFinderDataItem" type="FactFinderDataItem"/>
+        <property name="item" type="FactFinderDataItem"/>
 
         <property name="pageNumber" type="int"/>
     </transfer>
@@ -123,34 +123,35 @@
     </transfer>
 
     <transfer name="FactFinderDataAdvisorQuestion">
-        <property name="FactFinderDataAdvisorAnswers" type="FactFinderDataAdvisorAnswer[]"/>
+        <property name="advisorAnswers" type="FactFinderDataAdvisorAnswer[]"/>
 
         <property name="text" type="string"/>
         <property name="hasAnswers" type="bool"/>
     </transfer>
 
     <transfer name="FactFinderDataAdvisorAnswer">
-        <property name="FactFinderDataItem" type="FactFinderDataItem"/>
+        <property name="item" type="FactFinderDataItem"/>
 
         <property name="text" type="string"/>
         <property name="followUpQuestions" type="FactFinderDataAdvisorQuestion[]"/>
     </transfer>
 
     <transfer name="FactFinderDataResult">
-        <property name="FactFinderDataRecord" type="FactFinderDataRecord[]"/>
+        <property name="records" type="FactFinderDataRecord[]"/>
 
+        <property name="fieldNames" type="array"/>
         <property name="foundRecordsCount" type="int"/>
     </transfer>
 
     <transfer name="FactFinderDataResultsPerPageOptions">
-        <property name="FactFinderDataItems" type="FactFinderDataItem[]"/>
+        <property name="items" type="FactFinderDataItem[]"/>
 
         <property name="defaultOption" type="FactFinderDataItem"/>
         <property name="selectedOption" type="FactFinderDataItem"/>
     </transfer>
 
     <transfer name="FactFinderDataSuggestQuery">
-        <property name="FactFinderDataItem" type="FactFinderDataItem"/>
+        <property name="item" type="FactFinderDataItem"/>
 
         <property name="hitCount" type="int"/>
         <property name="type" type="string"/>
@@ -159,7 +160,7 @@
     </transfer>
 
     <transfer name="FactFinderDataSingleWordSearchItem">
-        <property name="FactFinderDataSuggestQuery" type="FactFinderDataSuggestQuery"/>
+        <property name="suggestQuery" type="FactFinderDataSuggestQuery"/>
 
         <property name="previewRecords" type="FactFinderDataRecord[]"/>
     </transfer>

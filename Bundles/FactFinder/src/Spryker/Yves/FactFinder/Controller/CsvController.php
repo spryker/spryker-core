@@ -26,7 +26,9 @@ class CsvController extends AbstractController
     {
         $locale = $request->get('locale', $this->getLocale());
         $number = $request->get('number', '');
-        $response = $this->getClient()->getProductCsv($locale, $number)->getContents();
+        $response = $this->getClient()
+            ->getProductCsv($locale, $number)
+            ->getContents();
 
         return $this->streamedResponse(
             function () use ($response) {
@@ -45,7 +47,9 @@ class CsvController extends AbstractController
     public function categoriesAction($request)
     {
         $locale = $request->get('locale', $this->getLocale());
-        $response = $this->getClient()->getCategoryCsv($locale)->getContents();
+        $response = $this->getClient()
+            ->getCategoryCsv($locale)
+            ->getContents();
 
         return $this->streamedResponse(
             function () use ($response) {

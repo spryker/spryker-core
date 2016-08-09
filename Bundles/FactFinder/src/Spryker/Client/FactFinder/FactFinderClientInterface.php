@@ -33,9 +33,10 @@ interface FactFinderClientInterface
     /**
      * @api
      *
+     * @param string $searchString
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
-    public function search();
+    public function search($searchString);
 
     /**
      * Returns the stored quote

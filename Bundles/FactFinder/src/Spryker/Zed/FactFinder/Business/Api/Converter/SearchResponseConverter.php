@@ -8,31 +8,26 @@
 namespace Spryker\Zed\FactFinder\Business\Api\Converter;
 
 use FACTFinder\Adapter\Search as FFSearchAdapter;
-use FACTFinder\Data\AdvisorQuestion;
 use FACTFinder\Data\AfterSearchNavigation;
-use FACTFinder\Data\ArticleNumberSearchStatus;
 use FACTFinder\Data\BreadCrumbTrail;
 use FACTFinder\Data\CampaignIterator;
 use FACTFinder\Data\Item;
-use FACTFinder\Data\Paging;
 use FACTFinder\Data\Record;
 use FACTFinder\Data\Result;
 use FACTFinder\Data\ResultsPerPageOptions;
 use FACTFinder\Data\Sorting;
 use FACTFinder\Data\SuggestQuery;
-use Generated\Shared\Transfer\FactFinderDataAdvisorQuestionTransfer;
 use Generated\Shared\Transfer\FactFinderDataAfterSearchNavigationTransfer;
 use Generated\Shared\Transfer\FactFinderDataBreadCrumbTransfer;
 use Generated\Shared\Transfer\FactFinderDataCampaignIteratorTransfer;
 use Generated\Shared\Transfer\FactFinderDataCampaignTransfer;
 use Generated\Shared\Transfer\FactFinderDataFilterGroupTransfer;
-use Generated\Shared\Transfer\FactFinderDataItemTransfer;
-use Generated\Shared\Transfer\FactFinderDataRecordTransfer;
 use Generated\Shared\Transfer\FactFinderDataResultsPerPageOptionsTransfer;
 use Generated\Shared\Transfer\FactFinderDataResultTransfer;
 use Generated\Shared\Transfer\FactFinderDataSingleWordSearchItemTransfer;
 use Generated\Shared\Transfer\FactFinderDataSuggestQueryTransfer;
 use Generated\Shared\Transfer\FactFinderSearchResponseTransfer;
+use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\ItemConverter;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\PagingConverter;
@@ -99,26 +94,26 @@ class SearchResponseConverter extends BaseConverter
     {
         $this->responseTransfer = new FactFinderSearchResponseTransfer();
 
-        $this->responseTransfer->setFactFinderDataCampaignIterator(
+        $this->responseTransfer->setCampaignIterator(
             $this->convertCampaigns($this->searchAdapter->getCampaigns())
         );
-        $this->responseTransfer->setFactFinderDataAfterSearchNavigation(
+        $this->responseTransfer->setAfterSearchNavigation(
             $this->convertAfterSearchNavigation($this->searchAdapter->getAfterSearchNavigation())
         );
-        $this->responseTransfer->setFactFinderDataBreadCrumbs(
+        $this->responseTransfer->setBreadCrumbs(
             $this->convertBreadCrumbTrail($this->searchAdapter->getBreadCrumbTrail())
         );
         $this->pagingConverter->setPaging($this->searchAdapter->getPaging());
-        $this->responseTransfer->setFactFinderDataPaging(
+        $this->responseTransfer->setPaging(
             $this->pagingConverter->convert()
         );
-        $this->responseTransfer->setFactFinderDataResult(
+        $this->responseTransfer->setResult(
             $this->convertResult($this->searchAdapter->getResult())
         );
-        $this->responseTransfer->setFactFinderDataResultsPerPageOptions(
+        $this->responseTransfer->setResultsPerPageOptions(
             $this->convertResultsPerPageOptions($this->searchAdapter->getResultsPerPageOptions())
         );
-        $this->responseTransfer->setFactFinderDataSingleWordSearchItems(
+        $this->responseTransfer->setSingleWordSearchItems(
             $this->convertSingleWordSearch($this->searchAdapter->getSingleWordSearch())
         );
         $this->responseTransfer->setSortingItems(
@@ -147,6 +142,7 @@ class SearchResponseConverter extends BaseConverter
         $factFinderDataCampaignIteratorTransfer->setHasFeedback($campaigns->hasFeedback());
 //        $factFinderDataCampaignIteratorTransfer->setFeedback($campaigns->getFeedback());
         $factFinderDataCampaignIteratorTransfer->setHasPushedProducts($campaigns->hasPushedProducts());
+        /** @var \FACTFinder\Data\Record $pushedProduct */
         foreach ($campaigns->getPushedProducts() as $pushedProduct) {
             $this->recordConverter->setRecord($pushedProduct);
             $factFinderDataCampaignIteratorTransfer->addPushedProducts(
@@ -154,6 +150,7 @@ class SearchResponseConverter extends BaseConverter
             );
         }
         $factFinderDataCampaignIteratorTransfer->setHasActiveQuestions($campaigns->hasActiveQuestions());
+        /** @var \FACTFinder\Data\Record $activeQuestion */
         foreach ($campaigns->getActiveQuestions() as $activeQuestion) {
             $this->recordConverter->setRecord($activeQuestion);
             $factFinderDataCampaignIteratorTransfer->addGetActiveQuestions(
@@ -161,6 +158,7 @@ class SearchResponseConverter extends BaseConverter
             );
         }
         $factFinderDataCampaignIteratorTransfer->setHasAdvisorTree($campaigns->hasAdvisorTree());
+        /** @var \FACTFinder\Data\Record $advisorTree */
         foreach ($campaigns->getAdvisorTree() as $advisorTree) {
             $this->recordConverter->setRecord($advisorTree);
             $factFinderDataCampaignIteratorTransfer->addAdvisorTree(
@@ -176,27 +174,29 @@ class SearchResponseConverter extends BaseConverter
             $factFinderDataCampaignTransfer->setRedirectUrl($campaign->getRedirectUrl());
             $factFinderDataCampaignTransfer->setFeedback($campaign->getFeedbackArray());
             $factFinderDataCampaignTransfer->setHasRedirect($campaign->hasRedirect());
-
+            /** @var \FACTFinder\Data\Record $pushedProduct */
             foreach ($campaign->getPushedProducts() as $pushedProduct) {
                 $this->recordConverter->setRecord($pushedProduct);
                 $factFinderDataCampaignTransfer->addPushedProducts(
                     $this->recordConverter->convert()
                 );
             }
+            /** @var \FACTFinder\Data\AdvisorQuestion $activeQuestion */
             foreach ($campaign->getActiveQuestions() as $activeQuestion) {
                 $this->advisorQuestionConverter->setAdvisorQuestion($activeQuestion);
                 $factFinderDataCampaignTransfer->addActiveQuestions(
                     $this->advisorQuestionConverter->convert()
                 );
             }
-            foreach ($campaign->getAdvisorTree() as $advisorQuestion) {
-                $this->advisorQuestionConverter->setAdvisorQuestion($advisorQuestion);
+            /** @var \FACTFinder\Data\AdvisorQuestion $advisorTree */
+            foreach ($campaign->getAdvisorTree() as $advisorTree) {
+                $this->advisorQuestionConverter->setAdvisorQuestion($advisorTree);
                 $factFinderDataCampaignTransfer->addAdvisorTree(
                     $this->advisorQuestionConverter->convert()
                 );
             }
 
-            $factFinderDataCampaignIteratorTransfer->addFactFinderDataCampaigns($factFinderDataCampaignTransfer);
+            $factFinderDataCampaignIteratorTransfer->addCampaigns($factFinderDataCampaignTransfer);
         }
 
         return $factFinderDataCampaignIteratorTransfer;
@@ -231,7 +231,7 @@ class SearchResponseConverter extends BaseConverter
             $factFinderDataFilterGroupTransfer->setIsTextType($filterGroup->isTextType());
             $factFinderDataFilterGroupTransfer->setIsNumberType($filterGroup->isNumberType());
 
-            $factFinderDataAfterSearchNavigationTransfer->addFactFinderDataFilterGroups($factFinderDataFilterGroupTransfer);
+            $factFinderDataAfterSearchNavigationTransfer->addFilterGroups($factFinderDataFilterGroupTransfer);
         }
 
         return $factFinderDataAfterSearchNavigationTransfer;
@@ -253,7 +253,7 @@ class SearchResponseConverter extends BaseConverter
             $factFinderDataBreadCrumbTransfer->setFieldName($breadCrumb->getFieldName());
 
             $this->itemConverter->setItem($breadCrumb);
-            $factFinderDataBreadCrumbTransfer->setFactFinderDataItem($this->itemConverter->convert());
+            $factFinderDataBreadCrumbTransfer->setItem($this->itemConverter->convert());
 
             $breadCrumbs->append($factFinderDataBreadCrumbTransfer);
         }
@@ -270,9 +270,11 @@ class SearchResponseConverter extends BaseConverter
     {
         $factFinderDataResultTransfer = new FactFinderDataResultTransfer();
         $factFinderDataResultTransfer->setFoundRecordsCount($result->getFoundRecordsCount());
+        $factFinderDataResultTransfer->setFieldNames(ApiConstants::ITEM_FIELDS);
+        /** @var \FACTFinder\Data\Record $record */
         foreach ($result as $record) {
             $this->recordConverter->setRecord($record);
-            $factFinderDataResultTransfer->addFactFinderDataRecord(
+            $factFinderDataResultTransfer->addRecords(
                 $this->recordConverter->convert()
             );
         }
@@ -297,10 +299,10 @@ class SearchResponseConverter extends BaseConverter
         $factFinderDataResultsPerPageOptionsTransfer->setSelectedOption(
             $this->itemConverter->convert()
         );
-
+        /** @var \FACTFinder\Data\Item $resultsPerPageOption */
         foreach ($resultsPerPageOptions as $resultsPerPageOption) {
             $this->itemConverter->setItem($resultsPerPageOption);
-            $factFinderDataResultsPerPageOptionsTransfer->addFactFinderDataItems(
+            $factFinderDataResultsPerPageOptionsTransfer->addItems(
                 $this->itemConverter->convert()
             );
         }
@@ -318,14 +320,14 @@ class SearchResponseConverter extends BaseConverter
         $singleWordSearchItems = new \ArrayObject();
         foreach ($singleWordSearch as $singleWordSearchItem) {
             $factFinderDataSingleWordSearchItemTransfer = new FactFinderDataSingleWordSearchItemTransfer();
-
+            /** @var \FACTFinder\Data\Record $previewRecord */
             foreach ($singleWordSearchItem->getPreviewRecords() as $previewRecord) {
                 $this->recordConverter->setRecord($previewRecord);
                 $factFinderDataSingleWordSearchItemTransfer->addPreviewRecords(
                     $this->recordConverter->convert()
                 );
             }
-            $factFinderDataSingleWordSearchItemTransfer->setFactFinderDataSuggestQuery(
+            $factFinderDataSingleWordSearchItemTransfer->setSuggestQuery(
                 $this->convertSuggestQuery($singleWordSearchItem)
             );
 
@@ -359,6 +361,7 @@ class SearchResponseConverter extends BaseConverter
     protected function convertSorting(Sorting $sorting)
     {
         $sortingItems = new \ArrayObject();
+        /** @var \FACTFinder\Data\Item $sortingItem */
         foreach ($sorting as $sortingItem) {
             $this->itemConverter->setItem($sortingItem);
 

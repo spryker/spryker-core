@@ -56,7 +56,7 @@ class AdvisorQuestionConverter extends BaseConverter
 
         if ($advisorQuestion->hasAnswers()) {
             foreach ($advisorQuestion->getAnswers() as $advisorAnswer) {
-                $factFinderDataAdvisorQuestionTransfer->addFactFinderDataAdvisorAnswers(
+                $factFinderDataAdvisorQuestionTransfer->addAdvisorAnswers(
                     $this->convertAnswer($advisorAnswer)
                 );
             }
@@ -75,7 +75,7 @@ class AdvisorQuestionConverter extends BaseConverter
         $factFinderDataAdvisorAnswerTransfer = new FactFinderDataAdvisorAnswerTransfer();
         $factFinderDataAdvisorAnswerTransfer->setText($advisorAnswer->getText());
         $this->itemConverter->setItem($advisorAnswer);
-        $factFinderDataAdvisorAnswerTransfer->setFactFinderDataItem(
+        $factFinderDataAdvisorAnswerTransfer->setItem(
             $this->itemConverter->convert()
         );
 

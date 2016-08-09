@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\FactFinder;
 
+use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -50,13 +51,20 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     /**
      * @api
      *
+     * @param string $searchString
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
-    public function search()
+    public function search($searchString)
     {
+        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
+        $factFinderSearchRequestTransfer->setQuery($searchString);
+
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->setFactFinderSearchRequest($factFinderSearchRequestTransfer);
+
         $ffSearchResponseTransfer = $this->getFactory()
             ->createZedFactFinderStub()
-            ->search($this->getQuote());
+            ->search($quoteTransfer);
 
         return $ffSearchResponseTransfer;
     }

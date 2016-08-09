@@ -72,7 +72,7 @@ class PagingConverter extends BaseConverter
 
         $factFinderDataPageTransfer->setPageNumber($page->getPageNumber());
         $this->itemConverter->setItem($page);
-        $factFinderDataPageTransfer->setFactFinderDataItem(
+        $factFinderDataPageTransfer->setItem(
             $this->itemConverter->convert()
         );
 

@@ -29,9 +29,9 @@ class FactFinderSearchRequestPlugin extends AbstractPlugin implements CheckoutPr
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFacade()->initPayment($quoteTransfer);
-        $ratepayResponseTransfer = $this->getFacade()->requestPayment($quoteTransfer);
-        $this->checkForErrors($ratepayResponseTransfer, $checkoutResponseTransfer);
+//        $this->getFacade()->initPayment($quoteTransfer);
+//        $ratepayResponseTransfer = $this->getFacade()->requestPayment($quoteTransfer);
+//        $this->checkForErrors($ratepayResponseTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
     }

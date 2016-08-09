@@ -35,7 +35,7 @@ class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterfa
      */
     public function search(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createSearchRequest()
             ->request($quoteTransfer);
     }
