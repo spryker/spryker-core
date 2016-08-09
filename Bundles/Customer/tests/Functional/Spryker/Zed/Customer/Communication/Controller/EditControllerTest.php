@@ -165,7 +165,6 @@ class EditControllerTest extends Test
         $result = $this->controller->indexAction($request);
 
         return $this->getFormDataFromResult($result['form']);
-
     }
 
     /**

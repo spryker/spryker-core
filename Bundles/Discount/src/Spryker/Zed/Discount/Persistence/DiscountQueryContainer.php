@@ -89,7 +89,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->endUse();
 
         return $query;
-
     }
 
     /**

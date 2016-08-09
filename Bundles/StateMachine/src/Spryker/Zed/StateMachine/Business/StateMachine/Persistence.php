@@ -247,7 +247,6 @@ class Persistence implements PersistenceInterface
      */
     public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer)
     {
-
         $stateMachineItemTransfer->requireIdentifier()
             ->requireIdItemState();
 

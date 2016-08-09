@@ -132,7 +132,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = $this->createValidator();
 
         $validator->validateByType('type', 'query string');
-
     }
 
     /**

@@ -48,7 +48,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscounts = $calculator->calculate([$discountTransfer], $quoteTransfer);
 
         $this->assertNotEmpty($collectedDiscounts);
-
     }
 
     /**
@@ -107,7 +106,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $calculator = $this->createCalculator($specificationBuilderMock);
 
         $calculator->calculate($discounts, $quoteTransfer);
-
     }
 
     /**

@@ -36,7 +36,6 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000, $convertedValues[0]);
         $this->assertEquals(1212, $convertedValues[1]);
         $this->assertEquals(1230, $convertedValues[2]);
-
     }
 
     /**
@@ -58,7 +57,6 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000, $convertedValues[0]);
         $this->assertEquals(1212, $convertedValues[1]);
         $this->assertEquals(1230, $convertedValues[2]);
-
     }
 
     /**
@@ -75,7 +73,6 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
         $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
         $this->assertEquals(1050, $clauseTransfer->getValue());
-
     }
 
     /**

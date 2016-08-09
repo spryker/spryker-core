@@ -103,7 +103,6 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
             ->setCustomer($customer);
 
         $this->orderEntity->save();
-
     }
 
     protected function setUpPaymentTestData()

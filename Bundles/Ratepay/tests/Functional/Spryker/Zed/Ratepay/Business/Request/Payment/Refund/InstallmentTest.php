@@ -23,7 +23,6 @@ class InstallmentTest extends InstallmentAbstractTest
         $this->setUpPaymentTestData();
 
         $this->orderTransfer->fromArray($this->orderEntity->toArray(), true);
-
     }
 
     /**

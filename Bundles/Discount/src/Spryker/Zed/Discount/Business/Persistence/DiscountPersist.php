@@ -58,7 +58,6 @@ class DiscountPersist implements DiscountPersistInterface
         $discountEntity->save();
 
         return $discountEntity->getIdDiscount();
-
     }
 
     /**
@@ -98,7 +97,6 @@ class DiscountPersist implements DiscountPersistInterface
         $affectedRows = $discountEntity->save();
 
         return $affectedRows > 0;
-
     }
 
     /**

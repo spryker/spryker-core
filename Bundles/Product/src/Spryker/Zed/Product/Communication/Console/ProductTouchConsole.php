@@ -56,7 +56,6 @@ class ProductTouchConsole extends Console
             InputArgument::REQUIRED,
             self::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION
         );
-
     }
 
     /**

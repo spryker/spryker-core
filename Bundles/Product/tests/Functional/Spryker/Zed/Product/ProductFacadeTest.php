@@ -331,7 +331,6 @@ class ProductFacadeTest extends Test
         $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $productConcreteTransfer->getProductAbstractSku());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $productConcreteTransfer->getIdProductConcrete());
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $productConcreteTransfer->getIdProductAbstract());
-
     }
 
     /**

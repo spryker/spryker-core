@@ -184,7 +184,6 @@ class CalculatorTest extends Test
             $this->createComparatorOperators(),
             $this->createLogicalOperators()
         );
-
     }
 
     protected function createDecisionRulePlugins()

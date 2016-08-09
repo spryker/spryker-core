@@ -35,7 +35,6 @@ class SpecificationBuilderTest extends Test
         $specification = $decisionRuleSpecificationBuilder->buildFromQueryString('sku = "123"');
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $specification);
-
     }
 
     /**
@@ -50,7 +49,6 @@ class SpecificationBuilderTest extends Test
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
-
     }
 
     /**
@@ -65,7 +63,6 @@ class SpecificationBuilderTest extends Test
         );
 
         $this->assertInstanceOf(DecisionRuleOrSpecification::class, $specification);
-
     }
 
     /**
@@ -80,7 +77,6 @@ class SpecificationBuilderTest extends Test
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
-
     }
 
     /**
@@ -162,7 +158,6 @@ class SpecificationBuilderTest extends Test
             $this->createComparatorOperators(),
             $this->createLogicalComparators()
         );
-
     }
 
     /**

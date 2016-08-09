@@ -48,7 +48,6 @@ class HandlerResolverTest extends StateMachineMocks
         $stateMachineHandlerMock->method('getStateMachineName')->willReturn(self::TEST_HANDLER_NAME);
 
         return new HandlerResolver([$stateMachineHandlerMock]);
-
     }
 
 }

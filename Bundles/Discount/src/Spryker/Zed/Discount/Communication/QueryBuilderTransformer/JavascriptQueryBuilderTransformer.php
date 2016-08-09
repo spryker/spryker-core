@@ -85,7 +85,6 @@ class JavascriptQueryBuilderTransformer
         }
 
         return $comparators;
-
     }
 
 }

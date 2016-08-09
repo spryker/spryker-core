@@ -65,7 +65,6 @@ class InstallmentCalculationMapper extends BaseMapper
 
         $this->requestTransfer->getHead()
             ->setOperationSubstring($this->ratepayPaymentTransfer->getInstallmentCalculationType());
-
     }
 
 }

@@ -307,7 +307,6 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder(DecisionRuleContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-
     }
 
     /**

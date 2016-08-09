@@ -137,7 +137,6 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode)
     {
-
         return $this->queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
             ->withColumn(SpyPaymentPayolutionTransactionRequestLogTableMap::COL_PAYMENT_CODE)
             ->addJoin(

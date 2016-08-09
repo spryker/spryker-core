@@ -123,7 +123,6 @@ class Discount implements DiscountInterface
         }
 
         return $discounts;
-
     }
 
     /**
@@ -167,7 +166,6 @@ class Discount implements DiscountInterface
         }
 
         return $applicableDiscounts;
-
     }
 
     /**

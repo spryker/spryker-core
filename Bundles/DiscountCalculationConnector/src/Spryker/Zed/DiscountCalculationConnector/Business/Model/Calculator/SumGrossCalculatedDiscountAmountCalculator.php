@@ -54,7 +54,6 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $itemTransfer->setSumGrossPriceWithDiscounts(
             $itemTransfer->getSumGrossPrice() - $totalDiscountSumGrossAmount
         );
-
     }
 
     /**

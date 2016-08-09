@@ -71,7 +71,6 @@ class ItemLockTest extends StateMachineMocks
         $itemLock = $this->createItemLock(null, $stateMachineQueryContainerMock);
 
         $itemLock->release(1);
-
     }
 
     /**

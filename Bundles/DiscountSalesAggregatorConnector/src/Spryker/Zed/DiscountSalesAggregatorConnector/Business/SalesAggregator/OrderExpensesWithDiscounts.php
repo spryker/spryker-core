@@ -155,7 +155,6 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
      */
     protected function updateExpenseGrossPriceWithDiscounts(OrderTransfer $orderTransfer)
     {
-
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             $expenseTransfer->setUnitGrossPriceWithDiscounts(
                 $expenseTransfer->getUnitGrossPrice() - $expenseTransfer->getUnitTotalDiscountAmount()

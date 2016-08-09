@@ -23,7 +23,6 @@ class InvoiceTest extends InvoiceAbstractTest
         $this->setUpPaymentTestData();
 
         $this->orderTransfer->fromArray($this->orderEntity->toArray(), true);
-
     }
 
     /**

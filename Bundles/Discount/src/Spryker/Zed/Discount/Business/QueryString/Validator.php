@@ -73,7 +73,6 @@ class Validator implements ValidatorInterface
         }
 
         return $validationMessages;
-
     }
 
     /**

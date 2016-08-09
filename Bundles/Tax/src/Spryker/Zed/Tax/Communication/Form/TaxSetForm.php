@@ -96,7 +96,6 @@ class TaxSetForm extends AbstractType
             ));
 
         return $this;
-
     }
 
     /**

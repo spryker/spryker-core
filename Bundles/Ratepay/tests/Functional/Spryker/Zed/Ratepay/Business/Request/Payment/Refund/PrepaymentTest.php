@@ -24,7 +24,6 @@ class PrepaymentTest extends PrepaymentAbstractTest
         $this->setUpPaymentTestData();
 
         $this->orderTransfer->fromArray($this->orderEntity->toArray(), true);
-
     }
 
     /**

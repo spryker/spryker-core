@@ -24,7 +24,6 @@ class ElvTest extends ElvAbstractTest
         $this->setUpPaymentTestData();
 
         $this->orderTransfer->fromArray($this->orderEntity->toArray(), true);
-
     }
 
     /**

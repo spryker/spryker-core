@@ -54,7 +54,6 @@ class VoucherController extends AbstractController
         return new RedirectResponse(
             $this->createEditDiscountRedirectUrl($idDiscount)
         );
-
     }
 
     /**

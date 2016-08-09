@@ -77,7 +77,6 @@ class ProductDiscountConnectorFacade extends AbstractFacade
         return $this->getFactory()
             ->createAttributeProvider()
             ->getAllAttributeTypes();
-
     }
 
 }
