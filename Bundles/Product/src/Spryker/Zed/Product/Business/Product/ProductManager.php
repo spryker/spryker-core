@@ -218,7 +218,7 @@ class ProductManager implements ProductManagerInterface
     {
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
 
-        foreach ($productAbstractTransfer->getProductImagesSets() as $productImagesSet) {
+        foreach ($productAbstractTransfer->getImageSets() as $productImagesSet) {
             $this->saveProductImageSet($idProductAbstract, $productImagesSet);
         }
     }
