@@ -45,6 +45,7 @@ class AbstractProductFormDataProvider
     const IMAGES = 'images';
 
     const DEFAULT_INPUT_TYPE = 'text';
+    const TEXT_AREA_INPUT_TYPE = 'textarea';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -145,7 +146,15 @@ class AbstractProductFormDataProvider
         $isNew = $idProductAbstract === null;
         $attributeProcessor = $this->productManagementFacade->getProductAttributesByAbstractProductId($idProductAbstract);
 
-        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, $isNew);
+        $localeCollection = $this->localeProvider->getLocaleCollection();
+
+        $localizedAttributeOptions = [];
+        foreach ($localeCollection as $localeCode) {
+            $localizedAttributeOptions[$localeCode] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, $localeCode, $isNew);
+        }
+        $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, null, $isNew);
+
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributeProcessor, $isNew);
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
@@ -431,14 +440,15 @@ class AbstractProductFormDataProvider
 
     /**
      * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param string $localeCode
      * @param bool|false $isNew
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
     {
         $productAttributeKeys = $attributeProcessor->getAllKeys();
-        $productAttributeValues = $attributeProcessor->mergeAttributes();
+        $productAttributeValues = $attributeProcessor->mergeAttributes($localeCode);
 
         $values = [];
         foreach ($productAttributeKeys as $type => $tmp) {
@@ -449,6 +459,8 @@ class AbstractProductFormDataProvider
             $isMultiple = false;
             $inputType = self::DEFAULT_INPUT_TYPE;
             $allowInput = false;
+            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $shouldBeTextArea = mb_strlen($value) > 255;
 
             if ($isDefined) {
                 $isProductSpecificAttribute = false;
@@ -459,7 +471,9 @@ class AbstractProductFormDataProvider
                 $allowInput = $attributeTransfer->getAllowInput();
             }
 
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            if ($shouldBeTextArea) {
+                $inputType = self::TEXT_AREA_INPUT_TYPE;
+            }
 
             $checkboxDisabled = false;
             $valueDisabled = true;

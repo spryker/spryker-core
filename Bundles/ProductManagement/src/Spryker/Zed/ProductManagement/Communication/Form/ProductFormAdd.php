@@ -197,7 +197,7 @@ class ProductFormAdd extends AbstractType
         foreach ($localeCollection as $localeCode) {
             $name = self::getAbstractAttributeFormName($localeCode);
             $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
-            $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options);
+            $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeCode]);
         }
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(
@@ -205,7 +205,7 @@ class ProductFormAdd extends AbstractType
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
-        $this->addAttributeAbstractForm($builder, $defaultName, null, $options);
+        $this->addAttributeAbstractForm($builder, $defaultName, null, $options[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]);
 
         return $this;
     }

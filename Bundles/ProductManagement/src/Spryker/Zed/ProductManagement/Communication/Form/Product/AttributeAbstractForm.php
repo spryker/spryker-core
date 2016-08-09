@@ -200,19 +200,14 @@ class AttributeAbstractForm extends AbstractSubForm
         $allowInput = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT];
         $isMultiple = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE];
         $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
+        $value = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_VALUE];
+        $input = $inputManager->getSymfonyInputType($inputType, $value, $allowInput, $isMultiple);
 
-        $input = $inputManager->getSymfonyInputType($inputType);
         $config = $this->getValueFieldConfig($name, $attributes);
         $config['attr']['style'] .= ' width: 250px';
         $config['attr']['data-value'] = null;
 
         if (strtolower($input) === 'select2') {
-            $input = new Select2ComboBoxType();
-        }
-
-        $useSelect2 = $isMultiple || !$allowInput;
-
-        if ($useSelect2) {
             $input = new Select2ComboBoxType();
             $config['multiple'] = $isMultiple;
             $config['attr']['style'] .= ' width: 250px';
@@ -234,7 +229,7 @@ class AttributeAbstractForm extends AbstractSubForm
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);
             $config['read_only'] = true;
-            $input = $inputManager->getSymfonyInputType(null);
+            $input = $inputManager->getSymfonyInputType(null, $value);
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
