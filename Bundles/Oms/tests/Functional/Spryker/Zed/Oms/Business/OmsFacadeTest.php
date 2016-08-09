@@ -36,7 +36,6 @@ class OmsFacadeTest extends Test
         $numberOfItems = SpyOmsStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
 
         $this->assertEquals(0, $numberOfItems);
-
     }
 
     /**

@@ -28,7 +28,6 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock);
         $clauseValidator->validateClause($this->createClauseTransfer());
-
     }
 
     /**
@@ -46,7 +45,6 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
         $clauseTransfer = $this->createClauseTransfer();
         $clauseTransfer->setField('as$as');
         $clauseValidator->validateClause($clauseTransfer);
-
     }
 
     /**
@@ -67,7 +65,6 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
         $clauseTransfer = $this->createClauseTransfer();
         $clauseTransfer->setField('field');
         $clauseValidator->validateClause($clauseTransfer);
-
     }
 
     /**
@@ -86,7 +83,6 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
         $clauseTransfer = $this->createClauseTransfer();
         $clauseTransfer->setField('field');
         $clauseValidator->validateClause($clauseTransfer);
-
     }
 
     /**

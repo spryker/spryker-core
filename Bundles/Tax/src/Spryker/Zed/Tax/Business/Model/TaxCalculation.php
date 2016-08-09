@@ -25,7 +25,6 @@ class TaxCalculation implements CalculatorInterface
         $totalTaxAmount += $this->sumExpenseTaxes($quoteTransfer);
 
         $this->setTaxTotals($quoteTransfer, $totalTaxAmount);
-
     }
 
     /**

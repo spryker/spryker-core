@@ -329,7 +329,6 @@ class DiscountFacadeTest extends Test
 
         $discountConditionTransfer = $discountConfiguratorTransfer->getDiscountCondition();
         $this->assertEquals($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
-
     }
 
     /**
@@ -352,7 +351,6 @@ class DiscountFacadeTest extends Test
 
         $voucherPool = $discountEntity->getVoucherPool();
         $this->assertNotEmpty($voucherPool);
-
     }
 
     /**
@@ -445,7 +443,6 @@ class DiscountFacadeTest extends Test
 
         $this->assertEquals($originalConfiguratorArray, $hydratedConfiguratorArray);
         $this->assertTrue($discountEntity->getIsActive());
-
     }
 
     /**
@@ -506,7 +503,6 @@ class DiscountFacadeTest extends Test
         $voucherCodes = $voucherPoolEntity->getDiscountVouchers();
 
         $this->assertCount(5, $voucherCodes);
-
     }
 
     /**

@@ -21,7 +21,6 @@ class PayolutionFacadeMockBuilder
      */
     public static function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
     {
-
         // Mock business factory to override return value of createExecutionAdapter to
         // place a mocked adapter that doesn't establish an actual connection.
         $businessFactoryMock = self::getBusinessFactoryMock($testCase);

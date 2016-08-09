@@ -104,7 +104,6 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
         $logicalOperators = $metaDataProvider->getLogicalComparators();
 
         $this->assertCount(1, $logicalOperators);
-
     }
 
 

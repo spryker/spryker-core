@@ -25,7 +25,6 @@ class PaymentMapperTest extends AbstractMapperTest
         $this->assertEquals(99, $this->requestTransfer->getPayment()->getAmount());
         $this->assertEquals('iso3', $this->requestTransfer->getPayment()->getCurrency());
         $this->assertEquals('invoice', $this->requestTransfer->getPayment()->getMethod());
-
     }
 
 }

@@ -81,7 +81,6 @@ class UniqueDiscountNameValidator extends ConstraintValidator
         }
 
         return false;
-
     }
 
 }

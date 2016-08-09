@@ -28,7 +28,6 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
 
         $taxTotalsTransfer = $this->getTaxTotals($totalTaxAmount);
         $orderTransfer->getTotals()->setTaxTotal($taxTotalsTransfer);
-
     }
 
     /**

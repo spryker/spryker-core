@@ -136,7 +136,6 @@ class ProductDiscountConnectorFacadeTest extends Test
         $concreteLocalizedAttributesEntity->save();
 
         return $abstractProductEntity;
-
     }
 
     /**

@@ -34,7 +34,6 @@ class InstallmentCalculationMapperTest extends AbstractMapperTest
         $this->assertEquals(3, $this->requestTransfer->getInstallmentCalculation()->getMonth());
         $this->assertEquals(28, $this->requestTransfer->getInstallmentCalculation()->getPaymentFirstday());
         $this->assertEquals('2016-05-15', $this->requestTransfer->getInstallmentCalculation()->getCalculationStart());
-
     }
 
 }

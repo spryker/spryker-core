@@ -125,7 +125,6 @@ class StateMachineFacadeTest extends Test
         /* @var $process StateMachineProcessTransfer  */
         $process = array_pop($processList);
         $this->assertEquals($processName, $process->getProcessName());
-
     }
 
     /**
@@ -181,7 +180,6 @@ class StateMachineFacadeTest extends Test
 
         $manualEvent = array_pop($manualEvents);
         $this->assertEquals('ship order', $manualEvent);
-
     }
 
     /**
@@ -383,7 +381,6 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineItemTransfer = $stateMachineItemsTransfer[2];
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
-
     }
 
     /**
@@ -560,7 +557,6 @@ class StateMachineFacadeTest extends Test
         $numberOfItems = SpyStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
 
         $this->assertEquals(0, $numberOfItems);
-
     }
 
     /**

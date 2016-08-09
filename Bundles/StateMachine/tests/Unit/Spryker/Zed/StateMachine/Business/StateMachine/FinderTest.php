@@ -52,7 +52,6 @@ class FinderTest extends StateMachineMocks
         $this->assertInstanceOf(StateMachineProcessTransfer::class, $subProcess);
         $this->assertEquals(self::TEST_STATE_MACHINE_NAME, $subProcess->getStateMachineName());
         $this->assertEquals('Process2', $subProcess->getProcessName());
-
     }
 
     /**
@@ -86,7 +85,6 @@ class FinderTest extends StateMachineMocks
         $manualEvents = $finder->getManualEventsForStateMachineItems($stateMachineItems);
 
         $this->assertCount(1, $manualEvents);
-
     }
 
     /**
@@ -154,7 +152,6 @@ class FinderTest extends StateMachineMocks
 
         $stateMachineItem = $stateMachineItems[0];
         $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItem);
-
     }
 
     /**

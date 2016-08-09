@@ -55,7 +55,6 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
         $quoteTransfer->setItems(new \ArrayObject($items));
 
         return $quoteTransfer;
-
     }
 
     /**

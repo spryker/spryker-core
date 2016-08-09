@@ -82,7 +82,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
         return $this->getZedStub()->addItem($cartChangeTransfer);
-
     }
 
     /**

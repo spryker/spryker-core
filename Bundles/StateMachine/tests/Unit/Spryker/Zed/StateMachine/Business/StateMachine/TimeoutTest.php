@@ -44,7 +44,6 @@ class TimeoutTest extends StateMachineMocks
             $this->createProcess(),
             $this->createStateMachineItemTransfer()
         );
-
     }
 
     /**

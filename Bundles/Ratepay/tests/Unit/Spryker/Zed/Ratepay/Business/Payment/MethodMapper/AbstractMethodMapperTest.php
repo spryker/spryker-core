@@ -207,7 +207,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
 
         //basket and items
         $this->testBasketAndItems();
-
     }
 
     /**
