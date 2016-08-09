@@ -8,17 +8,27 @@
 namespace Functional\Spryker\Zed\ProductOption\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
 class ProductOptionFacadeTest extends Test
 {
+
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';
 
     /**
@@ -26,7 +36,7 @@ class ProductOptionFacadeTest extends Test
      */
     public function testSaveProductOptionGroupShouldPersistProvidedOption()
     {
-        $productOptionFacade = $this->createProductFacade();
+        $productOptionFacade = $this->createProductOptionFacade();
 
         $producOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
@@ -60,7 +70,7 @@ class ProductOptionFacadeTest extends Test
      */
     public function testSaveProductGroupOptionAndAssignProductAbstract()
     {
-        $productOptionFacade = $this->createProductFacade();
+        $productOptionFacade = $this->createProductOptionFacade();
 
         $producOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
@@ -85,7 +95,7 @@ class ProductOptionFacadeTest extends Test
      */
     public function testSaveProductGroupOptionAndDeAssignProductAbstract()
     {
-        $productOptionFacade = $this->createProductFacade();
+        $productOptionFacade = $this->createProductOptionFacade();
 
         $producOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
@@ -113,7 +123,7 @@ class ProductOptionFacadeTest extends Test
      */
     public function testSaveProductGroupOptionAndRemoveProductOptionValues()
     {
-        $productOptionFacade = $this->createProductFacade();
+        $productOptionFacade = $this->createProductOptionFacade();
 
         $producOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
@@ -136,6 +146,175 @@ class ProductOptionFacadeTest extends Test
         $this->assertEmpty($productOptionGroupEntity->getSpyProductOptionValues());
     }
 
+    /**
+     * @return void
+     */
+    public function testSaveOptionValueShouldPersistOption()
+    {
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer();
+
+        $idProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionValueTransfer->setFkProductOptionGroup($idProductOptionGroup);
+
+        $idProductOptionValue = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        $this->assertNotEmpty($idProductOptionGroup);
+
+        $productOptionValueEntity = SpyProductOptionValueQuery::create()
+            ->findOneByIdProductOptionValue($idProductOptionValue);
+
+        $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+        $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
+        $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionValueEntity->getPrice());
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueShouldReturnPersistedOptionValue()
+    {
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+
+        $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $idOfPersistedOptionValue = $producOptionValueTransfer->getIdProductOptionValue();
+
+        $productOptionTransfer = $productOptionFacade->getProductOptionValueById($idOfPersistedOptionValue);
+
+        $this->assertEquals($idOfPersistedOptionValue, $productOptionTransfer->getIdProductOptionValue());
+        $this->assertEquals($producOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
+        $this->assertSame($producOptionValueTransfer->getPrice(), $productOptionTransfer->getUnitGrossPrice());
+        $this->assertEquals($producOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
+    }
+
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionByIdShouldReturnPersistedOptionGroup()
+    {
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+
+        $idOfPersistendOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $persistedProductOptionGroupTransfer = $productOptionFacade->getProductOptionGroupById($idOfPersistendOptionGroup);
+
+        $this->assertNotEmpty($persistedProductOptionGroupTransfer);
+        $this->assertEquals($productOptionGroupTransfer->getName(), $persistedProductOptionGroupTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptions()
+    {
+        $iso2Code = 'DE';
+        $taxRate = 19;
+
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+
+        $taxSetEntity = $this->createTaxSet($iso2Code, $taxRate);
+
+        $productOptionGroupTransfer->setFkTaxSet($taxSetEntity->getIdTaxSet());
+
+        $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->setIso2Code($iso2Code);
+        $quoteTransfer->setShippingAddress($addressTransfer);
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdProductOptionValue($producOptionValueTransfer->getIdProductOptionValue());
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $productOptionFacade->calculateProductOptionTaxRate($quoteTransfer);
+
+        $itemTransfer = $quoteTransfer->getItems()[0];
+        $productOptionTransfer = $itemTransfer->getProductOptions()[0];
+
+        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testToggleOptionActiveShouldActivateDeactiveOptionAcordingly()
+    {
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+
+        $idOfPersistendOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $productOptionFacade->toggleOptionActive($idOfPersistendOptionGroup, 1);
+
+        $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
+            ->findOneByIdProductOptionGroup($idOfPersistendOptionGroup);
+
+        $this->assertTrue($productOptionGroupEntity->getActive());
+
+        $productOptionFacade->toggleOptionActive($idOfPersistendOptionGroup, 0);
+
+        $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
+            ->findOneByIdProductOptionGroup($idOfPersistendOptionGroup);
+
+        $this->assertFalse($productOptionGroupEntity->getActive());
+    }
+
+    /**
+     * @param string $iso2Code
+     * @param int $taxRate
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
+     */
+    protected function createTaxSet($iso2Code, $taxRate)
+    {
+        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
+
+        $taxRateEntity = new SpyTaxRate();
+        $taxRateEntity->setName('test rate');
+        $taxRateEntity->setCountry($countryEntity);
+        $taxRateEntity->setRate($taxRate);
+        $taxRateEntity->save();
+
+        $taxSetEntity = new SpyTaxSet();
+        $taxSetEntity->setName('test tax set');
+        $taxSetEntity->save();
+
+        $taxSetTaxRateEntity = new SpyTaxSetTax();
+        $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
+        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity->getIdTaxRate());
+        $taxSetTaxRateEntity->save();
+
+        return $taxSetEntity;
+
+    }
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
@@ -155,7 +334,7 @@ class ProductOptionFacadeTest extends Test
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    protected function createProductOptionGroupTransfer(ProductOptionValueTransfer $productOptionValueTransfer)
+    protected function createProductOptionGroupTransfer(ProductOptionValueTransfer $productOptionValueTransfer = null)
     {
         $productOptionGroupTransfer = new ProductOptionGroupTransfer();
         $productOptionGroupTransfer->setName('translation.key');
@@ -167,11 +346,13 @@ class ProductOptionFacadeTest extends Test
         $groupNameTranslationTransfer->setName('Translation1');
         $productOptionGroupTransfer->addGroupNameTranslation($groupNameTranslationTransfer);
 
-        $productOptionTranslationTransfer = clone $groupNameTranslationTransfer;
-        $productOptionTranslationTransfer->setKey($productOptionValueTransfer->getValue());
-        $productOptionTranslationTransfer->setName('value translation');
-        $productOptionTranslationTransfer->setLocaleCode(self::DEFAULT_LOCALE_ISO_CODE);
-        $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
+        if ($productOptionValueTransfer) {
+            $productOptionTranslationTransfer = clone $groupNameTranslationTransfer;
+            $productOptionTranslationTransfer->setKey($productOptionValueTransfer->getValue());
+            $productOptionTranslationTransfer->setName('value translation');
+            $productOptionTranslationTransfer->setLocaleCode(self::DEFAULT_LOCALE_ISO_CODE);
+            $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
+        }
 
         return $productOptionGroupTransfer;
     }
@@ -202,7 +383,7 @@ class ProductOptionFacadeTest extends Test
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
-    protected function createProductFacade()
+    protected function createProductOptionFacade()
     {
         $productOptionFacade = new ProductOptionFacade();
 

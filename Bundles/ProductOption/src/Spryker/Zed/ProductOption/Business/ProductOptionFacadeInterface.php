@@ -65,7 +65,7 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValue($idProductOptionValue);
+    public function getProductOptionValueById($idProductOptionValue);
 
     /**
      *

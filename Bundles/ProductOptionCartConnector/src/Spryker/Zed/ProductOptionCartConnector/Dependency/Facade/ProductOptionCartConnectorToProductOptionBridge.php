@@ -30,7 +30,7 @@ class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCa
      */
     public function getProductOptionValue($idProductOptionValueUsage)
     {
-        return $this->productOptionFacade->getProductOptionValue($idProductOptionValueUsage);
+        return $this->productOptionFacade->getProductOptionValueById($idProductOptionValueUsage);
     }
 
 }
