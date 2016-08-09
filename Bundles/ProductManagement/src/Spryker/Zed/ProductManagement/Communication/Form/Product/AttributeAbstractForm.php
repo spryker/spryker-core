@@ -8,6 +8,10 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
+use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
+use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
@@ -213,8 +217,10 @@ class AttributeAbstractForm extends AbstractSubForm
             $config['multiple'] = $isMultiple;
             $config['attr']['style'] .= ' width: 250px';
             $config['choices'] = $this->getChoiceList($name, $attributes[$name]);
+            $config['attr']['tags'] = true;
+
             if ($allowInput) {
-                $config['attr']['tags'] = true;
+
             }
             else {
                 //$config['attr']['class'] .= ' ajax';
@@ -246,11 +252,30 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         $result = [];
         $valueCollection = null;
+        $attributeValue = $attributes[AbstractProductFormDataProvider::FORM_FIELD_VALUE];
         $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
 
         if ($this->localeTransfer instanceof LocaleTransfer) {
             $idLocale = $this->localeTransfer->getIdLocale();
         }
+
+        $valueExists = $this->productManagementQueryContainer
+            ->queryProductManagementAttributeValueQuery()
+            ->addJoin([
+                SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                (int)$idLocale
+            ],[
+                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE
+            ],
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
+            ->withColumn($idLocale, 'fk_locale')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
+            ->where('LOWER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') = ?', mb_strtolower($attributeValue), \PDO::PARAM_STR)
+            ->count();
 
         $valueCollection = $this->productManagementQueryContainer
             ->queryProductManagementAttributeValueWithTranslation(
@@ -258,6 +283,10 @@ class AttributeAbstractForm extends AbstractSubForm
                 $idLocale
             )
             ->find();
+
+        if (!$valueExists && isset($attributeValue)) {
+            $result[null] = $attributeValue;
+        }
 
         foreach ($valueCollection as $entity) {
             $data = $entity->toArray();

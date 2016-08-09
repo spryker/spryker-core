@@ -44,6 +44,8 @@ class AbstractProductFormDataProvider
 
     const IMAGES = 'images';
 
+    const DEFAULT_INPUT_TYPE = 'text';
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -436,31 +438,73 @@ class AbstractProductFormDataProvider
     protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
         $productAttributeKeys = $attributeProcessor->getAllKeys();
+        $productAttributeValues = $attributeProcessor->mergeAttributes();
 
         $values = [];
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $isProductSpecificAttribute =  !$isNew && !array_key_exists($type, $productAttributeKeys);
-            $value = isset($productAttributeKeys[$type]) ? $productAttributeKeys[$type] : null;
-            $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
+        foreach ($productAttributeKeys as $type => $tmp) {
+            $isDefined = array_key_exists($type, $this->attributeTransferCollection);
+
+            $isProductSpecificAttribute = true;
+            $id = null;
+            $isMultiple = false;
+            $inputType = self::DEFAULT_INPUT_TYPE;
+            $allowInput = false;
+
+            if ($isDefined) {
+                $isProductSpecificAttribute = false;
+                $attributeTransfer = $this->attributeTransferCollection[$type];
+                $id = $attributeTransfer->getIdProductManagementAttribute();
+                $isMultiple = $attributeTransfer->getIsMultiple();
+                $inputType = $attributeTransfer->getInputType();
+                $allowInput = $attributeTransfer->getAllowInput();
+            }
+
+            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+
             $checkboxDisabled = false;
             $valueDisabled = true;
 
             $values[$type] = [
-                self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                self::FORM_FIELD_ID => $id,
+                self::FORM_FIELD_VALUE => $value,
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 self::FORM_FIELD_MULTIPLE => $isMultiple,
-                self::FORM_FIELD_INPUT_TYPE => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
+                self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput()
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput
             ];
         }
 
-        $productValues = $this->getProductAttributesFormOptions($productAttributeKeys);
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $isProductSpecificAttribute = false;
+            $id = $attributeTransfer->getIdProductManagementAttribute();
+            $isMultiple = $attributeTransfer->getIsMultiple();
+            $inputType = $attributeTransfer->getInputType();
+            $allowInput = $attributeTransfer->getAllowInput();
 
-        return array_merge($productValues, $values);
+            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+
+            $checkboxDisabled = false;
+            $valueDisabled = true;
+
+            $values[$type] = [
+                self::FORM_FIELD_ID => $id,
+                self::FORM_FIELD_VALUE => $value,
+                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_INPUT_TYPE => $inputType,
+                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput
+            ];
+        }
+
+        return $values;
     }
 
     /**
@@ -544,23 +588,27 @@ class AbstractProductFormDataProvider
             ];
         }
 
-        $productValues = $this->getProductAttributesFormOptions($productAttributes);
+        $productAttributeValues = $attributeProcessor->mergeAttributes();
+        $productValues = $this->getProductAttributesFormOptions($productAttributes, $productAttributeValues);
 
         return array_merge($productValues, $values);
     }
 
     /**
      * @param array $productAttributeKeys
+     * @param array $productAttributeValues
      *
      * @return array
      */
-    protected function getProductAttributesFormOptions(array $productAttributeKeys)
+    protected function getProductAttributesFormOptions(array $productAttributeKeys, array $productAttributeValues)
     {
         $values = [];
         foreach ($productAttributeKeys as $key => $value) {
+            $value = array_key_exists($key, $productAttributeValues) ? $productAttributeValues[$key] : null;
+
             $values[$key] = [
                 self::FORM_FIELD_ID => null,
-                self::FORM_FIELD_VALUE => null,
+                self::FORM_FIELD_VALUE => $value,
                 self::FORM_FIELD_NAME => false,
                 self::FORM_FIELD_PRODUCT_SPECIFIC => true,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
