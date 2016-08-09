@@ -10,13 +10,14 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
+use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 
 class ProductOptionGroupReader
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -74,7 +75,7 @@ class ProductOptionGroupReader
     }
 
     /**
-     * @param SpyProductOptionGroup $productOptionGroupEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
@@ -145,7 +146,7 @@ class ProductOptionGroupReader
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
-     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      * @param array $availableLocales
      *
      * @return array
@@ -175,4 +176,5 @@ class ProductOptionGroupReader
         }
         return $productOptionValueTranslations;
     }
+
 }

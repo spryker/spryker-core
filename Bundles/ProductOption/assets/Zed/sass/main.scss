@@ -6,10 +6,6 @@
 
 .form-product-option-row, .form-product-option-translation-row {
 
-  .input {
-
-  }
-
   .form-group {
     vertical-align: top;
     margin-top:5px;
@@ -25,23 +21,20 @@ table.dataTable.gui-table-data {
 .translation-tabs {
    .tabs-left > .nav-tabs,
    .tabs-right > .nav-tabs {
-      width: 5%;
+      width: 10%;
   }
 
   .tabs-left .panel-body {
-    width: 95%;
-    margin-left: 5%;
+    width: 90%;
+    margin-left: 10%;
+  }
+  .row {
+    margin-left: 0;
   }
 }
 
 .copy-language {
   display:block;
-}
-
-.form-product-option-translation-row {
-  input[type=text] {
-      width: 100%;
-   }
 }
 
 

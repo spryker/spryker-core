@@ -51,16 +51,4 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
         return $this->localeFacade->getLocale($localeName);
     }
 
-    /**
-     * @param string $localeCode
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode)
-    {
-        return $this->localeFacade->getLocaleByCode($localeCode);
-    }
-
 }

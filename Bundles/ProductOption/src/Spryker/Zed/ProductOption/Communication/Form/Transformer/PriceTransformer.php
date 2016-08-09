@@ -12,7 +12,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 class PriceTransformer implements DataTransformerInterface
 {
 
-
     /**
      * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */

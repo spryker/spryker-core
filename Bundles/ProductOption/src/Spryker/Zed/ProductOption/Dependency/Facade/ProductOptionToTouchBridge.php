@@ -8,6 +8,7 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 class ProductOptionToTouchBridge implements ProductOptionToTouchInterface
 {
+
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -32,4 +33,5 @@ class ProductOptionToTouchBridge implements ProductOptionToTouchInterface
     {
         return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }
+
 }

@@ -20,6 +20,7 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -79,6 +80,8 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         $productOptionGroupEntity->save();
 
+        $productOptionGroupTransfer->setIdProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
+
         return $productOptionGroupEntity->getIdProductOptionGroup();
     }
 
@@ -98,7 +101,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(
-              sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
+                sprintf('Product option group with id "%d" not found', $idProductOptionGroup)
             );
         }
 
@@ -111,7 +114,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param SpyProductOptionGroup $productOptionGroupEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return void
      */
@@ -127,7 +130,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param SpyProductOptionGroup $productOptionGroupEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return void
      */
@@ -147,7 +150,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param SpyProductOptionGroup $productOptionGroupEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return void
      */
@@ -168,8 +171,8 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param SpyProductOptionGroup  $productOptionGroupEntity
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return void
      */
@@ -290,6 +293,8 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $producOptionValueEntity = $this->getProductOptionValueEntity($productOptionValueTransfer->getIdProductOptionValue());
         $this->hydrateOptionValueEntity($producOptionValueEntity, $productOptionValueTransfer);
         $producOptionValueEntity->save();
+
+        $productOptionValueTransfer->setIdProductOptionValue($producOptionValueEntity->getIdProductOptionValue());
 
         return $producOptionValueEntity->getIdProductOptionValue();
     }
@@ -470,6 +475,5 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
             );
         }
     }
-
 
 }

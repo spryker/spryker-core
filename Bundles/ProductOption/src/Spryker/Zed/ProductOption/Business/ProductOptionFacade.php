@@ -190,6 +190,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @param int $idProductOptionGroup
      * @param bool $isActive
+     *
      * @return void
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)

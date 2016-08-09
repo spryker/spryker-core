@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
 
 class ProductOptionGroupDataProvider
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
      */
@@ -116,4 +117,5 @@ class ProductOptionGroupDataProvider
 
         return $productOptionGroupTransfer;
     }
+
 }

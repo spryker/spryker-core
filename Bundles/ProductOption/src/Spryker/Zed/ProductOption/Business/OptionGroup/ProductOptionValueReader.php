@@ -8,11 +8,12 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionValueReader
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -49,7 +50,7 @@ class ProductOptionValueReader
     }
 
     /**
-     * @param SpyProductOptionValue $productOptionValueEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */

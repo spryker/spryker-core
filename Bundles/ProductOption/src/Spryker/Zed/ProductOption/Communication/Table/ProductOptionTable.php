@@ -135,7 +135,7 @@ class ProductOptionTable extends AbstractTable
      */
     protected function buildActionByTableContext(array $productOption)
     {
-        if ($this->tableContext === self::TABLE_CONTEXT_EDIT){
+        if ($this->tableContext === self::TABLE_CONTEXT_EDIT) {
             return [
                 self::COL_CHECKBOX => $this->getCheckboxHtml($productOption)
             ];

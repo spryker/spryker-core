@@ -15,13 +15,13 @@ trait GlossaryKeyBuilder
     use KeyBuilderTrait;
 
     /**
-     * @param string $idAbstractProduct
+     * @param string $glossaryKey
      *
      * @return string
      */
-    protected function buildKey($idAbstractProduct)
+    protected function buildKey($glossaryKey)
     {
-        return 'translation.' . $idAbstractProduct;
+        return 'translation.' . $glossaryKey;
     }
 
     /**

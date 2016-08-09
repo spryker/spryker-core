@@ -219,7 +219,7 @@ ProductOptionTranslationFormSelector.prototype.getRelatedOptionHashKeyField = fu
 };
 
 ProductOptionTranslationFormSelector.prototype.getTranslationLabel = function() {
-    return $(this.form.find(".label-translation").children()[0])
+    return this.getNameField().prev()
 };
 
 ProductOptionTranslationFormSelector.prototype.getNameField = function() {

@@ -16,6 +16,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
 
 class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -81,9 +82,9 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     }
 
     /**
-     * @param SpySalesOrderItemOption $salesOrderItemOptionEntity
-     * @param ProductOptionTransfer $productOptionTransfer
-     * @param ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $salesOrderItemOptionEntity
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
