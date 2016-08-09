@@ -30,7 +30,7 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
@@ -39,11 +39,13 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
             ->getSearchConfig()
             ->getSortConfigBuilder();
 
+        $sortParamName = $sortConfig->getActiveParamName($requestParameters);
+
         $sortSearchResultTransfer = new SortSearchResultTransfer();
         $sortSearchResultTransfer
-            ->setSortNames(array_keys($sortConfig->getAll()))
-            ->setCurrentSortParam($sortConfig->getActiveParamName($requestParameters))
-            ->setCurrentSortOrder($sortConfig->getActiveSortDirection($requestParameters));
+            ->setSortParamNames(array_keys($sortConfig->getAll()))
+            ->setCurrentSortParam($sortParamName)
+            ->setCurrentSortOrder($sortConfig->getSortDirection($sortParamName));
 
         return $sortSearchResultTransfer;
     }

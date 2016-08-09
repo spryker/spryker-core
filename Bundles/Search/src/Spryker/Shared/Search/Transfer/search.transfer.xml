@@ -22,6 +22,7 @@
         <property name="name" type="string" />
         <property name="parameterName" type="string" />
         <property name="fieldName" type="string" />
+        <property name="isDescending" type="bool" />
     </transfer>
 
     <transfer name="PaginationConfig">
@@ -101,7 +102,7 @@
     </transfer>
 
     <transfer name="SortSearchResult">
-        <property name="sortNames" type="array" />
+        <property name="sortParamNames" type="array" />
         <property name="currentSortParam" type="string" />
         <property name="currentSortOrder" type="string" />
     </transfer>

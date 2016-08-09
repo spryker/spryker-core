@@ -47,7 +47,7 @@ class SearchKeysQuery implements QueryInterface
     }
 
     /**
-     * @return \Elastica\Query\MatchAll
+     * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()
     {

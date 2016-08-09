@@ -13,6 +13,8 @@ class NestedRangeQuery extends AbstractNestedQuery
 {
 
     const RANGE_DIVIDER = '-';
+    const RANGE_MIN = 'min';
+    const RANGE_MAX = 'max';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
@@ -20,19 +22,19 @@ class NestedRangeQuery extends AbstractNestedQuery
     protected $facetConfigTransfer;
 
     /**
-     * @var string
+     * @var mixed
      */
-    protected $filterValue;
+    protected $rangeValues;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param mixed $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $filterValue, QueryBuilderInterface $queryBuilder)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
-        $this->filterValue = $filterValue;
+        $this->rangeValues = $rangeValues;
 
         parent::__construct($queryBuilder);
     }
@@ -58,7 +60,34 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function getMinMaxValue()
     {
-        $values = explode(self::RANGE_DIVIDER, $this->filterValue);
+        if (is_array($this->rangeValues)) {
+            return $this->getMinMaxValueFromArray($this->rangeValues);
+        }
+
+        return $this->getMinMaxValueFromString($this->rangeValues);
+    }
+
+    /**
+     * @param array $rangeValues
+     *
+     * @return array
+     */
+    protected function getMinMaxValueFromArray(array $rangeValues)
+    {
+        $minValue = isset($rangeValues[self::RANGE_MIN]) ? $rangeValues[self::RANGE_MIN] : 0;
+        $maxValue = isset($rangeValues[self::RANGE_MAX]) ? $rangeValues[self::RANGE_MAX] : $minValue;
+
+        return [$minValue, $maxValue];
+    }
+
+    /**
+     * @param string $rangeValues
+     *
+     * @return array
+     */
+    protected function getMinMaxValueFromString($rangeValues)
+    {
+        $values = explode(self::RANGE_DIVIDER, $rangeValues);
         $minValue = $values[0];
         $maxValue = $minValue;
 

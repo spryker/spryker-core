@@ -39,10 +39,10 @@ interface SortConfigBuilderInterface
     public function getActiveParamName(array $requestParameters);
 
     /**
-     * @param array $requestParameters
+     * @param string $sortParamName
      *
      * @return string|null
      */
-    public function getActiveSortDirection($requestParameters);
+    public function getSortDirection($sortParamName);
 
 }

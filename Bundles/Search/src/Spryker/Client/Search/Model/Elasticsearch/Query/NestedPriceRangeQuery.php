@@ -20,13 +20,13 @@ class NestedPriceRangeQuery extends NestedRangeQuery
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param mixed $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
      * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $filterValue, QueryBuilderInterface $queryBuilder, CurrencyManager $currencyManager)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, CurrencyManager $currencyManager)
     {
-        parent::__construct($facetConfigTransfer, $filterValue, $queryBuilder);
+        parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);
 
         $this->currencyManager = $currencyManager;
     }

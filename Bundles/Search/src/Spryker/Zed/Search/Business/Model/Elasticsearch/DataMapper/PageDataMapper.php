@@ -10,6 +10,8 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
+use Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
@@ -32,12 +34,18 @@ class PageDataMapper implements PageDataMapperInterface
     protected $underscoreToDashFilter;
 
     /**
+     * @var \Generated\Shared\Search\PageIndexMap
+     */
+    protected $pageIndexMap;
+
+    /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      */
     public function __construct(PageMapBuilderInterface $pageMapBuilder)
     {
         $this->pageMapBuilder = $pageMapBuilder;
         $this->underscoreToDashFilter = new UnderscoreToDash();
+        $this->pageIndexMap = new PageIndexMap();
     }
 
     /**
@@ -54,30 +62,68 @@ class PageDataMapper implements PageDataMapperInterface
         $pageMapTransfer = $pageMap->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
 
         foreach ($pageMapTransfer->modifiedToArray() as $key => $value) {
-            $normalizedKey = $this->underscoreToDashFilter->filter($key);
+            $normalizedKey = $this->normalizeKey($key);
 
-            switch($normalizedKey) {
-                case PageIndexMap::SEARCH_RESULT_DATA:
-                    $result = $this->transformSearchResultData($result, $pageMapTransfer->getSearchResultData());
-                    break;
-                case PageIndexMap::STRING_FACET:
-                    $result = $this->transformStringFacet($result, $pageMapTransfer->getStringFacet());
-                    break;
-                case PageIndexMap::INTEGER_FACET:
-                    $result = $this->transformIntegerFacet($result, $pageMapTransfer->getIntegerFacet());
-                    break;
-                case PageIndexMap::STRING_SORT:
-                    $result = $this->transformStringSort($result, $pageMapTransfer->getStringSort());
-                    break;
-                case PageIndexMap::INTEGER_SORT:
-                    $result = $this->transformIntegerSort($result, $pageMapTransfer->getIntegerSort());
-                    break;
-                case PageIndexMap::CATEGORY:
-                    $result = $this->transformCategory($result, $pageMapTransfer->getCategory());
-                    break;
-                default:
-                    $result = $this->transformOther($result, $normalizedKey, $value);
-            }
+            $result = $this->mapValue($pageMapTransfer, $normalizedKey, $value, $result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
+     *
+     * @return string
+     */
+    protected function normalizeKey($key)
+    {
+        if (in_array($key, $this->pageIndexMap->getProperties())) {
+            return $key;
+        }
+
+        $normalizedKey = $this->underscoreToDashFilter->filter($key);
+
+        if (in_array($normalizedKey, $this->pageIndexMap->getProperties())) {
+            return $normalizedKey;
+        }
+
+        throw new InvalidPropertyNameException(sprintf('Unable to map %s property in %s', $key, get_class($this->pageIndexMap)));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param string $normalizedKey
+     * @param mixed $value
+     * @param array $result
+     *
+     * @return array
+     */
+    protected function mapValue(PageMapTransfer $pageMapTransfer, $normalizedKey, $value, array $result)
+    {
+        switch ($normalizedKey) {
+            case PageIndexMap::SEARCH_RESULT_DATA:
+                $result = $this->transformSearchResultData($result, $pageMapTransfer->getSearchResultData());
+                break;
+            case PageIndexMap::STRING_FACET:
+                $result = $this->transformStringFacet($result, $pageMapTransfer->getStringFacet());
+                break;
+            case PageIndexMap::INTEGER_FACET:
+                $result = $this->transformIntegerFacet($result, $pageMapTransfer->getIntegerFacet());
+                break;
+            case PageIndexMap::STRING_SORT:
+                $result = $this->transformStringSort($result, $pageMapTransfer->getStringSort());
+                break;
+            case PageIndexMap::INTEGER_SORT:
+                $result = $this->transformIntegerSort($result, $pageMapTransfer->getIntegerSort());
+                break;
+            case PageIndexMap::CATEGORY:
+                $result = $this->transformCategory($result, $pageMapTransfer->getCategory());
+                break;
+            default:
+                $result = $this->transformOther($result, $normalizedKey, $value);
+                return $result;
         }
 
         return $result;

@@ -94,15 +94,23 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     }
 
     /**
-     * @param array $requestParameters
+     * @param string $sortParamName
      *
      * @return string|null
      */
-    public function getActiveSortDirection($requestParameters)
+    public function getSortDirection($sortParamName)
     {
-        $direction = array_key_exists($this->sortDirectionParamKey, $requestParameters) ? $requestParameters[$this->sortDirectionParamKey] : self::DIRECTION_ASC;
+        $sortConfigTransfer = $this->get($sortParamName);
 
-        return $direction;
+        if (!$sortConfigTransfer) {
+            return null;
+        }
+
+        if ($sortConfigTransfer->getIsDescending()) {
+            return self::DIRECTION_DESC;
+        }
+
+        return self::DIRECTION_ASC;
     }
 
     /**
