@@ -1,22 +1,20 @@
-<div class="payment-method payment-subform braintree-form braintree-credit-card-form payment-form" id="braintreeCreditCard">
-    <h3>Braintree CreditCard</h3>
-
+<div class="payment-method payment-subform braintree-form braintree-credit-card-form payment-form small-12 medium-9 large-6" id="braintreeCreditCard">
     <div class="braintree">
-        <div class="braintree-loader show">Loading credit card...</div>
+        <div class="small-12 columns braintree-loader show">Loading credit card...</div>
 
         <div class="braintree-method braintree-credit-card-method" data-braintree-client-token="{{ child.vars.clientToken }}">
-            <label for="braintree-credit-card-number">Card Number</label>
-            <div class="field">
+            <div class="small-12 columns">
+                <label for="braintree-credit-card-number">Card Number*</label>
                 <div id="braintree-credit-card-number" class="input"></div>
             </div>
 
-            <label for="braintree-credit-card-cvv">CVV</label>
-            <div class="field">
+            <div class="small-12 columns">
+                <label for="braintree-credit-card-cvv">CVV*</label>
                 <div id="braintree-credit-card-cvv" class="input"></div>
             </div>
 
-            <label for="braintree-credit-card-expiration-date">Expiration Date</label>
-            <div class="field">
+            <div class="small-12 columns">
+                <label for="braintree-credit-card-expiration-date">Expiration Date*</label>
                 <div id="braintree-credit-card-expiration-date" class="input"></div>
             </div>
 
