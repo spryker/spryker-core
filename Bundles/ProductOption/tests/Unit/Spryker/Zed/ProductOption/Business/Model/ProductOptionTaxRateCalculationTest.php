@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
@@ -59,7 +59,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
