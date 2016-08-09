@@ -45,8 +45,8 @@ OptionValueFormHandler.prototype.initialiseExistingProductValueForms = function(
         var relatedTranslationElements = $('#option-value-translations').find("input[value$='"+optionValueFormHash+"']");
 
         relatedTranslationElements.each(function(index, element) {
-            var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(element).parent());
 
+            var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(element).parent());
             var translationLabel = productOptionValueTranslationFormSelector.getTranslationLabel();
             translationLabel.text(numRow + '. ' + translationLabel.text());
         })
@@ -161,13 +161,13 @@ OptionValueFormHandler.prototype.addCopyTranslationTrigger = function() {
 
         var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(valueTranslationForm));
 
-        var translationKey = productOptionValueTranslationFormSelector.getKeyField().val();
+        var relatedOptionHash = productOptionValueTranslationFormSelector.getRelatedOptionHashKeyField().val();
         var translationVal = productOptionValueTranslationFormSelector.getNameField().val();
 
         $('.translation-tabs').find('.form-product-option-translation-row').each(function (index, element) {
 
             var productOptionTranslationSelector = new ProductOptionTranslationFormSelector($(element));
-            if (translationKey && productOptionTranslationSelector.getKeyField().val() == translationKey) {
+            if (relatedOptionHash && productOptionTranslationSelector.getRelatedOptionHashKeyField().val() == relatedOptionHash) {
                 productOptionTranslationSelector.getNameField().val(translationVal);
             }
         });

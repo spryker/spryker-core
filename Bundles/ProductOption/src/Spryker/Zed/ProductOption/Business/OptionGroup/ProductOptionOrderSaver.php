@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 
@@ -40,25 +41,37 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
         $saveOrderTransfer = $checkoutResponse->getSaveOrder();
 
         foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
+            $expandedProductOptions = new \ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
 
-                if ($this->glossaryFacade->hasTranslation($productOptionTransfer->getValue())) {
-                    $productOptionTransfer->setValue(
-                        $this->glossaryFacade->translate($productOptionTransfer->getValue())
+                $expandedProductOptionTransfer = clone $productOptionTransfer;
+                $expandedProductOptionTransfer->setQuantity(1);
+                $expandedProductOptionTransfer->setIdProductOptionValue(null);
+
+                $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
+                if ($this->glossaryFacade->hasTranslation($expandedProductOptionTransfer->getValue())) {
+                    $expandedProductOptionTransfer->setValue(
+                        $this->glossaryFacade->translate($expandedProductOptionTransfer->getValue())
                     );
                 }
 
-                $this->hydrateSalesOrderItemEntity($salesOrderItemOptionEntity, $productOptionTransfer, $itemTransfer);
+                $this->hydrateSalesOrderItemOptionEntity(
+                    $salesOrderItemOptionEntity,
+                    $expandedProductOptionTransfer,
+                    $itemTransfer
+                );
 
                 $salesOrderItemOptionEntity->save();
 
-                $productOptionTransfer->setIdSalesOrderItemOption(
+                $expandedProductOptionTransfer->setIdSalesOrderItemOption(
                     $salesOrderItemOptionEntity->getIdSalesOrderItemOption()
                 );
+                $expandedProductOptions->append($expandedProductOptionTransfer);
             }
+            $itemTransfer->setProductOptions($expandedProductOptions);
         }
     }
+
 
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
@@ -75,13 +88,13 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      *
      * @return void
      */
-    protected function hydrateSalesOrderItemEntity(
+    protected function hydrateSalesOrderItemOptionEntity(
         SpySalesOrderItemOption $salesOrderItemOptionEntity,
         ProductOptionTransfer $productOptionTransfer,
         ItemTransfer $itemTransfer
     ) {
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
-        $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getSumGrossPrice());
+        $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getUnitGrossPrice());
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
     }
 

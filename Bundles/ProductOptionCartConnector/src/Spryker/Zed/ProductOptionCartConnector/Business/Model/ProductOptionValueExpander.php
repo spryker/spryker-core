@@ -49,14 +49,11 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     protected function expandProductOptionTransfers(ItemTransfer $itemTransfer)
     {
         foreach ($itemTransfer->getProductOptions() as &$productOptionTransfer) {
-            if ($productOptionTransfer->getIdProductOptionValue() === null) {
-                throw new \RuntimeException('Unable to expand product option. Missing required value: idOptionValue.');
-            }
+            $productOptionTransfer->requireIdProductOptionValue();
 
-            $productOptionTransfer = $this->productOptionFacade
-                ->getProductOptionValue($productOptionTransfer->getIdProductOptionValue());
-
-            $productOptionTransfer->setQuantity($itemTransfer->getQuantity());
+            $productOptionTransfer = $this->productOptionFacade->getProductOptionValue(
+                $productOptionTransfer->getIdProductOptionValue()
+            );
         }
     }
 

@@ -236,11 +236,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
     {
-        $this->getFactory()->createProductOptionValueQuery()
+        return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($allIdOptionValueUsages, Criteria::IN)
             ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, self::COL_ID_PRODUCT_OPTION_VALUE)
             ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
@@ -261,30 +261,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
             ->endUse()
             ->select([self::COL_MAX_TAX_RATE]);
-
-        /*return $this->getFactory()->createProductOptionValueUsageQuery()
-            ->filterByIdProductOptionValueUsage($allIdOptionValueUsages, Criteria::IN)
-            ->withColumn(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE, self::COL_ID_PRODUCT_OPTION_VALUE_USAGE)
-            ->groupBy(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE)
-            ->useSpyProductOptionTypeUsageQuery()
-                ->useSpyProductOptionTypeQuery()
-                    ->useSpyTaxSetQuery()
-                        ->useSpyTaxSetTaxQuery()
-                            ->useSpyTaxRateQuery()
-                                ->useCountryQuery()
-                                    ->filterByIso2Code($countryIso2Code)
-                                ->endUse()
-                                ->_or()
-                                ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
-                            ->endUse()
-                        ->endUse()
-                        ->withColumn(SpyTaxSetTableMap::COL_NAME)
-                        ->groupBy(SpyTaxSetTableMap::COL_NAME)
-                    ->endUse()
-                    ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
-                ->endUse()
-            ->endUse()
-            ->select([self::COL_MAX_TAX_RATE]);*/
     }
 
 }

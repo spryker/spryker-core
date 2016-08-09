@@ -88,7 +88,7 @@ class ProductOptionValueForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Regex([
-                    'pattern' => '/^[a-z0-9\.]+$/',
+                    'pattern' => '/^[a-z0-9\.\_]+$/',
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".".'
                 ]),
             ],

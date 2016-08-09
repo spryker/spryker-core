@@ -85,24 +85,11 @@ class ProductOptionGroupReader
 
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
-        $productOptionValueTranslations = [];
-        foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
-            $productOptionValueTransfer = new ProductOptionValueTransfer();
-            $productOptionValueTransfer->fromArray($productOptionValueEntity->toArray(), true);
-
-            $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
-            $productOptionValueTransfer->setOptionHash($relatedOptionHash);
-
-            $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
-
-            $valueTranslations = $this->getOptionTranslations(
-                $availableLocales,
-                $productOptionValueTransfer->getValue(),
-                $relatedOptionHash
-            );
-
-            $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
-        }
+        $productOptionValueTranslations = $this->hydrateProductOptionValues(
+            $productOptionGroupEntity,
+            $productOptionGroupTransfer,
+            $availableLocales
+        );
 
         $productOptionGroupTransfer->setProductOptionValueTranslations(new \ArrayObject($productOptionValueTranslations));
 
@@ -154,5 +141,38 @@ class ProductOptionGroupReader
     protected function createRelatedKeyHash($identifier)
     {
         return hash('sha256', $identifier);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param array $availableLocales
+     *
+     * @return array
+     */
+    protected function hydrateProductOptionValues(
+        SpyProductOptionGroup $productOptionGroupEntity,
+        ProductOptionGroupTransfer $productOptionGroupTransfer,
+        array $availableLocales
+    ) {
+        $productOptionValueTranslations = [];
+        foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
+            $productOptionValueTransfer = new ProductOptionValueTransfer();
+            $productOptionValueTransfer->fromArray($productOptionValueEntity->toArray(), true);
+
+            $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
+            $productOptionValueTransfer->setOptionHash($relatedOptionHash);
+
+            $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+            $valueTranslations = $this->getOptionTranslations(
+                $availableLocales,
+                $productOptionValueTransfer->getValue(),
+                $relatedOptionHash
+            );
+
+            $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
+        }
+        return $productOptionValueTranslations;
     }
 }

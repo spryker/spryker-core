@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOption\Business\SaleAggregator;
+namespace Spryker\Zed\ProductOption\Business\SalesAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
