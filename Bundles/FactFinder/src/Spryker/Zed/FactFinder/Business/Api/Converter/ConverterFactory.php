@@ -14,7 +14,6 @@ use FACTFinder\Adapter\SimilarRecords as FFSimilarRecordsAdapter;
 use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
 use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
 use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
-use FACTFinder\Data\Item;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\ItemConverter;
 use Spryker\Zed\FactFinder\Business\Api\Converter\Data\PagingConverter;

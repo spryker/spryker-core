@@ -29,4 +29,16 @@ interface AdapterInterface
      */
     public function write(array $dataSet, $type = '');
 
+    /**
+     * @return string
+     */
+    public function getDirectory();
+
+    /**
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setDirectory($directory);
+
 }

@@ -31,6 +31,14 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * @return string
+     */
+    public function getDirectory()
+    {
+        return $this->directory;
+    }
+
+    /**
      * @param string $directory
      *
      * @return $this

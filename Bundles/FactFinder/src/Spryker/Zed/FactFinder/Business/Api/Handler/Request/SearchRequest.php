@@ -23,20 +23,15 @@ class SearchRequest extends AbstractRequest implements RequestInterface
     public function request(QuoteTransfer $quoteTransfer)
     {
         $searchRequestTransfer = $quoteTransfer->getFactFinderSearchRequest();
-
-        // @todo @Artem : check do we need send request?
-        // $request = mapper->map($searchRequestTransfer);
-
         $searchAdapter = $this->ffConnector->createSearchAdapter();
-        // @todo check
-//        $searchAdapter->setQuery('test');
+
+
         $searchAdapter->setQuery($searchRequestTransfer->getQuery());
 //        $searchAdapter->setSid($_SERVER)
 
+
 //        $status = $searchAdapter->getStatus();
 //        $error = $searchAdapter->getError();
-
-
 
         $this->logInfo($quoteTransfer, $searchAdapter);
 

@@ -8,11 +8,12 @@
             {% endif %}
         </h1>
         <aside class="catalog__filter js-filters">
-            {% include "@catalog/catalog/partials/filter-category-tree.twig" with {
+            {#@todo @artem#}
+            {% include "@FactFinder/index/partials/filter-category-tree.twig" with {
                 filterName:'category',
                 selectedCategory:(category is defined ? category : null)
             } %}
-            {% include "@catalog/catalog/partials/filter-range.twig" with {
+            {% include "@FactFinder/index/partials/filter-range.twig" with {
                 filterName:'price',
                 min:(facets.price.min | default(0)) | priceRaw | floor,
                 max:(facets.price.max | default(0)) | priceRaw | ceil
@@ -39,12 +40,12 @@
         <header class="catalog__summary">
             <div class="summary__total-count">
                 <span class="amount">
-                    {#{{ pagination.numFound }}#}
+                    {{ searchResponse.result.foundRecordsCount }}
                 </span>
                 {{ "catalog.itemsFound"|trans }}
             </div>
             <div class="ui-helper-hidden pagination-max-page">
-                {#{{ pagination.maxPage }}#}
+                {{ searchResponse.paging.pageCount }}
             </div>
             <div class="summary__sorting">
                 {{ "catalog.sort"|trans }}

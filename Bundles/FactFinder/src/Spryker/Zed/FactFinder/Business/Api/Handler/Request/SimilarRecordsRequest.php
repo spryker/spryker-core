@@ -24,10 +24,7 @@ class SimilarRecordsRequest extends AbstractRequest implements RequestInterface
     {
         $similarRecordsRequestTransfer = $quoteTransfer->getFactFinderSimilarRecordsRequest();
 
-        // @todo @Artem : check do we need send request?
-        // $request = mapper->map($searchRequestTransfer);
         $similarRecordsAdapter = $this->ffConnector->createSimilarRecordsAdapter();
-        // @todo check
 
         $this->logInfo($quoteTransfer, $similarRecordsAdapter);
 

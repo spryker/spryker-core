@@ -18,17 +18,13 @@ class SuggestRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FfSuggestResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderSuggestResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
         $suggestRequestTransfer = $quoteTransfer->getFactFinderSuggestRequest();
 
-        // @todo @Artem : check do we need send request?
-        // $request = mapper->map($searchRequestTransfer);
         $suggestAdapter = $this->ffConnector->createSuggestAdapter();
-        // @todo check
-        $suggestAdapter->getRawSuggestions();
 
         $this->logInfo($quoteTransfer, $suggestAdapter);
 

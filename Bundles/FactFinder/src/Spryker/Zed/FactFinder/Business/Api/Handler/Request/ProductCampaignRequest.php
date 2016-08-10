@@ -24,11 +24,8 @@ class ProductCampaignRequest extends AbstractRequest implements RequestInterface
     {
         $productCampaignRequestTransfer = $quoteTransfer->getFactFinderProductCampaignRequest();
 
-        // @todo @Artem : check do we need send request?
-        // $request = mapper->map($searchRequestTransfer);
+
         $productCampaignAdapter = $this->ffConnector->createProductCampaignAdapter();
-        // @todo check
-        $campaigns = $productCampaignAdapter->getCampaigns();
 
         $this->logInfo($quoteTransfer, $productCampaignAdapter);
 

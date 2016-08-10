@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\FactFinder\Business\Api\Converter\Data;
 
-use FACTFinder\Data\Page;
 use FACTFinder\Data\Paging;
 use Generated\Shared\Transfer\FactFinderDataPageTransfer;
 use Generated\Shared\Transfer\FactFinderDataPagingTransfer;
@@ -37,6 +36,7 @@ class PagingConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Paging $paging
+     * @return void
      */
     public function setPaging(Paging $paging)
     {
@@ -61,12 +61,12 @@ class PagingConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Page|null $page
-     * @return FactFinderDataPageTransfer
+     * @return \Generated\Shared\Transfer\FactFinderDataPageTransfer
      */
     protected function convertPage($page)
     {
         $factFinderDataPageTransfer = new FactFinderDataPageTransfer();
-        if (is_null($page)) {
+        if ($page === null) {
             return $factFinderDataPageTransfer;
         }
 

@@ -6,10 +6,10 @@
 'use strict';
 
 var $ = require('jquery');
-var paymentMethod = require('./payment-method');
+var factFinder = require('./fact-finder');
 
 $(document).ready(function() {
-    paymentMethod.init({
+    factFinder.init({
         
     });
 });

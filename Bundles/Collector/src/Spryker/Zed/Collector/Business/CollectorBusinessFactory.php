@@ -71,16 +71,6 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getTouchQueryContainer() instead
-     *
-     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
-     */
-    protected function createTouchQueryContainer()
-    {
-        return $this->getTouchQueryContainer();
-    }
-
-    /**
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected function getTouchQueryContainer()

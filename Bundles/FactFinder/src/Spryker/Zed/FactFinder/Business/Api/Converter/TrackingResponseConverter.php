@@ -32,7 +32,6 @@ class TrackingResponseConverter extends BaseConverter
     public function convert()
     {
         $responseTransfer = new FactFinderTrackingResponseTransfer();
-//        $responseTransfer->set();
 
         return $responseTransfer;
     }

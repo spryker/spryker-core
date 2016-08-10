@@ -22,6 +22,7 @@ class RecordConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\Record $record
+     * @return void
      */
     public function setRecord(Record $record)
     {
@@ -47,6 +48,7 @@ class RecordConverter extends BaseConverter
 
     /**
      * @param \Generated\Shared\Transfer\FactFinderDataRecordTransfer $factFinderDataRecordTransfer
+     * @return void
      */
     protected function convertFields(FactFinderDataRecordTransfer $factFinderDataRecordTransfer)
     {

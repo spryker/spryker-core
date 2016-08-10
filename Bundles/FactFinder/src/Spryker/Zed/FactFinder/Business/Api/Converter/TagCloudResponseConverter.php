@@ -32,7 +32,6 @@ class TagCloudResponseConverter extends BaseConverter
     public function convert()
     {
         $responseTransfer = new FactFinderTagCloudResponseTransfer();
-//        $responseTransfer->set();
 
         return $responseTransfer;
     }

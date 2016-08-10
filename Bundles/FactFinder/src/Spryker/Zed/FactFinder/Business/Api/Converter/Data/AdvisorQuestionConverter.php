@@ -37,6 +37,7 @@ class AdvisorQuestionConverter extends BaseConverter
 
     /**
      * @param \FACTFinder\Data\AdvisorQuestion $advisorQuestion
+     * @return void
      */
     public function setAdvisorQuestion(AdvisorQuestion $advisorQuestion)
     {
@@ -50,7 +51,7 @@ class AdvisorQuestionConverter extends BaseConverter
      */
     public function convert($advisorQuestion = null)
     {
-        $advisorQuestion = is_null($advisorQuestion)?$advisorQuestion:$this->advisorQuestion;
+        $advisorQuestion = $advisorQuestion === null?$advisorQuestion:$this->advisorQuestion;
         $factFinderDataAdvisorQuestionTransfer = new FactFinderDataAdvisorQuestionTransfer();
         $factFinderDataAdvisorQuestionTransfer->setText($advisorQuestion->getText());
 

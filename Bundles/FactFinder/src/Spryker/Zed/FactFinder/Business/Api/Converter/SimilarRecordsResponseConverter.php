@@ -32,7 +32,6 @@ class SimilarRecordsResponseConverter extends BaseConverter
     public function convert()
     {
         $responseTransfer = new FactFinderSimilarRecordsResponseTransfer();
-//        $responseTransfer->set();
 
         return $responseTransfer;
     }

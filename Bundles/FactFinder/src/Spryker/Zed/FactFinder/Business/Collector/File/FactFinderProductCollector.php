@@ -61,7 +61,7 @@ class FactFinderProductCollector extends StorageProductCollector
     protected function collectItem($touchKey, array $collectItemData)
     {
         $abstractAttributes = $this->getAbstractAttributes($collectItemData);
-        if (!isset($collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID])){
+        if (!isset($collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID])) {
             return [];
         }
         $generatedCategories = $this->generateCategories((int)$collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID]);

@@ -11,8 +11,6 @@ use FACTFinder\Adapter\Search as FFSearchAdapter;
 use FACTFinder\Data\AfterSearchNavigation;
 use FACTFinder\Data\BreadCrumbTrail;
 use FACTFinder\Data\CampaignIterator;
-use FACTFinder\Data\Item;
-use FACTFinder\Data\Record;
 use FACTFinder\Data\Result;
 use FACTFinder\Data\ResultsPerPageOptions;
 use FACTFinder\Data\Sorting;
@@ -364,7 +362,6 @@ class SearchResponseConverter extends BaseConverter
         /** @var \FACTFinder\Data\Item $sortingItem */
         foreach ($sorting as $sortingItem) {
             $this->itemConverter->setItem($sortingItem);
-
 
             $sortingItems->append($this->itemConverter->convert());
         }

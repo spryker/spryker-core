@@ -18,17 +18,13 @@ class TrackingRequest extends AbstractRequest implements RequestInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\FactFinderTagCloudResponseTransfer
+     * @return \Generated\Shared\Transfer\FactFinderTrackingResponseTransfer
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
         $trackingRequestTransfer = $quoteTransfer->getFactFinderTrackingRequest();
 
-        // @todo @Artem : check do we need send request?
-        // $request = mapper->map($searchRequestTransfer);
         $trackingAdapter = $this->ffConnector->createTrackingAdapter();
-        // @todo check
-        $trackingAdapter->doTrackingFromRequest();
 
         $this->logInfo($quoteTransfer, $trackingAdapter);
 

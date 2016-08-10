@@ -32,7 +32,6 @@ class RecommendationResponseConverter extends BaseConverter
     public function convert()
     {
         $responseTransfer = new FactFinderRecommendationResponseTransfer();
-//        $responseTransfer->set();
 
         return $responseTransfer;
     }
