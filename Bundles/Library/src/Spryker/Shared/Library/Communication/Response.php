@@ -168,17 +168,12 @@ class Response extends AbstractObject implements
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
-        if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
-            $getMethodName = (new TransferLocatorHelper())
-                ->transferClassNameToLocatorMethod($this->values['transferClassName']);
-
-            return (new TransferLocator())->$getMethodName($this->values['transfer']);
-        }
-
         return null;
     }
 
