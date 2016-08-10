@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
-class EditController extends IndexController
+class EditController extends BaseOptionController
 {
 
     /**
@@ -25,7 +25,7 @@ class EditController extends IndexController
      */
     public function indexAction(Request $request)
     {
-        $idProductOptionGroup = $this->castId($request->query->get(IndexController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
+        $idProductOptionGroup = $this->castId($request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
 
         $productOptionGroupTransfer = $this->getFacade()->getProductOptionGroupById($idProductOptionGroup);
         $dataProvider = $this->getFactory()->createGeneralFormDataProvider($productOptionGroupTransfer);
@@ -39,7 +39,7 @@ class EditController extends IndexController
             $redirectUrl = Url::generate(
                 '/product-option/edit/index',
                 [
-                    IndexController::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup
+                    BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup
                 ]
             )->build();
 
@@ -63,42 +63,6 @@ class EditController extends IndexController
             'generalForm' => $productOptionGroupForm->createView(),
             'availableLocales' => $availableLocales,
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function productOptionTableAction(Request $request)
-    {
-        $idProductOptionGroup = $this->castId($request->get(IndexController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-        $tableContext = $request->get(IndexController::URL_PARAM_TABLE_CONTEXT);
-
-        $productOptionsTable = $this->getFactory()->createProductOptionTable(
-            $idProductOptionGroup,
-            $tableContext
-        );
-
-        return $this->jsonResponse(
-            $productOptionsTable->fetchData()
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function productTableAction(Request $request)
-    {
-        $idProductOptionGroup = $this->castId($request->get(IndexController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-
-        $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
-
-        return $this->jsonResponse(
-            $productTable->fetchData()
-        );
     }
 
 }

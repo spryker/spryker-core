@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
@@ -32,31 +31,23 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @var \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface
      */
-    protected $glossaryFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
-     */
-    protected $localeFacade;
+    protected $translationSaver;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToTouchInterface $touchFacade,
-        ProductOptionToGlossaryInterface $glossaryFacade,
-        ProductOptionToLocaleInterface $localeFacade
+        TranslationSaverInterface $translationSaver
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
-        $this->glossaryFacade = $glossaryFacade;
-        $this->localeFacade = $localeFacade;
+        $this->translationSaver = $translationSaver;
     }
 
     /**
@@ -74,7 +65,9 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $this->removeOptionValues($productOptionGroupTransfer, $productOptionGroupEntity);
         $this->assignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
         $this->deAssignProducts($productOptionGroupTransfer, $productOptionGroupEntity);
-        $this->addTranslations($productOptionGroupTransfer);
+
+        $this->translationSaver->addGroupNameTranslations($productOptionGroupTransfer);
+        $this->translationSaver->addValueTranslations($productOptionGroupTransfer);
 
         $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
 
@@ -95,9 +88,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {
-        $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupById($idProductOptionGroup)
-            ->findOne();
+        $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(
@@ -110,6 +101,71 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $productOptionGroupEntity->setActive($isActive);
 
         return $productOptionGroupEntity->save() > 0;
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param int $idProductOptionGroup
+     *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     *
+     * @return bool
+     */
+    public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
+    {
+        $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
+        if (!$productOptionGroupEntity) {
+            throw new ProductOptionGroupNotFoundException(
+                'Product option group with id "%d" not found.',
+                $idProductOptionGroup
+            );
+        }
+
+        $productAbstractEntity = $this->getProductAbstractBySku($abstractSku);
+        if (!$productAbstractEntity) {
+            throw new AbstractProductNotFoundException(
+                'Abstract product with sku "%d" not found.',
+                $abstractSku
+            );
+        }
+
+        $productOptionGroupEntity->addSpyProductAbstract($productAbstractEntity);
+
+        $affectedRows = $productOptionGroupEntity->save();
+
+        if ($affectedRows > 0) {
+            $this->touchFacade->touchActive(
+                ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
+                $productAbstractEntity->getIdProductAbstract()
+            );
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
+     *
+     * @return int
+     */
+    public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer)
+    {
+        $productOptionValueTransfer->requireFkProductOptionGroup()
+            ->requirePrice()
+            ->requireSku()
+            ->requireValue();
+
+        $producOptionValueEntity = $this->getProductOptionValueEntity($productOptionValueTransfer->getIdProductOptionValue());
+        $this->hydrateOptionValueEntity($producOptionValueEntity, $productOptionValueTransfer);
+        $producOptionValueEntity->save();
+
+        $productOptionValueTransfer->setIdProductOptionValue($producOptionValueEntity->getIdProductOptionValue());
+
+        return $producOptionValueEntity->getIdProductOptionValue();
     }
 
     /**
@@ -143,7 +199,11 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
                 continue;
             }
 
-            $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity($productOptionGroupEntity, $idProductAbstract);
+            $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity(
+                $productOptionGroupEntity,
+                $idProductAbstract
+            );
+
             $productOptionGroupEntity->addSpyProductAbstractProductOptionGroup($productAbstractProductOptionGroupEntity);
         }
     }
@@ -162,10 +222,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
             $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity($productOptionGroupEntity, $idProductAbstract);
             $productOptionGroupEntity->removeSpyProductAbstractProductOptionGroup($productAbstractProductOptionGroupEntity);
 
-            $this->touchFacade->touchActive(
-                ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
-                $idProductAbstract
-            );
+            $this->touchFacade->touchActive(ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION, $idProductAbstract);
         }
 
     }
@@ -183,7 +240,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         foreach ($productOptionGroupTransfer->getProductOptionValuesToBeRemoved() as $idProductOptionValue) {
             $productOptionValueEntity = $this->getProductOptionValueEntity($idProductOptionValue);
 
-            $this->glossaryFacade->deleteKey($productOptionValueEntity->getValue());
+            $this->translationSaver->deleteTranslation($productOptionValueEntity->getValue());
 
             $productOptionGroupEntity->removeSpyProductOptionValue($productOptionValueEntity);
         }
@@ -202,101 +259,6 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         $productAbstractProductOptionGroupEntity->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
 
         return $productAbstractProductOptionGroupEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     *
-     * @return void
-     */
-    protected function addTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
-    {
-        $this->addValueTranslations($productOptionGroupTransfer);
-        $this->addGroupNameTranslations($productOptionGroupTransfer);
-    }
-
-    /**
-     * @param string $key
-     * @param string $value
-     * @param string $localeCode
-     *
-     * @return void
-     */
-    protected function saveProductOptionTranslation($key, $value, $localeCode)
-    {
-        if (!$this->glossaryFacade->hasKey($key)) {
-            $this->glossaryFacade->createKey($key);
-        }
-
-        $localeTransfer = $this->localeFacade->getLocaleByCode($localeCode);
-        if (!$this->glossaryFacade->hasTranslation($key, $localeTransfer)) {
-            $this->glossaryFacade->createAndTouchTranslation($key, $localeTransfer, $value);
-        } else {
-            $this->glossaryFacade->updateAndTouchTranslation($key, $localeTransfer, $value);
-        }
-    }
-
-    /**
-     * @param string $abstractSku
-     * @param int $idProductOptionGroup
-     *
-     * @return bool
-     */
-    public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
-    {
-        $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupByIdProductOptionGroup($idProductOptionGroup)
-            ->findOne();
-
-        if (!$productOptionGroupEntity) {
-            return false;
-        }
-
-        $productAbstractEntity = $this->productOptionQueryContainer
-            ->queryProductAbstractBySku($abstractSku)
-            ->findOne();
-
-        if (!$productAbstractEntity) {
-            return false;
-        }
-
-        $productOptionGroupEntity->addSpyProductAbstract($productAbstractEntity);
-
-        $affectedRows = $productOptionGroupEntity->save();
-
-        if ($affectedRows > 0) {
-            $this->touchFacade->touchActive(
-                ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
-                $productAbstractEntity->getIdProductAbstract()
-            );
-
-            return true;
-        }
-
-        return false;
-
-    }
-
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
-     *
-     * @return int
-     */
-    public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer)
-    {
-        $productOptionValueTransfer->requireFkProductOptionGroup()
-            ->requirePrice()
-            ->requireSku()
-            ->requireValue();
-
-        $producOptionValueEntity = $this->getProductOptionValueEntity($productOptionValueTransfer->getIdProductOptionValue());
-        $this->hydrateOptionValueEntity($producOptionValueEntity, $productOptionValueTransfer);
-        $producOptionValueEntity->save();
-
-        $productOptionValueTransfer->setIdProductOptionValue($producOptionValueEntity->getIdProductOptionValue());
-
-        return $producOptionValueEntity->getIdProductOptionValue();
     }
 
     /**
@@ -341,22 +303,6 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
-     */
-    protected function createProductOptionGroupEntity()
-    {
-        return new SpyProductOptionGroup();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
-     */
-    protected function createProductOptionValueEntity()
-    {
-        return new SpyProductOptionValue();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
@@ -364,9 +310,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected function getProductOptionGroupEntity(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
         if ($productOptionGroupTransfer->getIdProductOptionGroup()) {
-            return $this->productOptionQueryContainer
-                ->queryProductOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup())
-                ->findOne();
+            return $this->getOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup());
         }
 
         return $this->createProductOptionGroupEntity();
@@ -380,9 +324,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected function getProductOptionValueEntity($idProductOptionValue = null)
     {
         if ($idProductOptionValue) {
-            return $this->productOptionQueryContainer
-                ->queryProductOptionByValueId((int)$idProductOptionValue)
-                ->findOne();
+            return $this->getProductOptionValueById($idProductOptionValue);
         }
 
         return $this->createProductOptionValueEntity();
@@ -395,10 +337,10 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      */
     protected function touchProductOptionGroupAbstractProducts(SpyProductOptionGroup $productOptionGroupEntity)
     {
-        foreach ($productOptionGroupEntity->getSpyProductAbstracts() as $productAbstractEntity) {
+        foreach ($productOptionGroupEntity->getSpyProductAbstractProductOptionGroups() as $productAbstractProductOptionEntity) {
             $this->touchFacade->touchActive(
                 ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
-                $productAbstractEntity->getIdProductAbstract()
+                $productAbstractProductOptionEntity->getFkProductAbstract()
             );
         }
     }
@@ -421,59 +363,61 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param string $abstractSku
      *
-     * @return void
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function addValueTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    protected function getProductAbstractBySku($abstractSku)
     {
-        foreach ($productOptionGroupTransfer->getProductOptionValueTranslations() as $productOptionTranslationTransfer) {
+        $productAbstractEntity = $this->productOptionQueryContainer
+            ->queryProductAbstractBySku($abstractSku)
+            ->findOne();
 
-            $value = $productOptionTranslationTransfer->getName();
-            $key = $productOptionTranslationTransfer->getKey();
-
-            if (!$value) {
-                $value = $key;
-            }
-
-            if (strpos($key, ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false) {
-                $key = ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $key;
-            }
-
-            $this->saveProductOptionTranslation(
-                $key,
-                $value,
-                $productOptionTranslationTransfer->getLocaleCode()
-            );
-        }
+        return $productAbstractEntity;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param int $idProductOptionGroup
      *
-     * @return void
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function addGroupNameTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    protected function getOptionGroupById($idProductOptionGroup)
     {
-        if (!$productOptionGroupTransfer->getName()) {
-            return;
-        }
+        $productOptionGroupEntity = $this->productOptionQueryContainer
+            ->queryProductOptionGroupById((int)$idProductOptionGroup)
+            ->findOne();
 
-        foreach ($productOptionGroupTransfer->getGroupNameTranslations() as $groupNameTranslationTransfer) {
+        return $productOptionGroupEntity;
+    }
 
-            $value = $groupNameTranslationTransfer->getName();
-            $key = $productOptionGroupTransfer->getName();
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     */
+    protected function getProductOptionValueById($idProductOptionValue)
+    {
+        $productOptionValueEntity = $this->productOptionQueryContainer
+            ->queryProductOptionByValueId((int)$idProductOptionValue)
+            ->findOne();
 
-            if (!$value) {
-                $value = $key;
-            }
+        return $productOptionValueEntity;
+    }
 
-            $this->saveProductOptionTranslation(
-                $key,
-                $value,
-                $groupNameTranslationTransfer->getLocaleCode()
-            );
-        }
+    /**
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
+     */
+    protected function createProductOptionGroupEntity()
+    {
+        return new SpyProductOptionGroup();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     */
+    protected function createProductOptionValueEntity()
+    {
+        return new SpyProductOptionValue();
     }
 
 }

@@ -27,22 +27,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
-    /**
-     * @api
-     *
-     * @param int $idProductOptionGroup
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupByIdProductOptionGroup($idProductOptionGroup)
-    {
-        return $this->getFactory()
-            ->createProductOptionGroupQuery()
-            ->filterByIdProductOptionGroup($idProductOptionGroup);
-    }
-
 
     /**
      * @api

@@ -15,17 +15,6 @@ interface ProductOptionQueryContainerInterface
     /**
      * @api
      *
-     * @param int $idProductOptionGroup
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupByIdProductOptionGroup($idProductOptionGroup);
-
-    /**
-     * @api
-     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException

@@ -19,8 +19,12 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Persist new product option group
+     *  - Persist new product option group, with tax set
      *  - Persist option values if provided
+     *  - Add abstract products if provided in productsToBeAssigned array of primary keys
+     *  - Remove abstract products if provided in productsToBeDeAssigned array of primary keys
+     *  - Remove product option values if provided in productOptionValuesToBeRemoved array of primary keys
+     *  - Persist value and group name translations, add to glossary
      *
      * @api
      *

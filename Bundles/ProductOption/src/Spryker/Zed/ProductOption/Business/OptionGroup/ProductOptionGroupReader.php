@@ -10,12 +10,13 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
-class ProductOptionGroupReader
+class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 {
 
     /**
@@ -57,14 +58,12 @@ class ProductOptionGroupReader
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupById($idProductOptionGroup)
-            ->findOne();
+        $productOptionGroupEntity = $this->queryProductGroupById($idProductOptionGroup);
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(
                 sprintf(
-                    'Product option group with id %d not found',
+                    'Product option group with id "%d" not found.',
                     $idProductOptionGroup
                 )
             );
@@ -158,8 +157,7 @@ class ProductOptionGroupReader
     ) {
         $productOptionValueTranslations = [];
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
-            $productOptionValueTransfer = new ProductOptionValueTransfer();
-            $productOptionValueTransfer->fromArray($productOptionValueEntity->toArray(), true);
+            $productOptionValueTransfer = $this->hydrateProductOptionValueTransfer($productOptionValueEntity);
 
             $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
             $productOptionValueTransfer->setOptionHash($relatedOptionHash);
@@ -175,6 +173,33 @@ class ProductOptionGroupReader
             $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
         }
         return $productOptionValueTranslations;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
+     */
+    protected function hydrateProductOptionValueTransfer(SpyProductOptionValue $productOptionValueEntity)
+    {
+        $productOptionValueTransfer = new ProductOptionValueTransfer();
+        $productOptionValueTransfer->fromArray($productOptionValueEntity->toArray(), true);
+
+        return $productOptionValueTransfer;
+    }
+
+    /**
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
+     */
+    protected function queryProductGroupById($idProductOptionGroup)
+    {
+        $productOptionGroupEntity = $this->productOptionQueryContainer
+            ->queryProductOptionGroupById($idProductOptionGroup)
+            ->findOne();
+
+        return $productOptionGroupEntity;
     }
 
 }

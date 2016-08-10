@@ -11,7 +11,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
-class ProductOptionValueReader
+class ProductOptionValueReader implements ProductOptionValueReaderInterface
 {
 
     /**
@@ -36,9 +36,7 @@ class ProductOptionValueReader
      */
     public function getProductOption($idProductOptionValue)
     {
-        $productOptionValueEntity = $this->productOptionQueryContainer
-            ->queryProductOptionByValueId($idProductOptionValue)
-            ->findOne();
+        $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
 
         if (!$productOptionValueEntity) {
             throw new ProductOptionNotFoundException(
@@ -62,6 +60,20 @@ class ProductOptionValueReader
         $productOptionTransfer->setUnitGrossPrice($productOptionValueEntity->getPrice());
 
         return $productOptionTransfer;
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     */
+    protected function getOptionValueById($idProductOptionValue)
+    {
+        $productOptionValueEntity = $this->productOptionQueryContainer
+            ->queryProductOptionByValueId($idProductOptionValue)
+            ->findOne();
+
+        return $productOptionValueEntity;
     }
 
 }

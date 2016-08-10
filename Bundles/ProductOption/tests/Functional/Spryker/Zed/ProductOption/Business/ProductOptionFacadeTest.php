@@ -288,6 +288,36 @@ class ProductOptionFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testProductAbstractToProductOptionGroupShouldAddNewProductToGroup()
+    {
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+
+        $idOfPersistendOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $testSku = 'testing-sku';
+        $productAbstractEntity = $this->createProductAbstract($testSku);
+
+        $productOptionFacade->addProductAbstractToProductOptionGroup(
+            $productAbstractEntity->getSku(),
+            $idOfPersistendOptionGroup
+        );
+
+        $groupProducts = SpyProductOptionGroupQuery::create()
+            ->findOneByIdProductOptionGroup($idOfPersistendOptionGroup);
+
+        $assignedAbstractProducts = $groupProducts->getSpyProductAbstracts();
+
+        $this->assertEquals($assignedAbstractProducts[0]->getSku(), $productAbstractEntity->getSku());
+
+    }
+
+    /**
      * @param string $iso2Code
      * @param int $taxRate
      *

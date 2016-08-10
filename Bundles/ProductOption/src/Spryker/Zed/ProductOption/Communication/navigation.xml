@@ -16,8 +16,8 @@
                 <visible>1</visible>
             </product>
             <product_options>
-                <label>Product options</label>
-                <title>Product options</title>
+                <label>Product Options</label>
+                <title>Product Options</title>
                 <bundle>product-option</bundle>
                 <controller>list</controller>
                 <action>index</action>

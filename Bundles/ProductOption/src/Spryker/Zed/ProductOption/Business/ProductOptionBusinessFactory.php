@@ -13,6 +13,7 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
+use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice;
 use Spryker\Zed\ProductOption\Business\SalesAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -44,6 +45,16 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionGroupSaver(
             $this->getQueryContainer(),
             $this->getTouchFacade(),
+            $this->createTranslationSaver()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver
+     */
+    protected function createTranslationSaver()
+    {
+        return new TranslationSaver(
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
         );

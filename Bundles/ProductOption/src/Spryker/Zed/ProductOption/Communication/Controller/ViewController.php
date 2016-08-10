@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ProductOption\Communication\Controller;
 
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
-class ViewController extends AbstractController
+class ViewController extends BaseOptionController
 {
 
     /**
@@ -26,7 +25,9 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idProductOptionGroup = $this->castId($request->query->get(IndexController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
+        $idProductOptionGroup = $this->castId(
+            $request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP)
+        );
 
         $productOptionsTable = $this->getFactory()->createProductOptionTable(
             $idProductOptionGroup,
@@ -47,26 +48,6 @@ class ViewController extends AbstractController
             'productOptionsTable' => $productOptionsTable->render(),
             'taxSet' => $taxSetTransfer
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function productOptionTableAction(Request $request)
-    {
-        $idProductOptionGroup = $this->castId($request->get(IndexController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-        $tableContext = $request->get(IndexController::URL_PARAM_TABLE_CONTEXT);
-
-        $productOptionsTable = $this->getFactory()->createProductOptionTable(
-            $idProductOptionGroup,
-            $tableContext
-        );
-
-        return $this->jsonResponse(
-            $productOptionsTable->fetchData()
-        );
     }
 
 }
