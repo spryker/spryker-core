@@ -7,12 +7,11 @@
 
 namespace Spryker\Shared\Library\Zed;
 
-use Guzzle\Http\Client;
-use Guzzle\Http\Message\EntityEnclosingRequest;
-use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Cookie\Cookie;
-use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
-use Guzzle\Plugin\Cookie\CookiePlugin;
+use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Cookie\SetCookie;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\EventJournal\EventJournal;
 use Spryker\Client\EventJournal\EventJournalClient;
 use Spryker\Shared\Config\Config;
@@ -22,14 +21,19 @@ use Spryker\Shared\Library\Communication\Request;
 use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\System;
-use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface;
+use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 
 /**
  * @deprecated Moved to ZedRequest Bundle
  */
 class ZedClient
 {
+
+    const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
+
+    const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
 
     /**
      * @var bool
@@ -106,13 +110,12 @@ class ZedClient
         self::$requestCounter++;
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
-        $request = $this->createGuzzleRequest($pathInfo, $requestTransfer, $timeoutInSeconds);
+        $request = $this->createGuzzleRequest($pathInfo);
         $this->logRequest($pathInfo, $requestTransfer, $request->getBody());
 
-        $this->forwardDebugSession($request);
-        $response = $this->sendRequest($request);
+        $response = $this->sendRequest($request, $requestTransfer, $timeoutInSeconds);
         $responseTransfer = $this->getTransferFromResponse($response);
-        $this->logResponse($pathInfo, $responseTransfer, $response->getBody(true));
+        $this->logResponse($pathInfo, $responseTransfer, $response->getBody());
 
         return $responseTransfer;
     }
@@ -146,42 +149,24 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
-     * @param int|null $timeoutInSeconds
      *
-     * @return \Guzzle\Http\Message\EntityEnclosingRequest
+     * @return \Psr\Http\Message\RequestInterface
      */
-    protected function createGuzzleRequest($pathInfo, Request $requestTransfer, $timeoutInSeconds = null)
+    protected function createGuzzleRequest($pathInfo)
     {
-        $client = new Client(
-            $this->baseUrl,
-            [
-                Client::REQUEST_OPTIONS => [
-                    'timeout' => ($timeoutInSeconds ?: self::$timeoutInSeconds),
-                    'connect_timeout' => 1.5,
-                ],
-            ]
-        );
-
         $char = (strpos($pathInfo, '?') === false) ? '?' : '&';
-        /*
-         * @todo CD-417
-         */
+
         $eventJournal = new EventJournal();
         $event = new Event();
         $eventJournal->applyCollectors($event);
         $requestId = $event->getFields()['request_id'];
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
-        $client->setUserAgent('Yves 2.0');
-        /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
-        $request = $client->post($pathInfo);
-        $request->addHeader('X-Yves-Host', 1);
-
-        $rawRequestBody = json_encode($requestTransfer->toArray());
-
-        $request->setBody($rawRequestBody, 'application/json');
-        //$request->setHeader('Host', System::getHostname());
+        $headers = [
+            'User-Agent' => 'Yves 2.0',
+            'X-Yves-Host' => 1
+        ];
+        $request = new \GuzzleHttp\Psr7\Request('POST', $this->baseUrl . $pathInfo, $headers);
 
         return $request;
     }
@@ -221,34 +206,47 @@ class ZedClient
     }
 
     /**
-     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
-     *
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param \Spryker\Shared\Library\Communication\ObjectInterface $requestTransfer
+     * @param int|null $timeoutInSeconds
+
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function sendRequest(EntityEnclosingRequest $request)
+    protected function sendRequest(RequestInterface $request, ObjectInterface $requestTransfer, $timeoutInSeconds = null)
     {
-        $response = $request->send();
-        if (!$response || !$response->isSuccessful() || !$response->getBody()->getSize()) {
-            throw new InvalidZedResponseException('empty', $response);
+        $config = [
+            'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
+            'connect_timeout' => 1.5,
+        ];
+        $config = $this->addCookiesToForwardDebugSession($config);
+        $client = new Client($config);
+
+        $options = [
+            'json' => $requestTransfer->toArray()
+        ];
+        $response = $client->send($request, $options);
+
+        if (!$response || $response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
+            throw new InvalidZedResponseException('Invalid or empty response', $response, $request->getUri());
         }
 
         return $response;
     }
 
     /**
-     * @param \Guzzle\Http\Message\Response $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Spryker\Shared\Library\Communication\Response
      */
-    protected function getTransferFromResponse(Response $response)
+    protected function getTransferFromResponse(ResponseInterface $response)
     {
-        $data = json_decode(trim($response->getBody(true)), true);
-        if (empty($data) || !is_array($data)) {
-            throw new InvalidZedResponseException('no valid JSON', $response);
+        $data = json_decode(trim($response->getBody()), true);
+        if (!$data || !is_array($data)) {
+            throw new InvalidZedResponseException('no valid JSON', $response, '');
         }
 
         $responseTransfer = new CommunicationResponse();
@@ -259,37 +257,37 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $requestTransfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function logRequest($pathInfo, Request $requestTransfer, $rawBody)
+    protected function logRequest($pathInfo, EmbeddedTransferInterface $requestTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, Types::TRANSFER_REQUEST, $requestTransfer, $rawBody);
+        $this->doLog($pathInfo, static::EVENT_NAME_TRANSFER_REQUEST, $requestTransfer, $rawBody);
     }
 
     /**
      * @param string $pathInfo
-     * @param \Guzzle\Http\Message\Response $responseTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $responseTransfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function logResponse($pathInfo, Response $responseTransfer, $rawBody)
+    protected function logResponse($pathInfo, EmbeddedTransferInterface $responseTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, Types::TRANSFER_RESPONSE, $responseTransfer, $rawBody);
+        $this->doLog($pathInfo, static::EVENT_NAME_TRANSFER_RESPONSE, $responseTransfer, $rawBody);
     }
 
     /**
      * @param string $pathInfo
      * @param string $subType
-     * @param \Spryker\Shared\Library\Communication\ObjectInterface $transfer
+     * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $transfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
+    protected function doLog($pathInfo, $subType, EmbeddedTransferInterface $transfer, $rawBody)
     {
         $eventJournalClient = new EventJournalClient();
         $event = new Event();
@@ -320,22 +318,27 @@ class ZedClient
     }
 
     /**
-     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
+     * @param array $config
      *
-     * @return void
+     * @return array
      */
-    protected function forwardDebugSession(EntityEnclosingRequest $request)
+    protected function addCookiesToForwardDebugSession(array $config)
     {
-        if (Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
-            $cookie = new Cookie();
-            $cookie->setName(trim(Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)));
-            $cookie->setValue($_COOKIE[Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)]);
-            $cookie->setDomain(Config::get(LibraryConstants::HOST_ZED_API));
-            $cookieArray = new ArrayCookieJar(true);
-            $cookieArray->add($cookie);
-
-            $request->addSubscriber(new CookiePlugin($cookieArray));
+        if (!Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+            return $config;
         }
+
+        $cookie = new SetCookie();
+        $cookie->setName(trim(Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)));
+        $cookie->setValue($_COOKIE[Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)]);
+        $cookie->setDomain(Config::get(LibraryConstants::HOST_ZED_API));
+
+        $cookieJar = new CookieJar();
+        $cookieJar->setCookie($cookie);
+
+        $config['cookies'] = $cookieJar;
+
+        return $config;
     }
 
 }

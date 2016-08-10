@@ -7,13 +7,12 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Guzzle\Http\Client;
-use Guzzle\Http\Exception\RequestException as GuzzleRequestException;
-use Guzzle\Http\Message\EntityEnclosingRequest;
-use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Cookie\Cookie;
-use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
-use Guzzle\Plugin\Cookie\CookiePlugin;
+use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Cookie\SetCookie;
+use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
@@ -24,7 +23,6 @@ use Spryker\Shared\Library\System;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
-use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
@@ -91,7 +89,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     public static function setDefaultTimeout($timeoutInSeconds)
     {
-        self::$timeoutInSeconds = $timeoutInSeconds;
+        static::$timeoutInSeconds = $timeoutInSeconds;
     }
 
     /**
@@ -116,23 +114,24 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $timeoutInSeconds = null
     ) {
 
-        self::$requestCounter++;
+        static::$requestCounter++;
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
-        $request = $this->createGuzzleRequest($pathInfo, $requestTransfer, $timeoutInSeconds);
+
+        $request = $this->createGuzzleRequest($pathInfo);
         $this->logRequest($pathInfo, $requestTransfer, (string)$request->getBody());
 
-        $this->forwardDebugSession($request);
         try {
-            $response = $this->sendRequest($request);
+            $response = $this->sendRequest($request, $requestTransfer, $timeoutInSeconds);
         } catch (GuzzleRequestException $e) {
             $requestException = new RequestException($e->getMessage(), $e->getCode(), $e);
-            $requestException->setExtra((string)$e->getRequest()->getResponse());
+            $requestException->setExtra((string)$e->getResponse());
 
             throw $requestException;
         }
-        $responseTransfer = $this->getTransferFromResponse($response);
-        $this->logResponse($pathInfo, $responseTransfer, $response->getBody(true));
+
+        $responseTransfer = $this->getTransferFromResponse($response, $request);
+        $this->logResponse($pathInfo, $responseTransfer, (string)$response->getBody());
 
         return $responseTransfer;
     }
@@ -149,47 +148,30 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
-     * @param int|null $timeoutInSeconds
      *
-     * @return \Guzzle\Http\Message\EntityEnclosingRequest
+     * @return \Psr\Http\Message\RequestInterface
      */
-    protected function createGuzzleRequest($pathInfo, RequestInterface $requestTransfer, $timeoutInSeconds = null)
+    protected function createGuzzleRequest($pathInfo)
     {
-        $client = new Client(
-            $this->baseUrl,
-            [
-                Client::REQUEST_OPTIONS => [
-                    'timeout' => ($timeoutInSeconds ?: self::$timeoutInSeconds),
-                    'connect_timeout' => 1.5,
-                ],
-            ]
-        );
+        $headers = [
+            'User-Agent' => 'Yves 2.0',
+            'X-Yves-Host' => 1,
+            'X-Internal-Request' => 1,
+        ];
+
+        foreach ($this->getHeaders() as $header => $value) {
+            $headers[$header] = $value;
+        }
 
         $char = (strpos($pathInfo, '?') === false) ? '?' : ' &';
-        /*
-         * @todo CD-417
-         */
+
         $eventJournal = new SharedEventJournal();
         $event = new Event();
         $eventJournal->applyCollectors($event);
         $requestId = $event->getFields()['request_id'];
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
-        $client->setUserAgent('Yves 2.0');
-        /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
-        $request = $client->post($pathInfo);
-        $request->addHeader('X-Yves-Host', 1);
-        $request->addHeader('X-Internal-Request', 1);
-        foreach ($this->getHeaders() as $header => $value) {
-            $request->addHeader($header, $value);
-        }
-
-        $data = $requestTransfer->toArray(true);
-//        unset($data['transfer']);
-        $rawRequestBody = json_encode($data);
-        $request->setBody($rawRequestBody, 'application/json');
-//        $request->setHeader('Host', System::getHostname());
+        $request = new \GuzzleHttp\Psr7\Request('POST', $this->baseUrl . $pathInfo, $headers);
 
         return $request;
     }
@@ -200,7 +182,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @throws \LogicException
      *
-     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
+     * @return \Spryker\Client\ZedRequest\Client\Request
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
@@ -211,7 +193,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
-                throw new \LogicException(self::META_TRANSFER_ERROR);
+                throw new \LogicException(static::META_TRANSFER_ERROR);
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }
@@ -224,34 +206,47 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param \Spryker\Shared\ZedRequest\Client\ObjectInterface $requestTransfer
+     * @param int|null $timeoutInSeconds
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function sendRequest(EntityEnclosingRequest $request)
+    protected function sendRequest(RequestInterface $request, ObjectInterface $requestTransfer, $timeoutInSeconds = null)
     {
-        $response = $request->send();
-        if (!$response || !$response->isSuccessful() || !$response->getBody()->getSize()) {
-            throw new InvalidZedResponseException('empty', $response);
+        $config = [
+            'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
+            'connect_timeout' => 1.5,
+        ];
+        $config = $this->addCookiesToForwardDebugSession($config);
+        $client = new Client($config);
+
+        $options = [
+            'json' => $requestTransfer->toArray()
+        ];
+        $response = $client->send($request, $options);
+
+        if (!$response || $response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
+            throw new InvalidZedResponseException('Invalid or empty response', $response, $request->getUri());
         }
 
         return $response;
     }
 
     /**
-     * @param \Guzzle\Http\Message\Response $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
-    protected function getTransferFromResponse(Response $response)
+    protected function getTransferFromResponse(ResponseInterface $response, RequestInterface $request)
     {
-        $data = json_decode(trim($response->getBody(true)), true);
-        if (empty($data) || !is_array($data)) {
-            throw new InvalidZedResponseException('no valid JSON', $response);
+        $data = json_decode(trim($response->getBody()), true);
+        if (!$data || !is_array($data)) {
+            throw new InvalidZedResponseException('Invalid JSON', $response, $request->getUri());
         }
         $responseTransfer = new SprykerResponse();
         $responseTransfer->fromArray($data);
@@ -261,52 +256,52 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $requestTransfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function logRequest($pathInfo, RequestInterface $requestTransfer, $rawBody)
+    protected function logRequest($pathInfo, EmbeddedTransferInterface $requestTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, self::EVENT_NAME_TRANSFER_REQUEST, $requestTransfer, $rawBody);
+        $this->doLog($pathInfo, static::EVENT_NAME_TRANSFER_REQUEST, $requestTransfer, $rawBody);
     }
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $responseTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $responseTransfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function logResponse($pathInfo, ZedResponse $responseTransfer, $rawBody)
+    protected function logResponse($pathInfo, EmbeddedTransferInterface $responseTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, self::EVENT_NAME_TRANSFER_RESPONSE, $responseTransfer, $rawBody);
+        $this->doLog($pathInfo, static::EVENT_NAME_TRANSFER_RESPONSE, $responseTransfer, $rawBody);
     }
 
     /**
      * @param string $pathInfo
      * @param string $subType
-     * @param \Spryker\Shared\ZedRequest\Client\ObjectInterface $transfer
+     * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $transfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
+    protected function doLog($pathInfo, $subType, EmbeddedTransferInterface $transfer, $rawBody)
     {
         $eventJournal = new SharedEventJournal();
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
-            $event->setField(self::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->modifiedToArray(true));
-            $event->setField(self::EVENT_FIELD_TRANSFER_CLASS, get_class($responseTransfer));
+            $event->setField(static::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->modifiedToArray(true));
+            $event->setField(static::EVENT_FIELD_TRANSFER_CLASS, get_class($responseTransfer));
         } else {
-            $event->setField(self::EVENT_FIELD_TRANSFER_DATA, null);
-            $event->setField(self::EVENT_FIELD_TRANSFER_CLASS, null);
+            $event->setField(static::EVENT_FIELD_TRANSFER_DATA, null);
+            $event->setField(static::EVENT_FIELD_TRANSFER_CLASS, null);
         }
 
         $event->setField(Event::FIELD_NAME, 'transfer');
-        $event->setField(self::EVENT_FIELD_PATH_INFO, $pathInfo);
-        $event->setField(self::EVENT_FIELD_SUB_TYPE, $subType);
+        $event->setField(static::EVENT_FIELD_PATH_INFO, $pathInfo);
+        $event->setField(static::EVENT_FIELD_SUB_TYPE, $subType);
 
         $eventJournal->saveEvent($event);
     }
@@ -318,28 +313,35 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     public static function getRequestCounter()
     {
-        return self::$requestCounter;
+        return static::$requestCounter;
     }
 
     /**
-     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
+     * @param array $config
      *
-     * @return void
+     * @return array
      */
-    protected function forwardDebugSession(EntityEnclosingRequest $request)
+    protected function addCookiesToForwardDebugSession(array $config)
     {
-        if (Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
-            if (isset($_COOKIE[Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)])) {
-                $cookie = new Cookie();
-                $cookie->setName(trim(Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)));
-                $cookie->setValue($_COOKIE[Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)]);
-                $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
-                $cookieArray = new ArrayCookieJar(true);
-                $cookieArray->add($cookie);
-
-                $request->addSubscriber(new CookiePlugin($cookieArray));
-            }
+        if (!Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+            return $config;
         }
+
+        if (!isset($_COOKIE[Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)])) {
+            return $config;
+        }
+
+        $cookie = new SetCookie();
+        $cookie->setName(trim(Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)));
+        $cookie->setValue($_COOKIE[Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)]);
+        $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
+
+        $cookieJar = new CookieJar();
+        $cookieJar->setCookie($cookie);
+
+        $config['cookies'] = $cookieJar;
+
+        return $config;
     }
 
     /**
