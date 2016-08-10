@@ -227,7 +227,7 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      *
-     * @return Api\Model\RequestModelFactoryInterface
+     * @return \Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface
      */
     public function createApiRequestFactory($requestTransfer)
     {
