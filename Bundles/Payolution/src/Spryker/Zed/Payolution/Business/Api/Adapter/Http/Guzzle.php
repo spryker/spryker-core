@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
-use Spryker\Zed\Ratepay\Business\Exception\ApiHttpRequestException;
+use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 
 class Guzzle extends AbstractHttpAdapter
 {
@@ -65,7 +65,7 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param \Psr\Http\Message\RequestInterface $request
      *
-     * @throws \Spryker\Zed\Ratepay\Business\Exception\ApiHttpRequestException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */
