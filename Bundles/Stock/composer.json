@@ -12,7 +12,6 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/guzzle": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.0.0",
