@@ -20,28 +20,28 @@ class NestedPriceRangeQuery extends NestedRangeQuery
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param mixed $rangeValues
+     * @param array|string $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
      * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
      */
     public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, CurrencyManager $currencyManager)
     {
-        parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);
-
         $this->currencyManager = $currencyManager;
+
+        parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);
     }
 
     /**
+     * @param array|string $rangeValues
+     *
      * @return array
      */
-    protected function getMinMaxValue()
+    protected function setMinMaxValues($rangeValues)
     {
-        list($minValue, $maxValue) = parent::getMinMaxValue();
+        parent::setMinMaxValues($rangeValues);
 
-        $minValue = $this->currencyManager->convertDecimalToCent($minValue);
-        $maxValue = $this->currencyManager->convertDecimalToCent($maxValue);
-
-        return [$minValue, $maxValue];
+        $this->minValue = $this->currencyManager->convertDecimalToCent($this->minValue);
+        $this->maxValue = $this->currencyManager->convertDecimalToCent($this->maxValue);
     }
 
 }

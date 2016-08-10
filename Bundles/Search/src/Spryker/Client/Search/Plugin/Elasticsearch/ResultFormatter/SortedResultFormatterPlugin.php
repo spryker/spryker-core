@@ -30,7 +30,7 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\SortSearchResultTransfer
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {

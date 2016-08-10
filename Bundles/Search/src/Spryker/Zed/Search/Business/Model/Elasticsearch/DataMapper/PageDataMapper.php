@@ -123,7 +123,6 @@ class PageDataMapper implements PageDataMapperInterface
                 break;
             default:
                 $result = $this->transformOther($result, $normalizedKey, $value);
-                return $result;
         }
 
         return $result;
