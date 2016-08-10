@@ -34,7 +34,7 @@ class NestedPriceRangeQuery extends NestedRangeQuery
     /**
      * @param array|string $rangeValues
      *
-     * @return array
+     * @return void
      */
     protected function setMinMaxValues($rangeValues)
     {
