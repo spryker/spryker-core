@@ -9,12 +9,14 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
@@ -23,6 +25,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -56,6 +59,11 @@ class AbstractProductFormDataProvider
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     */
+    protected $productManagementQueryContainer;
 
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
@@ -93,9 +101,9 @@ class AbstractProductFormDataProvider
     protected $productManagementFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Spryker\Shared\Library\Collection\CollectionInterface
      */
-    protected $attributeTransferCollection = [];
+    protected $attributeTransferCollection;
 
     /**
      * @var array
@@ -110,6 +118,7 @@ class AbstractProductFormDataProvider
 
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToPriceInterface $priceFacade,
@@ -123,6 +132,7 @@ class AbstractProductFormDataProvider
         $imageUrlPrefix
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
+        $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
@@ -131,7 +141,7 @@ class AbstractProductFormDataProvider
         $this->productFacade = $productFacade;
         $this->productManagementFacade = $productManagementFacade;
         $this->currentLocale = $currentLocale;
-        $this->attributeTransferCollection = $attributeCollection;
+        $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
     }
@@ -410,7 +420,7 @@ class AbstractProductFormDataProvider
     protected function convertAbstractLocalizedAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
     {
         if ($localeCode === null) {
-            $attributes = $attributeProcessor->getAllKeys();
+            $attributes = $attributeProcessor->mergeAttributes($localeCode);
         } else {
             $attributes = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
         }
@@ -428,8 +438,9 @@ class AbstractProductFormDataProvider
             }
 
             $values[$type] = [
-                self::FORM_FIELD_NAME => isset($attributeValue),
-                self::FORM_FIELD_VALUE => $attributeValue,
+                AttributeAbstractForm::FIELD_NAME => isset($attributeValue),
+                AttributeAbstractForm::FIELD_VALUE => $attributeValue,
+                AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID => $attributeTransfer->getIdProductManagementAttribute(),
             ];
         }
 
@@ -448,11 +459,15 @@ class AbstractProductFormDataProvider
     protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
     {
         $productAttributeKeys = $attributeProcessor->getAllKeys();
-        $productAttributeValues = $attributeProcessor->mergeAttributes($localeCode);
+        if ($localeCode === null) { //default tab
+            $productAttributeValues = $attributeProcessor->getAbstractAttributes();
+        } else {
+            $productAttributeValues = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
+        }
 
         $values = [];
         foreach ($productAttributeKeys as $type => $tmp) {
-            $isDefined = array_key_exists($type, $this->attributeTransferCollection);
+            $isDefined = $this->attributeTransferCollection->has($type);
 
             $isProductSpecificAttribute = true;
             $id = null;
@@ -464,7 +479,7 @@ class AbstractProductFormDataProvider
 
             if ($isDefined) {
                 $isProductSpecificAttribute = false;
-                $attributeTransfer = $this->attributeTransferCollection[$type];
+                $attributeTransfer = $this->attributeTransferCollection->get($type);
                 $id = $attributeTransfer->getIdProductManagementAttribute();
                 $isMultiple = $attributeTransfer->getIsMultiple();
                 $inputType = $attributeTransfer->getInputType();
@@ -534,7 +549,7 @@ class AbstractProductFormDataProvider
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-            $isMultiple = $this->attributeTransferCollection[$type]->getIsMultiple();
+            $isMultiple = $this->attributeTransferCollection->get($type)->getIsMultiple();
 
             if ($isNew) {
                 $value = null;
@@ -545,8 +560,9 @@ class AbstractProductFormDataProvider
             }
 
             $result[$type] = [
-                self::FORM_FIELD_NAME => null,
-                self::FORM_FIELD_VALUE => $value
+                AttributeAbstractForm::FIELD_NAME => null,
+                AttributeAbstractForm::FIELD_VALUE => $value,
+                AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID => $attributeTransfer->getIdProductManagementAttribute()
             ];
         }
 
@@ -569,7 +585,7 @@ class AbstractProductFormDataProvider
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-            $isMulti = $this->attributeTransferCollection[$type]->getIsMultiple();
+            $isMulti = $this->attributeTransferCollection->get($type)->getIsMultiple();
             $valueDisabled = !$isProductSpecificAttribute;
 
             if ($isNew) {
@@ -623,7 +639,7 @@ class AbstractProductFormDataProvider
             $values[$key] = [
                 self::FORM_FIELD_ID => null,
                 self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => false,
+                self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => true,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
                 self::FORM_FIELD_MULTIPLE => false,
@@ -647,15 +663,21 @@ class AbstractProductFormDataProvider
         $values = [];
         foreach ($productAttributes as $key => $value) {
             $isMultiple = isset($value) && is_array($value);
-
             if ($isMultiple && !is_array($value)) {
                 $value = [$value];
             }
 
+            $id = null;
+            $attributeTransfer = $this->attributeTransferCollection->get($key);
+            if ($attributeTransfer) {
+                $id = $attributeTransfer->getIdProductManagementAttribute();
+            }
+
             if (!array_key_exists($key, $values)) {
                 $values[$key] = [
-                    self::FORM_FIELD_NAME => false,
-                    self::FORM_FIELD_VALUE => $value,
+                    AttributeAbstractForm::FIELD_NAME => false,
+                    AttributeAbstractForm::FIELD_VALUE => $value,
+                    AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID => $id,
                 ];
             }
         }
@@ -665,11 +687,11 @@ class AbstractProductFormDataProvider
 
     protected function getLocalizedAttributeMetadataKey($keyToLocalize)
     {
-        if (!array_key_exists($keyToLocalize, $this->attributeTransferCollection)) {
+        if (!$this->attributeTransferCollection->has($keyToLocalize)) {
             return $keyToLocalize;
         }
 
-        $transfer = $this->attributeTransferCollection[$keyToLocalize];
+        $transfer = $this->attributeTransferCollection->get($keyToLocalize);
         //TODO implement translations
         return $transfer->getKey();
     }

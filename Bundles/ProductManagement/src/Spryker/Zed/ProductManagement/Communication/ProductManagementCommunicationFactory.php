@@ -99,6 +99,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 
         return new ProductFormAddDataProvider(
             $this->getCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
             $this->getPriceFacade(),
@@ -122,6 +123,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 
         return new ProductFormEditDataProvider(
             $this->getCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
             $this->getPriceFacade(),
@@ -145,6 +147,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 
         return new ProductConcreteFormEditDataProvider(
             $this->getCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
             $this->getPriceFacade(),

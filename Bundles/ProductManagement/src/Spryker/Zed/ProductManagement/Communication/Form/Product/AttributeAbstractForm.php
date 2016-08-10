@@ -8,10 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
@@ -194,24 +191,40 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
+        $attributeData = new Collection($attributes[$name]);
 
         $inputManager = new AttributeInputManager();
-        $inputType = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_INPUT_TYPE];
-        $allowInput = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT];
-        $isMultiple = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE];
-        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
-        $value = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_VALUE];
+        $inputType = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_INPUT_TYPE);
+        $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
+        $isMultiple = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE);
+        $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
+        $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
+        $valueName = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME);
         $input = $inputManager->getSymfonyInputType($inputType, $value, $allowInput, $isMultiple);
-
         $config = $this->getValueFieldConfig($name, $attributes);
+
         $config['attr']['style'] .= ' width: 250px';
         $config['attr']['data-value'] = null;
+
+        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+        if ($this->localeTransfer instanceof LocaleTransfer) {
+            $idLocale = $this->localeTransfer->getIdLocale();
+        }
+
+        $existingValue = $this->productManagementQueryContainer
+            ->queryFindAttributeByValueOrTranslation(
+                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID), $idLocale, $value
+            )->findOne();
 
         if (strtolower($input) === 'select2') {
             $input = new Select2ComboBoxType();
             $config['multiple'] = $isMultiple;
+            $config['placeholder'] = '';
             $config['attr']['style'] .= ' width: 250px';
-            $config['choices'] = $this->getChoiceList($name, $attributes[$name]);
+            $config['choices'] = [];
+            if ($valueName) {
+                $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
+            }
             $config['attr']['tags'] = true;
 
             if ($allowInput) {
@@ -243,43 +256,18 @@ class AttributeAbstractForm extends AbstractSubForm
      *
      * @return array
      */
-    protected function getChoiceList($name, array $attributes)
+    protected function getChoiceList($name, array $attributes, $existingValue, $idLocale)
     {
         $result = [];
-        $valueCollection = null;
         $attributeValue = $attributes[AbstractProductFormDataProvider::FORM_FIELD_VALUE];
-        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
-
-        if ($this->localeTransfer instanceof LocaleTransfer) {
-            $idLocale = $this->localeTransfer->getIdLocale();
-        }
-
-        $valueExists = $this->productManagementQueryContainer
-            ->queryProductManagementAttributeValueQuery()
-            ->addJoin([
-                SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                (int)$idLocale
-            ],[
-                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE
-            ],
-                Criteria::LEFT_JOIN
-            )
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
-            ->withColumn($idLocale, 'fk_locale')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
-            ->where('LOWER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') = ?', mb_strtolower($attributeValue), \PDO::PARAM_STR)
-            ->count();
 
         $valueCollection = $this->productManagementQueryContainer
-            ->queryProductManagementAttributeValueWithTranslation(
+            ->queryFindAttributeByValueOrTranslation(
                 $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID],
                 $idLocale
-            )
-            ->find();
+            )->find();
 
-        if (!$valueExists && isset($attributeValue)) {
+        if (!$existingValue && isset($attributeValue)) {
             $result[null] = $attributeValue;
         }
 

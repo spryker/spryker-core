@@ -37,6 +37,15 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
 
     /**
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string|null $attributeValueOrTranslation
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryFindAttributeByValueOrTranslation($idProductManagementAttribute, $idLocale, $attributeValueOrTranslation = null);
+
+    /**
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery

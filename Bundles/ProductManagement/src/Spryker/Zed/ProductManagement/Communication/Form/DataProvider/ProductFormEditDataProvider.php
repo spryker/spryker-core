@@ -104,9 +104,9 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     protected function appendAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
-        $abstractAttributesData = $productAbstractTransfer->getLocalizedAttributes();
+        $abstractLocalizedAttributesData = $productAbstractTransfer->getLocalizedAttributes();
 
-        foreach ($abstractAttributesData as $localizedAttributesTransfer) {
+        foreach ($abstractLocalizedAttributesData as $localizedAttributesTransfer) {
             $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();
             $formName = ProductFormAdd::getAbstractAttributeFormName($localeCode);
 
@@ -116,11 +116,16 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             }
 
             $attributes = $localizedAttributesTransfer->getAttributes();
-
             foreach ($attributes as $key => $value) {
+                $id = null;
+                $attributeTransfer = $this->attributeTransferCollection->get($key);
+                if ($attributeTransfer) {
+                    $id = $attributeTransfer->getIdProductManagementAttribute();
+                }
+
                 $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
                 $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
-                $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = null;
+                $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = $id;
             }
         }
 
@@ -128,9 +133,15 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $attributes = $productAbstractTransfer->getAttributes();
 
         foreach ($attributes as $key => $value) {
+            $id = null;
+            $attributeTransfer = $this->attributeTransferCollection->get($key);
+            if ($attributeTransfer) {
+                $id = $attributeTransfer->getIdProductManagementAttribute();
+            }
+
             $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
-            $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = null;
+            $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = $id;
         }
 
         return $formData;

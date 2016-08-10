@@ -69,6 +69,34 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string|null $attributeValueOrTranslation
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryFindAttributeByValueOrTranslation($idProductManagementAttribute, $idLocale, $attributeValueOrTranslation = null)
+    {
+        $query = $this->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
+
+        if ($attributeValueOrTranslation !== null) {
+            $query->where(
+                'LOWER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') = ?',
+                mb_strtolower($attributeValueOrTranslation),
+                \PDO::PARAM_STR
+            )
+            ->_or()
+            ->where(
+                'LOWER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') = ?',
+                mb_strtolower($attributeValueOrTranslation),
+                \PDO::PARAM_STR
+            );
+        }
+
+        return $query;
+    }
+
+    /**
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
