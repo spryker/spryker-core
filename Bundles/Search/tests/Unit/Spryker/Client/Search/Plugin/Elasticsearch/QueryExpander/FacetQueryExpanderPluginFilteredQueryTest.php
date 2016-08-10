@@ -256,7 +256,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                             'lte' => 78900,
                             'gte' => 45600,
                         ]))))
-            ->addFilter((new Nested())
+                ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
                 ->setQuery((new BoolQuery())
                     ->addFilter((new Term)
