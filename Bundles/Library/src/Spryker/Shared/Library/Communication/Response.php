@@ -7,12 +7,9 @@
 
 namespace Spryker\Shared\Library\Communication;
 
-use Spryker\Shared\Kernel\TransferLocator;
-use Spryker\Shared\Kernel\TransferLocatorHelper;
 use Spryker\Shared\Transfer\TransferInterface;
 
-class Response extends AbstractObject implements
-    EmbeddedTransferInterface
+class Response extends AbstractObject implements EmbeddedTransferInterface
 {
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Application;
 
+use ErrorException;
+
 class TestEnvironment
 {
 
@@ -34,7 +36,7 @@ class TestEnvironment
         }
 
         if (defined('SYSTEM_UNDER_TEST') && SYSTEM_UNDER_TEST === 0) {
-            throw new \ErrorException('Cannot change to Test-Mode after a previous initialisation.');
+            throw new ErrorException('Cannot change to Test-Mode after a previous initialisation.');
         }
 
         define('SYSTEM_UNDER_TEST', 1);

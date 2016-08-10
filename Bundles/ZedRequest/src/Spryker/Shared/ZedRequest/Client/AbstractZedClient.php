@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
+use BadMethodCallException;
 use Spryker\Shared\Transfer\TransferInterface;
 
 abstract class AbstractZedClient implements AbstractZedClientInterface
@@ -91,7 +92,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     public function getLastResponse()
     {
         if (self::$lastResponse === null) {
-            throw new \BadMethodCallException('There is no response received from zed.');
+            throw new BadMethodCallException('There is no response received from zed.');
         }
 
         return self::$lastResponse;

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Reader\Csv;
 
+use SplFileObject;
+
 class CsvMeta implements CsvMetaInterface
 {
 
@@ -53,7 +55,7 @@ class CsvMeta implements CsvMetaInterface
     /**
      * @param \SplFileObject $csvFile
      */
-    public function __construct(\SplFileObject $csvFile, $lineSeparator = "\n")
+    public function __construct(SplFileObject $csvFile, $lineSeparator = "\n")
     {
         $this->csvFile = $csvFile;
         $this->lineSeparator = $lineSeparator;

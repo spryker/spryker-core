@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Library\Service;
 
+use Exception;
 use Zend\Http\Client;
 use Zend\Http\Request;
 
@@ -130,7 +131,7 @@ class GoogleGraph
     public function request($sendHeader = true, $contentType = 'gif')
     {
         if (!in_array($contentType, ['gif', 'png', 'json'])) {
-            throw new \Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
+            throw new Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
         }
 
         $client = new Client();

@@ -9,6 +9,7 @@ namespace Spryker\Shared\Library\SystemUnderTest;
 
 // This is the only place where Project namespace is allowed
 // @todo this has to be refactored with the new test concept
+use Exception;
 use Propel\Runtime\Propel;
 use Pyz\Yves\Application\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
@@ -100,7 +101,7 @@ class SystemUnderTestBootstrap
     protected function validateApplication($application)
     {
         if (!in_array($application, $this->applications)) {
-            throw new \Exception('Given application "' . $application . '" is not a valid application for running tests!');
+            throw new Exception('Given application "' . $application . '" is not a valid application for running tests!');
         }
     }
 

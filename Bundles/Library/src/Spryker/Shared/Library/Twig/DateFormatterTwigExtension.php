@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library\Twig;
 
+use DateTimeZone;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Shared\Twig\TwigFilter;
@@ -120,7 +121,7 @@ class DateFormatterTwigExtension extends TwigExtension
     private function convertDateTimeZone($timezone = null)
     {
         if ($timezone !== null) {
-            return new \DateTimeZone($timezone);
+            return new DateTimeZone($timezone);
         }
 
         return null;

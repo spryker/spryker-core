@@ -10,6 +10,8 @@ namespace Spryker\Shared\Library\Zed;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use LogicException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\EventJournal\EventJournal;
@@ -105,7 +107,7 @@ class ZedClient
     public function request($pathInfo, TransferInterface $transferObject = null, array $metaTransfers = [], $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
         if (!$this->isRequestAllowed($isBackgroundRequest)) {
-            throw new \LogicException('You cannot make more than one request from Yves to Zed.');
+            throw new LogicException('You cannot make more than one request from Yves to Zed.');
         }
         self::$requestCounter++;
 
@@ -166,7 +168,7 @@ class ZedClient
             'User-Agent' => 'Yves 2.0',
             'X-Yves-Host' => 1
         ];
-        $request = new \GuzzleHttp\Psr7\Request('POST', $this->baseUrl . $pathInfo, $headers);
+        $request = new Psr7Request('POST', $this->baseUrl . $pathInfo, $headers);
 
         return $request;
     }
@@ -188,7 +190,7 @@ class ZedClient
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
-                throw new \LogicException('Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.');
+                throw new LogicException('Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.');
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }

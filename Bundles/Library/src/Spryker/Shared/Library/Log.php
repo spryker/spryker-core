@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library;
 
+use Exception;
+
 class Log
 {
 
@@ -112,7 +114,7 @@ class Log
         }
 
         if (!is_writable($logPath)) {
-            throw new \Exception(sprintf('Log file "%s" is not writable!', $logPath));
+            throw new Exception(sprintf('Log file "%s" is not writable!', $logPath));
         }
 
         return $logPath . DIRECTORY_SEPARATOR . $fileName;

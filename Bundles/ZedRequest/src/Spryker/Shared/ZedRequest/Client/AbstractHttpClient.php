@@ -11,6 +11,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use LogicException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\Auth\AuthClientInterface;
@@ -171,7 +173,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $requestId = $event->getFields()['request_id'];
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
-        $request = new \GuzzleHttp\Psr7\Request('POST', $this->baseUrl . $pathInfo, $headers);
+        $request = new Psr7Request('POST', $this->baseUrl . $pathInfo, $headers);
 
         return $request;
     }
@@ -193,7 +195,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
-                throw new \LogicException(static::META_TRANSFER_ERROR);
+                throw new LogicException(static::META_TRANSFER_ERROR);
             }
             $request->addMetaTransfer($name, $metaTransfer);
         }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library;
 
+use DateTimeZone;
+
 interface DateFormatterInterface
 {
 
@@ -16,7 +18,7 @@ interface DateFormatterInterface
      *
      * @return string
      */
-    public function dateShort($date, \DateTimeZone $timezone = null);
+    public function dateShort($date, DateTimeZone $timezone = null);
 
     /**
      * @param string $date
@@ -24,7 +26,7 @@ interface DateFormatterInterface
      *
      * @return string
      */
-    public function dateMedium($date, \DateTimeZone $timezone = null);
+    public function dateMedium($date, DateTimeZone $timezone = null);
 
     /**
      * @param string $date
@@ -32,7 +34,7 @@ interface DateFormatterInterface
      *
      * @return string
      */
-    public function dateRFC($date, \DateTimeZone $timezone = null);
+    public function dateRFC($date, DateTimeZone $timezone = null);
 
     /**
      * @param string $date
@@ -40,6 +42,6 @@ interface DateFormatterInterface
      *
      * @return string
      */
-    public function dateTime($date, \DateTimeZone $timezone = null);
+    public function dateTime($date, DateTimeZone $timezone = null);
 
 }

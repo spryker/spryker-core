@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\Library\Sanitize;
 
 use Spryker\Zed\Library\Sanitize\Html;
+use stdClass;
 
 /**
  * @group Sanitize
@@ -27,7 +28,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
                 ['&lt;foo&gt;', '&amp;nbsp;'],
             ],
             [false, false],
-            [new \stdClass(), '(object)stdClass'],
+            [new stdClass(), '(object)stdClass'],
         ];
     }
 
