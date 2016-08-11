@@ -158,6 +158,7 @@ class ImageForm extends AbstractSubForm
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'prototype_name' => '__img_collection__',
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($images, ExecutionContextInterface $context) {

@@ -354,8 +354,6 @@ class AbstractProductFormDataProvider
      */
     protected function getImagesDefaultFields()
     {
-        return [];
-
         $availableLocales = $this->localeProvider->getLocaleCollection();
         $data = [
             ImageForm::FIELD_SET_ID => null,
