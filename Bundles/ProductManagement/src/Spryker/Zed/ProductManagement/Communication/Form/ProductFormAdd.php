@@ -358,14 +358,20 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
-                    return;
-                            $form = $context->getRoot();
-                            $data = $form->getData();
-                            //sd($attributes, $data);
+                            foreach ($attributes as $type => $valueSet) {
+                                if ($valueSet[AttributeAbstractForm::FIELD_NAME] && empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
+                                    $context->addViolation(sprintf(
+                                        'Please enter value for an attribute "%s" or disable it',
+                                        $type
+                                    ));
+                                    //GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                }
+                            }
+
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
+                                if (!empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
+                                    $selectedAttributes[] = $valueSet[AttributeAbstractForm::FIELD_VALUE];
                                     break;
                                 }
                             }

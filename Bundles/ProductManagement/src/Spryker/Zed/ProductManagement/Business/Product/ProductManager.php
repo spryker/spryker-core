@@ -240,7 +240,7 @@ class ProductManager implements ProductManagerInterface
                 $this->priceFacade->persistAbstractProductPrice($priceTransfer);
             }
 
-            $imageSetTransferCollection = $productAbstractTransfer->getImagesSets();
+            $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
             if ($imageSetTransferCollection) {
                 foreach ($imageSetTransferCollection as $imageSetTransfer) {
                     $this->productImageFacade->persistProductImageSet($imageSetTransfer);
@@ -504,7 +504,7 @@ class ProductManager implements ProductManagerInterface
                 $this->priceFacade->persistConcreteProductPrice($priceTransfer);
             }
 
-            $imageSetTransferCollection = $productConcreteTransfer->getImagesSets();
+            $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
             if ($imageSetTransferCollection) {
                 foreach ($imageSetTransferCollection as $imageSetTransfer) {
                     $this->productImageFacade->persistProductImageSet($imageSetTransfer);
