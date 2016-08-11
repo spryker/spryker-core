@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 
 class VariantGenerator
 {
@@ -45,12 +46,12 @@ class VariantGenerator
      */
     protected function formatConcreteSku($abstractSku, $concreteSku)
     {
-        return sprintf(
+        return AbstractProductFormDataProvider::slugify(sprintf(
             '%s%s%s',
             $abstractSku,
             self::SKU_ABSTRACT_SEPARATOR,
             $concreteSku
-        );
+        ));
     }
 
     /**

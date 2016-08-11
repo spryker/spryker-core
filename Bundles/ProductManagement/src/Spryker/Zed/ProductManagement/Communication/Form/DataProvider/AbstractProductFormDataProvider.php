@@ -755,7 +755,7 @@ class AbstractProductFormDataProvider
         }
 
         $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
-        $value = strtolower($value);
+        $value = mb_strtolower($value);
         $value = str_replace(' ', '-', $value);
 
         return $value;

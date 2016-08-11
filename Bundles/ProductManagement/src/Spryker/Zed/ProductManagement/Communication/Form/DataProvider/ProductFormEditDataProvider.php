@@ -37,8 +37,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
         }
 
-        $formData[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] = [];
-
         return $formData;
     }
 

@@ -36,7 +36,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         ];
 
         $formData[ProductFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
-
         $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = null;
 
         return $formData;

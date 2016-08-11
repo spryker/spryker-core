@@ -231,24 +231,6 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     }
 
     /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function slugify($value)
-    {
-        if (function_exists('iconv')) {
-            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
-        }
-
-        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
-        $value = strtolower($value);
-        $value = str_replace(' ', '-', $value);
-
-        return $value;
-    }
-
-    /**
      * @param array $data
      *
      * @return array
