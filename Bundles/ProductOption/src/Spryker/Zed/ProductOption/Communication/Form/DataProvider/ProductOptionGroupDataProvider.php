@@ -15,6 +15,8 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
 class ProductOptionGroupDataProvider
 {
 
+    const NEW_GROUP_NAME = 'new_group_name';
+
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
      */
@@ -112,6 +114,7 @@ class ProductOptionGroupDataProvider
         foreach ($availableLocales as $localeTransfer) {
             $productOptionGroupNameTranslationTransfer = new ProductOptionTranslationTransfer();
             $productOptionGroupNameTranslationTransfer->setLocaleCode($localeTransfer->getLocaleName());
+            $productOptionGroupNameTranslationTransfer->setRelatedOptionHash(self::NEW_GROUP_NAME);
             $productOptionGroupTransfer->addGroupNameTranslation($productOptionGroupNameTranslationTransfer);
         }
 

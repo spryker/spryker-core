@@ -15,6 +15,11 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
 {
 
     /**
+     * @var array
+     */
+    protected $validatedSkus = [];
+
+    /**
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
@@ -25,6 +30,11 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        if (in_array($value, $this->validatedSkus)) {
+            $this->buildViolation('Product option with this sku is already used.')
+                ->addViolation();
+        }
+
         if (!$constraint instanceof UniqueOptionValueSku) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueOptionValueSku');
         }
@@ -37,6 +47,8 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
             $this->buildViolation('Product option with this sku is already used.')
                 ->addViolation();
         }
+
+        $this->validatedSkus[] = $value;
     }
 
     /**
