@@ -12,8 +12,8 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductTable extends AbstractTable
 {
@@ -95,8 +95,7 @@ class ProductTable extends AbstractTable
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
             ->withColumn(SpyProductAbstractTableMap::COL_FK_TAX_SET, static::COL_TAX_SET)
-            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
-        ;
+            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
 
         $queryResults = $this->runQuery($query, $config);
 

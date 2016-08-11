@@ -19,12 +19,12 @@ use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
@@ -103,7 +103,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $productAbstractTransfer->setPrice($priceTransfer);
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
-        $productAbstractTransfer->setImagesSets(
+        $productAbstractTransfer->setImageSets(
             new ArrayObject($imageSetCollection)
         );
 
@@ -171,7 +171,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $productConcreteTransfer->setStock(new ArrayObject($stockCollection));
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
-        $productConcreteTransfer->setImagesSets(
+        $productConcreteTransfer->setImageSets(
             new ArrayObject($imageSetCollection)
         );
 
@@ -388,13 +388,11 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $result = [];
         foreach ($data as $imageData) {
             $imageTransfer = new ProductImageTransfer();
-            $imageData[ImageCollectionForm::FIELD_SORT_ORDER] = (int) $imageData[ImageCollectionForm::FIELD_SORT_ORDER];
+            $imageData[ImageCollectionForm::FIELD_SORT_ORDER] = (int)$imageData[ImageCollectionForm::FIELD_SORT_ORDER];
             $imageTransfer->fromArray($imageData, true);
 
             $result[] = $imageTransfer;
         }
-
-        s($result);
 
         return $result;
     }

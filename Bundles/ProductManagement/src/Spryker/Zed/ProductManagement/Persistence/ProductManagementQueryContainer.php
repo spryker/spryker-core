@@ -53,10 +53,12 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             ->createProductManagementAttributeValueQuery()
             ->clearSelectColumns()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)
-            ->addJoin([
+            ->addJoin(
+                [
                     SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     (int)$idLocale
-                ],[
+                ],
+                [
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE
                 ],
@@ -69,6 +71,8 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * @api
+     *
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string|null $attributeValueOrTranslation

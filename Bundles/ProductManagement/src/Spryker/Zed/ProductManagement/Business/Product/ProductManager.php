@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
@@ -1206,7 +1205,6 @@ class ProductManager implements ProductManagerInterface
                 $abstractLocalizedAttributes[$localeCode] = array_merge($abstractLocalizedAttributes[$localeCode], $localizedAttribute->getAttributes());
             }
         }
-
 
         $localizedAttributes = [];
         foreach ($concreteProductCollection as $productTransfer) {

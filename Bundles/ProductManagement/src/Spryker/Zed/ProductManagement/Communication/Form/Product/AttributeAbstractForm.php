@@ -48,7 +48,7 @@ class AttributeAbstractForm extends AbstractSubForm
     protected $localeTransfer;
 
     /**
-     * @var LocaleProvider
+     * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
      */
     protected $localeProvider;
 
@@ -213,7 +213,9 @@ class AttributeAbstractForm extends AbstractSubForm
 
         $existingValue = $this->productManagementQueryContainer
             ->queryFindAttributeByValueOrTranslation(
-                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID), $idLocale, $value
+                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
+                $idLocale,
+                $value
             )->findOne();
 
         if (strtolower($input) === 'select2') {

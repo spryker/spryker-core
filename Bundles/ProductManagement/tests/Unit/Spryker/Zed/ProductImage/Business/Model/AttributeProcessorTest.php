@@ -9,7 +9,6 @@ namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 
 class AttributeProcessorTest extends Test

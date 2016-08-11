@@ -37,6 +37,8 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string|null $attributeValueOrTranslation
