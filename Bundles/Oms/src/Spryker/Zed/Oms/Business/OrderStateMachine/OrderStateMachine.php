@@ -193,7 +193,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $this->saveOrderItems($processedOrderItems, $log, $processes, $sourceStateBuffer);
         }
 
-        $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
+        $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($processedOrderItems, $processes, $sourceStateBuffer);
 
         $log->saveAll();
 
@@ -489,6 +489,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $log->setEvent($event);
 
             if (!$event->hasCommand()) {
+                $processedOrderItems[] = $orderItemEntity;
                 continue;
             }
 
@@ -516,11 +517,9 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                 $log->saveAll();
 
-                if ($type === self::BY_ITEM) {
-                    continue;
+                if ($type !== self::BY_ITEM) {
+                    throw $e;
                 }
-
-                throw $e;
             }
         }
 
