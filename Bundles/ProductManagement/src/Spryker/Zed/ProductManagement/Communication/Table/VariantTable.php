@@ -16,6 +16,7 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class VariantTable extends AbstractTable
 {
+    const TABLE_IDENTIFIER = 'product-variant-table';
 
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_ID_PRODUCT = 'id_product';
@@ -30,12 +31,21 @@ class VariantTable extends AbstractTable
     protected $productQueryQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @var int
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
+    protected $idProductAbstract;
+
+    /**
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param int $idProductAbstract
+     */
+    public function __construct(ProductQueryContainerInterface $productQueryContainer, $idProductAbstract)
     {
         $this->productQueryQueryContainer = $productQueryContainer;
-        $this->defaultUrl = 'variantTable';
+        $this->idProductAbstract = $idProductAbstract;
+        $this->defaultUrl = sprintf('variantTable?%s=%d', EditController::PARAM_ID_PRODUCT_ABSTRACT, $idProductAbstract);
+        //$this->defaultUrl = 'variantTable';
+        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
     /**
@@ -79,6 +89,7 @@ class VariantTable extends AbstractTable
             ->productQueryQueryContainer
             ->queryProduct()
             ->innerJoinSpyProductAbstract()
+            ->filterByFkProductAbstract($this->idProductAbstract)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU)
         ;

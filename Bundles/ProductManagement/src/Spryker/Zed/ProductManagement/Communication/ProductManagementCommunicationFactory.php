@@ -461,9 +461,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
      */
-    public function createVariantTable()
+    public function createVariantTable($idProductAbstract)
     {
-        return new VariantTable($this->getProductQueryContainer());
+        return new VariantTable($this->getProductQueryContainer(), $idProductAbstract);
     }
 
 

@@ -91,7 +91,7 @@ class EditController extends AddController
 
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable();
+            ->createVariantTable($idProductAbstract);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -181,11 +181,15 @@ class EditController extends AddController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function variantTableAction()
+    public function variantTableAction(Request $request)
     {
+        $idProductAbstract = $this->castId($request->get(
+            self::PARAM_ID_PRODUCT_ABSTRACT
+        ));
+
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable();
+            ->createVariantTable($idProductAbstract);
 
         return $this->jsonResponse(
             $variantTable->fetchData()
