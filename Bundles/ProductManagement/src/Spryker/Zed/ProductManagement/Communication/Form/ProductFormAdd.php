@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Gui\Communication\Form\Validator\Constraints\SkuRegex;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
@@ -262,9 +264,7 @@ class ProductFormAdd extends AbstractType
                     new NotBlank([
                         'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
                     ]),
-                    new Regex([
-                        'pattern' => '/^[a-zA-Z0-9\.\-\_\s*]+$/',
-                        'message' => 'Invalid value provided. Valid characters: "a-z A-Z", "0-9", ". - _"',
+                    new SkuRegex([
                         'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
                     ]),
                     new Callback([
@@ -272,10 +272,7 @@ class ProductFormAdd extends AbstractType
                             function ($sku, ExecutionContextInterface $context) {
                                 $form = $context->getRoot();
                                 $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-
-                                if (!($sku)) {
-                                    $context->addViolation('Please enter only alphanumeric characters with dashes or dots.');
-                                }
+                                $sku = AbstractProductFormDataProvider::slugify($sku);
 
                                 $skuCount = $this->productQueryContainer
                                     ->queryProduct()
@@ -288,7 +285,9 @@ class ProductFormAdd extends AbstractType
                                     ->count();
 
                                 if ($skuCount > 0) {
-                                    $context->addViolation('This SKU is already used');
+                                    $context->addViolation(
+                                        sprintf('The SKU "%s" is already used', $sku)
+                                    );
                                 }
                             },
                         ],

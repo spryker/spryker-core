@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -190,7 +191,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku(
-                $this->slugify($data[ProductFormAdd::FIELD_SKU])
+                AbstractProductFormDataProvider::slugify($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
             ->setTaxSetId($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);

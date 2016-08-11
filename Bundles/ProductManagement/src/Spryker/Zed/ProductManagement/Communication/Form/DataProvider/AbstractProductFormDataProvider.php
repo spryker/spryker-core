@@ -743,4 +743,22 @@ class AbstractProductFormDataProvider
         }
     }
 
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public static function slugify($value)
+    {
+        if (function_exists('iconv')) {
+            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
+        }
+
+        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
+        $value = strtolower($value);
+        $value = str_replace(' ', '-', $value);
+
+        return $value;
+    }
+
 }
