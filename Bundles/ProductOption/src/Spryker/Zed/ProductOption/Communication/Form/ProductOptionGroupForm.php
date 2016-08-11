@@ -125,7 +125,7 @@ class ProductOptionGroupForm extends AbstractType
             'allow_delete' => true,
             'prototype' => true,
             'constraints' => [
-                new Callback(['callback' => function(\ArrayObject $values, ExecutionContextInterface $context) {
+                new Callback(['callback' => function (\ArrayObject $values, ExecutionContextInterface $context) {
                     if (count($values) === 0) {
                         $context->buildViolation('No option values added.')
                             ->addViolation();
