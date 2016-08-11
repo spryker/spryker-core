@@ -254,7 +254,7 @@ class ProductManagementFacadeAttributeTest extends Test
     /**
      * @return void
      */
-    public function SKIP_testGetProductManagementAttributeReturnsFullyHydratedTransfer()
+    public function testGetProductManagementAttributeReturnsFullyHydratedTransfer()
     {
         $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
 
