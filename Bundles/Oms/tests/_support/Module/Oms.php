@@ -56,7 +56,8 @@ class Oms extends Module
         $salesOrderItemEntity = $salesOrderItemQuery->findOneByIdSalesOrderItem($idSalesOrderItem);
 
         $orderItemStateQuery = new SpyOmsOrderItemStateQuery();
-        $orderItemStateEntity = $orderItemStateQuery->findOneByName($stateName);
+        $orderItemStateEntity = $orderItemStateQuery->filterByName($stateName)->findOneOrCreate();
+        $orderItemStateEntity->save();
 
         $salesOrderItemEntity->setState($orderItemStateEntity);
         $salesOrderItemEntity->save();

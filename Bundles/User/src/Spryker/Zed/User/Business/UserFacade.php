@@ -120,7 +120,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
-     * @throws Exception\UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
