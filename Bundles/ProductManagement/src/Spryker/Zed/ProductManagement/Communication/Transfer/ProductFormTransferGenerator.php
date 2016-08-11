@@ -29,7 +29,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm 
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -329,7 +329,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                     ->fromArray($imageSet->getData(), true);
 
                 $productImages = $this->buildProductImageCollection(
-                    $imageSet->get(ImageForm::PRODUCT_IMAGES)->getData()
+                    $imageSet->get(ImageSetForm::PRODUCT_IMAGES)->getData()
                 );
                 $object = new ArrayObject($productImages);
                 $imageSetTransfer->setProductImages($object);

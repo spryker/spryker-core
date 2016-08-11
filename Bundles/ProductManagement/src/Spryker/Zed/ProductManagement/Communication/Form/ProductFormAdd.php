@@ -17,7 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractFo
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -236,7 +236,7 @@ class ProductFormAdd extends AbstractType
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
         foreach ($localeCollection as $localeCode) {
             $name = self::getImagesFormName($localeCode);
-            $this->addImageForm($builder, $name);
+            $this->addImageSetForm($builder, $name);
         }
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(
@@ -244,7 +244,7 @@ class ProductFormAdd extends AbstractType
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
-        $this->addImageForm($builder, $defaultName);
+        $this->addImageSetForm($builder, $defaultName);
 
         return $this;
     }
@@ -472,11 +472,11 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addImageForm(FormBuilderInterface $builder, $name, array $options = [])
+    protected function addImageSetForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new ImageForm($name),
+                'type' => new ImageSetForm($name),
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -489,12 +489,12 @@ class ProductFormAdd extends AbstractType
                             }
 
                             foreach ($imageSetCollection as $setData) {
-                                if (trim($setData[ImageForm::FIELD_SET_NAME]) === '') {
+                                if (trim($setData[ImageSetForm::FIELD_SET_NAME]) === '') {
                                     $context->addViolation('Please enter Image Set Name under Images');
                                     GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                                 }
 
-                                foreach ($setData[ImageForm::PRODUCT_IMAGES] as $productImage) {
+                                foreach ($setData[ImageSetForm::PRODUCT_IMAGES] as $productImage) {
                                     if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_SMALL]) === '') {
                                         $context->addViolation('Please enter small image url under Images');
                                         GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;

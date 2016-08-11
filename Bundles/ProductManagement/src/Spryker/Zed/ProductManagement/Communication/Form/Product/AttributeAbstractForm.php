@@ -130,7 +130,7 @@ class AttributeAbstractForm extends AbstractSubForm
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options = [])
     {
         parent::buildForm($builder, $options);
 
@@ -146,7 +146,7 @@ class AttributeAbstractForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addCheckboxNameField(FormBuilderInterface $builder, array $options)
+    protected function addCheckboxNameField(FormBuilderInterface $builder, array $options = [])
     {
         $attributes = $options[AttributeAbstractForm::OPTION_ATTRIBUTE];
 
@@ -175,7 +175,7 @@ class AttributeAbstractForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addValueIdHiddenField(FormBuilderInterface $builder, array $options)
+    protected function addValueIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_VALUE_HIDDEN_ID, 'hidden', []);

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -27,7 +27,7 @@ class ProductFormEdit extends ProductFormAdd
         $validationGroups = parent::getValidationGroups();
 
         return array_filter($validationGroups, function($item){
-            return $item !== ImageForm::VALIDATION_GROUP_IMAGE_COLLECTION;
+            return $item !== ImageSetForm::VALIDATION_GROUP_IMAGE_COLLECTION;
         });
     }
 

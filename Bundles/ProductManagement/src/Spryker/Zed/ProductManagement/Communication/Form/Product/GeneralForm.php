@@ -12,7 +12,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class GeneralForm extends AbstractSubForm
 {
@@ -31,8 +30,8 @@ class GeneralForm extends AbstractSubForm
         parent::buildForm($builder, $options);
 
         $this
-            ->addNameField($builder)
-            ->addDescriptionField($builder);
+            ->addNameField($builder, $options)
+            ->addDescriptionField($builder, $options);
     }
 
     /**
@@ -40,7 +39,7 @@ class GeneralForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_NAME, 'text', [
@@ -64,7 +63,7 @@ class GeneralForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addDescriptionField(FormBuilderInterface $builder)
+    protected function addDescriptionField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_DESCRIPTION, 'textarea', [

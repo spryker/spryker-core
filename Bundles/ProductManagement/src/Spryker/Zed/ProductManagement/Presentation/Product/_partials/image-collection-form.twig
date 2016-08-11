@@ -26,12 +26,16 @@
                     {% set form_group_errors_css = 'has-error' %}
                 {% endif %}
 
+                {{ form_row(productImage.image_preview_large_url) }}
+                {{ form_row(productImage.image_preview_large_url) }}
+
                 <div class='form-group {{ form_group_errors_css }}'>
-                    {{  form_row(productImage.image_preview) }}
+                    {{ form_row(productImage.image_preview) }}
                 </div>
             </div>
             <div class="col-lg-10">
                 {{ form_row(productImage.id_product_image) }}
+                {{ form_row(productImage.fk_image_set_id) }}
 
                 <div class='form-group {{ form_group_errors_small_css }}'>
                     {{ form_row(productImage.external_url_small) }}

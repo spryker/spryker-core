@@ -3,6 +3,8 @@
     {% set img_width = '' %}
     {% set img_height = '' %}
     {% set img_title = '' %}
+    {% set img_url = '' %}
+    {% set img_gallery = '' %}
 
     {% if form.vars.img_width is defined and form.vars.img_width %}
         {% set img_width = 'width="' ~ form.vars.img_width ~ '"' %}
@@ -14,6 +16,14 @@
 
     {% if form.vars.img_title is defined and form.vars.img_title %}
         {% set img_title = 'title="' ~ form.vars.img_title  ~ '" alt="' ~ form.vars.img_title  ~ '"' %}
+    {% endif %}
+
+    {% if form.vars.img_url is defined and form.vars.img_url %}
+        {% set img_url = form.vars.img_url %}
+    {% endif %}
+
+    {% if form.vars.img_gallery is defined and form.vars.img_gallery %}
+        {% set img_gallery = form.vars.img_gallery %}
     {% endif %}
 
     {% set form_group_errors_css = '' %}
@@ -31,7 +41,9 @@
     {% endif %}
 
     <div class='form-group {{ form_group_errors_css }}'>
-        <img src="{{ value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css|raw }}" {{ img_title|raw }} />
+        <a href="{{ img_url }}" data-lightbox="{{ img_gallery }}">
+            <img src="{{ value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css|raw }}" {{ img_title|raw }} />
+        </a>
         {{ form_label(form) }}
         {{ form_errors(form) }}
     </div>

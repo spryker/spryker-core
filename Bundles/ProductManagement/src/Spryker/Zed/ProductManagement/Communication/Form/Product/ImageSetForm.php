@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class ImageForm extends AbstractSubForm
+class ImageSetForm extends AbstractSubForm
 {
 
     const FIELD_SET_ID = 'id_product_image_set';
@@ -60,17 +60,17 @@ class ImageForm extends AbstractSubForm
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options = [])
     {
         parent::buildForm($builder, $options);
 
         $this
-            ->addSetIdField($builder)
-            ->addNameField($builder)
-            ->addLocaleHiddenField($builder)
-            ->addProductHiddenField($builder)
-            ->addProductAbstractHiddenField($builder)
-            ->addImageCollectionForm($builder);
+            ->addSetIdField($builder, $options)
+            ->addNameField($builder, $options)
+            ->addLocaleHiddenField($builder, $options)
+            ->addProductHiddenField($builder, $options)
+            ->addProductAbstractHiddenField($builder, $options)
+            ->addImageCollectionForm($builder, $options);
     }
 
     /**
@@ -78,7 +78,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addSetIdField(FormBuilderInterface $builder)
+    protected function addSetIdField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_SET_ID, 'hidden', []);
@@ -91,7 +91,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_SET_NAME, 'text', [
@@ -110,7 +110,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addLocaleHiddenField(FormBuilderInterface $builder)
+    protected function addLocaleHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_SET_FK_LOCALE, 'hidden', []);
@@ -123,7 +123,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addProductHiddenField(FormBuilderInterface $builder)
+    protected function addProductHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_SET_FK_PRODUCT, 'hidden', []);
@@ -136,7 +136,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addProductAbstractHiddenField(FormBuilderInterface $builder)
+    protected function addProductAbstractHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::FIELD_SET_FK_PRODUCT_ABSTRACT, 'hidden', []);
@@ -149,7 +149,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addImageCollectionForm(FormBuilderInterface $builder)
+    protected function addImageCollectionForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(self::PRODUCT_IMAGES, 'collection', [

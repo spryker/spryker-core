@@ -19,7 +19,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
@@ -272,10 +272,12 @@ class AbstractProductFormDataProvider
         foreach ($imageSetTransfer->getProductImages() as $imageTransfer) {
             $image = $imageTransfer->toArray();
             $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_LARGE];
+            $image[ImageCollectionForm::FIELD_FK_IMAGE_SET_ID] = $imageSetTransfer->getIdProductImageSet();
             $itemImages[] = $image;
         }
 
-        $item[ImageForm::PRODUCT_IMAGES] = $itemImages;
+        $item[ImageSetForm::PRODUCT_IMAGES] = $itemImages;
 
         return $item;
     }
@@ -358,17 +360,19 @@ class AbstractProductFormDataProvider
 
         $availableLocales = $this->localeProvider->getLocaleCollection();
         $data = [
-            ImageForm::FIELD_SET_ID => null,
-            ImageForm::FIELD_SET_NAME => null,
-            ImageForm::PRODUCT_IMAGES => [[
+            ImageSetForm::FIELD_SET_ID => null,
+            ImageSetForm::FIELD_SET_NAME => null,
+            ImageSetForm::PRODUCT_IMAGES => [[
                 ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
                 ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
+                ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL => null,
+                ImageCollectionForm::FIELD_FK_IMAGE_SET_ID => null,
                 ImageCollectionForm::FIELD_IMAGE_SMALL => null,
                 ImageCollectionForm::FIELD_IMAGE_LARGE => null,
                 ImageCollectionForm::FIELD_SORT_ORDER => null,
-                ImageForm::FIELD_SET_FK_LOCALE => null,
-                ImageForm::FIELD_SET_FK_PRODUCT => null,
-                ImageForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
+                ImageSetForm::FIELD_SET_FK_LOCALE => null,
+                ImageSetForm::FIELD_SET_FK_PRODUCT => null,
+                ImageSetForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
             ]]
         ];
 

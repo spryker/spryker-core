@@ -27,6 +27,8 @@ class ImageType extends AbstractType
         $view->vars['img_width'] = $options['img_width'];
         $view->vars['img_height'] = $options['img_height'];
         $view->vars['img_title'] = $options['img_title'];
+        $view->vars['img_url'] = $options['img_url'];
+        $view->vars['img_gallery'] = $options['img_gallery'];
     }
 
     /**
@@ -40,6 +42,8 @@ class ImageType extends AbstractType
             'img_width' => null,
             'img_height' => null,
             'img_title' => null,
+            'img_url' => null,
+            'img_gallery' => null,
         ]);
     }
 
