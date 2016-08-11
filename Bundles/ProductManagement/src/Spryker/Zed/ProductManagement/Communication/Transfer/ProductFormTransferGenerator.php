@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 
+use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -22,6 +24,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
@@ -31,9 +34,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
-use \ArrayObject;
-use \Exception;
-use \Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 
 class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterface
 {
@@ -211,19 +211,19 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
         $localizedAttributesTransfer->setName($form->get(GeneralForm::FIELD_NAME)->getData());
-        $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION));
+        $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION)->getData());
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
 
         if ($form->has(SeoForm::FIELD_META_TITLE)) {
-            $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE));
+            $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE)->getData());
         }
 
         if ($form->has(SeoForm::FIELD_META_KEYWORDS)) {
-            $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS));
+            $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS)->getData());
         }
 
         if ($form->has(SeoForm::FIELD_META_DESCRIPTION)) {
-            $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION));
+            $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION)->getData());
         }
 
         return $localizedAttributesTransfer;
@@ -266,7 +266,6 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
 
         return $attributes;
     }
-
 
     /**
      * @param array $data
