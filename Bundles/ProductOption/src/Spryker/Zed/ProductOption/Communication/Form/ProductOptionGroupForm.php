@@ -11,6 +11,8 @@ use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransf
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductOptionGroupForm extends AbstractType
 {
@@ -122,6 +124,14 @@ class ProductOptionGroupForm extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
+            'constraints' => [
+                new Callback(['callback' => function(\ArrayObject $values, ExecutionContextInterface $context) {
+                    if (count($values) === 0) {
+                        $context->buildViolation('No option values added.')
+                            ->addViolation();
+                    }
+                }]),
+            ]
         ]);
 
         $builder->get(self::FIELD_VALUES)
@@ -182,7 +192,7 @@ class ProductOptionGroupForm extends AbstractType
             self::FIELD_TAX_SET_FIELD,
             'choice',
             [
-                'label' => 'Tax set',
+                'label' => 'Tax set *',
                 'choices' => $options[self::OPTION_TAX_SETS],
             ]
         );

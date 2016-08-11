@@ -21,6 +21,7 @@ function OptionValueFormHandler() {
     this.valuesToBeRemovedField = $('#product_option_general_product_option_values_to_be_removed');
 
     this.addProductOptionValueForm();
+    this.addCopyTranslationTrigger();
     if (this.optionValueCount > 0) {
         this.initialiseExistingProductValueForms();
     }
@@ -157,7 +158,7 @@ OptionValueFormHandler.prototype.addCopyTranslationTrigger = function() {
     $('.copy-language').on('click', function (event) {
         event.preventDefault();
 
-        var valueTranslationForm = $(event.target).parent().parent();
+        var valueTranslationForm = $(event.target).parent().parent().parent();
 
         var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(valueTranslationForm));
 

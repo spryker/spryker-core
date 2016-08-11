@@ -238,6 +238,9 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         SpyProductOptionGroup $productOptionGroupEntity
     ) {
         foreach ($productOptionGroupTransfer->getProductOptionValuesToBeRemoved() as $idProductOptionValue) {
+            if (!$idProductOptionValue) {
+                continue;
+            }
             $productOptionValueEntity = $this->getProductOptionValueEntity($idProductOptionValue);
 
             $this->translationSaver->deleteTranslation($productOptionValueEntity->getValue());
@@ -294,9 +297,11 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         ProductOptionValueTransfer $productOptionValueTransfer
     ) {
         if (!$producOptionValueEntity->getValue()) {
-            $productOptionValueTransfer->setValue(
-                ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue()
-            );
+            if (strpos($productOptionValueTransfer->getValue(), ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false) {
+                $productOptionValueTransfer->setValue(
+                    ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue()
+                );
+            }
         }
 
         $producOptionValueEntity->fromArray($productOptionValueTransfer->toArray());

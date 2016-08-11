@@ -83,7 +83,7 @@ class ProductOptionValueForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALUE, 'text', [
-            'label' => 'Translation key *',
+            'label' => 'Option name translation key *',
             'required' => false,
             'constraints' => [
                 new NotBlank(),

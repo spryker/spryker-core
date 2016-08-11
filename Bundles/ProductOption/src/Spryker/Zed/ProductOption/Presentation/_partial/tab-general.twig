@@ -1,16 +1,21 @@
+{{ form_errors(generalForm) }}
+
 {{ form_start(generalForm, { attr: { id:'product_option_general'}}) }}
-<p>
-    {{ 'Create a product option by entering a name, sku and price. By adding more than 1 option bellow, you will create an option group. With an option group your customer can choose one option from the group.' | trans }}
-</p>
+ <div class="form-group">
+    {{ 'Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.' | trans }}
+
+ </div>
 
 {% set readOnly = {} %}
-{% if generalForm.vars.data and generalForm.vars.data.name %}
+{% if generalForm.vars.data and generalForm.vars.data.name and generalForm.vars.data.idProductOptionGroup %}
     {% set readOnly = {'readonly' : 'readonly'} %}
 {% endif %}
 
 {{ form_row(generalForm.name, {attr:readOnly}) }}
 
 {{ form_row(generalForm.fkTaxSet) }}
+
+<br />
 
 <h4>{{ 'Option Values' | trans }}</h4>
 
@@ -26,15 +31,16 @@
         {% for valueForm in generalForm.productOptionValues %}
             {{ include ('@ProductOption/_template/_product-option-template.twig', { 'productOptionForm': valueForm }) }}
         {% endfor %}
+
         {% do generalForm.productOptionValues.setRendered %}
     </div>
 </div>
 
 <div class="form-group">
-    <a href="#" class="btn btn-primary" id="add-another-option">{{ 'Add option' | trans }}</a>
+    <a href="#" class="btn btn-sm btn-outline btn-primary" id="add-another-option">{{ 'Add option' | trans }}</a>
 </div>
 
-<br />
+<br /><br />
 
 <h4>{{ 'Translation' | trans }}</h4>
 
@@ -43,7 +49,7 @@
          data-value-count="{{ generalForm.productOptionValueTranslations|length  }}"
          data-prototype="
            {% filter escape %}
-               {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': generalForm.productOptionValueTranslations.vars.prototype, 'label' : 'Option:' }) }}
+               {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': generalForm.productOptionValueTranslations.vars.prototype, 'label' : 'Option name:' }) }}
            {% endfilter %}">
         <div class="tabs-left">
             <ul class="nav nav-tabs">
@@ -66,7 +72,7 @@
 
                         {% for valueTranslationForm in generalForm.productOptionValueTranslations %}
                             {% if valueTranslationForm.vars.data.localeCode == locale.localeName  %}
-                                {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': valueTranslationForm, 'label' : 'Option:' }) }}
+                                {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': valueTranslationForm, 'label' : 'Option name:' }) }}
                             {% endif %}
                         {% endfor %}
 
@@ -78,6 +84,6 @@
     </div>
 </div>
 {% do generalForm.productOptionValueTranslations.setRendered %}
-    {% do generalForm.groupNameTranslations.setRendered %}
+{% do generalForm.groupNameTranslations.setRendered %}
 
 {{ form_end(generalForm) }}

@@ -67,7 +67,7 @@ class ProductOptionListTable extends AbstractTable
             self::TABLE_COL_NAME => 'Name',
             self::TABLE_COL_PRICE => 'Price',
             SpyProductOptionGroupTableMap::COL_ACTIVE => 'Status',
-            self::TABLE_COL_ACTIONS => 'Action',
+            self::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -204,8 +204,8 @@ class ProductOptionListTable extends AbstractTable
     protected function getActionButtons(SpyProductOptionGroup $productOptionGroupEntity)
     {
         $buttons = [];
-        $buttons[] = $this->createViewButton($productOptionGroupEntity);
         $buttons[] = $this->createEditButton($productOptionGroupEntity);
+        $buttons[] = $this->createViewButton($productOptionGroupEntity);
         $buttons[] = $this->createDeativateButton($productOptionGroupEntity);
 
         return implode(' ', $buttons);

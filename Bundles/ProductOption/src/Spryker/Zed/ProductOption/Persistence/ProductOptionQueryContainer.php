@@ -27,7 +27,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
-
     /**
      * @api
      *
@@ -209,7 +208,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionGroupWithValues()
     {
         return $this->getFactory()->createProductOptionGroupQuery()
-            ->joinSpyProductOptionValue()
+            ->leftJoinSpyProductOptionValue()
             ->groupByIdProductOptionGroup();
     }
 

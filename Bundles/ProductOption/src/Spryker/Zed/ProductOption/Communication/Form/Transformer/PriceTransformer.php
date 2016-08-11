@@ -54,6 +54,14 @@ class PriceTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        if (!$value && $value !== 0) {
+            return $value;
+        }
+
+        if ($value === 0) {
+            return '0';
+        }
+
         return $this->currencyManager->format(
             $this->currencyManager->convertCentToDecimal($value),
             false
@@ -86,6 +94,14 @@ class PriceTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if (!$value && $value !== 0) {
+            return $value;
+        }
+
+        if ($value === 0) {
+            return '0';
+        }
+
         return $this->currencyManager->convertDecimalToCent(
             str_replace(',', '.', $value)
         );

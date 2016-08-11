@@ -5,7 +5,7 @@
 
             {% block widget_content %}
 
-                <table class="footable table table-striped toggle-arrow-tiny" data-qa="totals-list">
+                <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
                     <tbody>
                     {% for orderItem in order.items %}
                         <tr>
@@ -17,13 +17,9 @@
                             <tr>
                                 <td> + {{ orderItemOption.value }}</td>
                                 <td class="text-right">{{ orderItemOption.unitGrossPrice | currency  }}</td>
-                                <td>{{ 'option price' | trans }}</td>
+                                <td>{{ 'gross option price' | trans }}</td>
                             </tr>
                         {% endfor %}
-                        <tr>
-                            <th>&nbsp;</th>
-                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.unitGrossPrice | currency  }}</td>
-                        </tr>
                     {% endfor %}
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
@@ -32,7 +28,7 @@
                     </tr>
                     {% for expense in order.expenses %}
                         <tr>
-                            <th>{{ expense.type|lower|replace({'_' : ' '}) }} -  {{ expense.name }}</th>
+                            <th>{{ 'Shipment' | trans }} -  {{ expense.name }}</th>
                             <td class="text-right">{{ expense.unitGrossPrice | currency  }}</td>
                             <td></td>
                         </tr>
@@ -46,6 +42,12 @@
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
                         <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal|currency }}</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ 'Included tax amount' | trans }}</td>
+                        <td class="text-right" data-qa="grand-total">{{ order.totals.taxTotal.amount | currency }}</td>
                         <td></td>
                     </tr>
                     </tbody>
