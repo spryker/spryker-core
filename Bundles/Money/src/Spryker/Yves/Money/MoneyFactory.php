@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Money;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
