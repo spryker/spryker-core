@@ -3,20 +3,20 @@
         <div class="braintree-method braintree-credit-card-method" data-braintree-client-token="{{ child.vars.clientToken }}">
             <div class="small-12 columns">
                 <label for="braintree-credit-card-number">Card Number*</label>
-                <div id="braintree-credit-card-number" class="input"></div>
+                <div id="braintree-credit-card-number" class="__input"></div>
             </div>
 
             <div class="small-12 columns">
                 <label for="braintree-credit-card-cvv">CVV*</label>
-                <div id="braintree-credit-card-cvv" class="input"></div>
+                <div id="braintree-credit-card-cvv" class="__input"></div>
             </div>
 
             <div class="small-12 columns">
                 <label for="braintree-credit-card-expiration-date">Expiration Date*</label>
-                <div id="braintree-credit-card-expiration-date" class="input"></div>
+                <div id="braintree-credit-card-expiration-date" class="__input"></div>
             </div>
 
-            <div class="braintree-error braintree-credit-card-error field"></div>
+            <div class="braintree-error braintree-credit-card-error"></div>
         </div>
 
         {{ form_errors(form.braintreeCreditCard) }}
