@@ -23,6 +23,7 @@ require('codemirror');
 require('summernote');
 require('sweetalert');
 require('slick-carousel');
+require('lightbox2');
 
 // inspinia
 require('../../../Inspinia/inspinia');
