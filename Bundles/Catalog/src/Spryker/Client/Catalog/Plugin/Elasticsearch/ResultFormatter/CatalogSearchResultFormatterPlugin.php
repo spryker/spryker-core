@@ -53,15 +53,15 @@ class CatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultForm
      */
     public function extractProductIdsFromResultSet(ResultSet $resultSet)
     {
-        $ids = [];
+        $abstractProductIds = [];
         foreach ($resultSet->getResults() as $result) {
             $product = $result->getSource();
             if (isset($product[PageIndexMap::SEARCH_RESULT_DATA]['id_product_abstract'])) {
-                $ids[] = $product[PageIndexMap::SEARCH_RESULT_DATA]['id_product_abstract'];
+                $abstractProductIds[] = $product[PageIndexMap::SEARCH_RESULT_DATA]['id_product_abstract'];
             }
         }
 
-        return $ids;
+        return $abstractProductIds;
     }
 
 }
