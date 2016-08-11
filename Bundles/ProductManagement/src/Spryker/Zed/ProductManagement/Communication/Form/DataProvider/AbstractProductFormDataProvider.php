@@ -544,7 +544,7 @@ class AbstractProductFormDataProvider
      */
     protected function convertVariantAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAbstractAttributes();
+        $productAttributes = [];
 
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -579,49 +579,76 @@ class AbstractProductFormDataProvider
      */
     protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
     {
-        $productAttributes = $attributeProcessor->getAllKeys();
+        $productAttributeKeys = $attributeProcessor->getAllKeys();
+        $productAttributeValues = [];
+        $isMultiple = true;
 
         $values = [];
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $isProductSpecificAttribute = !array_key_exists($type, $productAttributes);
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-            $isMulti = $this->attributeTransferCollection->get($type)->getIsMultiple();
-            $valueDisabled = !$isProductSpecificAttribute;
+        foreach ($productAttributeKeys as $type => $tmp) {
+            $isDefined = $this->attributeTransferCollection->has($type);
 
-            if ($isNew) {
-                $valueDisabled = false;
+            $isProductSpecificAttribute = true;
+            $id = null;
+            $inputType = self::DEFAULT_INPUT_TYPE;
+            $allowInput = false;
+            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $shouldBeTextArea = mb_strlen($value) > 255;
+
+            if ($isDefined) {
+                $isProductSpecificAttribute = false;
+                $attributeTransfer = $this->attributeTransferCollection->get($type);
+                $id = $attributeTransfer->getIdProductManagementAttribute();
+                $inputType = $attributeTransfer->getInputType();
+                $allowInput = $attributeTransfer->getAllowInput();
             }
 
-            $checkboxDisabled = $isProductSpecificAttribute && $attributeTransfer->getAllowInput();
-            if ($isNew) {
-                $checkboxDisabled = false;
+            if ($shouldBeTextArea) {
+                $inputType = self::TEXT_AREA_INPUT_TYPE;
             }
 
-            if (!$attributeTransfer->getAllowInput()) {
-                $valueDisabled = true;
-            }
-
-            if ($checkboxDisabled) {
-                $valueDisabled = true;
-            }
+            $checkboxDisabled = false;
+            $valueDisabled = true;
 
             $values[$type] = [
-                self::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                self::FORM_FIELD_ID => $id,
+                self::FORM_FIELD_VALUE => $value,
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_MULTIPLE => $isMulti,
-                self::FORM_FIELD_INPUT_TYPE => $this->getHtmlInputTypeByInput($attributeTransfer->getInputType()),
+                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput()
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput
             ];
         }
 
-        $productAttributeValues = $attributeProcessor->mergeAttributes();
-        $productValues = $this->getProductAttributesFormOptions($productAttributes, $productAttributeValues);
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $isProductSpecificAttribute = false;
+            $id = $attributeTransfer->getIdProductManagementAttribute();
+            $inputType = $attributeTransfer->getInputType();
+            $allowInput = $attributeTransfer->getAllowInput();
 
-        return array_merge($productValues, $values);
+            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+
+            $checkboxDisabled = false;
+            $valueDisabled = true;
+
+            $values[$type] = [
+                self::FORM_FIELD_ID => $id,
+                self::FORM_FIELD_VALUE => $value,
+                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_INPUT_TYPE => $inputType,
+                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput
+            ];
+        }
+
+        return $values;
     }
 
     /**

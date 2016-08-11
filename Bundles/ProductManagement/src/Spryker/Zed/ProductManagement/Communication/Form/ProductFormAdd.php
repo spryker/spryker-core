@@ -361,24 +361,10 @@ class ProductFormAdd extends AbstractType
                             foreach ($attributes as $type => $valueSet) {
                                 if ($valueSet[AttributeAbstractForm::FIELD_NAME] && empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
                                     $context->addViolation(sprintf(
-                                        'Please enter value for an attribute "%s" or disable it',
+                                        'Please enter value for product attribute "%s" or disable it',
                                         $type
                                     ));
-                                    //GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                                 }
-                            }
-
-                            $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
-                                    $selectedAttributes[] = $valueSet[AttributeAbstractForm::FIELD_VALUE];
-                                    break;
-                                }
-                            }
-
-                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                $context->addViolation('Please select at least one attribute and its value under Attributes');
-                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],
@@ -411,17 +397,26 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
-                            return;
+                            foreach ($attributes as $type => $valueSet) {
+                                if ($valueSet[AttributeVariantForm::FIELD_NAME] && empty($valueSet[AttributeVariantForm::FIELD_VALUE])) {
+                                    $context->addViolation(sprintf(
+                                        'Please enter value for variant attribute "%s" or disable it',
+                                        $type
+                                    ));
+                                }
+                            }
+
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
+                                if (!empty($valueSet[AttributeVariantForm::FIELD_VALUE])) {
+                                    $selectedAttributes[] = $valueSet[AttributeVariantForm::FIELD_VALUE];
                                     break;
                                 }
                             }
 
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one variant attribute value');
+                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
+                                $context->addViolation('Please select at least one attribute and its value under Variants');
+                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },
                     ],

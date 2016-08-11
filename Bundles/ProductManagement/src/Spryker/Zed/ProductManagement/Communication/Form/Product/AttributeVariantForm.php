@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -23,24 +26,52 @@ class AttributeVariantForm extends AttributeAbstractForm
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
-        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
+        $attributeData = new Collection($attributes[$name]);
+
+        $inputManager = new AttributeInputManager();
+        $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
+        $isMultiple = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE);
+        $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
+        $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
         $config = $this->getValueFieldConfig($name, $attributes);
 
-        $input = new Select2ComboBoxType();
-        $config['multiple'] = true; //be able to select multiple values of super attributes;
         $config['attr']['style'] .= ' width: 250px';
-        $config['choices'] = [];
-        $config['attr']['class'] .= ' ajax';
-        $config['attr']['tags'] = false; //don't allow undefined values
-        $config['read_only'] = true;
+        $config['attr']['data-value'] = null;
+
+        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+        if ($this->localeTransfer instanceof LocaleTransfer) {
+            $idLocale = $this->localeTransfer->getIdLocale();
+        }
+
+        $existingValue = $this->productManagementQueryContainer
+            ->queryFindAttributeByValueOrTranslation(
+                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
+                $idLocale,
+                $value
+            )->findOne();
+
+        $input = new Select2ComboBoxType();
+        $config['multiple'] = $isMultiple;
+        $config['placeholder'] = '';
+        $config['attr']['style'] .= ' width: 250px';
+        $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
+        $config['attr']['tags'] = false;
+
+        if ($allowInput) {
+
+        }
+        else {
+            //$config['attr']['class'] .= ' ajax';
+        }
+
 
         if ($isDisabled) {
-            $config['disabled'] = true;
+            $config = $this->getValueFieldConfig($name, $attributes);
+            $config['read_only'] = true;
+            $input = $inputManager->getSymfonyInputType(null, $value);
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
-
-        $builder->get(self::FIELD_VALUE)->resetViewTransformers();
 
         return $this;
     }
