@@ -162,7 +162,6 @@ class ImageForm extends AbstractSubForm
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($images, ExecutionContextInterface $context) {
-                            s($images);
                             $selectedAttributes = [];
                             foreach ($images as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {

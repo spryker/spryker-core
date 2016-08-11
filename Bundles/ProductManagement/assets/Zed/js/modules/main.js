@@ -198,7 +198,7 @@ $(document).ready(function() {
         valueList.data('valuecount', valueCount);
     });
 
-    $('.spryker-form-image').slick({
+    $('.slick_demo_1').slick({
         dots: true
     });
 
