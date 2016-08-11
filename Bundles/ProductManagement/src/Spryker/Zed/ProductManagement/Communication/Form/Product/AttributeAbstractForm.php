@@ -200,7 +200,6 @@ class AttributeAbstractForm extends AbstractSubForm
         $isMultiple = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
-        $valueName = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME);
         $input = $inputManager->getSymfonyInputType($inputType, $value, $allowInput, $isMultiple);
         $config = $this->getValueFieldConfig($name, $attributes);
 
@@ -224,14 +223,10 @@ class AttributeAbstractForm extends AbstractSubForm
             $config['multiple'] = $isMultiple;
             $config['placeholder'] = '';
             $config['attr']['style'] .= ' width: 250px';
-            $config['choices'] = [];
-            if ($valueName) {
-                $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
-            }
-            $config['attr']['tags'] = true;
+            $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
 
             if ($allowInput) {
-
+                $config['attr']['tags'] = true;
             }
             else {
                 //$config['attr']['class'] .= ' ajax';
