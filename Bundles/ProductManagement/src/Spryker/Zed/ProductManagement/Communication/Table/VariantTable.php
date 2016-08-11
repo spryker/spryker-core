@@ -91,8 +91,7 @@ class VariantTable extends AbstractTable
             ->innerJoinSpyProductAbstract()
             ->filterByFkProductAbstract($this->idProductAbstract)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-            ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU)
-        ;
+            ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU);
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -131,8 +130,8 @@ class VariantTable extends AbstractTable
         $urls[] = $this->generateViewButton(
             sprintf('/product-management/view/variant?%s=%d&%s=%d',
                 EditController::PARAM_ID_PRODUCT,
-                EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $item[SpyProductTableMap::COL_ID_PRODUCT],
+                EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $item[static::COL_ID_PRODUCT_ABSTRACT]
             ),
             'View'
@@ -141,8 +140,8 @@ class VariantTable extends AbstractTable
         $urls[] = $this->generateViewButton(
             sprintf('/product-management/edit/variant?%s=%d&%s=%d',
                 EditController::PARAM_ID_PRODUCT,
-                EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $item[SpyProductTableMap::COL_ID_PRODUCT],
+                EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $item[static::COL_ID_PRODUCT_ABSTRACT]
             ),
             'Edit'
