@@ -22,6 +22,7 @@ require('select2');
 require('codemirror');
 require('summernote');
 require('sweetalert');
+require('slick-carousel');
 
 // inspinia
 require('../../../Inspinia/inspinia');
