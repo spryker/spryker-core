@@ -35,7 +35,6 @@ class OrderHeadMapper extends BaseMapper
      */
     protected $requestTransfer;
 
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $paymentData
