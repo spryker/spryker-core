@@ -298,33 +298,14 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     protected function getVariantValues(array $variantData, ProductManagementAttributeTransfer $attributeTransfer)
     {
         $hasValue = $variantData[AttributeVariantForm::FIELD_NAME];
-        $hiddenValueId = (int)$variantData[AttributeVariantForm::FIELD_VALUE_HIDDEN_ID];
-        $valueIds = (array)$variantData[AttributeVariantForm::FIELD_VALUE];
+        $values = (array)$variantData[AttributeVariantForm::FIELD_VALUE];
 
         if (!$hasValue) {
             return null;
         }
 
-        if ($hiddenValueId > 0) {
-            $valueIds = [$hiddenValueId];
-        }
-
-        if (empty($valueIds)) {
+        if (empty($hasValue)) {
             return null;
-        }
-
-        $valueEntities = $this->productManagementQueryContainer
-            ->queryProductManagementAttributeValue()
-            ->filterByIdProductManagementAttributeValue($valueIds, Criteria::IN)
-            ->find();
-
-        $values = [];
-        foreach ($valueEntities as $entity) {
-            $values[$entity->getValue()] = $entity->getValue();
-        }
-
-        if (empty($values)) {
-            throw new Exception('Undefined values for product management attribute: ' . $attributeTransfer->getKey());
         }
 
         return $values;

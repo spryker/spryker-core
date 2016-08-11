@@ -105,7 +105,7 @@ class VariantGenerator
         foreach ($attributeCollection as $attributeType => $attributeValueSet) {
             $typeAttributesValues = [];
             foreach ($attributeValueSet as $name => $value) {
-                $typeAttributesValues[] = [$attributeType => $name];
+                $typeAttributesValues[] = [$attributeType => $value];
             }
 
             $attributes[] = $typeAttributesValues;
