@@ -188,9 +188,9 @@ class OrderStateMachine implements OrderStateMachineInterface
         foreach ($orderGroup as $groupedOrderItems) {
             $this->logSourceState($groupedOrderItems, $log);
 
-            $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
-            $sourceStateBuffer = $this->updateStateByEvent($eventId, $groupedOrderItems, $sourceStateBuffer, $log);
-            $this->saveOrderItems($groupedOrderItems, $log, $processes, $sourceStateBuffer);
+            $processedOrderItems = $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
+            $sourceStateBuffer = $this->updateStateByEvent($eventId, $processedOrderItems, $sourceStateBuffer, $log);
+            $this->saveOrderItems($processedOrderItems, $log, $processes, $sourceStateBuffer);
         }
 
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
@@ -472,14 +472,16 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws \Exception
      *
-     * @return void
+     * @return array
      */
     protected function runCommand($eventId, array $orderItems, array $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
     {
+        $processedOrderItems = [];
+
         $orderEntity = current($orderItems)->getOrder();
-        foreach ($orderItems as $orderItem) {
-            $stateId = $orderItem->getState()->getName();
-            $processId = $orderItem->getProcess()->getName();
+        foreach ($orderItems as $orderItemEntity) {
+            $stateId = $orderItemEntity->getState()->getName();
+            $processId = $orderItemEntity->getProcess()->getName();
             $process = $processes[$processId];
             $state = $process->getStateFromAllProcesses($stateId);
             $event = $state->getEvent($eventId);
@@ -493,26 +495,36 @@ class OrderStateMachine implements OrderStateMachineInterface
             $command = $this->getCommand($event->getCommand());
             $type = $this->getCommandType($command);
 
-            $log->addCommand($orderItem, $command);
+            $log->addCommand($orderItemEntity, $command);
 
             try {
                 if ($type === self::BY_ITEM) {
-                    $returnData = $command->run($orderItem, $data);
+                    $returnData = $command->run($orderItemEntity, $data);
                     $this->returnData = array_merge($this->returnData, $returnData);
+                    $processedOrderItems[] = $orderItemEntity;
+
                 } else {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
                     }
+                    $processedOrderItems[] = $orderItemEntity;
                     break;
                 }
             } catch (Exception $e) {
                 $log->setIsError(true);
                 $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                 $log->saveAll();
+
+                if ($type === self::BY_ITEM) {
+                    continue;
+                }
+
                 throw $e;
             }
         }
+
+        return $processedOrderItems;
     }
 
     /**
