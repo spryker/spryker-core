@@ -14,6 +14,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
@@ -56,7 +57,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
-    const VALIDATION_GROUP_IMAGE = 'validation_group_image';
+    const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
 
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
@@ -120,7 +121,7 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
             self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
             self::VALIDATION_GROUP_SEO,
-            self::VALIDATION_GROUP_IMAGE,
+            self::VALIDATION_GROUP_IMAGE_SET,
         ];
 
         $resolver->setDefaults([
@@ -473,6 +474,35 @@ class ProductFormAdd extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'constraints' => [new Callback([
+                    'methods' => [
+                        function ($imageSetCollection, ExecutionContextInterface $context) {
+                            if (array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
+                                return;
+                            }
+
+                            foreach ($imageSetCollection as $setData) {
+                                if (trim($setData[ImageForm::FIELD_SET_NAME]) === '') {
+                                    $context->addViolation('Please enter Image Set Name under Images');
+                                    GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                }
+
+                                foreach ($setData[ImageForm::PRODUCT_IMAGES] as $productImage) {
+                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_SMALL]) === '') {
+                                        $context->addViolation('Please enter small image url under Images');
+                                        GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                    }
+
+                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_LARGE]) === '') {
+                                        $context->addViolation('Please enter large image url under Images');
+                                        GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                    }
+                                }
+                            }
+                        },
+                    ],
+                    'groups' => [self::VALIDATION_GROUP_IMAGE_SET]
+                ])]
             ]);
 
         return $this;

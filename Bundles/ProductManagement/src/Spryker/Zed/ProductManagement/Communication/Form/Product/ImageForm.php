@@ -8,8 +8,14 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ImageForm extends AbstractSubForm
 {
@@ -22,6 +28,31 @@ class ImageForm extends AbstractSubForm
 
     const PRODUCT_IMAGES = 'product_images';
 
+    const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $validationGroups = [
+            Constraint::DEFAULT_GROUP,
+            self::VALIDATION_GROUP_IMAGE_COLLECTION,
+        ];
+
+        $resolver->setDefaults([
+            'cascade_validation' => true,
+            'required' => false,
+            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+                return $validationGroups;
+            },
+            'compound' => true,
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -39,7 +70,7 @@ class ImageForm extends AbstractSubForm
             ->addLocaleHiddenField($builder)
             ->addProductHiddenField($builder)
             ->addProductAbstractHiddenField($builder)
-            ->addImageForm($builder);
+            ->addImageCollectionForm($builder);
     }
 
     /**
@@ -64,7 +95,7 @@ class ImageForm extends AbstractSubForm
     {
         $builder
             ->add(self::FIELD_SET_NAME, 'text', [
-                'required' => false,
+                'required' => true,
                 'label' => 'Image Set Name',
                 'constraints' => [
                     new NotBlank(),
@@ -118,7 +149,7 @@ class ImageForm extends AbstractSubForm
      *
      * @return $this
      */
-    protected function addImageForm(FormBuilderInterface $builder)
+    protected function addImageCollectionForm(FormBuilderInterface $builder)
     {
         $builder
             ->add(self::PRODUCT_IMAGES, 'collection', [
@@ -127,25 +158,25 @@ class ImageForm extends AbstractSubForm
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
-/*                'constraints' => [new Callback([
+                'constraints' => [new Callback([
                     'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            return;
+                        function ($images, ExecutionContextInterface $context) {
+                            s($images);
                             $selectedAttributes = [];
-                            foreach ($attributes as $type => $valueSet) {
+                            foreach ($images as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
                                     $selectedAttributes[] = $valueSet['value'];
                                     break;
                                 }
                             }
 
-                            if (empty($selectedAttributes)) {
-                                $context->addViolation('Please select at least one variant attribute value');
+                            if (!empty($selectedAttributes)) {
+                                $context->addViolation('Please enter required image information');
                             }
                         },
                     ],
-                    'groups' => [ProductFormAdd::VALIDATION_GROUP_IMAGE]
-                ])]*/
+                    'groups' => [self::VALIDATION_GROUP_IMAGE_COLLECTION]
+                ])]
             ]);
 
         return $this;
