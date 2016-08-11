@@ -13,8 +13,8 @@ use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use LogicException;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\RequestInterface as MessageRequestInterface;
+use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
@@ -165,8 +165,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $headers[$header] = $value;
         }
 
-        $char = (strpos($pathInfo, '?') === false) ? '?' : ' &';
-
+        $char = (strpos($pathInfo, '?') === false) ? '?' : '&';
         $eventJournal = new SharedEventJournal();
         $event = new Event();
         $eventJournal->applyCollectors($event);
@@ -179,14 +178,14 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      *
      * @throws \LogicException
      *
      * @return \Spryker\Client\ZedRequest\Client\Request
      */
-    protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
+    protected function createRequestTransfer(TransferInterface $transferObject = null, array $metaTransfers = [])
     {
         $request = $this->getRequest();
         $request->setSessionId(session_id());
@@ -200,7 +199,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $request->addMetaTransfer($name, $metaTransfer);
         }
 
-        if (!empty($transferObject)) {
+        if ($transferObject) {
             $request->setTransfer($transferObject);
         }
 
@@ -216,7 +215,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function sendRequest(RequestInterface $request, ObjectInterface $requestTransfer, $timeoutInSeconds = null)
+    protected function sendRequest(MessageRequestInterface $request, ObjectInterface $requestTransfer, $timeoutInSeconds = null)
     {
         $config = [
             'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
@@ -244,7 +243,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
-    protected function getTransferFromResponse(ResponseInterface $response, RequestInterface $request)
+    protected function getTransferFromResponse(MessageResponseInterface $response, MessageRequestInterface $request)
     {
         $data = json_decode(trim($response->getBody()), true);
         if (!$data || !is_array($data)) {
