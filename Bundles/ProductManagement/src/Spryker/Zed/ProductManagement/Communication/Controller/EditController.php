@@ -89,13 +89,18 @@ class EditController extends AddController
             }
         };
 
+        $variantTable = $this
+            ->getFactory()
+            ->createVariantTable();
+
         return $this->viewResponse([
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'concreteProductCollection' => $concreteProductCollection,
             'localeCollection' => $localeProvider->getLocaleCollection(),
-            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
+            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
+            'variantTable' => $variantTable->render(),
         ]);
     }
 
@@ -171,7 +176,20 @@ class EditController extends AddController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
         ]);
+    }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function variantTableAction()
+    {
+        $variantTable = $this
+            ->getFactory()
+            ->createVariantTable();
+
+        return $this->jsonResponse(
+            $variantTable->fetchData()
+        );
     }
 
 }

@@ -24,6 +24,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
+use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator;
@@ -456,5 +457,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductTable($this->getProductQueryContainer());
     }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
+     */
+    public function createVariantTable()
+    {
+        return new VariantTable($this->getProductQueryContainer());
+    }
+
 
 }
