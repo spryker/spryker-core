@@ -83,6 +83,7 @@ class AttributeAbstractForm extends AbstractSubForm
         return [
             'read_only' => $isDisabled,
             'label' => false,
+            'required' => true,
             'attr' => [
                 'class' => 'attribute_metadata_value',
                 'style' => '',
@@ -270,7 +271,7 @@ class AttributeAbstractForm extends AbstractSubForm
             )->find();
 
         if (!$existingValue && isset($attributeValue)) {
-            $result[null] = $attributeValue;
+            $result[$attributeValue] = $attributeValue;
         }
 
         foreach ($valueCollection as $entity) {
@@ -280,7 +281,7 @@ class AttributeAbstractForm extends AbstractSubForm
                 $value = $data['translation'];
             }
 
-            $result[$entity->getIdProductManagementAttributeValue()] = $value;
+            $result[$value] = $value;
         }
 
         return $result;

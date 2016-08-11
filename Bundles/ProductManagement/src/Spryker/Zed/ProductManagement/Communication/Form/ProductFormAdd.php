@@ -358,7 +358,10 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
-                            sd($attributes);
+                    return;
+                            $form = $context->getRoot();
+                            $data = $form->getData();
+                            //sd($attributes, $data);
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
                                 if (!empty($valueSet['value'])) {
