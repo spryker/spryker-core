@@ -41,14 +41,14 @@ class AbstractHttpClientTest extends \PHPUnit_Framework_TestCase
         $response = $abstractRequest->request('?foo=bar');
 
         /**
-         * @var AbstractTransfer $transfer
+         * @var \Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer $transfer
          */
         $transfer = $response->getTransfer();
         $this->assertTrue($transfer->getBool());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractHttpClient
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
      */
     protected function getAbstractRequestMock()
     {
