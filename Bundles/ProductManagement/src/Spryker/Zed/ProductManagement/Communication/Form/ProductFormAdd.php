@@ -112,7 +112,24 @@ class ProductFormAdd extends AbstractType
         $resolver->setRequired(self::OPTION_ATTRIBUTE_VARIANT);
         $resolver->setRequired(self::OPTION_TAX_RATES);
 
-        $validationGroups = [
+        $validationGroups = $this->getValidationGroups();
+
+        $resolver->setDefaults([
+            'cascade_validation' => true,
+            'required' => false,
+            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+                return $validationGroups;
+            },
+            'compound' => true,
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getValidationGroups()
+    {
+        return [
             Constraint::DEFAULT_GROUP,
             self::VALIDATION_GROUP_UNIQUE_SKU,
             self::VALIDATION_GROUP_GENERAL,
@@ -123,15 +140,6 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_SEO,
             self::VALIDATION_GROUP_IMAGE_SET,
         ];
-
-        $resolver->setDefaults([
-            'cascade_validation' => true,
-            'required' => false,
-            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
-                return $validationGroups;
-            },
-            'compound' => true,
-        ]);
     }
 
     /**

@@ -7,10 +7,23 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageForm;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductFormEdit extends ProductFormAdd
 {
+
+    /**
+     * @return array
+     */
+    protected function getValidationGroups()
+    {
+        $validationGroups = parent::getValidationGroups();
+
+        return array_filter($validationGroups, function($item){
+            return $item !== ImageForm::VALIDATION_GROUP_IMAGE_COLLECTION;
+        });
+    }
 
     /**
      * @return string
@@ -24,20 +37,11 @@ class ProductFormEdit extends ProductFormAdd
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    protected function addAttributeVariantForm(FormBuilderInterface $builder, array $options = [])
     {
-        parent::buildForm($builder, $options);
-
-        /*$this
-            ->addSkuField($builder)
-            ->addProductAbstractIdHiddenField($builder)
-            ->addGeneralLocalizedForms($builder)
-            ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
-            ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
-            ->addSeoLocalizedForms($builder, $options)
-            ->addImageForm($builder);*/
+        return $this;
     }
 
 }
