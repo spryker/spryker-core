@@ -24,7 +24,6 @@ class InvalidZedResponseException extends RuntimeException
             '[status code] ' . $response->getStatusCode(),
             '[reason phrase] ' . $reason,
             '[url] ' => $url,
-            //'[url] ' . $response->getEffectiveUrl(),
             '[raw body] ' . htmlentities(substr($response->getBody(), 0, 80)) . '...',
         ]);
 
