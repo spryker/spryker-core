@@ -31,10 +31,43 @@ table.dataTable.gui-table-data {
   .row {
     margin-left: 0;
   }
+
+  li.active a.tab-item {
+    border-left-width: 3px;
+    border-left-color: #1ab394 !important;
+    border-right-color: transparent !important;
+    border-right: none;
+  }
 }
 
 .copy-language {
   display:block;
 }
+
+#product-option-tabs {
+  li > a {
+    color: #999;
+  }
+
+  li a.tab-item {
+    background: #f3f3f4;
+  }
+
+  li.active a.tab-item {
+    background-color: #1ab394 !important;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+      color: #fff;
+    }
+  }
+
+  .error-tab i {
+    color: #ffc333;
+  }
+}
+
+
 
 

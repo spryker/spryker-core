@@ -11,6 +11,7 @@ function Navigation(){
     this.changeTabsOnClick();
     this.showHideNavigationButtons();
     this.listenNavigationButtons();
+    this.markValidationFailedTabs();
 }
 
 Navigation.prototype.changeTabsOnClick = function(){
@@ -35,6 +36,24 @@ Navigation.prototype.changeTabsOnClick = function(){
             }
             position++
         });
+    });
+};
+
+Navigation.prototype.markValidationFailedTabs = function() {
+    $('.tab-content .tab-pane').each(function(index, tabContent) {
+        var hasErrors = $(tabContent).find('.has-error, .alert-danger');
+        if (hasErrors.length == 0) {
+            return;
+        }
+        var tabContentElementId = $(tabContent).attr('id');
+        $('#product-option-tabs').find('li a').each(function(index, tabElement) {
+            var jTabElement = $(tabElement);
+            var elementHref = jTabElement.attr('href');
+            if (elementHref.indexOf(tabContentElementId) > -1) {
+                jTabElement.addClass('error-tab');
+                jTabElement.html(jTabElement.text() + " <i class='fa fa-warning'></i>");
+            }
+        })
     });
 };
 
