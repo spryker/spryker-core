@@ -34,7 +34,7 @@ class SearchProductAttributeMapCollector implements SearchProductAttributeMapCol
         $rawMap = [];
 
         foreach ($this->getRawAttributeMap() as $attributeMap) {
-            $attributeName = $attributeMap->getSpyProductAttributesMetadata()->getKey();
+            $attributeName = $attributeMap->getSpyProductAttributeKey()->getKey();
 
             if (!isset($rawMap[$attributeName])) {
                 $rawMap[$attributeName] = [];

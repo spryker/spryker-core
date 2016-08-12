@@ -114,9 +114,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated
+     *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return \Spryker\Zed\Product\Business\Internal\Install
+     *
+     * TODO: Remove me
      */
     public function createInstaller(MessengerInterface $messenger)
     {

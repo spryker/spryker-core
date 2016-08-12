@@ -10,6 +10,11 @@ namespace Spryker\Zed\Product\Business\Internal;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 
+/**
+ * @deprecated Product attribute types are obsolete
+ *
+ * TODO: remove me
+ */
 class Install extends AbstractInstaller
 {
 

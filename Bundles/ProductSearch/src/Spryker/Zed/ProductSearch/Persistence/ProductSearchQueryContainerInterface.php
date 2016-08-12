@@ -43,16 +43,16 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $fkProductAttributesMetadata
+     * @param int $fkProductAttributeKey
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
      */
-    public function queryProductSearchAttributeMapByFkProductAttributesMetadata($fkProductAttributesMetadata);
+    public function queryProductSearchAttributeMapByFkProductAttributeKey($fkProductAttributeKey);
 
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function querySearchPreferencesTable();
 

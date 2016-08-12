@@ -10,8 +10,12 @@ namespace Spryker\Zed\Product\Communication\Plugin;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
+ * @deprecated
+ *
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
+ *
+ * TODO: remove me
  */
 class Installer extends AbstractInstallerPlugin
 {

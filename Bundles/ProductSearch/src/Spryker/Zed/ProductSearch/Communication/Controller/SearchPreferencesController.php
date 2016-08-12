@@ -51,7 +51,7 @@ class SearchPreferencesController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idAttributesMetadata = $this->castId($request->query->get(self::PARAM_ID));
+        $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -59,7 +59,7 @@ class SearchPreferencesController extends AbstractController
 
         $form = $this->getFactory()
             ->createSearchPreferencesForm(
-                $dataProvider->getData($idAttributesMetadata),
+                $dataProvider->getData($idAttributeKey),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -67,7 +67,7 @@ class SearchPreferencesController extends AbstractController
         if ($form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
             $productSearchPreferencesTransfer
-                ->setIdProductAttributesMetadata($idAttributesMetadata)
+                ->setIdProductAttributeKey($idAttributeKey)
                 ->fromArray($form->getData(), true);
 
             $this->getFacade()->saveProductSearchPreferences($productSearchPreferencesTransfer);

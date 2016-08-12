@@ -37,17 +37,17 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
     {
         $this->productSearchQueryContainer->getConnection()->beginTransaction();
 
-        $idProductAttributesMetadata = $productSearchPreferencesTransfer
-            ->requireIdProductAttributesMetadata()
-            ->getIdProductAttributesMetadata();
+        $idProductAttributeKey = $productSearchPreferencesTransfer
+            ->requireIdProductAttributeKey()
+            ->getIdProductAttributeKey();
 
-        $this->cleanProductSearchAttributeMap($idProductAttributesMetadata);
+        $this->cleanProductSearchAttributeMap($idProductAttributeKey);
 
         $this
-            ->addFullText($productSearchPreferencesTransfer, $idProductAttributesMetadata)
-            ->addFullTextBoosted($productSearchPreferencesTransfer, $idProductAttributesMetadata)
-            ->addSuggestionTerms($productSearchPreferencesTransfer, $idProductAttributesMetadata)
-            ->addCompletionTerms($productSearchPreferencesTransfer, $idProductAttributesMetadata);
+            ->addFullText($productSearchPreferencesTransfer, $idProductAttributeKey)
+            ->addFullTextBoosted($productSearchPreferencesTransfer, $idProductAttributeKey)
+            ->addSuggestionTerms($productSearchPreferencesTransfer, $idProductAttributeKey)
+            ->addCompletionTerms($productSearchPreferencesTransfer, $idProductAttributeKey);
 
         /*
          * TODO: we need to touch all products to trigger collectors (search only if possible) to update the searchable data.
@@ -58,28 +58,28 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
     }
 
     /**
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      *
      * @return void
      */
-    protected function cleanProductSearchAttributeMap($idProductAttributesMetadata)
+    protected function cleanProductSearchAttributeMap($idProductAttributeKey)
     {
         $this
             ->productSearchQueryContainer
-            ->queryProductSearchAttributeMapByFkProductAttributesMetadata($idProductAttributesMetadata)
+            ->queryProductSearchAttributeMapByFkProductAttributeKey($idProductAttributeKey)
             ->delete();
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      *
      * @return $this
      */
-    protected function addFullText(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributesMetadata)
+    protected function addFullText(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getFullText() === true) {
-            $this->createNewProductSearchAttributeMapRecord($idProductAttributesMetadata, PageIndexMap::FULL_TEXT);
+            $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::FULL_TEXT);
         }
 
         return $this;
@@ -87,14 +87,14 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      *
      * @return $this
      */
-    protected function addFullTextBoosted(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributesMetadata)
+    protected function addFullTextBoosted(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getFullTextBoosted() === true) {
-            $this->createNewProductSearchAttributeMapRecord($idProductAttributesMetadata, PageIndexMap::FULL_TEXT_BOOSTED);
+            $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::FULL_TEXT_BOOSTED);
         }
 
         return $this;
@@ -102,14 +102,14 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      *
      * @return $this
      */
-    protected function addSuggestionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributesMetadata)
+    protected function addSuggestionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getSuggestionTerms() === true) {
-            $this->createNewProductSearchAttributeMapRecord($idProductAttributesMetadata, PageIndexMap::SUGGESTION_TERMS);
+            $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::SUGGESTION_TERMS);
         }
 
         return $this;
@@ -117,30 +117,30 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      *
      * @return $this
      */
-    protected function addCompletionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributesMetadata)
+    protected function addCompletionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getCompletionTerms() === true) {
-            $this->createNewProductSearchAttributeMapRecord($idProductAttributesMetadata, PageIndexMap::COMPLETION_TERMS);
+            $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::COMPLETION_TERMS);
         }
 
         return $this;
     }
 
     /**
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      * @param string $targetField
      *
      * @return void
      */
-    protected function createNewProductSearchAttributeMapRecord($idProductAttributesMetadata, $targetField)
+    protected function createNewProductSearchAttributeMapRecord($idProductAttributeKey, $targetField)
     {
         $entity = new SpyProductSearchAttributeMap();
         $entity
-            ->setFkProductAttributesMetadata($idProductAttributesMetadata)
+            ->setFkProductAttributeKey($idProductAttributeKey)
             ->setTargetField($targetField);
 
         $entity->save();

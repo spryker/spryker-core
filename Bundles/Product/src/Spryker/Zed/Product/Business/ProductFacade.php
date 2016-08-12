@@ -285,11 +285,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
      *
      * @return void
+     *
+     * TODO: remove me
      */
     public function install(MessengerInterface $messenger = null)
     {

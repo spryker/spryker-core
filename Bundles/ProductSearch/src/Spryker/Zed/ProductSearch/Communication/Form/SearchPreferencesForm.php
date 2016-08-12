@@ -15,7 +15,6 @@ class SearchPreferencesForm extends AbstractType
 {
 
     const FIELD_ATTRIBUTE_NAME = 'attributeName';
-    const FIELD_ATTRIBUTE_TYPE = 'attributeType';
     const FIELD_FULL_TEXT = 'fullText';
     const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
     const FIELD_SUGGESTION_TERMS = 'suggestionTerms';
@@ -39,7 +38,6 @@ class SearchPreferencesForm extends AbstractType
     {
         $this
             ->addAttributeName($builder)
-            ->addAttributeType($builder)
             ->addFullTextField($builder)
             ->addFullTextBoostedField($builder)
             ->addSuggestionTermsField($builder)
@@ -54,20 +52,6 @@ class SearchPreferencesForm extends AbstractType
     protected function addAttributeName(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ATTRIBUTE_NAME, 'text', [
-            'disabled' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addAttributeType(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_ATTRIBUTE_TYPE, 'text', [
             'disabled' => true,
         ]);
 
