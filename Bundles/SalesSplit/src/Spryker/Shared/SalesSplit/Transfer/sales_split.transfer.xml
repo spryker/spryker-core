@@ -15,4 +15,14 @@
         <property name="successMessage" type="string" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int" />
+        <property name="quantity" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="name" type="string" />
+        <property name="groupKey" type="string" />
+        <property name="sku" type="string" />
+    </transfer>
+
 </transfers>
