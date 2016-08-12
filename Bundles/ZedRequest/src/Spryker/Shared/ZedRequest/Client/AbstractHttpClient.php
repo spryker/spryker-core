@@ -127,7 +127,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $response = $this->sendRequest($request, $requestTransfer, $timeoutInSeconds);
         } catch (GuzzleRequestException $e) {
             $requestException = new RequestException($e->getMessage(), $e->getCode(), $e);
-            $requestException->setExtra((string)$e->getResponse());
+            $requestException->setExtra((string)$e->getResponse()->getBody());
 
             throw $requestException;
         }
