@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Money\Mapper;
+namespace Unit\Spryker\Shared\Money\DataMapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
@@ -17,8 +17,8 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
  * @group Spryker
  * @group Shared
  * @group Money
- * @group Converter
- * @group TransferToMoneyConverter
+ * @group DataMapper
+ * @group TransferToMoneyConverterTest
  */
 class TransferToMoneyConverterTest extends \PHPUnit_Framework_TestCase
 {

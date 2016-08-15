@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Money\Communication\Plugin\TwigMoneyServiceProvider;
+namespace Functional\Spryker\Zed\Money\Communication\Plugin\ServiceProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
@@ -20,7 +20,8 @@ use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvi
  * @group Money
  * @group Communication
  * @group Plugin
- * @group TwigMoneyServiceProvider
+ * @group ServiceProvider
+ * @group TwigMoneyServiceProviderTest
  */
 class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -129,4 +130,5 @@ class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         return $moneyTransfer;
     }
+
 }

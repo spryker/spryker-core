@@ -13,9 +13,10 @@ use Spryker\Yves\Currency\Plugin\CurrencyPlugin;
 /**
  * @group Functional
  * @group Spryker
- * @group Zed
+ * @group Yves
  * @group Currency
- * @group CurrencyPlugin
+ * @group Plugin
+ * @group CurrencyPluginTest
  */
 class CurrencyPluginTest extends \PHPUnit_Framework_TestCase
 {

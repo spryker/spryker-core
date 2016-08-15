@@ -16,7 +16,7 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
  * @group Shared
  * @group Money
  * @group Converter
- * @group IntegerToDecimalConverter
+ * @group IntegerToDecimalConverterTest
  */
 class IntegerToDecimalConverterTest extends \PHPUnit_Framework_TestCase
 {

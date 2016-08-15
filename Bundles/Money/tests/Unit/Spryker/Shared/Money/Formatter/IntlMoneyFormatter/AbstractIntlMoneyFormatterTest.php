@@ -18,6 +18,8 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
  * @group Shared
  * @group Money
  * @group Formatter
+ * @group IntlMoneyFormatter
+ * @group AbstractIntlMoneyFormatterTest
  */
 abstract class AbstractIntlMoneyFormatterTest extends \PHPUnit_Framework_TestCase
 {

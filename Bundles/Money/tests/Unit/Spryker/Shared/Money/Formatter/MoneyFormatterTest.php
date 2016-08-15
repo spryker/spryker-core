@@ -19,7 +19,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
  * @group Shared
  * @group Money
  * @group Formatter
- * @group MoneyFormatter
+ * @group MoneyFormatterTest
  */
 class MoneyFormatterTest extends \PHPUnit_Framework_TestCase
 {

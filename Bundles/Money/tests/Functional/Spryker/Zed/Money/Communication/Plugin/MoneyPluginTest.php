@@ -16,7 +16,9 @@ use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
  * @group Spryker
  * @group Zed
  * @group Money
- * @group MoneyPlugin
+ * @group Communication
+ * @group Plugin
+ * @group MoneyPluginTest
  */
 class MoneyPluginTest extends \PHPUnit_Framework_TestCase
 {

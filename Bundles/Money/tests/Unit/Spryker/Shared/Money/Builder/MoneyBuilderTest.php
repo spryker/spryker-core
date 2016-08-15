@@ -22,7 +22,7 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
  * @group Shared
  * @group Money
  * @group Builder
- * @group MoneyBuilder
+ * @group MoneyBuilderTest
  */
 class MoneyBuilderTest extends \PHPUnit_Framework_TestCase
 {

@@ -82,7 +82,7 @@ interface MoneyFacadeInterface
 
     /**
      * Specification
-     * - Converts a cent value into decimal value
+     * - Converts an integer value into decimal value
      *
      * @api
      *
@@ -94,7 +94,7 @@ interface MoneyFacadeInterface
 
     /**
      * Specification
-     * - Converts a decimal value into cent value
+     * - Converts a decimal value into integer value
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  * @group Shared
  * @group Money
  * @group Formatter
- * @group MoneyFormatterCollection
+ * @group MoneyFormatterCollectionTest
  */
 class MoneyFormatterCollectionTest extends \PHPUnit_Framework_TestCase
 {

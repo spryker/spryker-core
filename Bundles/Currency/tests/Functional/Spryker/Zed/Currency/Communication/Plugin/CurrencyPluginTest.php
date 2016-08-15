@@ -15,7 +15,9 @@ use Spryker\Zed\Currency\Communication\Plugin\CurrencyPlugin;
  * @group Spryker
  * @group Zed
  * @group Currency
- * @group CurrencyPlugin
+ * @group Communication
+ * @group Plugin
+ * @group CurrencyPluginTest
  */
 class CurrencyPluginTest extends \PHPUnit_Framework_TestCase
 {

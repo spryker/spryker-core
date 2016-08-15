@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Yves\Money\Plugin\TwigMoneyServiceProvider;
+namespace Functional\Spryker\Yves\Money\Plugin\ServiceProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
@@ -19,7 +19,8 @@ use Spryker\Yves\Money\Plugin\ServiceProvider\TwigMoneyServiceProvider;
  * @group Yves
  * @group Money
  * @group Plugin
- * @group TwigMoneyServiceProvider
+ * @group ServiceProvider
+ * @group TwigMoneyServiceProviderTest
  */
 class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -128,4 +129,5 @@ class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         return $moneyTransfer;
     }
+
 }

@@ -18,7 +18,7 @@ use Symfony\Component\Intl\Intl;
  * @group Shared
  * @group Currency
  * @group Builder
- * @group CurrencyBuilder
+ * @group CurrencyBuilderTest
  */
 class CurrencyBuilderTest extends \PHPUnit_Framework_TestCase
 {

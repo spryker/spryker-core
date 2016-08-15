@@ -8,9 +8,9 @@
     }
   },
   "require": {
-    "spryker/currency": "^1.0.0",
+    "spryker/currency": "^0.1.0",
     "spryker/kernel": "^2.0.0",
-    "mathiasverraes/money": "~3.0"
+    "mathiasverraes/money": "~3.0.0-beta2"
   },
   "description": "Money bundle",
   "license": "proprietary",

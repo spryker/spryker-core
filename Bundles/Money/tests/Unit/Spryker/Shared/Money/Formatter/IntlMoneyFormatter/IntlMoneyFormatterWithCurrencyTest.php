@@ -14,7 +14,13 @@ use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithCurr
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
 
 /**
- * @group IntlMoneyFormatterWithCurrency
+ * @group Unit
+ * @group Spryker
+ * @group Shared
+ * @group Money
+ * @group Formatter
+ * @group IntlMoneyFormatter
+ * @group IntlMoneyFormatterWithCurrencyTest
  */
 class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
 {

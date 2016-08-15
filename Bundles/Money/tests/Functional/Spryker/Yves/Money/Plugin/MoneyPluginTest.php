@@ -14,9 +14,10 @@ use Spryker\Yves\Money\Plugin\MoneyPlugin;
 /**
  * @group Functional
  * @group Spryker
- * @group Zed
+ * @group Yves
  * @group Money
- * @group MoneyPlugin
+ * @group Plugin
+ * @group MoneyPluginTest
  */
 class MoneyPluginTest extends \PHPUnit_Framework_TestCase
 {
