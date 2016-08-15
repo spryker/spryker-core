@@ -14,7 +14,6 @@ use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
 class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPostCheckPluginInterface
 {
@@ -27,11 +26,10 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface $queryContainer
      */
-    public function __construct(PayolutionQueryContainerInterface $queryContainer)
+    public function __construct()
     {
-        $this->queryContainer = $queryContainer;
+        $this->queryContainer = $this->getQueryContainer();
     }
 
     /**

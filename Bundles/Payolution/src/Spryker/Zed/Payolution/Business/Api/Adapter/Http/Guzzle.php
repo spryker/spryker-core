@@ -45,34 +45,36 @@ class Guzzle extends AbstractHttpAdapter
         $headers = [
             'Content-Type' => self::$requestContentTypes[$this->contentType],
         ];
-        $request = new Request('POST', $this->gatewayUrl, $headers, $data);
+        $request = new Request('POST', $this->gatewayUrl, $headers);
 
         return $request;
     }
 
     /**
-     * @param \Psr\Http\Message\RequestInterface $request
      * @param string $user
      * @param string $password
      *
-     * @return void
+     * @return array
      */
-    protected function authorizeRequest($request, $user, $password)
+    protected function authorizeRequest($user, $password)
     {
-        $request->withAddedHeader('auth', [$user, $password]);
+        return [
+            'auth' => [$user, $password]
+        ];
     }
 
     /**
      * @param \Psr\Http\Message\RequestInterface $request
+     * @param array $options
      *
      * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */
-    protected function send($request)
+    protected function send($request, array $options = [])
     {
         try {
-            $response = $this->client->send($request);
+            $response = $this->client->send($request, $options);
         } catch (RequestException $requestException) {
             throw new ApiHttpRequestException($requestException->getMessage());
         }
