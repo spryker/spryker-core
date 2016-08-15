@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Money\Communication\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
+use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

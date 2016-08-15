@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Price\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
@@ -16,13 +15,4 @@ use Spryker\Zed\Price\PriceDependencyProvider;
  */
 class PriceCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Money\Communication\Plugin\MoneyPluginInterface
-     */
-    public function getMoneyPlugin()
-    {
-        return $this->getProvidedDependency(PriceDependencyProvider::PLUGIN_MONEY);
-    }
-
 }

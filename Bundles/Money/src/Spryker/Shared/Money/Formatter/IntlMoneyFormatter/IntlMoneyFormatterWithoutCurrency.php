@@ -19,8 +19,9 @@ class IntlMoneyFormatterWithoutCurrency extends AbstractIntlMoneyFormatter
      */
     protected function getNumberFormatter($localeName)
     {
-        $numberFormatter = new NumberFormatter($localeName, NumberFormatter::DECIMAL);
-        $numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+        $numberFormatter = new NumberFormatter($localeName, NumberFormatter::CURRENCY);
+        $pattern = str_replace(['¤', ' '], '', $numberFormatter->getPattern());
+        $numberFormatter->setPattern($pattern);
 
         return $numberFormatter;
     }

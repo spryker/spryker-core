@@ -9,6 +9,7 @@ namespace Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**

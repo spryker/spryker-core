@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Money\Plugin;
+namespace Spryker\Shared\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 
-/**
- * @method \Spryker\Yves\Money\MoneyFactory getFactory()
- */
 interface MoneyPluginInterface
 {
 
