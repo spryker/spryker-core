@@ -47,7 +47,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      */
     public function sendRequest($data)
     {
-        $request = $this->buildRequest($data);
+        $request = $this->buildRequest();
 
         $options = [];
         $options = $this->addPayload($data, $options);
@@ -64,7 +64,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      */
     public function sendAuthorizedRequest($data, $user, $password)
     {
-        $request = $this->buildRequest($data);
+        $request = $this->buildRequest();
         $options = $this->authorizeRequest($user, $password);
         $options = $this->addPayload($data, $options);
 
@@ -72,11 +72,9 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     }
 
     /**
-     * @param array|string $data
-     *
      * @return \Psr\Http\Message\RequestInterface
      */
-    abstract protected function buildRequest($data);
+    abstract protected function buildRequest();
 
     /**
      * @param string $user

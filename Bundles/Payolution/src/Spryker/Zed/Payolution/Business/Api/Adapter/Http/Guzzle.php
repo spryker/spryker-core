@@ -36,11 +36,9 @@ class Guzzle extends AbstractHttpAdapter
     }
 
     /**
-     * @param string $data
-     *
      * @return \Psr\Http\Message\RequestInterface
      */
-    protected function buildRequest($data)
+    protected function buildRequest()
     {
         $headers = [
             'Content-Type' => self::$requestContentTypes[$this->contentType],
