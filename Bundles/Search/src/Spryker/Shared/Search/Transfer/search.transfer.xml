@@ -28,7 +28,7 @@
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string" />
         <property name="itemsPerPageParameterName" type="string" />
-        <property name="defaultItemsPerPage" type="integer" />
+        <property name="defaultItemsPerPage" type="int" />
         <property name="validItemsPerPageOptions" type="array" />
     </transfer>
 
@@ -59,7 +59,7 @@
 
     <transfer name="IntegerFacetMap">
         <property name="name" type="string" />
-        <property name="value" type="integer" />
+        <property name="value" type="int" />
     </transfer>
 
     <transfer name="StringSortMap">
@@ -69,7 +69,7 @@
 
     <transfer name="IntegerSortMap">
         <property name="name" type="string" />
-        <property name="value" type="integer" />
+        <property name="value" type="int" />
     </transfer>
 
     <transfer name="CategoryMap">
@@ -95,10 +95,10 @@
     </transfer>
 
     <transfer name="PaginationSearchResult">
-        <property name="numFound" type="integer" />
-        <property name="currentPage" type="integer" />
-        <property name="maxPage" type="integer" />
-        <property name="currentItemsPerPage" type="integer" />
+        <property name="numFound" type="int" />
+        <property name="currentPage" type="int" />
+        <property name="maxPage" type="int" />
+        <property name="currentItemsPerPage" type="int" />
     </transfer>
 
     <transfer name="SortSearchResult">

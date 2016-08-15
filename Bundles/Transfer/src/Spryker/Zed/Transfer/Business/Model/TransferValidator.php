@@ -42,7 +42,7 @@ class TransferValidator
      *
      * @return bool
      */
-    public function validate($options)
+    public function validate(array $options)
     {
         $files = $this->finder->getXmlTransferDefinitionFiles();
 
@@ -71,7 +71,7 @@ class TransferValidator
      *
      * @return bool
      */
-    protected function validateDefinition($bundle, $definition, $options)
+    protected function validateDefinition($bundle, array $definition, array $options)
     {
         $simpleTypes = [
             'int' => 'int',
@@ -108,7 +108,7 @@ class TransferValidator
      *
      * @return array
      */
-    protected function normalize($definition)
+    protected function normalize(array $definition)
     {
         $transferDefinition = $definition['transfer'];
         if (!isset($transferDefinition[0])) {
