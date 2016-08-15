@@ -23,7 +23,7 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $containerGlobals = new ContainerGlobals();
-        $containerGlobals[ApplicationConstants::APPLICATION_FORM_FACTORY] = $containerGlobals->share(function () use ($app) {
+        $containerGlobals[ApplicationConstants::FORM_FACTORY] = $containerGlobals->share(function () use ($app) {
             return $app['form.factory'];
         });
     }

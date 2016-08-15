@@ -44,9 +44,9 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getContainer()
+    protected function createContainer()
     {
-        $containerGlobals = $this->getContainerGlobals();
+        $containerGlobals = $this->createContainerGlobals();
         $container = new Container($containerGlobals->getContainerGlobals());
 
         return $container;
@@ -55,7 +55,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @return \Spryker\Shared\Kernel\ContainerGlobals
      */
-    protected function getContainerGlobals()
+    protected function createContainerGlobals()
     {
         return new ContainerGlobals();
     }
@@ -87,19 +87,31 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function resolveClient()
     {
-        return $this->getClientResolver()->resolve($this);
+        return $this->createClientResolver()->resolve($this);
+    }
+
+    /**
+     * @deprecated Use `createClientResolver()` instead
+     *
+     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
+     */
+    protected function getClientResolver()
+    {
+        return $this->createClientResolver();
     }
 
     /**
      * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
      */
-    protected function getClientResolver()
+    protected function createClientResolver()
     {
         return new ClientResolver();
     }
 
     /**
-     * @deprecated Use `$container[ApplicationConstants::APPLICATION_FORM_FACTORY]` within your `DependencyProvider` to get the form factory
+     * @deprecated Use `$this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)` to get the form factory.
+     *
+     * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
      *
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
@@ -118,7 +130,7 @@ abstract class AbstractFactory implements FactoryInterface
     protected function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $this->container = $this->getContainerWithProvidedDependencies();
+            $this->container = $this->createContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -129,13 +141,23 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
+     * @deprecated Use `createContainerWithProvidedDependencies()` instead
+     *
      * @return \Spryker\Yves\Kernel\Container
      */
     protected function getContainerWithProvidedDependencies()
     {
-        $container = $this->getContainer();
+        return $this->createContainerWithProvidedDependencies();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function createContainerWithProvidedDependencies()
+    {
+        $container = $this->createContainer();
         $dependencyInjectorCollection = $this->resolveDependencyInjectorCollection();
-        $dependencyInjector = $this->getDependencyInjector($dependencyInjectorCollection);
+        $dependencyInjector = $this->createDependencyInjector($dependencyInjectorCollection);
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $container = $this->provideDependencies($dependencyProvider, $container);
@@ -160,7 +182,19 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function resolveDependencyInjectorCollection()
     {
-        return $this->getDependencyInjectorResolver()->resolve($this);
+        return $this->createDependencyInjectorResolver()->resolve($this);
+    }
+
+    /**
+     * @deprecated Use `createDependencyInjector()` instead
+     *
+     * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     *
+     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
+     */
+    protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
+    {
+        return $this->createDependencyInjector($dependencyInjectorCollection);
     }
 
     /**
@@ -168,15 +202,25 @@ abstract class AbstractFactory implements FactoryInterface
      *
      * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector
      */
-    protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
+    protected function createDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
         return new DependencyInjector($dependencyInjectorCollection);
     }
 
     /**
+     * @deprecated Use `createDependencyInjectorResolver()` instead
+     *
      * @return \Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
     protected function getDependencyInjectorResolver()
+    {
+        return $this->createDependencyInjectorResolver();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
+     */
+    protected function createDependencyInjectorResolver()
     {
         return new DependencyInjectorResolver();
     }
@@ -186,13 +230,23 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function resolveDependencyProvider()
     {
-        return $this->getDependencyProviderResolver()->resolve($this);
+        return $this->createDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @deprecated Use `createDependencyProviderResolver()` instead
+     *
+     * @return \Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
+     */
+    protected function getDependencyProviderResolver()
+    {
+        return $this->createDependencyProviderResolver();
     }
 
     /**
      * @return \Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function getDependencyProviderResolver()
+    protected function createDependencyProviderResolver()
     {
         return new DependencyProviderResolver();
     }

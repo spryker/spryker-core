@@ -29,7 +29,9 @@ class Application extends \Silex\Application
      * Returns a form.
      *
      * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::APPLICATION_FORM_FACTORY)->create(FooFormType::class);
+     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)->create(FooFormType::class);
+     *
+     * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
      *
      * @see createBuilder()
      *

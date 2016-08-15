@@ -44,7 +44,7 @@ trait BundleDependencyProviderResolverAwareTrait
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $this->container = $this->getContainerWithProvidedDependencies();
+            $this->container = $this->createContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -55,13 +55,23 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
+     * @deprecated Use `createContainerWithProvidedDependencies()` instead
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainerWithProvidedDependencies()
     {
-        $container = $this->getContainer();
+        return $this->createContainerWithProvidedDependencies();
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function createContainerWithProvidedDependencies()
+    {
+        $container = $this->createContainer();
         $dependencyInjectorCollection = $this->resolveDependencyInjectorCollection();
-        $dependencyInjector = $this->getDependencyInjector($dependencyInjectorCollection);
+        $dependencyInjector = $this->createDependencyInjector($dependencyInjectorCollection);
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $this->provideExternalDependencies($dependencyProvider, $container);
@@ -71,11 +81,23 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
+     * @deprecated Use `createDependencyInjector()` instead
+     *
      * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
      *
      * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector
      */
     protected function getDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
+    {
+        return $this->createDependencyInjector($dependencyInjectorCollection);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     *
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector
+     */
+    protected function createDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection)
     {
         return new DependencyInjector($dependencyInjectorCollection);
     }
@@ -85,13 +107,23 @@ trait BundleDependencyProviderResolverAwareTrait
      */
     protected function resolveDependencyProvider()
     {
-        return $this->getDependencyProviderResolver()->resolve($this);
+        return $this->createDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @deprecated Use `createDependencyProviderResolver()` instead
+     *
+     * @return \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
+     */
+    protected function getDependencyProviderResolver()
+    {
+        return $this->createDependencyProviderResolver();
     }
 
     /**
      * @return \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function getDependencyProviderResolver()
+    protected function createDependencyProviderResolver()
     {
         return new DependencyProviderResolver();
     }
@@ -119,11 +151,21 @@ trait BundleDependencyProviderResolverAwareTrait
     );
 
     /**
+     * @deprecated Use `createContainer()` instead
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
     {
-        $containerGlobals = $this->getContainerGlobals();
+        return $this->createContainer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function createContainer()
+    {
+        $containerGlobals = $this->createContainerGlobals();
         $container = new Container($containerGlobals->getContainerGlobals());
 
         return $container;
@@ -132,7 +174,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @return \Spryker\Shared\Kernel\ContainerGlobals
      */
-    protected function getContainerGlobals()
+    protected function createContainerGlobals()
     {
         return new ContainerGlobals();
     }
@@ -142,13 +184,23 @@ trait BundleDependencyProviderResolverAwareTrait
      */
     protected function resolveDependencyInjectorCollection()
     {
-        return $this->getDependencyInjectorResolver()->resolve($this);
+        return $this->createDependencyInjectorResolver()->resolve($this);
+    }
+
+    /**
+     * @deprecated Use `createDependencyInjectorResolver()` instead
+     *
+     * @return \Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
+     */
+    protected function getDependencyInjectorResolver()
+    {
+        return $this->createDependencyInjectorResolver();
     }
 
     /**
      * @return \Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getDependencyInjectorResolver()
+    protected function createDependencyInjectorResolver()
     {
         return new DependencyInjectorResolver();
     }

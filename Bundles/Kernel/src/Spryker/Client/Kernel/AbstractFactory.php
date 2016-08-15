@@ -41,7 +41,7 @@ abstract class AbstractFactory
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $this->container = $this->getContainerWithProvidedDependencies();
+            $this->container = $this->createContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -54,9 +54,9 @@ abstract class AbstractFactory
     /**
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function getContainerWithProvidedDependencies()
+    protected function createContainerWithProvidedDependencies()
     {
-        $container = $this->getContainer();
+        $container = $this->createContainer();
         $dependencyProvider = $this->resolveDependencyProvider();
         $this->provideExternalDependencies($dependencyProvider, $container);
 
@@ -64,11 +64,21 @@ abstract class AbstractFactory
     }
 
     /**
+     * @deprecated Use `createContainer()` instead
+     *
      * @return \Spryker\Client\Kernel\Container
      */
     protected function getContainer()
     {
-        $containerGlobals = $this->getContainerGlobals();
+        return $this->createContainer();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function createContainer()
+    {
+        $containerGlobals = $this->createContainerGlobals();
         $container = new Container($containerGlobals->getContainerGlobals());
 
         return $container;
@@ -77,7 +87,7 @@ abstract class AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\ContainerGlobals
      */
-    protected function getContainerGlobals()
+    protected function createContainerGlobals()
     {
         return new ContainerGlobals();
     }
@@ -91,9 +101,19 @@ abstract class AbstractFactory
     }
 
     /**
+     * @deprecated Use `createDependencyProviderResolver` instead
+     *
      * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
+    {
+        return $this->createDependencyProviderResolver();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
+     */
+    protected function createDependencyProviderResolver()
     {
         return new DependencyProviderResolver();
     }
