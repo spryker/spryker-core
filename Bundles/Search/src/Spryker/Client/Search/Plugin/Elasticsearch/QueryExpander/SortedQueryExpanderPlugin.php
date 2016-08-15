@@ -50,11 +50,11 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
             return;
         }
 
-        $nestedSortField = $sortConfigTransfer->getFieldName() . '.' . $sortConfigTransfer->getParameterName();
+        $nestedSortField = $sortConfigTransfer->getFieldName() . '.' . $sortConfigTransfer->getName();
         $query->setSort(
             [
                 $nestedSortField => [
-                    'order' => $sortConfig->getActiveSortDirection($requestParameters),
+                    'order' => $sortConfig->getSortDirection($sortParamName),
                     'mode' => 'min',
                 ],
             ]

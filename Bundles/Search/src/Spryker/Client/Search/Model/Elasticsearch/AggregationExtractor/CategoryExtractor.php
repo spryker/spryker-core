@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
@@ -58,7 +59,7 @@ class CategoryExtractor implements AggregationExtractorInterface
      */
     protected function extractFacetData(array $aggregation)
     {
-        $facetValues = new \ArrayObject();
+        $facetValues = new ArrayObject();
         foreach ($aggregation['buckets'] as $bucket) {
             $facetResultValueTransfer = new FacetSearchResultValueTransfer();
             $facetResultValueTransfer

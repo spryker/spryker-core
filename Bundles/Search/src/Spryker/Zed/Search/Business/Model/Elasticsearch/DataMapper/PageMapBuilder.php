@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\SearchResultDataMapTransfer;
 use Generated\Shared\Transfer\StringFacetMapTransfer;
 use Generated\Shared\Transfer\StringSortMapTransfer;
+use InvalidArgumentException;
 
 class PageMapBuilder implements PageMapBuilderInterface
 {
@@ -58,7 +59,7 @@ class PageMapBuilder implements PageMapBuilderInterface
                 $this->addIntegerSort($pageMapTransfer, $name, $value);
                 break;
             default:
-                throw new \InvalidArgumentException(sprintf('Adding "%s" field is not supported!', $fieldName));
+                throw new InvalidArgumentException(sprintf('Adding "%s" field is not supported!', $fieldName));
         }
 
         return $this;

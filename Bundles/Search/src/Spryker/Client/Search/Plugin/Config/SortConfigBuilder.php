@@ -18,7 +18,6 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     const DIRECTION_DESC = 'desc';
 
     const DEFAULT_SORT_PARAM_KEY = 'sort';
-    const DEFAULT_SORT_DIRECTION_PARAM_KEY = 'sort_order';
 
     /**
      * @var \Generated\Shared\Transfer\SortConfigTransfer[]
@@ -31,18 +30,11 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     protected $sortParamKey;
 
     /**
-     * @var string
-     */
-    protected $sortDirectionParamKey;
-
-    /**
      * @param string $sortParamName
-     * @param string $sortDirectionParamName
      */
-    public function __construct($sortParamName = self::DEFAULT_SORT_PARAM_KEY, $sortDirectionParamName = self::DEFAULT_SORT_DIRECTION_PARAM_KEY)
+    public function __construct($sortParamName = self::DEFAULT_SORT_PARAM_KEY)
     {
         $this->sortParamKey = $sortParamName;
-        $this->sortDirectionParamKey = $sortDirectionParamName;
     }
 
     /**
@@ -94,15 +86,23 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     }
 
     /**
-     * @param array $requestParameters
+     * @param string $sortParamName
      *
      * @return string|null
      */
-    public function getActiveSortDirection($requestParameters)
+    public function getSortDirection($sortParamName)
     {
-        $direction = array_key_exists($this->sortDirectionParamKey, $requestParameters) ? $requestParameters[$this->sortDirectionParamKey] : self::DIRECTION_ASC;
+        $sortConfigTransfer = $this->get($sortParamName);
 
-        return $direction;
+        if (!$sortConfigTransfer) {
+            return null;
+        }
+
+        if ($sortConfigTransfer->getIsDescending()) {
+            return self::DIRECTION_DESC;
+        }
+
+        return self::DIRECTION_ASC;
     }
 
     /**
