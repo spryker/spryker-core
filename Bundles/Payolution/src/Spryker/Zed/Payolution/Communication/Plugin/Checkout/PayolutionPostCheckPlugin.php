@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
+/**
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
+ */
 class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPostCheckPluginInterface
 {
 

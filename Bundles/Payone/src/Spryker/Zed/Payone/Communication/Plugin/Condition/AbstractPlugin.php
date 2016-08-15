@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 /**
- * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
