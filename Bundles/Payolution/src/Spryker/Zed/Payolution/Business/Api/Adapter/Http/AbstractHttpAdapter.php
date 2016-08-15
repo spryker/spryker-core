@@ -50,11 +50,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
         $request = $this->buildRequest($data);
 
         $options = [];
-        if (is_array($data)) {
-            $options['form_params'] = $data;
-        } else {
-            $options['body'] = $data;
-        }
+        $options = $this->addPayload($data, $options);
 
         return $this->send($request, $options);
     }
@@ -70,11 +66,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     {
         $request = $this->buildRequest($data);
         $options = $this->authorizeRequest($user, $password);
-        if (is_array($data)) {
-            $options['form_params'] = $data;
-        } else {
-            $options['body'] = $data;
-        }
+        $options = $this->addPayload($data, $options);
 
         return $this->send($request, $options);
     }
@@ -103,5 +95,22 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      * @return string
      */
     abstract protected function send($request, array $options = []);
+
+    /**
+     * @param array|string $data
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function addPayload($data, array $options)
+    {
+        if (is_array($data)) {
+            $options['form_params'] = $data;
+        } else {
+            $options['body'] = $data;
+        }
+
+        return $options;
+    }
 
 }
