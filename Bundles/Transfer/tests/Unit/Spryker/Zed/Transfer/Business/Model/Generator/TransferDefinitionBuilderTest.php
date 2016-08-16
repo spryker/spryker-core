@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
@@ -32,8 +33,9 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
             __DIR__ . '/Fixtures/Project/',
         ];
 
+        $finder = new TransferDefinitionFinder($directories);
         $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $directories);
+        $loader = new TransferDefinitionLoader($finder, $normalizer);
         $transferDefinitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),

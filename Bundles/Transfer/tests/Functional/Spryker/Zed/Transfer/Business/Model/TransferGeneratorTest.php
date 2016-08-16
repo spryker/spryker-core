@@ -10,6 +10,7 @@ namespace Functional\Spryker\Zed\Transfer\Business\Model;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
@@ -132,8 +133,9 @@ class TransferGeneratorTest extends Test
      */
     protected function getDefinitionBuilder($sourceDirectories)
     {
+        $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
+        $loader = new TransferDefinitionLoader($finder, $normalizer);
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
