@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator\TransferInterface;
+namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -16,6 +16,8 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Zed
  * @group Transfer
  * @group Business
+ * @group Model
+ * @group Generator
  * @group ClassGenerator
  */
 class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
@@ -51,7 +53,7 @@ class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     private function getFixtureDirectory()
     {
-        return __DIR__ . '/Fixtures/';
+        return __DIR__ . '/FixturesTest/';
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
+use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
@@ -45,7 +47,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
             $this->getMessenger()
         );
 
-        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferGenerator', $transferGenerator);
+        $this->assertInstanceOf(TransferGenerator::class, $transferGenerator);
     }
 
     /**
@@ -55,7 +57,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $transferCleaner = $this->getFactory()->createTransferCleaner();
 
-        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferCleaner', $transferCleaner);
+        $this->assertInstanceOf(TransferCleaner::class, $transferCleaner);
     }
 
 }

@@ -7,49 +7,11 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
-use Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface;
-use Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder as SprykerTransferDefinitionBuilder;
 
-class TransferDefinitionBuilder extends AbstractDefinitionBuilder
+/**
+ * @deprecated Use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder directly
+ */
+class TransferDefinitionBuilder extends SprykerTransferDefinitionBuilder
 {
-
-    /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
-     */
-    private $loader;
-
-    /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface
-     */
-    private $merger;
-
-    /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface
-     */
-    private $classDefinition;
-
-    /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface $loader
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface $merger
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface $classDefinition
-     */
-    public function __construct(LoaderInterface $loader, MergerInterface $merger, ClassDefinitionInterface $classDefinition)
-    {
-        $this->loader = $loader;
-        $this->merger = $merger;
-        $this->classDefinition = $classDefinition;
-    }
-
-    /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface[]
-     */
-    public function getDefinitions()
-    {
-        $definitions = $this->loader->getDefinitions();
-        $definitions = $this->merger->merge($definitions);
-
-        return $this->buildDefinitions($definitions, $this->classDefinition);
-    }
-
 }

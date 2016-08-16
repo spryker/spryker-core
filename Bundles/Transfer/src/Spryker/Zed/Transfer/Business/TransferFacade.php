@@ -38,4 +38,17 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
         $this->getFactory()->createTransferCleaner()->cleanDirectory();
     }
 
+    /**
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function validateTransferObjects($messenger, array $options)
+    {
+        return $this->getFactory()->createValidator($messenger)->validate($options);
+    }
+
 }
