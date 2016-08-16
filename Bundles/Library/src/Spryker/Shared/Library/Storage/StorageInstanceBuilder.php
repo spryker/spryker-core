@@ -139,7 +139,7 @@ class StorageInstanceBuilder
                 if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {
                     $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);
                 } elseif (Config::hasKey(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION)) {
-                    $config['password'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
+                    $config['persistent'] = Config::get(LibraryConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION);
                 }
                 break;
 
