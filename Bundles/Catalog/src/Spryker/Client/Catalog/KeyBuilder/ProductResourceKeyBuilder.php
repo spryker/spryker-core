@@ -10,6 +10,9 @@ namespace Spryker\Client\Catalog\KeyBuilder;
 use Spryker\Shared\Catalog\CatalogConstants;
 use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
+/**
+ * @deprecated
+ */
 class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {
 

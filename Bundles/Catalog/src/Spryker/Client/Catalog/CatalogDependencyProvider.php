@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Catalog;
 
+use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\CatalogSearchResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
@@ -20,6 +22,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_SEARCH = 'search client';
+    const CATALOG_SEARCH_QUERY_PLUGIN = 'catalog search query plugin';
     const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
     const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
 
@@ -36,21 +39,53 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->search()->client();
         };
 
+        $container[self::CATALOG_SEARCH_QUERY_PLUGIN] = function () {
+            return $this->createCatalogSearchQueryPlugin();
+        };
+
         $container[self::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
-            return $this->createCatalogSearchQueryExpanderPlugins();
+            $searchQueryExpanderPlugins = $this->createCatalogSearchQueryExpanderPlugins();
+            if ($searchQueryExpanderPlugins === null) {
+                $searchQueryExpanderPlugins = $this->createDefaultCatalogSearchQueryExpanderPlugins();
+            }
+
+            return $searchQueryExpanderPlugins;
         };
 
         $container[self::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
-            return $this->createCatalogSearchResultFormatterPlugins();
+            $resultFormatterPlugins = $this->createCatalogSearchResultFormatterPlugins();
+            if ($resultFormatterPlugins === null) {
+                $resultFormatterPlugins = $this->createDefaultCatalogSearchResultFormatterPlugins();
+            }
+
+            return $resultFormatterPlugins;
         };
 
         return $container;
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createCatalogSearchQueryPlugin()
+    {
+        return new CatalogSearchQueryPlugin();
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCatalogSearchQueryExpanderPlugins()
+    {
+        return null;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     *
+     * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
+     */
+    private function createDefaultCatalogSearchQueryExpanderPlugins()
     {
         return [
             new FacetQueryExpanderPlugin(),
@@ -64,10 +99,21 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins()
     {
+        return null;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     *
+     * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
+     */
+    private function createDefaultCatalogSearchResultFormatterPlugins()
+    {
         return [
             new FacetResultFormatterPlugin(),
             new SortedResultFormatterPlugin(),
             new PaginatedResultFormatterPlugin(),
+            new CatalogSearchResultFormatterPlugin(),
         ];
     }
 
