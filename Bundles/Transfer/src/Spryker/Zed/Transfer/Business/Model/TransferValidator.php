@@ -20,12 +20,25 @@ class TransferValidator
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $messenger;
+    protected $messenger;
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
      */
-    private $finder;
+    protected $finder;
+
+    /**
+     * @var array
+     */
+    protected $typeMap = [
+        'int' => 'int',
+        'bool' => 'bool',
+        'integer' => 'int',
+        'boolean' => 'bool',
+        'string' => 'string',
+        'float' => 'float',
+        'array' => 'array'
+    ];
 
     /**
      * @param \Psr\Log\LoggerInterface $messenger
@@ -73,34 +86,31 @@ class TransferValidator
      */
     protected function validateDefinition($bundle, array $definition, array $options)
     {
-        $simpleTypes = [
-            'int' => 'int',
-            'bool' => 'bool',
-            'integer' => 'int',
-            'boolean' => 'bool',
-            'string' => 'string',
-            'float' => 'float',
-            'array' => 'array'
-        ];
-
         if ($options['verbose']) {
-            $this->messenger->info('Checking ' . $bundle . ' bundle');
+            $this->messenger->info(sprintf('Checking %s bundle', $bundle));
         }
 
         $ok = true;
         foreach ($definition as $transfer) {
             foreach ($transfer['property'] as $property) {
                 $type = strtolower($property['type']);
-                if (!isset($simpleTypes[$type])) {
+                if (!isset($this->typeMap[$type])) {
                     continue;
                 }
 
-                if ($type === $property['type'] && in_array($type, $simpleTypes)) {
+                if ($type === $property['type'] && in_array($type, $this->typeMap)) {
                     continue;
                 }
 
                 $ok = false;
-                $this->messenger->warning($bundle . '.' . $transfer['name'] . '.' . $property['name'] . ': ' . $property['type'] . ' should be ' . $simpleTypes[$type] . '');
+                $this->messenger->warning(sprintf(
+                    '%s.%s.%s: %s should be %s',
+                    $bundle,
+                    $transfer['name'],
+                    $property['name'],
+                    $property['type'],
+                    $this->typeMap[$type]
+                ));
             }
         }
 
