@@ -3,6 +3,16 @@
     "index": {
       "number_of_shards": 1,
       "number_of_replicas": 1
+    },
+    "analysis": {
+      "analyzer": {
+        "lowercase_keyword_analyzer": {
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
     }
   },
   "mappings": {
@@ -11,7 +21,6 @@
         {
           "search-result-data": {
             "mapping": {
-              "type": "string",
               "index": "no"
             },
             "path_match": "search-result-data.*"
@@ -23,7 +32,7 @@
               "analyzer": "lowercase_keyword_analyzer",
               "type": "string"
             },
-            "path_match": "string_sort.*"
+            "path_match": "string-sort.*"
           }
         },
         {
@@ -32,7 +41,7 @@
               "index": "not_analyzed",
               "type": "integer"
             },
-            "path_match": "integer_sort.*"
+            "path_match": "integer-sort.*"
           }
         }
       ],
