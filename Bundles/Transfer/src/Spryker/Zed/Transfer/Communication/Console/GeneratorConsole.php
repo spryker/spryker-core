@@ -18,6 +18,7 @@ class GeneratorConsole extends Console
 {
 
     const COMMAND_NAME = 'transfer:generate';
+    const COMMAND_DESCRIPTION = 'Generates transfer objects from transfer XML definition files';
 
     /**
      * @return void
@@ -26,8 +27,9 @@ class GeneratorConsole extends Console
     {
         parent::configure();
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>');
+            ->setName(static::COMMAND_NAME)
+            ->setDescription(static::COMMAND_DESCRIPTION)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
     }
 
     /**

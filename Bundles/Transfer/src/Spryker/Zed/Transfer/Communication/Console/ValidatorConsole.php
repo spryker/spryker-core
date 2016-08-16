@@ -19,6 +19,7 @@ class ValidatorConsole extends Console
 {
 
     const COMMAND_NAME = 'transfer:validate';
+    const COMMAND_DESCRIPTION = 'Validates transfer XML definition files';
     const OPTION_BUNDLE = 'bundle';
 
     /**
@@ -29,6 +30,7 @@ class ValidatorConsole extends Console
         parent::configure();
         $this
             ->setName(self::COMMAND_NAME)
+            ->setDescription(static::COMMAND_DESCRIPTION)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>');
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run validation for (defaults to all)');
