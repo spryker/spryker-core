@@ -39,6 +39,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
         $transactionStatusLogEntity->setProcessingCode(self::PROCESSING_SUCCESS_CODE);
 
         $postCheckPlugin = new PayolutionPostCheckPlugin();
+        $postCheckPlugin->setQueryContainer($this->getQueryContainerMock($transactionStatusLogEntity));
 
         $checkoutResponseTransfer = $this->getCheckoutResponseTransfer();
         $postCheckPlugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
@@ -55,6 +56,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
         $transactionStatusLogEntity->setProcessingCode(self::PROCESSING_ERROR_CODE);
 
         $postCheckPlugin = new PayolutionPostCheckPlugin();
+        $postCheckPlugin->setQueryContainer($this->getQueryContainerMock($transactionStatusLogEntity));
 
         $checkoutResponseTransfer = $this->getCheckoutResponseTransfer();
         $postCheckPlugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
