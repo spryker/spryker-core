@@ -27,7 +27,7 @@ use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
 {
 
-    const PROCESSING_SUCCESS_CODE = 'VA.PA.90';
+    const PROCESSING_SUCCESS_CODE = 'VA.PA.90.00';
     const PROCESSING_ERROR_CODE = 'error code';
 
     /**
@@ -37,9 +37,8 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     {
         $transactionStatusLogEntity = $this->getTransactionStatusLogEntity();
         $transactionStatusLogEntity->setProcessingCode(self::PROCESSING_SUCCESS_CODE);
-        $queryContainerMock = $this->getQueryContainerMock($transactionStatusLogEntity);
 
-        $postCheckPlugin = new PayolutionPostCheckPlugin($queryContainerMock);
+        $postCheckPlugin = new PayolutionPostCheckPlugin();
 
         $checkoutResponseTransfer = $this->getCheckoutResponseTransfer();
         $postCheckPlugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
@@ -54,9 +53,8 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     {
         $transactionStatusLogEntity = $this->getTransactionStatusLogEntity();
         $transactionStatusLogEntity->setProcessingCode(self::PROCESSING_ERROR_CODE);
-        $queryContainerMock = $this->getQueryContainerMock($transactionStatusLogEntity);
 
-        $postCheckPlugin = new PayolutionPostCheckPlugin($queryContainerMock);
+        $postCheckPlugin = new PayolutionPostCheckPlugin();
 
         $checkoutResponseTransfer = $this->getCheckoutResponseTransfer();
         $postCheckPlugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
