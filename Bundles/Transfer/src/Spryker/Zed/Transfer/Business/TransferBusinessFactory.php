@@ -29,7 +29,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return \Spryker\Zed\Transfer\Business\Model\TransferGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferGeneratorInterface
      */
     public function createTransferGenerator(LoggerInterface $messenger)
     {
@@ -41,7 +41,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     protected function createClassGenerator()
     {
@@ -51,7 +51,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder|\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     protected function createTransferDefinitionBuilder()
     {
@@ -63,7 +63,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
     protected function createLoader()
     {
@@ -75,7 +75,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\TransferCleaner
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */
     public function createTransferCleaner()
     {
@@ -85,7 +85,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface
      */
     protected function createTransferDefinitionMerger()
     {
@@ -93,7 +93,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinitionInterface
      */
     protected function createClassDefinition()
     {
@@ -101,7 +101,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
      */
     protected function createDefinitionNormalizer()
     {
@@ -111,7 +111,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return \Spryker\Zed\Transfer\Business\Model\TransferValidator
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferValidatorInterface
      */
     public function createValidator(LoggerInterface $messenger)
     {
@@ -122,7 +122,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
      */
     protected function createFinder()
     {

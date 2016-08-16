@@ -12,7 +12,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
 use Zend\Config\Factory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class TransferValidator
+class TransferValidator implements TransferValidatorInterface
 {
 
     const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
@@ -61,10 +61,8 @@ class TransferValidator
 
         $result = true;
         foreach ($files as $key => $file) {
-            if ($options['bundle']) {
-                if (strpos($file, '/Shared/' . $options['bundle'] . '/Transfer/') === false) {
-                    continue;
-                }
+            if ($options['bundle'] && strpos($file, '/Shared/' . $options['bundle'] . '/Transfer/') === false) {
+                continue;
             }
 
             $definition = Factory::fromFile($file->getPathname(), true)->toArray();

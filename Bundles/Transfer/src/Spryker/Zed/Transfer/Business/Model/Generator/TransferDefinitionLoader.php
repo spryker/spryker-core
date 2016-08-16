@@ -24,7 +24,7 @@ class TransferDefinitionLoader implements LoaderInterface
     private $finder;
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
      */
     private $definitionNormalizer;
 
@@ -37,7 +37,7 @@ class TransferDefinitionLoader implements LoaderInterface
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer $normalizer
      */
-    public function __construct(FinderInterface $finder, DefinitionNormalizer $normalizer)
+    public function __construct(FinderInterface $finder, DefinitionNormalizerInterface $normalizer)
     {
         $this->finder = $finder;
         $this->definitionNormalizer = $normalizer;
