@@ -29,11 +29,11 @@ class ValidatorConsole extends Console
     {
         parent::configure();
         $this
-            ->setName(self::COMMAND_NAME)
+            ->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>');
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run validation for (defaults to all)');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run validation for (defaults to all)');
     }
 
     /**
@@ -49,7 +49,7 @@ class ValidatorConsole extends Console
         $messenger = $this->getMessenger();
 
         $result = $this->getFacade()->validateTransferObjects($messenger, $this->input->getOptions());
-        return $result ? self::CODE_SUCCESS : self::CODE_ERROR;
+        return $result ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 
 }
