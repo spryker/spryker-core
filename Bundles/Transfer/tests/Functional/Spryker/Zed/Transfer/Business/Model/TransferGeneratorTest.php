@@ -116,7 +116,7 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     protected function getClassGenerator()
     {
@@ -129,7 +129,7 @@ class TransferGeneratorTest extends Test
     /**
      * @param array $sourceDirectories
      *
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     protected function getDefinitionBuilder($sourceDirectories)
     {
