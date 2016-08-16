@@ -19,6 +19,8 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
  * @group Zed
  * @group Transfer
  * @group Business
+ * @group Model
+ * @group Generator
  * @group TransferDefinitionBuilder
  */
 class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase

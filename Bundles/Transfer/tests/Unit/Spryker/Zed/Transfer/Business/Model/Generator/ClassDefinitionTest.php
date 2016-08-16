@@ -14,6 +14,8 @@ use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
  * @group Zed
  * @group Transfer
  * @group Business
+ * @group Model
+ * @group Generator
  * @group ClassDefinition
  */
 class ClassDefinitionTest extends \PHPUnit_Framework_TestCase

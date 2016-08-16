@@ -16,6 +16,8 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Zed
  * @group Transfer
  * @group Business
+ * @group Model
+ * @group Generator
  * @group ClassGenerator
  */
 class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
