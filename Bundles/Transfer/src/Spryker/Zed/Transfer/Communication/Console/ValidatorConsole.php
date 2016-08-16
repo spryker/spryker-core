@@ -20,7 +20,6 @@ class ValidatorConsole extends Console
 
     const COMMAND_NAME = 'transfer:validate';
     const OPTION_BUNDLE = 'bundle';
-    const OPTION_CLEAN = 'clean';
 
     /**
      * @return void
@@ -32,8 +31,7 @@ class ValidatorConsole extends Console
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run validation for (or "all")');
-        $this->addOption(self::OPTION_CLEAN, 'c', InputOption::VALUE_NONE, 'Clean the file(s)');
+        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run validation for (defaults to all)');
     }
 
     /**

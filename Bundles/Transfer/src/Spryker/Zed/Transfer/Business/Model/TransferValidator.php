@@ -83,6 +83,10 @@ class TransferValidator
             'array' => 'array'
         ];
 
+        if ($options['verbose']) {
+            $this->messenger->info('Checking ' . $bundle . ' bundle');
+        }
+
         $ok = true;
         foreach ($definition as $transfer) {
             foreach ($transfer['property'] as $property) {
