@@ -5,14 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
+namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface as SprykerClassDefinitionInterface;
-
-/**
- * @deprecated Use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface directly
- */
-interface ClassDefinitionInterface extends SprykerClassDefinitionInterface
+interface ClassDefinitionInterface extends DefinitionInterface
 {
 
     /**

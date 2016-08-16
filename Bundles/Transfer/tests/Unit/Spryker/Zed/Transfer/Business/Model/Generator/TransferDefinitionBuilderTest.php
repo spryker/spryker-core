@@ -7,12 +7,12 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 
 /**
  * @group Spryker
@@ -47,7 +47,7 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
 
         $transferDefinition = $result[0];
-        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition', $transferDefinition);
+        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition', $transferDefinition);
     }
 
 }
