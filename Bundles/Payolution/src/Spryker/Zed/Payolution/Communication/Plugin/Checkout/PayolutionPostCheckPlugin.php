@@ -78,7 +78,7 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
      */
     protected function isPreAuthorizationApproved(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $successStatusCode = ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION . '.' . ApiConstants::STATUS_CODE_SUCCESS;
+        $successStatusCode = ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION . '.' . ApiConstants::STATUS_REASON_CODE_SUCCESS;
 
         return ($transactionStatusLogEntity && $transactionStatusLogEntity->getProcessingCode() === $successStatusCode);
     }
