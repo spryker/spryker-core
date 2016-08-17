@@ -77,7 +77,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchQueryExpanderPlugins()
     {
-        return null;
+        return null; // Returning null here only for BC reasons.
     }
 
     /**
@@ -99,7 +99,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins()
     {
-        return null;
+        return null; // Returning null here only for BC reasons.
     }
 
     /**
