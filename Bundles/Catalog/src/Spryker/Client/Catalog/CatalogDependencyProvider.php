@@ -67,7 +67,8 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchQueryExpanderPlugins()
     {
-        return $this->createDefaultCatalogSearchQueryExpanderPlugins(); // TODO: Return empty array after deprecated method is removed.
+        // TODO: Return empty array after deprecated method is removed.
+        return $this->createDefaultCatalogSearchQueryExpanderPlugins();
     }
 
     /**
@@ -89,7 +90,8 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins()
     {
-        return $this->createDefaultCatalogSearchResultFormatterPlugins(); // TODO: Return empty array after deprecated method is removed.
+        // TODO: Return empty array after deprecated method is removed.
+        return $this->createDefaultCatalogSearchResultFormatterPlugins();
     }
 
     /**
