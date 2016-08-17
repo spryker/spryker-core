@@ -11,6 +11,9 @@ use Spryker\Client\Catalog\Model\Exception\ProductNotFoundException;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
+/**
+ * @deprecated This class will be removed because it's using a bad design to read search product data from Storage.
+ */
 class Catalog implements CatalogInterface
 {
 

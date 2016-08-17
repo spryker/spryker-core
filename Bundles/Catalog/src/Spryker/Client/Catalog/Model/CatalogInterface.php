@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Catalog\Model;
 
+/**
+ * @deprecated
+ */
 interface CatalogInterface
 {
 
