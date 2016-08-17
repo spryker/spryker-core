@@ -50,6 +50,8 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog
      */
     protected function getTransactionStatusLog(CheckoutResponseTransfer $checkoutResponseTransfer)

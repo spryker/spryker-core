@@ -41,6 +41,8 @@ class DetailsController extends AbstractController
     /**
      * @param int $idPayment
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private function getPaymentEntity($idPayment)
