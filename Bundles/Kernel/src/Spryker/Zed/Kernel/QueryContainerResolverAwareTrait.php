@@ -8,22 +8,22 @@
 namespace Spryker\Zed\Kernel;
 
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 trait QueryContainerResolverAwareTrait
 {
 
     /**
-     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @var \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
      */
     private $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
+     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
      *
      * @return $this
      */
-    public function setQueryContainer(AbstractQueryContainer $queryContainer)
+    public function setQueryContainer(QueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
 
@@ -31,7 +31,7 @@ trait QueryContainerResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
      */
     protected function getQueryContainer()
     {
@@ -45,7 +45,7 @@ trait QueryContainerResolverAwareTrait
     /**
      * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
      */
     private function resolveQueryContainer()
     {

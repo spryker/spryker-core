@@ -42,7 +42,7 @@ class QueryContainerLocator extends AbstractLocator
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
      */
     public function locate($bundle)
     {
