@@ -86,7 +86,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     {
         $queryContainerMock = $this->getMock(PayolutionQueryContainerInterface::class);
         $transactionStatusLogQueryMock = $this->getTransactionStatusLogQueryMock($transactionStatusLogEntity);
-        $queryContainerMock->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
+        $queryContainerMock->expects($this->once())->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
 
         return $queryContainerMock;
     }

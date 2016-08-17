@@ -14,6 +14,7 @@ use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
@@ -22,18 +23,6 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
 {
 
     const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
-
-    /**
-     * @var \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     */
-    public function __construct()
-    {
-        $this->queryContainer = $this->getQueryContainer();
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -65,8 +54,11 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
      */
     protected function getTransactionStatusLog(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $transactionStatusLogQuery = $this->queryContainer->queryTransactionStatusLogBySalesOrderId($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
+        $transactionStatusLogQuery = $this->getQueryContainer()->queryTransactionStatusLogBySalesOrderId($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
         $transactionStatusLogEntity = $transactionStatusLogQuery->findOne();
+        if ($transactionStatusLogEntity === null) {
+            throw new NotFoundHttpException('TransactionStatusLog entity could not be found');
+        }
 
         return $transactionStatusLogEntity;
     }
