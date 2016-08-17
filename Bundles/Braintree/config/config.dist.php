@@ -46,4 +46,3 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     BraintreeConstants::PAYMENT_METHOD_CREDIT_CARD => 'BraintreeCreditCard01',
     BraintreeConstants::PAYMENT_METHOD_PAY_PAL => 'BraintreePayPal01',
 ];
-
