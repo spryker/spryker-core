@@ -223,7 +223,7 @@ class ZedClient
     /**
      * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
-     * @throws Exception\InvalidZedResponseException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Guzzle\Http\Message\Response
      */
@@ -240,7 +240,7 @@ class ZedClient
     /**
      * @param \Guzzle\Http\Message\Response $response
      *
-     * @throws Exception\InvalidZedResponseException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Spryker\Shared\Library\Communication\Response
      */

@@ -48,7 +48,7 @@ class QueryFactory implements QueryFactoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param mixed $filterValue
      *
      * @return \Elastica\Query\AbstractQuery|null
      */
@@ -86,7 +86,7 @@ class QueryFactory implements QueryFactoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param mixed $filterValue
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryInterface
      */
@@ -97,7 +97,7 @@ class QueryFactory implements QueryFactoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param mixed $filterValue
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\NestedQueryInterface
      */

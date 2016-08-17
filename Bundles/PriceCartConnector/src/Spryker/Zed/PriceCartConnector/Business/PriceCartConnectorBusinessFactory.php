@@ -21,7 +21,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|null $grossPriceType
      *
-     * @return Manager\PriceManager
+     * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
      */
     public function createPriceManager($grossPriceType = null)
     {

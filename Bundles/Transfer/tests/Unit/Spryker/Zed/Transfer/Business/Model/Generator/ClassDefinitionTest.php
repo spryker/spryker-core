@@ -5,15 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
+namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
 /**
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
+ * @group Model
+ * @group Generator
  * @group ClassDefinition
  */
 class ClassDefinitionTest extends \PHPUnit_Framework_TestCase

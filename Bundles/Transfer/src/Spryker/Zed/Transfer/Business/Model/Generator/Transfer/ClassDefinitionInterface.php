@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface as SprykerClassDefinitionInterface;
 
-interface ClassDefinitionInterface extends DefinitionInterface
+/**
+ * @deprecated Use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface directly
+ */
+interface ClassDefinitionInterface extends SprykerClassDefinitionInterface
 {
 
     /**

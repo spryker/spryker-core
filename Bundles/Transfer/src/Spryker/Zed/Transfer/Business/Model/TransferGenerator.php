@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 
-class TransferGenerator
+class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**

@@ -29,7 +29,6 @@ class AddressMapper extends BaseMapper
      */
     protected $requestTransfer;
 
-
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param string $type

@@ -14,6 +14,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
  * @group Zed
  * @group Transfer
  * @group Business
+ * @group Model
  * @group Cleaner
  */
 class TransferCleanerTest extends \PHPUnit_Framework_TestCase

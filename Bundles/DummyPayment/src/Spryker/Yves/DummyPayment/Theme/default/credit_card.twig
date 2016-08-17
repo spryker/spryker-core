@@ -1,0 +1,42 @@
+<div class="small-12 medium-9 large-6">
+    <div class="small-12 columns">
+        <label>
+            {{ 'dummyPaymentCreditCard.card_type' | trans }}*
+            {{ form_widget(form.dummyPaymentCreditCard.card_type, { 'attr': {'placeholder': 'dummyPaymentCreditCard.card_type' | trans } }) }}
+        </label>
+        {{ form_errors(form.dummyPaymentCreditCard.card_type) }}
+    </div>
+
+
+    <div class="small-12 columns">
+        <label>{{ 'dummyPaymentCreditCard.card_number' | trans }}*
+            {{ form_widget(form.dummyPaymentCreditCard.card_number, { 'attr': {'placeholder': 'dummyPaymentCreditCard.card_number' | trans } }) }}
+        </label>
+        {{ form_errors(form.dummyPaymentCreditCard.card_number) }}
+    </div>
+
+    <div class="small-12 columns">
+        <label>{{ 'dummyPaymentCreditCard.name_on_card' | trans }}*
+            {{ form_widget(form.dummyPaymentCreditCard.name_on_card, { 'attr': {'placeholder': 'dummyPaymentCreditCard.name_on_card' | trans } }) }}
+        </label>
+        {{ form_errors(form.dummyPaymentCreditCard.name_on_card) }}
+    </div>
+
+    <div class="small-12 columns">
+        <label>
+            {{ 'dummyPaymentCreditCard.card_expires' | trans }}*
+            {{ form_widget(form.dummyPaymentCreditCard.card_expires_month) }}
+
+            {{ form_widget(form.dummyPaymentCreditCard.card_expires_year) }}
+        </label>
+        {{ form_errors(form.dummyPaymentCreditCard.card_expires_month) }}
+        {{ form_errors(form.dummyPaymentCreditCard.card_expires_year) }}
+    </div>
+
+    <div class="small-12 columns">
+        <label>{{ 'dummyPaymentCreditCard.card_security_code' | trans }}*
+            {{ form_widget(form.dummyPaymentCreditCard.card_security_code, { 'attr': {'placeholder': 'dummyPaymentCreditCard.card_security_code' | trans } }) }}
+        </label>
+        {{ form_errors(form.dummyPaymentCreditCard.card_security_code) }}
+    </div>
+</div>

@@ -66,7 +66,6 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         return [
             'no active sort when it\'s not requested' => $this->getDataForInactiveSort(),
             'activate sort when it\'s requested' => $this->getDataForActiveSort(),
-            'activate sort and direction when it\'s requested' => $this->getDataForActiveSortAndDirection(),
         ];
     }
 
@@ -80,9 +79,9 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $requestParameters = [];
 
         $expectedResult = (new SortSearchResultTransfer())
-            ->setSortNames(['foo'])
+            ->setSortParamNames(['foo'])
             ->setCurrentSortParam(null)
-            ->setCurrentSortOrder(SortConfigBuilder::DIRECTION_ASC);
+            ->setCurrentSortOrder(null);
 
         return [$searchConfig, $requestParameters, $expectedResult];
     }
@@ -99,29 +98,9 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         ];
 
         $expectedResult = (new SortSearchResultTransfer())
-            ->setSortNames(['foo'])
+            ->setSortParamNames(['foo'])
             ->setCurrentSortParam('foo')
             ->setCurrentSortOrder(SortConfigBuilder::DIRECTION_ASC);
-
-        return [$searchConfig, $requestParameters, $expectedResult];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDataForActiveSortAndDirection()
-    {
-        $searchConfig = $this->createSimpleSearchConfigMock();
-
-        $requestParameters = [
-            SortConfigBuilder::DEFAULT_SORT_PARAM_KEY => 'foo',
-            SortConfigBuilder::DEFAULT_SORT_DIRECTION_PARAM_KEY => SortConfigBuilder::DIRECTION_DESC,
-        ];
-
-        $expectedResult = (new SortSearchResultTransfer())
-            ->setSortNames(['foo'])
-            ->setCurrentSortParam('foo')
-            ->setCurrentSortOrder(SortConfigBuilder::DIRECTION_DESC);
 
         return [$searchConfig, $requestParameters, $expectedResult];
     }

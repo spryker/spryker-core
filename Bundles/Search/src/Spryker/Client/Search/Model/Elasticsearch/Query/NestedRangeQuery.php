@@ -13,6 +13,8 @@ class NestedRangeQuery extends AbstractNestedQuery
 {
 
     const RANGE_DIVIDER = '-';
+    const RANGE_MIN = 'min';
+    const RANGE_MAX = 'max';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
@@ -22,17 +24,22 @@ class NestedRangeQuery extends AbstractNestedQuery
     /**
      * @var string
      */
-    protected $filterValue;
+    protected $minValue;
+
+    /**
+     * @var string
+     */
+    protected $maxValue;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param array|string $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $filterValue, QueryBuilderInterface $queryBuilder)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
-        $this->filterValue = $filterValue;
+        $this->setMinMaxValues($rangeValues);
 
         parent::__construct($queryBuilder);
     }
@@ -45,28 +52,53 @@ class NestedRangeQuery extends AbstractNestedQuery
         $fieldName = $this->facetConfigTransfer->getFieldName();
         $nestedFieldName = $this->facetConfigTransfer->getName();
 
-        list($minValue, $maxValue) = $this->getMinMaxValue();
-
         return $this->bindMultipleNestedQuery($fieldName, [
             $this->queryBuilder->createTermQuery($fieldName . self::FACET_NAME_SUFFIX, $nestedFieldName),
-            $this->queryBuilder->createRangeQuery($fieldName . self::FACET_VALUE_SUFFIX, $minValue, $maxValue),
+            $this->queryBuilder->createRangeQuery($fieldName . self::FACET_VALUE_SUFFIX, $this->minValue, $this->maxValue),
         ]);
     }
 
     /**
-     * @return array
+     * @param array|string $rangeValues
+     *
+     * @return void
      */
-    protected function getMinMaxValue()
+    protected function setMinMaxValues($rangeValues)
     {
-        $values = explode(self::RANGE_DIVIDER, $this->filterValue);
-        $minValue = $values[0];
-        $maxValue = $minValue;
+        if (is_array($rangeValues)) {
+            $this->setMinMaxValuesFromArray($rangeValues);
 
-        if (count($values) > 1) {
-            $maxValue = $values[1];
+            return;
         }
 
-        return [$minValue, $maxValue];
+        $this->setMinMaxValuesFromString($rangeValues);
+    }
+
+    /**
+     * @param array $rangeValues
+     *
+     * @return void
+     */
+    protected function setMinMaxValuesFromArray(array $rangeValues)
+    {
+        $this->minValue = isset($rangeValues[self::RANGE_MIN]) ? $rangeValues[self::RANGE_MIN] : 0;
+        $this->maxValue = isset($rangeValues[self::RANGE_MAX]) ? $rangeValues[self::RANGE_MAX] : $this->minValue;
+    }
+
+    /**
+     * @param string $rangeValues
+     *
+     * @return void
+     */
+    protected function setMinMaxValuesFromString($rangeValues)
+    {
+        $values = explode(self::RANGE_DIVIDER, $rangeValues);
+        $this->minValue = $values[0];
+        $this->maxValue = $this->minValue;
+
+        if (count($values) > 1) {
+            $this->maxValue = $values[1];
+        }
     }
 
 }
