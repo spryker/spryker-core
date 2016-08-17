@@ -44,21 +44,11 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         };
 
         $container[self::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
-            $searchQueryExpanderPlugins = $this->createCatalogSearchQueryExpanderPlugins();
-            if ($searchQueryExpanderPlugins === null) {
-                $searchQueryExpanderPlugins = $this->createDefaultCatalogSearchQueryExpanderPlugins();
-            }
-
-            return $searchQueryExpanderPlugins;
+            return $this->createCatalogSearchQueryExpanderPlugins();
         };
 
         $container[self::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
-            $resultFormatterPlugins = $this->createCatalogSearchResultFormatterPlugins();
-            if ($resultFormatterPlugins === null) {
-                $resultFormatterPlugins = $this->createDefaultCatalogSearchResultFormatterPlugins();
-            }
-
-            return $resultFormatterPlugins;
+            return $this->createCatalogSearchResultFormatterPlugins();
         };
 
         return $container;
@@ -77,7 +67,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchQueryExpanderPlugins()
     {
-        return null; // Returning null here only for BC reasons.
+        return $this->createDefaultCatalogSearchQueryExpanderPlugins(); // TODO: Return empty array after deprecated method is removed.
     }
 
     /**
@@ -99,7 +89,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins()
     {
-        return null; // Returning null here only for BC reasons.
+        return $this->createDefaultCatalogSearchResultFormatterPlugins(); // TODO: Return empty array after deprecated method is removed.
     }
 
     /**

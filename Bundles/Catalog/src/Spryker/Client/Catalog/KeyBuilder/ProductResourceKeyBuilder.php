@@ -11,7 +11,7 @@ use Spryker\Shared\Catalog\CatalogConstants;
 use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 /**
- * @deprecated
+ * @deprecated See \Spryker\Client\Catalog\Model\Catalog for more info.
  */
 class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {

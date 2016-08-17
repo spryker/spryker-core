@@ -9,6 +9,7 @@ namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
 
@@ -24,25 +25,57 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\Catalog\Dependency\SearchStringSetterInterface
+     * @param string $searchString
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     *
+     * @deprecated Use getCatalogSearchQueryPlugin() method instead.
      */
-    public function createCatalogSearchQueryPlugin()
+    public function createCatalogSearchQueryPlugin($searchString)
+    {
+        return new CatalogSearchQueryPlugin($searchString);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function getCatalogSearchQueryPlugin()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_PLUGIN);
     }
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     *
+     * @deprecated Use getCatalogSearchQueryExpanderPlugins() method instead.
      */
     public function createCatalogSearchQueryExpanderPlugins()
+    {
+        return $this->getCatalogSearchQueryExpanderPlugins();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getCatalogSearchQueryExpanderPlugins()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS);
     }
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     *
+     * @deprecated Use getCatalogSearchResultFormatters() method instead.
      */
     public function createCatalogSearchResultFormatters()
+    {
+        return $this->getCatalogSearchResultFormatters();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getCatalogSearchResultFormatters()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS);
     }
@@ -50,7 +83,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Catalog\Model\Catalog
      *
-     * @deprecated
+     * @deprecated See \Spryker\Client\Catalog\Model\Catalog for more info.
      */
     public function createCatalogModel()
     {
