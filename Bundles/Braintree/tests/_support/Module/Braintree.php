@@ -28,7 +28,7 @@ class Braintree extends Module
     protected function addBraintreeToConfig()
     {
         $configLocalTest = $this->getPathToConfigLocalTest();
-        $braintreeConfig = realpath(__DIR__ . '/../../../config/config_default.php.dist');
+        $braintreeConfig = realpath(__DIR__ . '/../../../config/config.dist.php');
         file_put_contents($configLocalTest, file_get_contents($braintreeConfig));
     }
 
