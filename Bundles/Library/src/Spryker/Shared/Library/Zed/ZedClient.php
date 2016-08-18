@@ -28,7 +28,7 @@ use Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 
 /**
- * @deprecated Moved to ZedRequest Bundle
+ * @deprecated Use \Spryker\Shared\ZedRequest\Client\AbstractHttpClient instead.
  */
 class ZedClient
 {
