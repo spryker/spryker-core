@@ -46,7 +46,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, $modifiedItemCollection->getItems()->count());
 
         foreach ($modifiedItemCollection->getItems() as $modifiedItem) {
-            $this->assertEquals(1000, $modifiedItem->getUnitGrossPrice());
+            $this->assertSame(1000, $modifiedItem->getUnitGrossPrice());
         }
     }
 
