@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\Payment\Dependency\Plugin;
+namespace Unit\Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;

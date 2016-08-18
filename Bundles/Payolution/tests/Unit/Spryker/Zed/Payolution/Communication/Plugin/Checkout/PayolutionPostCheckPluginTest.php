@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\Payolution\Communication\Plugin;
+namespace Unit\Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;

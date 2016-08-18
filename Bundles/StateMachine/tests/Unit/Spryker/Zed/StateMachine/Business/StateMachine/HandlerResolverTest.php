@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
+namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;

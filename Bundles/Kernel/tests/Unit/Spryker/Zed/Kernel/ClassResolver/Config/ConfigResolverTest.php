@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\ClassResolver\QueryContainer;
+namespace Unit\Spryker\Zed\Kernel\ClassResolver\Config;
 
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
@@ -15,6 +15,8 @@ use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
  * @group Spryker
  * @group Zed
  * @group Kernel
+ * @group ClassResolver
+ * @group Config
  * @group ConfigResolver
  */
 class ConfigResolverTest extends AbstractResolverTest

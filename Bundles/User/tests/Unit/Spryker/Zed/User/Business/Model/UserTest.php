@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Auth\Business\Model;
+namespace Unit\Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;

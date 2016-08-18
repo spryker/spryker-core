@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Ratepay\Business\Request\Payment\ConfigurationCalculation;
+namespace Functional\Spryker\Zed\Ratepay\Business\Request\Service;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\ProfileAdapterMock;

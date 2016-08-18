@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PaginationSearchResultTransfer;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\PaginatedResultFormatterPlugin;
 use Spryker\Client\Search\SearchFactory;
-use Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\AbstractResultFormatterPluginTest;
 
 /**
  * @group Client

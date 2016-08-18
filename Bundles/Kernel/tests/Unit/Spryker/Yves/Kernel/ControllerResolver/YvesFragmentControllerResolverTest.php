@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\ControllerResolver;
+namespace Unit\Spryker\Yves\Kernel\ControllerResolver;
 
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,11 +43,11 @@ class YvesFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
     public function getController()
     {
         return [
-            ['index/index/index', 'Unit\Spryker\Zed\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['/index/index/index', 'Unit\Spryker\Zed\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['Index/Index/Index', 'Unit\Spryker\Zed\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['/Index/Index/Index', 'Unit\Spryker\Zed\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['foo-bar/baz-bat/zip-zap', 'Unit\Spryker\Zed\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::zipZapAction'],
+            ['index/index/index', 'Unit\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
+            ['/index/index/index', 'Unit\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
+            ['Index/Index/Index', 'Unit\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
+            ['/Index/Index/Index', 'Unit\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
+            ['foo-bar/baz-bat/zip-zap', 'Unit\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::zipZapAction'],
         ];
     }
 

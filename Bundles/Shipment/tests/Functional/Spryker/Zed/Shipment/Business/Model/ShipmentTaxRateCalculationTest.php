@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Shipment\Business;
+namespace Functional\Spryker\Zed\Shipment\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;

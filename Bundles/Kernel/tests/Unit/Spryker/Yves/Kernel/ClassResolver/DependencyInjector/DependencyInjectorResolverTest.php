@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\Kernel\ClassResolver\DependencyInjectorProvider;
+namespace Unit\Spryker\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
