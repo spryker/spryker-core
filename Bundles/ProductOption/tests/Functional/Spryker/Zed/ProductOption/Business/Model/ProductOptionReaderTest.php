@@ -12,6 +12,7 @@ use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
