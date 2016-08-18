@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\StepEngine\Process\Steps;
+namespace Unit\Spryker\Yves\StepEngine\Dependency\Step;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
@@ -15,6 +15,7 @@ use Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
  * @group Spryker
  * @group Yves
  * @group StepEngine
+ * @group Dependency
  * @group BaseStep
  */
 class BaseStepTest extends \PHPUnit_Framework_TestCase

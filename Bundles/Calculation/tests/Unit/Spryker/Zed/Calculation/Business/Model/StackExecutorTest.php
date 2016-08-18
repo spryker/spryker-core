@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Calculation\Business\Model;
+namespace Unit\Spryker\Zed\Calculation\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;

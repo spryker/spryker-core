@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\Model;
+namespace Unit\Spryker\Zed\ProductOption\Business\Model;
 
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Generated\Shared\Transfer\AddressTransfer;

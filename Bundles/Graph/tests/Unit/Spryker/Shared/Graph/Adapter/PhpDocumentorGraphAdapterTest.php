@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Graph;
+namespace Unit\Spryker\Shared\Graph\Adapter;
 
 use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
 

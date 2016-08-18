@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Search\Business\Model\Generator;
+namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Generator;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;

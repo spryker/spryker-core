@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\ControllerResolver;
+namespace Unit\Spryker\Yves\Kernel\ControllerResolver;
 
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;

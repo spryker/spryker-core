@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductOption\Persistence;
+namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;

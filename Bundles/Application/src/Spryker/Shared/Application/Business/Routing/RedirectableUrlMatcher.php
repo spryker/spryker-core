@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Library\Silex\Routing;
+namespace Spryker\Shared\Application\Business\Routing;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -13,11 +13,14 @@ use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Route;
 
+/**
+ * @deprecated Not in use anymore.
+ */
 class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatcherInterface
 {
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function match($pathinfo)
     {
@@ -45,7 +48,7 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function handleRouteRequirements($pathinfo, $name, Route $route)
     {
@@ -59,13 +62,7 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
     }
 
     /**
-     * @see \Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface::match()
-     *
-     * @param string $path
-     * @param string $route
-     * @param string|null $scheme
-     *
-     * @return array
+     * @inheritDoc
      */
     public function redirect($path, $route, $scheme = null)
     {

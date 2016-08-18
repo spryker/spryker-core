@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Application\Business\Model;
+namespace Unit\Spryker\Zed\Application\Business;
 
 use Spryker\Zed\Application\Business\ApplicationFacade;
 
@@ -20,7 +20,7 @@ class ApplicationFacadeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return \Spryker\Zed\Application\Business\ApplicationFacade
+     * @return \Spryker\Zed\Application\Business\ApplicationFacadeInterface
      */
     private function getFacade()
     {

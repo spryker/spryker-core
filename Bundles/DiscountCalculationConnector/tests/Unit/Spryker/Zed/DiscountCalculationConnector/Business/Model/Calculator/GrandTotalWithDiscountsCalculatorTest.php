@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;

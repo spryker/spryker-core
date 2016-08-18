@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Console\Business\Model\Console;
+namespace Unit\Spryker\Zed\Console\Business\Model;
 
 use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 

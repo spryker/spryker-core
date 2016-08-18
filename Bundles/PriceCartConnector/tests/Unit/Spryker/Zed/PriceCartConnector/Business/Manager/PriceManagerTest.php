@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PriceCartConnector\Business;
+namespace Unit\Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -41,10 +41,12 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
         $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice');
 
-        $modifiedItems = $priceManager->addGrossPriceToItems($itemCollection);
+        $modifiedItemCollection = $priceManager->addGrossPriceToItems($itemCollection);
 
-        foreach ($modifiedItems as $modifiedItem) {
-            $this->assertEquals(1000, $modifiedItem->getGrossPrice());
+        $this->assertSame(1, $modifiedItemCollection->getItems()->count());
+
+        foreach ($modifiedItemCollection->getItems() as $modifiedItem) {
+            $this->assertEquals(1000, $modifiedItem->getUnitGrossPrice());
         }
     }
 

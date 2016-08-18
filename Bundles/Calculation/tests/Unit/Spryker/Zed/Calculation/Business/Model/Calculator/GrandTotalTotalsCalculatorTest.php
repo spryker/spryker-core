@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Bundles\Calculation\tests\Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
