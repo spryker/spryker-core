@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin
 {
@@ -110,11 +110,11 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
      * @return $this
      */
-    public function setQueryContainer(QueryContainerInterface $queryContainer)
+    public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
 

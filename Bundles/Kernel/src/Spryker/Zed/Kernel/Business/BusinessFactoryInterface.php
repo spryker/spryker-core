@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 interface BusinessFactoryInterface
 {
@@ -21,10 +21,10 @@ interface BusinessFactoryInterface
     public function setContainer(Container $container);
 
     /**
-     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
      * @return void
      */
-    public function setQueryContainer(QueryContainerInterface $queryContainer);
+    public function setQueryContainer(AbstractQueryContainer $queryContainer);
 
 }

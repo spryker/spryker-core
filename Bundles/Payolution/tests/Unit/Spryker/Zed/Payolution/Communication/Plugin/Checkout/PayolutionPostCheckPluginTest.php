@@ -15,7 +15,7 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlugin;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
 /**
  * @group Spryker
@@ -80,11 +80,11 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer
      */
     private function getQueryContainerMock(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $queryContainerMock = $this->getMock(PayolutionQueryContainerInterface::class);
+        $queryContainerMock = $this->getMock(PayolutionQueryContainer::class);
         $transactionStatusLogQueryMock = $this->getTransactionStatusLogQueryMock($transactionStatusLogEntity);
         $queryContainerMock->expects($this->once())->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
 
