@@ -112,7 +112,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
     protected function createTouchUpdater()
     {
