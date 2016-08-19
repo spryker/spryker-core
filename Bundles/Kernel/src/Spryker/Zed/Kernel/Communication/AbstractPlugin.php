@@ -122,7 +122,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
@@ -136,7 +136,7 @@ abstract class AbstractPlugin
     /**
      * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()
     {

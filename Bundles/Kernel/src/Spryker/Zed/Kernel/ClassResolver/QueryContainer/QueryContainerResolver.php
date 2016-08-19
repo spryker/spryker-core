@@ -19,7 +19,7 @@ class QueryContainerResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     public function resolve($callerClass)
     {
