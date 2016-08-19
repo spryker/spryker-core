@@ -15,6 +15,7 @@ use Acceptance\Auth\Login\Zed\Tester\LoginTester;
  * @group Auth
  * @group Login
  * @group Zed
+ * @group LoginCest
  */
 class LoginCest
 {

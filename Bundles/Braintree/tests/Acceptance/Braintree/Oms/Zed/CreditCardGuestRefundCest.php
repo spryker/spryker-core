@@ -15,8 +15,7 @@ use Acceptance\Braintree\Oms\Zed\Tester\OmsTester;
  * @group Braintree
  * @group Oms
  * @group Zed
- * @group CreditCard
- * @group CreditCardGuestRefund
+ * @group CreditCardGuestRefundCest
  */
 class CreditCardGuestRefundCest
 {

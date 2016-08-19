@@ -16,7 +16,7 @@ use Acceptance\Sales\Order\Zed\Tester\SalesListTester;
  * @group Sales
  * @group Order
  * @group Zed
- * @group SalesDetail
+ * @group SalesDetailCest
  */
 class SalesDetailCest
 {
