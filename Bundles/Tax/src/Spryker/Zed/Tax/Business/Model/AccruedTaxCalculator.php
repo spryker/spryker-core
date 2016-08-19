@@ -17,7 +17,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
     /**
      * @var float
      */
-    protected static $roundingErrorDelta = 0;
+    protected static $roundingErrorDelta = 0.0;
 
     /**
      * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
@@ -51,7 +51,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
      */
     public function resetRoundingErrorDelta()
     {
-        static::$roundingErrorDelta = 0;
+        static::$roundingErrorDelta = 0.0;
     }
 
 }

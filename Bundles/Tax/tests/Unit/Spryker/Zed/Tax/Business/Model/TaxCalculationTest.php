@@ -30,13 +30,13 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
         $quoteTransfer->addItem($itemTransfer);
 
         $expenseTransfer = $this->createExpenseTransfer();
-        $expenseTransfer->setSumTaxAmount(25);
+        $expenseTransfer->setSumTaxAmount(30);
         $quoteTransfer->addExpense($expenseTransfer);
 
         $taxCalculation = $this->createTaxCalculation();
         $taxCalculation->recalculate($quoteTransfer);
 
-        $this->assertEquals(50, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
+        $this->assertSame(55, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
     /**
