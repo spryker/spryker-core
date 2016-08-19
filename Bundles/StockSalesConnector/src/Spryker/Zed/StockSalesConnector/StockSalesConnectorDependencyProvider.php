@@ -23,6 +23,16 @@ class StockSalesConnectorDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
         $container[self::FACADE_STOCK] = function (Container $container) {
             return new StockSalesConnectorToStockBridge($container->getLocator()->stock()->facade());
         };
