@@ -16,10 +16,11 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Unit\Spryker\Zed\Kernel\Fixtures\Factory;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group AbstractFactory
+ * @group AbstractFactoryTest
  */
 class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
 {

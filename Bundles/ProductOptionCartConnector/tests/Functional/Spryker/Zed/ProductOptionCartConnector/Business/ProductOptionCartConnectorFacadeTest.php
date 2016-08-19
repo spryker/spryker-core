@@ -15,9 +15,11 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group ProductOptionCartConnector
+ * @group Business
  * @group ProductOptionCartConnectorFacadeTest
  */
 class ProductOptionCartConnectorFacadeTest extends Test

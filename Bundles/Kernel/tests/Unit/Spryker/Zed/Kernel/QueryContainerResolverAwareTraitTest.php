@@ -11,10 +11,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group QueryContainerResolverAwareTrait
+ * @group QueryContainerResolverAwareTraitTest
  */
 class QueryContainerResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
 {

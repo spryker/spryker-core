@@ -16,10 +16,13 @@ use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Auth
  * @group Business
  * @group Model
- * @group Auth
+ * @group AuthTest
  */
 class AuthTest extends \PHPUnit_Framework_TestCase
 {

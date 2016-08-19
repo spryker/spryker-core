@@ -17,11 +17,14 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPlugin
+ * @group QueryExpander
+ * @group FacetQueryExpanderPluginFilteredAggregationTest
  */
 class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQueryExpanderPluginAggregationTest
 {

@@ -12,11 +12,13 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Dependency
- * @group OmsDependencyInjector
+ * @group Injector
+ * @group OmsDependencyInjectorTest
  */
 class OmsDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {

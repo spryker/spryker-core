@@ -10,6 +10,15 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Calculation
+ * @group Business
+ * @group Model
+ * @group StackExecutorTest
+ */
 class StackExecutorTest extends \PHPUnit_Framework_TestCase
 {
 

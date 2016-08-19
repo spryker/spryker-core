@@ -14,6 +14,15 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\Business\Storage\InMemory;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Wishlist
+ * @group Business
+ * @group Storage
+ * @group InMemoryTest
+ */
 class InMemoryTest extends \PHPUnit_Framework_TestCase
 {
 

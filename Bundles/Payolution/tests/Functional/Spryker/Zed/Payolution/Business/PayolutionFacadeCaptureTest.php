@@ -12,9 +12,11 @@ use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorization
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Payolution
+ * @group Business
  * @group PayolutionFacadeCaptureTest
  */
 class PayolutionFacadeCaptureTest extends AbstractFacadeTest

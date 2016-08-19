@@ -12,6 +12,16 @@ use Functional\Spryker\Zed\Ratepay\Business\Request\AbstractFacadeTest;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ProfileResponse;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Service
+ * @group ProfileTest
+ */
 class ProfileTest extends AbstractFacadeTest
 {
 

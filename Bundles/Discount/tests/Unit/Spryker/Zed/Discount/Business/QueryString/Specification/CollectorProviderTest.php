@@ -15,6 +15,16 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Specification
+ * @group CollectorProviderTest
+ */
 class CollectorProviderTest extends \PHPUnit_Framework_TestCase
 {
 

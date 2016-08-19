@@ -9,6 +9,16 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Mapper
+ * @group AddressMapperTest
+ */
 class AddressMapperTest extends AbstractMapperTest
 {
 

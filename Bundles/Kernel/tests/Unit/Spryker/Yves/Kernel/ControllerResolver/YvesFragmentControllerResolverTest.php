@@ -11,9 +11,12 @@ use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @group Kernel
+ * @group Unit
+ * @group Spryker
  * @group Yves
+ * @group Kernel
  * @group ControllerResolver
+ * @group YvesFragmentControllerResolverTest
  */
 class YvesFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
 {

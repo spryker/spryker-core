@@ -11,6 +11,15 @@ use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group ComparatorOperatorsTest
+ */
 class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 {
 

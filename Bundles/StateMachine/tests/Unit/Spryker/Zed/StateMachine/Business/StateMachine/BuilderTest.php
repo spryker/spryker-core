@@ -17,6 +17,15 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
 use Spryker\Zed\StateMachine\Business\StateMachine\Builder;
 use Spryker\Zed\StateMachine\StateMachineConfig;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group BuilderTest
+ */
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
 

@@ -14,6 +14,16 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ExpenseTotal;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesAggregator
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group ExpenseTotalTest
+ */
 class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
 {
 

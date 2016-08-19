@@ -11,6 +11,15 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group DiscountSalesAggregatorConnector
+ * @group Business
+ * @group SalesAggregator
+ * @group OrderExpenseTaxWithDiscountsTest
+ */
 class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 

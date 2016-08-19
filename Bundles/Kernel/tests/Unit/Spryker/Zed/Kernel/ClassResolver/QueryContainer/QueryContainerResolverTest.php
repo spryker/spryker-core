@@ -12,10 +12,13 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group QueryContainerResolver
+ * @group ClassResolver
+ * @group QueryContainer
+ * @group QueryContainerResolverTest
  */
 class QueryContainerResolverTest extends AbstractResolverTest
 {

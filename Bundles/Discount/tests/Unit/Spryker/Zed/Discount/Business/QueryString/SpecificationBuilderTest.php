@@ -18,6 +18,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group SpecificationBuilderTest
+ */
 class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 {
 

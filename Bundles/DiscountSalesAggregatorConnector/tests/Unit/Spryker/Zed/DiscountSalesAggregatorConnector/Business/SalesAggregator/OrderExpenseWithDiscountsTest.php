@@ -13,6 +13,15 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpensesWithDiscounts;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group DiscountSalesAggregatorConnector
+ * @group Business
+ * @group SalesAggregator
+ * @group OrderExpenseWithDiscountsTest
+ */
 class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 

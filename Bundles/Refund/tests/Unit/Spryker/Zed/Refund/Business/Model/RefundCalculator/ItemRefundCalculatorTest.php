@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator\ItemRefundCalculator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Business
+ * @group Model
  * @group RefundCalculator
- * @group ItemRefundCalculator
+ * @group ItemRefundCalculatorTest
  */
 class ItemRefundCalculatorTest extends AbstractRefundCalculatorTest
 {

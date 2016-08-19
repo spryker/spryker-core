@@ -13,6 +13,15 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderDiscounts;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group DiscountSalesAggregatorConnector
+ * @group Business
+ * @group SalesAggregator
+ * @group OrderDiscountsTest
+ */
 class OrderDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 

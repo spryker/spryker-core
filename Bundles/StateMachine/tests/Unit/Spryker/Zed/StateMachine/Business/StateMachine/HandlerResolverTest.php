@@ -11,6 +11,15 @@ use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group HandlerResolverTest
+ */
 class HandlerResolverTest extends StateMachineMocks
 {
 

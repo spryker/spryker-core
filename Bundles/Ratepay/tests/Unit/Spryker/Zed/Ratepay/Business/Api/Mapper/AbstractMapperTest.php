@@ -16,6 +16,16 @@ use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Mapper
+ * @group AbstractMapperTest
+ */
 abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
 {
 

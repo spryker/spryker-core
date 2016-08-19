@@ -9,6 +9,16 @@ namespace Unit\Spryker\Zed\Payolution\Business\Api\Response;
 
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group Api
+ * @group Response
+ * @group ConverterTest
+ */
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {
 

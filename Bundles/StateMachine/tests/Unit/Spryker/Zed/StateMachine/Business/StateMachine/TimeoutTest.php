@@ -15,6 +15,15 @@ use Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Timeout;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group TimeoutTest
+ */
 class TimeoutTest extends StateMachineMocks
 {
 

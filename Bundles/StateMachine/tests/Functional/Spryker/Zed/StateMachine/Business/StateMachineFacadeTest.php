@@ -24,6 +24,14 @@ use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachineFacadeTest
+ */
 class StateMachineFacadeTest extends Test
 {
 

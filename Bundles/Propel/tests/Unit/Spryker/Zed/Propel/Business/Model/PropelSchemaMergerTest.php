@@ -11,11 +11,13 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
- * @group PropelSchemaMerger
+ * @group Model
+ * @group PropelSchemaMergerTest
  */
 class PropelSchemaMergerTest extends \PHPUnit_Framework_TestCase
 {

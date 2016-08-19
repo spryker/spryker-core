@@ -12,12 +12,13 @@ use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group ClassResolver
  * @group Config
- * @group ConfigResolver
+ * @group ConfigResolverTest
  */
 class ConfigResolverTest extends AbstractResolverTest
 {

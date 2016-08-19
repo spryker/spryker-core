@@ -14,6 +14,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group DiscountCalculationConnector
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group SumGrossCalculatedDiscountAmountTest
+ */
 class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 {
 

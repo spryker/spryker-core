@@ -12,10 +12,11 @@ use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\OmsConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
- * @group OmsConfig
+ * @group OmsConfigTest
  */
 class OmsConfigTest extends \PHPUnit_Framework_TestCase
 {

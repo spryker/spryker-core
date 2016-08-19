@@ -11,8 +11,9 @@ use Codeception\TestCase\Test;
 use Spryker\Shared\Url\Url;
 
 /**
+ * @group Functional
  * @group Spryker
- * @group Zed
+ * @group Shared
  * @group Url
  * @group UrlTest
  */

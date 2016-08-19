@@ -11,10 +11,14 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
+ * @group Model
+ * @group PropelDatabase
+ * @group MySqlDatabaseCreatorTest
  */
 class MySqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
 {

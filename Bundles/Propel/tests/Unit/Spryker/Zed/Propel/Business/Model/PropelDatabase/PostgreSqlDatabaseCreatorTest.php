@@ -11,10 +11,14 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
+ * @group Model
+ * @group PropelDatabase
+ * @group PostgreSqlDatabaseCreatorTest
  */
 class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
 {

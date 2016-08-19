@@ -10,8 +10,13 @@ namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
+ * @group IdeAutoCompletion
  * @group MethodTagBuilder
+ * @group GeneratedInterfaceMethodTagBuilderTest
  */
 class GeneratedInterfaceMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {

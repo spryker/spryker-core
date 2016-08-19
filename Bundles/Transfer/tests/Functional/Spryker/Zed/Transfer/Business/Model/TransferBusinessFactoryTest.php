@@ -13,11 +13,13 @@ use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferBusinessFactory
+ * @group Model
+ * @group TransferBusinessFactoryTest
  */
 class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {

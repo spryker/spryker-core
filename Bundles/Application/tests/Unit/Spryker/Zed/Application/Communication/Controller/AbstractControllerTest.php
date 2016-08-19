@@ -11,10 +11,13 @@ use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Unit\Spryker\Zed\Application\Communication\Controller\Fixtures\MockController;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Communication
+ * @group Controller
+ * @group AbstractControllerTest
  */
 class AbstractControllerTest extends \PHPUnit_Framework_TestCase
 {

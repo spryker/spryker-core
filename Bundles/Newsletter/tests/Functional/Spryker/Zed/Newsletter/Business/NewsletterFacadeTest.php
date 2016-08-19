@@ -15,9 +15,11 @@ use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
 use Spryker\Zed\Newsletter\Business\NewsletterFacade;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Newsletter
+ * @group Business
  * @group NewsletterFacadeTest
  */
 class NewsletterFacadeTest extends Test

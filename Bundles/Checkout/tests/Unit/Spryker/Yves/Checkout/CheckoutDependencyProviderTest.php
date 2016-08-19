@@ -13,10 +13,11 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
- * @group StepEngine
- * @group StepEngineDependencyProvider
+ * @group Checkout
+ * @group CheckoutDependencyProviderTest
  */
 class CheckoutDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {

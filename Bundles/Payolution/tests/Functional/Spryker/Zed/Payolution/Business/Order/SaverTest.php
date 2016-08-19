@@ -33,6 +33,15 @@ use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Order\Saver;
 use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group Order
+ * @group SaverTest
+ */
 class SaverTest extends Test
 {
 

@@ -13,6 +13,16 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOptionDiscountConnector
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group ItemProductOptionTaxWithDiscountsTest
+ */
 class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 

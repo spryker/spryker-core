@@ -9,6 +9,17 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Request\Payment\Refund;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RefundAdapterMock;
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\InvoiceAbstractTest;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group Refund
+ * @group InvoiceTest
+ */
 class InvoiceTest extends InvoiceAbstractTest
 {
 

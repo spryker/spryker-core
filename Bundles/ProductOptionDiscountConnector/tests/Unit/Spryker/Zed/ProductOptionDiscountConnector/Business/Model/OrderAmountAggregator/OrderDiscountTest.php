@@ -13,6 +13,16 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOptionDiscountConnector
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group OrderDiscountTest
+ */
 class OrderDiscountTest extends \PHPUnit_Framework_TestCase
 {
 

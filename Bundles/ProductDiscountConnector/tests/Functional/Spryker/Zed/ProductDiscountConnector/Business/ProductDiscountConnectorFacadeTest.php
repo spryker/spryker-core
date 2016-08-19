@@ -18,6 +18,14 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group ProductDiscountConnector
+ * @group Business
+ * @group ProductDiscountConnectorFacadeTest
+ */
 class ProductDiscountConnectorFacadeTest extends Test
 {
 

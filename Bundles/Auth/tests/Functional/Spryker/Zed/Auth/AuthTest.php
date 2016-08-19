@@ -16,9 +16,11 @@ use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Auth
+ * @group AuthTest
  */
 class AuthTest extends Test
 {

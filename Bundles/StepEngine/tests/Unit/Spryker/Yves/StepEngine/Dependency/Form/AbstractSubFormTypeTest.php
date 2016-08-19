@@ -12,10 +12,13 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group StepEngine
- * @group AbstractSubFormType
+ * @group Dependency
+ * @group Form
+ * @group AbstractSubFormTypeTest
  */
 class AbstractSubFormTypeTest extends \PHPUnit_Framework_TestCase
 {

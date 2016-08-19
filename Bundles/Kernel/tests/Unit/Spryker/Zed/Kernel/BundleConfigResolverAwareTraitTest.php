@@ -11,10 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group BundleConfigResolverAwareTrait
+ * @group BundleConfigResolverAwareTraitTest
  */
 class BundleConfigResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
 {

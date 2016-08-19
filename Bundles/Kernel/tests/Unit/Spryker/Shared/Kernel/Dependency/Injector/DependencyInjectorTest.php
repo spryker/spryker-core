@@ -8,11 +8,13 @@
 namespace Unit\Spryker\Shared\Kernel\Dependency\Injector;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group Kernel
  * @group Dependency
- * @group DependencyInjector
+ * @group Injector
+ * @group DependencyInjectorTest
  */
 class DependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {

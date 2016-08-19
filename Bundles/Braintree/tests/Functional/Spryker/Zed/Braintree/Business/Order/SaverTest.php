@@ -33,9 +33,13 @@ use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
 use Spryker\Zed\Braintree\Business\Order\Saver;
 
 /**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
  * @group Braintree
  * @group Business
  * @group Order
+ * @group SaverTest
  */
 class SaverTest extends Test
 {

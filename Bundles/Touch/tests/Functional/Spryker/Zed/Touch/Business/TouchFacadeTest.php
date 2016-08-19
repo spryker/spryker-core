@@ -14,11 +14,12 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Touch\Business\TouchFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Touch
  * @group Business
- * @group TouchFacade
+ * @group TouchFacadeTest
  */
 class TouchFacadeTest extends Test
 {

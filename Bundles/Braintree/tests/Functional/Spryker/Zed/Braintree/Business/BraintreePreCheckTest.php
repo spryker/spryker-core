@@ -18,9 +18,11 @@ use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
 use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Braintree
+ * @group Business
  * @group BraintreePreCheckTest
  */
 class BraintreePreCheckTest extends AbstractFacadeTest

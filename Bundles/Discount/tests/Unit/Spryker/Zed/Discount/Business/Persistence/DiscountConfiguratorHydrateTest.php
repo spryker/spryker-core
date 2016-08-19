@@ -11,6 +11,15 @@ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Persistence
+ * @group DiscountConfiguratorHydrateTest
+ */
 class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
 {
 

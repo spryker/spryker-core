@@ -10,13 +10,14 @@ namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
  * @group Model
  * @group Generator
- * @group TransferDefinitionMerger
+ * @group TransferDefinitionMergerTest
  */
 class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
 {

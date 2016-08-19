@@ -16,7 +16,8 @@ use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group Tax
  * @group WriterTest

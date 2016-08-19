@@ -12,8 +12,11 @@ use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithMatcher;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
  * @group Kernel
- * @group BundleProxy
+ * @group BundleProxyTest
  */
 class BundleProxyTest extends \PHPUnit_Framework_TestCase
 {

@@ -15,11 +15,13 @@ use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Business
- * @group RefundCalculator
+ * @group Model
+ * @group RefundCalculatorTest
  */
 class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
 {

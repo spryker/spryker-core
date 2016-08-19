@@ -10,8 +10,11 @@ namespace Unit\Spryker\Zed\Kernel;
 use Spryker\Zed\Kernel\BundleNameFinder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group BundleNameFinder
+ * @group BundleNameFinderTest
  */
 class BundleNameFinderTest extends \PHPUnit_Framework_TestCase
 {

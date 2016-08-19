@@ -16,6 +16,16 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\ProductOptionDiscounts;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOptionDiscountConnector
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group ProductOptionDiscountsTest
+ */
 class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 

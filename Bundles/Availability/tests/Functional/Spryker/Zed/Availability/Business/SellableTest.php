@@ -22,6 +22,7 @@ use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Spryker\Zed\Kernel\Container;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Availability

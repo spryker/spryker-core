@@ -15,6 +15,15 @@ use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Voucher
+ * @group VoucherEngineTest
+ */
 class VoucherEngineTest extends \PHPUnit_Framework_TestCase
 {
 

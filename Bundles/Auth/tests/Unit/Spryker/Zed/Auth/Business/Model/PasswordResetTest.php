@@ -15,10 +15,13 @@ use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Auth
  * @group Business
  * @group Model
- * @group PasswordReset
+ * @group PasswordResetTest
  */
 class PasswordResetTest extends \PHPUnit_Framework_TestCase
 {

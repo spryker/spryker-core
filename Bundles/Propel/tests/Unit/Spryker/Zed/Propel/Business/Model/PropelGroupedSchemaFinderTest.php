@@ -11,11 +11,13 @@ use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
- * @group PropelGroupedSchemaFinder
+ * @group Model
+ * @group PropelGroupedSchemaFinderTest
  */
 class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
 {

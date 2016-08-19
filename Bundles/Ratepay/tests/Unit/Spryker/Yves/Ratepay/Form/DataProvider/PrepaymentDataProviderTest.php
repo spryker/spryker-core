@@ -13,10 +13,13 @@ use Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer;
 use Spryker\Yves\Ratepay\Form\DataProvider\PrepaymentDataProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Ratepay
- * @group PrepaymentDataProvider
+ * @group Form
+ * @group DataProvider
+ * @group PrepaymentDataProviderTest
  */
 class PrepaymentDataProviderTest extends AbstractDataProviderTest
 {

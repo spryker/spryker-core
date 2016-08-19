@@ -13,8 +13,14 @@ use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 /**
  * Class FixedTest
  *
- * @group DiscountCalculatorFixedTest
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group Type
+ * @group FixedTest
  */
 class FixedTest extends \PHPUnit_Framework_TestCase
 {

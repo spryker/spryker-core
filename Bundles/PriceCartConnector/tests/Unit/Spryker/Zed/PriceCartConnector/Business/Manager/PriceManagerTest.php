@@ -14,11 +14,13 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group PriceCartConnector
  * @group Business
- * @group PriceManager
+ * @group Manager
+ * @group PriceManagerTest
  */
 class PriceManagerTest extends \PHPUnit_Framework_TestCase
 {

@@ -10,11 +10,12 @@ namespace Unit\Spryker\Zed\Setup\Communication;
 use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Setup
  * @group Communication
- * @group SetupCommunicationFactory
+ * @group SetupCommunicationFactoryTest
  */
 class SetupCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
 {

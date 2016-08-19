@@ -14,7 +14,8 @@ use Spryker\Shared\Storage\Provider\AbstractKvProvider;
  * @group Spryker
  * @group Shared
  * @group Storage
- * @group AbstractKvProvider
+ * @group Provider
+ * @group AbstractKvProviderTest
  */
 class AbstractKvProviderTest extends \PHPUnit_Framework_TestCase
 {

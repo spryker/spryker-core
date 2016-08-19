@@ -12,8 +12,11 @@ use Predis\ClientInterface;
 use Spryker\Client\Storage\Redis\Service;
 
 /**
- * @group Storage
+ * @group Unit
+ * @group Spryker
  * @group Client
+ * @group Storage
+ * @group Redis
  * @group ServiceTest
  */
 class ServiceTest extends Test

@@ -12,10 +12,13 @@ use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolv
 use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group DependencyProviderResolver
+ * @group ClassResolver
+ * @group DependencyProvider
+ * @group DependencyProviderResolverTest
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {

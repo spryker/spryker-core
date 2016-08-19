@@ -13,10 +13,13 @@ use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Yves\Ratepay\Form\DataProvider\InvoiceDataProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Ratepay
- * @group InvoiceDataProvider
+ * @group Form
+ * @group DataProvider
+ * @group InvoiceDataProviderTest
  */
 class InvoiceDataProviderTest extends AbstractDataProviderTest
 {

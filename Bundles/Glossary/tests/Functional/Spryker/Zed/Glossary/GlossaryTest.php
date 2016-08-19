@@ -16,6 +16,7 @@ use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Glossary

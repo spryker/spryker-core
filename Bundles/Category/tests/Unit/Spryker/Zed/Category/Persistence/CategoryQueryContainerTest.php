@@ -11,10 +11,12 @@ use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Category
  * @group Persistence
+ * @group CategoryQueryContainerTest
  */
 class CategoryQueryContainerTest extends \PHPUnit_Framework_TestCase
 {

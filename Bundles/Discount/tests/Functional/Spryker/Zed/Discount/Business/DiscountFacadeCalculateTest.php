@@ -20,6 +20,14 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DiscountFacadeCalculateTest
+ */
 class DiscountFacadeCalculateTest extends Test
 {
 

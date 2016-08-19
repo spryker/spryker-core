@@ -21,6 +21,15 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Shipment
+ * @group Business
+ * @group Model
+ * @group ShipmentTaxRateCalculationTest
+ */
 class ShipmentTaxRateCalculationTest extends Test
 {
 

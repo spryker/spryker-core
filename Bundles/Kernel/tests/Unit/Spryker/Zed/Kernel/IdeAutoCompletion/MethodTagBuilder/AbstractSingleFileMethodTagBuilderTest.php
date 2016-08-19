@@ -10,8 +10,13 @@ namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\SingleFileMethodTagBuilder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
+ * @group IdeAutoCompletion
  * @group MethodTagBuilder
+ * @group AbstractSingleFileMethodTagBuilderTest
  */
 class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {

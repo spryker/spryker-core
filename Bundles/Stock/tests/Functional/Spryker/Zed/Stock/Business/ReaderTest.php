@@ -18,7 +18,12 @@ use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
- * @group StockTest
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Stock
+ * @group Business
+ * @group ReaderTest
  */
 class ReaderTest extends Test
 {

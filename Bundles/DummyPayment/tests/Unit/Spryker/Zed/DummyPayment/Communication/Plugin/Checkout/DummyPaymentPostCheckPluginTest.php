@@ -14,11 +14,14 @@ use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheckPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Communication
- * @group DummyPaymentPostCheckPlugin
+ * @group Plugin
+ * @group Checkout
+ * @group DummyPaymentPostCheckPluginTest
  */
 class DummyPaymentPostCheckPluginTest extends \PHPUnit_Framework_TestCase
 {

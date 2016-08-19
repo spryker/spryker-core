@@ -16,7 +16,13 @@ use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
 /**
- * @group ShipmentTaxRate
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Shipment
+ * @group Business
+ * @group Model
+ * @group ShipmentTaxRateCalculationTest
  */
 class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 {

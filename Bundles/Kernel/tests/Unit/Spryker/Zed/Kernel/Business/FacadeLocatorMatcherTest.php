@@ -10,11 +10,12 @@ namespace Unit\Spryker\Zed\Kernel\Business;
 use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
  * @group Business
- * @group Locator
- * @group FacadeLocator
- * @group FacadeLocatorMatcher
+ * @group FacadeLocatorMatcherTest
  */
 class FacadeLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 {

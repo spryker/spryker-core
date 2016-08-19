@@ -13,7 +13,8 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group Tax
  * @group ReaderTest

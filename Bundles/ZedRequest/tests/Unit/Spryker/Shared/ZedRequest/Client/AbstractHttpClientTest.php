@@ -16,11 +16,12 @@ use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractHttpClient;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group ZedRequest
  * @group Client
- * @group AbstractHttpClient
+ * @group AbstractHttpClientTest
  */
 class AbstractHttpClientTest extends \PHPUnit_Framework_TestCase
 {

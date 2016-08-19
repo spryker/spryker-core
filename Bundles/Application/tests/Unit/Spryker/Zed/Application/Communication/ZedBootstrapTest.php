@@ -9,11 +9,12 @@ namespace Unit\Spryker\Zed\Application\Communication;
 use Spryker\Zed\Application\Communication\ZedBootstrap;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Communication
- * @group ZedBootstrap
+ * @group ZedBootstrapTest
  */
 class ZedBootstrapTest extends \PHPUnit_Framework_TestCase
 {

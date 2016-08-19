@@ -13,10 +13,11 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Unit\Spryker\Client\Kernel\Fixtures\Plugin\FooPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Client
  * @group Kernel
- * @group AbstractPlugin
+ * @group AbstractPluginTest
  */
 class AbstractPluginTest extends \PHPUnit_Framework_TestCase
 {

@@ -14,6 +14,14 @@ use Spryker\Yves\StepEngine\Process\StepEngine;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Yves
+ * @group StepEngine
+ * @group Process
+ * @group StepEngineTest
+ */
 class StepEngineTest extends AbstractStepEngineTest
 {
 

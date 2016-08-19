@@ -44,8 +44,10 @@ use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
+ * @group Checkout
  * @group Business
  * @group CheckoutFacadeTest
  */

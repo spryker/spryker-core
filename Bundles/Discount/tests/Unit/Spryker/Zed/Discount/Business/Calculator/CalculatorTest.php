@@ -20,6 +20,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group CalculatorTest
+ */
 class CalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

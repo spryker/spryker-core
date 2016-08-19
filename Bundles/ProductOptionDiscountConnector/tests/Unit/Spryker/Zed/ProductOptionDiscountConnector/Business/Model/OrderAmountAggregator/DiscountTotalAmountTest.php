@@ -14,6 +14,16 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOptionDiscountConnector
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group DiscountTotalAmountTest
+ */
 class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
 {
 

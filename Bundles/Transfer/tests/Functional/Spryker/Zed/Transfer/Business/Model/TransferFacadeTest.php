@@ -13,11 +13,13 @@ use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferFacade
+ * @group Model
+ * @group TransferFacadeTest
  */
 class TransferFacadeTest extends \PHPUnit_Framework_TestCase
 {

@@ -14,11 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group SubRequestHandler
+ * @group Model
+ * @group Request
+ * @group SubRequestHandlerTest
  */
 class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
 {

@@ -15,10 +15,11 @@ use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Client
  * @group Kernel
- * @group AbstractDependencyProvider
+ * @group AbstractDependencyProviderTest
  */
 class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {

@@ -13,11 +13,14 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Business
+ * @group Model
  * @group RefundCalculator
+ * @group AbstractRefundCalculatorTest
  */
 class AbstractRefundCalculatorTest extends \PHPUnit_Framework_TestCase
 {

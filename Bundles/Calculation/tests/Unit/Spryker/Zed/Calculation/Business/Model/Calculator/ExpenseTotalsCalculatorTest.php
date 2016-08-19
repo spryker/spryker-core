@@ -13,6 +13,16 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Calculation
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group ExpenseTotalsCalculatorTest
+ */
 class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

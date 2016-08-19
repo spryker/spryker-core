@@ -12,10 +12,13 @@ use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResol
 use Unit\Spryker\Yves\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group DependencyProviderResolver
+ * @group ClassResolver
+ * @group DependencyProvider
+ * @group DependencyProviderResolverTest
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {
