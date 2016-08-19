@@ -88,7 +88,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can't resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery
      *
      * @return void
@@ -100,7 +100,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can't resolve bulk touch class name: BulkDeleteTouchByIdQuery
      *
      * @return void
