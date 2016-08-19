@@ -7,12 +7,14 @@
 
 namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
+use Memcached as PhpMemcached;
+use MemcachedException;
+
 /**
  * @property \Memcached $resource
  *
  * @method \Memcached getResource()
  */
-
 abstract class Memcached extends AbstractKeyValue
 {
 
@@ -24,7 +26,7 @@ abstract class Memcached extends AbstractKeyValue
     public function connect()
     {
         if (!$this->resource) {
-            $resource = new \Memcached();
+            $resource = new PhpMemcached();
             $resource->addServer(
                 isset($this->config['host']) ? $this->config['host'] : '',
                 isset($this->config['port']) ? $this->config['port'] : null
@@ -32,11 +34,11 @@ abstract class Memcached extends AbstractKeyValue
 
             //ensure that values from multi calls are returned in the same order as requested
             //@see http://www.php.net/manual/de/memcached.constants.php
-            $resource->setOption(\Memcached::GET_PRESERVE_ORDER, true);
+            $resource->setOption(PhpMemcached::GET_PRESERVE_ORDER, true);
 
             $resource->getVersion();
             if ($resource->getResultCode() !== 0) {
-                throw new \MemcachedException('Could not connect to any memcached server');
+                throw new MemcachedException('Could not connect to any memcached server');
             }
 
             $this->resource = $resource;

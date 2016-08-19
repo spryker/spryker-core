@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Application;
 
+use ErrorException;
+use Exception;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
@@ -107,7 +109,7 @@ class Environment
     {
         if (!defined('APPLICATION')) {
             if (!getenv('APPLICATION')) {
-                throw new \Exception('Can not get APPLICATION environment variable');
+                throw new Exception('Can not get APPLICATION environment variable');
             }
             define('APPLICATION', getenv('APPLICATION'));
         }
@@ -121,7 +123,7 @@ class Environment
     {
         if (!defined('APPLICATION_ROOT_DIR')) {
             if (!getenv('APPLICATION_ROOT_DIR')) {
-                throw new \Exception('Can not get APPLICATION_ROOT_DIR environment variable');
+                throw new Exception('Can not get APPLICATION_ROOT_DIR environment variable');
             }
             define('APPLICATION_ROOT_DIR', getenv('APPLICATION_ROOT_DIR'));
         }
@@ -200,7 +202,7 @@ class Environment
         $errorLevel = error_reporting();
         set_error_handler(
             function ($errno, $errstr, $errfile, $errline) use ($initErrorHandler) {
-                throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+                throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
             },
             $errorLevel
         );
@@ -225,7 +227,7 @@ class Environment
             function ($script, $line, $message) {
                 $parsedMessage = trim(preg_replace('~^.*/\*(.*)\*/~i', '$1', $message));
                 $message = $parsedMessage ?: 'Assertion failed: ' . $message;
-                throw new \ErrorException($message, 0, 0, $script, $line);
+                throw new ErrorException($message, 0, 0, $script, $line);
             }
         );
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library;
 
+use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 
@@ -64,7 +65,7 @@ class Image
                     return self::getSchema() . Config::get(LibraryConstants::HOST_YVES) . self::PLACEHOLDER_PRODUCT_YVES;
 
                 default:
-                    throw new \ErrorException('Invalid Application name');
+                    throw new ErrorException('Invalid Application name');
             }
         }
 
@@ -122,7 +123,7 @@ class Image
                 $virtualDirectory = $parts[self::POSITION_DIRECTORY];
             } else {
                 if ($virtualDirectory !== $parts[self::POSITION_DIRECTORY]) {
-                    throw new \ErrorException('You cannot mix product images from different products');
+                    throw new ErrorException('You cannot mix product images from different products');
                 }
             }
 

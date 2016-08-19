@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
+use Exception;
+
 class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
 {
 
@@ -23,7 +25,7 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
         $result = $this->getResource()->set($key, $value);
         $this->addWriteAccessStats($key);
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set memcacheKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
@@ -43,7 +45,7 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
         $result = $this->getResource()->setMulti($items);
         $this->addMultiWriteAccessStats($items);
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set memcacheKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }

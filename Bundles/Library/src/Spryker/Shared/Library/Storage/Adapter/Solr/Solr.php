@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library\Storage\Adapter\Solr;
 
+use Solarium\Client;
 use Spryker\Shared\Library\Storage\AdapterInterface;
 use Spryker\Shared\Library\Storage\AdapterTrait;
 use Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query;
@@ -46,7 +47,7 @@ abstract class Solr implements AdapterInterface
     public function connect()
     {
         if (!$this->resource) {
-            $resource = new \Solarium\Client($this->config);
+            $resource = new Client($this->config);
             $resource->registerQueryType(
                 Query::QUERY_ADMIN,
                 'Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query'

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Library\Twig\Loader;
 
+use Twig_Error_Loader;
 use Zend\Filter\Word\CamelCaseToDash;
 
 class Filesystem extends \Twig_Loader_Filesystem
@@ -108,7 +109,7 @@ class Filesystem extends \Twig_Loader_Filesystem
             if ($this->cache[$name] !== false) {
                 return $this->cache[$name];
             } else {
-                throw new \Twig_Error_Loader(sprintf('Unable to find template "%s" (cached).', $name));
+                throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (cached).', $name));
             }
         }
 
@@ -118,7 +119,7 @@ class Filesystem extends \Twig_Loader_Filesystem
             $pos = strpos($name, '/');
             if ($pos === false) {
                 $this->cache[$name] = false;
-                throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
+                throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
             }
             $bundle = ucfirst(substr($name, 1, $pos - 1));
             $templateName = ucfirst(substr($name, $pos + 1));
@@ -130,7 +131,7 @@ class Filesystem extends \Twig_Loader_Filesystem
         $pos = strpos(ltrim($name, '/'), '/');
         if ($pos === false) {
             $this->cache[$name] = false;
-            throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
+            throw new Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
         }
         $bundle = ucfirst(substr($name, 1, $pos));
         $templateName = ucfirst(substr($name, $pos + 2));
@@ -157,7 +158,7 @@ class Filesystem extends \Twig_Loader_Filesystem
         }
 
         $this->cache[$name] = false;
-        throw new \Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
+        throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
     }
 
 }

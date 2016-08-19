@@ -47,9 +47,12 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      */
     public function sendRequest($data)
     {
-        $request = $this->buildRequest($data);
+        $request = $this->buildRequest();
 
-        return $this->send($request);
+        $options = [];
+        $options = $this->addPayload($data, $options);
+
+        return $this->send($request, $options);
     }
 
     /**
@@ -61,35 +64,51 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      */
     public function sendAuthorizedRequest($data, $user, $password)
     {
-        $request = $this->buildRequest($data);
-        $this->authorizeRequest($request, $user, $password);
+        $request = $this->buildRequest();
+        $options = $this->authorizeRequest($user, $password);
+        $options = $this->addPayload($data, $options);
 
-        return $this->send($request);
+        return $this->send($request, $options);
     }
 
     /**
-     * @param array|string $data
-     *
-     * @return object
+     * @return \Psr\Http\Message\RequestInterface
      */
-    abstract protected function buildRequest($data);
+    abstract protected function buildRequest();
 
     /**
-     * @param object $request
      * @param string $user
      * @param string $password
      *
-     * @return void
+     * @return array
      */
-    abstract protected function authorizeRequest($request, $user, $password);
+    abstract protected function authorizeRequest($user, $password);
 
     /**
-     * @param object $request
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param array $options
      *
      * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */
-    abstract protected function send($request);
+    abstract protected function send($request, array $options = []);
+
+    /**
+     * @param array|string $data
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function addPayload($data, array $options)
+    {
+        if (is_array($data)) {
+            $options['form_params'] = $data;
+        } else {
+            $options['body'] = $data;
+        }
+
+        return $options;
+    }
 
 }

@@ -88,7 +88,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can't resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery
      *
      * @return void
@@ -100,7 +100,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can't resolve bulk touch class name: BulkDeleteTouchByIdQuery
      *
      * @return void
@@ -112,7 +112,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
     protected function createTouchUpdater()
     {

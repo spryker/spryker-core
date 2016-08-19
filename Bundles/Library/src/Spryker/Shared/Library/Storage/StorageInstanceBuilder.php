@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Library\Storage;
 
 use Elastica\Client;
+use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Storage\StorageConstants;
@@ -159,7 +160,7 @@ class StorageInstanceBuilder
         }
 
         if ($config === null) {
-            throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);
+            throw new ErrorException('Missing implementation for adapter ' . $kvAdapter);
         }
 
         return $config;

@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 class FooPlugin extends AbstractPlugin
 {
@@ -31,7 +31,7 @@ class FooPlugin extends AbstractPlugin
     }
 
     /**
-     * @return QueryContainerInterface
+     * @return AbstractQueryContainer
      */
     public function getQueryContainer()
     {

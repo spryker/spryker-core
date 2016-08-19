@@ -11,7 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 
 /**
- * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
 class PaymentIsCapture extends AbstractCondition

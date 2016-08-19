@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library\BatchIterator;
 
+use PDO;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -65,7 +66,7 @@ class PdoBatchIterator implements CountableIteratorInterface
             ->prepare($sqlPart->getSql());
         $st->execute($sqlPart->getParameters());
 
-        $this->batchData = $st->fetchAll(\PDO::FETCH_ASSOC);
+        $this->batchData = $st->fetchAll(PDO::FETCH_ASSOC);
         $this->offset += $this->chunkSize;
     }
 

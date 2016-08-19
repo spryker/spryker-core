@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Error;
 
+use ErrorException;
+use Exception;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
@@ -55,7 +57,7 @@ class ErrorHandler
      *
      * @return void
      */
-    public function handleException(\Exception $exception, $output = true, $exit = true)
+    public function handleException(Exception $exception, $output = true, $exit = true)
     {
         ErrorLogger::log($exception);
 
@@ -90,7 +92,7 @@ class ErrorHandler
         $error = error_get_last();
 
         if (isset($error)) {
-            $exception = new \ErrorException('FATAL ERROR - ' . $error['message'], 0, $error['type'], $error['file'], $error['line']);
+            $exception = new ErrorException('FATAL ERROR - ' . $error['message'], 0, $error['type'], $error['file'], $error['line']);
             $this->handleException($exception);
         }
     }
@@ -123,7 +125,7 @@ class ErrorHandler
      *
      * @return void
      */
-    protected function echoOutput(\Exception $exception, $output)
+    protected function echoOutput(Exception $exception, $output)
     {
         if ($output) {
             $message = ErrorRenderer::renderException($exception);

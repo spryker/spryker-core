@@ -9,6 +9,7 @@ namespace Spryker\Shared\Library\Reader\Csv;
 
 use SplFileObject;
 use Spryker\Shared\Library\Exception\ResourceNotFoundException;
+use UnexpectedValueException;
 
 class CsvReader implements CsvReaderInterface
 {
@@ -113,7 +114,7 @@ class CsvReader implements CsvReaderInterface
         $columns = array_values($columns);
 
         if (empty($data)) {
-            throw new \UnexpectedValueException(sprintf(
+            throw new UnexpectedValueException(sprintf(
                 'Expected %d column(s) but received data with %d column(s) in %s on line %d',
                 count($columns),
                 count($data),
@@ -183,7 +184,7 @@ class CsvReader implements CsvReaderInterface
     {
         $data = $this->getFile()->fgetcsv();
         if (empty($data)) {
-            throw new \UnexpectedValueException(sprintf(
+            throw new UnexpectedValueException(sprintf(
                 'Malformed data at line %d in %s',
                 $this->readIndex,
                 $this->csvFilename
