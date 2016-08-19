@@ -1,5 +1,7 @@
 <?php
-// Copy over the following configs to your config
+/**
+ * Copy over the following configs to your config
+ */
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
