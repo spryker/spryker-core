@@ -10,10 +10,11 @@ namespace Unit\Spryker\Zed\Kernel;
 use Spryker\Zed\Kernel\Container;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group Container
+ * @group ContainerTest
  */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {

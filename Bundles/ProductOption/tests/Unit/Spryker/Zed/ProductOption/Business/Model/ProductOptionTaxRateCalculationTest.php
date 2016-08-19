@@ -15,7 +15,13 @@ use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 
 /**
- * @group ProductOptionTaxRate
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group Model
+ * @group ProductOptionTaxRateCalculationTest
  */
 class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 {

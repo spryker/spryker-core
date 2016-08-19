@@ -12,9 +12,11 @@ use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Braintree
+ * @group Business
  * @group BraintreeFacadeConditionsTest
  */
 class BraintreeFacadeConditionsTest extends AbstractFacadeTest

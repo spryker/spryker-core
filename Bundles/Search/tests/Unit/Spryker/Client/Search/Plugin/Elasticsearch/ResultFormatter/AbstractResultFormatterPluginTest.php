@@ -14,6 +14,16 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Client
+ * @group Search
+ * @group Plugin
+ * @group Elasticsearch
+ * @group ResultFormatter
+ * @group AbstractResultFormatterPluginTest
+ */
 abstract class AbstractResultFormatterPluginTest extends \PHPUnit_Framework_TestCase
 {
 

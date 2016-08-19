@@ -10,12 +10,14 @@ namespace Unit\Spryker\Zed\Transfer\Business\Model\Cleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
  * @group Model
  * @group Cleaner
+ * @group TransferCleanerTest
  */
 class TransferCleanerTest extends \PHPUnit_Framework_TestCase
 {

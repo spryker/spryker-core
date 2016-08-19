@@ -11,6 +11,13 @@ use Codeception\TestCase\Test;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Locale
+ * @group LocaleTest
+ */
 class LocaleTest extends Test
 {
 

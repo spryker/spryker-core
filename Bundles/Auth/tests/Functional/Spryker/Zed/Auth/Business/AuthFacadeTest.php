@@ -13,6 +13,14 @@ use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Zed\Auth\Business\AuthFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Auth
+ * @group Business
+ * @group AuthFacadeTest
+ */
 class AuthFacadeTest extends Test
 {
 

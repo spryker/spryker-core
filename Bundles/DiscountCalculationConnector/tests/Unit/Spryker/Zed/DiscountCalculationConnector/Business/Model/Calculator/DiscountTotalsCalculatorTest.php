@@ -15,11 +15,14 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DiscountCalculationConnector
  * @group Business
- * @group DiscountTotalsCalculator
+ * @group Model
+ * @group Calculator
+ * @group DiscountTotalsCalculatorTest
  */
 class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {

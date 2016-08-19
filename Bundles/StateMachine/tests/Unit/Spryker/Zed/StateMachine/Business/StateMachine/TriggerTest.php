@@ -21,6 +21,15 @@ use Spryker\Zed\StateMachine\Business\StateMachine\StateUpdaterInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Trigger;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group TriggerTest
+ */
 class TriggerTest extends StateMachineMocks
 {
 

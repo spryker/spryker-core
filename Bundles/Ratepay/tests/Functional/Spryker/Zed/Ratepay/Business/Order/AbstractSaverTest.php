@@ -10,6 +10,15 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Order;
 use Functional\Spryker\Zed\Ratepay\Business\AbstractBusinessTest;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Order
+ * @group AbstractSaverTest
+ */
 abstract class AbstractSaverTest extends AbstractBusinessTest
 {
 

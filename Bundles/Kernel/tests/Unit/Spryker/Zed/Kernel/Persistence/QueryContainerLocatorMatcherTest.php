@@ -10,11 +10,12 @@ namespace Unit\Spryker\Zed\Kernel\Persistence;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group Business
- * @group Locator
- * @group QueryContainerLocator
- * @group QueryContainerLocatorMatcher
+ * @group Persistence
+ * @group QueryContainerLocatorMatcherTest
  */
 class QueryContainerLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 {

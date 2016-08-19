@@ -22,9 +22,12 @@ use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group ProductOption
+ * @group Business
+ * @group Model
  * @group ProductOptionReaderTest
  *
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()

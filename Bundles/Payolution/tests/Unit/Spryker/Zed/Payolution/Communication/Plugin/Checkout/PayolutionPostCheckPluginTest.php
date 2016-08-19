@@ -18,11 +18,14 @@ use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlug
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Payolution
  * @group Communication
- * @group PayolutionPostCheckPlugin
+ * @group Plugin
+ * @group Checkout
+ * @group PayolutionPostCheckPluginTest
  */
 class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
 {

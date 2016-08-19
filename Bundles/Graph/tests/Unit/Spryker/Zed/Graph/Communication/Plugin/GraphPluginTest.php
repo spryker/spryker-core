@@ -13,10 +13,13 @@ use Spryker\Zed\Graph\Communication\GraphCommunicationFactory;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Graph
  * @group Communication
+ * @group Plugin
+ * @group GraphPluginTest
  */
 class GraphPluginTest extends \PHPUnit_Framework_TestCase
 {

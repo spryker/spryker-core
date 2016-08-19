@@ -16,6 +16,15 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
 use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemOptionMock;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesSplit
+ * @group Business
+ * @group Model
+ * @group OrderItemSplitTest
+ */
 class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
 {
 

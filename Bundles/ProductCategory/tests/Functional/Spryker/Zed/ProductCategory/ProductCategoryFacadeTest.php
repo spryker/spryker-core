@@ -20,10 +20,11 @@ use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group ProductCategory
- * @group ProductCategoryFacade
+ * @group ProductCategoryFacadeTest
  */
 class ProductCategoryFacadeTest extends Test
 {

@@ -12,11 +12,13 @@ use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureE
 use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Category
  * @group Business
- * @group CategoryTreeFormatter
+ * @group Tree
+ * @group CategoryTreeStructureTest
  */
 class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 {

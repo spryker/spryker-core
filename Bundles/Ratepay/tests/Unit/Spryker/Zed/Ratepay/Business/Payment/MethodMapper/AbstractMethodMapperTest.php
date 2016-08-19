@@ -29,6 +29,16 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use Unit\Spryker\Zed\Ratepay\Business\Payment\BasePaymentTest;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group MethodMapper
+ * @group AbstractMethodMapperTest
+ */
 abstract class AbstractMethodMapperTest extends BasePaymentTest
 {
 

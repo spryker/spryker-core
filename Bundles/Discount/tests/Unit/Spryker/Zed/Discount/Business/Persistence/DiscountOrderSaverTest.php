@@ -18,11 +18,13 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
- * @group DiscountCheckoutConnector
+ * @group Discount
  * @group Business
- * @group DiscountOrderSaver
+ * @group Persistence
+ * @group DiscountOrderSaverTest
  */
 class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
 {

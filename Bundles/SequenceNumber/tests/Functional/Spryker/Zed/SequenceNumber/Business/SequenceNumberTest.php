@@ -16,7 +16,11 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 
 /**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
  * @group SequenceNumber
+ * @group Business
  * @group SequenceNumberTest
  */
 class SequenceNumberTest extends Test

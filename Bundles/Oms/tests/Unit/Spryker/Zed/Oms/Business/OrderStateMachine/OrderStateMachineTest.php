@@ -21,11 +21,13 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Business
  * @group OrderStateMachine
+ * @group OrderStateMachineTest
  */
 class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
 {

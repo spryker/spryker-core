@@ -12,6 +12,15 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Distributor
+ * @group DistributorTest
+ */
 class DistributorTest extends \PHPUnit_Framework_TestCase
 {
 

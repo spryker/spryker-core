@@ -10,10 +10,12 @@ namespace Unit\Spryker\Zed\Kernel\ClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group ClassInfo
+ * @group ClassResolver
+ * @group ClassInfoTest
  */
 class ClassInfoTest extends \PHPUnit_Framework_TestCase
 {

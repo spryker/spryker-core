@@ -12,9 +12,15 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Search
  * @group Business
- * @group IndexMapClassGenerator
+ * @group Model
+ * @group Elastisearch
+ * @group Generator
+ * @group IndexMapClassGeneratorTest
  */
 class IndexMapClassGeneratorTest extends \PHPUnit_Framework_TestCase
 {

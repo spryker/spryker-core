@@ -14,11 +14,12 @@ use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Glossary
- * @group GlossaryFacade
  * @group Business
+ * @group GlossaryFacadeTest
  */
 class GlossaryFacadeTest extends Test
 {

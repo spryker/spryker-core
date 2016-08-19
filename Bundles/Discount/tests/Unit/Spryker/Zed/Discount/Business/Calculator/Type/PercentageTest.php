@@ -14,8 +14,14 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 /**
  * Class PercentageTest
  *
- * @group DiscountCalculatorPercentageTest
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group Type
+ * @group PercentageTest
  */
 class PercentageTest extends \PHPUnit_Framework_TestCase
 {

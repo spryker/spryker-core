@@ -21,6 +21,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Zed\Braintree\Business\BraintreeFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Braintree
+ * @group Business
+ * @group AbstractFacadeTest
+ */
 class AbstractFacadeTest extends Test
 {
 

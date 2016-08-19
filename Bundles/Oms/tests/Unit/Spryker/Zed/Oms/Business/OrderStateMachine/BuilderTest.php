@@ -17,11 +17,13 @@ use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Business
- * @group Builder
+ * @group OrderStateMachine
+ * @group BuilderTest
  */
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {

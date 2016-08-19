@@ -14,6 +14,16 @@ use Spryker\Zed\Collector\CollectorConfig;
 use Unit\Spryker\Zed\Collector\Business\Fixture\CollectorConfigWithNotDefinedDbEngineFake;
 use Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Collector
+ * @group Business
+ * @group Exporter
+ * @group Writer
+ * @group AbstractTouchUpdaterTest
+ */
 class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
 {
 

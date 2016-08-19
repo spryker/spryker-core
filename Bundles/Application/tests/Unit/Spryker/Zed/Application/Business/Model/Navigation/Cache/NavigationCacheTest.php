@@ -13,11 +13,15 @@ use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistEx
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group NavigationCache
+ * @group Model
+ * @group Navigation
+ * @group Cache
+ * @group NavigationCacheTest
  */
 class NavigationCacheTest extends \PHPUnit_Framework_TestCase
 {

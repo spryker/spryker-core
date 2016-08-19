@@ -20,11 +20,13 @@ use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Business
- * @group RefundSaver
+ * @group Model
+ * @group RefundSaverTest
  */
 class RefundSaverTest extends \PHPUnit_Framework_TestCase
 {

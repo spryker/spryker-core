@@ -13,11 +13,15 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Communication
- * @group CommandCollection
+ * @group Plugin
+ * @group Oms
+ * @group Command
+ * @group CommandCollectionTest
  */
 class CommandCollectionTest extends \PHPUnit_Framework_TestCase
 {

@@ -14,10 +14,13 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group DependencyInjectionProviderResolver
+ * @group ClassResolver
+ * @group DependencyInjector
+ * @group DependencyInjectorResolverTest
  */
 class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
 {

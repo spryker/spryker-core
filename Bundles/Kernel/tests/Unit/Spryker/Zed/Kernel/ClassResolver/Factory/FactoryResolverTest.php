@@ -12,10 +12,13 @@ use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group FactoryResolver
+ * @group ClassResolver
+ * @group Factory
+ * @group FactoryResolverTest
  */
 class FactoryResolverTest extends AbstractResolverTest
 {

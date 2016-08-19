@@ -10,10 +10,12 @@ namespace Unit\Spryker\Yves\Kernel\ClassResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
  * @group ClassResolver
+ * @group AbstractResolverTest
  */
 abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
 {

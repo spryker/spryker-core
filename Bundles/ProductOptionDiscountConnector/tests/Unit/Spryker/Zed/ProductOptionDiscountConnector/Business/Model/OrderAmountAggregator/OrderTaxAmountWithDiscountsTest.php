@@ -13,6 +13,16 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\OrderTaxAmountWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOptionDiscountConnector
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group OrderTaxAmountWithDiscountsTest
+ */
 class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 

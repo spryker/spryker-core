@@ -11,6 +11,15 @@ use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DecisionRule
+ * @group MonthDecisionRuleTest
+ */
 class MonthDecisionRuleTest extends BaseRuleTester
 {
 

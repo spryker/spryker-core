@@ -15,10 +15,13 @@ use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Yves\Ratepay\Form\DataProvider\InstallmentDataProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Ratepay
- * @group InstallmentDataProvider
+ * @group Form
+ * @group DataProvider
+ * @group InstallmentDataProviderTest
  */
 class InstallmentDataProviderTest extends AbstractDataProviderTest
 {

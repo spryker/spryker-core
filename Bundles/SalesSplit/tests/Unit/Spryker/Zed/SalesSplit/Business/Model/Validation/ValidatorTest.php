@@ -14,6 +14,16 @@ use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesSplit
+ * @group Business
+ * @group Model
+ * @group Validation
+ * @group ValidatorTest
+ */
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
 

@@ -11,6 +11,17 @@ use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentInvoi
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\InvoiceAbstractTest;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group RequestPayment
+ * @group InvoiceTest
+ */
 class InvoiceTest extends InvoiceAbstractTest
 {
 

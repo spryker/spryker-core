@@ -12,11 +12,13 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group StepEngine
  * @group Dependency
- * @group BaseStep
+ * @group Step
+ * @group BaseStepTest
  */
 class BaseStepTest extends \PHPUnit_Framework_TestCase
 {

@@ -16,10 +16,12 @@ use Spryker\Yves\StepEngine\Process\StepEngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Checkout
- * @group StepFactory
+ * @group Process
+ * @group StepFactoryTest
  */
 class StepFactoryTest extends \PHPUnit_Framework_TestCase
 {

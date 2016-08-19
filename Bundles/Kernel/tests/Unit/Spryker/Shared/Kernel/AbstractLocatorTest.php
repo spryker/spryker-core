@@ -10,9 +10,11 @@ namespace Unit\Spryker\Shared\Kernel;
 use Unit\Spryker\Shared\Kernel\Fixtures\MissingPropertyLocator;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
  * @group Kernel
- * @group Locator
- * @group AbstractLocator
+ * @group AbstractLocatorTest
  */
 class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
 {

@@ -10,10 +10,11 @@ namespace Unit\Spryker\Client\Kernel;
 use Spryker\Client\Kernel\ClientLocatorMatcher;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Client
  * @group Kernel
- * @group ClientLocatorMatcher
+ * @group ClientLocatorMatcherTest
  */
 class ClientLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 {

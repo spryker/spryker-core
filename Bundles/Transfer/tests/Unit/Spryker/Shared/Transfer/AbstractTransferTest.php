@@ -12,9 +12,11 @@ use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group Transfer
+ * @group AbstractTransferTest
  */
 class AbstractTransferTest extends \PHPUnit_Framework_TestCase
 {

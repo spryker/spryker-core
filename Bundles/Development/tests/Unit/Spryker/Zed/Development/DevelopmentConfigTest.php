@@ -9,6 +9,13 @@ namespace Unit\Spryker\Zed\Development;
 
 use Spryker\Zed\Development\DevelopmentConfig;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Development
+ * @group DevelopmentConfigTest
+ */
 class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
 {
 

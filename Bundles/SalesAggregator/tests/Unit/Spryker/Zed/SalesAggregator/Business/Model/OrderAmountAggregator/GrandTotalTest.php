@@ -11,6 +11,16 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\GrandTotal;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesAggregator
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group GrandTotalTest
+ */
 class GrandTotalTest extends \PHPUnit_Framework_TestCase
 {
 

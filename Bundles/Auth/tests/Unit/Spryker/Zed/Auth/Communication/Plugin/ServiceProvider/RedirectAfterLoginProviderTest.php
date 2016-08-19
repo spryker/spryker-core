@@ -16,11 +16,14 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Auth
  * @group Communication
- * @group RedirectAfterLoginProvider
+ * @group Plugin
+ * @group ServiceProvider
+ * @group RedirectAfterLoginProviderTest
  */
 class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 {

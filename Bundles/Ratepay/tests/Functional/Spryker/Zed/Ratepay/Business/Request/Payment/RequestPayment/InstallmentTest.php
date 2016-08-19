@@ -10,6 +10,17 @@ use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentInsta
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\InstallmentAbstractTest;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group RequestPayment
+ * @group InstallmentTest
+ */
 class InstallmentTest extends InstallmentAbstractTest
 {
 

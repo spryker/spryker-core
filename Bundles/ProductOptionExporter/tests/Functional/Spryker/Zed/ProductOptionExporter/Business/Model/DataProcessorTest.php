@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group ProdutOptionExporter
+ * @group ProductOptionExporter
+ * @group Business
+ * @group Model
  * @group DataProcessorTest
  *
  * @method \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade getFacade()

@@ -11,7 +11,12 @@ use Spryker\Zed\Library\Sanitize\Html;
 use stdClass;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
+ * @group Library
  * @group Sanitize
+ * @group HtmlTest
  */
 class HtmlTest extends \PHPUnit_Framework_TestCase
 {

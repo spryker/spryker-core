@@ -11,9 +11,13 @@ use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Assertion
+ * @group Business
+ * @group Model
+ * @group AssertionTest
  */
 class AssertionTest extends \PHPUnit_Framework_TestCase
 {

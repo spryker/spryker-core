@@ -7,6 +7,16 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Mapper
+ * @group InstallmentPaymentMapperTest
+ */
 class InstallmentPaymentMapperTest extends AbstractMapperTest
 {
 

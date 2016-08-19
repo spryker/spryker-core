@@ -10,11 +10,12 @@ namespace Unit\Spryker\Zed\Application\Business;
 use Spryker\Zed\Application\Business\ApplicationFacade;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group ApplicationFacade
+ * @group ApplicationFacadeTest
  */
 class ApplicationFacadeTest extends \PHPUnit_Framework_TestCase
 {

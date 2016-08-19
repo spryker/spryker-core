@@ -16,11 +16,14 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultForma
 use Spryker\Client\Search\SearchFactory;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
  * @group ResultFormatter
+ * @group SortedResultFormatterPluginTest
  */
 class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {

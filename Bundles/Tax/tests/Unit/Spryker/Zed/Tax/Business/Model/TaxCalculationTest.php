@@ -12,6 +12,15 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Tax
+ * @group Business
+ * @group Model
+ * @group TaxCalculationTest
+ */
 class TaxCalculationTest extends \PHPUnit_Framework_TestCase
 {
 

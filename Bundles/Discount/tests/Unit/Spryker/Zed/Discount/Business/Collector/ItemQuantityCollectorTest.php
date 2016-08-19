@@ -11,6 +11,15 @@ use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Collector
+ * @group ItemQuantityCollectorTest
+ */
 class ItemQuantityCollectorTest extends BaseRuleTester
 {
 

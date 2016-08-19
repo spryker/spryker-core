@@ -10,9 +10,11 @@ namespace Unit\Spryker\Zed\Graph;
 use Spryker\Zed\Graph\GraphConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Graph
+ * @group GraphConfigTest
  */
 class GraphConfigTest extends \PHPUnit_Framework_TestCase
 {

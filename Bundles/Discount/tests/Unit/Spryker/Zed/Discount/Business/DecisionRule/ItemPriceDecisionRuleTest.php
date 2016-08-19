@@ -12,6 +12,15 @@ use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DecisionRule
+ * @group ItemPriceDecisionRuleTest
+ */
 class ItemPriceDecisionRuleTest extends BaseRuleTester
 {
 

@@ -11,8 +11,12 @@ use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group RouteNameResolver
+ * @group Communication
+ * @group RouteNameResolverTest
  */
 class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
 {

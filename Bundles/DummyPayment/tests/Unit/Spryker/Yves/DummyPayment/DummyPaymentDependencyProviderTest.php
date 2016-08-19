@@ -12,10 +12,11 @@ use Spryker\Yves\DummyPayment\DummyPaymentDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group DummyPayment
- * @group DummyPaymentDependencyProvider
+ * @group DummyPaymentDependencyProviderTest
  */
 class DummyPaymentDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {

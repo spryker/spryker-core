@@ -13,6 +13,15 @@ use Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger;
 use Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group LockedTriggerTest
+ */
 class LockedTriggerTest extends StateMachineMocks
 {
 

@@ -21,6 +21,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group DiscountTest
+ */
 class DiscountTest extends \PHPUnit_Framework_TestCase
 {
 

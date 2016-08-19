@@ -10,6 +10,16 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Comparator
+ * @group NotEqualTest
+ */
 class NotEqualTest extends \PHPUnit_Framework_TestCase
 {
 

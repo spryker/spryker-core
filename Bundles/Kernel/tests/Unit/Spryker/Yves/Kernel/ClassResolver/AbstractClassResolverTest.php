@@ -11,10 +11,12 @@ namespace Unit\Spryker\Yves\Kernel\ClassResolver;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group AbstractClassResolver
+ * @group ClassResolver
+ * @group AbstractClassResolverTest
  */
 class AbstractClassResolverTest extends \PHPUnit_Framework_TestCase
 {

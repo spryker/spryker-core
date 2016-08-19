@@ -11,10 +11,13 @@ use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\Filter\RecursiveFieldFilter;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group EventJournal
+ * @group Model
  * @group Filter
+ * @group RecursiveFieldFilterTest
  */
 class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
 {

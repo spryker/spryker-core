@@ -12,6 +12,16 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Calculation
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group GrandTotalTotalsCalculatorTest
+ */
 class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

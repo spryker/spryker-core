@@ -19,10 +19,12 @@ use Spryker\Yves\Payolution\Handler\PayolutionHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Payolution
- * @group PayolutionHandler
+ * @group Handler
+ * @group PayolutionHandlerTest
  */
 class PayolutionHandlerTest extends \PHPUnit_Framework_TestCase
 {

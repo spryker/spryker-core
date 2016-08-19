@@ -11,6 +11,16 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\Subtotal;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesAggregator
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group SubtotalTest
+ */
 class SubtotalTest extends \PHPUnit_Framework_TestCase
 {
 

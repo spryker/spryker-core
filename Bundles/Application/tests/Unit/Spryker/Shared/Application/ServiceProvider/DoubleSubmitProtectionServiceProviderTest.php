@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * @group Shared
  * @group Application
  * @group ServiceProvider
- * @group DoubleSubmitProtectionServiceProvider
+ * @group DoubleSubmitProtectionServiceProviderTest
  */
 class DoubleSubmitProtectionServiceProviderTest extends Test
 {

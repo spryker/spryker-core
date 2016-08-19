@@ -13,11 +13,15 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Communication
- * @group ConditionCollection
+ * @group Plugin
+ * @group Oms
+ * @group Condition
+ * @group ConditionCollectionTest
  */
 class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
 {

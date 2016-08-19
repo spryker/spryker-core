@@ -10,6 +10,16 @@ use Functional\Spryker\Zed\Ratepay\Business\Request\AbstractFacadeTest;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group InvoiceAbstractTest
+ */
 abstract class InvoiceAbstractTest extends AbstractFacadeTest
 {
 

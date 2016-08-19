@@ -15,6 +15,15 @@ use Spryker\Zed\StateMachine\Business\Lock\ItemLock;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group Lock
+ * @group ItemLockTest
+ */
 class ItemLockTest extends StateMachineMocks
 {
 

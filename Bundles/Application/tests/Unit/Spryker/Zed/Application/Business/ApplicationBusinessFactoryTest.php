@@ -11,11 +11,12 @@ use Spryker\Zed\Application\Business\ApplicationBusinessFactory;
 use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group ApplicationBusinessFactory
+ * @group ApplicationBusinessFactoryTest
  */
 class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {

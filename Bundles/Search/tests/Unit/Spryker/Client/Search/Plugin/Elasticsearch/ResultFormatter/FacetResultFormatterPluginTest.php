@@ -20,11 +20,14 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormat
 use Spryker\Client\Search\SearchFactory;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
  * @group ResultFormatter
+ * @group FacetResultFormatterPluginTest
  */
 class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {

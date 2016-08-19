@@ -11,11 +11,13 @@ use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
- * @group DirectoryRemover
+ * @group Model
+ * @group DirectoryRemoverTest
  */
 class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
 {

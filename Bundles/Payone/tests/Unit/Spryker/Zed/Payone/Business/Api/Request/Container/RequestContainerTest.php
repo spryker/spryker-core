@@ -35,7 +35,15 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer as RefundBankAccountContainer;
 
 /**
- * @group RequestContainer
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payone
+ * @group Business
+ * @group Api
+ * @group Request
+ * @group Container
+ * @group RequestContainerTest
  */
 class RequestContainerTest extends \PHPUnit_Framework_TestCase
 {

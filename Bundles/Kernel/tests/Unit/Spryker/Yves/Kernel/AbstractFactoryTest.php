@@ -14,10 +14,11 @@ use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Unit\Spryker\Yves\Kernel\Fixtures\ConcreteFactory;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group Factory
+ * @group AbstractFactoryTest
  */
 class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
 {

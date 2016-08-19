@@ -12,10 +12,12 @@ use Spryker\Yves\Checkout\Form\FormFactory;
 use Spryker\Yves\Kernel\Container;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Checkout
- * @group FormFactory
+ * @group Form
+ * @group FormFactoryTest
  */
 class FormFactoryTest extends \PHPUnit_Framework_TestCase
 {

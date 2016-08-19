@@ -10,10 +10,11 @@ namespace Unit\Spryker\Client\Kernel;
 use Spryker\Client\Kernel\Container;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Client
  * @group Kernel
- * @group Container
+ * @group ContainerTest
  */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {

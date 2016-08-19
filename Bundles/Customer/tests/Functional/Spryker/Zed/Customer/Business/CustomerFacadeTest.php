@@ -16,11 +16,12 @@ use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Customer
  * @group Business
- * @group Facade
+ * @group CustomerFacadeTest
  */
 class CustomerFacadeTest extends Test
 {

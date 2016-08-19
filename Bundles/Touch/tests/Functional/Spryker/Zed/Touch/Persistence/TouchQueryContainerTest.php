@@ -14,10 +14,12 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Touch
  * @group Persistence
+ * @group TouchQueryContainerTest
  */
 class TouchQueryContainerTest extends Test
 {

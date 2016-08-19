@@ -13,6 +13,15 @@ use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Voucher
+ * @group VoucherValidatorTest
+ */
 class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
 {
 

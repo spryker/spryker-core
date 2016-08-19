@@ -10,6 +10,16 @@ namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Client
+ * @group Search
+ * @group Plugin
+ * @group Elasticsearch
+ * @group QueryExpander
+ * @group AbstractFacetQueryExpanderPluginAggregationTest
+ */
 abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQueryExpanderPluginTest
 {
 

@@ -15,11 +15,14 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\PaginatedResultFo
 use Spryker\Client\Search\SearchFactory;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
  * @group ResultFormatter
+ * @group PaginatedResultFormatterPluginTest
  */
 class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {
