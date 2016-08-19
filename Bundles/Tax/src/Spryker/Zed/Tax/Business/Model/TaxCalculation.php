@@ -36,7 +36,9 @@ class TaxCalculation implements CalculatorInterface
     protected function setTaxTotals(QuoteTransfer $quoteTransfer, $taxAmount)
     {
         $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount(round($taxAmount));
+
+        $taxAmount = (int)round($taxAmount);
+        $taxTotalTransfer->setAmount($taxAmount);
 
         $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
     }
@@ -49,7 +51,7 @@ class TaxCalculation implements CalculatorInterface
     protected function sumExpenseTaxes(QuoteTransfer $quoteTransfer)
     {
         $totalTaxAmount = 0;
-        foreach ($quoteTransfer->getItems() as $expenseTransfer) {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $totalTaxAmount += $expenseTransfer->getSumTaxAmount();
         }
 
