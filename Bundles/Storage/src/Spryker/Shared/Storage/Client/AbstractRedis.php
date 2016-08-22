@@ -21,7 +21,7 @@ abstract class AbstractRedis extends AbstractKeyValue
 {
 
     /**
-     * @throws \MemcachedException
+     * @throws \Predis\Connection\ConnectionException
      *
      * @return void
      */
