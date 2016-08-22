@@ -9,7 +9,6 @@ interface AccruedTaxCalculatorInterface
 {
 
     /**
-     *
      * @param int $price Price as integer (e. g 15508 for 155.08)
      * @param float $taxRate
      *

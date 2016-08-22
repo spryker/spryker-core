@@ -61,9 +61,6 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @throws \ErrorException
-     * @throws \Exception
-     *
      * @return void
      */
     public function bootstrap($application = self::APPLICATION_ZED)

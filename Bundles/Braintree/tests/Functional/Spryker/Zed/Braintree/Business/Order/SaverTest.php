@@ -165,8 +165,6 @@ class SaverTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private function createOrderEntity()

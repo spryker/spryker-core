@@ -124,8 +124,6 @@ trait Helper
     /**
      * @param string $question
      *
-     * @throws \RuntimeException
-     *
      * @return bool
      */
     public function askConfirmation($question)

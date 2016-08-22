@@ -33,8 +33,6 @@ class TaxReader implements TaxReaderInterface
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\TaxRateCollectionTransfer
      */
     public function getTaxRates()
@@ -56,7 +54,6 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
      * @return \Generated\Shared\Transfer\TaxRateTransfer
@@ -86,8 +83,6 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return bool
      */
     public function taxRateExists($id)
@@ -98,8 +93,6 @@ class TaxReader implements TaxReaderInterface
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
     public function getTaxSets()
@@ -118,7 +111,6 @@ class TaxReader implements TaxReaderInterface
     /**
      * @param int $id
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
@@ -153,8 +145,6 @@ class TaxReader implements TaxReaderInterface
 
     /**
      * @param int $id
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

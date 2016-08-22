@@ -409,8 +409,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
     public function getCurrencyManager()

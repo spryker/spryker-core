@@ -92,8 +92,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function saveOrderItemOptionDiscounts(ItemTransfer $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
@@ -152,8 +150,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function persistSalesDiscount(SpySalesDiscount $salesDiscountEntity)
@@ -201,8 +197,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscountCode $salesDiscountCodeEntity
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

@@ -126,8 +126,6 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
@@ -162,8 +160,6 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
@@ -217,8 +213,6 @@ class Console extends SymfonyCommand
     /**
      * @param string $command
      * @param array $arguments
-     *
-     * @throws \Exception
      *
      * @return int
      */

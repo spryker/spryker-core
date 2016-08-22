@@ -53,9 +53,6 @@ class Address
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
@@ -72,8 +69,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -162,10 +157,6 @@ class Address
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
@@ -181,8 +172,6 @@ class Address
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -207,8 +196,6 @@ class Address
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -365,8 +352,6 @@ class Address
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
@@ -379,8 +364,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -407,8 +390,6 @@ class Address
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -450,8 +431,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CountryNotFoundException
      *
      * @return int
      */

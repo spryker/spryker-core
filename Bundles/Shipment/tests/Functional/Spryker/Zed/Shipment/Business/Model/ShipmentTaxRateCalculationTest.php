@@ -88,8 +88,6 @@ class ShipmentTaxRateCalculationTest extends Test
      * @param int $taxRate
      * @param string $iso2Code
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */
     protected function createShipmentMethodWithTaxSet($taxRate, $iso2Code)

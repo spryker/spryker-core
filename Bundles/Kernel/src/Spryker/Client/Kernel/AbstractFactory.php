@@ -54,8 +54,6 @@ abstract class AbstractFactory
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractDependencyProvider
      */
     protected function resolveDependencyProvider()

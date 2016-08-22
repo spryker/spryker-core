@@ -37,8 +37,6 @@ class Application extends \Silex\Application
      * @param mixed $data The initial data
      * @param array $options The options
      *
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
-     *
      * @return \Symfony\Component\Form\FormInterface The form named after the type
      */
     public function createForm($type = 'form', $data = null, array $options = [])
@@ -57,8 +55,6 @@ class Application extends \Silex\Application
      *
      * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options The options
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
      * @return \Symfony\Component\Form\FormInterface The form named after the type
      */

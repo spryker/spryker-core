@@ -34,9 +34,6 @@ class Dummy implements DummyInterface
     /**
      * @param string $processName
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return array
      */
     public function prepareItems($processName)

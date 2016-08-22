@@ -148,7 +148,6 @@ class ProfileTest extends AbstractFacadeTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $ratepayPaymentEntity
      *
      * @return void

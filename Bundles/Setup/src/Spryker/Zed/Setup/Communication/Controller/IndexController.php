@@ -18,7 +18,6 @@ class IndexController extends AbstractController
     const COOKIE_HASH_ALGORITHM = 'sha256';
 
     /**
-     * @throws \Exception
      * @return array
      */
     public function indexAction()

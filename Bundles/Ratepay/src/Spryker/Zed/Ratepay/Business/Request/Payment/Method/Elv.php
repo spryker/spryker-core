@@ -47,7 +47,6 @@ class Elv extends AbstractMethod
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentElvTransfer

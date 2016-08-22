@@ -24,8 +24,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @param string $keyName
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
-     *
      * @return int
      */
     public function createKey($keyName)
@@ -69,8 +67,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param string $oldKeyName
      * @param string $newKeyName
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     *
      * @return bool
      */
     public function updateKey($oldKeyName, $newKeyName)
@@ -102,10 +98,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
@@ -121,10 +113,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param string $keyName
      * @param string $value
      * @param bool $isActive
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -142,10 +130,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -177,8 +161,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
@@ -196,8 +178,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function updateTranslation($keyName, $locale, $value, $isActive = true)
@@ -214,8 +194,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -245,10 +223,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function saveTranslation(TranslationTransfer $transferTranslation)
@@ -262,10 +236,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -297,8 +267,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @param string $keyName
      * @param array $data
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return string
      */
     public function translate($keyName, array $data = [])
@@ -313,8 +281,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @param int $idKey
      * @param array $data
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */

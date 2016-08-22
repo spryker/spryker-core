@@ -87,8 +87,6 @@ class Trigger implements TriggerInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
      *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
-     *
      * @return int
      */
     public function triggerForNewStateMachineItem(
@@ -393,8 +391,6 @@ class Trigger implements TriggerInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $identifier
-     *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      *

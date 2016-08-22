@@ -138,8 +138,6 @@ class Customer
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function register(CustomerTransfer $customerTransfer)
@@ -235,7 +233,6 @@ class Customer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -258,8 +255,6 @@ class Customer
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -288,9 +283,6 @@ class Customer
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -330,9 +322,6 @@ class Customer
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     *
      * @return bool
      */
     public function delete(CustomerTransfer $customerTransfer)
@@ -345,10 +334,6 @@ class Customer
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotUpdatedException
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -426,10 +411,6 @@ class Customer
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotUpdatedException
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */

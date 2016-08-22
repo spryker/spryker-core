@@ -36,8 +36,6 @@ class HandlerResolverTest extends StateMachineMocks
     }
 
     /**
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound
-     *
      * @return void
      *
      */

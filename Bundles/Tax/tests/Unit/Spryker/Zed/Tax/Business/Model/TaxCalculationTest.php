@@ -57,7 +57,6 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
      */
     protected function createTaxCalculation()

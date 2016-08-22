@@ -63,8 +63,6 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function moveNode(NodeTransfer $categoryNode)
@@ -101,8 +99,6 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

@@ -161,6 +161,7 @@ class GroupController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function deleteUserFromGroupAction(Request $request)

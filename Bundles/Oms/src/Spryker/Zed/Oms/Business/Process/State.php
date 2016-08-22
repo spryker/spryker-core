@@ -313,8 +313,6 @@ class State implements StateInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getTimeoutEvents()

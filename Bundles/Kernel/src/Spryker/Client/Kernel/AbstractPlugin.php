@@ -48,8 +48,6 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractFactory
      */
     private function resolveFactory()
@@ -78,8 +76,6 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     private function resolveClient()

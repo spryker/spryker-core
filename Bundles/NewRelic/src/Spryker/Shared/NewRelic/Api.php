@@ -313,8 +313,6 @@ class Api implements ApiInterface
     /**
      * @param array $params
      *
-     * @throws \Exception
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function createRecordDeploymentRequest(array $params)

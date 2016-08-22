@@ -101,8 +101,6 @@ class ClassInfo
      *
      * @param array $callerClassParts
      *
-     * @throws \Exception
-     *
      * @return array
      */
     private function removeTestNamespace(array $callerClassParts)

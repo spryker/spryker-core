@@ -17,7 +17,6 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
      * @param string $itemEvent
      * @param array $itemIds
      *
-     * @throws \Exception
      * @return int
      */
     public function bulkTouch($itemType, $itemEvent, array $itemIds)
@@ -39,8 +38,6 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return string
      */
     protected function getTouchedColumnName()
@@ -49,8 +46,6 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return string
      */
     protected function getItemEventColumnName()

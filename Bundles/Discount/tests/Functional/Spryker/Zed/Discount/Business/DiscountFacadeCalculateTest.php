@@ -46,8 +46,6 @@ class DiscountFacadeCalculateTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function testCalculateWhenQueryStringMatchesAllItemsIncludeAllProvidedDiscounts()

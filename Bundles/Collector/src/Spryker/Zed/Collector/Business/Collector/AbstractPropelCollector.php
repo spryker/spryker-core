@@ -22,6 +22,7 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
     protected $queryBuilder;
 
     /**
+     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException
      * @return void
      */
     protected function validateDependencies()

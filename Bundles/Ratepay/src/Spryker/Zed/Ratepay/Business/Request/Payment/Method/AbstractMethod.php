@@ -86,7 +86,6 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Confirm

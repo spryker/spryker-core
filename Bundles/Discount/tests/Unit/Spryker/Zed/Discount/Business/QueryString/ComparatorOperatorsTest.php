@@ -24,8 +24,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testCompareWhenComparatorEvaluatesToTrueShouldReturnTrue()
@@ -61,8 +59,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testCompareWhenComparatorNotFoundShouldThrowException()
@@ -83,8 +79,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testCompareWhenComparatorCannotHandleTypeShouldThrowException()
@@ -117,8 +111,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testComparatorExpressionsByTypesShouldReturnAllOperatorsMatchingDataType()
@@ -162,8 +154,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testGetAvailableComparatorShouldReturnAllAvailableExpressions()
@@ -249,7 +239,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      * @return void
      */
     public function testCompareWhenUsingMatchAllIdentifierShouldAlwaysReturnFalse()
@@ -265,7 +254,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      * @return void
      */
     public function testCompareWhenValueIsNotProvidedShouldReturnFalse()
@@ -281,7 +269,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      * @return void
      */
     public function testWhenNoneOfComparatorsAcceptsClauseShouldThrowException()

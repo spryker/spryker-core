@@ -80,8 +80,6 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
     protected function resolveDependencyProvider()

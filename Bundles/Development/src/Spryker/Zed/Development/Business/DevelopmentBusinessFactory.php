@@ -113,8 +113,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getGraph()

@@ -18,7 +18,6 @@ interface PaymentMethodMapperInterface
     public function getMethodName();
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *

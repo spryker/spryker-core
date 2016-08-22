@@ -292,8 +292,6 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     private function setBaseTestData()
@@ -329,8 +327,6 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     private function setPaymentTestData()

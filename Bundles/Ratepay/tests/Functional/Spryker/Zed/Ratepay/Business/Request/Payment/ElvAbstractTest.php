@@ -59,7 +59,6 @@ abstract class ElvAbstractTest extends AbstractFacadeTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay|\Generated\Shared\Transfer\RatepayPaymentElvTransfer $ratepayPaymentEntity
      *
      * @return void

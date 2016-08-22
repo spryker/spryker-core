@@ -38,8 +38,6 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
-     *
      * @return \Spryker\Yves\Application\Controller\AbstractController
      */
     protected function resolveController(BundleControllerActionInterface $bundleControllerAction)

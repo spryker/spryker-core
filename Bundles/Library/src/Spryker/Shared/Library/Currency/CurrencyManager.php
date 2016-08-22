@@ -134,7 +134,6 @@ class CurrencyManager implements CurrencyManagerInterface
      * -((0.1+0.7)*10), ('34.200' + 0) * 100)
      * Specify expected decimalPlacesInUse to avoid false rounding
      *
-     *
      * @param int|float $value
      * @param int $decimalPlacesInUse
      *

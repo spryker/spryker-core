@@ -34,7 +34,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     *
      * @param int $idDiscount
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -97,7 +96,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
      * @return \Symfony\Component\Form\FormInterface

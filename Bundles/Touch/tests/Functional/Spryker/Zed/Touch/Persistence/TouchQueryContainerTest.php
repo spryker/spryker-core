@@ -129,7 +129,6 @@ class TouchQueryContainerTest extends Test
      * @param string $itemEvent
      * @param int $itemId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
     protected function createTouchEntity($itemEvent, $itemId)

@@ -83,9 +83,6 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
-     *
      * @return int
      */
     public function createAttribute($attributeName, $attributeType, $isEditable = true)
@@ -127,8 +124,6 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $name
      * @param string $inputType
      * @param int|null $fkParentAttributeType
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
      *
      * @return int
      */

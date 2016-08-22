@@ -45,8 +45,6 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @throws \Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException
-     *
      * @return string
      */
     public function generate()

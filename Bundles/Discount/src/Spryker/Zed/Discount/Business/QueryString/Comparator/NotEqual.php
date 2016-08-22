@@ -17,8 +17,6 @@ class NotEqual implements ComparatorInterface
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)

@@ -48,7 +48,6 @@ class SubRequestHandler implements SubRequestHandlerInterface
      *
      * @param array $additionalSubRequestParameters
      * @return \Symfony\Component\HttpFoundation\Request
-     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      */
     protected function createSubRequest(Request $request, $url, array $additionalSubRequestParameters)
     {

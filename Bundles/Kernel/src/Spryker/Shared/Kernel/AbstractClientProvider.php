@@ -16,8 +16,6 @@ abstract class AbstractClientProvider
     protected $client;
 
     /**
-     * @throws \Exception
-     *
      * @return mixed
      */
     public function getInstance()

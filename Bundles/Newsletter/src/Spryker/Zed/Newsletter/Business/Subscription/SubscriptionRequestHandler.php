@@ -58,7 +58,6 @@ class SubscriptionRequestHandler
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface $optInHandler
      *
-     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException
      * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
@@ -96,7 +95,6 @@ class SubscriptionRequestHandler
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException
      * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer

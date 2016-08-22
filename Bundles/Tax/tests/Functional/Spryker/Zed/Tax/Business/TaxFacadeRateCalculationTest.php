@@ -73,7 +73,6 @@ class TaxFacadeRateCalculationTest extends Test
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function createAbstractProductWithTaxSet($taxRate, $iso2Code)
     {

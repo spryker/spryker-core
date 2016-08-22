@@ -84,8 +84,6 @@ class CsvReader implements CsvReaderInterface
      * @param array $columns
      * @param array $data
      *
-     * @throws \UnexpectedValueException
-     *
      * @return array
      */
     public function composeItem(array $columns, array $data)
@@ -106,6 +104,7 @@ class CsvReader implements CsvReaderInterface
      * @param string $filename
      * @param int $lineNumber
      *
+     * @throws \UnexpectedValueException
      * @return array
      */
     protected function composeAndValidateLine(array $columns, array $data, $filename, $lineNumber)
@@ -137,7 +136,6 @@ class CsvReader implements CsvReaderInterface
     /**
      * @return \SplFileObject
      *
-     * @throws \LogicException
      */
     public function getFile()
     {
@@ -158,8 +156,6 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @param string $filename
-     *
-     * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
      *
      * @return $this
      */

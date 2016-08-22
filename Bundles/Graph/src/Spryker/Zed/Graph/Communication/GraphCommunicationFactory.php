@@ -36,10 +36,6 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Graph\Communication\Exception\GraphAdapterNameIsAnObjectException
-     * @throws \Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterNameException
-     * @throws \Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterException
-     *
      * @return \Spryker\Shared\Graph\GraphAdapterInterface
      */
     protected function createAdapter()

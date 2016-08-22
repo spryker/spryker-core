@@ -128,7 +128,6 @@ class SetController extends AbstractController
     }
 
     /**
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listTableAction()

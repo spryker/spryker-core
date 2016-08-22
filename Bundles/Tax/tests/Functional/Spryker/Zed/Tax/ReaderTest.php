@@ -129,7 +129,6 @@ class ReaderTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
      */
     private function loadFixtures()

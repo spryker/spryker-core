@@ -472,7 +472,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws \Exception
      *
-     * @return array
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     protected function runCommand($eventId, array $orderItems, array $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
     {
@@ -791,8 +791,6 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $command
-     *
-     * @throws \LogicException
      *
      * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface
      */

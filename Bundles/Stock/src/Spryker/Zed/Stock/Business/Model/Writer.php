@@ -56,8 +56,6 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function createStockType(TypeTransfer $stockTypeTransfer)
@@ -76,7 +74,6 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException
      *
      * @return int
@@ -101,8 +98,6 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
-     *
      * @return int
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct)
@@ -121,9 +116,6 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
      * @return int
      */
@@ -222,8 +214,6 @@ class Writer implements WriterInterface
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      * @param int $idStockType
      * @param int $idProduct
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */

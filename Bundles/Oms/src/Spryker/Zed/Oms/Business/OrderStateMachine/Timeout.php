@@ -70,9 +70,6 @@ class Timeout implements TimeoutInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param \DateTime $currentTime
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime)
@@ -107,9 +104,6 @@ class Timeout implements TimeoutInterface
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $stateId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
-     *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
