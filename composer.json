@@ -5,7 +5,8 @@
   "require":{
     "phpdocumentor/graphviz": "~1.0.4",
     "paragonie/random_compat": "~1.2.1",
-    "everon/criteria-builder": "^1.1.0"
+    "everon/criteria-builder": "^1.1.0",
+    "mathiasverraes/money": "~3.0.0-beta2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
