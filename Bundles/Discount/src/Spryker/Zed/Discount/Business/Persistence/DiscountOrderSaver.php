@@ -258,20 +258,16 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         $calculatedItemDiscountsByGroupKey = [];
         $optionCalculatedDiscountsByGroupKey = [];
         foreach ($orderItemCollection as $orderItemTransfer) {
-
             if (!isset($calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
                 $calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$orderItemTransfer->getCalculatedDiscounts();
             }
-
             $orderItemTransfer->setCalculatedDiscounts(
                 $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
             );
-
             foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
                 if (!isset($optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
                     $optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
                 }
-
                 $productOptionTransfer->setCalculatedDiscounts(
                     $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
                 );

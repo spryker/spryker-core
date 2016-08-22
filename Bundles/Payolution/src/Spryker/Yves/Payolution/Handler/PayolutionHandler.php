@@ -10,6 +10,7 @@ namespace Spryker\Yves\Payolution\Handler;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
@@ -148,7 +149,7 @@ class PayolutionHandler
      */
     protected function getCurrency()
     {
-        return $this->currencyManager->getDefaultCurrency()->getIsoCode();
+        return Store::getInstance()->getCurrencyIsoCode();
     }
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
@@ -91,7 +92,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PRESENTATION_ELEMENT,
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_CURRENCY_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManager()->getDefaultCurrency()->getIsoCode(),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => Store::getInstance()->getCurrencyIsoCode(),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_USAGE_ELEMENT,
