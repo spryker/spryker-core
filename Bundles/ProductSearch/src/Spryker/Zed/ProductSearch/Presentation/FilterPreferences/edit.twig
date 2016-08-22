@@ -1,0 +1,84 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set action_name = (app.request.query.get('id') > 0) ? 'Edit' : 'Create' %}
+
+{% block section_title 'Filter Preferences' | trans %}
+{% block head_title action_name ~ ' Filter' | trans %}
+
+{% block action %}
+    {{ backActionButton('/product-search/filter-preferences/', 'Back to filters' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: action_name ~ ' Filter' } %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+
+                {{ form_row(form.key) }}
+
+                {{ form_row(form.filter_type) }}
+
+                <div class="well">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            {% for locale,localizedAttribute in form.translations %}
+                                {% set activeClass = '' %}
+                                {% set invalidClass = '' %}
+
+                                {% if currentLocale == locale %}
+                                    {% set activeClass =  'active' %}
+                                {% endif %}
+
+                                {% if errors.general is defined %}
+                                    {% if locale in errors.general|keys %}
+                                        {% set invalidClass = 'invalid-tab' %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <li class="{{ activeClass }} {{ invalidClass }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+                            {% for locale,localizedAttribute in form.translations %}
+                                {% set activeClass = '' %}
+                                {% if currentLocale == locale %}
+                                    {% set activeClass = 'active' %}
+                                {% endif %}
+
+                                <div id="content_{{ locale }}" class="tab-pane {{ activeClass }} tab-translation">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
+                                                    {{ form_label(localizedAttribute.key_translation) }}
+                                                    <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="name-translation">{{ 'Copy to other languages' | trans }}</a>
+                                                    {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation'}}) }}
+                                                    {{ form_errors(localizedAttribute.key_translation) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Submit' | trans }} " />
+
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productsearch-filter-preferences.js"></script>
+{% endblock %}

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMapQuery;
+use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -50,6 +51,14 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAttributeKeyQuery()
     {
         return SpyProductAttributeKeyQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function createProductSearchAttributeQuery()
+    {
+        return SpyProductSearchAttributeQuery::create();
     }
 
 }

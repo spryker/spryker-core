@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
@@ -16,12 +18,170 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 class FilterPreferencesController extends AbstractController
 {
 
+    const PARAM_ID = 'id';
+    const PARAM_SEARCH_TEXT = 'q';
+    const PARAM_TERM = 'term';
+
     /**
      * @return array
      */
     public function indexAction()
     {
-        return $this->viewResponse([]);
+        $filterPreferencesTable = $this->getFactory()->createFilterPreferencesTable();
+
+        return $this->viewResponse([
+            'filterPreferencesTable' => $filterPreferencesTable->render(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getFactory()->createFilterPreferencesTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createAction(Request $request)
+    {
+        $dataProvider = $this
+            ->getFactory()
+            ->createFilterPreferencesDataProvider();
+
+        $form = $this->getFactory()
+            ->createFilterPreferencesForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
+
+        if ($form->isValid()) {
+            $productSearchAttributeTransfer = $this
+                ->getFactory()
+                ->createAttributeFormTransferGenerator()
+                ->createTransfer($form);
+
+            $productSearchAttributeTransfer = $this
+                ->getFacade()
+                ->createProductSearchAttribute($productSearchAttributeTransfer);
+
+            return $this->redirectResponse(sprintf(
+                '/product-search/filter-preferences/view?id=%d',
+                $productSearchAttributeTransfer->getIdProductSearchAttribute()
+            ));
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editAction(Request $request)
+    {
+        $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
+
+        $dataProvider = $this
+            ->getFactory()
+            ->createFilterPreferencesDataProvider();
+
+        $form = $this->getFactory()
+            ->createFilterPreferencesForm(
+                $dataProvider->getData($idProductSearchAttribute),
+                $dataProvider->getOptions($idProductSearchAttribute)
+            )
+            ->handleRequest($request);
+
+        if ($form->isValid()) {
+            $productSearchAttributeTransfer = $this
+                ->getFactory()
+                ->createAttributeFormTransferGenerator()
+                ->createTransfer($form);
+
+            $productSearchAttributeTransfer = $this
+                ->getFacade()
+                ->updateProductSearchAttribute($productSearchAttributeTransfer);
+
+            return $this->redirectResponse(sprintf(
+                '/product-search/filter-preferences/view?id=%d',
+                $productSearchAttributeTransfer->getIdProductSearchAttribute()
+            ));
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function viewAction(Request $request)
+    {
+        $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
+
+        $attributeTransfer = $this
+            ->getFacade()
+            ->getProductSearchAttribute($idProductSearchAttribute);
+
+        if (!$attributeTransfer) {
+            return $this->redirectResponse('/product-search/filter-preferences');
+        }
+
+        return $this->viewResponse([
+            'attributeTransfer' => $attributeTransfer,
+            'locales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request)
+    {
+        $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
+
+        $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
+        $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
+
+        $this
+            ->getFacade()
+            ->deleteProductSearchAttribute($productSearchAttributeTransfer);
+
+        return $this->redirectResponse('/product-search/filter-preferences');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function keysAction(Request $request)
+    {
+        $searchTerm = $request->query->get(self::PARAM_TERM);
+
+        $keys = $this->getFacade()->suggestUnusedSearchKeys($searchTerm);
+
+        return $this->jsonResponse($keys);
     }
 
 }

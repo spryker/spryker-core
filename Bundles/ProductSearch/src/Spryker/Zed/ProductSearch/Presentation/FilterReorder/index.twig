@@ -1,0 +1,45 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Filter Preferences' %}
+
+{% block section_title widget_title | trans %}
+{% block head_title widget_title | trans %}
+
+{% block action %}
+    {{ backActionButton('/product-search/filter-preferences', 'Back to List' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Edit filter order' | trans} %}
+
+        {% block widget_content %}
+
+            <div class="form-group">
+                <div id="filter-container" class="dd">
+                    <ol class="dd-list">
+                        {% for productSearchAttribute in productSearchAttributes %}
+                            <li class="dd-item" data-id-product-search-attribute="{{ productSearchAttribute.idProductSearchAttribute }}">
+                                <div class="dd-handle">{{ productSearchAttribute.key }}</div>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+
+            <div class="progress progress-striped active hidden">
+                <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-warning"></div>
+            </div>
+
+            <button id="save-filter-order" class="btn btn-sm btn-primary">{{ 'Save Order' | trans }}</button>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productsearch-filter-reorder.js"></script>
+{% endblock %}

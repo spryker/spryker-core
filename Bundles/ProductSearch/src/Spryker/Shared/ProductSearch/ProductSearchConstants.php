@@ -7,11 +7,9 @@
 
 namespace Spryker\Shared\ProductSearch;
 
-use Spryker\Shared\Product\ProductConstants;
-
 interface ProductSearchConstants
 {
 
-    const RESOURCE_TYPE_PRODUCT_ABSTRACT = ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT;
+    const PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX = 'product.filter.';
 
 }

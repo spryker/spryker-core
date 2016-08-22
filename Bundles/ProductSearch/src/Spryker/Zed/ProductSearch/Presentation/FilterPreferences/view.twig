@@ -1,0 +1,63 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Filter Preferences' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ editActionButton(url('/product-search/filter-preferences/edit', {'id': app.request.query.get('id')}), 'Edit' | trans) }}
+    {{ removeActionButton(url('/product-search/filter-preferences/delete', {'id': app.request.query.get('id')}), 'Delete' | trans) }}
+    {{ backActionButton(url('/product-search/filter-preferences'), 'Back to List' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View Filter #' ~ app.request.query.get('id') } %}
+        {% block widget_content %}
+
+            <h4>{{ 'General Information' | trans }}</h4>
+            <table class="table">
+                <tr>
+                    <td style="width: 250px;">{{ 'Attribute key' | trans }}:</td>
+                    <td>{{ attributeTransfer.key }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Filter type' | trans }}:</td>
+                    <td>{{ attributeTransfer.filterType }}</td>
+                </tr>
+            </table>
+
+            <div class="tabs-container well">
+                <ul class="nav nav-tabs">
+                    {% for locale in locales %}
+                        <li class="{% if loop.first %}active{% endif %}"><a href="#{{ locale.localeName }}" data-toggle="tab">{{ locale.localeName }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="tab-content">
+
+                    {% for locale in locales %}
+                        <div id="{{ locale.localeName }}" class="tab-pane {% if loop.first %}active{% endif %}">
+                            <div class="panel-body">
+                                <table>
+                                    <tr>
+                                        <td style="width: 220px;">{{ 'Filter name' | trans }}:</td>
+                                        <td>
+                                            {% for localizedAttributeKeyTransfer in attributeTransfer.localizedKeys %}
+                                                {% if localizedAttributeKeyTransfer.localeName == locale.localeName %}
+                                                    {{ localizedAttributeKeyTransfer.keyTranslation }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

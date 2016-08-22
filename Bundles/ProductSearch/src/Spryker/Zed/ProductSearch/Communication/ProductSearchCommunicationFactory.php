@@ -8,9 +8,14 @@
 namespace Spryker\Zed\ProductSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\FilterPreferencesDataProvider;
 use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\SearchPreferencesDataProvider;
+use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
+use Spryker\Zed\ProductSearch\Communication\Table\FilterPreferencesTable;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
+use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferGenerator;
+use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
@@ -47,6 +52,64 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     public function createSearchPreferencesDataProvider()
     {
         return new SearchPreferencesDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createFilterPreferencesForm(array $data = [], array $options = [])
+    {
+        $filterFormType = new FilterPreferencesForm($this->getQueryContainer());
+
+        return $this->getFormFactory()->create($filterFormType, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Communication\Form\DataProvider\FilterPreferencesDataProvider
+     */
+    public function createFilterPreferencesDataProvider()
+    {
+        return new FilterPreferencesDataProvider(
+            $this->getQueryContainer(),
+            $this->getConfig(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Communication\Table\FilterPreferencesTable
+     */
+    public function createFilterPreferencesTable()
+    {
+        return new FilterPreferencesTable($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferGeneratorInterface
+     */
+    public function createAttributeFormTransferGenerator()
+    {
+        return new AttributeFormTransferGenerator();
     }
 
 }

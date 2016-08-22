@@ -373,6 +373,7 @@
       "Spryker\\Zed\\ProductSearch\\": "Bundles/ProductSearch/src",
       "Unit\\Spryker\\Zed\\ProductSearch\\": "Bundles/ProductSearch/tests",
       "Functional\\Spryker\\Zed\\ProductSearch\\": "Bundles/ProductSearch/tests",
+      "Acceptance\\ProductSearch\\": "Bundles/ProductSearch/tests",
       "Spryker\\Shared\\Propel\\": "Bundles/Propel/src",
       "Unit\\Spryker\\Shared\\Propel\\": "Bundles/Propel/tests",
       "Functional\\Spryker\\Shared\\Propel\\": "Bundles/Propel/tests",

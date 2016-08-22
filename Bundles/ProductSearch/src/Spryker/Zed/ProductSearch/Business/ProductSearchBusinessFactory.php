@@ -8,10 +8,13 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapper;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
+use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
 use Spryker\Zed\ProductSearch\Business\Saver\SearchPreferencesSaver;
+use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -62,6 +65,66 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function createSearchPreferencesSaver()
     {
         return new SearchPreferencesSaver($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriterInterface
+     */
+    public function createAttributeWriter()
+    {
+        return new AttributeWriter(
+            $this->getQueryContainer(),
+            $this->getProductFacade(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface
+     */
+    public function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface
+     */
+    public function createAttributeReader()
+    {
+        return new AttributeReader(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->createProductAttributeTransferGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     */
+    protected function createProductAttributeTransferGenerator()
+    {
+        return new ProductAttributeTransferGenerator(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
     }
 
 }

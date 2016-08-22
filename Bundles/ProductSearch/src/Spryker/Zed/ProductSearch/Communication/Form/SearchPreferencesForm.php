@@ -25,7 +25,7 @@ class SearchPreferencesForm extends AbstractType
      */
     public function getName()
     {
-        return 'filterPreferences';
+        return 'searchPreferences';
     }
 
     /**

@@ -129,6 +129,21 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryFilterPreferencesTable()
+    {
+        $query = $this
+            ->getFactory()
+            ->createProductSearchAttributeQuery()
+            ->joinWith('SpyProductAttributeKey');
+
+        return $query;
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query
      * @param string $alias
      * @param string $targetField
@@ -145,6 +160,28 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->withColumn($alias . '.target_field IS NOT NULL', $alias);
 
         return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey()
+    {
+        return $this->getFactory()->createProductAttributeKeyQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryProductSearchAttribute()
+    {
+        return $this
+            ->getFactory()
+            ->createProductSearchAttributeQuery();
     }
 
 }

@@ -62,7 +62,7 @@ class SearchPreferencesTable extends AbstractTable
             self::COL_FULL_TEXT => 'Include for Full Text',
             self::COL_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
             self::COL_SUGGESTION_TERMS => 'Include for Suggestion',
-            self::COL_COMPLETION_TERMS => 'Include for Suggestion',
+            self::COL_COMPLETION_TERMS => 'Include for Completion',
             self::ACTION => 'Action',
         ];
     }
