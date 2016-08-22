@@ -33,6 +33,8 @@ class MoneyFormatterCollection implements MoneyFormatterCollectionInterface
     /**
      * @param string $type
      *
+     * @throws \Spryker\Shared\Money\Exception\FormatterNotFoundException
+     *
      * @return \Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
     public function getFormatter($type)

@@ -17,6 +17,8 @@ class DecimalToIntegerConverter implements DecimalToIntegerConverterInterface
     /**
      * @param float $value
      *
+     * @throws \Spryker\Shared\Money\Exception\InvalidConverterArgumentException
+     *
      * @return int
      */
     public function convert($value)

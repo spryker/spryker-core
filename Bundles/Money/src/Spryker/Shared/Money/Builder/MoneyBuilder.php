@@ -51,6 +51,8 @@ class MoneyBuilder implements MoneyBuilderInterface
      * @param int $amount
      * @param null|string $isoCode
      *
+     * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
+     *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromInteger($amount, $isoCode = null)
@@ -69,6 +71,8 @@ class MoneyBuilder implements MoneyBuilderInterface
      * @param float $amount
      * @param null|string $isoCode
      *
+     * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
+     *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromFloat($amount, $isoCode = null)
@@ -86,6 +90,8 @@ class MoneyBuilder implements MoneyBuilderInterface
     /**
      * @param string $amount
      * @param null|string $isoCode
+     *
+     * @throws \Spryker\Shared\Money\Exception\InvalidAmountArgumentException
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
