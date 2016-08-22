@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Money\Communication\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
  * @group Plugin
  * @group MoneyPluginTest
  */
-class MoneyPluginTest extends \PHPUnit_Framework_TestCase
+class MoneyPluginTest extends PHPUnit_Framework_TestCase
 {
 
     const AMOUNT_INTEGER = 1000;

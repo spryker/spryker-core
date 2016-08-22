@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Yves\Currency\Plugin;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Currency\Plugin\CurrencyPlugin;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Yves\Currency\Plugin\CurrencyPlugin;
  * @group Plugin
  * @group CurrencyPluginTest
  */
-class CurrencyPluginTest extends \PHPUnit_Framework_TestCase
+class CurrencyPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

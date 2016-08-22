@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Currency\Communication\Plugin;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Currency\Communication\Plugin\CurrencyPlugin;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Currency\Communication\Plugin\CurrencyPlugin;
  * @group Plugin
  * @group CurrencyPluginTest
  */
-class CurrencyPluginTest extends \PHPUnit_Framework_TestCase
+class CurrencyPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

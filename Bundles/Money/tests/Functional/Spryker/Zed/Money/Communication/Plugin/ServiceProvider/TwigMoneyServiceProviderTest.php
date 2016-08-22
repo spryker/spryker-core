@@ -9,9 +9,11 @@ namespace Functional\Spryker\Zed\Money\Communication\Plugin\ServiceProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider;
+use Twig_Environment;
 
 /**
  * @group Functional
@@ -23,7 +25,7 @@ use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvi
  * @group ServiceProvider
  * @group TwigMoneyServiceProviderTest
  */
-class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
+class TwigMoneyServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -34,7 +36,7 @@ class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
         $moneyServiceProvider = new TwigMoneyServiceProvider();
         $application = new Application();
         $application['twig'] = function () {
-            return new \Twig_Environment();
+            return new Twig_Environment();
         };
 
         $moneyServiceProvider->register($application);
@@ -65,7 +67,7 @@ class TwigMoneyServiceProviderTest extends \PHPUnit_Framework_TestCase
         $moneyServiceProvider = new TwigMoneyServiceProvider();
         $application = new Application();
         $application['twig'] = function () {
-            return new \Twig_Environment();
+            return new Twig_Environment();
         };
         $moneyServiceProvider->register($application);
 

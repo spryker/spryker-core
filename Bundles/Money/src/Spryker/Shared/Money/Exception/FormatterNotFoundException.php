@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Money\Exception;
 
-class FormatterNotFoundException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class FormatterNotFoundException extends InvalidArgumentException
 {
 }

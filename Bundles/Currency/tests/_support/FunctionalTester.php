@@ -2,6 +2,8 @@
 
 namespace Currency;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -17,7 +19,7 @@ namespace Currency;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends \Codeception\Actor
+class FunctionalTester extends Actor
 {
 
     use _generated\FunctionalTesterActions;

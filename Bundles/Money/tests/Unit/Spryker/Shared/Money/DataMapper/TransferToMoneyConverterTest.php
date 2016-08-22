@@ -10,6 +10,7 @@ namespace Unit\Spryker\Shared\Money\DataMapper;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 
 /**
@@ -20,7 +21,7 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
  * @group DataMapper
  * @group TransferToMoneyConverterTest
  */
-class TransferToMoneyConverterTest extends \PHPUnit_Framework_TestCase
+class TransferToMoneyConverterTest extends PHPUnit_Framework_TestCase
 {
 
     const AMOUNT = 1000;

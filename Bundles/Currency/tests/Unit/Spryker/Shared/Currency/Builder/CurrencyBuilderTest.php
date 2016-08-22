@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Currency\Builder;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
 use Spryker\Shared\Kernel\Store;
@@ -20,7 +21,7 @@ use Symfony\Component\Intl\Intl;
  * @group Builder
  * @group CurrencyBuilderTest
  */
-class CurrencyBuilderTest extends \PHPUnit_Framework_TestCase
+class CurrencyBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     const DEFAULT_CURRENCY = 'EUR';

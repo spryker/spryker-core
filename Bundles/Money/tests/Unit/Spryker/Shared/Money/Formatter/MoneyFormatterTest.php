@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\Money\Formatter;
 
 use Generated\Shared\Transfer\MoneyTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
@@ -21,7 +22,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
  * @group Formatter
  * @group MoneyFormatterTest
  */
-class MoneyFormatterTest extends \PHPUnit_Framework_TestCase
+class MoneyFormatterTest extends PHPUnit_Framework_TestCase
 {
 
     const AMOUNT = '1000';

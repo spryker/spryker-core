@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig_SimpleFilter;
 
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
@@ -50,7 +51,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $moneyFacade = $this->getFacade();
 
-        $filter = new \Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFacade) {
+        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFacade) {
             if (!($money instanceof MoneyTransfer)) {
                 if (is_int($money)) {
                     $money = $moneyFacade->fromInteger($money);

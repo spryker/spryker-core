@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\MoneyTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Money\Plugin\MoneyPlugin;
 
@@ -19,7 +20,7 @@ use Spryker\Yves\Money\Plugin\MoneyPlugin;
  * @group Plugin
  * @group MoneyPluginTest
  */
-class MoneyPluginTest extends \PHPUnit_Framework_TestCase
+class MoneyPluginTest extends PHPUnit_Framework_TestCase
 {
 
     const AMOUNT_INTEGER = 1000;

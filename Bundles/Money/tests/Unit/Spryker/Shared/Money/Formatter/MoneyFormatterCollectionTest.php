@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Money\Formatter;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Exception\FormatterNotFoundException;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface;
@@ -20,7 +21,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  * @group Formatter
  * @group MoneyFormatterCollectionTest
  */
-class MoneyFormatterCollectionTest extends \PHPUnit_Framework_TestCase
+class MoneyFormatterCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const FORMATTER = 'formatter';

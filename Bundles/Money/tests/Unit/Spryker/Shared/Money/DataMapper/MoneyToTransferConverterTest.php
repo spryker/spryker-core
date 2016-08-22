@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
  * @group DataMapper
  * @group MoneyToTransferConverterTest
  */
-class MoneyToTransferConverterTest extends \PHPUnit_Framework_TestCase
+class MoneyToTransferConverterTest extends PHPUnit_Framework_TestCase
 {
 
     const AMOUNT = 1000;

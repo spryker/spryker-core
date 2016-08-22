@@ -10,6 +10,7 @@ namespace Unit\Spryker\Shared\Money\Formatter\IntlMoneyFormatter;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
  * @group IntlMoneyFormatter
  * @group AbstractIntlMoneyFormatterTest
  */
-abstract class AbstractIntlMoneyFormatterTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractIntlMoneyFormatterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

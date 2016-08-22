@@ -12,6 +12,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\MoneyConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Twig_SimpleFilter;
 
 /**
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
@@ -51,7 +52,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $moneyFactory = $this->getFactory();
 
-        $filter = new \Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFactory) {
+        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFactory) {
             if (!($money instanceof MoneyTransfer)) {
                 if (is_int($money)) {
                     $money = $moneyFactory->createMoneyBuilder()->fromInteger($money);
