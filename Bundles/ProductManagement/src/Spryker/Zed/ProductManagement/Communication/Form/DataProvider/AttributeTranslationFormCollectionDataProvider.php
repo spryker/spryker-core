@@ -75,22 +75,18 @@ class AttributeTranslationFormCollectionDataProvider
      */
     protected function getTranslationFields($idProductManagementAttribute)
     {
-        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $availableLocales = $this->localeFacade->getLocaleCollection();
 
         $attributeKey = $this->getAttributeKey($idProductManagementAttribute);
 
         $fields = [];
-        foreach ($availableLocales as $idLocale => $localeName) {
-            $localeTransfer = (new LocaleTransfer())
-                ->setIdLocale($idLocale)
-                ->setLocaleName($localeName);
-
-            $fields[$localeName] = [
+        foreach ($availableLocales as $localeTransfer) {
+            $fields[$localeTransfer->getLocaleName()] = [
                 AttributeTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $idProductManagementAttribute,
                 AttributeTranslationForm::FIELD_KEY => $attributeKey,
                 AttributeTranslationForm::FIELD_KEY_TRANSLATION => $this->getAttributeKeyTranslation($attributeKey, $localeTransfer),
                 AttributeTranslationForm::FIELD_TRANSLATE_VALUES => $this->getTranslateValues($idProductManagementAttribute),
-                AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS => $this->getValueTranslations($idProductManagementAttribute, $idLocale),
+                AttributeTranslationForm::FIELD_VALUE_TRANSLATIONS => $this->getValueTranslations($idProductManagementAttribute, $localeTransfer->getIdLocale()),
             ];
         }
 

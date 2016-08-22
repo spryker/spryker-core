@@ -196,7 +196,7 @@ class AttributeController extends AbstractController
 
         return $this->viewResponse([
             'attributeTransfer' => $attributeTransfer,
-            'locales' => $this->getFactory()->getLocaleFacade()->getAvailableLocales(),
+            'locales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
         ]);
     }
 

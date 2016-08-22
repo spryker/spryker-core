@@ -23,11 +23,6 @@ interface ProductManagementToLocaleInterface
     public function getLocale($localeName);
 
     /**
-     * @return array
-     */
-    public function getAvailableLocales();
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();

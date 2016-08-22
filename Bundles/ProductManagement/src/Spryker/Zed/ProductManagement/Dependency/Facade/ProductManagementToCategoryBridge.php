@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Spryker\Zed\Category\Business\CategoryFacadeInterface;
-
 class ProductManagementToCategoryBridge implements ProductManagementToCategoryInterface
 {
 
@@ -20,7 +18,7 @@ class ProductManagementToCategoryBridge implements ProductManagementToCategoryIn
     /**
      * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
      */
-    public function __construct(CategoryFacadeInterface $categoryFacade)
+    public function __construct($categoryFacade)
     {
         $this->categoryFacade = $categoryFacade;
     }

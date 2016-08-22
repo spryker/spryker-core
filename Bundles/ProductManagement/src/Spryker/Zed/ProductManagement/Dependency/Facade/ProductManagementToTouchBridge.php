@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacadeInterface;
-
 class ProductManagementToTouchBridge implements ProductManagementToTouchInterface
 {
 
@@ -20,7 +18,7 @@ class ProductManagementToTouchBridge implements ProductManagementToTouchInterfac
     /**
      * @param \Spryker\Zed\Touch\Business\TouchFacadeInterface $touchFacade
      */
-    public function __construct(TouchFacadeInterface $touchFacade)
+    public function __construct($touchFacade)
     {
         $this->touchFacade = $touchFacade;
     }

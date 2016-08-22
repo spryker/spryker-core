@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
-use Spryker\Zed\Stock\Business\StockFacadeInterface;
 
 class ProductManagementToStockBridge implements ProductManagementToStockInterface
 {
@@ -21,7 +20,7 @@ class ProductManagementToStockBridge implements ProductManagementToStockInterfac
     /**
      * @param \Spryker\Zed\Stock\Business\StockFacadeInterface $stockFacade
      */
-    public function __construct(StockFacadeInterface $stockFacade)
+    public function __construct($stockFacade)
     {
         $this->stockFacade = $stockFacade;
     }

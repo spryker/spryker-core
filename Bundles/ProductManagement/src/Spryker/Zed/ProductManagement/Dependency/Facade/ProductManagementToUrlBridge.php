@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Url\Business\UrlFacadeInterface;
 
 class ProductManagementToUrlBridge implements ProductManagementToUrlInterface
 {
@@ -21,7 +20,7 @@ class ProductManagementToUrlBridge implements ProductManagementToUrlInterface
     /**
      * @param \Spryker\Zed\Url\Business\UrlFacadeInterface $urlFacade
      */
-    public function __construct(UrlFacadeInterface $urlFacade)
+    public function __construct($urlFacade)
     {
         $this->urlFacade = $urlFacade;
     }

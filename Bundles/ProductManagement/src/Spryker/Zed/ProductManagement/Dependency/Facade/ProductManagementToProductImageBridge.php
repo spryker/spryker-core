@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
-use Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface;
 
 class ProductManagementToProductImageBridge implements ProductManagementToProductImageInterface
 {
@@ -22,7 +21,7 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
     /**
      * @param \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface $productImageFacade
      */
-    public function __construct(ProductImageFacadeInterface $productImageFacade)
+    public function __construct($productImageFacade)
     {
         $this->productImageFacade = $productImageFacade;
     }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacadeInterface;
 
 class ProductManagementToGlossaryBridge implements ProductManagementToGlossaryInterface
 {
@@ -21,7 +20,7 @@ class ProductManagementToGlossaryBridge implements ProductManagementToGlossaryIn
     /**
      * @param \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(GlossaryFacadeInterface $glossaryFacade)
+    public function __construct($glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }

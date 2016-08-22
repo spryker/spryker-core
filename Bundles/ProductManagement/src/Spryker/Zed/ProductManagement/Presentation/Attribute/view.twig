@@ -48,28 +48,26 @@
                 </tr>
             </table>
 
-            <hr />
-
-            <div class="tabs-container">
+            <div class="tabs-container well">
                 <ul class="nav nav-tabs">
-                    {% for idLocale, localeName in locales %}
-                        <li class="{% if loop.first %}active{% endif %}"><a href="#{{ localeName }}" data-toggle="tab">{{ localeName }}</a></li>
+                    {% for locale in locales %}
+                        <li class="{% if loop.first %}active{% endif %}"><a href="#{{ locale.localeName }}" data-toggle="tab">{{ locale.localeName }}</a></li>
                     {% endfor %}
                 </ul>
 
                 <div class="tab-content">
 
-                    {% for idLocale, localeName in locales %}
-                        <div id="{{ localeName }}" class="tab-pane {% if loop.first %}active{% endif %}">
+                    {% for locale in locales %}
+                        <div id="{{ locale.localeName }}" class="tab-pane {% if loop.first %}active{% endif %}">
                             <div class="panel-body">
 
                                 <h4>{{ 'Attribute name translation' | trans }}</h4>
                                 <table class="table">
                                     <tr>
-                                        <td style="width: 250px;">{{ attributeTransfer.key }}:</td>
+                                        <td style="width: 220px;">{{ attributeTransfer.key }}:</td>
                                         <td>
                                             {% for localizedAttributeKeyTransfer in attributeTransfer.localizedKeys %}
-                                                {% if localizedAttributeKeyTransfer.localeName == localeName %}
+                                                {% if localizedAttributeKeyTransfer.localeName == locale.localeName %}
                                                     {{ localizedAttributeKeyTransfer.keyTranslation }}
                                                 {% endif %}
                                             {% endfor %}
@@ -82,10 +80,10 @@
                                     <table class="table">
                                         {% for valueTransfer in attributeTransfer.values %}
                                             <tr>
-                                                <td style="width: 250px;">{{ valueTransfer.value }}:</td>
+                                                <td style="width: 220px;">{{ valueTransfer.value }}:</td>
                                                 <td>
                                                     {% for localizedAttributeValueTransfer in valueTransfer.localizedValues %}
-                                                        {% if localizedAttributeValueTransfer.fkLocale == idLocale %}
+                                                        {% if localizedAttributeValueTransfer.fkLocale == locale.idLocale %}
                                                             {{ localizedAttributeValueTransfer.translation }}
                                                         {% endif %}
                                                     {% endfor %}
