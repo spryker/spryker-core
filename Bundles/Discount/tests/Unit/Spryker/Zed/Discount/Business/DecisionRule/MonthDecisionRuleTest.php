@@ -36,7 +36,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
         });
 
         $monthDecisionRule = $this->createMonthDecisionRule($comparatorMock, $dateTime);
-        $isSatisfied =$monthDecisionRule->isSatisfiedBy(
+        $isSatisfied = $monthDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
             $this->createClauseTransfer($dateTime->format(MonthDecisionRule::DATE_FORMAT))

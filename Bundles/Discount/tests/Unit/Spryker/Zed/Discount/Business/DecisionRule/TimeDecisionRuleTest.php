@@ -36,7 +36,7 @@ class TimeDecisionRuleTest extends BaseRuleTester
         });
 
         $monthDecisionRule = $this->createTimeDecisionRule($comparatorMock, $dateTime);
-        $isSatisfied =$monthDecisionRule->isSatisfiedBy(
+        $isSatisfied = $monthDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
             $this->createClauseTransfer($dateTime->format(TimeDecisionRule::TIME_FORMAT))

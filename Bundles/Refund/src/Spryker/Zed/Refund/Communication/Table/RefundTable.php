@@ -42,7 +42,7 @@ class RefundTable extends AbstractTable
      */
     public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, CurrencyManagerInterface $currencyManager)
     {
-        $this->refundQueryContainer= $refundQueryContainer;
+        $this->refundQueryContainer = $refundQueryContainer;
         $this->dateFormatter = $dateFormatter;
         $this->currencyManager = $currencyManager;
     }

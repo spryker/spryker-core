@@ -36,7 +36,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
         });
 
         $calendarWeekDecisionRule = $this->createDateOfTheWeekDecisionRule($comparatorMock, $dateTime);
-        $isSatisfied =$calendarWeekDecisionRule->isSatisfiedBy(
+        $isSatisfied = $calendarWeekDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
             $this->createClauseTransfer($dateTime->format(DayOfWeekDecisionRule::DATE_FORMAT))

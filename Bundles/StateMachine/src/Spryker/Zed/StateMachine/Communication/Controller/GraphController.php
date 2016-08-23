@@ -139,7 +139,7 @@ class GraphController extends AbstractController
         $stateMachineBundleConfig = $this->getFactory()->getConfig();
         $formatContentTypes = $stateMachineBundleConfig->getGraphFormatContentTypes();
         if (isset($formatContentTypes[$format])) {
-            $headers['content-type'] =$formatContentTypes[$format];
+            $headers['content-type'] = $formatContentTypes[$format];
         }
 
         return $headers;
