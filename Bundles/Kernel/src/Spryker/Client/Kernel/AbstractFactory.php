@@ -9,6 +9,7 @@ namespace Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Shared\Kernel\ContainerGlobals;
 
 abstract class AbstractFactory
 {
@@ -40,10 +41,7 @@ abstract class AbstractFactory
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $dependencyProvider = $this->resolveDependencyProvider();
-            $container = new Container();
-            $this->provideExternalDependencies($dependencyProvider, $container);
-            $this->container = $container;
+            $this->container = $this->createContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -51,6 +49,47 @@ abstract class AbstractFactory
         }
 
         return $this->container[$key];
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function createContainerWithProvidedDependencies()
+    {
+        $container = $this->createContainer();
+        $dependencyProvider = $this->resolveDependencyProvider();
+        $this->provideExternalDependencies($dependencyProvider, $container);
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use `createContainer()` instead
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        return $this->createContainer();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function createContainer()
+    {
+        $containerGlobals = $this->createContainerGlobals();
+        $container = new Container($containerGlobals->getContainerGlobals());
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ContainerGlobals
+     */
+    protected function createContainerGlobals()
+    {
+        return new ContainerGlobals();
     }
 
     /**
@@ -62,9 +101,19 @@ abstract class AbstractFactory
     }
 
     /**
+     * @deprecated Use `createDependencyProviderResolver` instead
+     *
      * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
+    {
+        return $this->createDependencyProviderResolver();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
+     */
+    protected function createDependencyProviderResolver()
     {
         return new DependencyProviderResolver();
     }

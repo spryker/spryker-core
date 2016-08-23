@@ -251,4 +251,6 @@ interface ApplicationConstants
 
     const APPLICATION_SPRYKER_ROOT = 'APPLICATION_SPRYKER_ROOT';
 
+    const FORM_FACTORY = 'FORM_FACTORY';
+
 }

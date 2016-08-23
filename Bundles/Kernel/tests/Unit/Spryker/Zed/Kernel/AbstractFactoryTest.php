@@ -47,7 +47,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $factory = new Factory();
 
-        $this->setExpectedException(ContainerKeyNotFoundException::class);
+        $this->expectException(ContainerKeyNotFoundException::class);
         $factory->setContainer($container);
         $factory->getProvidedDependency('something');
     }
@@ -83,8 +83,8 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
 
-        $factoryMock = $this->getFactoryMock(['getContainerWithProvidedDependencies']);
-        $factoryMock->expects($this->once())->method('getContainerWithProvidedDependencies')->willReturn($container);
+        $factoryMock = $this->getFactoryMock(['createContainerWithProvidedDependencies']);
+        $factoryMock->expects($this->once())->method('createContainerWithProvidedDependencies')->willReturn($container);
 
         $this->assertSame(self::CONTAINER_VALUE, $factoryMock->getProvidedDependency(self::CONTAINER_KEY));
     }
@@ -95,8 +95,8 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
     public function testGetProvidedDependencyShouldGetInjectedData()
     {
         $dependencyInjectorResolver = $this->getDependencyInjectorResolverMock();
-        $factoryMock = $this->getFactoryMock(['getDependencyInjectorResolver', 'resolveDependencyProvider']);
-        $factoryMock->expects($this->once())->method('getDependencyInjectorResolver')->willReturn($dependencyInjectorResolver);
+        $factoryMock = $this->getFactoryMock(['createDependencyInjectorResolver', 'resolveDependencyProvider']);
+        $factoryMock->expects($this->once())->method('createDependencyInjectorResolver')->willReturn($dependencyInjectorResolver);
 
         $abstractBundleDependencyProviderMock = $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
         $factoryMock->expects($this->once())->method('resolveDependencyProvider')->willReturn($abstractBundleDependencyProviderMock);
@@ -118,9 +118,8 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $dependencyInjectorMock->expects($this->once())->method('injectPersistenceLayerDependencies')->willReturn($container);
 
         $dependencyInjectorCollectionMock = $this->getMock(DependencyInjectorCollection::class, ['getDependencyInjector']);
-        $dependencyInjectorCollectionMock->method('getDependencyInjector')->willReturn(
-            [$dependencyInjectorMock]
-        );
+        $dependencyInjectorCollectionMock->method('getDependencyInjector')->willReturn([$dependencyInjectorMock]);
+
         $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, ['resolve']);
         $dependencyInjectorResolverMock->expects($this->once())->method('resolve')->willReturn($dependencyInjectorCollectionMock);
 

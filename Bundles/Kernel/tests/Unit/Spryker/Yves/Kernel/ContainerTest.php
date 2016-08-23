@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel;
+namespace Unit\Spryker\Yves\Kernel;
 
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Yves\Kernel\Container;
 
 /**
  * @group Unit
  * @group Spryker
- * @group Zed
+ * @group Yves
  * @group Kernel
  * @group ContainerTest
  */

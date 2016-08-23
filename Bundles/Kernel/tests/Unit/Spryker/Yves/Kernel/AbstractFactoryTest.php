@@ -65,9 +65,9 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $dependencyResolverMock = $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
         $container = new Container([self::TEST_KEY => self::TEST_VALUE]);
 
-        $factoryMock = $this->getMockForAbstractClass(ConcreteFactory::class, [], '', true, true, true, ['resolveDependencyProvider', 'getContainer']);
+        $factoryMock = $this->getMockForAbstractClass(ConcreteFactory::class, [], '', true, true, true, ['resolveDependencyProvider', 'createContainer']);
         $factoryMock->expects($this->once())->method('resolveDependencyProvider')->willReturn($dependencyResolverMock);
-        $factoryMock->expects($this->once())->method('getContainer')->willReturn($container);
+        $factoryMock->expects($this->once())->method('createContainer')->willReturn($container);
 
         return $factoryMock;
     }
@@ -78,7 +78,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
     public function testGetProvidedDependencyThrowsExceptionWhenProviderNotFound()
     {
         $factory = new ConcreteFactory();
-        $this->setExpectedException(DependencyProviderNotFoundException::class);
+        $this->expectException(DependencyProviderNotFoundException::class);
 
         $factory->getProvidedDependency(self::TEST_KEY);
     }
