@@ -66,6 +66,8 @@ class ContainerGlobals implements ArrayAccess
     /**
      * @param string $id
      *
+     * @throws \InvalidArgumentException
+     *
      * @return mixed
      */
     public function offsetGet($id)
@@ -102,6 +104,8 @@ class ContainerGlobals implements ArrayAccess
     /**
      * @param callable $callable
      *
+     * @throws \InvalidArgumentException
+     *
      * @return \Closure
      */
     public static function share($callable)
@@ -124,6 +128,8 @@ class ContainerGlobals implements ArrayAccess
     /**
      * @param callable $callable
      *
+     * @throws \InvalidArgumentException
+     *
      * @return \Closure
      */
     public static function protect($callable)
@@ -140,6 +146,8 @@ class ContainerGlobals implements ArrayAccess
     /**
      * @param string $id
      *
+     * @throws \InvalidArgumentException
+     *
      * @return mixed
      */
     public function raw($id)
@@ -154,6 +162,8 @@ class ContainerGlobals implements ArrayAccess
     /**
      * @param string $id
      * @param callable $callable
+     *
+     * @throws \InvalidArgumentException
      *
      * @return \Closure
      */
