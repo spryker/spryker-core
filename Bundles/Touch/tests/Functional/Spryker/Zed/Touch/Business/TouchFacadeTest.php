@@ -57,7 +57,6 @@ class TouchFacadeTest extends Test
      * @param array $itemIds
      * @param int $expectedAffectedRows
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return void
      */
     public function testBulkTouchMethods($method, array $itemIds, $expectedAffectedRows)
@@ -96,7 +95,6 @@ class TouchFacadeTest extends Test
      * @param int $expectedAffectedRows
      * @param string $expectedItemEvent
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return void
      */
     public function testBulkTouchSetMethods($method, array $itemIds, $expectedAffectedRows, $expectedItemEvent)
@@ -136,7 +134,6 @@ class TouchFacadeTest extends Test
      * @param string $itemEvent
      * @param int $itemId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
     protected function createTouchEntity($itemEvent, $itemId)

@@ -25,8 +25,6 @@ class ControllerNotFoundException extends \Exception implements ExceptionInterfa
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @throws \Exception
-     *
      * @return string
      */
     protected function buildMessage(BundleControllerActionInterface $bundleControllerAction)

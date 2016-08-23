@@ -90,9 +90,6 @@ class SilexRouter implements RouterInterface
      *
      * @param string $pathinfo The path info to be parsed (raw format, i.e. not urldecoded)
      *
-     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException If the resource could not be found
-     * @throws \Symfony\Component\Routing\Exception\MethodNotAllowedException If the resource was found but the request method is not allowed
-     *
      * @return array An array of parameters
      *
      * @api

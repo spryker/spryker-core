@@ -19,7 +19,6 @@ class LessEqual implements ComparatorInterface
      *
      * @return bool
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $compareWithValue, $withValue)
     {

@@ -40,7 +40,6 @@ class ApiFactory extends AbstractBusinessFactory
     }
 
     /**
-     *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface
      */
     public function createRequestModelFactory()

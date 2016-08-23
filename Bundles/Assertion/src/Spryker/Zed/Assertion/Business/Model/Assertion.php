@@ -16,8 +16,6 @@ class Assertion implements AssertionInterface
      * @param mixed $value
      * @param string|null $message
      *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
-     *
      * @return void
      */
     public function assertNumeric($value, $message = null)
@@ -30,8 +28,6 @@ class Assertion implements AssertionInterface
     /**
      * @param mixed $value
      * @param string|null $message
-     *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
      *
      * @return void
      */
@@ -47,8 +43,6 @@ class Assertion implements AssertionInterface
      * @param mixed $value
      * @param string|null $message
      *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
-     *
      * @return void
      */
     public function assertAlphaNumeric($value, $message = null)
@@ -62,8 +56,6 @@ class Assertion implements AssertionInterface
      * @param mixed $value
      * @param string|null $message
      *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
-     *
      * @return void
      */
     public function assertAlpha($value, $message = null)
@@ -76,8 +68,6 @@ class Assertion implements AssertionInterface
     /**
      * @param mixed $value
      * @param string|null $message
-     *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
      *
      * @return void
      */

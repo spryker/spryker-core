@@ -135,8 +135,6 @@ class ErrorHandler
     }
 
     /**
-     * @throws \Exception
-     *
      * @return void
      */
     protected function showErrorPage()

@@ -56,8 +56,6 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Elastica\Client
      */
     protected function createElasticaClient()
@@ -98,8 +96,6 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Predis\Client
      */
     protected function createPredisClient()

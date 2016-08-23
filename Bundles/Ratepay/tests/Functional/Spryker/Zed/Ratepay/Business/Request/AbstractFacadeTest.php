@@ -123,7 +123,6 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $ratepayPaymentEntity
      *
      * @return void

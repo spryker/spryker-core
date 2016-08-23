@@ -222,6 +222,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     /**
      * @param \Elastica\Query $query
      *
+     * @throws \InvalidArgumentException
      * @return \Elastica\Query\BoolQuery
      */
     protected function getBoolQuery(Query $query)

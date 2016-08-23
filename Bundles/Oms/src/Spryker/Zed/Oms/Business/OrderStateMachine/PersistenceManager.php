@@ -23,8 +23,6 @@ class PersistenceManager implements PersistenceManagerInterface
     /**
      * @param string $stateName
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getStateEntity($stateName)
@@ -48,8 +46,6 @@ class PersistenceManager implements PersistenceManagerInterface
 
     /**
      * @param string $processName
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */

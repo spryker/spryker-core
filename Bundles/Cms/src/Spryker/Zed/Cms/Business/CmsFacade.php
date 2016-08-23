@@ -26,8 +26,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param string $name
      * @param string $path
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
-     *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function createTemplate($name, $path)
@@ -41,8 +39,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param string $path
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
@@ -71,8 +67,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
@@ -161,8 +155,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param int $idPage
      * @param string $placeholder
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
-     *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
@@ -192,9 +184,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param int $idPage
      * @param string $placeholder
      * @param array $data
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -229,10 +218,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return bool
      */
     public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder)
@@ -247,8 +232,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

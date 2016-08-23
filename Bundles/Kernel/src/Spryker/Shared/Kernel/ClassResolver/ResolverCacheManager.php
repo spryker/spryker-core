@@ -57,8 +57,6 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface
      */
     public function createClassResolverCacheProvider()

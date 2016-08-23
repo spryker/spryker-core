@@ -44,8 +44,6 @@ trait BundleConfigResolverAwareTrait
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private function resolveBundleConfig()

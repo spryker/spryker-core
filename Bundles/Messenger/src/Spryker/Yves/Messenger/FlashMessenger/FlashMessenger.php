@@ -28,8 +28,6 @@ class FlashMessenger implements FlashMessengerInterface
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return $this
      */
     public function addSuccessMessage($message)
@@ -42,8 +40,6 @@ class FlashMessenger implements FlashMessengerInterface
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return $this
      */
     public function addInfoMessage($message)
@@ -55,8 +51,6 @@ class FlashMessenger implements FlashMessengerInterface
 
     /**
      * @param string $message
-     *
-     * @throws \ErrorException
      *
      * @return $this
      */

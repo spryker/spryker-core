@@ -392,7 +392,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $ratepayPaymentEntity
      *
      * @return void

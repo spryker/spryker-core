@@ -17,7 +17,6 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
 {
 
     /**
-     *
      * Specification:
      *
      * - Loop over all quote items, and sum all calculated discounts
@@ -38,7 +37,6 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     *
      * Specification:
      *
      * - Loop over item calculated discount and group by discount display name
@@ -59,7 +57,6 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     *
      * Specification:
      *
      * - Loop over item calculated discounts and calculate item gross amount after discounts
@@ -78,7 +75,6 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     *
      * Specification:
      *
      * - Take current grand total and subtract total discount
@@ -97,7 +93,6 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     *
      * Specification:
      *
      * - Loop over expenses and calculate order expense tax after discounts
@@ -116,7 +111,6 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     *
      * Specification:
      *
      * - Loop over order expenses and calculated expense gross amount after discounts

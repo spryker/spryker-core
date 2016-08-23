@@ -78,8 +78,6 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\AbstractFactory
      */
     private function resolveFactory()

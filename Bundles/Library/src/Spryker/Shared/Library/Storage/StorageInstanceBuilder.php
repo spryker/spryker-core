@@ -35,8 +35,6 @@ class StorageInstanceBuilder
     protected static $searchInstances = [];
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Elastica\Client
      */
     public static function getElasticsearchInstance()
@@ -65,8 +63,6 @@ class StorageInstanceBuilder
     /**
      * @param bool $debug
      *
-     * @throws \Exception
-     *
      * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface
      */
     public static function getStorageReadWriteInstance($debug = false)
@@ -76,8 +72,6 @@ class StorageInstanceBuilder
 
     /**
      * @param bool $debug
-     *
-     * @throws \Exception
      *
      * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
@@ -89,8 +83,6 @@ class StorageInstanceBuilder
     /**
      * @param string $type
      * @param bool $debug
-     *
-     * @throws \Exception
      *
      * @return \Spryker\Shared\Library\Storage\AdapterInterface
      */
@@ -111,7 +103,6 @@ class StorageInstanceBuilder
      * @param string $kvAdapter
      *
      * @throws \ErrorException
-     * @throws \Exception
      *
      * @return array
      */

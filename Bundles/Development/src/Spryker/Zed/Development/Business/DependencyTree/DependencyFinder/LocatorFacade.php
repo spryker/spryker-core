@@ -18,8 +18,6 @@ class LocatorFacade extends AbstractDependencyFinder
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function addDependencies(SplFileInfo $fileInfo)

@@ -103,6 +103,7 @@ class TransferServer
     }
 
     /**
+     * @throws \LogicException
      * @return \Symfony\Component\HttpFoundation\Request
      */
     private function getHttpRequest()

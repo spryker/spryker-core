@@ -176,7 +176,7 @@ class Store
     }
 
     /**
-     * @throws \Exception
+     * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
      *
      * @return string
      */

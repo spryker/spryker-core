@@ -23,8 +23,6 @@ class Distributor implements DistributorInterface
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
-     *
      * @return void
      */
     public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)

@@ -135,8 +135,6 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
      */
     public function isValidComparatorValue(ClauseTransfer $clauseTransfer)

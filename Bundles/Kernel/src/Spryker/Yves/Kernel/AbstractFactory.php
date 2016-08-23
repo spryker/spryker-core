@@ -71,8 +71,6 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     protected function resolveClient()

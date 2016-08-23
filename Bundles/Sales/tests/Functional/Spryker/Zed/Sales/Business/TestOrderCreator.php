@@ -62,8 +62,6 @@ class TestOrderCreator
      * @param int $grossPrice
      * @param int $taxRate
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createOrderItem(
@@ -91,7 +89,6 @@ class TestOrderCreator
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity)
@@ -128,7 +125,6 @@ class TestOrderCreator
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     protected function createOmsState()
@@ -141,7 +137,6 @@ class TestOrderCreator
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function createOmsProcess()
@@ -155,7 +150,6 @@ class TestOrderCreator
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return void
      */
     protected function createSalesExpense(SpySalesOrder $salesOrderEntity)
@@ -169,7 +163,6 @@ class TestOrderCreator
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function createSalesOrderAddress()

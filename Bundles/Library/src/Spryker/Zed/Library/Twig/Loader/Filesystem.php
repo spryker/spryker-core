@@ -90,6 +90,7 @@ class Filesystem extends \Twig_Loader_Filesystem
 
     /**
      * {@inheritdoc}
+     * @throws \Twig_Error_Loader
      */
     protected function findTemplate($name)
     {

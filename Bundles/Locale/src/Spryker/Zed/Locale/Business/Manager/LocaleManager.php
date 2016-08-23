@@ -91,8 +91,6 @@ class LocaleManager
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -129,8 +127,6 @@ class LocaleManager
 
     /**
      * @param string $localeName
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

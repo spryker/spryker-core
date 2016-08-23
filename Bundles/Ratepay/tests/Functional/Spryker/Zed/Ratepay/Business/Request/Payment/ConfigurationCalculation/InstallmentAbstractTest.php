@@ -60,7 +60,6 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer$ratepayPaymentEntity
      *
      * @return void

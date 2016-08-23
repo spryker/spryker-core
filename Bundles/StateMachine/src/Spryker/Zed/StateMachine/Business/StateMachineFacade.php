@@ -19,7 +19,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
 {
 
     /**
-     *
      * Trigger when first time adding item to state machine process
      *
      * Specification:
@@ -151,7 +150,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      *  Specification:
      *  - Read all processes from given state machine
      *  - Using graph library draw graph
@@ -199,7 +197,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      *  Specification:
      *  - Read state machine process list
      *  - Find all manual events
@@ -272,7 +269,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      * Specification:
      *  - Get history for given state machine item reading state machine history table
      *
@@ -309,7 +305,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      * Specification:
      *  - Find all items without flag for given state machine and process, parse xml.
      *

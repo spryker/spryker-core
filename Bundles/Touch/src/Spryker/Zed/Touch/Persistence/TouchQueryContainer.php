@@ -85,8 +85,6 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)

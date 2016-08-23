@@ -46,7 +46,6 @@ class Image
      * @param string $filename
      *
      * @throws \ErrorException
-     * @throws \Exception
      *
      * @return string
      */

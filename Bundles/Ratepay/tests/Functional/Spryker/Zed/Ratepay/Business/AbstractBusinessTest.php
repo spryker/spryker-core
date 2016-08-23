@@ -182,7 +182,6 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
     protected function getPaymentTransfer()
@@ -257,8 +256,6 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function createOrderEntity()

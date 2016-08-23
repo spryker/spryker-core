@@ -45,7 +45,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Check if given item transfer matching clause
      *
@@ -68,7 +67,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      *  Specification:
      * - Check if quote grandTotal matching clause
      *
@@ -138,7 +136,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      *  Specification:
      * - Collect all items matching given sku in clause
-     *
      *
      * @api
      *
@@ -218,7 +215,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Collect all items matching given quantity in clause
      *
@@ -237,7 +233,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Check if current week in year matching clause
      *
@@ -260,7 +255,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Check if current day of the week is matching clause
      *
@@ -328,7 +322,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Collect all available fields from all registered plugins
@@ -348,7 +341,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Collect all available comparator operators for given fieldName
@@ -369,7 +361,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Get all available comparators
@@ -389,7 +380,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Get boolean logical comparators
@@ -409,7 +399,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Given configure clause
      * - Select comparator operator based on clause operator, execute it and return result.
@@ -418,8 +407,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $compareWith
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */
@@ -431,7 +418,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Configure specification builder on type and query string
      * - Try building query string
@@ -472,7 +458,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Hydrate discount entity from DiscountConfiguratorTransfer and persist it.
      * - If discount type is voucher create/update voucher pool without voucherCodes
@@ -497,7 +482,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * - Hydrate data from entities to DiscountConfiguratorTransfer
      * - return DiscountConfiguratorTransfer
      *
-     *
      * @api
      *
      * @param int $idDiscount
@@ -512,7 +496,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Find discount entity
      * - Change discount state to enabled/disabled.
@@ -534,7 +517,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
 
     /**
-     *
      * Specification:
      * - Find discount to which voucherCodes have to be generated
      * - Change discount state to enabled/disabled.
@@ -557,13 +539,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Loop over all discountable items and calculate discount price amount per item
      * - Sum each amount to to total
      * - Round up cent fraction for total discount amount!
      * - Return total calculated discount amount on given discountable items
-     *
      *
      * @api
      *
@@ -580,7 +560,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *
      * - Return amount passed as parameter,
@@ -601,7 +580,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *
      * - Loop over each DiscountableItemTransfer and calculate each item price amount share from current discount total, for single item.
@@ -622,7 +600,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *
      * - For given voucherCodes find all voucher entities with counter
@@ -642,7 +619,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *
      * - For given voucherCodes find all voucher entities with counter
@@ -662,7 +638,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *
      * - Loop over all quote items, take calculated discounts and persist them discount amount is for single item

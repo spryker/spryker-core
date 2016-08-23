@@ -18,7 +18,6 @@ class Less implements ComparatorInterface
      * @param string $withValue
      *
      * @return bool
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {

@@ -54,8 +54,6 @@ class Zed extends Module
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
-     *
      * @return \Codeception\Module\WebDriver
      */
     protected function getWebDriver()

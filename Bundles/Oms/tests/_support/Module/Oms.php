@@ -72,7 +72,6 @@ class Oms extends Module
     }
 
     /**
-     *
      * @return void
      */
     public function checkTimeout()

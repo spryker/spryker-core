@@ -62,8 +62,6 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Console\Business\ConsoleFacade
      */
     protected function resolveFacade()

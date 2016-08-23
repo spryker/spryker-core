@@ -352,8 +352,6 @@ class SalesFacadeSaveOrderTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function getProcessEntity()

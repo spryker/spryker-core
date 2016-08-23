@@ -34,8 +34,6 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     /**
      * @param \Silex\Application $app
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function boot(Application $app)
@@ -51,8 +49,6 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Exception
      *
      * @return bool
      */

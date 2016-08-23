@@ -36,8 +36,6 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
-     * @throws \Exception
-     *
      * @return string
      */
     public function getSchemaDirectory()

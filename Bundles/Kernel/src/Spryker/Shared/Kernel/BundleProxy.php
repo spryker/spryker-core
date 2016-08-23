@@ -59,6 +59,7 @@ class BundleProxy
     /**
      * @param \Spryker\Shared\Kernel\Locator\LocatorInterface $locator
      *
+     * @throws \LogicException
      * @return $this
      */
     public function addLocator(LocatorInterface $locator)
@@ -82,6 +83,7 @@ class BundleProxy
      * @param string $method
      * @param string $arguments
      *
+     * @throws \LogicException
      * @return object
      */
     public function __call($method, $arguments)

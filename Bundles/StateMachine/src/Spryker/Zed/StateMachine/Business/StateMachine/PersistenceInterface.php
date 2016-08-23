@@ -52,7 +52,6 @@ interface PersistenceInterface
     public function getStateHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess);
 
     /**
-     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer

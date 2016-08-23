@@ -115,8 +115,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @api
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAbstractSkuForm()
@@ -132,8 +130,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     /**
      * @api
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

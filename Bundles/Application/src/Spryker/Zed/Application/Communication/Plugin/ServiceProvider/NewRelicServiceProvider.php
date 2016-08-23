@@ -33,8 +33,6 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
     /**
      * @param \Silex\Application $app
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function boot(Application $app)

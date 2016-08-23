@@ -46,8 +46,6 @@ class ProductCategoryPathQueryExpander
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandQuery(ModelCriteria $expandableQuery, $excludeDirectParent = true, $excludeRoot = true)

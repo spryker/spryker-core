@@ -21,8 +21,6 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
      * @param mixed $value
      * @param string|null $message
      *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
-     *
      * @return void
      */
     public function assertNumeric($value, $message = null)
@@ -35,8 +33,6 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
      *
      * @param mixed $value
      * @param string|null $message
-     *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
      *
      * @return void
      */
@@ -51,8 +47,6 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
      * @param mixed $value
      * @param string|null $message
      *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
-     *
      * @return void
      */
     public function assertString($value, $message = null)
@@ -66,8 +60,6 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
      * @param mixed $value
      * @param string|null $message
      *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
-     *
      * @return void
      */
     public function assertAlpha($value, $message = null)
@@ -80,8 +72,6 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
      *
      * @param mixed $value
      * @param string|null $message
-     *
-     * @throws \Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException
      *
      * @return void
      */

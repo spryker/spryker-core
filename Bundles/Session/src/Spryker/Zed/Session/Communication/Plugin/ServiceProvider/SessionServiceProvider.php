@@ -111,8 +111,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     /**
      * @param string $saveHandler
      *
-     * @throws \Exception
-     *
      * @return string|null
      */
     protected function getSavePath($saveHandler)
@@ -153,7 +151,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      * Secure flag of cookies can only be set to true if SSL is enabled. If you set it to true
      * without SSL enabled you will not get the same session in browsers like Firefox and Safari
      *
-     * @throws \Exception
      * @return bool
      */
     protected function secureCookie()

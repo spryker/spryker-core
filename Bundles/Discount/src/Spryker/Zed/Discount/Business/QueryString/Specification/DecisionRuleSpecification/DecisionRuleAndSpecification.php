@@ -35,7 +35,6 @@ class DecisionRuleAndSpecification implements DecisionRuleSpecificationInterface
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *

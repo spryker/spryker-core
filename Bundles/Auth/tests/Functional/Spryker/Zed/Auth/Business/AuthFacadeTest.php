@@ -126,8 +126,6 @@ class AuthFacadeTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\User\Persistence\SpyUser
      */
     protected function createTestUser()

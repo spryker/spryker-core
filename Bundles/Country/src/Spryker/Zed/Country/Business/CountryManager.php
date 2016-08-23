@@ -95,8 +95,6 @@ class CountryManager implements CountryManagerInterface
      *
      * @deprecated Use saveCountry() instead.
      *
-     * @throws \Spryker\Zed\Country\Business\Exception\CountryExistsException
-     *
      * @return int
      */
     public function createCountry($iso2code, array $countryData)

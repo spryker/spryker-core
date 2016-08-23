@@ -121,8 +121,6 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Shared\Library\DateFormatterInterface
      */
     protected function getDateFormatter()

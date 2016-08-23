@@ -26,8 +26,6 @@ class Environment
     ];
 
     /**
-     * @throws \Exception
-     *
      * @return void
      */
     public static function initialize()
@@ -189,6 +187,7 @@ class Environment
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
      *
+     * @throws \ErrorException
      * @return void
      */
     protected static function initializeErrorHandler()

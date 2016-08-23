@@ -64,7 +64,6 @@ class DiscountPersist implements DiscountPersistInterface
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -131,7 +130,6 @@ class DiscountPersist implements DiscountPersistInterface
      * @param bool $isActive
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -157,10 +155,7 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
-     *
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */

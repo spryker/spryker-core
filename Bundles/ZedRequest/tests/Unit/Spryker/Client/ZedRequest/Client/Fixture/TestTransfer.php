@@ -53,8 +53,6 @@ class TestTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireFoo()

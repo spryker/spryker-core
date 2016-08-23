@@ -31,6 +31,8 @@ class TransitionLogTable extends AbstractTable
 
     /**
      * @inheritDoc
+     * @throws \UnexpectedValueException
+     * @throws \Spryker\Zed\Oms\Business\Exception\TransitionLogException
      */
     protected function configure(TableConfiguration $config)
     {

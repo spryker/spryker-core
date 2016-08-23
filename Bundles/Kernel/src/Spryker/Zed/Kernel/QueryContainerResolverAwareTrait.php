@@ -43,8 +43,6 @@ trait QueryContainerResolverAwareTrait
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()

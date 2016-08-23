@@ -24,8 +24,6 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
     /**
      * @deprecated Will be removed in the next major version. Please use ZedRequestFactory->createClient().
      *
-     * @throws \Exception
-     *
      * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClient
      */
     protected function createZedClient()

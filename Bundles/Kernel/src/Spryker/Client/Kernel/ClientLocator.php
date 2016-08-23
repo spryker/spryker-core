@@ -35,8 +35,6 @@ class ClientLocator extends AbstractLocator
      *
      * @param string $bundle
      *
-     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     public function locate($bundle)

@@ -125,8 +125,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param array $localizedNames
      * @param int|null $price
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     *
      * @return int
      */
     public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null)
@@ -196,8 +194,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param bool $isOptional
      * @param int|null $sequence
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     *
      * @return int
      */
     public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null)
@@ -224,9 +220,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param int $idProductOptionTypeUsage
      * @param string $importKeyProductOptionValue
      * @param int|null $sequence
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
      *
      * @return int
      */
@@ -259,9 +252,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param string $importKeyProductOptionTypeA
      * @param string $importKeyProductOptionTypeB
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
-     *
      * @return void
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
@@ -292,10 +282,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param int $idProductOptionValueUsageSource
      * @param string $importKeyProductOptionValueTarget
      * @param string $operator
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      *
      * @return void
      */
@@ -328,10 +314,6 @@ class DataImportWriter implements DataImportWriterInterface
      * @param array $importKeysProductOptionValues
      * @param bool $isDefault
      * @param int|null $sequence
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      *
      * @return int
      */
