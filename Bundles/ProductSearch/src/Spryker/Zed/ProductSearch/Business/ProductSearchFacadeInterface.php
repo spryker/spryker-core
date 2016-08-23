@@ -60,6 +60,17 @@ interface ProductSearchFacadeInterface
     public function deactivateProductSearch($idProduct, array $localeCollection);
 
     /**
+     * TODO: Add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function createProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
+
+    /**
      * Specification:
      * - For the given product attribute the search preferences will be updated
      *
@@ -69,7 +80,7 @@ interface ProductSearchFacadeInterface
      *
      * @return void
      */
-    public function saveProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
+    public function updateProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
     /**
      * Specification:

@@ -49,6 +49,38 @@ class SearchPreferencesController extends AbstractController
      *
      * @return array
      */
+    public function createAction(Request $request)
+    {
+        $dataProvider = $this
+            ->getFactory()
+            ->createSearchPreferencesDataProvider();
+
+        $form = $this->getFactory()
+            ->createSearchPreferencesForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
+
+        if ($form->isValid()) {
+            $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
+            $productSearchPreferencesTransfer->fromArray($form->getData(), true);
+
+            $this->getFacade()->createProductSearchPreferences($productSearchPreferencesTransfer);
+
+            $this->addSuccessMessage('Attribute has been saved successfully');
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
     public function editAction(Request $request)
     {
         $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
@@ -60,19 +92,17 @@ class SearchPreferencesController extends AbstractController
         $form = $this->getFactory()
             ->createSearchPreferencesForm(
                 $dataProvider->getData($idAttributeKey),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions($idAttributeKey)
             )
             ->handleRequest($request);
 
         if ($form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
-            $productSearchPreferencesTransfer
-                ->setIdProductAttributeKey($idAttributeKey)
-                ->fromArray($form->getData(), true);
+            $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()->saveProductSearchPreferences($productSearchPreferencesTransfer);
+            $this->getFacade()->updateProductSearchPreferences($productSearchPreferencesTransfer);
 
-            $this->addSuccessMessage('Search Preferences has been saved successfully');
+            $this->addSuccessMessage('Attribute has been saved successfully');
         }
 
         return $this->viewResponse([

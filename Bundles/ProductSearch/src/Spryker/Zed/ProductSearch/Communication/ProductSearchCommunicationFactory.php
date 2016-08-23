@@ -41,7 +41,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSearchPreferencesForm(array $data = [], array $options = [])
     {
-        $filterFormType = new SearchPreferencesForm();
+        $filterFormType = new SearchPreferencesForm($this->getQueryContainer());
 
         return $this->getFormFactory()->create($filterFormType, $data, $options);
     }

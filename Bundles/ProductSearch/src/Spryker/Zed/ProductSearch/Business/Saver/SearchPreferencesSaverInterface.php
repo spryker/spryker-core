@@ -17,6 +17,13 @@ interface SearchPreferencesSaverInterface
      *
      * @return void
      */
-    public function save(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
+    public function create(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function update(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
 }

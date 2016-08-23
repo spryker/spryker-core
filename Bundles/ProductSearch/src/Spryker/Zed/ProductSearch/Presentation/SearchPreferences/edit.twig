@@ -1,17 +1,17 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit Search Preferences' %}
+{% set action_name = (app.request.query.get('id') > 0) ? 'Edit' : 'Create' %}
 
-{% block section_title widget_title | trans %}
-{% block head_title widget_title | trans %}
+{% block section_title 'Search Preferences' | trans %}
+{% block head_title action_name ~ ' Attribute to Search' | trans %}
 
 {% block action %}
-    {{ backActionButton('/product-search/search-preferences', 'Back to Search Preferences' | trans) }}
+    {{ backActionButton('/product-search/search-preferences', 'Back to list' | trans) }}
     <a href="#" class="btn-sm"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: action_name ~ ' Attribute to Search' } %}
         {% block widget_content %}
 
             {{ form_start(form) }}

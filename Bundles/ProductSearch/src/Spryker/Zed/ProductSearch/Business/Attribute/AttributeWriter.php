@@ -221,8 +221,6 @@ class AttributeWriter implements AttributeWriterInterface
         $productSearchAttributeEntity->fromArray($productSearchAttributeTransfer->modifiedToArray());
         $productSearchAttributeEntity->setFkProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
 
-        // TODO: set position to last+1
-
         $productSearchAttributeEntity->save();
         $productSearchAttributeTransfer->setIdProductSearchAttribute($productSearchAttributeEntity->getIdProductSearchAttribute());
 

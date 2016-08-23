@@ -64,7 +64,10 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createSearchPreferencesSaver()
     {
-        return new SearchPreferencesSaver($this->getQueryContainer());
+        return new SearchPreferencesSaver(
+            $this->getQueryContainer(),
+            $this->getProductFacade()
+        );
     }
 
     /**

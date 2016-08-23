@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ProductSearch\Business\Saver;
 
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class SearchPreferencesSaver implements SearchPreferencesSaverInterface
@@ -21,40 +23,110 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
     protected $productSearchQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
+     * @var \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface
      */
-    public function __construct(ProductSearchQueryContainerInterface $productSearchQueryContainer)
-    {
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
+     * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface $productFacade
+     */
+    public function __construct(
+        ProductSearchQueryContainerInterface $productSearchQueryContainer,
+        ProductSearchToProductInterface $productFacade
+    ) {
         $this->productSearchQueryContainer = $productSearchQueryContainer;
+        $this->productFacade = $productFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
+     * @throws \Exception
+     *
      * @return void
      */
-    public function save(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    public function create(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        $this->productSearchQueryContainer
+            ->getConnection()
+            ->beginTransaction();
+
+        $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productSearchPreferencesTransfer);
+
+        try {
+            $this
+                ->addFullText($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey())
+                ->addFullTextBoosted($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey())
+                ->addSuggestionTerms($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey())
+                ->addCompletionTerms($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey());
+
+            $this->productSearchQueryContainer
+                ->getConnection()
+                ->commit();
+        } catch (\Exception $e) {
+            $this->productSearchQueryContainer
+                ->getConnection()
+                ->rollBack();
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    protected function findOrCreateProductAttributeKey(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        if ($this->productFacade->hasProductAttributeKey($productSearchPreferencesTransfer->getKey())) {
+            $productAttributeKeyTransfer = $this->productFacade->getProductAttributeKey($productSearchPreferencesTransfer->getKey());
+
+            return $productAttributeKeyTransfer;
+        }
+
+        $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
+        $productAttributeKeyTransfer->setKey($productSearchPreferencesTransfer->getKey());
+        $productAttributeKeyTransfer = $this->productFacade->createProductAttributeKey($productAttributeKeyTransfer);
+
+        return $productAttributeKeyTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function update(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
         $this->productSearchQueryContainer->getConnection()->beginTransaction();
 
-        $idProductAttributeKey = $productSearchPreferencesTransfer
-            ->requireIdProductAttributeKey()
-            ->getIdProductAttributeKey();
+        try {
+            $idProductAttributeKey = $productSearchPreferencesTransfer
+                ->requireIdProductAttributeKey()
+                ->getIdProductAttributeKey();
 
-        $this->cleanProductSearchAttributeMap($idProductAttributeKey);
+            $this->cleanProductSearchAttributeMap($idProductAttributeKey);
 
-        $this
-            ->addFullText($productSearchPreferencesTransfer, $idProductAttributeKey)
-            ->addFullTextBoosted($productSearchPreferencesTransfer, $idProductAttributeKey)
-            ->addSuggestionTerms($productSearchPreferencesTransfer, $idProductAttributeKey)
-            ->addCompletionTerms($productSearchPreferencesTransfer, $idProductAttributeKey);
+            $this
+                ->addFullText($productSearchPreferencesTransfer, $idProductAttributeKey)
+                ->addFullTextBoosted($productSearchPreferencesTransfer, $idProductAttributeKey)
+                ->addSuggestionTerms($productSearchPreferencesTransfer, $idProductAttributeKey)
+                ->addCompletionTerms($productSearchPreferencesTransfer, $idProductAttributeKey);
 
-        /*
-         * TODO: we need to touch all products to trigger collectors (search only if possible) to update the searchable data.
-         * Maybe we'd need a different event to trigger the product search collector ("Apply search preferences" button in the UI).
-         */
+            $this->productSearchQueryContainer
+                ->getConnection()
+                ->commit();
+        } catch (\Exception $e) {
+            $this->productSearchQueryContainer
+                ->getConnection()
+                ->rollBack();
 
-        $this->productSearchQueryContainer->getConnection()->commit();
+            throw $e;
+        }
     }
 
     /**

@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class SearchPreferencesForm extends AbstractType
+class SearchPreferencesForm extends AbstractAttributeKeyForm
 {
 
-    const FIELD_ATTRIBUTE_NAME = 'attributeName';
+    const FIELD_ID_PRODUCT_ATTRIBUTE_KEY = 'idProductAttributeKey';
     const FIELD_FULL_TEXT = 'fullText';
     const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
     const FIELD_SUGGESTION_TERMS = 'suggestionTerms';
@@ -37,7 +36,8 @@ class SearchPreferencesForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addAttributeName($builder)
+            ->addIdProductAttributeKeyField($builder)
+            ->addKeyField($builder, $options)
             ->addFullTextField($builder)
             ->addFullTextBoostedField($builder)
             ->addSuggestionTermsField($builder)
@@ -49,11 +49,9 @@ class SearchPreferencesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeName(FormBuilderInterface $builder)
+    protected function addIdProductAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ATTRIBUTE_NAME, 'text', [
-            'disabled' => true,
-        ]);
+        $builder->add(self::FIELD_ID_PRODUCT_ATTRIBUTE_KEY, 'hidden');
 
         return $this;
     }
@@ -149,6 +147,15 @@ class SearchPreferencesForm extends AbstractType
                 return $submittedValue === 'yes' ? true : false;
             }
         ));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getKeyAutosuggestionUrl()
+    {
+        // TODO: create it's own url
+        return '/product-search/filter-preferences/keys';
     }
 
 }

@@ -5,6 +5,10 @@
 {% block section_title widget_title | trans %}
 {% block head_title widget_title | trans %}
 
+{% block action %}
+    {{ createActionButton('/product-search/search-preferences/create', 'Create Attribute to Search' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}

@@ -80,8 +80,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - For the given product attribute the search preferences will be updated
+     * TODO: Add specification
      *
      * @api
      *
@@ -89,12 +88,30 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @return void
      */
-    public function saveProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    public function createProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
         $this
             ->getFactory()
             ->createSearchPreferencesSaver()
-            ->save($productSearchPreferencesTransfer);
+            ->create($productSearchPreferencesTransfer);
+    }
+
+    /**
+     * Specification:
+     * - For the given product attribute the search preferences will be updated (TODO: review/extend specification)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function updateProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createSearchPreferencesSaver()
+            ->update($productSearchPreferencesTransfer);
     }
 
     /**
