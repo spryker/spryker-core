@@ -130,7 +130,7 @@ class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createQuoteTransfer()
     {
-        $quoteTransfer =  new QuoteTransfer();
+        $quoteTransfer = new QuoteTransfer();
 
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
         $shipmentMethodTransfer->setName('DummyShipment');

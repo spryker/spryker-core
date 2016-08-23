@@ -394,7 +394,7 @@ class Url
                 if (isset($parts[self::PASS])) {
                     $url .= ':' . $parts[self::PASS];
                 }
-                $url .=  '@';
+                $url .= '@';
             }
 
             $url .= $parts[self::HOST];
@@ -420,7 +420,7 @@ class Url
     {
         if (isset($parts[self::PATH]) && strlen($parts[self::PATH]) !== 0) {
             // Always ensure that the path begins with '/' if set and something is before the path
-            if ($url && $parts[self::PATH][0] !== '/' && mb_substr($url, -1)  !== '/') {
+            if ($url && $parts[self::PATH][0] !== '/' && mb_substr($url, -1) !== '/') {
                 $url .= '/';
             }
             $url .= $parts[self::PATH];

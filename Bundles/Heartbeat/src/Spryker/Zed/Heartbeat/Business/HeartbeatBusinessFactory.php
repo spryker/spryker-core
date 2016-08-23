@@ -100,7 +100,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPredisClient()
     {
-        $config =  $this->getConnectionParameters();
+        $config = $this->getConnectionParameters();
 
         return new PredisClient($config);
     }

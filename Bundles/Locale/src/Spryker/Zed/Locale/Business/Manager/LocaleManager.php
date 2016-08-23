@@ -73,7 +73,7 @@ class LocaleManager
      */
     public function getLocaleByCode($localeCode)
     {
-        $locales  = $this->getLocaleCollection();
+        $locales = $this->getLocaleCollection();
 
         if (!array_key_exists($localeCode, $locales)) {
             throw new MissingLocaleException(

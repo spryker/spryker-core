@@ -24,7 +24,7 @@ class DoesNotContain implements ComparatorInterface
     {
         $this->isValidValue($withValue);
 
-        return (stripos(trim($withValue), $clauseTransfer->getValue())  === false);
+        return (stripos(trim($withValue), $clauseTransfer->getValue()) === false);
     }
 
     /**
