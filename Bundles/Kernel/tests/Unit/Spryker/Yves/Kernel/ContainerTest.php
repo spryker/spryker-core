@@ -16,7 +16,7 @@ use Spryker\Yves\Kernel\Container;
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group Container
+ * @group ContainerTest
  */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
