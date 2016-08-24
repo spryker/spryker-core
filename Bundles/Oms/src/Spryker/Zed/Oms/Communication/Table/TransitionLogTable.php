@@ -118,6 +118,8 @@ class TransitionLogTable extends AbstractTable
     }
 
     /**
+     * @throws \BadMethodCallException
+     *
      * @return int
      */
     protected function getIdOrder()
