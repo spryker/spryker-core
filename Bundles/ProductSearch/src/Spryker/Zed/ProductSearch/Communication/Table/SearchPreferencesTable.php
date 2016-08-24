@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Communication\Table;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;
@@ -109,14 +110,7 @@ class SearchPreferencesTable extends AbstractTable
                 self::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_FULL_TEXT_BOOSTED)),
                 self::COL_SUGGESTION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_SUGGESTION_TERMS)),
                 self::COL_COMPLETION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_COMPLETION_TERMS)),
-                self::ACTION => $this->generateEditButton(
-                    sprintf(
-                        '/product-search/search-preferences/edit?%s=%d',
-                        SearchPreferencesController::PARAM_ID,
-                        $productAttributeKeyEntity->getIdProductAttributeKey()
-                    ),
-                    'Edit'
-                ),
+                self::ACTION => $this->getActions($productAttributeKeyEntity),
             ];
         }
 
@@ -147,6 +141,35 @@ class SearchPreferencesTable extends AbstractTable
     protected function boolToString($boolValue)
     {
         return $boolValue ? 'yes' : 'no';
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey $productAttributeKeyEntity
+     *
+     * @return string
+     */
+    protected function getActions(SpyProductAttributeKey $productAttributeKeyEntity)
+    {
+        $actions = [
+            $this->generateEditButton(
+                sprintf(
+                    '/product-search/search-preferences/edit?%s=%d',
+                    SearchPreferencesController::PARAM_ID,
+                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                ),
+                'Edit'
+            ),
+            $this->generateRemoveButton(
+                sprintf(
+                    '/product-search/search-preferences/clean?%s=%d',
+                    SearchPreferencesController::PARAM_ID,
+                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                ),
+                'Deactivate all'
+            ),
+        ];
+
+        return implode(' ', $actions);
     }
 
 }

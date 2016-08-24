@@ -76,26 +76,6 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
-     */
-    protected function findOrCreateProductAttributeKey(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
-    {
-        if ($this->productFacade->hasProductAttributeKey($productSearchPreferencesTransfer->getKey())) {
-            $productAttributeKeyTransfer = $this->productFacade->getProductAttributeKey($productSearchPreferencesTransfer->getKey());
-
-            return $productAttributeKeyTransfer;
-        }
-
-        $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
-        $productAttributeKeyTransfer->setKey($productSearchPreferencesTransfer->getKey());
-        $productAttributeKeyTransfer = $this->productFacade->createProductAttributeKey($productAttributeKeyTransfer);
-
-        return $productAttributeKeyTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
-     *
      * @throws \Exception
      *
      * @return void
@@ -127,6 +107,40 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 
             throw $e;
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function clean(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        $idProductAttributeKey = $productSearchPreferencesTransfer
+            ->requireIdProductAttributeKey()
+            ->getIdProductAttributeKey();
+
+        $this->cleanProductSearchAttributeMap($idProductAttributeKey);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    protected function findOrCreateProductAttributeKey(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        if ($this->productFacade->hasProductAttributeKey($productSearchPreferencesTransfer->getKey())) {
+            $productAttributeKeyTransfer = $this->productFacade->getProductAttributeKey($productSearchPreferencesTransfer->getKey());
+
+            return $productAttributeKeyTransfer;
+        }
+
+        $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
+        $productAttributeKeyTransfer->setKey($productSearchPreferencesTransfer->getKey());
+        $productAttributeKeyTransfer = $this->productFacade->createProductAttributeKey($productAttributeKeyTransfer);
+
+        return $productAttributeKeyTransfer;
     }
 
     /**

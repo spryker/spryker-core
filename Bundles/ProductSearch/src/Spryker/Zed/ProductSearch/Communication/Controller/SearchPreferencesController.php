@@ -110,4 +110,21 @@ class SearchPreferencesController extends AbstractController
         ]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cleanAction(Request $request)
+    {
+        $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
+
+        $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
+        $productSearchPreferencesTransfer->setIdProductAttributeKey($idAttributeKey);
+
+        $this->getFacade()->cleanProductSearchPreferences($productSearchPreferencesTransfer);
+
+        return $this->redirectResponse('/product-search/search-preferences');
+    }
+
 }

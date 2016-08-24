@@ -115,6 +115,23 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
+     * TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     *
+     * @return void
+     */
+    public function cleanProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createSearchPreferencesSaver()
+            ->clean($productSearchPreferencesTransfer);
+    }
+
+    /**
      * Specification:
      * - Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted
      * product search attribute list

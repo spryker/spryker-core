@@ -5,8 +5,6 @@
         <label>Search and Filters</label>
         <title>Search and Filters</title>
         <bundle>product-search</bundle>
-        <controller>filters</controller>
-        <action>index</action>
         <icon>fa-search</icon>
         <pages>
             <search-preferences>
@@ -15,6 +13,7 @@
                 <bundle>product-search</bundle>
                 <controller>search-preferences</controller>
                 <action>index</action>
+                <icon>fa-search</icon>
             </search-preferences>
             <filter-preferences>
                 <label>Filter Preferences</label>
@@ -22,6 +21,7 @@
                 <bundle>product-search</bundle>
                 <controller>filter-preferences</controller>
                 <action>index</action>
+                <icon>fa-filter</icon>
             </filter-preferences>
         </pages>
     </search-and-filters>

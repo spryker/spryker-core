@@ -163,9 +163,7 @@ class FilterPreferencesController extends AbstractController
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
         $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
 
-        $this
-            ->getFacade()
-            ->deleteProductSearchAttribute($productSearchAttributeTransfer);
+        $this->getFacade()->deleteProductSearchAttribute($productSearchAttributeTransfer);
 
         return $this->redirectResponse('/product-search/filter-preferences');
     }
