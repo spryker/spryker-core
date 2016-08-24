@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Table;
 
+use BadMethodCallException;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -122,6 +123,9 @@ class TransitionLogTable extends AbstractTable
     protected function getIdOrder()
     {
         $idOrder = $this->request->get('id-order');
+        if (!$idOrder) {
+            throw new BadMethodCallException('Please pass a sales order id');
+        }
 
         return $idOrder;
     }

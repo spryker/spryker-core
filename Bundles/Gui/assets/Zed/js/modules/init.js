@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
@@ -13,12 +13,15 @@ $(document).ready(function() {
     $('.html-editor').summernote(editor.getConfig());
 
     /** Draw data tables */
-    $('.gui-table-data').dataTable();
+    $('.gui-table-data').dataTable({
+        scrollX: 'auto'
+    });
 
     /** Draw data tables without search */
     $('.gui-table-data-no-search').dataTable({
         bFilter: false,
-        bInfo: false
+        bInfo: false,
+        scrollX: 'auto'
     });
 
     /** all elements with the same class will have the same height */
