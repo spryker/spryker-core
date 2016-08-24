@@ -270,7 +270,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return void
      *
@@ -300,7 +300,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return string
      */
