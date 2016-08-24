@@ -97,7 +97,7 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface $collectorPluginMock
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface|null $collectorPluginMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */

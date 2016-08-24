@@ -178,7 +178,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface|null $timeoutMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistenceMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface|null $stateMachinePersistenceMock
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $propelConnectionMock
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater

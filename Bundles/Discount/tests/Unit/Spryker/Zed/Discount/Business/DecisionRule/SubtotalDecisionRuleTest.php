@@ -70,8 +70,8 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
 
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorMock
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManagerMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface|null $currencyManagerMock
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule
      */

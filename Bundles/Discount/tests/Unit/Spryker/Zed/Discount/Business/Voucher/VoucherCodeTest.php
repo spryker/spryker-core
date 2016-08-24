@@ -214,7 +214,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      *
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherCode
      */

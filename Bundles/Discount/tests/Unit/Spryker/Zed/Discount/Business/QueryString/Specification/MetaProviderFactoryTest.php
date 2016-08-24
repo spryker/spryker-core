@@ -81,7 +81,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory $discountBusinessFactoryMock
+     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory|null $discountBusinessFactoryMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory
      */

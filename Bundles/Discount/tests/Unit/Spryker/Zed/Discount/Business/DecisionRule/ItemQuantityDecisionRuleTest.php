@@ -44,7 +44,7 @@ class ItemQuantityDecisionRuleTest extends BaseRuleTester
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
      */

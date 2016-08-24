@@ -65,8 +65,8 @@ class LockedTriggerTest extends StateMachineMocks
 
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface $triggerMock
-     * @param \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface $itemLockMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface|null $triggerMock
+     * @param \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface|null $itemLockMock
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger
      */

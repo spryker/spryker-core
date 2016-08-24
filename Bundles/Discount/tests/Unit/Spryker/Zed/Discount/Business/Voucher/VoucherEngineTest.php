@@ -197,9 +197,9 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfigMock
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainerMock
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
+     * @param \Spryker\Zed\Discount\DiscountConfig|null $discountConfigMock
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher|null $discountVoucherEntity
      *
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */

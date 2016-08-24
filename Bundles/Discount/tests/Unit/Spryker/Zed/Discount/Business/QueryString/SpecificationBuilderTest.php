@@ -230,8 +230,8 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $createComparatorOperatorsMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProviderMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $createComparatorOperatorsMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface|null $metaDataProviderMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */

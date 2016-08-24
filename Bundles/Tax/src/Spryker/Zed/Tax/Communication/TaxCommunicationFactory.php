@@ -65,7 +65,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer|null $taxSetTransfer
      *
      * @return \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider
      */
@@ -75,7 +75,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer|null $taxRateTransfer
      *
      * @return \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider
      */

@@ -404,7 +404,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param int $amount
-     * @param string $voucherCoder
+     * @param string|null $voucherCoder
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */

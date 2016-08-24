@@ -164,9 +164,9 @@ class FinderTest extends StateMachineMocks
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface $builderMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $handlerResolverMock
-     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainerMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface|null $builderMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface|null $stateMachineQueryContainerMock
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Finder
      */
