@@ -91,7 +91,7 @@ class ConsoleBootstrap extends Application
         $newRelicApi = $this->getNewRelicApi();
         $newRelicApi->markAsBackgroundJob(true);
         $newRelicApi->setNameOfTransaction($this->getCommandTransactionName($input));
-        
+
         $output->writeln($this->getInfoText());
 
         return parent::doRun($input, $output);
@@ -106,13 +106,13 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @param InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return string
      */
     protected function getCommandTransactionName(InputInterface $input)
     {
-        return static::NEW_RELIC_TRANSACTION_PREFIX . (string) $input;
+        return static::NEW_RELIC_TRANSACTION_PREFIX . (string)$input;
     }
 
     /**
