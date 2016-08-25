@@ -63,7 +63,11 @@ class RefundTable extends AbstractTable
         ]);
 
         $config->setSortable([
+            SpyRefundTableMap::COL_ID_REFUND,
+            SpyRefundTableMap::COL_FK_SALES_ORDER,
             SpyRefundTableMap::COL_CREATED_AT,
+            SpyRefundTableMap::COL_AMOUNT,
+            SpyRefundTableMap::COL_COMMENT,
         ]);
 
         $config->setSearchable([
@@ -73,6 +77,9 @@ class RefundTable extends AbstractTable
             SpyRefundTableMap::COL_AMOUNT,
             SpyRefundTableMap::COL_COMMENT,
         ]);
+
+        $config->setDefaultSortColumnIndex(0);
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
     }
@@ -85,7 +92,6 @@ class RefundTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $refundQuery = $this->refundQueryContainer->queryRefunds();
-        $refundQuery->orderByIdRefund(Criteria::DESC);
 
         $queryResults = $this->runQuery($refundQuery, $config);
         $results = [];
