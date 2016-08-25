@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -39,21 +39,29 @@ class AttributeWriter implements AttributeWriterInterface
     protected $attributeValueWriter;
 
     /**
+     * @var \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected $glossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriterInterface $attributeValueWriter
+     * @param \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     public function __construct(
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToGlossaryInterface $glossaryFacade,
-        AttributeValueWriterInterface $attributeValueWriter
+        AttributeValueWriterInterface $attributeValueWriter,
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->productFacade = $productFacade;
         $this->glossaryFacade = $glossaryFacade;
         $this->attributeValueWriter = $attributeValueWriter;
+        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
     }
 
     /**
@@ -193,7 +201,7 @@ class AttributeWriter implements AttributeWriterInterface
      */
     protected function saveGlossaryKeyIfNotExists(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
     {
-        $glossaryKey = ProductManagementConstants::PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX . $productAttributeKeyTransfer->getKey();
+        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($productAttributeKeyTransfer->getKey());
         if ($this->glossaryFacade->hasKey($glossaryKey) === false) {
             $this->glossaryFacade->createKey($glossaryKey);
         }

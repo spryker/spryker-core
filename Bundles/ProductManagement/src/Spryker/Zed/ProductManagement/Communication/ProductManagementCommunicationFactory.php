@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication;
 
+use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Business\Product\VariantGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
@@ -400,7 +401,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new AttributeTranslationFormCollectionDataProvider(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
         );
     }
 
@@ -466,5 +468,12 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new VariantTable($this->getProductQueryContainer(), $idProductAbstract);
     }
 
+    /**
+     * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected function createAttributeGlossaryKeyBuilder()
+    {
+        return new AttributeGlossaryKeyBuilder();
+    }
 
 }

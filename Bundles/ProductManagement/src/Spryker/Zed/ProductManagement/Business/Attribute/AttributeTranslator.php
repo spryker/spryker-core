@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -36,18 +36,26 @@ class AttributeTranslator implements AttributeTranslatorInterface
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected $glossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     public function __construct(
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
-        ProductManagementToGlossaryInterface $glossaryFacade
+        ProductManagementToGlossaryInterface $glossaryFacade,
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
     }
 
     /**
@@ -84,16 +92,6 @@ class AttributeTranslator implements AttributeTranslatorInterface
     }
 
     /**
-     * @param string $attributeName
-     *
-     * @return string
-     */
-    protected function generateAttributeGlossaryKey($attributeName)
-    {
-        return ProductManagementConstants::PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX . $attributeName;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
      *
      * @return void
@@ -117,7 +115,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
      */
     protected function saveAttributeKeyToGlossary($key, $keyTranslation, LocaleTransfer $localeTransfer)
     {
-        $attributeGlossaryKey = $this->generateAttributeGlossaryKey($key);
+        $attributeGlossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($key);
 
         if ($this->glossaryFacade->hasTranslation($attributeGlossaryKey, $localeTransfer)) {
             $this->glossaryFacade->updateAndTouchTranslation(

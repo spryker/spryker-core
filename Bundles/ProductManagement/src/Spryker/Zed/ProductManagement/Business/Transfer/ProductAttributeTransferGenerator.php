@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 
@@ -32,15 +32,23 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected $glossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     public function __construct(
         ProductManagementToLocaleInterface $localeFacade,
-        ProductManagementToGlossaryInterface $glossaryFacade
+        ProductManagementToGlossaryInterface $glossaryFacade,
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
     }
 
     /**
@@ -157,7 +165,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
      */
     protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {
-        $glossaryKey = ProductManagementConstants::PRODUCT_MANAGEMENT_ATTRIBUTE_GLOSSARY_PREFIX . $attributeKey;
+        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
 
         if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
             return $this->glossaryFacade

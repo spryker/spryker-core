@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Business;
 
+use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManager;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
@@ -138,7 +139,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
         return new AttributeTranslator(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
         );
     }
 
@@ -170,7 +172,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductFacade(),
             $this->getGlossaryFacade(),
-            $this->createAttributeValueWriter()
+            $this->createAttributeValueWriter(),
+            $this->createAttributeGlossaryKeyBuilder()
         );
     }
 
@@ -203,8 +206,17 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeTransferGenerator(
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected function createAttributeGlossaryKeyBuilder()
+    {
+        return new AttributeGlossaryKeyBuilder();
     }
 
 }
