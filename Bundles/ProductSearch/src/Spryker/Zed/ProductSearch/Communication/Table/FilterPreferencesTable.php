@@ -58,7 +58,7 @@ class FilterPreferencesTable extends AbstractTable
     {
         return [
             self::COL_POSITION => 'Filter position',
-            self::COL_NAME => 'Attribute name',
+            self::COL_NAME => 'Attribute key',
             self::COL_FILTER_TYPE => 'Filter type',
             self::ACTION => 'Action',
         ];

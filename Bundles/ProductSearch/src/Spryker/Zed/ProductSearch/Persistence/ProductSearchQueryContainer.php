@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductSearch\Persistence;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
@@ -182,6 +183,21 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
         return $this
             ->getFactory()
             ->createProductSearchAttributeQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys()
+    {
+        return $this
+            ->queryProductAttributeKey()
+            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
+            ->useSpyProductSearchAttributeQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIdProductSearchAttribute(null)
+            ->endUse();
     }
 
 }

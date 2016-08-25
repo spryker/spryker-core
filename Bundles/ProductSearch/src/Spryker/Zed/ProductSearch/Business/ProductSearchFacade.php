@@ -143,15 +143,11 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @return array
      */
-    public function suggestUnusedSearchKeys($searchText = '', $limit = 10)
+    public function suggestUnusedProductSearchAttributeKeys($searchText = '', $limit = 10)
     {
-        // FIXME
-        return [
-            'Foo', 'Bar', 'Baz'
-        ];
-//        return $this->getFactory()
-//            ->createAttributeReader()
-//            ->suggestUnusedKeys($searchText, $limit);
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->suggestUnusedKeys($searchText, $limit);
     }
 
     /**

@@ -58,6 +58,39 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addKeyField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_KEY, 'text', [
+            'label' => 'Attribute key',
+            'constraints' => $this->createAttributeKeyFieldConstraints(),
+            'disabled' => $options[self::OPTION_IS_UPDATE],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function isUniqueKey($key)
+    {
+        $keyCount = $this->productSearchQueryContainer
+            ->queryProductAttributeKey()
+            ->joinSpyProductSearchAttributeMap()
+            ->filterByKey($key)
+            ->count();
+
+        return ($keyCount === 0);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -147,15 +180,6 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
                 return $submittedValue === 'yes' ? true : false;
             }
         ));
-    }
-
-    /**
-     * @return string
-     */
-    protected function getKeyAutosuggestionUrl()
-    {
-        // TODO: create it's own url
-        return '/product-search/filter-preferences/keys';
     }
 
 }

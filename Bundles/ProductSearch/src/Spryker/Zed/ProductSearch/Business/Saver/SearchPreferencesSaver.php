@@ -14,6 +14,7 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
+// TODO Rename and separate to AttributeMapReader, AttributeMapReaderWriter
 class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 {
 

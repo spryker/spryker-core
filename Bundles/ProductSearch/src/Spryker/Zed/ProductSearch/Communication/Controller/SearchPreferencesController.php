@@ -68,7 +68,7 @@ class SearchPreferencesController extends AbstractController
 
             $this->getFacade()->createProductSearchPreferences($productSearchPreferencesTransfer);
 
-            $this->addSuccessMessage('Attribute has been saved successfully');
+            return $this->redirectResponse('/product-search/search-preferences');
         }
 
         return $this->viewResponse([
@@ -101,8 +101,6 @@ class SearchPreferencesController extends AbstractController
             $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 
             $this->getFacade()->updateProductSearchPreferences($productSearchPreferencesTransfer);
-
-            $this->addSuccessMessage('Attribute has been saved successfully');
         }
 
         return $this->viewResponse([

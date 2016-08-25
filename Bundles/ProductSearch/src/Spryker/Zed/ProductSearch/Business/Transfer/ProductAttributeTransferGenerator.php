@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductSearchAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
+use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Shared\ProductSearch\ProductSearchConstants;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
@@ -29,15 +30,23 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     protected $glossaryFacade;
 
     /**
+     * @var GlossaryKeyBuilderInterface $glossaryKeyBuilder
+     */
+    protected $glossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     public function __construct(
         ProductSearchToLocaleInterface $localeFacade,
-        ProductSearchToGlossaryInterface $glossaryFacade
+        ProductSearchToGlossaryInterface $glossaryFacade,
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
     }
 
     /**
@@ -87,7 +96,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
      */
     protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {
-        $glossaryKey = ProductSearchConstants::PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX . $attributeKey;
+        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
 
         if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
             return $this->glossaryFacade

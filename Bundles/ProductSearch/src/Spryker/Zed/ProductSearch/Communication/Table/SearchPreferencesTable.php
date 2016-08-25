@@ -59,7 +59,7 @@ class SearchPreferencesTable extends AbstractTable
     protected function getHeaderFields()
     {
         return [
-            self::COL_NAME => 'Attribute name',
+            self::COL_NAME => 'Attribute key',
             self::COL_FULL_TEXT => 'Include for Full Text',
             self::COL_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
             self::COL_SUGGESTION_TERMS => 'Include for Suggestion',

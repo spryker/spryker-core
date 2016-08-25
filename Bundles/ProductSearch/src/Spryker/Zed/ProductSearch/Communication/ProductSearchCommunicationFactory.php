@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Communication;
 
+use Spryker\Shared\ProductSearch\Code\KeyBuilder\FilterGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\FilterPreferencesDataProvider;
 use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\SearchPreferencesDataProvider;
@@ -76,7 +77,8 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getConfig(),
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->createFilterGlossaryKeyBuilder()
         );
     }
 
@@ -110,6 +112,14 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     public function createAttributeFormTransferGenerator()
     {
         return new AttributeFormTransferGenerator();
+    }
+
+    /**
+     * @return \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected function createFilterGlossaryKeyBuilder()
+    {
+        return new FilterGlossaryKeyBuilder();
     }
 
 }

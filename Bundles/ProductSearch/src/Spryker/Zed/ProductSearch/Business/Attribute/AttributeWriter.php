@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
+use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface;
@@ -41,21 +41,29 @@ class AttributeWriter implements AttributeWriterInterface
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected $glossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface $productFacade
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     public function __construct(
         ProductSearchQueryContainerInterface $productSearchQueryContainer,
         ProductSearchToProductInterface $productFacade,
         ProductSearchToLocaleInterface $localeFacade,
-        ProductSearchToGlossaryInterface $glossaryFacade
+        ProductSearchToGlossaryInterface $glossaryFacade,
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->productSearchQueryContainer = $productSearchQueryContainer;
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
     }
 
     /**
@@ -67,7 +75,9 @@ class AttributeWriter implements AttributeWriterInterface
      */
     public function create(ProductSearchAttributeTransfer $productSearchAttributeTransfer)
     {
-        // TODO: add transfer assertion
+        $productSearchAttributeTransfer
+            ->requireKey()
+            ->requireFilterType();
 
         $this->productSearchQueryContainer
             ->getConnection()
@@ -102,7 +112,9 @@ class AttributeWriter implements AttributeWriterInterface
      */
     public function update(ProductSearchAttributeTransfer $productSearchAttributeTransfer)
     {
-        // TODO: add transfer assertion
+        $productSearchAttributeTransfer
+            ->requireKey()
+            ->requireIdProductSearchAttribute();
 
         $this->productSearchQueryContainer
             ->getConnection()
@@ -160,20 +172,16 @@ class AttributeWriter implements AttributeWriterInterface
 
         try {
             foreach ($productSearchAttributes as $productSearchAttributeTransfer) {
+                $productSearchAttributeTransfer
+                    ->requireIdProductSearchAttribute()
+                    ->requirePosition();
+
                 $productSearchAttributeEntity = $this->productSearchQueryContainer
                     ->queryProductSearchAttribute()
-                    ->findOneByIdProductSearchAttribute(
-                        $productSearchAttributeTransfer
-                            ->requireIdProductSearchAttribute()
-                            ->getIdProductSearchAttribute()
-                    );
+                    ->findOneByIdProductSearchAttribute($productSearchAttributeTransfer->getIdProductSearchAttribute());
 
                 $productSearchAttributeEntity
-                    ->setPosition(
-                        $productSearchAttributeTransfer
-                            ->requirePosition()
-                            ->getPosition()
-                    )
+                    ->setPosition($productSearchAttributeTransfer->getPosition())
                     ->save();
             }
 
@@ -255,21 +263,10 @@ class AttributeWriter implements AttributeWriterInterface
      */
     protected function saveGlossaryKeyIfNotExists(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
     {
-        $glossaryKey = $this->generateAttributeGlossaryKey($productAttributeKeyTransfer->getKey());
+        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($productAttributeKeyTransfer->getKey());
         if ($this->glossaryFacade->hasKey($glossaryKey) === false) {
             $this->glossaryFacade->createKey($glossaryKey);
         }
-    }
-
-    /**
-     * @param string $attributeName
-     *
-     * @return string
-     */
-    protected function generateAttributeGlossaryKey($attributeName)
-    {
-        // TODO: consider to move this to it's own class and refactor data provider also (+ same for product manager bundle)
-        return ProductSearchConstants::PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX . $attributeName;
     }
 
     /**
@@ -296,7 +293,7 @@ class AttributeWriter implements AttributeWriterInterface
      */
     protected function saveAttributeKeyToGlossary($key, $keyTranslation, LocaleTransfer $localeTransfer)
     {
-        $attributeGlossaryKey = $this->generateAttributeGlossaryKey($key);
+        $attributeGlossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($key);
 
         if ($this->glossaryFacade->hasTranslation($attributeGlossaryKey, $localeTransfer)) {
             $this->glossaryFacade->updateAndTouchTranslation(

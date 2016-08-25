@@ -105,7 +105,7 @@ interface ProductSearchFacadeInterface
      *
      * @return array
      */
-    public function suggestUnusedSearchKeys($searchText = '', $limit = 10);
+    public function suggestUnusedProductSearchAttributeKeys($searchText = '', $limit = 10);
 
     /**
      * TODO: add specification

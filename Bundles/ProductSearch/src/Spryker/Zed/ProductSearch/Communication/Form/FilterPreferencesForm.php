@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
-use Spryker\Zed\ProductSearch\Communication\Form\AttributeTranslationForm;
+use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -18,9 +18,6 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
     const FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE = 'id_product_search_attribute';
     const FIELD_FILTER_TYPE = 'filter_type';
     const FIELD_TRANSLATIONS = 'translations';
-
-    const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
-    const OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS = 'attribute_translation_collection_options';
 
     /**
      * @return string The name of this type
@@ -77,10 +74,44 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      *
      * @return $this
      */
+    protected function addKeyField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
+            'label' => 'Attribute key',
+            'url' => '/product-search/filter-preferences/keys',
+            'constraints' => $this->createAttributeKeyFieldConstraints(),
+            'disabled' => $options[self::OPTION_IS_UPDATE],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function isUniqueKey($key)
+    {
+        $keyCount = $this->productSearchQueryContainer
+            ->queryProductAttributeKey()
+            ->joinSpyProductSearchAttribute()
+            ->filterByKey($key)
+            ->count();
+
+        return ($keyCount === 0);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_FILTER_TYPE, 'choice', [
-            'label' => 'Input type',
+            'label' => 'Filter type',
             'choices' => $options[self::OPTION_FILTER_TYPE_CHOICES],
             'constraints' => [
                 new NotBlank(),
@@ -104,15 +135,6 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
         ]);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getKeyAutosuggestionUrl()
-    {
-        // TODO: create it's own url
-        return '/product-search/filter-preferences/keys';
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
+use Spryker\Shared\ProductSearch\Code\KeyBuilder\FilterGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
@@ -79,7 +80,8 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->createFilterGlossaryKeyBuilder()
         );
     }
 
@@ -126,8 +128,17 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeTransferGenerator(
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->createFilterGlossaryKeyBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected function createFilterGlossaryKeyBuilder()
+    {
+        return new FilterGlossaryKeyBuilder();
     }
 
 }

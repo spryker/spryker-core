@@ -177,7 +177,7 @@ class FilterPreferencesController extends AbstractController
     {
         $searchTerm = $request->query->get(self::PARAM_TERM);
 
-        $keys = $this->getFacade()->suggestUnusedSearchKeys($searchTerm);
+        $keys = $this->getFacade()->suggestUnusedProductSearchAttributeKeys($searchTerm);
 
         return $this->jsonResponse($keys);
     }

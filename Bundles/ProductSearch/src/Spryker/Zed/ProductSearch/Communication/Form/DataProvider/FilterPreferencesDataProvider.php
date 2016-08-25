@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
+use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductSearch\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
@@ -40,21 +40,29 @@ class FilterPreferencesDataProvider
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected $glossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
      * @param \Spryker\Zed\ProductSearch\ProductSearchConfig $config
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     public function __construct(
         ProductSearchQueryContainerInterface $productSearchQueryContainer,
         ProductSearchConfig $config,
         ProductSearchToLocaleInterface $localeFacade,
-        ProductSearchToGlossaryInterface $glossaryFacade
+        ProductSearchToGlossaryInterface $glossaryFacade,
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->productSearchQueryContainer = $productSearchQueryContainer;
         $this->config = $config;
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
     }
 
     /**
@@ -148,7 +156,7 @@ class FilterPreferencesDataProvider
      */
     protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {
-        $glossaryKey = ProductSearchConstants::PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX . $attributeKey;
+        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
 
         if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
             return $this->glossaryFacade

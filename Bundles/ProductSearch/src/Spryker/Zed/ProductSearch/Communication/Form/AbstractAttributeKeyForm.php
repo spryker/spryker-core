@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -73,39 +72,33 @@ abstract class AbstractAttributeKeyForm extends AbstractType
      *
      * @return $this
      */
-    protected function addKeyField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
-            'label' => 'Attribute key',
-            'url' => $this->getKeyAutosuggestionUrl(),
-            'constraints' => [
-                new NotBlank(),
-                new Callback([
-                    'methods' => [
-                        function ($key, ExecutionContextInterface $context) {
-                            $keyCount = $this->productSearchQueryContainer
-                                ->queryProductAttributeKey()
-                                ->joinSpyProductSearchAttribute()
-                                ->filterByKey($key)
-                                ->count();
-
-                            if ($keyCount > 0) {
-                                $context->addViolation('Attribute key is already used');
-                            }
-                        },
-                    ],
-                    'groups' => [self::GROUP_UNIQUE_KEY]
-                ]),
-            ],
-            'disabled' => $options[self::OPTION_IS_UPDATE],
-        ]);
-
-        return $this;
-    }
+    abstract protected function addKeyField(FormBuilderInterface $builder, array $options);
 
     /**
-     * @return string
+     * @param string $key
+     *
+     * @return bool
      */
-    abstract protected function getKeyAutosuggestionUrl();
+    abstract protected function isUniqueKey($key);
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    protected function createAttributeKeyFieldConstraints()
+    {
+        return [
+            new NotBlank(),
+            new Callback([
+                'methods' => [
+                    function ($key, ExecutionContextInterface $context) {
+                        if (!$this->isUniqueKey($key)) {
+                            $context->addViolation('Attribute key is already used');
+                        }
+                    },
+                ],
+                'groups' => [self::GROUP_UNIQUE_KEY]
+            ]),
+        ];
+    }
 
 }
