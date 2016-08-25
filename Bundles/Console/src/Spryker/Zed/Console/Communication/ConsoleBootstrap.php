@@ -17,8 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleBootstrap extends Application
 {
 
-    const NEW_RELIC_TRANSACTION_PREFIX = 'vendor/bin/console ';
-
     /**
      * @var \Spryker\Zed\Console\Business\ConsoleFacade
      */
@@ -112,7 +110,7 @@ class ConsoleBootstrap extends Application
      */
     protected function getCommandTransactionName(InputInterface $input)
     {
-        return static::NEW_RELIC_TRANSACTION_PREFIX . (string)$input;
+        return 'vendor/bin/console ' . (string)$input;
     }
 
     /**
