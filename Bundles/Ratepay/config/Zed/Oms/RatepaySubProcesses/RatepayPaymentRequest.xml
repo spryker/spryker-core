@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<statemachine
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../process.xsd"
+>
+    <process name="RatepayPaymentRequest">
+
+        <states>
+            <state name="payment request"/>
+            <state name="payment request error"/>
+        </states>
+
+        <transitions>
+            <transition happy="true" condition="Ratepay/IsPaymentRequestSuccess">
+                <source>payment request</source>
+                <target>payment confirmation</target>
+                <event>payment request</event>
+            </transition>
+
+            <transition>
+                <source>payment request</source>
+                <target>payment request error</target>
+                <event>payment request</event>
+            </transition>
+
+        </transitions>
+        <events>
+            <event name="payment request" onEnter="true" command="Ratepay/PaymentRequest" />
+        </events>
+    </process>
+</statemachine>

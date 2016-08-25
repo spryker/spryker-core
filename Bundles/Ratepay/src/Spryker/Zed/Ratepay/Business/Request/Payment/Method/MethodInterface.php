@@ -8,6 +8,8 @@ namespace Spryker\Zed\Ratepay\Business\Request\Payment\Method;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 
 interface MethodInterface
 {
@@ -25,18 +27,18 @@ interface MethodInterface
     public function getPaymentData(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init
      */
-    public function paymentInit($quoteTransfer);
+    public function paymentInit(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function paymentRequest($quoteTransfer);
+    public function paymentRequest(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

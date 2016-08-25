@@ -5,6 +5,7 @@
 
     <process name="RatepayElv01" main="true">
         <subprocesses>
+            <process>RatepayPaymentRequest</process>
             <process>RatepayShipment</process>
             <process>RatepayRefund</process>
             <process>RatepayCancel</process>
@@ -12,6 +13,7 @@
 
         <states>
             <state name="new" reserved="true"/>
+            <state name="payment confirmation"/>
             <state name="payment confirmed"/>
             <state name="ready for refund" />
             <state name="refund succeeded" />
@@ -30,14 +32,20 @@
         </states>
 
         <transitions>
-            <transition happy="true" condition="Ratepay/IsPaymentConfirmed">
+            <transition happy="true">
                 <source>new</source>
+                <target>payment request</target>
+                <event>go payment request</event>
+            </transition>
+
+            <transition happy="true" condition="Ratepay/IsPaymentConfirmed">
+                <source>payment confirmation</source>
                 <target>payment confirmed</target>
                 <event>create payment confirmation</event>
             </transition>
 
             <transition>
-                <source>new</source>
+                <source>payment confirmation</source>
                 <target>confirm payment invalid</target>
                 <event>create payment confirmation</event>
             </transition>
@@ -62,6 +70,7 @@
         </transitions>
 
         <events>
+            <event name="go payment request" onEnter="true" />
             <event name="create payment confirmation" onEnter="true" command="Ratepay/ConfirmPayment" />
             <event name="create delivery confirmation" onEnter="true" command="Ratepay/ConfirmDelivery" />
             <event name="ready for shipment" onEnter="true" />
@@ -71,6 +80,7 @@
         </events>
     </process>
 
+    <process name="RatepayPaymentRequest" file="RatepaySubProcesses/RatepayPaymentRequest.xml"/>
     <process name="RatepayShipment" file="RatepaySubProcesses/RatepayShipment.xml"/>
     <process name="RatepayRefund" file="RatepaySubProcesses/RatepayRefund.xml"/>
     <process name="RatepayCancel" file="RatepaySubProcesses/RatepayCancel.xml"/>

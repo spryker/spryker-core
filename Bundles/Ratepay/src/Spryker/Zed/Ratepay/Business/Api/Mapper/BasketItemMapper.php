@@ -74,11 +74,13 @@ class BasketItemMapper extends BaseMapper
      */
     protected function getBasketItemDiscount()
     {
-        $itemDiscount = $this->itemTransfer
-            ->requireUnitTotalDiscountAmountWithProductOption()
-            ->getUnitTotalDiscountAmountWithProductOption();
-        $itemDiscount = $this->centsToDecimal($itemDiscount);
+        //@todo learn how to get discount here?
+//        $itemDiscount = $this->itemTransfer
+//            ->requireUnitTotalDiscountAmountWithProductOption()
+//            ->getUnitTotalDiscountAmountWithProductOption();
+//        $itemDiscount = $this->centsToDecimal($itemDiscount);
 
+        $itemDiscount = 0;
         return $itemDiscount;
     }
 

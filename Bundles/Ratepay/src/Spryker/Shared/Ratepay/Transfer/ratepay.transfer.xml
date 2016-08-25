@@ -4,6 +4,48 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="RatepayPaymentInit">
+        <property name="paymentMethodName" type="string" />
+        <property name="customerId" type="string" />
+        <property name="transactionId" type="string" />
+        <property name="transactionShortId" type="string" />
+        <property name="deviceFingerprint" type="string"/>
+    </transfer>
+
+    <transfer name="RatepayPaymentRequest">
+        <property name="orderId" type="int" />
+
+        <property name="RatepayPaymentInit" type="RatepayPaymentInit" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
+        <property name="items" type="Item[]"  singular="item" />
+
+        <property name="customerEmail" type="string" />
+        <property name="customerPhone" type="string" />
+        <property name="customerAllowCreditInquiry" type="bool" />
+        <property name="gender" type="string" />
+        <property name="dateOfBirth" type="string" />
+        <property name="ipAddress" type="string" />
+
+        <property name="grandTotal" type="int" />
+        <property name="expenseTotal" type="int" />
+        <property name="paymentType" type="string" /> <!-- INVOICE, INSTALLMENT, ELV, PREPAYMENT -->
+        <property name="currencyIso3" type="string" />
+
+        <property name="bankAccountHolder" type="string" />
+        <property name="bankAccountBic" type="string"/>
+        <property name="bankAccountIban" type="string"/>
+
+        <property name="debitPayType" type="string"/>
+        <property name="installmentNumberRates" type="int"/>
+        <property name="installmentGrandTotalAmount" type="float"/>
+        <property name="installmentRate" type="float"/>
+        <property name="installmentLastRate" type="float"/>
+        <property name="installmentInterestRate" type="float"/>
+        <property name="installmentPaymentFirstDay" type="int"/>
+
+    </transfer>
+
     <!-- properties of the RatepayPaymentInvoice should exist in all other payment methods -->
     <transfer name="RatepayPaymentInvoice">
         <property name="paymentType" type="string" />

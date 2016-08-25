@@ -34,6 +34,14 @@ interface RatepayConstants
     const API_URL = 'RATEPAY_API_URL';
 
     /**
+     * Payment submethods.
+     */
+    const METHOD_INVOICE = 'INVOICE';
+    const METHOD_ELV = 'ELV';
+    const METHOD_PREPAYMENT = 'PREPAYMENT';
+    const METHOD_INSTALLMENT = 'INSTALLMENT';
+
+    /**
      * Service method
      */
     const METHOD_SERVICE = 'SERVICE';

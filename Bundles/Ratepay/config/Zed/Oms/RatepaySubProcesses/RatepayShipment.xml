@@ -11,8 +11,10 @@
                 <event>ship</event>
             </transition>
         </transitions>
+
         <events>
             <event name="ship" manual="true"/>
         </events>
     </process>
+
 </statemachine>

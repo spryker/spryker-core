@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 
@@ -22,14 +23,9 @@ class BasketMapper extends BaseMapper
     const BASKET_DISCOUNT_COEFFICIENT = -1;
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer|\Generated\Shared\Transfer\OrderTransfer
+     * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
-     */
-    protected $ratepayPaymentTransfer;
+    protected $ratepayPaymentRequestTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -37,17 +33,14 @@ class BasketMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
-        $quoteTransfer,
-        $ratepayPaymentTransfer,
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayRequestTransfer $requestTransfer
     ) {
-        $this->quoteTransfer = $quoteTransfer;
-        $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
+        $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
     }
 
@@ -56,13 +49,12 @@ class BasketMapper extends BaseMapper
      */
     public function map()
     {
-        $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
-        $shippingUnitPrice = $this->centsToDecimal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
+        $shippingUnitPrice = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
+        $grandTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
 
-        $grandTotal = $this->centsToDecimal($totalsTransfer->requireGrandTotal()->getGrandTotal());
         $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
             ->setAmount($grandTotal)
-            ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
+            ->setCurrency($this->ratepayPaymentRequestTransfer->requireCurrencyIso3()->getCurrencyIso3())
 
             ->setShippingUnitPrice($shippingUnitPrice)
             ->setShippingTitle(self::DEFAULT_SHIPPING_NODE_VALUE)

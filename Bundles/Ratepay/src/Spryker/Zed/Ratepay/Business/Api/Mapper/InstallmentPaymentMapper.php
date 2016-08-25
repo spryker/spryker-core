@@ -6,8 +6,7 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestInstallmentPaymentTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 
@@ -15,9 +14,9 @@ class InstallmentPaymentMapper extends BaseMapper
 {
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
-    protected $quoteTransfer;
+    protected $ratepayPaymentRequestTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -25,24 +24,16 @@ class InstallmentPaymentMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
-     */
-    protected $ratepayPaymentTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
-        QuoteTransfer $quoteTransfer,
-        RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer,
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayRequestTransfer $requestTransfer
     ) {
 
-        $this->quoteTransfer = $quoteTransfer;
+        $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
-        $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
     }
 
     /**
@@ -51,13 +42,10 @@ class InstallmentPaymentMapper extends BaseMapper
     public function map()
     {
         $this->requestTransfer->setInstallmentPayment(new RatepayRequestInstallmentPaymentTransfer())->getInstallmentPayment()
-            ->setDebitPayType($this->ratepayPaymentTransfer->getDebitPayType())
+            ->setDebitPayType($this->ratepayPaymentRequestTransfer->getDebitPayType())
             ->setAmount(
                 $this->centsToDecimal(
-                    $this->quoteTransfer
-                        ->getPayment()
-                        ->getRatepayInstallment()
-                        ->getInstallmentGrandTotalAmount()
+                    $this->ratepayPaymentRequestTransfer->getInstallmentGrandTotalAmount()
                 )
             );
     }

@@ -8,6 +8,8 @@ namespace Spryker\Zed\Ratepay\Business\Request\Payment\Method;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface;
@@ -41,6 +43,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface $modelFactory
      * @param \Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory $mapperFactory
      * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
+     *
      */
     public function __construct(
         RequestModelFactoryInterface $modelFactory,
@@ -53,39 +56,37 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init
      */
-    public function paymentInit($quoteTransfer)
+    public function paymentInit(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer)
     {
-        $paymentData = $this->getPaymentData($quoteTransfer);
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_INIT);
-        $this->mapQuoteHeadData($quoteTransfer, $paymentData);
+        $this->mapPaymentInitHeadData($ratepayPaymentInitTransfer);
 
         return $request;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function paymentRequest($quoteTransfer)
+    public function paymentRequest(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
-        $paymentData = $this->getPaymentData($quoteTransfer);
-
         /**
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST);
-        $this->mapQuoteHeadData($quoteTransfer, $paymentData);
-        $this->mapPaymentData($quoteTransfer, $paymentData);
+        $this->mapPaymentInitHeadData($ratepayPaymentRequestTransfer->getRatepayPaymentInit());
+        $this->mapPaymentData($ratepayPaymentRequestTransfer);
 
         return $request;
     }
 
     /**
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Confirm
@@ -210,15 +211,14 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     abstract protected function getPaymentTransferObject($payment);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return void
      */
-    protected function mapQuoteHeadData($quoteTransfer, $paymentData)
+    protected function mapPaymentInitHeadData(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer)
     {
         $this->mapperFactory
-            ->getQuoteHeadMapper($quoteTransfer, $paymentData)
+            ->getPaymentInitHeadMapper($ratepayPaymentInitTransfer)
             ->map();
     }
 
@@ -236,18 +236,17 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return void
      */
-    protected function mapShoppingBasketAndItems($dataTransfer, $paymentData)
+    protected function mapShoppingBasketAndItems(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
         $this->mapperFactory
-            ->getBasketMapper($dataTransfer, $paymentData)
+            ->getBasketMapper($ratepayPaymentRequestTransfer)
             ->map();
 
-        $basketItems = $dataTransfer->requireItems()->getItems();
+        $basketItems = $ratepayPaymentRequestTransfer->getItems();
         foreach ($basketItems as $basketItem) {
             $this->mapperFactory
                 ->getBasketItemMapper($basketItem)
@@ -276,34 +275,32 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return void
      */
-    protected function mapPaymentData($quoteTransfer, $paymentData)
+    protected function mapPaymentData(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
         $this->mapperFactory
-            ->getPaymentMapper($quoteTransfer, $paymentData)
+            ->getPaymentMapper($ratepayPaymentRequestTransfer)
             ->map();
 
         $this->mapperFactory
-            ->getCustomerMapper($quoteTransfer, $paymentData)
+            ->getCustomerMapper($ratepayPaymentRequestTransfer)
             ->map();
 
-        $this->mapShoppingBasketAndItems($quoteTransfer, $paymentData);
+        $this->mapShoppingBasketAndItems($ratepayPaymentRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer $paymentData
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return void
      */
-    protected function mapBankAccountData($quoteTransfer, $paymentData)
+    protected function mapBankAccountData(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
         $this->mapperFactory
-            ->getBankAccountMapper($quoteTransfer, $paymentData)
+            ->getBankAccountMapper($ratepayPaymentRequestTransfer)
             ->map();
     }
 
