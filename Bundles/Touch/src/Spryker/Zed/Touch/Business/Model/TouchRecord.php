@@ -56,9 +56,6 @@ class TouchRecord implements TouchRecordInterface
      * @param int $idItem
      * @param bool $keyChange
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return bool
      */
     public function saveTouchRecord(
@@ -226,9 +223,9 @@ class TouchRecord implements TouchRecordInterface
      *
      * @api
      *
-     * @return int
-     *
      * @throws \Exception
+     *
+     * @return int
      */
     public function removeTouchEntriesMarkedAsDeleted()
     {
@@ -255,7 +252,6 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return int
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function removeTouchEntries(SpyTouchQuery $query)
     {
@@ -279,7 +275,6 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return \Spryker\Shared\Library\BatchIterator\PropelBatchIterator
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
     {

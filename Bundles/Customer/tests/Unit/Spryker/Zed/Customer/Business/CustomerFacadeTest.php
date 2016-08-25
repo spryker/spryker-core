@@ -17,11 +17,12 @@ use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Customer
  * @group Business
- * @group Facade
+ * @group CustomerFacadeTest
  */
 class CustomerFacadeTest extends Test
 {

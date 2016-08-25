@@ -16,7 +16,7 @@ class Functional extends Module
 {
 
     /**
-     * @param array $config
+     * @param array|null $config
      */
     public function __construct($config = null)
     {

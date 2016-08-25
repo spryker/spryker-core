@@ -20,6 +20,16 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
 use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Converter
+ * @group ConverterTest
+ */
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {
 

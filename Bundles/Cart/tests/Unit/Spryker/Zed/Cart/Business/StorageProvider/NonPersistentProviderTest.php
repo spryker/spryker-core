@@ -13,11 +13,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 
 /**
- * @group SprykerFeature
+ * @group Unit
+ * @group Spryker
  * @group Zed
  * @group Cart
  * @group Business
- * @group InMemoryProvider
+ * @group StorageProvider
+ * @group NonPersistentProviderTest
  */
 class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
 {

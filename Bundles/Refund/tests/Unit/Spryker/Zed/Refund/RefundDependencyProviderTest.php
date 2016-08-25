@@ -16,10 +16,11 @@ use Spryker\Zed\Refund\RefundDependencyProvider;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
- * @group RefundDependencyProvider
+ * @group RefundDependencyProviderTest
  */
 class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {

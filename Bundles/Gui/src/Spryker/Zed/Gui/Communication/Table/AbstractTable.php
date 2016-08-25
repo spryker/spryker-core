@@ -520,7 +520,7 @@ abstract class AbstractTable
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (isset($order[0]) && (int)($order[0][self::SORT_BY_COLUMN]) > 0 && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
+        if (isset($order[0]) && isset($order[0][self::SORT_BY_COLUMN]) && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
 
             $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
 

@@ -15,6 +15,8 @@ use Symfony\Component\Form\Forms;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Shared
  * @group Symfony
  * @group Form

@@ -13,8 +13,9 @@ use Acceptance\Customer\Customer\Zed\Tester\CustomerTester;
 /**
  * @group Acceptance
  * @group Customer
+ * @group Customer
  * @group Zed
- * @group CustomerList
+ * @group CustomerListCest
  */
 class CustomerListCest
 {

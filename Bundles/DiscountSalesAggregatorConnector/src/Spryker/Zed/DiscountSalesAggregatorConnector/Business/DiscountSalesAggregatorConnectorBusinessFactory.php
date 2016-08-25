@@ -73,8 +73,6 @@ class DiscountSalesAggregatorConnectorBusinessFactory extends AbstractBusinessFa
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function getDiscountQueryContainer()
@@ -83,8 +81,6 @@ class DiscountSalesAggregatorConnectorBusinessFactory extends AbstractBusinessFa
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface
      */
     protected function getTaxFacade()

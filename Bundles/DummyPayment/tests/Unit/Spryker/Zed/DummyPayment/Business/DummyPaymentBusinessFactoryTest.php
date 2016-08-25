@@ -11,10 +11,12 @@ use Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
- * @group DummyPaymentDependencyProvider
+ * @group Business
+ * @group DummyPaymentBusinessFactoryTest
  */
 class DummyPaymentBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {

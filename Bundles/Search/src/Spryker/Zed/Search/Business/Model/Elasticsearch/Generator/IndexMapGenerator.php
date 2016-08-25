@@ -89,7 +89,7 @@ class IndexMapGenerator
     protected function generateIndexMapClass($mappingName, array $mapping)
     {
         $fileName = $mappingName . self::CLASS_NAME_SUFFIX . self::CLASS_EXTENSION;
-        $templateData =  $this->getTemplateData($mappingName, $mapping);
+        $templateData = $this->getTemplateData($mappingName, $mapping);
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
         if (!is_dir($this->targetBaseDirectory)) {

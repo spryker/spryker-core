@@ -9,6 +9,8 @@ namespace Spryker\Shared\Catalog\Code;
 
 /**
  * Add option types in project code as constants.
+ *
+ * @deprecated This interface is not used any more and will be removed.
  */
 interface ProductOptionTypeConstantInterface
 {

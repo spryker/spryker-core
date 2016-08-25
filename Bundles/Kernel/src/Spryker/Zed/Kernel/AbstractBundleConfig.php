@@ -16,8 +16,6 @@ abstract class AbstractBundleConfig
      * @param string $key
      * @param mixed $default
      *
-     * @throws \Exception
-     *
      * @return mixed
      */
     protected function get($key, $default = null)

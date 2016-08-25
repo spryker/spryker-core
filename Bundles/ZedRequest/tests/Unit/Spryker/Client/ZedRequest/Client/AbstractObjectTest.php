@@ -10,7 +10,12 @@ namespace Unit\Spryker\Client\ZedRequest\Client;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\CommunicationObject;
 
 /**
- * @group Communication
+ * @group Unit
+ * @group Spryker
+ * @group Client
+ * @group ZedRequest
+ * @group Client
+ * @group AbstractObjectTest
  */
 class AbstractObjectTest extends \PHPUnit_Framework_TestCase
 {

@@ -9,6 +9,15 @@ namespace Unit\Spryker\Zed\Propel\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Propel
+ * @group Business
+ * @group Model
+ * @group AbstractPropelSchemaTest
+ */
 abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
 {
 

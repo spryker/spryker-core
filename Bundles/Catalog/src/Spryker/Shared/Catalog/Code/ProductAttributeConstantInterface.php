@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Catalog\Code;
 
+/**
+ * @deprecated This interface is not used any more and will be removed.
+ */
 interface ProductAttributeConstantInterface
 {
 

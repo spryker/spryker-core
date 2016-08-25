@@ -11,11 +11,13 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
- * @group PropelSchemaWriter
+ * @group Model
+ * @group PropelSchemaWriterTest
  */
 class PropelSchemaWriterTest extends AbstractPropelSchemaTest
 {

@@ -36,8 +36,6 @@ class LockedTrigger implements TriggerInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
      *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
-     *
      * @return int
      *
      */
@@ -65,8 +63,6 @@ class LockedTrigger implements TriggerInterface
     /**
      * @param string $eventName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
      *
      * @return int
      */

@@ -23,11 +23,13 @@ use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\Request;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Communication
- * @group GatewayControllerListenerPlugin
+ * @group Plugin
+ * @group GatewayControllerListenerPluginTest
  */
 class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 {

@@ -27,7 +27,7 @@ class MenuLevelValidator implements MenuLevelValidatorInterface
      * @param int $currentLevel
      * @param string $pageTitle
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelException
      *
      * @return void
      */

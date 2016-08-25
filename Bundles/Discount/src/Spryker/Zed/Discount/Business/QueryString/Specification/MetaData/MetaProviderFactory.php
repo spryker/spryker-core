@@ -31,6 +31,7 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
     /**
      * @param string $type
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\QueryBuilderException
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
     public function createMetaProviderByType($type)

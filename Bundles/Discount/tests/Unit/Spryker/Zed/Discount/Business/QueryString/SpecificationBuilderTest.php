@@ -18,6 +18,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
 use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group SpecificationBuilderTest
+ */
 class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -221,8 +230,8 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $createComparatorOperatorsMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProviderMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $createComparatorOperatorsMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface|null $metaDataProviderMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */

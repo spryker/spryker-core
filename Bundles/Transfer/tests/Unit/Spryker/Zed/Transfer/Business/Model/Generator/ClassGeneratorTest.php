@@ -12,13 +12,14 @@ use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
  * @group Model
  * @group Generator
- * @group ClassGenerator
+ * @group ClassGeneratorTest
  */
 class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
 {

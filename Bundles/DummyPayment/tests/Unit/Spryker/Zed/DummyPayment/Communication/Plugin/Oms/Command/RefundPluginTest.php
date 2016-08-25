@@ -13,11 +13,15 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Communication
- * @group RefundPlugin
+ * @group Plugin
+ * @group Oms
+ * @group Command
+ * @group RefundPluginTest
  */
 class RefundPluginTest extends \PHPUnit_Framework_TestCase
 {

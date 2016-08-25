@@ -92,8 +92,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function saveOrderItemOptionDiscounts(ItemTransfer $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
@@ -152,8 +150,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function persistSalesDiscount(SpySalesDiscount $salesDiscountEntity)
@@ -201,8 +197,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscountCode $salesDiscountCodeEntity
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -258,20 +252,16 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         $calculatedItemDiscountsByGroupKey = [];
         $optionCalculatedDiscountsByGroupKey = [];
         foreach ($orderItemCollection as $orderItemTransfer) {
-
             if (!isset($calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
                 $calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$orderItemTransfer->getCalculatedDiscounts();
             }
-
             $orderItemTransfer->setCalculatedDiscounts(
                 $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
             );
-
             foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
                 if (!isset($optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
                     $optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
                 }
-
                 $productOptionTransfer->setCalculatedDiscounts(
                     $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
                 );

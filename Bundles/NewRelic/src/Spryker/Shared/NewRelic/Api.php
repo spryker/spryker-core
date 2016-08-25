@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\NewRelic;
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
 
@@ -20,6 +20,7 @@ class Api implements ApiInterface
 {
 
     const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
+    const STATUS_CODE_OK = 200;
 
     /**
      * @var bool
@@ -296,11 +297,9 @@ class Api implements ApiInterface
             return $this;
         }
 
-        $request = $this->createRecordDeploymentRequest($params);
+        $response = $this->createRecordDeploymentRequest($params);
 
-        $response = $request->send();
-
-        if ($response->isError()) {
+        if ($response->getStatusCode() !== static::STATUS_CODE_OK) {
             throw new RecordDeploymentException(sprintf(
                 'Record deployment to New Relic request failed with code %d. %s',
                 $response->getStatusCode(),
@@ -314,25 +313,24 @@ class Api implements ApiInterface
     /**
      * @param array $params
      *
-     * @throws \Exception
-     *
-     * @return \Guzzle\Http\Message\EntityEnclosingRequestInterface|\Guzzle\Http\Message\RequestInterface
+     * @return \Psr\Http\Message\ResponseInterface
      */
     protected function createRecordDeploymentRequest(array $params)
     {
-        $headers = [
+        $options = [
             'x-api-key' => Config::get(NewRelicConstants::NEWRELIC_API_KEY),
         ];
 
+        $data = [];
         $data['deployment'] = [];
         foreach ($params as $key => $value) {
             $data['deployment'][$key] = $value;
         }
+        $options['form_params'] = $data;
 
-        $httpClient = new Client(self::NEWRELIC_DEPLOYMENT_API_URL);
+        $httpClient = new Client();
 
-        $request = $httpClient->post(null, $headers);
-        $request->addPostFields($data);
+        $request = $httpClient->post(self::NEWRELIC_DEPLOYMENT_API_URL, $options);
 
         return $request;
     }

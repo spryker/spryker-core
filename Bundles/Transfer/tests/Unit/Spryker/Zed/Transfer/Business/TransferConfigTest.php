@@ -10,6 +10,14 @@ namespace Unit\Spryker\Zed\Transfer\Business;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Transfer
+ * @group Business
+ * @group TransferConfigTest
+ */
 class TransferConfigTest extends \PHPUnit_Framework_TestCase
 {
 

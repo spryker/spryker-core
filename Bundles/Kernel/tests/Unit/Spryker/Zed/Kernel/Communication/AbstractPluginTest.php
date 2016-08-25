@@ -18,11 +18,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Communication
- * @group AbstractPlugin
+ * @group AbstractPluginTest
  */
 class AbstractPluginTest extends \PHPUnit_Framework_TestCase
 {

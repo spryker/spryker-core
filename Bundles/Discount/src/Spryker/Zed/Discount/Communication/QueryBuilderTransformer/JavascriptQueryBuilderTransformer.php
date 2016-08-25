@@ -24,7 +24,7 @@ class JavascriptQueryBuilderTransformer
         '=' => 'equal',
         '!=' => 'not_equal',
         '<' => 'less',
-        '<='=> 'less_or_equal',
+        '<=' => 'less_or_equal',
         '>' => 'greater',
         '>=' => 'greater_or_equal',
         'does not contain' => 'not_contains',

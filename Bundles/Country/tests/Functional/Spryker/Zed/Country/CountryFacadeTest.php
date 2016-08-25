@@ -14,7 +14,11 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
  * @group Country
+ * @group CountryFacadeTest
  */
 class CountryFacadeTest extends Test
 {

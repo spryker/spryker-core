@@ -12,6 +12,15 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Voucher
+ * @group VoucherCodeTest
+ */
 class VoucherCodeTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -205,7 +214,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      *
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherCode
      */

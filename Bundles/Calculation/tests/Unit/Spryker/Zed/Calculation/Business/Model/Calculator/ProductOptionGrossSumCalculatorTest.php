@@ -13,6 +13,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Calculation
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group ProductOptionGrossSumCalculatorTest
+ */
 class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

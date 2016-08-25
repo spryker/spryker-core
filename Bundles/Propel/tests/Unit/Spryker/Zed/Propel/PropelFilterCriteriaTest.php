@@ -10,6 +10,13 @@ namespace Unit\Spryker\Zed\Propel;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Propel
+ * @group PropelFilterCriteriaTest
+ */
 class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
 {
 

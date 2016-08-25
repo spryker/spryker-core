@@ -14,11 +14,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group SubRequestHandler
+ * @group Model
+ * @group Request
+ * @group SubRequestHandlerTest
  */
 class SubRequestHandlerTest extends WebTestCase
 {

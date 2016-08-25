@@ -11,6 +11,16 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Elv;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group MethodMapper
+ * @group ElvTest
+ */
 class ElvTest extends AbstractMethodMapperTest
 {
 
@@ -41,7 +51,6 @@ class ElvTest extends AbstractMethodMapperTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay|\Generated\Shared\Transfer\RatepayPaymentElvTransfer $ratepayPaymentEntity
      *
      * @return void

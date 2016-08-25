@@ -14,6 +14,17 @@ use Elastica\Type;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Collector
+ * @group Business
+ * @group Exporter
+ * @group Writer
+ * @group Search
+ * @group ElasticsearchWriterTest
+ */
 class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
 {
 

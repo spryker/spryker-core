@@ -11,7 +11,6 @@ interface SubFormPluginInterface
 {
 
     /**
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
     public function createSubForm();

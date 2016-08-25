@@ -39,8 +39,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdBySku($sku)
@@ -53,8 +51,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductConcreteIdBySku($sku)
@@ -66,8 +62,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -115,8 +109,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
-     *
      * @return int
      *
      * TODO: remove
@@ -134,9 +126,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $attributeName
      * @param string $attributeType
      * @param bool $isEditable
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
      *
      * @return int
      *
@@ -255,10 +244,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
@@ -272,10 +257,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

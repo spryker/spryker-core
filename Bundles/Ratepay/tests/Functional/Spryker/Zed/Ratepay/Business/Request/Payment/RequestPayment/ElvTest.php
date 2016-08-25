@@ -10,6 +10,17 @@ use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentElvAd
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\ElvAbstractTest;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group RequestPayment
+ * @group ElvTest
+ */
 class ElvTest extends ElvAbstractTest
 {
 

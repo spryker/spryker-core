@@ -73,7 +73,7 @@ class LocaleManager
      */
     public function getLocaleByCode($localeCode)
     {
-        $locales  = $this->getLocaleCollection();
+        $locales = $this->getLocaleCollection();
 
         if (!array_key_exists($localeCode, $locales)) {
             throw new MissingLocaleException(
@@ -117,8 +117,6 @@ class LocaleManager
      * @param string $localeName
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -155,8 +153,6 @@ class LocaleManager
 
     /**
      * @param string $localeName
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

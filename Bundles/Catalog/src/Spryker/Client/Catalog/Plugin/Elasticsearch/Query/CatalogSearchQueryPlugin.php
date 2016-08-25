@@ -12,12 +12,13 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
+use Spryker\Client\Catalog\Dependency\SearchStringSetterInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
-class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
+class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface
 {
 
     /**
@@ -31,9 +32,9 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
     protected $query;
 
     /**
-     * @param string $searchString
+     * @param string $searchString @deprecated Use setSearchString() method instead.
      */
-    public function __construct($searchString)
+    public function __construct($searchString = '')
     {
         $this->searchString = $searchString;
         $this->query = $this->createSearchQuery();
@@ -45,6 +46,17 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface
     public function getSearchQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * @param string $searchString
+     *
+     * @return void
+     */
+    public function setSearchString($searchString)
+    {
+        $this->searchString = $searchString;
+        $this->query = $this->createSearchQuery();
     }
 
     /**

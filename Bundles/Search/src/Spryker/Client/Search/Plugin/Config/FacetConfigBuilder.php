@@ -96,8 +96,6 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     protected function assertFacetConfigTransfer(FacetConfigTransfer $facetConfigTransfer)

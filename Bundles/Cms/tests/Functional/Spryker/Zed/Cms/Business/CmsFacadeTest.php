@@ -25,8 +25,10 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
+ * @group Cms
  * @group Business
  * @group CmsFacadeTest
  */

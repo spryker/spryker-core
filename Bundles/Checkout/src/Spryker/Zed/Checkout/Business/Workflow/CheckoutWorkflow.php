@@ -107,8 +107,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @throws \Exception
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function doSaveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)

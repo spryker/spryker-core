@@ -13,9 +13,12 @@ use Spryker\Shared\ZedRequest\Client\Message;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Client
  * @group ZedRequest
+ * @group Client
+ * @group ResponseTest
  */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {

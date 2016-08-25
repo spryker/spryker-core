@@ -10,6 +10,17 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Request\Payment\ConfirmPayment
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\ConfirmPaymentAdapterMock;
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\ElvAbstractTest;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group ConfirmPayment
+ * @group ElvTest
+ */
 class ElvTest extends ElvAbstractTest
 {
 

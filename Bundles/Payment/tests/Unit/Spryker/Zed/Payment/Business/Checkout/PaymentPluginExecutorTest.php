@@ -17,6 +17,15 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payment
+ * @group Business
+ * @group Checkout
+ * @group PaymentPluginExecutorTest
+ */
 class PaymentPluginExecutorTest extends \PHPUnit_Framework_TestCase
 {
 

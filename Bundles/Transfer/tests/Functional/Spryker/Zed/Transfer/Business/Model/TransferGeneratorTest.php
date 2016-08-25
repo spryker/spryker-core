@@ -21,11 +21,13 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferGenerator
+ * @group Model
+ * @group TransferGeneratorTest
  */
 class TransferGeneratorTest extends Test
 {

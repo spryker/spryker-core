@@ -20,8 +20,10 @@ use Spryker\Client\Search\SearchClient;
 use Spryker\Client\Search\SearchFactory;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Client
- * @group Search
+ * @group SearchClientTest
  */
 class SearchClientTest extends \PHPUnit_Framework_TestCase
 {

@@ -21,8 +21,6 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
 
     /**
-     * @throws \Exception
-     *
      * @return \Elastica\Client
      */
     protected function createZedClient()

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
+namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
@@ -14,6 +14,16 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Client
+ * @group Search
+ * @group Plugin
+ * @group Elasticsearch
+ * @group ResultFormatter
+ * @group AbstractResultFormatterPluginTest
+ */
 abstract class AbstractResultFormatterPluginTest extends \PHPUnit_Framework_TestCase
 {
 

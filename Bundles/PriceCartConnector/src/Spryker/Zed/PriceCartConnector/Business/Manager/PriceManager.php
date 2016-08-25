@@ -39,7 +39,7 @@ class PriceManager implements PriceManagerInterface
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function addGrossPriceToItems(CartChangeTransfer $change)
     {

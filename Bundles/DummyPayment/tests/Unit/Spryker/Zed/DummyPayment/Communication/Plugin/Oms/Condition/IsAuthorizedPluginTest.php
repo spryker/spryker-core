@@ -13,11 +13,15 @@ use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Communication
- * @group IsAuthorizedPlugin
+ * @group Plugin
+ * @group Oms
+ * @group Condition
+ * @group IsAuthorizedPluginTest
  */
 class IsAuthorizedPluginTest extends \PHPUnit_Framework_TestCase
 {

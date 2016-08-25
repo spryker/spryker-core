@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -15,11 +15,14 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DiscountCalculationConnector
  * @group Business
- * @group DiscountTotalsCalculator
+ * @group Model
+ * @group Calculator
+ * @group DiscountTotalsCalculatorTest
  */
 class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {

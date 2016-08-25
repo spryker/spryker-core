@@ -33,8 +33,6 @@ class KeyManager implements KeyManagerInterface
      * @param string $currentKeyName
      * @param string $newKeyName
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     *
      * @return bool
      */
     public function updateKey($currentKeyName, $newKeyName)
@@ -121,9 +119,6 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function createKey($keyName)
@@ -158,8 +153,6 @@ class KeyManager implements KeyManagerInterface
 
     /**
      * @param string $keyName
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return int
      */

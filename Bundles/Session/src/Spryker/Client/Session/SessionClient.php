@@ -88,8 +88,6 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @api
      *
-     * @throws \RuntimeException If session fails to start.
-     *
      * @return bool True if session started.
      */
     public function start()

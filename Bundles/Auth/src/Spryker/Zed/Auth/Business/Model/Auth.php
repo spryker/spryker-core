@@ -298,8 +298,6 @@ class Auth implements AuthInterface
      *
      * @param string $token
      *
-     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
-     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function unserializeUserFromSession($token)

@@ -11,6 +11,16 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Order
+ * @group MethodMapper
+ * @group BaseMethodMapperTest
+ */
 class BaseMethodMapperTest extends \PHPUnit_Framework_TestCase
 {
 

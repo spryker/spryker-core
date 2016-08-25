@@ -14,11 +14,14 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpanderPlugin;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPlugin
+ * @group QueryExpander
+ * @group PaginatedQueryExpanderPluginTest
  */
 class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {

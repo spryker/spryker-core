@@ -9,6 +9,17 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Payment\Handler\Transaction;
 
 use Unit\Spryker\Zed\Ratepay\Business\Payment\BasePaymentTest;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group Handler
+ * @group Transaction
+ * @group BaseTransactionTest
+ */
 class BaseTransactionTest extends BasePaymentTest
 {
 }

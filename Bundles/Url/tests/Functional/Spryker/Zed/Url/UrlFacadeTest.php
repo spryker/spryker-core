@@ -16,6 +16,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Url

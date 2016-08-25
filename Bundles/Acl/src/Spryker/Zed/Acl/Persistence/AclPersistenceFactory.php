@@ -80,8 +80,6 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected function getUserQueryContainer()

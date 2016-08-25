@@ -13,10 +13,14 @@ use Spryker\Zed\Assertion\Business\AssertionFacade;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Assertion
  * @group Communication
+ * @group Plugin
+ * @group ServiceProvider
+ * @group AssertionServiceProviderTest
  */
 class AssertionServiceProviderTest extends \PHPUnit_Framework_TestCase
 {

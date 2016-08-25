@@ -9,6 +9,15 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Order;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Order
+ * @group InstallmentSaverTest
+ */
 class InstallmentSaverTest extends AbstractSaverTest
 {
 

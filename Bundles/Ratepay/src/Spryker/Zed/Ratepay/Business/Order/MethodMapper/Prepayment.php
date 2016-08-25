@@ -21,7 +21,6 @@ class Prepayment extends AbstractMapper
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer

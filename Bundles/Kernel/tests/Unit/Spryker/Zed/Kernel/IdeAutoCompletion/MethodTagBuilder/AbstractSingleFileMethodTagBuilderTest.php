@@ -5,13 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
 use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\SingleFileMethodTagBuilder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
+ * @group IdeAutoCompletion
  * @group MethodTagBuilder
+ * @group AbstractSingleFileMethodTagBuilderTest
  */
 class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {

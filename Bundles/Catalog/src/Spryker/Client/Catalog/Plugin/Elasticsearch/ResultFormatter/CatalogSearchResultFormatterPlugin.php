@@ -13,6 +13,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
+ *
+ * @deprecated This result formatter uses a bad design to extract product data as it reads Storage per product. Use
+ * \Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\RawCatalogSearchResultFormatterPlugin instead.
  */
 class CatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {

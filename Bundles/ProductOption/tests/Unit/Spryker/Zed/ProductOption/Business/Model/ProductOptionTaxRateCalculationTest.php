@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\Model;
+namespace Unit\Spryker\Zed\ProductOption\Business\Model;
 
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -15,7 +15,13 @@ use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 
 /**
- * @group ProductOptionTaxRate
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group Model
+ * @group ProductOptionTaxRateCalculationTest
  */
 class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 {

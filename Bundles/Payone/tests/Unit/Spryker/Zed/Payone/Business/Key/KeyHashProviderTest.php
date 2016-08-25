@@ -10,7 +10,13 @@ namespace Unit\Spryker\Zed\Payone\Business\Key;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
 
 /**
- * @group KeyHash
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payone
+ * @group Business
+ * @group Key
+ * @group KeyHashProviderTest
  */
 class KeyHashProviderTest extends \PHPUnit_Framework_TestCase
 {

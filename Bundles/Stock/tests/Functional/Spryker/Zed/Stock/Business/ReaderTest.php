@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Stock;
+namespace Functional\Spryker\Zed\Stock\Business;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -18,7 +18,12 @@ use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
- * @group StockTest
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Stock
+ * @group Business
+ * @group ReaderTest
  */
 class ReaderTest extends Test
 {

@@ -10,10 +10,11 @@ namespace Unit\Spryker\Shared\Kernel;
 use Spryker\Shared\Kernel\Store;
 
 /**
+ * @group Unit
  * @group Spryker
- * @group Zed
+ * @group Shared
  * @group Kernel
- * @group Store
+ * @group StoreTest
  */
 class StoreTest extends \PHPUnit_Framework_TestCase
 {

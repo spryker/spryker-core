@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Library;
 
+use DateTime;
+use DateTimeZone;
+use Exception;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Exception\UnknownContextPropertyException;
 
@@ -56,7 +59,7 @@ class Context
         }
         static::loadContexts();
         if (!isset(static::$contexts[$context])) {
-            throw new \Exception('Incorrect context: ' . $context);
+            throw new Exception('Incorrect context: ' . $context);
         }
         if (!isset(static::$instances[$context])) {
             static::$instances[$context] = new self($context);
@@ -182,9 +185,9 @@ class Context
     public function dateTimeConvertTo($dateTime, $format = 'Y-m-d H:i:s')
     {
         if (!($dateTime instanceof \DateTime)) {
-            $dateTime = new \DateTime($dateTime, new \DateTimeZone(Store::getInstance()->getTimezone()));
+            $dateTime = new DateTime($dateTime, new DateTimeZone(Store::getInstance()->getTimezone()));
         }
-        $dateTime->setTimezone(new \DateTimeZone($this->timezone));
+        $dateTime->setTimezone(new DateTimeZone($this->timezone));
 
         return $dateTime->format($format);
     }
@@ -200,9 +203,9 @@ class Context
     public function dateTimeConvertFrom($dateTime, $format = 'Y-m-d H:i:s')
     {
         if (!($dateTime instanceof \DateTime)) {
-            $dateTime = new \DateTime($dateTime, new \DateTimeZone($this->timezone));
+            $dateTime = new DateTime($dateTime, new DateTimeZone($this->timezone));
         }
-        $dateTime->setTimezone(new \DateTimeZone(Store::getInstance()->getTimezone()));
+        $dateTime->setTimezone(new DateTimeZone(Store::getInstance()->getTimezone()));
 
         return $dateTime->format($format);
     }
@@ -219,9 +222,9 @@ class Context
     public function dateTimeConvertToFrom($contextFrom, $dateTime, $format = 'Y-m-d H:i:s')
     {
         if (!($dateTime instanceof \DateTime)) {
-            $dateTime = new \DateTime($dateTime, new \DateTimeZone(self::getInstance($contextFrom)->timezone));
+            $dateTime = new DateTime($dateTime, new DateTimeZone(self::getInstance($contextFrom)->timezone));
         }
-        $dateTime->setTimezone(new \DateTimeZone($this->timezone));
+        $dateTime->setTimezone(new DateTimeZone($this->timezone));
 
         return $dateTime->format($format);
     }
@@ -238,9 +241,9 @@ class Context
     public function dateTimeConvertFromTo($contextTo, $dateTime, $format = 'Y-m-d H:i:s')
     {
         if (!($dateTime instanceof \DateTime)) {
-            $dateTime = new \DateTime($dateTime, new \DateTimeZone($this->timezone));
+            $dateTime = new DateTime($dateTime, new DateTimeZone($this->timezone));
         }
-        $dateTime->setTimezone(new \DateTimeZone(self::getInstance($contextTo)->timezone));
+        $dateTime->setTimezone(new DateTimeZone(self::getInstance($contextTo)->timezone));
 
         return $dateTime->format($format);
     }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
+namespace Unit\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
@@ -13,11 +13,15 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Communication
- * @group ConditionCollection
+ * @group Plugin
+ * @group Oms
+ * @group Condition
+ * @group ConditionCollectionTest
  */
 class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
 {

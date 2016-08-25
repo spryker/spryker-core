@@ -11,9 +11,11 @@ use Spryker\Shared\Graph\Graph;
 use Spryker\Shared\Graph\GraphAdapterInterface;
 
 /**
+ * @group Unit
  * @group Spryker
- * @group Tool
+ * @group Shared
  * @group Graph
+ * @group GraphTest
  */
 class GraphTest extends \PHPUnit_Framework_TestCase
 {

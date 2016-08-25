@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Model;
+namespace Unit\Spryker\Zed\Discount\Business\Persistence;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -18,11 +18,13 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
- * @group DiscountCheckoutConnector
+ * @group Discount
  * @group Business
- * @group DiscountOrderSaver
+ * @group Persistence
+ * @group DiscountOrderSaverTest
  */
 class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
 {

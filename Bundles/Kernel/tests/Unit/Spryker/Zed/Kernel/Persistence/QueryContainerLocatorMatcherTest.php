@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\Business;
+namespace Unit\Spryker\Zed\Kernel\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group Business
- * @group Locator
- * @group QueryContainerLocator
- * @group QueryContainerLocatorMatcher
+ * @group Persistence
+ * @group QueryContainerLocatorMatcherTest
  */
 class QueryContainerLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 {

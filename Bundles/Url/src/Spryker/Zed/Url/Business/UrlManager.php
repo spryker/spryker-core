@@ -67,10 +67,6 @@ class UrlManager implements UrlManagerInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
@@ -126,8 +122,6 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     *
-     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -294,9 +288,6 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function deleteUrl(UrlTransfer $urlTransfer)
@@ -330,10 +321,6 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function createUrlFromTransfer(UrlTransfer $urlTransfer)
@@ -352,11 +339,6 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -400,9 +382,6 @@ class UrlManager implements UrlManagerInterface
      * @param string $url
      * @param string $resourceType
      * @param int $idResource
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */

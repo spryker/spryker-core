@@ -33,8 +33,6 @@ class PropelInstall extends Module
     }
 
     /**
-     * @throws \Exception
-     *
      * @return int
      */
     protected function initPropel()

@@ -36,8 +36,8 @@ class SearchKeysQuery implements QueryInterface
 
     /**
      * @param string $searchString
-     * @param string $limit
-     * @param string $offset
+     * @param string|null $limit
+     * @param string|null $offset
      */
     public function __construct($searchString, $limit = null, $offset = null)
     {

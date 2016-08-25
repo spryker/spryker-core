@@ -18,7 +18,7 @@ class UrlUniqueValidator implements UrlUniqueValidatorInterface
     /**
      * @param string $url
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueException
      *
      * @return void
      */

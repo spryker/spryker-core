@@ -13,6 +13,15 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Ratepay\Business\Expander\ProductExpander;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Expander
+ * @group ProductExpanderTest
+ */
 class ProductExpanderTest extends \PHPUnit_Framework_TestCase
 {
 

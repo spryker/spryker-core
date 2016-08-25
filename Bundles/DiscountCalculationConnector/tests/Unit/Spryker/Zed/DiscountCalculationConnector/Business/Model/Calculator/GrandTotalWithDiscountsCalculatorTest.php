@@ -5,13 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group DiscountCalculationConnector
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group GrandTotalWithDiscountsCalculatorTest
+ */
 class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

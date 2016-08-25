@@ -58,8 +58,6 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function createBaseTypes()

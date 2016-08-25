@@ -14,8 +14,7 @@ use Acceptance\Braintree\Checkout\Yves\Tester\CheckoutTester;
  * @group Braintree
  * @group Checkout
  * @group Yves
- * @group PayPal
- * @group PayPalGuestCheckout
+ * @group PayPalGuestCheckoutCest
  */
 class PayPalGuestCheckoutCest
 {

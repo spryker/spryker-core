@@ -48,8 +48,6 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @throws \Spryker\Client\Search\Exception\MissingFacetAggregationException
-     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationInterface
      */
     protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer)

@@ -11,10 +11,13 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group StepEngine
- * @group StepEngineSubFormPluginCollection
+ * @group Dependency
+ * @group Plugin
+ * @group SubFormPluginCollectionTest
  */
 class SubFormPluginCollectionTest extends \PHPUnit_Framework_TestCase
 {

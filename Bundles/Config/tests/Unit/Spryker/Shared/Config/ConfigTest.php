@@ -10,9 +10,11 @@ namespace Unit\Spryker\Shared\Config;
 use Spryker\Shared\Config\Config;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group Config
+ * @group ConfigTest
  */
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {

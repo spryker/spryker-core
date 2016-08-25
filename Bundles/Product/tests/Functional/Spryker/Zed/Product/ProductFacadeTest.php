@@ -23,9 +23,10 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
- * @group Business
+ * @group Product
  * @group ProductFacadeTest
  */
 class ProductFacadeTest extends Test

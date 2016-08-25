@@ -10,8 +10,12 @@ namespace Unit\Spryker\Shared\Library\Currency;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
+ * @group Library
  * @group Currency
- * @group CurrencyManager
+ * @group CurrencyManagerTest
  */
 class CurrencyManagerTest extends \PHPUnit_Framework_TestCase
 {

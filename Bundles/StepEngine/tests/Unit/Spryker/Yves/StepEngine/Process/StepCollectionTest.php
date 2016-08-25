@@ -10,6 +10,14 @@ namespace Unit\Spryker\Yves\StepEngine\Process;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Yves
+ * @group StepEngine
+ * @group Process
+ * @group StepCollectionTest
+ */
 class StepCollectionTest extends AbstractStepEngineTest
 {
 

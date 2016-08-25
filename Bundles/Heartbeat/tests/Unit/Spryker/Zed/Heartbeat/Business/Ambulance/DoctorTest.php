@@ -11,11 +11,13 @@ use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Heartbeat
  * @group Business
- * @group Doctor
+ * @group Ambulance
+ * @group DoctorTest
  */
 class DoctorTest extends \PHPUnit_Framework_TestCase
 {

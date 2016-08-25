@@ -18,11 +18,13 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterf
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Business
- * @group Drawer
+ * @group Util
+ * @group DrawerTest
  */
 class DrawerTest extends \PHPUnit_Framework_TestCase
 {

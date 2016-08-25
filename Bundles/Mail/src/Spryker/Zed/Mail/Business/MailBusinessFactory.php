@@ -47,8 +47,6 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return string
      */
     protected function getAPIKey()

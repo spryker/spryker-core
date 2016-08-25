@@ -10,11 +10,12 @@ namespace Functional\Spryker\Zed\Setup\Business;
 use Spryker\Zed\Setup\Business\SetupBusinessFactory;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Setup
  * @group Business
- * @group SetupBusinessFactory
+ * @group SetupBusinessFactoryTest
  */
 class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {

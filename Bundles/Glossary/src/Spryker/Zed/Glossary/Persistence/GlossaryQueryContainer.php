@@ -233,8 +233,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      *
      * @param array $localeIds
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKeysAndTranslationsForEachLanguage(array $localeIds)
@@ -285,8 +283,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      *
      * @param array $relevantLocales
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllPossibleTranslations(array $relevantLocales)
@@ -299,8 +295,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery $keyQuery
      * @param array $relevantLocales
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -441,7 +435,6 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param int $fkGlossaryKey
      * @param array $locales
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales)

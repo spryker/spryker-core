@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Catalog;
 
+use Spryker\Client\Catalog\Dependency\SearchStringSetterInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -34,7 +35,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
 
         $resultFormatters = $this
             ->getFactory()
-            ->createCatalogSearchResultFormatters();
+            ->getCatalogSearchResultFormatters();
 
         return $this
             ->getFactory()
@@ -52,12 +53,16 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     {
         $searchQuery = $this
             ->getFactory()
-            ->createCatalogSearchQueryPlugin($searchString);
+            ->getCatalogSearchQueryPlugin();
 
-        $searchQuery =  $this
+        if ($searchQuery instanceof SearchStringSetterInterface) {
+            $searchQuery->setSearchString($searchString);
+        }
+
+        $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->createCatalogSearchQueryExpanderPlugins(), $requestParameters);
+            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchQueryExpanderPlugins(), $requestParameters);
 
         return $searchQuery;
     }

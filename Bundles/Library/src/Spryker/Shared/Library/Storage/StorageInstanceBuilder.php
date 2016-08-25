@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Library\Storage;
 
 use Elastica\Client;
+use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Storage\StorageConstants;
@@ -34,8 +35,6 @@ class StorageInstanceBuilder
     protected static $searchInstances = [];
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Elastica\Client
      */
     public static function getElasticsearchInstance()
@@ -64,8 +63,6 @@ class StorageInstanceBuilder
     /**
      * @param bool $debug
      *
-     * @throws \Exception
-     *
      * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface
      */
     public static function getStorageReadWriteInstance($debug = false)
@@ -75,8 +72,6 @@ class StorageInstanceBuilder
 
     /**
      * @param bool $debug
-     *
-     * @throws \Exception
      *
      * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
@@ -88,8 +83,6 @@ class StorageInstanceBuilder
     /**
      * @param string $type
      * @param bool $debug
-     *
-     * @throws \Exception
      *
      * @return \Spryker\Shared\Library\Storage\AdapterInterface
      */
@@ -110,7 +103,6 @@ class StorageInstanceBuilder
      * @param string $kvAdapter
      *
      * @throws \ErrorException
-     * @throws \Exception
      *
      * @return array
      */
@@ -159,7 +151,7 @@ class StorageInstanceBuilder
         }
 
         if ($config === null) {
-            throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);
+            throw new ErrorException('Missing implementation for adapter ' . $kvAdapter);
         }
 
         return $config;

@@ -5,16 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Transfer\Business\Model;
+namespace Unit\Spryker\Zed\Application\Business;
 
 use Spryker\Zed\Application\Business\ApplicationBusinessFactory;
+use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
- * @group ApplicationFacade
+ * @group Application
  * @group Business
- * @group ApplicationFacadeBusinessFactory
+ * @group ApplicationBusinessFactoryTest
  */
 class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,7 +36,7 @@ class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $instance = $this->getFactory()->createNavigationBuilder();
 
-        $this->assertInstanceOf('Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
+        $this->assertInstanceOf(NavigationBuilder::class, $instance);
     }
 
 }

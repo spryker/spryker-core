@@ -15,10 +15,12 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Touch
  * @group Business
+ * @group Model
  * @group TouchTest
  */
 class TouchTest extends Test

@@ -12,6 +12,16 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesAggregator
+ * @group Business
+ * @group Model
+ * @group OrderAmountAggregator
+ * @group OrderTaxAmountTest
+ */
 class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
 {
 

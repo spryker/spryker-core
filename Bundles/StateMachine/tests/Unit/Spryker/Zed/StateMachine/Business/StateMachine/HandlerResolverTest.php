@@ -4,13 +4,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
+namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound;
 use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolver;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group HandlerResolverTest
+ */
 class HandlerResolverTest extends StateMachineMocks
 {
 
@@ -27,8 +36,6 @@ class HandlerResolverTest extends StateMachineMocks
     }
 
     /**
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound
-     *
      * @return void
      *
      */

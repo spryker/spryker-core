@@ -14,8 +14,8 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 {
 
     const MATCH_ALL_IDENTIFIER = '*';
-    const TYPE_NUMBER  = 'number';
-    const TYPE_STRING  = 'string';
+    const TYPE_NUMBER = 'number';
+    const TYPE_STRING = 'string';
     const TYPE_LIST = 'list';
     const NUMBER_REGEXP = '/[0-9\.\,]+/';
     const LIST_DELIMITER = ';';
@@ -134,8 +134,6 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */

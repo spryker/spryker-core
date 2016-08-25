@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Shipmwent\Business\Model;
+namespace Unit\Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,7 +16,13 @@ use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
 /**
- * @group ShipmentTaxRate
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Shipment
+ * @group Business
+ * @group Model
+ * @group ShipmentTaxRateCalculationTest
  */
 class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 {
@@ -124,7 +130,7 @@ class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createQuoteTransfer()
     {
-        $quoteTransfer =  new QuoteTransfer();
+        $quoteTransfer = new QuoteTransfer();
 
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
         $shipmentMethodTransfer->setName('DummyShipment');

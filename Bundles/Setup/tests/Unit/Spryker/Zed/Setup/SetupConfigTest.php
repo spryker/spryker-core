@@ -10,11 +10,11 @@ namespace Unit\Spryker\Zed\Setup;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Setup
- * @group Business
- * @group SetupConstants
+ * @group SetupConfigTest
  */
 class SetupConfigTest extends \PHPUnit_Framework_TestCase
 {

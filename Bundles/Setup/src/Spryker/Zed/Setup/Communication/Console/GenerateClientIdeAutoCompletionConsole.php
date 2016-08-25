@@ -101,8 +101,6 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     }
 
     /**
-     * @throws \Exception
-     *
      * @return string
      */
     private function getProjectNamespace()

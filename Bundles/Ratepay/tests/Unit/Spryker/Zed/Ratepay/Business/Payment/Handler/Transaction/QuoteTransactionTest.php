@@ -15,6 +15,17 @@ use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\Installment
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InstallmentConfigurationTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\RequestPaymentTransaction;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group Handler
+ * @group Transaction
+ * @group QuoteTransactionTest
+ */
 class QuoteTransactionTest extends BaseTransactionTest
 {
 

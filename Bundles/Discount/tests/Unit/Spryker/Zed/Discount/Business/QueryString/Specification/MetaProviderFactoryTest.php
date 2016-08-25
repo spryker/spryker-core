@@ -12,6 +12,16 @@ use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Specification
+ * @group MetaProviderFactoryTest
+ */
 class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -71,7 +81,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory $discountBusinessFactoryMock
+     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory|null $discountBusinessFactoryMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory
      */

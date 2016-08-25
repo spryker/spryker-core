@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Shipment\Business;
+namespace Functional\Spryker\Zed\Shipment\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -21,6 +21,15 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Shipment
+ * @group Business
+ * @group Model
+ * @group ShipmentTaxRateCalculationTest
+ */
 class ShipmentTaxRateCalculationTest extends Test
 {
 
@@ -78,8 +87,6 @@ class ShipmentTaxRateCalculationTest extends Test
     /**
      * @param int $taxRate
      * @param string $iso2Code
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */

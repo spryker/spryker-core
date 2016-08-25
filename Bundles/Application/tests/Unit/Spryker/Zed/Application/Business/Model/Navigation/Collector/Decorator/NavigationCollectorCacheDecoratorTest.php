@@ -10,11 +10,16 @@ namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Collector\Decor
 use Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group NavigationCollectorCacheDecorator
+ * @group Model
+ * @group Navigation
+ * @group Collector
+ * @group Decorator
+ * @group NavigationCollectorCacheDecoratorTest
  */
 class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
 {

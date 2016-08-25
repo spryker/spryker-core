@@ -108,8 +108,6 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     /**
      * @param \Generated\Shared\Transfer\SortConfigTransfer $sortConfigTransfer
      *
-     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     protected function assertSortConfigTransfer(SortConfigTransfer $sortConfigTransfer)

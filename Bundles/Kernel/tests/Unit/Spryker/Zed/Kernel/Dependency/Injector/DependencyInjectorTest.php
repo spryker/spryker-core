@@ -14,11 +14,13 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Dependency
- * @group DependencyInjector
+ * @group Injector
+ * @group DependencyInjectorTest
  */
 class DependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {

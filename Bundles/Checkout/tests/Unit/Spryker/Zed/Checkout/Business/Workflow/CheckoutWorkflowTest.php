@@ -22,9 +22,12 @@ use Unit\Spryker\Zed\Checkout\Business\Fixture\MockPostHook;
 use Unit\Spryker\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Checkout
+ * @group Business
+ * @group Workflow
  * @group CheckoutWorkflowTest
  */
 class CheckoutWorkflowTest extends Test

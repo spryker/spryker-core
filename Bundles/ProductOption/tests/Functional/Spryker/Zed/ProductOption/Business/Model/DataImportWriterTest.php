@@ -25,9 +25,12 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group ProductOption
+ * @group Business
+ * @group Model
  * @group DataImportWriterTest
  *
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
@@ -276,8 +279,6 @@ class DataImportWriterTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
     private function createProductConcrete()
@@ -302,8 +303,6 @@ class DataImportWriterTest extends Test
      * @param string $typeKey
      * @param string $valueKey
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionType
      */
     private function createOptionTypeWithValue($typeKey, $valueKey)
@@ -318,8 +317,6 @@ class DataImportWriterTest extends Test
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $product
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionType $optionType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage
      */

@@ -76,10 +76,6 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     * @throws \Spryker\Zed\Cms\Business\Exception\PageExistsException
-     *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePage(PageTransfer $pageTransfer)
@@ -95,10 +91,6 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
@@ -118,10 +110,6 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
@@ -224,8 +212,6 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrl(PageTransfer $pageTransfer)
@@ -244,8 +230,6 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function updatePageUrl(PageTransfer $pageTransfer)
@@ -259,8 +243,6 @@ class PageManager implements PageManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

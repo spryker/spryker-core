@@ -13,7 +13,6 @@ interface DecisionRuleSpecificationInterface
 {
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *

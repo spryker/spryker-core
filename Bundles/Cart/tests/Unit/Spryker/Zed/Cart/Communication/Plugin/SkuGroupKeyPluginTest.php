@@ -14,11 +14,13 @@ use Spryker\Zed\Kernel\Communication\Factory;
 use Spryker\Zed\Kernel\Locator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Cart
  * @group Communication
- * @group SkuGroupKeyPlugin
+ * @group Plugin
+ * @group SkuGroupKeyPluginTest
  */
 class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
 {

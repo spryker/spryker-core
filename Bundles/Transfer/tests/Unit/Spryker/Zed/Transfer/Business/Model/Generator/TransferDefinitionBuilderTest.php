@@ -15,13 +15,14 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
  * @group Model
  * @group Generator
- * @group TransferDefinitionBuilder
+ * @group TransferDefinitionBuilderTest
  */
 class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
 {

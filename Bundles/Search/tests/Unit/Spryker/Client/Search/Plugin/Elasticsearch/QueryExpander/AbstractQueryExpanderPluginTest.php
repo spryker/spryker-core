@@ -22,6 +22,16 @@ use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\SearchFactory;
 use Unit\Spryker\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Client
+ * @group Search
+ * @group Plugin
+ * @group Elasticsearch
+ * @group QueryExpander
+ * @group AbstractQueryExpanderPluginTest
+ */
 abstract class AbstractQueryExpanderPluginTest extends \PHPUnit_Framework_TestCase
 {
 

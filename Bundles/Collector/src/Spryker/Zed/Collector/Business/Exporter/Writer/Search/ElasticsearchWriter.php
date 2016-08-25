@@ -46,6 +46,7 @@ class ElasticsearchWriter implements WriterInterface
      * @param array $dataSet
      * @param string $type
      *
+     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      * @return bool
      */
     public function write(array $dataSet, $type = '')
@@ -66,6 +67,7 @@ class ElasticsearchWriter implements WriterInterface
     /**
      * @param array $dataSet
      *
+     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      * @return bool
      */
     public function delete(array $dataSet)
@@ -100,6 +102,7 @@ class ElasticsearchWriter implements WriterInterface
     /**
      * @param array $dataSet
      *
+     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      * @return array
      */
     protected function createDocuments(array $dataSet)

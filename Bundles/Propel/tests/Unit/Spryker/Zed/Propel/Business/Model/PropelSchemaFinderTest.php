@@ -10,11 +10,13 @@ namespace Unit\Spryker\Zed\Propel\Business\Model;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
- * @group PropelSchemaFinder
+ * @group Model
+ * @group PropelSchemaFinderTest
  */
 class PropelSchemaFinderTest extends AbstractPropelSchemaTest
 {
