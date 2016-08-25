@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -43,16 +45,16 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function initPayment(QuoteTransfer $quoteTransfer)
+    public function initPayment(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer)
     {
         return $this
             ->getFactory()
             ->createInitPaymentTransactionHandler()
-            ->request($quoteTransfer);
+            ->request($ratepayPaymentInitTransfer);
     }
 
     /**
@@ -76,16 +78,16 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function requestPayment(QuoteTransfer $quoteTransfer)
+    public function requestPayment(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
         return $this
             ->getFactory()
             ->createRequestPaymentTransactionHandler()
-            ->request($quoteTransfer);
+            ->request($ratepayPaymentRequestTransfer);
     }
 
     /**
@@ -197,6 +199,21 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
             ->getFactory()
             ->createInstallmentCalculationTransactionHandler()
             ->request($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentRequestSuccess(OrderTransfer $orderTransfer)
+    {
+        return $this
+            ->getFactory()
+            ->createStatusTransaction()
+            ->isPaymentRequestSuccess($orderTransfer);
     }
 
     /**

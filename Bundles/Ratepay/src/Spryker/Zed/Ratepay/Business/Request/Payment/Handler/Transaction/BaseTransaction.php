@@ -14,17 +14,25 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
 {
 
     /**
+     * @param int $orderId
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay
+     */
+    protected function getPaymentMethodByIrderId($orderId)
+    {
+        return $this->queryContainer
+            ->queryPayments()
+            ->findByFkSalesOrder($orderId)->getFirst();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay
      */
     protected function getPaymentMethod(OrderTransfer $orderTransfer)
     {
-        return $this->queryContainer
-            ->queryPayments()
-            ->findByFkSalesOrder(
-                $orderTransfer->requireIdSalesOrder()->getIdSalesOrder()
-            )->getFirst();
+        return $this->getPaymentMethodByIrderId($orderTransfer->requireIdSalesOrder()->getIdSalesOrder());
     }
 
     /**
@@ -61,7 +69,7 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
 
             'payment_method' => $method,
             'request_type' => static::TRANSACTION_TYPE,
-            'request_transaction_id' => (isset($headData['transaction-id'])) ? $headData['transaction-id'] : null,
+            'request_transaction_id' =>(isset($headData['transaction-id'])) ? $headData['transaction-id'] : null,
             'request_transaction_short_id' => (isset($headData['transaction-short-id'])) ? $headData['transaction-short-id'] : null,
             'request_body' => (string)$request,
 

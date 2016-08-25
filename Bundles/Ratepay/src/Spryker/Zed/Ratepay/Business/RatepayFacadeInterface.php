@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
@@ -37,11 +39,11 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function initPayment(QuoteTransfer $quoteTransfer);
+    public function initPayment(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer);
 
     /**
      * Specification:
@@ -49,11 +51,11 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function requestPayment(QuoteTransfer $quoteTransfer);
+    public function requestPayment(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer);
 
     /**
      * Specification:
@@ -129,6 +131,18 @@ interface RatepayFacadeInterface
      * @return \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer
      */
     public function installmentCalculation(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Checks if the payment request success
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentRequestSuccess(OrderTransfer $orderTransfer);
 
     /**
      * Specification:

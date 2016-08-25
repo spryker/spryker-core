@@ -13,6 +13,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
 
     /**
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
@@ -20,6 +21,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     abstract protected function getPaymentTransfer(QuoteTransfer $quoteTransfer);
 
     /**
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
@@ -28,12 +30,11 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     public function mapMethodDataToPayment(QuoteTransfer $quoteTransfer, SpyPaymentRatepay $payment)
     {
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
-        $paymentMethod = $quoteTransfer->requirePayment()->getPayment()->requirePaymentMethod()->getPaymentMethod();
         $payment
-            ->setPaymentType($paymentMethod)
-            ->setTransactionId($paymentTransfer->requireTransactionId()->getTransactionId())
-            ->setTransactionShortId($paymentTransfer->requireTransactionShortId()->getTransactionShortId())
-            ->setResultCode($paymentTransfer->requireResultCode()->getResultCode())
+            ->setPaymentType($quoteTransfer->requirePayment()->getPayment()->requirePaymentMethod()->getPaymentMethod())
+            ->setTransactionId($paymentTransfer->getTransactionId())
+            ->setTransactionShortId($paymentTransfer->getTransactionShortId())
+            ->setResultCode($paymentTransfer->getResultCode())
             ->setDeviceFingerprint($paymentTransfer->getDeviceFingerprint())
 
             ->setGender($paymentTransfer->requireGender()->getGender())

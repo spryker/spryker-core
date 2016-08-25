@@ -10,9 +10,9 @@
         <column name="id_payment_ratepay" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
         <column name="payment_type" required="true" type="ENUM" valueSet="INVOICE, INSTALLMENT, ELV, PREPAYMENT"/>
-        <column name="transaction_id" required="true" type="VARCHAR" size="50"/>
-        <column name="transaction_short_id" required="true" type="VARCHAR" size="50"/>
-        <column name="result_code" required="true" type="INTEGER"/>
+        <column name="transaction_id" type="VARCHAR" size="50"/>
+        <column name="transaction_short_id" type="VARCHAR" size="50"/>
+        <column name="result_code" type="INTEGER"/>
 
         <column name="gender" required="true" type="ENUM" valueSet="M, F, U"/>
         <column name="date_of_birth" required="true" type="DATE"/>
