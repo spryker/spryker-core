@@ -14,7 +14,7 @@ use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapper;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductSearch\Business\Saver\SearchPreferencesSaver;
+use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
@@ -61,11 +61,11 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Saver\SearchPreferencesSaverInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriterInterface
      */
-    public function createSearchPreferencesSaver()
+    public function createAttributeMapWriter()
     {
-        return new SearchPreferencesSaver(
+        return new AttributeMapWriter(
             $this->getQueryContainer(),
             $this->getProductFacade()
         );

@@ -21,9 +21,9 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes
-     * - If an attribute is configured to be mapped in the page map builder, then it's value will be added to the page map
-     * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values
+     * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes.
+     * - If an attribute is configured to be mapped in the page map builder, then it's value will be added to the page map.
+     * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values.
      *
      * @api
      *
@@ -43,8 +43,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - Marks the given product to be searchable
-     * - Touches the product so next time the collector runs it will process it
+     * - Marks the given product to be searchable.
+     * - Touches the product so next time the collector runs it will process it.
      *
      * @api
      *
@@ -62,8 +62,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - Marks the given product to not to be searchable
-     * - Touches the product so next time the collector will process it
+     * - Marks the given product to not to be searchable.
+     * - Touches the product so next time the collector will process it.
      *
      * @api
      *
@@ -80,42 +80,47 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * TODO: Add specification
+     * Specification:
+     * - If the given product attribute key does not exists then it will be created.
+     * - For the given product attribute the search preferences will be created.
+     * - Returns a transfer that also contains the ids of the created entities.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function createProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
-        $this
+        return $this
             ->getFactory()
-            ->createSearchPreferencesSaver()
+            ->createAttributeMapWriter()
             ->create($productSearchPreferencesTransfer);
     }
 
     /**
      * Specification:
-     * - For the given product attribute the search preferences will be updated (TODO: review/extend specification)
+     * - For the given product attribute the search preferences will be updated.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function updateProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
-        $this
+        return $this
             ->getFactory()
-            ->createSearchPreferencesSaver()
+            ->createAttributeMapWriter()
             ->update($productSearchPreferencesTransfer);
     }
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Removes all product search preferences for the given product attribute.
+     * - The product attribute itself is not removed.
      *
      * @api
      *
@@ -127,7 +132,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     {
         $this
             ->getFactory()
-            ->createSearchPreferencesSaver()
+            ->createAttributeMapWriter()
             ->clean($productSearchPreferencesTransfer);
     }
 
@@ -151,7 +156,11 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Searches for an existing product attribute key entity by the provided key in database or create it if does not exist.
+     * - Creates a new product search attribute entity with the given data and the found/created attribute key entity.
+     * - Creates a glossary key for the search attribute key if does not exist already.
+     * - Returns a transfer that also contains the ids of the created entities.
      *
      * @api
      *
@@ -168,7 +177,10 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Searches for an existing product attribute key entity by the provided key in database or create it if does not exist.
+     * - Updates an existing product search attribute entity by id with the given data and the found/created attribute key entity.
+     * - Creates a glossary key for the product attribute key if does not exist already.
      *
      * @api
      *
@@ -185,7 +197,9 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Removes the product search attribute entity by id.
+     * - The product attribute itself is not removed.
      *
      * @api
      *
@@ -203,8 +217,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - Reads a product search attribute entity from the database and returns a fully hydrated transfer representation
-     * - Return null if the entity is not found by id
+     * - Reads a product search attribute entity from the database and returns a fully hydrated transfer representation.
+     * - Return null if the entity is not found by id.
      *
      * @api
      *
@@ -221,7 +235,9 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Reads all product search attribute entities from the database and returns a list of their fully hydrated transfer representations.
+     * - The returned list is ordered ascending by position.
      *
      * @api
      *
@@ -236,7 +252,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Updates the positions of the provided product search attribute entities.
      *
      * @api
      *

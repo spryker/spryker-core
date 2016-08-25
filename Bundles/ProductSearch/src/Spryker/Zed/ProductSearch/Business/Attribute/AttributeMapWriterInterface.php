@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business\Saver;
+namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 
-interface SearchPreferencesSaverInterface
+interface AttributeMapWriterInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function create(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function update(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 

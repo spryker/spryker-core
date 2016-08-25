@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business\Saver;
+namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
@@ -14,8 +14,7 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
-// TODO Rename and separate to AttributeMapReader, AttributeMapReaderWriter
-class SearchPreferencesSaver implements SearchPreferencesSaverInterface
+class AttributeMapWriter implements AttributeMapWriterInterface
 {
 
     /**
@@ -45,15 +44,18 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
      *
      * @throws \Exception
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function create(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
+        $productSearchPreferencesTransfer->requireKey();
+
+        $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productSearchPreferencesTransfer);
+        $productSearchPreferencesTransfer->setIdProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
+
         $this->productSearchQueryContainer
             ->getConnection()
             ->beginTransaction();
-
-        $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productSearchPreferencesTransfer);
 
         try {
             $this
@@ -72,6 +74,8 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 
             throw $e;
         }
+
+        return $productSearchPreferencesTransfer;
     }
 
     /**
@@ -79,17 +83,17 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
      *
      * @throws \Exception
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function update(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
+        $idProductAttributeKey = $productSearchPreferencesTransfer
+            ->requireIdProductAttributeKey()
+            ->getIdProductAttributeKey();
+
         $this->productSearchQueryContainer->getConnection()->beginTransaction();
 
         try {
-            $idProductAttributeKey = $productSearchPreferencesTransfer
-                ->requireIdProductAttributeKey()
-                ->getIdProductAttributeKey();
-
             $this->cleanProductSearchAttributeMap($idProductAttributeKey);
 
             $this
@@ -108,6 +112,8 @@ class SearchPreferencesSaver implements SearchPreferencesSaverInterface
 
             throw $e;
         }
+
+        return $productSearchPreferencesTransfer;
     }
 
     /**
