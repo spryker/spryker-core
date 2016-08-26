@@ -26,7 +26,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefunds()
     {
-        return $this->getFactory()->createRefundQuery()->orderByIdRefund(Criteria::DESC);
+        return $this->getFactory()->createRefundQuery();
     }
 
 }
