@@ -29,6 +29,8 @@ class OrdersTable extends AbstractTable
     const URL_SALES_DETAIL = '/sales/detail';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
+    const FILTER_DAY = 'day';
+    const FILTER_WEEK = 'week';
 
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -160,23 +162,13 @@ class OrdersTable extends AbstractTable
         }
 
         $idOrderItemItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
-        $filter = $this->request->get(self::FILTER);
-        $filterValue = null;
-        if ($filter === 'day') {
-            $filterValue = new \DateTime('-1 day');
-        } elseif ($filter === 'week') {
-            $filterValue = new \DateTime('-7 day');
-        }
 
         $filterQuery = $this->orderItemQuery
             ->filterByFkOmsOrderProcess($idOrderItemProcess)
             ->filterByFkOmsOrderItemState($idOrderItemItemState);
 
-        if ($filterValue) {
-            $filterQuery->filterByLastStateChange($filterValue, Criteria::GREATER_EQUAL);
-        } else {
-            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
-        }
+        $filter = $this->request->get(self::FILTER);
+        $this->addRangeFilter($filterQuery, $filter);
 
         $orders = $filterQuery->groupByFkSalesOrder()
             ->select(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
@@ -261,6 +253,24 @@ class OrdersTable extends AbstractTable
         return [
             SpySalesOrderTableMap::COL_CREATED_AT,
         ];
+    }
+
+    /**
+     * @param SpySalesOrderItemQuery $filterQuery
+     * @param string $filter
+     *
+     * @return void
+     */
+    protected function addRangeFilter(SpySalesOrderItemQuery $filterQuery, $filter)
+    {
+        if ($filter === self::FILTER_DAY) {
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_EQUAL);
+        } elseif ($filter === self::FILTER_WEEK) {
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_THAN);
+            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::GREATER_EQUAL);
+        } else {
+            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
+        }
     }
 
 }
