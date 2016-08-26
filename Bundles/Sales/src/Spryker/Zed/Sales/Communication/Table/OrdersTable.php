@@ -256,7 +256,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param SpySalesOrderItemQuery $filterQuery
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $filterQuery
      * @param string $filter
      *
      * @return void
