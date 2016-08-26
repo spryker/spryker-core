@@ -156,18 +156,18 @@ class OrdersTable extends AbstractTable
     {
         $query = $this->orderQuery;
 
-        $idOrderItemProcess = $this->request->get(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->get(self::ID_ORDER_ITEM_PROCESS);
         if (!$idOrderItemProcess) {
             return $query;
         }
 
-        $idOrderItemItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
+        $idOrderItemItemState = $this->request->query->get(self::ID_ORDER_ITEM_STATE);
 
         $filterQuery = $this->orderItemQuery
             ->filterByFkOmsOrderProcess($idOrderItemProcess)
             ->filterByFkOmsOrderItemState($idOrderItemItemState);
 
-        $filter = $this->request->get(self::FILTER);
+        $filter = $this->request->query->get(self::FILTER);
         $this->addRangeFilter($filterQuery, $filter);
 
         $orders = $filterQuery->groupByFkSalesOrder()
@@ -187,10 +187,10 @@ class OrdersTable extends AbstractTable
      */
     protected function persistFilters(TableConfiguration $config)
     {
-        $idOrderItemProcess = $this->request->get(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->get(self::ID_ORDER_ITEM_PROCESS);
         if ($idOrderItemProcess) {
-            $idOrderItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
-            $filter = $this->request->get(self::FILTER);
+            $idOrderItemState = $this->request->query->get(self::ID_ORDER_ITEM_STATE);
+            $filter = $this->request->query->get(self::FILTER);
 
             $config->setUrl(
                 sprintf(
