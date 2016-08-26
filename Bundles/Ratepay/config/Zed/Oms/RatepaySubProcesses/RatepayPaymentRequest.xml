@@ -7,7 +7,7 @@
 
         <states>
             <state name="payment request"/>
-            <state name="payment request error"/>
+            <state name="payment request invalid"/>
         </states>
 
         <transitions>
@@ -19,7 +19,7 @@
 
             <transition>
                 <source>payment request</source>
-                <target>payment request error</target>
+                <target>payment request invalid</target>
                 <event>payment request</event>
             </transition>
 

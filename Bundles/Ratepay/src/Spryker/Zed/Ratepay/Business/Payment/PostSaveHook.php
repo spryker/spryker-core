@@ -8,7 +8,8 @@ namespace Spryker\Zed\Ratepay\Business\Payment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Ratepay\Business\Api\Constants;
+use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog;
+use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 class PostSaveHook implements PostSaveHookInterface
@@ -36,10 +37,35 @@ class PostSaveHook implements PostSaveHookInterface
      */
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $queryLog = $this->queryContainer->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder());
-        $logRecord = $queryLog->findOne();
+        /** @var SpyPaymentRatepayLog $paymentLog */
+        $logRecord = $this->queryContainer
+            ->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder())
+            ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST)
+            ->find()
+            ->getLast()
+        ;
+        if (
+            $logRecord
+            && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST]
+        ) {
+            $error = new CheckoutErrorTransfer();
+            $error
+                ->setErrorCode($logRecord->getResponseResultCode())
+                ->setMessage($logRecord->getResponseResultText());
 
-        if ($logRecord && $logRecord->getMessage() != Constants::REQUEST_MODEL_PAYMENT_CONFIRM) {
+            $checkoutResponse->addError($error);
+        }
+
+        $logRecord = $this->queryContainer
+            ->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder())
+            ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM)
+            ->find()
+            ->getLast()
+        ;
+        if (
+            $logRecord
+            && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM]
+        ) {
             $error = new CheckoutErrorTransfer();
             $error
                 ->setErrorCode($logRecord->getResponseResultCode())
