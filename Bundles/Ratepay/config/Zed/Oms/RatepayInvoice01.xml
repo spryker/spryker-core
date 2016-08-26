@@ -73,7 +73,7 @@
 
         <events>
             <event name="go payment request" onEnter="true" />
-            <event name="create payment confirmation" manual="true" command="Ratepay/ConfirmPayment"/>
+            <event name="create payment confirmation" onEnter="true" command="Ratepay/ConfirmPayment"/>
             <event name="create delivery confirmation" onEnter="true" command="Ratepay/ConfirmDelivery" />
             <event name="ready for shipment" onEnter="true" />
             <event name="item not returned" timeout="90days" />
