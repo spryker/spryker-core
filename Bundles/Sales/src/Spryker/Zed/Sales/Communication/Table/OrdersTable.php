@@ -156,12 +156,12 @@ class OrdersTable extends AbstractTable
     {
         $query = $this->orderQuery;
 
-        $idOrderItemProcess = $this->request->query->get(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
         if (!$idOrderItemProcess) {
             return $query;
         }
 
-        $idOrderItemItemState = $this->request->query->get(self::ID_ORDER_ITEM_STATE);
+        $idOrderItemItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
 
         $filterQuery = $this->orderItemQuery
             ->filterByFkOmsOrderProcess($idOrderItemProcess)
@@ -187,9 +187,9 @@ class OrdersTable extends AbstractTable
      */
     protected function persistFilters(TableConfiguration $config)
     {
-        $idOrderItemProcess = $this->request->query->get(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
         if ($idOrderItemProcess) {
-            $idOrderItemState = $this->request->query->get(self::ID_ORDER_ITEM_STATE);
+            $idOrderItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
             $filter = $this->request->query->get(self::FILTER);
 
             $config->setUrl(
