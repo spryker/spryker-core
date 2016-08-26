@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
