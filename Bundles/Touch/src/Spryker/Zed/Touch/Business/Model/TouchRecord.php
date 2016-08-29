@@ -251,7 +251,6 @@ class TouchRecord implements TouchRecordInterface
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $query
      *
      * @return int
-     *
      */
     protected function removeTouchEntries(SpyTouchQuery $query)
     {
@@ -274,7 +273,6 @@ class TouchRecord implements TouchRecordInterface
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $query
      *
      * @return \Spryker\Shared\Library\BatchIterator\PropelBatchIterator
-     *
      */
     protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
     {

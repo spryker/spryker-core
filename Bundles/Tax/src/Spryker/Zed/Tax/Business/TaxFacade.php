@@ -246,7 +246,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param int $id
      *
      * @return void
-     *
      */
     public function deleteTaxSet($id)
     {

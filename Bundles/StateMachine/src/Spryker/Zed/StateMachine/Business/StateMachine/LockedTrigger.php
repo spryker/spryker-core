@@ -37,7 +37,6 @@ class LockedTrigger implements TriggerInterface
      * @param int $identifier
      *
      * @return int
-     *
      */
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier)
     {

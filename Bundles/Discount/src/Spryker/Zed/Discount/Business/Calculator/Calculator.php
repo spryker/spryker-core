@@ -161,7 +161,6 @@ class Calculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountsTransfer
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
-     *
      */
     protected function sortByDiscountAmountDescending(array $collectedDiscountsTransfer)
     {

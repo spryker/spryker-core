@@ -135,7 +135,6 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @return \SplFileObject
-     *
      */
     public function getFile()
     {

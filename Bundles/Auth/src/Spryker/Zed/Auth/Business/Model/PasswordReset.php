@@ -61,7 +61,6 @@ class PasswordReset
      * @param string $email
      *
      * @return bool
-     *
      */
     public function requestToken($email)
     {

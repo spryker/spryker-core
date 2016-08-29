@@ -35,7 +35,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      * @param int $identifier - this is id of foreign entity you want to track in state machine, it's stored in history table.
      *
      * @return int
-     *
      */
     public function triggerForNewStateMachineItem(
         StateMachineProcessTransfer $stateMachineProcessTransfer,

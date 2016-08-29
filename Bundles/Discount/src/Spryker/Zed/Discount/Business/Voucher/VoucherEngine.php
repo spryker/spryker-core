@@ -202,7 +202,6 @@ class VoucherEngine implements VoucherEngineInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\VoucherEngineException
      *
      * @return string
-     *
      */
     protected function getRandomVoucherCode($length)
     {
