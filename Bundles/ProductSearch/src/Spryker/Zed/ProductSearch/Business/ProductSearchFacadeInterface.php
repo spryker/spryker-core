@@ -190,4 +190,22 @@ interface ProductSearchFacadeInterface
      */
     public function updateProductSearchAttributeOrder(array $productSearchAttributes);
 
+    /**
+     * TODO: add specification
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function touchProductAbstractByAsynchronousAttributes();
+
+    /**
+     * TODO: add specification
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function touchProductAbstractByAsynchronousAttributeMap();
+
 }

@@ -37,6 +37,18 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
     }
 
     /**
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
+     *
+     * @return bool
+     */
+    public function preUpdate(ConnectionInterface $connection = null)
+    {
+        $this->setSynced(false);
+
+        return parent::preUpdate($connection);
+    }
+
+    /**
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void

@@ -269,4 +269,34 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->reorder($productSearchAttributes);
     }
 
+    /**
+     * TODO: add specification
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function touchProductAbstractByAsynchronousAttributes()
+    {
+        $this
+            ->getFactory()
+            ->createAttributeMarker()
+            ->touchProductAbstractByAsynchronousAttributes();
+    }
+
+    /**
+     * TODO: add specification
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function touchProductAbstractByAsynchronousAttributeMap()
+    {
+        $this
+            ->getFactory()
+            ->createAttributeMarker()
+            ->touchProductAbstractByAsynchronousAttributeMap();
+    }
+
 }

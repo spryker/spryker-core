@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class FilterPreferencesController extends AbstractController
 {
@@ -180,6 +181,16 @@ class FilterPreferencesController extends AbstractController
         $keys = $this->getFacade()->suggestUnusedProductSearchAttributeKeys($searchTerm);
 
         return $this->jsonResponse($keys);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function syncAction()
+    {
+        $this->getFacade()->touchProductAbstractByAsynchronousAttributes();
+
+        return $this->redirectResponse('/product-search/filter-preferences');
     }
 
 }

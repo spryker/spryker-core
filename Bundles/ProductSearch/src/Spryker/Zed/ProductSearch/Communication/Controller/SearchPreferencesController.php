@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class SearchPreferencesController extends AbstractController
 {
@@ -121,6 +122,16 @@ class SearchPreferencesController extends AbstractController
         $productSearchPreferencesTransfer->setIdProductAttributeKey($idAttributeKey);
 
         $this->getFacade()->cleanProductSearchPreferences($productSearchPreferencesTransfer);
+
+        return $this->redirectResponse('/product-search/search-preferences');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function syncAction()
+    {
+        $this->getFacade()->touchProductAbstractByAsynchronousAttributeMap();
 
         return $this->redirectResponse('/product-search/search-preferences');
     }

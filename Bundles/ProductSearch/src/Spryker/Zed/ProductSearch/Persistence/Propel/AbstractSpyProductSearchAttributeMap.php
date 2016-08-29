@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Persistence\Propel;
 
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMap as BaseSpyProductSearchAttributeMap;
+use Propel\Runtime\Connection\ConnectionInterface;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_search_attribute_map' table.
@@ -20,4 +21,17 @@ use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMap as BaseS
  */
 abstract class AbstractSpyProductSearchAttributeMap extends BaseSpyProductSearchAttributeMap
 {
+
+    /**
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
+     *
+     * @return bool
+     */
+    public function preUpdate(ConnectionInterface $connection = null)
+    {
+        $this->setSynced(false);
+
+        return parent::preUpdate($connection);
+    }
+
 }

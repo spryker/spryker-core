@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMapQuery;
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -46,6 +49,14 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
+     */
+    public function createProductSearchAttributeMapArchiveQuery()
+    {
+        return SpyProductSearchAttributeMapArchiveQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function createProductAttributeKeyQuery()
@@ -59,6 +70,22 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductSearchAttributeQuery()
     {
         return SpyProductSearchAttributeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
+     */
+    public function createProductSearchAttributeArchiveQuery()
+    {
+        return SpyProductSearchAttributeArchiveQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function createProductAbstractQuery()
+    {
+        return SpyProductAbstractQuery::create();
     }
 
 }
