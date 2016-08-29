@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Refund\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
