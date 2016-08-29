@@ -81,6 +81,9 @@ class OrdersTable extends AbstractTable
 
         $config->addRawColumn(self::URL);
 
+        $config->setDefaultSortColumnIndex(0);
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
+
         $this->persistFilters($config);
 
         return $config;
@@ -108,7 +111,6 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
-        $query->orderByIdSalesOrder(Criteria::DESC);
 
         $queryResults = $this->runQuery($query, $config);
         $results = [];
@@ -259,7 +261,11 @@ class OrdersTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
             SpySalesOrderTableMap::COL_CREATED_AT,
+            SpySalesOrderTableMap::COL_FK_CUSTOMER,
+            SpySalesOrderTableMap::COL_EMAIL,
+            SpySalesOrderTableMap::COL_FIRST_NAME,
         ];
     }
 
