@@ -54,8 +54,9 @@ class OrderPaymentInitMapper extends BaseMapper
             ;
         }
 
+        $customerId = $this->orderEntity->getCustomer() ? $this->orderEntity->getCustomer()->getIdCustomer() : 0;
         $this->ratepayPaymentInitTransfer
-            ->setCustomerId($this->orderEntity->getCustomer()->getIdCustomer())
+            ->setCustomerId($customerId)
         ;
     }
 
