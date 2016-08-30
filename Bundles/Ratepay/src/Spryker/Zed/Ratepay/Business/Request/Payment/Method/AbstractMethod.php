@@ -267,11 +267,21 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
             ->getPartialBasketMapper($dataTransfer, $paymentData, $orderItems)
             ->map();
 
+        $grouppedItems = [];
         foreach ($orderItems as $basketItem) {
+            if (isset($grouppedItems[$basketItem->getGroupKey()])) {
+                $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
+            } else {
+                $grouppedItems[$basketItem->getGroupKey()] = $basketItem;
+            }
+        }
+
+        foreach ($grouppedItems as $basketItem) {
             $this->mapperFactory
                 ->getBasketItemMapper($basketItem)
                 ->map();
         }
+
     }
 
     /**

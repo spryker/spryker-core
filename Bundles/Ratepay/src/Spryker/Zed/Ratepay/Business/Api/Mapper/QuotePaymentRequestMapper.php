@@ -130,10 +130,6 @@ class QuotePaymentRequestMapper extends BaseMapper
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
-                $grouppedItems[$basketItem->getGroupKey()]->setUnitGrossPriceWithProductOptions(
-                    $grouppedItems[$basketItem->getGroupKey()]->getUnitGrossPriceWithProductOptions()
-                    + $basketItem->getUnitGrossPriceWithProductOptions()
-                );
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = $basketItem;
             }
