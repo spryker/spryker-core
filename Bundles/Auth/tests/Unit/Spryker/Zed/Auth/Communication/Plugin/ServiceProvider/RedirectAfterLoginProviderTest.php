@@ -27,7 +27,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 {
 
-    const VALID_REDIRECT_URL = '/valid-redirect-url';
+    const VALID_REDIRECT_URL = '/valid-redirect-url?query=string';
 
     /**
      * @return void
@@ -46,7 +46,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
             ->method('isAuthenticated');
         $redirectAfterLoginProvider->onKernelResponse($event);
 
-        $this->assertSame('/auth/login?referer=%2Fvalid-redirect-url', $event->getResponse()->headers->get('location'));
+        $this->assertSame('/auth/login?referer=%2Fvalid-redirect-url%3Fquery%3Dstring', $event->getResponse()->headers->get('location'));
     }
 
     /**
