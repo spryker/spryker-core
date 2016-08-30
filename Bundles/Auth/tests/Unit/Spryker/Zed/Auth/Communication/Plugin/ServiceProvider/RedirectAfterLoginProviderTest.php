@@ -34,7 +34,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnKernelResponseShouldSetRefererWhenRedirectingToLogin()
     {
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
         $request->server->set('REQUEST_URI', static:: VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
@@ -54,7 +54,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnKernelResponseShouldNotChangeResponseIfRedirectUriNotSetInReferer()
     {
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
         $request->server->set('REQUEST_URI', AuthConfig::DEFAULT_URL_LOGIN);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
@@ -73,7 +73,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnKernelResponseMustNotSetRedirectUriInSessionIfRedirectUriSetInSessionAndUserIsNotAuthenticated()
     {
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
         $request->server->set('REQUEST_URI', AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set('referer', static:: VALID_REDIRECT_URL);
@@ -95,7 +95,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnKernelResponseMustSetRedirectResponseIfRedirectUriSetInRefererAndUserIsAuthenticated()
     {
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
         $request->server->set('REQUEST_URI', AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set('referer', static:: VALID_REDIRECT_URL);
@@ -109,7 +109,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 
         $redirectAfterLoginProvider->onKernelResponse($event);
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $event->getResponse());
+        $this->assertInstanceOf(RedirectResponse::class, $event->getResponse());
 
         $this->assertSame(static:: VALID_REDIRECT_URL, $event->getResponse()->headers->get('location'));
     }
@@ -125,7 +125,10 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
             return new RedirectAfterLoginProvider();
         }
 
-        return $this->getMock(RedirectAfterLoginProvider::class, $methods, [], '', false);
+        return $this->getMockBuilder(RedirectAfterLoginProvider::class)
+            ->setMethods($methods)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
 }
