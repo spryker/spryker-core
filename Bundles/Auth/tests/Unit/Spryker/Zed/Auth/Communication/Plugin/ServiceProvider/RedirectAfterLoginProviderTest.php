@@ -36,7 +36,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $request = new Request();
-        $request->server->set('REQUEST_URI', '/foo');
+        $request->server->set('REQUEST_URI', static:: VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
@@ -46,7 +46,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
             ->method('isAuthenticated');
         $redirectAfterLoginProvider->onKernelResponse($event);
 
-        $this->assertSame('/auth/login?referer=%2Ffoo', $event->getResponse()->headers->get('location'));
+        $this->assertSame('/auth/login?referer=%2Fvalid-redirect-url', $event->getResponse()->headers->get('location'));
     }
 
     /**
@@ -76,7 +76,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $request = new Request();
         $request->server->set('REQUEST_URI', AuthConfig::DEFAULT_URL_LOGIN);
-        $request->query->set('referer', '/foo');
+        $request->query->set('referer', static:: VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
@@ -98,7 +98,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $request = new Request();
         $request->server->set('REQUEST_URI', AuthConfig::DEFAULT_URL_LOGIN);
-        $request->query->set('referer', '/foo');
+        $request->query->set('referer', static:: VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
@@ -111,7 +111,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $event->getResponse());
 
-        $this->assertSame('/foo', $event->getResponse()->headers->get('location'));
+        $this->assertSame(static:: VALID_REDIRECT_URL, $event->getResponse()->headers->get('location'));
     }
 
     /**
