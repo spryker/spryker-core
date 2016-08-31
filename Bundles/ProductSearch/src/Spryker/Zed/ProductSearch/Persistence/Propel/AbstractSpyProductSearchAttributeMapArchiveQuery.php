@@ -1,6 +1,6 @@
 <?php
 
-namespace Spryker\Zed\ProductSearch\Persistence;
+namespace Spryker\Zed\ProductSearch\Persistence\Propel;
 
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMapArchiveQuery as BaseSpyProductSearchAttributeMapArchiveQuery;
 

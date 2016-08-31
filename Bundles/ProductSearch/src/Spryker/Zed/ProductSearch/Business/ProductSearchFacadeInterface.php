@@ -191,7 +191,10 @@ interface ProductSearchFacadeInterface
     public function updateProductSearchAttributeOrder(array $productSearchAttributes);
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Touches abstract products which has an attribute that has not been synchronized yet.
+     * - Asynchronous attribute means a product search attribute entity had been created/modified/deleted since last synchronization.
+     * - After touch, product search attribute entities are marked as synchronized.
      *
      * @api
      *
@@ -200,7 +203,10 @@ interface ProductSearchFacadeInterface
     public function touchProductAbstractByAsynchronousAttributes();
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Touches abstract products which has an attribute that has not been synchronized yet.
+     * - Asynchronous attribute means a product search attribute map entity had been created/modified/deleted since last synchronization.
+     * - After touch, product search attribute map entities are marked as synchronized.
      *
      * @api
      *

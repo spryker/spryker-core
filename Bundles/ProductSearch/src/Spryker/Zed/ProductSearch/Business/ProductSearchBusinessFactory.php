@@ -12,7 +12,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapper;
-use Spryker\Zed\ProductSearch\Business\Marker\AttributeMarker;
+use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMapMarker;
+use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
@@ -145,9 +146,20 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSearch\Business\Marker\AttributeMarkerInterface
      */
-    public function createAttributeMarker()
+    public function createProductSearchAttributeMarker()
     {
-        return new AttributeMarker(
+        return new ProductSearchAttributeMarker(
+            $this->getTouchFacade(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Marker\AttributeMarkerInterface
+     */
+    public function createProductSearchAttributeMapMarker()
+    {
+        return new ProductSearchAttributeMapMarker(
             $this->getTouchFacade(),
             $this->getQueryContainer()
         );

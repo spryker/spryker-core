@@ -51,9 +51,9 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
      *
      * @return int
      */
-    public function bulkTouchActive($itemType, array $itemIds = [])
+    public function bulkTouchSetActive($itemType, array $itemIds = [])
     {
-        return $this->touchFacade->bulkTouchActive($itemType, $itemIds);
+        return $this->touchFacade->bulkTouchSetActive($itemType, $itemIds);
     }
 
 }

@@ -230,7 +230,7 @@ class AttributeWriter implements AttributeWriterInterface
         $productSearchAttributeEntity->setFkProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
 
         $productSearchAttributeEntity->save();
-        $productSearchAttributeTransfer->setIdProductSearchAttribute($productSearchAttributeEntity->getIdProductSearchAttribute());
+        $productSearchAttributeTransfer->fromArray($productSearchAttributeEntity->toArray(), true);
 
         return $productSearchAttributeTransfer;
     }

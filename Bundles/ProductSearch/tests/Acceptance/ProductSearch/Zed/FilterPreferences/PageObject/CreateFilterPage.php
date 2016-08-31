@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\ProductSearch\Zed\PageObject;
+namespace Acceptance\ProductSearch\Zed\FilterPreferences\PageObject;
 
-class FilterPreferencesListPage
+class CreateFilterPage
 {
 
-    const URL = '/product-search/filter-preferences';
-
-    const SELECTOR_TABLE = '.dataTables_wrapper';
+    const URL = '/product-search/filter-preferences/create';
 
 }

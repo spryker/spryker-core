@@ -13,11 +13,6 @@ interface AttributeMarkerInterface
     /**
      * @return void
      */
-    public function touchProductAbstractByAsynchronousAttributes();
-
-    /**
-     * @return void
-     */
-    public function touchProductAbstractByAsynchronousAttributeMap();
+    public function touchProductAbstract();
 
 }

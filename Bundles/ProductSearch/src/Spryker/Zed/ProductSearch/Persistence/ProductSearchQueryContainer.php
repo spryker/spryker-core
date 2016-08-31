@@ -257,7 +257,6 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductAbstractByAttributeName(array $attributeNames)
     {
-        // TODO: add join to spy_product_search to filter only searchable products
         $query = $this->getFactory()
             ->createProductAbstractQuery()
             ->leftJoinSpyProductAbstractLocalizedAttributes()

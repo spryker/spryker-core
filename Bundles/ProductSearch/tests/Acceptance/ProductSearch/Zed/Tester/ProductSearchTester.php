@@ -9,6 +9,6 @@ namespace Acceptance\ProductSearch\Zed\Tester;
 
 use ProductSearch\ZedAcceptanceTester;
 
-class FilterPreferencesTester extends ZedAcceptanceTester
+class ProductSearchTester extends ZedAcceptanceTester
 {
 }

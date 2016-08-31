@@ -32,6 +32,6 @@ interface ProductSearchToTouchInterface
      *
      * @return int
      */
-    public function bulkTouchActive($itemType, array $itemIds = []);
+    public function bulkTouchSetActive($itemType, array $itemIds = []);
 
 }
