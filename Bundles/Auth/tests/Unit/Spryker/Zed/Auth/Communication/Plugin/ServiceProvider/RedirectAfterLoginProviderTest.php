@@ -128,7 +128,6 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 
         return $this->getMockBuilder(RedirectAfterLoginProvider::class)
             ->setMethods($methods)
-            ->disableOriginalConstructor()
             ->getMock();
     }
 
