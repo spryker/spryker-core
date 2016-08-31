@@ -172,7 +172,6 @@ class Builder implements BuilderInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return \SimpleXMLElement
-     *
      */
     protected function loadXmlFromFileName($pathToXml, $fileName)
     {

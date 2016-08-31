@@ -74,7 +74,8 @@ class SalesFacadeSaveOrderTest extends Test
                 'getManualEvents',
                 'getItemsWithFlag',
                 'getManualEventsByIdSalesOrder',
-                'getDistinctManualEventsByIdSalesOrder'
+                'getDistinctManualEventsByIdSalesOrder',
+                'getOrderItemMatrix'
             ]
         );
         $omsFacadeMock->method('selectProcess')

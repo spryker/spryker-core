@@ -135,12 +135,11 @@ abstract class AbstractTable
     /**
      * @return $this
      */
-    private function init()
+    protected function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;
-            $this->request = (new Pimple())
-                ->getApplication()['request'];
+            $this->request = $this->getRequest();
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
@@ -148,6 +147,15 @@ abstract class AbstractTable
         }
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest()
+    {
+        return (new Pimple())
+            ->getApplication()['request'];
     }
 
     /**

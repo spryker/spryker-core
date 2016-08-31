@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Console\Communication;
 
+use Spryker\Shared\NewRelic\Api;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Symfony\Component\Console\Application;
@@ -85,15 +86,37 @@ class ConsoleBootstrap extends Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $newRelicApi = $this->getNewRelicApi();
+        $newRelicApi->markAsBackgroundJob(true);
+        $newRelicApi->setNameOfTransaction($this->getCommandTransactionName($input));
+
         $output->writeln($this->getInfoText());
 
         return parent::doRun($input, $output);
     }
 
     /**
+     * @return \Spryker\Shared\NewRelic\ApiInterface
+     */
+    protected function getNewRelicApi()
+    {
+        return new Api();
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
      * @return string
      */
-    private function getInfoText()
+    protected function getCommandTransactionName(InputInterface $input)
+    {
+        return 'vendor/bin/console ' . (string)$input;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getInfoText()
     {
         return sprintf(
             '<fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',

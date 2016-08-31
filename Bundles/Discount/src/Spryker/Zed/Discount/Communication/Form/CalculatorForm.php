@@ -196,7 +196,6 @@ class CalculatorForm extends AbstractType
      * @throws \Spryker\Zed\Discount\Business\Exception\CalculatorException
      *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
-     *
      */
     protected function getCalculatorPlugin($pluginName)
     {
@@ -205,7 +204,7 @@ class CalculatorForm extends AbstractType
         }
 
         throw new CalculatorException(sprintf(
-            'Calculator plugin with name "%s" not found. 
+            'Calculator plugin with name "%s" not found.
             Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins plugin stack?',
             $pluginName
         ));

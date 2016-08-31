@@ -31,7 +31,6 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
-     *
      */
     public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider)
     {

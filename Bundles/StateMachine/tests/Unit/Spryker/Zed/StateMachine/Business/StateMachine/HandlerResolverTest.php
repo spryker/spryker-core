@@ -37,7 +37,6 @@ class HandlerResolverTest extends StateMachineMocks
 
     /**
      * @return void
-     *
      */
     public function testHandlerResolverWhenRequestedNonExistantShouldThrowException()
     {

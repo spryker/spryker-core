@@ -70,7 +70,6 @@ class MetaDataProvider implements MetaDataProviderInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
      * @return array|string[]
-     *
      */
     public function getAcceptedTypesByFieldName($fieldName)
     {

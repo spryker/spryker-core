@@ -14,14 +14,16 @@ $(document).ready(function() {
 
     /** Draw data tables */
     $('.gui-table-data').dataTable({
-        scrollX: 'auto'
+        scrollX: 'auto',
+        autoWidth: false
     });
 
     /** Draw data tables without search */
     $('.gui-table-data-no-search').dataTable({
         bFilter: false,
         bInfo: false,
-        scrollX: 'auto'
+        scrollX: 'auto',
+        autoWidth: false
     });
 
     /** all elements with the same class will have the same height */

@@ -60,7 +60,6 @@ class GreaterEqual implements ComparatorInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isValidValue($withValue)
     {

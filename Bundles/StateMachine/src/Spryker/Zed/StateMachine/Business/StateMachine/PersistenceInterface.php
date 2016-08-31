@@ -94,7 +94,6 @@ interface PersistenceInterface
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
-     *
      */
     public function saveStateMachineItemTimeout(
         StateMachineItemTransfer $stateMachineItemTransfer,

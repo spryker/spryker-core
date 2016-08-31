@@ -157,7 +157,6 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     protected function assertTypeAccepted(array $withTypes, ComparatorInterface $operator)
     {

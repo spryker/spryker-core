@@ -509,8 +509,8 @@ class OrderStateMachine implements OrderStateMachineInterface
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
                     }
-                    $processedOrderItems[] = $orderItemEntity;
-                    break;
+
+                    return $orderItems;
                 }
             } catch (Exception $e) {
                 $log->setIsError(true);
