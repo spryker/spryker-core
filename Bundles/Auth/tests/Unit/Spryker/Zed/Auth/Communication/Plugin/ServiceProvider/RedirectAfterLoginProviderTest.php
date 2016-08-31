@@ -37,7 +37,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
     {
         $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
-        $request->server->set(static::REQUEST_URI, static:: VALID_REDIRECT_URL);
+        $request->server->set(static::REQUEST_URI, static::VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
@@ -77,7 +77,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
         $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
-        $request->query->set(RedirectAfterLoginProvider::REFERER, static:: VALID_REDIRECT_URL);
+        $request->query->set(RedirectAfterLoginProvider::REFERER, static::VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
@@ -99,7 +99,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
         $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
-        $request->query->set(RedirectAfterLoginProvider::REFERER, static:: VALID_REDIRECT_URL);
+        $request->query->set(RedirectAfterLoginProvider::REFERER, static::VALID_REDIRECT_URL);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
@@ -112,7 +112,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(RedirectResponse::class, $event->getResponse());
 
-        $this->assertSame(static:: VALID_REDIRECT_URL, $event->getResponse()->headers->get('location'));
+        $this->assertSame(static::VALID_REDIRECT_URL, $event->getResponse()->headers->get('location'));
     }
 
     /**
