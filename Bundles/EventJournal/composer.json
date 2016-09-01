@@ -11,7 +11,7 @@
     "spryker/config": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
-    "spryker/new-relic": "^2.0.0"
+    "spryker/new-relic": "^2.1.0"
   },
   "description": "EventJournal bundle",
   "license": "proprietary",
