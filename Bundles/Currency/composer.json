@@ -9,7 +9,7 @@
   },
   "require": {
     "spryker/kernel": "^2.0.0",
-    "symfony/intl": "~2.8.8"
+    "spryker/symfony": "^2.1.3"
   },
   "description": "Currency bundle",
   "license": "proprietary",
