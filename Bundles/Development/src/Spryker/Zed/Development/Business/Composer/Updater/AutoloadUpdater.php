@@ -54,7 +54,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function updateAutoloadForTests(array $composerJson, SplFileInfo $composerJsonFile)
     {
         $testDirectoryKeys = $this->buildTestDirectoryKeys();
-        $bundlePath = $composerJsonFile->getRelativePathname();
+        $bundlePath = dirname($composerJsonFile->getPathname());
 
         foreach ($testDirectoryKeys as $testDirectoryKey) {
             $composerJson = $this->updateAutoload($composerJson, $testDirectoryKey, $bundlePath);
@@ -76,8 +76,7 @@ class AutoloadUpdater implements UpdaterInterface
 
         if ($this->directoryExists($directoryName)) {
             $composerJson = $this->addAutoloadDevPsr0($composerJson);
-            $testPath = $bundlePath . DIRECTORY_SEPARATOR . 'tests';
-            $composerJson['autoload-dev']['psr-0'][$testDirectoryKey] = $testPath;
+            $composerJson['autoload-dev']['psr-0'][$testDirectoryKey] = 'tests/';
         }
 
         if (isset($composerJson['autoload']['psr-0'][$testDirectoryKey])) {

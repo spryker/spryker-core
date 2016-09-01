@@ -32,15 +32,15 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenKeyInComposerButDirDoesNotExistRemoveFromComposer($autoloadKey)
     {
-//        $composerJson = $this->getComposerJson($autoloadKey);
-//        $splFileInfo = $this->getSplFile();
-//
-//        $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
-//        $autoloadUpdaterMock->method('directoryExists')->willReturn(false);
-//        $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
-//        unset($composerJson['autoload']['psr-0'][$autoloadKey]);
-//
-//        $this->assertSame($composerJson, $updatedComposerJson);
+        $composerJson = $this->getComposerJson($autoloadKey);
+        $splFileInfo = $this->getSplFile();
+
+        $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
+        $autoloadUpdaterMock->method('directoryExists')->willReturn(false);
+        $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
+        unset($composerJson['autoload']['psr-0'][$autoloadKey]);
+
+        $this->assertSame($composerJson, $updatedComposerJson);
     }
 
     /**
@@ -57,7 +57,9 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
 
         $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
         $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function($path) use ($autoloadKey) {
-            return ($path === __DIR__ . '/tests/' . $autoloadKey);
+            $testPath = __DIR__ . '/tests/' . $autoloadKey;
+
+            return ($path === $testPath);
         });
         $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
         $composerJson['autoload-dev']['psr-0'][$autoloadKey] = $composerJson['autoload']['psr-0'][$autoloadKey];
@@ -79,10 +81,12 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
 
         $composerJson = $this->getComposerJson($autoloadKey);
         unset($composerJson['autoload']['psr-0'][$autoloadKey]);
-        $composerJson['autoload-dev']['psr-0'][$autoloadKey] = __DIR__ . '/tests';
+        $composerJson['autoload-dev']['psr-0'][$autoloadKey] = 'tests/';
         $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
         $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function($path) use ($autoloadKey) {
-            return ($path === __DIR__ . '/tests/' . $autoloadKey);
+            $testPath = __DIR__ . '/tests/' . $autoloadKey;
+
+            return ($path === $testPath);
         });
         $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
 
@@ -125,7 +129,7 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
             'autoload' => [
                 'psr-0' => [
                     'Path' => 'should/stay',
-                    $autoloadKey => __DIR__ . '/tests'
+                    $autoloadKey => 'tests/'
                 ]
             ]
         ];
@@ -136,7 +140,7 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSplFile()
     {
-        return new SplFileInfo(get_class($this), __DIR__, __DIR__);
+        return new SplFileInfo(__FILE__, __DIR__, __DIR__);
     }
 
 }
