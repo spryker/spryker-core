@@ -9,7 +9,7 @@ namespace Unit\Spryker\Shared\Error;
 
 use Exception;
 use Psr\Log\LoggerInterface;
-use Spryker\Shared\Error\ErrorLogger;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
 /**
@@ -61,7 +61,7 @@ class ErrorLoggerTest extends \PHPUnit_Framework_TestCase
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Error\ErrorLogger
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
      */
     protected function getErrorLoggerMock(LoggerInterface $logger, NewRelicApiInterface $newRelicApi)
     {

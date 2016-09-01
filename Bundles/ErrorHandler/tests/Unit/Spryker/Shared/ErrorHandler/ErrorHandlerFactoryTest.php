@@ -8,12 +8,12 @@
 namespace Unit\Spryker\Shared\Error;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Error\ErrorConstants;
-use Spryker\Shared\Error\ErrorHandler;
-use Spryker\Shared\Error\ErrorHandlerFactory;
-use Spryker\Shared\Error\ErrorRenderer\CliErrorRenderer;
-use Spryker\Shared\Error\ErrorRenderer\WebExceptionErrorRenderer;
-use Spryker\Shared\Error\ErrorRenderer\WebHtmlErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorConstants;
+use Spryker\Shared\ErrorHandler\ErrorHandler;
+use Spryker\Shared\ErrorHandler\ErrorHandlerFactory;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Library\LibraryConstants;
 
 /**
@@ -158,7 +158,7 @@ class ErrorHandlerFactoryTest extends \PHPUnit_Framework_TestCase
      * @param string $application
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Error\ErrorHandlerFactory
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorHandlerFactory
      */
     protected function getErrorHandlerFactoryMock($application, array $methods)
     {

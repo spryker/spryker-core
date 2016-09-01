@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Error;
 
-use Spryker\Shared\Error\ErrorHandlerEnvironment;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 /**
  * @group Unit

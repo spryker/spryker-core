@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Error\ErrorRenderer;
+namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Error\ErrorConstants;
-use Spryker\Shared\Error\ErrorRenderer\WebHtmlErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorConstants;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 /**
  * @group Unit
@@ -92,7 +92,7 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $application
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Error\ErrorRenderer\ErrorRendererInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
     protected function getErrorPageMock($application)
     {

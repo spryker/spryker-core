@@ -8,10 +8,10 @@
 namespace Unit\Spryker\Shared\Error;
 
 use Psr\Log\LoggerInterface;
-use Spryker\Shared\Error\ErrorHandler;
-use Spryker\Shared\Error\ErrorLogger;
-use Spryker\Shared\Error\ErrorLoggerInterface;
-use Spryker\Shared\Error\ErrorRenderer\ErrorRendererInterface;
+use Spryker\Shared\ErrorHandler\ErrorHandler;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Shared\ErrorHandler\ErrorLoggerInterface;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
 /**
@@ -139,11 +139,11 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Shared\Error\ErrorLoggerInterface $errorLogger
-     * @param \Spryker\Shared\Error\ErrorRenderer\ErrorRendererInterface $errorRenderer
+     * @param \Spryker\Shared\ErrorHandler\ErrorLoggerInterface $errorLogger
+     * @param \Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface $errorRenderer
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Error\ErrorHandler
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorHandler
      */
     protected function getErrorHandlerMock(
         ErrorLoggerInterface $errorLogger,
@@ -168,7 +168,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Error\ErrorLogger
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
      */
     protected function getErrorLoggerMock()
     {
@@ -208,7 +208,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Error\ErrorRenderer\ErrorRendererInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
     protected function getErrorRendererMock()
     {
