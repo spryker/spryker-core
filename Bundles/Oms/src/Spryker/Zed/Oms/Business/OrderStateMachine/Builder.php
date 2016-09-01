@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\OmsConfig;
@@ -59,7 +60,7 @@ class Builder implements BuilderInterface
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|array $processDefinitionLocation
      */
-    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $processDefinitionLocation)
+    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, ProcessInterface $process, $processDefinitionLocation)
     {
         $this->event = $event;
         $this->state = $state;
