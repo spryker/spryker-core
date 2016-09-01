@@ -146,6 +146,7 @@
       "Spryker\\Zed\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/src",
       "Unit\\Spryker\\Zed\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/tests",
       "Functional\\Spryker\\Zed\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/tests",
+
       "Spryker\\Zed\\Development\\": "Bundles/Development/src",
       "Spryker\\Shared\\Development\\": "Bundles/Development/src",
       "Unit\\Spryker\\Zed\\Development\\": "Bundles/Development/tests",
@@ -164,6 +165,10 @@
       "Spryker\\Yves\\DummyPayment\\": "Bundles/DummyPayment/src",
       "Spryker\\Shared\\DummyPayment\\": "Bundles/DummyPayment/src",
       "Spryker\\Zed\\DummyPayment\\": "Bundles/DummyPayment/src",
+
+      "Spryker\\Shared\\ErrorHandler\\": "Bundles/ErrorHandler/src",
+      "Unit\\Spryker\\Shared\\ErrorHandler\\": "Bundles/ErrorHandler/tests",
+
       "Spryker\\Client\\EventJournal\\": "Bundles/EventJournal/src",
       "Unit\\Spryker\\Client\\EventJournal\\": "Bundles/EventJournal/tests",
       "Functional\\Spryker\\Client\\EventJournal\\": "Bundles/EventJournal/tests",
