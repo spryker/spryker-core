@@ -1,8 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-$bootstrap = Spryker\Shared\Library\SystemUnderTest\SystemUnderTestBootstrap::getInstance();
 
-$application = 'Zed';
-$bootstrap->bootstrap($application);
+use Spryker\Shared\Testify\SystemUnderTestBootstrap;
+
+$bootstrap = SystemUnderTestBootstrap::getInstance();
+$bootstrap->bootstrap(SystemUnderTestBootstrap::APPLICATION_ZED);

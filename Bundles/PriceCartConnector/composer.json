@@ -17,6 +17,10 @@
     "spryker/price": "^2.0.0",
     "spryker/transfer": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "PriceCartConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -31,7 +31,7 @@ class SystemUnderTestBootstrap
     const TEST_ENVIRONMENT = 'test';
 
     /**
-     * @var self
+     * @var SystemUnderTestBootstrap
      */
     protected static $instance;
 
@@ -73,7 +73,8 @@ class SystemUnderTestBootstrap
         defined('APPLICATION') || define('APPLICATION', strtoupper($application));
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
 
-        $path = realpath(__DIR__ . '/../../../../../../../../../..');
+        $path = realpath(__DIR__ . '/../../../../../../../../..');
+
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $path);
 
         TestEnvironment::forceSystemUnderTest();

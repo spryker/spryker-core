@@ -14,6 +14,10 @@
     "spryker/kernel": "^2.0.0",
     "spryker/mail": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "AuthMailConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

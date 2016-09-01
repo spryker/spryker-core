@@ -13,6 +13,10 @@
     "spryker/application": "^2.0.0",
     "spryker/kernel": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Maintenance bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

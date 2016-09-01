@@ -29,6 +29,10 @@
     "spryker/url": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Payolution bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -11,6 +11,10 @@
     "everon/factory": "~1.1.4",
     "everon/utils": "~1.0.4"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "SqlCriteriaBuilder bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

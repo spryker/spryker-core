@@ -31,6 +31,10 @@
     "spryker/zed-request": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Library bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -14,6 +14,10 @@
     "codeception/codeception": "~2.1.5",
     "php-mock/php-mock": "~1.0.1"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Testify bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -18,7 +18,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "^2.0.0"
+    "spryker/testify": "*"
   },
   "description": "Config bundle",
   "license": "proprietary",

@@ -13,6 +13,10 @@
     "spryker/library": "^2.0.0",
     "spryker/new-relic": "^2.1.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "EventJournal bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

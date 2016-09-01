@@ -22,7 +22,9 @@
     "spryker/url": "^2.0.0"
   },
   "require-dev": {
-    "spryker/sales-split": "^1.0.0"
+    "spryker/code-sniffer": "*",
+    "spryker/sales-split": "^1.0.0",
+    "spryker/testify": "*"
   },
   "description": "Discount bundle",
   "license": "proprietary",

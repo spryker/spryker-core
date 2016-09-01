@@ -13,7 +13,9 @@
     "spryker/symfony": "^2.0.0"
   },
   "require-dev": {
-    "spryker/sales": "^2.0.0"
+    "spryker/sales": "^2.0.0",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Payment bundle",
   "license": "proprietary",
