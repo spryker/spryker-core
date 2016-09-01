@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Error\Module;
+namespace ErrorHandler\Module;
 
 use Codeception\Module;
 
