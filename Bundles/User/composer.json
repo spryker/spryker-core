@@ -23,8 +23,8 @@
     "spryker/url": "^2.0.0"
   },
   "require-dev": {
-    "spryker/propel": "^2.0.0",
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "User bundle",

@@ -15,8 +15,7 @@
     "php-mock/php-mock": "~1.0.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "description": "Testify bundle",
   "license": "proprietary",

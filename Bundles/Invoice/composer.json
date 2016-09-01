@@ -11,8 +11,8 @@
     }
   },
   "require-dev": {
-    "spryker/library": "^2.0.0",
     "spryker/code-sniffer": "*",
+    "spryker/library": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "Invoice bundle",

@@ -13,8 +13,8 @@
     "spryker/symfony": "^2.0.0"
   },
   "require-dev": {
-    "spryker/sales": "^2.0.0",
     "spryker/code-sniffer": "*",
+    "spryker/sales": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "Payment bundle",
