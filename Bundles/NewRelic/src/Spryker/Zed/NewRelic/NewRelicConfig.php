@@ -7,8 +7,18 @@
 
 namespace Spryker\Zed\NewRelic;
 
+use Spryker\Shared\NewRelic\NewRelicConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NewRelicConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return mixed
+     */
+    public function getIgnorableTransactions()
+    {
+        return $this->get(NewRelicConstants::IGNORABLE_TRANSACTIONS, []);
+    }
+
 }

@@ -7,9 +7,15 @@
 
 namespace Spryker\Shared\NewRelic;
 
-/**
- * @deprecated Use NewRelicApi instead, you can also use NewRelicApiTrait to retrieve the NewRelicApi
- */
-class Api extends NewRelicApi
+trait NewRelicApiTrait
 {
+
+    /**
+     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
+     */
+    public function createNewRelicApi()
+    {
+        return new NewRelicApi();
+    }
+
 }
