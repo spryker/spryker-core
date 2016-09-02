@@ -12,6 +12,9 @@ namespace Spryker\Shared\EventJournal\Model;
  * determine every time whether to use the Yves or Zed Journal.
  */
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class SharedEventJournal extends AbstractEventJournal
 {
 }

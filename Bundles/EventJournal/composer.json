@@ -3,18 +3,15 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {
     "spryker/config": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
-    "spryker/new-relic": "^2.0.0"
+    "spryker/new-relic": "^2.1.0"
   },
   "description": "EventJournal bundle",
   "license": "proprietary",

@@ -9,6 +9,9 @@ namespace Spryker\Client\EventJournal;
 
 use Spryker\Shared\EventJournal\Model\Event as SharedEvent;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class Event extends SharedEvent
 {
 }

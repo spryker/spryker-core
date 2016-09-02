@@ -9,6 +9,9 @@ namespace Spryker\Zed\EventJournal;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournalConfig extends AbstractBundleConfig
 {
 }

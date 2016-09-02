@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
 /**
+ * @deprecated Use Log bundle instead
+ *
  * @method \Spryker\Client\EventJournal\EventJournalFactory getFactory()
  */
 class EventJournalClient extends AbstractClient implements EventJournalClientInterface
