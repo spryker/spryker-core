@@ -7,19 +7,19 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
-use Spryker\Shared\Library\Communication\Request;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
 
 class TransferServer extends CoreTransferServer
 {
 
     /**
-     * @var \Spryker\Shared\Library\Communication\Request
+     * @var \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     private $fixtureRequest;
 
     /**
-     * @param \Spryker\Shared\Library\Communication\Request $request
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
      * @return $this
      */
