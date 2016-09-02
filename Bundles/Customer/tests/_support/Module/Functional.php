@@ -112,7 +112,7 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
-     * @apram $fail
+     * @param bool $fail
      * @return void
      */
     public function _failed(TestCase $test, $fail)
