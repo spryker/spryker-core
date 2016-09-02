@@ -16,7 +16,6 @@ use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Library\Application\Environment;
-use Spryker\Shared\Library\Application\TestEnvironment;
 use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -77,8 +76,7 @@ class SystemUnderTestBootstrap
 
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $path);
 
-        TestEnvironment::forceSystemUnderTest();
-        Environment::initialize($application);
+        Environment::initialize();
 
         if (self::APPLICATION_ZED === $application) {
             $this->bootstrapZed();

@@ -9,6 +9,9 @@ namespace Spryker\Shared\Library\Application;
 
 use ErrorException;
 
+/**
+ * @deprecated Not needed anymore
+ */
 class TestEnvironment
 {
 
