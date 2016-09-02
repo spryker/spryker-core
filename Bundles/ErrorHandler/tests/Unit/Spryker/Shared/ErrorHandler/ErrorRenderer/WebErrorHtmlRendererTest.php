@@ -16,7 +16,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
  * @group Unit
  * @group Spryker
  * @group Shared
- * @group Error
+ * @group ErrorHandler
  * @group ErrorRenderer
  * @group WebErrorHtmlRendererTest
  */

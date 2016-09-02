@@ -8,8 +8,8 @@
 namespace Unit\Spryker\Shared\Error;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
+use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerFactory;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;

@@ -14,7 +14,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
  * @group Unit
  * @group Spryker
  * @group Shared
- * @group Error
+ * @group ErrorHandler
  * @group ErrorRenderer
  * @group CliErrorRendererTest
  */
