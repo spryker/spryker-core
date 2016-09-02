@@ -16,6 +16,9 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
 
     /**
+     * Specification
+     * - Returns an array of console commands
+     *
      * @api
      *
      * @return \Symfony\Component\Console\Command\Command[]
@@ -23,6 +26,19 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     public function getConsoleCommands()
     {
         return $this->getFactory()->getConsoleCommands();
+    }
+
+    /**
+     * Specification
+     * - Returns an array of event subscribers
+     *
+     * @api
+     *
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     */
+    public function getEventSubscriber()
+    {
+        return $this->getFactory()->getEventSubscriber();
     }
 
 }
