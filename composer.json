@@ -499,6 +499,13 @@
       "Spryker\\Shared\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/src",
       "Spryker\\Yves\\ZedRequest\\": "Bundles/ZedRequest/src",
+      "Functional\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Functional\\Spryker\\Shared\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Functional\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Unit\\Spryker\\Client\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Unit\\Spryker\\Shared\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Unit\\Spryker\\Zed\\ZedRequest\\": "Bundles/ZedRequest/tests",
+      "Unit\\Spryker\\Yves\\ZedRequest\\": "Bundles/ZedRequest/tests",
 
       "Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/src",
       "Unit\\Spryker\\Zed\\ProductDiscountConnector\\": "Bundles/ProductDiscountConnector/tests",
