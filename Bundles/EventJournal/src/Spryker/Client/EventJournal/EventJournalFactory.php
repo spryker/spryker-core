@@ -9,6 +9,9 @@ namespace Spryker\Client\EventJournal;
 
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournalFactory extends AbstractFactory
 {
 
