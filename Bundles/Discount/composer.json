@@ -2,7 +2,9 @@
   "name": "spryker/discount",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/"
+      "Spryker": "src/",
+      "Functional": "tests/",
+      "Unit": "tests/"
     }
   },
   "require": {
@@ -10,6 +12,7 @@
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
+    "spryker/log": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/sales": "^2.0.0",

@@ -43,7 +43,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if ((string)$withValue === '') {
+        if (!$withValue) {
             return false;
         }
 
