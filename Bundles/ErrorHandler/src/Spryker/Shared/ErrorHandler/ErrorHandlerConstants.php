@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
-interface ErrorConstants
+interface ErrorHandlerConstants
 {
 
     /**

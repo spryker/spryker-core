@@ -9,7 +9,7 @@ namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\ErrorHandler\ErrorConstants;
+use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 
 class WebHtmlErrorRenderer implements ErrorRendererInterface
 {
@@ -47,10 +47,10 @@ class WebHtmlErrorRenderer implements ErrorRendererInterface
     protected function getErrorPageForApplication()
     {
         if ($this->application === static::APPLICATION_ZED) {
-            return Config::get(ErrorConstants::ZED_ERROR_PAGE);
+            return Config::get(ErrorHandlerConstants::ZED_ERROR_PAGE);
         }
 
-        return Config::get(ErrorConstants::YVES_ERROR_PAGE);
+        return Config::get(ErrorHandlerConstants::YVES_ERROR_PAGE);
     }
 
     /**

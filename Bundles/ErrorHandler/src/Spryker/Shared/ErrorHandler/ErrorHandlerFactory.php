@@ -62,7 +62,7 @@ class ErrorHandlerFactory
             return $this->createCliRenderer();
         }
 
-        $errorRendererClassName = Config::get(ErrorConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
+        $errorRendererClassName = Config::get(ErrorHandlerConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
 
         $legacyConfigKey = $this->getLegacyConfigKey();
         if (Config::hasKey($legacyConfigKey) && Config::get($legacyConfigKey)) {

@@ -17,7 +17,7 @@ class ErrorHandlerEnvironment
     public function __construct()
     {
         $errorCode = error_reporting();
-        $configErrorCode = Config::get(ErrorConstants::ERROR_LEVEL);
+        $configErrorCode = Config::get(ErrorHandlerConstants::ERROR_LEVEL);
         if ($configErrorCode !== $errorCode) {
             error_reporting($configErrorCode);
         }

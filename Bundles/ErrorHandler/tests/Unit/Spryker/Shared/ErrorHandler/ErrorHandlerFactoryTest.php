@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Shared\Error;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\ErrorHandler\ErrorConstants;
+use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorHandlerFactory;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
@@ -105,7 +105,7 @@ class ErrorHandlerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->unsetAllErrorRelatedConfigs();
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
-        $config[ErrorConstants::ERROR_RENDERER] = WebExceptionErrorRenderer::class;
+        $config[ErrorHandlerConstants::ERROR_RENDERER] = WebExceptionErrorRenderer::class;
         $configProperty->setValue($config);
 
         $errorHandler = $errorHandlerFactoryMock->createErrorHandler();
@@ -175,8 +175,8 @@ class ErrorHandlerFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
-        if (isset($config[ErrorConstants::ERROR_RENDERER])) {
-            unset($config[ErrorConstants::ERROR_RENDERER]);
+        if (isset($config[ErrorHandlerConstants::ERROR_RENDERER])) {
+            unset($config[ErrorHandlerConstants::ERROR_RENDERER]);
         }
         if (isset($config[LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE])) {
             unset($config[LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE]);

@@ -9,7 +9,7 @@ namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\ErrorHandler\ErrorConstants;
+use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 /**
@@ -31,7 +31,7 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
         $this->setupConfigForZedErrorPage();
 
         $errorPageMock = $this->getErrorPageMock('ZED');
-        $errorPageMock->method('getHtmlErrorPageContent')->with(ErrorConstants::ZED_ERROR_PAGE);
+        $errorPageMock->method('getHtmlErrorPageContent')->with(ErrorHandlerConstants::ZED_ERROR_PAGE);
 
         $errorPageMock->render(new Exception());
     }
@@ -41,8 +41,8 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
      */
     protected function setupConfigForZedErrorPage()
     {
-        $configKey = ErrorConstants::ZED_ERROR_PAGE;
-        $configValue = ErrorConstants::ZED_ERROR_PAGE;
+        $configKey = ErrorHandlerConstants::ZED_ERROR_PAGE;
+        $configValue = ErrorHandlerConstants::ZED_ERROR_PAGE;
 
         $this->prepareConfig($configKey, $configValue);
     }
@@ -55,7 +55,7 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
         $this->setupConfigForYvesErrorPage();
 
         $errorPageMock = $this->getErrorPageMock('YVES');
-        $errorPageMock->method('getHtmlErrorPageContent')->with(ErrorConstants::YVES_ERROR_PAGE);
+        $errorPageMock->method('getHtmlErrorPageContent')->with(ErrorHandlerConstants::YVES_ERROR_PAGE);
 
         $errorPageMock->render(new \Exception());
     }
@@ -65,8 +65,8 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
      */
     protected function setupConfigForYvesErrorPage()
     {
-        $configKey = ErrorConstants::YVES_ERROR_PAGE;
-        $configValue = ErrorConstants::YVES_ERROR_PAGE;
+        $configKey = ErrorHandlerConstants::YVES_ERROR_PAGE;
+        $configValue = ErrorHandlerConstants::YVES_ERROR_PAGE;
 
         $this->prepareConfig($configKey, $configValue);
     }
