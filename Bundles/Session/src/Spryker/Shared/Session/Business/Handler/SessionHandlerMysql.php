@@ -9,7 +9,7 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Environment;
-use Spryker\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
 class SessionHandlerMysql implements \SessionHandlerInterface
 {
@@ -54,18 +54,18 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     protected $port = 3306;
 
     /**
-     * @var \Spryker\Shared\NewRelic\ApiInterface
+     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
-     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
      * @param int $lifetime
      */
-    public function __construct(ApiInterface $newRelicApi, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
+    public function __construct(NewRelicApiInterface $newRelicApi, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
     {
         $host = $hosts[0];
         if (strpos($host, ':')) {

@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Session\Business\Handler;
 
 use Predis\Client;
-use Spryker\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
 class SessionHandlerRedis implements \SessionHandlerInterface
 {
@@ -38,16 +38,16 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     protected $savePath;
 
     /**
-     * @var \Spryker\Shared\NewRelic\ApiInterface
+     * @var \Spryker\Shared\NewRelic\NewRelicApiInterface
      */
     protected $newRelicApi;
 
     /**
      * @param string $savePath
      * @param int $lifetime
-     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelic\NewRelicApiInterface $newRelicApi
      */
-    public function __construct($savePath, $lifetime, ApiInterface $newRelicApi)
+    public function __construct($savePath, $lifetime, NewRelicApiInterface $newRelicApi)
     {
         $this->savePath = $savePath;
         $this->lifetime = $lifetime;
