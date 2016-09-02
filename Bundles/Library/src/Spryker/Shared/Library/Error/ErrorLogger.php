@@ -17,6 +17,9 @@ use Spryker\Shared\Library\Log;
 use Spryker\Shared\NewRelic\Api;
 use Spryker\Shared\NewRelic\ApiInterface;
 
+/**
+ * @deprecated Use ErrorHandler bundle instead.
+ */
 class ErrorLogger
 {
 

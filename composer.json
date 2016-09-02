@@ -178,6 +178,7 @@
       "Spryker\\Zed\\EventJournal\\": "Bundles/EventJournal/src",
       "Unit\\Spryker\\Zed\\EventJournal\\": "Bundles/EventJournal/tests",
       "Functional\\Spryker\\Zed\\EventJournal\\": "Bundles/EventJournal/tests",
+
       "Spryker\\Client\\Glossary\\": "Bundles/Glossary/src",
       "Unit\\Spryker\\Client\\Glossary\\": "Bundles/Glossary/tests",
       "Functional\\Spryker\\Client\\Glossary\\": "Bundles/Glossary/tests",
