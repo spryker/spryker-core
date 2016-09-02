@@ -255,6 +255,8 @@
 
       "Spryker\\Shared\\NewRelic\\": "Bundles/NewRelic/src",
       "Spryker\\Zed\\NewRelic\\": "Bundles/NewRelic/src",
+      "Spryker\\Yves\\NewRelic\\": "Bundles/NewRelic/src",
+
       "Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/src",
       "Functional\\Spryker\\Client\\Newsletter\\": "Bundles/Newsletter/tests",
       "Spryker\\Shared\\Newsletter\\": "Bundles/Newsletter/src",
