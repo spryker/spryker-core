@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Error;
+namespace Unit\Spryker\Shared\ErrorHandler;
 
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -16,7 +16,7 @@ use Spryker\Shared\NewRelic\NewRelicApiInterface;
  * @group Unit
  * @group Spryker
  * @group Shared
- * @group Error
+ * @group ErrorHandler
  * @group ErrorLoggerTest
  */
 class ErrorLoggerTest extends \PHPUnit_Framework_TestCase

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Error;
+namespace Unit\Spryker\Shared\ErrorHandler;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
@@ -20,7 +20,7 @@ use Spryker\Shared\Library\LibraryConstants;
  * @group Unit
  * @group Spryker
  * @group Shared
- * @group Error
+ * @group ErrorHandler
  * @group ErrorHandlerFactoryTest
  */
 class ErrorHandlerFactoryTest extends \PHPUnit_Framework_TestCase

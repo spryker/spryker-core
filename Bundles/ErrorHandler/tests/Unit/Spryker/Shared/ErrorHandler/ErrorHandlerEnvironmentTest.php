@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Error;
+namespace Unit\Spryker\Shared\ErrorHandler;
 
 use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
@@ -13,7 +13,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
  * @group Unit
  * @group Spryker
  * @group Shared
- * @group Error
+ * @group ErrorHandler
  * @group ErrorHandlerEnvironmentTest
  */
 class ErrorHandlerEnvironmentTest extends \PHPUnit_Framework_TestCase
