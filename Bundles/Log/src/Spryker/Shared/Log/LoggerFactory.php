@@ -7,7 +7,8 @@
 
 namespace Spryker\Shared\Log;
 
-use Monolog\Logger;
+use Monolog\Logger as MonologLogger;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
@@ -27,10 +28,11 @@ class LoggerFactory
     public static function getInstance(LoggerConfigInterface $loggerConfig = null)
     {
         if ($loggerConfig === null) {
-            $loggerConfig = new DefaultLoggerConfig();
+            $loggerClassName = static::getLoggerClassName();
+            $loggerConfig = new $loggerClassName;
         }
 
-        return self::createInstanceIfNotExists($loggerConfig);
+        return static::createInstanceIfNotExists($loggerConfig);
     }
 
     /**
@@ -43,12 +45,26 @@ class LoggerFactory
         $channelName = $loggerConfig->getChannelName();
 
         if (!array_key_exists($channelName, static::$loggers)) {
-            $logger = new Logger($channelName, $loggerConfig->getHandlers(), $loggerConfig->getProcessors());
+            $logger = new MonologLogger($channelName, $loggerConfig->getHandlers(), $loggerConfig->getProcessors());
 
             static::$loggers[$channelName] = $logger;
         }
 
-        return self::$loggers[$channelName];
+        return static::$loggers[$channelName];
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getLoggerClassName()
+    {
+        if (Config::hasKey(LogConstants::LOGGER_CONFIG)) {
+            $loggerClass = Config::get(LogConstants::LOGGER_CONFIG);
+        } else {
+            $loggerClass = DefaultLoggerConfig::class;
+        }
+
+        return $loggerClass;
     }
 
 }
