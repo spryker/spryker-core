@@ -81,8 +81,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
         }
 
-        s($formData);
-
         return $formData;
     }
 

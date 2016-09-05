@@ -75,7 +75,7 @@ class PriceForm extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PRICE, 'text', [
+        $builder->add(self::FIELD_PRICE, 'money', [
             'label' => 'Price',
             'required' => true,
             'attr' => [
