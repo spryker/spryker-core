@@ -55,6 +55,20 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     /**
      * @api
      *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportSearch(OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesSearchExporter();
+
+        return $exporter->exportStorage($output);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
@@ -65,6 +79,20 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
         $exporter = $this->getFactory()->createYvesSearchExporter();
 
         return $exporter->exportStorageByLocale($locale, $output);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function updateSearch(OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
+
+        return $exporter->exportStorage($output);
     }
 
     /**
