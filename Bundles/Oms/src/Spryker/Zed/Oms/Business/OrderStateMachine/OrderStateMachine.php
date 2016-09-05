@@ -186,16 +186,17 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderGroup = $this->groupByOrderAndState($eventId, $orderItems, $processes);
         $sourceStateBuffer = [];
 
-        $processedOrderItems = [];
+        $allProcessedOrderItems = [];
         foreach ($orderGroup as $groupedOrderItems) {
             $this->logSourceState($groupedOrderItems, $log);
 
-            $processedOrderItems = array_merge($processedOrderItems, $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log));
+            $processedOrderItems = $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
             $sourceStateBuffer = $this->updateStateByEvent($eventId, $processedOrderItems, $sourceStateBuffer, $log);
             $this->saveOrderItems($processedOrderItems, $log, $processes, $sourceStateBuffer);
+            $allProcessedOrderItems = array_merge($allProcessedOrderItems, $processedOrderItems);
         }
 
-        $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($processedOrderItems, $processes, $sourceStateBuffer);
+        $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($allProcessedOrderItems, $processes, $sourceStateBuffer);
 
         $log->saveAll();
 
