@@ -15,11 +15,10 @@ class AttributeInputManager
      *
      * @return string
      */
-    public function getSymfonyInputType($inputType, $value = null, $allowInput = false, $isMultiple = false)
+    public function getSymfonyInputType($inputType, $value = null)
     {
         $inputType = strtolower($inputType);
         $useTextArea = mb_strlen($value) > 255;
-        $useSelect2 = $isMultiple || !$allowInput;
 
         $input = 'text';
 
@@ -35,10 +34,6 @@ class AttributeInputManager
 
         if ($useTextArea) {
             return 'textarea';
-        }
-
-        if ($useSelect2) {
-            return 'select2';
         }
 
         return $input;

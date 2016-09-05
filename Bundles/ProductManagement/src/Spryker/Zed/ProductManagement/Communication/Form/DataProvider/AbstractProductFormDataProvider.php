@@ -464,38 +464,14 @@ class AbstractProductFormDataProvider
      */
     protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
     {
-        $productAttributeKeys = $attributeProcessor->getAllKeys();
-        if ($localeCode === null) { //default tab
-            $productAttributeValues = $attributeProcessor->getAbstractAttributes();
-        } else {
-            $productAttributeValues = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
-        }
-
         $values = [];
-        foreach ($productAttributeKeys as $type => $tmp) {
-            $isDefined = $this->attributeTransferCollection->has($type);
-
-            $isProductSpecificAttribute = true;
-            $id = null;
-            $isMultiple = false;
-            $inputType = self::DEFAULT_INPUT_TYPE;
-            $allowInput = false;
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $isProductSpecificAttribute = false;
+            $id = $attributeTransfer->getIdProductManagementAttribute();
+            $isMultiple = $attributeTransfer->getIsMultiple();
+            $inputType = $attributeTransfer->getInputType();
+            $allowInput = $attributeTransfer->getAllowInput();
             $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
-            $shouldBeTextArea = mb_strlen($value) > 255;
-
-            if ($isDefined) {
-                $isProductSpecificAttribute = false;
-                $attributeTransfer = $this->attributeTransferCollection->get($type);
-                $id = $attributeTransfer->getIdProductManagementAttribute();
-                $isMultiple = $attributeTransfer->getIsMultiple();
-                $inputType = $attributeTransfer->getInputType();
-                $allowInput = $attributeTransfer->getAllowInput();
-            }
-
-            if ($shouldBeTextArea) {
-                $inputType = self::TEXT_AREA_INPUT_TYPE;
-            }
-
             $checkboxDisabled = false;
             $valueDisabled = true;
 
@@ -513,17 +489,33 @@ class AbstractProductFormDataProvider
             ];
         }
 
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $isProductSpecificAttribute = false;
-            $id = $attributeTransfer->getIdProductManagementAttribute();
-            $isMultiple = $attributeTransfer->getIsMultiple();
-            $inputType = $attributeTransfer->getInputType();
-            $allowInput = $attributeTransfer->getAllowInput();
+        $productAttributeKeys = $attributeProcessor->getAllKeys();
+        if ($localeCode === null) { //default tab
+            $productAttributeValues = $attributeProcessor->getAbstractAttributes();
+        } else {
+            $productAttributeValues = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
+        }
 
+        foreach ($productAttributeKeys as $type => $tmp) {
+            $isDefined = $this->attributeTransferCollection->has($type);
+
+            $isProductSpecificAttribute = true;
+            $id = null;
+            $isMultiple = false;
+            $inputType = self::DEFAULT_INPUT_TYPE;
+            $allowInput = false;
             $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
-
-            $checkboxDisabled = false;
+            $shouldBeTextArea = mb_strlen($value) > 255;
+            $checkboxDisabled = true;
             $valueDisabled = true;
+
+            if ($isDefined) {
+                continue;
+            }
+
+            if ($shouldBeTextArea) {
+                $inputType = self::TEXT_AREA_INPUT_TYPE;
+            }
 
             $values[$type] = [
                 self::FORM_FIELD_ID => $id,

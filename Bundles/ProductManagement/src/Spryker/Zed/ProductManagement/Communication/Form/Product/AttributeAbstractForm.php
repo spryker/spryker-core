@@ -199,48 +199,51 @@ class AttributeAbstractForm extends AbstractSubForm
         $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
         $isMultiple = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
+        $isProductSpecific = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
-        $input = $inputManager->getSymfonyInputType($inputType, $value, $allowInput, $isMultiple);
+        $input = $inputManager->getSymfonyInputType($inputType, $value);
         $config = $this->getValueFieldConfig($name, $attributes);
+
+        if ($isProductSpecific) {
+            $isDisabled = true;
+        }
 
         $config['attr']['style'] .= ' width: 250px';
         $config['attr']['data-value'] = null;
-
-        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
-        if ($this->localeTransfer instanceof LocaleTransfer) {
-            $idLocale = $this->localeTransfer->getIdLocale();
-        }
-
-        $existingValue = $this->productManagementQueryContainer
-            ->queryFindAttributeByValueOrTranslation(
-                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
-                $idLocale,
-                $value
-            )->findOne();
-
-        if (strtolower($input) === 'select2') {
-            $input = new Select2ComboBoxType();
-            $config['multiple'] = $isMultiple;
-            $config['placeholder'] = '';
-            $config['attr']['style'] .= ' width: 250px';
-            $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
-
-            if ($allowInput) {
-                $config['attr']['tags'] = true;
-            }
-            else {
-                //$config['attr']['class'] .= ' ajax';
-            }
-        } else {
-            if ($allowInput) {
-                $config['attr']['class'] .= ' kv_attribute_autocomplete';
-            }
-        }
 
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);
             $config['read_only'] = true;
             $input = $inputManager->getSymfonyInputType(null, $value);
+        } else {
+            if (strtolower($input) === 'select2') {
+                $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+                if ($this->localeTransfer instanceof LocaleTransfer) {
+                    $idLocale = $this->localeTransfer->getIdLocale();
+                }
+
+                $existingValue = $this->productManagementQueryContainer
+                    ->queryFindAttributeByValueOrTranslation(
+                        $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
+                        $idLocale,
+                        $value
+                    )->findOne();
+
+                $input = new Select2ComboBoxType();
+                $config['multiple'] = $isMultiple;
+                $config['placeholder'] = '-';
+                $config['attr']['style'] .= ' width: 250px';
+                $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
+
+                if ($allowInput) {
+                    $config['attr']['tags'] = true;
+                }
+                else {
+                    //$config['attr']['class'] .= ' ajax';
+                }
+            } else {
+                $config['attr']['class'] .= ' kv_attribute_autocomplete';
+            }
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
