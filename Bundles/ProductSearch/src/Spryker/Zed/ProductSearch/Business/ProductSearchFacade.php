@@ -37,7 +37,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     {
         return $this
             ->getFactory()
-            ->createSearchProductAttributeMapper()
+            ->createProductSearchAttributeMapper()
             ->mapDynamicProductAttributes($pageMapBuilder, $pageMapTransfer, $attributes);
     }
 
@@ -267,6 +267,22 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->getFactory()
             ->createAttributeWriter()
             ->reorder($productSearchAttributes);
+    }
+
+    /**
+     * Specification:
+     * - Reads all product search attribute entities from the database in ascending order by position.
+     * - Generates a SearchConfigCacheTransfer with a list of FacetConfigTransfers based on the attributes.
+     * - Stores the generated search cache configuration into the storage (Redis by default)
+     *
+     * @return void
+     */
+    public function saveProductSearchCacheConfig()
+    {
+        $this
+            ->getFactory()
+            ->createProductSearchConfigCacheSaver()
+            ->saveProductSearchConfigCache();
     }
 
     /**

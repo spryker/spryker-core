@@ -9,14 +9,16 @@ namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\FilterGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
-use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollector;
-use Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapper;
+use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
+use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeCollector;
+use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollector;
+use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper;
+use Spryker\Zed\ProductSearch\Business\Map\ProductSearchConfigCacheSaver;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMapMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
-use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
@@ -47,19 +49,53 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapperInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapperInterface
      */
-    public function createSearchProductAttributeMapper()
+    public function createProductSearchAttributeMapper()
     {
-        return new SearchProductAttributeMapper($this->createSearchProductAttributeMapCollector());
+        return new ProductSearchAttributeMapper($this->getAttributeMapCollectors());
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\SearchProductAttributeMapCollectorInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface[]
      */
-    public function createSearchProductAttributeMapCollector()
+    protected function getAttributeMapCollectors()
     {
-        return new SearchProductAttributeMapCollector($this->getQueryContainer());
+        return [
+            $this->createProductSearchAttributeMapCollector(),
+            $this->createProductSearchAttributeCollector(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface
+     */
+    protected function createProductSearchAttributeMapCollector()
+    {
+        return new ProductSearchAttributeMapCollector($this->getSearchClient()->getSearchConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface
+     */
+    protected function createProductSearchAttributeCollector()
+    {
+        return new ProductSearchAttributeCollector(
+            $this->createAttributeReader(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchConfigCacheSaverInterface
+     */
+    public function createProductSearchConfigCacheSaver()
+    {
+        return new ProductSearchConfigCacheSaver(
+            $this->createAttributeReader(),
+            $this->getSearchFacade(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -109,6 +145,22 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchInterface
+     */
+    public function getSearchFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\SearchClientInterface
+     */
+    public function getSearchClient()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_SEARCH);
     }
 
     /**

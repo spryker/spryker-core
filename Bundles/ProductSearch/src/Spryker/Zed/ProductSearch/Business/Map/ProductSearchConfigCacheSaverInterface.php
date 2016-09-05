@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Map;
 
-interface SearchProductAttributeMapCollectorInterface
+interface ProductSearchConfigCacheSaverInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
+     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
+     *
+     * @return void
      */
-    public function getProductSearchAttributeMap();
+    public function saveProductSearchConfigCache();
 
 }

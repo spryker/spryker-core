@@ -71,9 +71,8 @@ class FilterPreferencesController extends AbstractController
                 ->createAttributeFormTransferGenerator()
                 ->createTransfer($form);
 
-            $productSearchAttributeTransfer = $this
-                ->getFacade()
-                ->createProductSearchAttribute($productSearchAttributeTransfer);
+            $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
+            $this->getFacade()->saveProductSearchCacheConfig();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?id=%d',
@@ -113,9 +112,8 @@ class FilterPreferencesController extends AbstractController
                 ->createAttributeFormTransferGenerator()
                 ->createTransfer($form);
 
-            $productSearchAttributeTransfer = $this
-                ->getFacade()
-                ->updateProductSearchAttribute($productSearchAttributeTransfer);
+            $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
+            $this->getFacade()->saveProductSearchCacheConfig();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?id=%d',
@@ -138,9 +136,7 @@ class FilterPreferencesController extends AbstractController
     {
         $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
 
-        $attributeTransfer = $this
-            ->getFacade()
-            ->getProductSearchAttribute($idProductSearchAttribute);
+        $attributeTransfer = $this->getFacade()->getProductSearchAttribute($idProductSearchAttribute);
 
         if (!$attributeTransfer) {
             return $this->redirectResponse('/product-search/filter-preferences');
@@ -165,6 +161,7 @@ class FilterPreferencesController extends AbstractController
         $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
 
         $this->getFacade()->deleteProductSearchAttribute($productSearchAttributeTransfer);
+        $this->getFacade()->saveProductSearchCacheConfig();
 
         return $this->redirectResponse('/product-search/filter-preferences');
     }

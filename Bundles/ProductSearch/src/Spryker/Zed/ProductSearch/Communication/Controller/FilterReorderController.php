@@ -48,9 +48,8 @@ class FilterReorderController extends AbstractController
 
         $productSearchAttributeList = $this->createProductSearchAttributeList($filterList);
 
-        $this
-            ->getFacade()
-            ->updateProductSearchAttributeOrder($productSearchAttributeList);
+        $this->getFacade()->updateProductSearchAttributeOrder($productSearchAttributeList);
+        $this->getFacade()->saveProductSearchCacheConfig();
 
         return $this->jsonResponse();
     }

@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
-use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeValueTableMap;
-use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeValueTranslationTableMap;
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeValueQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGeneratorInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;

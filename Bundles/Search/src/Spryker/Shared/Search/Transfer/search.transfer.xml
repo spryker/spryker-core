@@ -81,6 +81,7 @@
         <property name="name" type="string" />
         <property name="values" type="FacetSearchResultValue[]" singular="value" />
         <property name="activeValue" type="string" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="FacetSearchResultValue">
@@ -92,6 +93,9 @@
         <property name="name" type="string" />
         <property name="min" type="float" />
         <property name="max" type="float" />
+        <property name="activeMin" type="float" />
+        <property name="activeMax" type="float" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="PaginationSearchResult">

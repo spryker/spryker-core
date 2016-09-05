@@ -192,6 +192,16 @@ interface ProductSearchFacadeInterface
 
     /**
      * Specification:
+     * - Reads all product search attribute entities from the database in ascending order by position.
+     * - Generates a SearchConfigCacheTransfer with a list of FacetConfigTransfers based on the attributes.
+     * - Stores the generated search cache configuration into the storage (Redis by default)
+     *
+     * @return void
+     */
+    public function saveProductSearchCacheConfig();
+
+    /**
+     * Specification:
      * - Touches abstract products which has an attribute that has not been synchronized yet.
      * - Asynchronous attribute means a product search attribute entity had been created/modified/deleted since last synchronization.
      * - After touch, product search attribute entities are marked as synchronized.

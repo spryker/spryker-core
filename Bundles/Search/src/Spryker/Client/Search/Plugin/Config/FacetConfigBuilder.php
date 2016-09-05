@@ -14,10 +14,11 @@ use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
 
-    const TYPE_ENUMERATION = 'enumeration';
+    // TODO: normalize available filter types (single-select, multi-select, range, boolean, *category*, *price-range*)
+    const TYPE_ENUMERATION = 'enumeration'; // TODO: deprecate
     const TYPE_BOOL = 'bool';
     const TYPE_RANGE = 'range';
-    const TYPE_PRICE_RANGE = 'price_range';
+    const TYPE_PRICE_RANGE = 'price-range';
     const TYPE_CATEGORY = 'category';
 
     /**

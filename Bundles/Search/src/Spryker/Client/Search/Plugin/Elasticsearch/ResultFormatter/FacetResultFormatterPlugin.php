@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
+use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
 /**
@@ -44,11 +45,6 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
         $aggregations = $searchResult->getAggregations();
 
         foreach ($facetConfig->getAll() as $facetName => $facetConfigTransfer) {
-            $fieldName = $facetConfigTransfer->getFieldName();
-            if (!isset($aggregations[$fieldName])) {
-                continue;
-            }
-
             $extractor = $this
                 ->getFactory()
                 ->createAggregationExtractorFactory()
@@ -56,7 +52,10 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
 
             $aggregation = $this->getAggregationRawData($aggregations, $facetConfigTransfer);
 
-            $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
+            // TODO: provide a test for the bug fix
+            if ($aggregation) {
+                $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
+            }
         }
 
         return $facetData;
@@ -68,18 +67,20 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      *
      * @return array
      */
-    protected function getAggregationRawData(array $aggregations, $facetConfigTransfer)
+    protected function getAggregationRawData(array $aggregations, FacetConfigTransfer $facetConfigTransfer)
     {
-        $facetName = $facetConfigTransfer->getName();
         $fieldName = $facetConfigTransfer->getFieldName();
+        $bucketName = FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName();
 
-        if ($facetConfigTransfer->getIsMultiValued() === true) {
-            $aggregation = $aggregations[FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
-        } else {
-            $aggregation = $aggregations[$fieldName];
+        if (isset($aggregations[$bucketName])) {
+            return $aggregations[$bucketName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
         }
 
-        return $aggregation;
+        if (isset($aggregations[$fieldName])) {
+            return $aggregations[$fieldName];
+        }
+
+        return [];
     }
 
 }

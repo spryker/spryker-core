@@ -9,6 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
@@ -32,8 +33,10 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     {
         switch ($facetConfigTransfer->getType()) {
             case FacetConfigBuilder::TYPE_RANGE:
-            case FacetConfigBuilder::TYPE_PRICE_RANGE:
                 return $this->createRangeExtractor($facetConfigTransfer);
+
+            case FacetConfigBuilder::TYPE_PRICE_RANGE:
+                return $this->createPriceRangeExtractor($facetConfigTransfer);
 
             case FacetConfigBuilder::TYPE_CATEGORY:
                 return $this->createCategoryExtractor($facetConfigTransfer);
@@ -58,6 +61,16 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
+    protected function createPriceRangeExtractor(FacetConfigTransfer $facetConfigTransfer)
+    {
+        return new PriceRangeExtractor($facetConfigTransfer, $this->createCurrencyManager());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     */
     protected function createFacetExtractor(FacetConfigTransfer $facetConfigTransfer)
     {
         return new FacetExtractor($facetConfigTransfer);
@@ -71,6 +84,14 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     protected function createCategoryExtractor(FacetConfigTransfer $facetConfigTransfer)
     {
         return new CategoryExtractor($facetConfigTransfer);
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     */
+    protected function createCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
     }
 
 }

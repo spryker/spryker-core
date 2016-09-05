@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductBridge;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
@@ -21,6 +22,8 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_GLOSSARY = 'glossary facade';
     const FACADE_TOUCH = 'touch facade';
+    const FACADE_SEARCH = 'search facade';
+    const CLIENT_SEARCH = 'search client';
     const QUERY_CONTAINER_PRODUCT = 'product query container';
 
     /**
@@ -34,6 +37,8 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideLocaleFacade($container);
         $this->provideGlossaryFacade($container);
         $this->provideTouchFacade($container);
+        $this->provideSearchFacade($container);
+        $this->provideSearchClient($container);
 
         return $container;
     }
@@ -106,6 +111,30 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductSearchToTouchBridge($container->getLocator()->touch()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideSearchFacade(Container $container)
+    {
+        $container[self::FACADE_SEARCH] = function (Container $container) {
+            return new ProductSearchToSearchBridge($container->getLocator()->search()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideSearchClient(Container $container)
+    {
+        $container[self::CLIENT_SEARCH] = function (Container $container) {
+            return $container->getLocator()->search()->client();
         };
     }
 

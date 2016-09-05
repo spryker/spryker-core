@@ -390,7 +390,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setParameterName('foo')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(FacetConfigBuilder::TYPE_ENUMERATION)
-                ->setIsMultiValued(true)
+                    ->setIsMultiValued(true)
             )
             ->addFacet(
                 (new FacetConfigTransfer())

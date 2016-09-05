@@ -10,6 +10,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Config;
 use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Library\Json;
 use Spryker\Shared\Search\SearchConstants;
 
 class SearchConfigCacheSaver implements SearchConfigCacheSaverInterface
@@ -35,10 +36,11 @@ class SearchConfigCacheSaver implements SearchConfigCacheSaverInterface
      */
     public function save(SearchConfigCacheTransfer $searchConfigCacheTransfer)
     {
+        //TODO: add another saver that works with collector rather saving directly to redis and be able to enable/disable it with configuration
         $searchConfigCacheKey = $this->getSearchConfigCacheKey();
         $this
             ->storageClient
-            ->set($searchConfigCacheKey, $searchConfigCacheTransfer->toArray());
+            ->set($searchConfigCacheKey, Json::encode($searchConfigCacheTransfer->toArray()));
     }
 
     /**
