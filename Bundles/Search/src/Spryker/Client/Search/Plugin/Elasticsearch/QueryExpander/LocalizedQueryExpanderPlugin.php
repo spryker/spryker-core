@@ -54,6 +54,7 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      * @param \Elastica\Query $query
      *
      * @throws \InvalidArgumentException
+     *
      * @return \Elastica\Query\BoolQuery
      */
     protected function getBoolQuery(Query $query)
