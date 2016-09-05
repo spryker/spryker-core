@@ -185,4 +185,12 @@ class SearchFactory extends AbstractFactory
         return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_CONFIG_EXPANDER_PLUGINS);
     }
 
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::STORE);
+    }
+
 }
