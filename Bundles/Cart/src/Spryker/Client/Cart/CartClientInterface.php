@@ -48,6 +48,7 @@ interface CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem($sku, $groupKey = null);
@@ -58,6 +59,7 @@ interface CartClientInterface
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);

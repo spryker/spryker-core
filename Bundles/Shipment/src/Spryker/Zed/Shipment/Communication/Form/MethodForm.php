@@ -86,6 +86,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addCarrierField(FormBuilderInterface $builder, array $options)
@@ -105,6 +106,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addDefaultPriceField(FormBuilderInterface $builder)
@@ -127,6 +129,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
@@ -145,6 +148,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addAvailabilityPluginField(FormBuilderInterface $builder, array $options)
@@ -162,6 +166,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addPricePluginField(FormBuilderInterface $builder, array $options)
@@ -179,6 +184,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addDeliveryTimePluginField(FormBuilderInterface $builder, array $options)
@@ -195,6 +201,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
@@ -208,6 +215,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addIdField(FormBuilderInterface $builder)

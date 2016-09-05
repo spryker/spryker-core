@@ -156,6 +156,7 @@ class MenuFormatter implements MenuFormatterInterface
 
     /**
      * @param array $page
+     *
      * @return mixed|null
      */
     protected function getPageAction(array $page)
@@ -171,6 +172,7 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $page
      * @param mixed|null $action
+     *
      * @return mixed|null
      */
     protected function getPageController(array $page, $action)

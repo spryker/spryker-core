@@ -45,6 +45,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @throws \RuntimeException
+     *
      * @return void
      */
     public function expandProductOptionTransfers(ItemTransfer $cartItem)

@@ -65,6 +65,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     *
      * @return void
      */
     protected function handleRedirectToLogin(FilterResponseEvent $event)
@@ -91,6 +92,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     *
      * @return void
      */
     protected function handleRedirectFromLogin(FilterResponseEvent $event)

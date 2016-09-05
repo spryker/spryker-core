@@ -264,6 +264,7 @@ class TaxWriter implements TaxWriterInterface
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
+     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRate
      */
     private function findOrCreateTaxRateEntity(TaxRateTransfer $taxRateTransfer)

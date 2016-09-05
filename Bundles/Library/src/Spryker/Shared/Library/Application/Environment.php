@@ -101,6 +101,7 @@ class Environment
 
     /**
      * @throws \Exception
+     *
      * @return void
      */
     protected static function defineApplication()
@@ -115,6 +116,7 @@ class Environment
 
     /**
      * @throws \Exception
+     *
      * @return void
      */
     protected static function defineApplicationRootDir()
@@ -188,6 +190,7 @@ class Environment
      * we will not use it
      *
      * @throws \ErrorException
+     *
      * @return void
      */
     protected static function initializeErrorHandler()

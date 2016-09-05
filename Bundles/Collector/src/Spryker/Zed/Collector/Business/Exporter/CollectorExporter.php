@@ -141,6 +141,7 @@ class CollectorExporter
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException
+     *
      * @return void
      */
     protected function handleResult(BatchResultInterface $result)
@@ -181,6 +182,7 @@ class CollectorExporter
 
     /**
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException
+     *
      * @return array
      */
     protected function getAvailableCollectorTypes()

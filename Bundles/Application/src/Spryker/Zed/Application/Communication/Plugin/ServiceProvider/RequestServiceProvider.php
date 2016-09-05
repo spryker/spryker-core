@@ -57,6 +57,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \InvalidArgumentException
+     *
      * @return void
      */
     protected function parseCliRequestData(Request $request)

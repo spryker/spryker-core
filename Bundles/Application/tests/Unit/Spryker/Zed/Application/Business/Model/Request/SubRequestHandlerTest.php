@@ -61,6 +61,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spryker\Zed\Application\Business\Exception\UrlInvalidException
+     *
      * @return void
      */
     public function testInvalidUrlThrowsUrlInvalidException()
@@ -82,6 +83,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $kernelMock
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject | SubRequestHandler
      */
     private function getRequestHandlerPartialMock(PHPUnit_Framework_MockObject_MockObject $kernelMock)

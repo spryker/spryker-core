@@ -62,6 +62,7 @@ abstract class AbstractClient
 
     /**
      * @throws \BadMethodCallException
+     *
      * @return \Spryker\Client\ZedRequest\Stub\BaseStub
      */
     protected function getZedStub()

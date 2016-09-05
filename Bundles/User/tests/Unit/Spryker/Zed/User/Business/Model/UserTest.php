@@ -107,6 +107,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $userName
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function createUserTransfer($userName)

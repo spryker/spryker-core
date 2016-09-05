@@ -249,6 +249,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $value
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Wishlist\Business\Model\CustomerInterface
      */
     protected function getCustomerMock($value = null)
