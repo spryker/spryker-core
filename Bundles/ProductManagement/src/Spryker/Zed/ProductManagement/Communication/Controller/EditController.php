@@ -136,7 +136,7 @@ class EditController extends AddController
             ->getFactory()
             ->createProductVariantFormEdit(
                 $dataProvider->getData($idProductAbstract, $idProduct),
-                $dataProvider->getOptions($idProductAbstract, $idProduct)
+                $dataProvider->getOptions($idProductAbstract)
             )
             ->handleRequest($request);
 
@@ -156,7 +156,7 @@ class EditController extends AddController
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
-                    $idProduct
+                    $productConcreteTransfer->getSku()
                 ));
 
                 return $this->redirectResponse(sprintf(

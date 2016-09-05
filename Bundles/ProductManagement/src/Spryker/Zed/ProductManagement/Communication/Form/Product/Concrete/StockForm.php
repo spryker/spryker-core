@@ -42,7 +42,8 @@ class StockForm extends AbstractType
             ->addStockIdHiddenField($builder, $options)
             ->addProductStockIdHiddenField($builder, $options)
             ->addTypeField($builder, $options)
-            ->addQuantityField($builder, $options);
+            ->addQuantityField($builder, $options)
+            ->addIsNeverOutOfStockCheckbox($builder);
     }
 
     /**
@@ -101,6 +102,20 @@ class StockForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsNeverOutOfStockCheckbox(FormBuilderInterface $builder)
+    {
+        $builder->add(StockForm::FIELD_IS_NEVER_OUT_OF_STOCK, 'checkbox', [
+            'label' => 'Never out of stock'
         ]);
 
         return $this;

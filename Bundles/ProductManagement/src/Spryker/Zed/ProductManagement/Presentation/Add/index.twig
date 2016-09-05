@@ -27,20 +27,6 @@
 {% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-adding.twig' %}
 {% endif %}
 
-{% block checkbox_widget %}
-    {% spaceless %}
-        <label for="{{ id }}">{{ label|trans }}</label>&nbsp;<input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    {% endspaceless %}
-{% endblock checkbox_widget %}
-
-
-{#
-
-{% block select_widget %}
-    {{ form_widget(form, { 'attr': {'class': 'spryker-form-select2combobox attribute_metadata_value'} }) }}
-{% endblock select2_widget %}
-
-#}
 
 {% block content %}
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -18,7 +17,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
@@ -90,7 +88,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         foreach ($localizedData as $localeCode => $data) {
             $localeTransfer = $this->localeFacade->getLocale($localeCode);
 
-            $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
+            $localizedAttributesTransfer = $this->createAbstractLocalizedAttributesTransfer(
                 $form,
                 $attributeValues[$localeCode],
                 $localeTransfer
@@ -155,7 +153,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
             $formName = ProductFormAdd::getGeneralFormName($localeCode);
             $localeTransfer = $this->localeFacade->getLocale($localeCode);
 
-            $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
+            $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer(
                 $form->get($formName),
                 [],
                 $localeTransfer
@@ -199,13 +197,13 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormInterface $formObject
      * @param array $abstractLocalizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    protected function createLocalizedAttributesTransfer(FormInterface $formObject, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
+    protected function createAbstractLocalizedAttributesTransfer(FormInterface $formObject, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
     {
         $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
         $form = $formObject->get($formName);
@@ -218,11 +216,32 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
 
         $formName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());
-        $form = $formObject->get($formName);
+        if ($formObject->has($formName)) {
+            $form = $formObject->get($formName);
 
-        $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE)->getData());
-        $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS)->getData());
-        $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION)->getData());
+            $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE)->getData());
+            $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS)->getData());
+            $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION)->getData());
+        }
+
+        return $localizedAttributesTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $abstractLocalizedAttributes
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    protected function createConcreteLocalizedAttributesTransfer(FormInterface $form, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
+    {
+        $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
+        $localizedAttributesTransfer = new LocalizedAttributesTransfer();
+        $localizedAttributesTransfer->setLocale($localeTransfer);
+        $localizedAttributesTransfer->setName($form->get(GeneralForm::FIELD_NAME)->getData());
+        $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION)->getData());
+        $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
 
         return $localizedAttributesTransfer;
     }
@@ -270,7 +289,6 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      * @param array $variantData
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
      *
-     * @throws \Exception
      *
      * @return array|null
      */
