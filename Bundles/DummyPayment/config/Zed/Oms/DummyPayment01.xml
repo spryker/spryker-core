@@ -85,7 +85,7 @@
 
         <events>
             <event name="authorize" onEnter="true"/>
-            <event name="pay" manual="true" timeout="1 hour"/>
+            <event name="pay" manual="true" timeout="1 hour" command="DummyPayment/Pay"/>
             <event name="export" onEnter="true" manual="true"/>
             <event name="ship" manual="true"/>
             <event name="stock-update" manual="true"/>
