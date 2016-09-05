@@ -43,8 +43,6 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Client\Cart\CartClientInterface
      */
     protected function getCartClient()

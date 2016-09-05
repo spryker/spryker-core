@@ -9,22 +9,25 @@ namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferGenerator
+ * @group Model
+ * @group TransferGeneratorTest
  */
 class TransferGeneratorTest extends Test
 {
@@ -115,7 +118,7 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     protected function getClassGenerator()
     {
@@ -128,12 +131,13 @@ class TransferGeneratorTest extends Test
     /**
      * @param array $sourceDirectories
      *
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     protected function getDefinitionBuilder($sourceDirectories)
     {
+        $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
+        $loader = new TransferDefinitionLoader($finder, $normalizer);
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),

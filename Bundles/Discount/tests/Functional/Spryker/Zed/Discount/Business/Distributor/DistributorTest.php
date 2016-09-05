@@ -14,11 +14,13 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Discount
  * @group Business
  * @group Distributor
+ * @group DistributorTest
  */
 class DistributorTest extends Test
 {

@@ -83,8 +83,6 @@ class RefundSaver implements RefundSaverInterface
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function updateOrderItems(RefundTransfer $refundTransfer)
@@ -112,8 +110,6 @@ class RefundSaver implements RefundSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

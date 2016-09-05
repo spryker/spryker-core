@@ -132,8 +132,6 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     private function getProjectNamespaces()
@@ -142,8 +140,6 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     private function getCoreNamespaces()

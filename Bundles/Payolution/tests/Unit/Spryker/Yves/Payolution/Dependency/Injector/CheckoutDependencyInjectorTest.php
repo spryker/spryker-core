@@ -15,10 +15,13 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Payolution
- * @group CheckoutDependencyInjector
+ * @group Dependency
+ * @group Injector
+ * @group CheckoutDependencyInjectorTest
  */
 class CheckoutDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {

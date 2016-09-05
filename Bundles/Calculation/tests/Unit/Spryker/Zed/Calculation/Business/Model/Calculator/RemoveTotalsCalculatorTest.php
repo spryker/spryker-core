@@ -11,6 +11,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Calculation
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group RemoveTotalsCalculatorTest
+ */
 class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

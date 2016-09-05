@@ -17,6 +17,15 @@ use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\BaseResponse;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group AbstractFacadeTest
+ */
 abstract class AbstractFacadeTest extends AbstractBusinessTest
 {
 
@@ -114,7 +123,6 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $ratepayPaymentEntity
      *
      * @return void

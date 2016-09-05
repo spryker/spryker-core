@@ -135,12 +135,11 @@ abstract class AbstractTable
     /**
      * @return $this
      */
-    private function init()
+    protected function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;
-            $this->request = (new Pimple())
-                ->getApplication()['request'];
+            $this->request = $this->getRequest();
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
@@ -148,6 +147,15 @@ abstract class AbstractTable
         }
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest()
+    {
+        return (new Pimple())
+            ->getApplication()['request'];
     }
 
     /**
@@ -520,7 +528,7 @@ abstract class AbstractTable
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (isset($order[0]) && (int)($order[0][self::SORT_BY_COLUMN]) > 0 && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
+        if (isset($order[0]) && isset($order[0][self::SORT_BY_COLUMN]) && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
 
             $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
 

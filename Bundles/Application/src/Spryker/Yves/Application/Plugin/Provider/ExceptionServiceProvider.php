@@ -58,6 +58,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface
      * @throws \Exception
      *
      * @return void

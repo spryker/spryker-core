@@ -43,8 +43,6 @@ class Role implements RoleInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
-     *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function addRole($name)
@@ -147,8 +145,6 @@ class Role implements RoleInterface
 
     /**
      * @param int $idGroup
-     *
-     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
      * @return \Generated\Shared\Transfer\RolesTransfer
      */

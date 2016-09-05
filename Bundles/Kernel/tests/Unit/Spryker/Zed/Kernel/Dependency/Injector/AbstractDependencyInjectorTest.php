@@ -12,11 +12,13 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Dependency
- * @group AbstractDependencyInjector
+ * @group Injector
+ * @group AbstractDependencyInjectorTest
  */
 class AbstractDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {

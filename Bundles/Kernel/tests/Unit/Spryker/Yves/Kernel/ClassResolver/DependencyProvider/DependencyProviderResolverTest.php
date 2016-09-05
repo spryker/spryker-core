@@ -5,17 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\Kernel\ClassResolver\QueryContainer;
+namespace Unit\Spryker\Yves\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Unit\Spryker\Yves\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group DependencyProviderResolver
+ * @group ClassResolver
+ * @group DependencyProvider
+ * @group DependencyProviderResolverTest
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {

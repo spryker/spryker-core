@@ -26,6 +26,14 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DiscountFacadeTest
+ */
 class DiscountFacadeTest extends Test
 {
 

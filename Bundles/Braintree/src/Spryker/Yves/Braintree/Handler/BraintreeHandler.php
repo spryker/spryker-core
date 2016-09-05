@@ -10,6 +10,7 @@ namespace Spryker\Yves\Braintree\Handler;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Braintree\BraintreeClientInterface;
 use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -109,7 +110,7 @@ class BraintreeHandler
      */
     protected function getCurrency()
     {
-        return $this->currencyManager->getDefaultCurrency()->getIsoCode();
+        return Store::getInstance()->getCurrencyIsoCode();
     }
 
     /**

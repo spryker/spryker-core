@@ -10,11 +10,14 @@ namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferDefinitionMerger
+ * @group Model
+ * @group Generator
+ * @group TransferDefinitionMergerTest
  */
 class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,6 +41,9 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Property 'propertyA' defined more than once with different attributes! To fix this, search for 'property name="propertyA"' in the code base and fix the wrong one.
+     *
      * @return void
      */
     public function testMergeShouldThrowExceptionIfTwoPropertiesWithSameNameDefineDifferentAttributes()
@@ -62,7 +68,6 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
 
         $merger = new TransferDefinitionMerger();
 
-        $this->setExpectedException('\Exception', 'Property \'propertyA\' defined more than once with different attributes! To fix this, search for \'property name="propertyA"\' in the code base and fix the wrong one.');
         $merger->merge($transferDefinitions);
     }
 

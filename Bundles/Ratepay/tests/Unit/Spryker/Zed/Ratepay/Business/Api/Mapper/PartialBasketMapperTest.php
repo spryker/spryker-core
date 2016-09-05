@@ -5,10 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Ratepay\Business\Api\Converter;
+namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Mapper
+ * @group PartialBasketMapperTest
+ */
 class PartialBasketMapperTest extends AbstractMapperTest
 {
 

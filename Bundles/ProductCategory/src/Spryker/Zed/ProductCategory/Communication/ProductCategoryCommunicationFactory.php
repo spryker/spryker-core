@@ -36,8 +36,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     public function getProductFacade()
@@ -46,8 +44,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     public function getCategoryFacade()
@@ -56,8 +52,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     public function getCmsFacade()
@@ -176,8 +170,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getPropelConnection()

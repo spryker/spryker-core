@@ -4,13 +4,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Collector;
+namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DecisionRule
+ * @group MonthDecisionRuleTest
+ */
 class MonthDecisionRuleTest extends BaseRuleTester
 {
 
@@ -27,7 +36,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
         });
 
         $monthDecisionRule = $this->createMonthDecisionRule($comparatorMock, $dateTime);
-        $isSatisfied =$monthDecisionRule->isSatisfiedBy(
+        $isSatisfied = $monthDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
             $this->createClauseTransfer($dateTime->format(MonthDecisionRule::DATE_FORMAT))

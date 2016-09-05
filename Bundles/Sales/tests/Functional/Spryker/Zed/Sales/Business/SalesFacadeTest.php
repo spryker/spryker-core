@@ -15,7 +15,12 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Sales\Business\SalesFacade;
 
 /**
- * @group SalesFacade
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Sales
+ * @group Business
+ * @group SalesFacadeTest
  */
 class SalesFacadeTest extends Test
 {

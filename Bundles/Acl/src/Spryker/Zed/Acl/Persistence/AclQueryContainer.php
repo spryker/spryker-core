@@ -329,8 +329,6 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
      * @param string $action
      * @param int $type
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type)

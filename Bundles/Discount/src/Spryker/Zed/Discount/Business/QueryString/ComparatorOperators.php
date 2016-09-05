@@ -14,8 +14,8 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 {
 
     const MATCH_ALL_IDENTIFIER = '*';
-    const TYPE_NUMBER  = 'number';
-    const TYPE_STRING  = 'string';
+    const TYPE_NUMBER = 'number';
+    const TYPE_STRING = 'string';
     const TYPE_LIST = 'list';
     const NUMBER_REGEXP = '/[0-9\.\,]+/';
     const LIST_DELIMITER = ';';
@@ -42,7 +42,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if (!$withValue) {
+        if ((string)$withValue === '') {
             return false;
         }
 
@@ -135,8 +135,6 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
      */
     public function isValidComparatorValue(ClauseTransfer $clauseTransfer)
@@ -159,7 +157,6 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     protected function assertTypeAccepted(array $withTypes, ComparatorInterface $operator)
     {

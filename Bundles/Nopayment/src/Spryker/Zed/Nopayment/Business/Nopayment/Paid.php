@@ -30,8 +30,6 @@ class Paid
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function setOrderItemAsPaid(SpySalesOrderItem $orderItem)

@@ -44,6 +44,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
+     * @throws \RuntimeException
      * @return void
      */
     protected function expandProductOptionTransfers(ItemTransfer $itemTransfer)

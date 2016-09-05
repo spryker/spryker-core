@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library;
 
+use Exception;
+
 class TestAutoloader
 {
 
@@ -134,7 +136,6 @@ class TestAutoloader
     /**
      * @param int $resourceName
      *
-     * @throws \Exception
      * @return bool|string
      */
     protected function findFile($resourceName)
@@ -217,7 +218,7 @@ class TestAutoloader
 
         $app = ucfirst(strtolower($this->application));
         if (($resourceParts[1] !== $app && ($resourceParts[1] === 'Yves' || $resourceParts[1] === 'Zed')) && $resourceParts[1] !== 'Shared') {
-            throw new \Exception('You are not allowed to load this class in your app. (' . implode('\\', $resourceParts) . ')');
+            throw new Exception('You are not allowed to load this class in your app. (' . implode('\\', $resourceParts) . ')');
         }
     }
 

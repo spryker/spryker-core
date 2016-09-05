@@ -21,8 +21,6 @@ class BulkWriter extends Writer implements BulkWriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @throws \Exception
-     *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
@@ -44,8 +42,6 @@ class BulkWriter extends Writer implements BulkWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @throws \Exception
      *
      * @return void
      */

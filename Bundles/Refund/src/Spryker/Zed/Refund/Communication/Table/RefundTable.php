@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -42,7 +41,7 @@ class RefundTable extends AbstractTable
      */
     public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, CurrencyManagerInterface $currencyManager)
     {
-        $this->refundQueryContainer= $refundQueryContainer;
+        $this->refundQueryContainer = $refundQueryContainer;
         $this->dateFormatter = $dateFormatter;
         $this->currencyManager = $currencyManager;
     }
@@ -63,7 +62,11 @@ class RefundTable extends AbstractTable
         ]);
 
         $config->setSortable([
+            SpyRefundTableMap::COL_ID_REFUND,
+            SpyRefundTableMap::COL_FK_SALES_ORDER,
             SpyRefundTableMap::COL_CREATED_AT,
+            SpyRefundTableMap::COL_AMOUNT,
+            SpyRefundTableMap::COL_COMMENT,
         ]);
 
         $config->setSearchable([
@@ -73,6 +76,9 @@ class RefundTable extends AbstractTable
             SpyRefundTableMap::COL_AMOUNT,
             SpyRefundTableMap::COL_COMMENT,
         ]);
+
+        $config->setDefaultSortColumnIndex(0);
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
     }
@@ -85,7 +91,6 @@ class RefundTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $refundQuery = $this->refundQueryContainer->queryRefunds();
-        $refundQuery->orderByIdRefund(Criteria::DESC);
 
         $queryResults = $this->runQuery($refundQuery, $config);
         $results = [];

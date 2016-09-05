@@ -8,12 +8,15 @@
 namespace Unit\Spryker\Shared\Transfer;
 
 use ArrayObject;
+use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group Transfer
+ * @group AbstractTransferTest
  */
 class AbstractTransferTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +57,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertInstanceOf('Spryker\Shared\Transfer\TransferInterface', $transfer->getTransfer());
+        $this->assertInstanceOf(TransferInterface::class, $transfer->getTransfer());
         $this->assertInstanceOf('\ArrayObject', $transfer->getTransferCollection());
         $this->assertCount(1, $transfer->getTransferCollection());
     }
@@ -76,15 +79,16 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertInstanceOf('Spryker\Shared\Transfer\TransferInterface', $transfer->getTransfer());
+        $this->assertInstanceOf(TransferInterface::class, $transfer->getTransfer());
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     *
      * @return void
      */
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()
     {
-        $this->setExpectedException('\InvalidArgumentException');
         $data = [
             'not existing property key' => '',
         ];

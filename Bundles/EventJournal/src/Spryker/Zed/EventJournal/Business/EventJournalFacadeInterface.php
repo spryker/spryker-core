@@ -9,6 +9,9 @@ namespace Spryker\Zed\EventJournal\Business;
 
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 interface EventJournalFacadeInterface
 {
 

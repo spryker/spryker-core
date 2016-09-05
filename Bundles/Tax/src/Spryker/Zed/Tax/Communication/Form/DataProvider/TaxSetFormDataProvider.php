@@ -26,7 +26,7 @@ class TaxSetFormDataProvider
 
     /**
      * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer|null $taxSetTransfer
      */
     public function __construct(TaxFacadeInterface $taxFacade, TaxSetTransfer $taxSetTransfer = null)
     {

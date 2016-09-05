@@ -49,7 +49,7 @@ class BraintreeCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createStatusLogTable($idPayment)
     {
-        $statusLogQuery= $this->getQueryContainer()->queryTransactionStatusLogByPaymentId($idPayment);
+        $statusLogQuery = $this->getQueryContainer()->queryTransactionStatusLogByPaymentId($idPayment);
 
         return new StatusLog($statusLogQuery, $idPayment);
     }

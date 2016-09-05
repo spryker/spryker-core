@@ -17,8 +17,6 @@ class FileInfoExtractor
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
-     * @throws \Exception
-     *
      * @return string
      */
     public function getApplicationNameFromFileInfo(SplFileInfo $fileInfo)
@@ -31,8 +29,6 @@ class FileInfoExtractor
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
-     * @throws \Exception
-     *
      * @return string
      */
     public function getBundleNameFromFileInfo(SplFileInfo $fileInfo)
@@ -44,8 +40,6 @@ class FileInfoExtractor
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
-     *
-     * @throws \Exception
      *
      * @return string
      */
@@ -63,8 +57,6 @@ class FileInfoExtractor
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
-     *
-     * @throws \Exception
      *
      * @return string
      */

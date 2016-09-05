@@ -13,7 +13,6 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
@@ -21,7 +20,6 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     abstract protected function getPaymentTransfer(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *

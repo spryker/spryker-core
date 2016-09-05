@@ -16,7 +16,7 @@ interface CalculatorInterface
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
     public function calculate(array $discounts, QuoteTransfer $quoteTransfer);
 

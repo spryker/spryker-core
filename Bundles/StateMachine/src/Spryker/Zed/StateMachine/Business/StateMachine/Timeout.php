@@ -42,8 +42,6 @@ class Timeout implements TimeoutInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function setNewTimeout(ProcessInterface $process, StateMachineItemTransfer $stateMachineItemTransfer)
@@ -74,9 +72,6 @@ class Timeout implements TimeoutInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param string $stateName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

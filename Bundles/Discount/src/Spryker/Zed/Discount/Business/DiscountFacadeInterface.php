@@ -37,7 +37,6 @@ interface DiscountFacadeInterface
     public function calculateDiscounts(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
      * - Check if given item transfer matching clause
      *
@@ -52,7 +51,6 @@ interface DiscountFacadeInterface
     public function isItemSkuSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *
      *  Specification:
      * - Check if quote grandTotal matching clause
      *
@@ -97,7 +95,6 @@ interface DiscountFacadeInterface
     /**
      *  Specification:
      * - Collect all items matching given sku in clause
-     *
      *
      * @api
      *
@@ -150,7 +147,6 @@ interface DiscountFacadeInterface
     public function isItemPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *
      * Specification:
      * - Collect all items matching given quantity in clause
      *
@@ -164,7 +160,6 @@ interface DiscountFacadeInterface
     public function collectByItemPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *
      * Specification:
      * - Check if current week in year matching clause
      *
@@ -179,7 +174,6 @@ interface DiscountFacadeInterface
     public function isCalendarWeekSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *
      * Specification:
      * - Check if current day of the week is matching clause
      *
@@ -222,7 +216,6 @@ interface DiscountFacadeInterface
     public function isTimeSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Collect all available fields from all registered plugins
@@ -236,7 +229,6 @@ interface DiscountFacadeInterface
     public function getQueryStringFieldsByType($type);
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Collect all available comparator operators for given fieldName
@@ -251,7 +243,6 @@ interface DiscountFacadeInterface
     public function getQueryStringFieldExpressionsForField($type, $fieldName);
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Get all available comparators
@@ -265,7 +256,6 @@ interface DiscountFacadeInterface
     public function getQueryStringComparatorExpressions($type);
 
     /**
-     *
      * Specification:
      * - Given type look for meta data provider
      * - Get boolean logical comparators
@@ -279,7 +269,6 @@ interface DiscountFacadeInterface
     public function getQueryStringLogicalComparators($type);
 
     /**
-     *
      * Specification:
      * - Given configure clause
      * - Select comparator operator based on clause operator, execute it and return result.
@@ -296,7 +285,6 @@ interface DiscountFacadeInterface
     public function queryStringCompare(ClauseTransfer $clauseTransfer, $compareWith);
 
     /**
-     *
      * Specification:
      * - Configure specification builder on type and query string
      * - Try building query string
@@ -326,7 +314,6 @@ interface DiscountFacadeInterface
     public function saveDiscount(DiscountConfiguratorTransfer $discountConfigurator);
 
     /**
-     *
      * Specification:
      * - Hydrate discount entity from DiscountConfiguratorTransfer and persist it.
      * - If discount type is voucher create/update voucher pool without voucherCodes
@@ -346,7 +333,6 @@ interface DiscountFacadeInterface
      * - Hydrate data from entities to DiscountConfiguratorTransfer
      * - return DiscountConfiguratorTransfer
      *
-     *
      * @api
      *
      * @param int $idDiscount
@@ -356,7 +342,6 @@ interface DiscountFacadeInterface
     public function getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
     /**
-     *
      * Specification:
      * - Find discount entity
      * - Change discount state to enabled/disabled.
@@ -372,7 +357,6 @@ interface DiscountFacadeInterface
     public function toggleDiscountVisibility($idDiscount, $isActive = false);
 
     /**
-     *
      * Specification:
      * - Find discount to which voucherCodes have to be generated
      * - Change discount state to enabled/disabled.
@@ -390,13 +374,11 @@ interface DiscountFacadeInterface
     public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer);
 
     /**
-     *
      * Specification:
      * - Loop over all discountable items and calculate discount price amount per item
      * - Sum each amount to to total
      * - Round up cent fraction for total discount amount!
      * - Return total calculated discount amount on given discountable items
-     *
      *
      * @api
      *
@@ -408,7 +390,6 @@ interface DiscountFacadeInterface
     public function calculatePercentage(array $discountableObjects, $percentage);
 
     /**
-     *
      * Specification:
      *
      * - Return amount passed as parameter,
@@ -424,7 +405,6 @@ interface DiscountFacadeInterface
     public function calculateFixed(array $discountableObjects, $amount);
 
     /**
-     *
      * Specification:
      *
      * - Loop over each DiscountableItemTransfer and calculate each item price amount share from current discount total, for single item.
@@ -440,7 +420,6 @@ interface DiscountFacadeInterface
     public function distributeAmount(CollectedDiscountTransfer $collectedDiscountTransfer);
 
     /**
-     *
      * Specification:
      *
      * - For given voucherCodes find all voucher entities with counter
@@ -455,7 +434,6 @@ interface DiscountFacadeInterface
     public function releaseUsedVoucherCodes(array $voucherCodes);
 
     /**
-     *
      * Specification:
      *
      * - For given voucherCodes find all voucher entities with counter
@@ -470,7 +448,6 @@ interface DiscountFacadeInterface
     public function useVoucherCodes(array $voucherCodes);
 
     /**
-     *
      * Specification:
      *
      * - Loop over all quote items, take calculated discounts and persist them discount amount is for single item

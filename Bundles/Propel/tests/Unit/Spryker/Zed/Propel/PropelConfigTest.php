@@ -10,6 +10,13 @@ namespace Unit\Spryker\Zed\Propel;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 use Spryker\Zed\Propel\PropelConfig;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Propel
+ * @group PropelConfigTest
+ */
 class PropelConfigTest extends \PHPUnit_Framework_TestCase
 {
 

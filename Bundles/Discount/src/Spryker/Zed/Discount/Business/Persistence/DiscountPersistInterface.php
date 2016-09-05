@@ -25,7 +25,6 @@ interface DiscountPersistInterface
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
-     *
      */
     public function update(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
 

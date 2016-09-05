@@ -61,9 +61,6 @@ class Writer implements WriterInterface
     /**
      * @param string $name
      *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function createPriceType($name)
@@ -197,9 +194,6 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

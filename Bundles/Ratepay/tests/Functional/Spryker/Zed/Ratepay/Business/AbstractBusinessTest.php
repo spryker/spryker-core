@@ -30,6 +30,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
 use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group AbstractBusinessTest
+ */
 abstract class AbstractBusinessTest extends Test
 {
 
@@ -174,7 +182,6 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
     protected function getPaymentTransfer()
@@ -249,8 +256,6 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function createOrderEntity()

@@ -12,6 +12,17 @@ use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group ConfigurationCalculation
+ * @group InstallmentConfigurationTest
+ */
 class InstallmentConfigurationTest extends InstallmentAbstractTest
 {
 

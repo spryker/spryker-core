@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
+use Exception;
+
 class RedisReadWrite extends RedisRead implements ReadWriteInterface
 {
 
@@ -25,7 +27,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
         $result = $this->getResource()->set($key, $value);
         $this->addWriteAccessStats($key);
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
@@ -63,7 +65,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
         $this->addMultiWriteAccessStats($data);
 
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set redisKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Cart\Fixture;
+namespace Functional\Spryker\Zed\Cart\Business\Fixture;
 
 use Spryker\Zed\Cart\Business\CartBusinessFactory;
 use Spryker\Zed\Cart\CartConfig;

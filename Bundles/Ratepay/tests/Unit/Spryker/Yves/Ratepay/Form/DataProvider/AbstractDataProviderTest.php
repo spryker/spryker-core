@@ -12,10 +12,13 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Ratepay
+ * @group Form
  * @group DataProvider
+ * @group AbstractDataProviderTest
  */
 class AbstractDataProviderTest extends \PHPUnit_Framework_TestCase
 {

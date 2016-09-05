@@ -14,8 +14,14 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Kernel\Locator;
 
 /**
- * @group SubtotalTest
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Calculation
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group SubtotalTotalsCalculatorTest
  */
 class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {

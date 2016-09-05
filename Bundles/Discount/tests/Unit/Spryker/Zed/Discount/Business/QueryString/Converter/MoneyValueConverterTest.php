@@ -14,6 +14,16 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Converter
+ * @group MoneyValueConverterTest
+ */
 class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
 {
 

@@ -8,11 +8,14 @@
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPlugin
+ * @group QueryExpander
+ * @group FacetQueryExpanderPluginAggregationTest
  */
 class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpanderPluginAggregationTest
 {

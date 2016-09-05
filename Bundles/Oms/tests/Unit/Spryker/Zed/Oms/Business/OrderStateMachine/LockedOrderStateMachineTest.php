@@ -18,11 +18,13 @@ use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Business
- * @group Builder
+ * @group OrderStateMachine
+ * @group LockedOrderStateMachineTest
  */
 class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 {

@@ -63,8 +63,6 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function moveNode(NodeTransfer $categoryNode)
@@ -102,8 +100,6 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function createRootNode(NodeTransfer $categoryNode)
@@ -126,7 +122,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function persistNode($nodeId, $parentId)
     {
-        $closureQuery= new SpyCategoryClosureTableQuery();
+        $closureQuery = new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($parentId);
 
         foreach ($nodes as $node) {

@@ -16,7 +16,7 @@
     "spryker/messenger": "^2.0.0",
     "spryker/new-relic": "^2.0.0",
     "spryker/propel": "^2.0.0",
-    "spryker/search": "^2.0.0 || ^3.0.0",
+    "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/storage": "^2.0.0",

@@ -44,8 +44,6 @@ abstract class AbstractFacade
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
     private function resolveFactory()

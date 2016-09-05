@@ -14,8 +14,13 @@ use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**
- * @group TaxRate
- * @group TaxCountry
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Tax
+ * @group Business
+ * @group Model
+ * @group TaxRateCalculationTest
  */
 class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
 {

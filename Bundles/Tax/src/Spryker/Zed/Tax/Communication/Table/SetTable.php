@@ -133,7 +133,6 @@ class SetTable extends AbstractTable
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
      *
      * @return string
-     *
      */
     protected function createViewButton(SpyTaxSet $taxSetEntity)
     {

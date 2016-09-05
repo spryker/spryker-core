@@ -12,9 +12,12 @@ use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\Fixtures\BundleNameFinder;
 use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\Fixtures\MethodTagBuilder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group Generator
  * @group IdeAutoCompletion
+ * @group IdeBundleAutoCompletionGeneratorTest
  */
 class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
 {

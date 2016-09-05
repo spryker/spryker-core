@@ -82,8 +82,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
@@ -112,8 +110,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
@@ -142,8 +138,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()

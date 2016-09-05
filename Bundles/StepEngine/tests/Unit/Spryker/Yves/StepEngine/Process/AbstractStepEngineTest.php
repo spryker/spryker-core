@@ -14,6 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMock;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Yves
+ * @group StepEngine
+ * @group Process
+ * @group AbstractStepEngineTest
+ */
 abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
 {
 

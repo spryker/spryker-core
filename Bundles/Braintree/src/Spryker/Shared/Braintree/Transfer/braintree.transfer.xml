@@ -33,7 +33,7 @@
         <property name="transactionType" type="string"/>
         <property name="transactionStatus" type="string"/>
         <property name="transactionAmount" type="string"/>
-        <property name="processingTimestamp" type="integer"/>
+        <property name="processingTimestamp" type="int"/>
 
         <property name="merchantAccount" type="string"/>
         <property name="creditCardType" type="string"/>

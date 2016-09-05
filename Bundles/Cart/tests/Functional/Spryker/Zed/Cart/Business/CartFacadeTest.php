@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Cart

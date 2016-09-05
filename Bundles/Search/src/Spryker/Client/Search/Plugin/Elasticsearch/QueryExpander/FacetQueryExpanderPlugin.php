@@ -11,6 +11,7 @@ use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -221,13 +222,14 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     /**
      * @param \Elastica\Query $query
      *
+     * @throws \InvalidArgumentException
      * @return \Elastica\Query\BoolQuery
      */
     protected function getBoolQuery(Query $query)
     {
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
-            throw new \InvalidArgumentException(sprintf('Facet filters available only with %s, got: %s', BoolQuery::class, get_class($boolQuery)));
+            throw new InvalidArgumentException(sprintf('Facet filters available only with %s, got: %s', BoolQuery::class, get_class($boolQuery)));
         }
 
         return $boolQuery;

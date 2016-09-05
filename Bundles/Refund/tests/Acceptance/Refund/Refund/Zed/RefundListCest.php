@@ -12,8 +12,9 @@ use Acceptance\Refund\Refund\Zed\Tester\RefundListTester;
 /**
  * @group Acceptance
  * @group Refund
+ * @group Refund
  * @group Zed
- * @group RefundList
+ * @group RefundListCest
  */
 class RefundListCest
 {

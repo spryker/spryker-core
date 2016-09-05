@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Auth\Business\Model;
+namespace Unit\Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
@@ -14,10 +14,13 @@ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group User
  * @group Business
  * @group Model
- * @group User
+ * @group UserTest
  */
 class UserTest extends \PHPUnit_Framework_TestCase
 {

@@ -10,8 +10,11 @@ namespace Unit\Spryker\Shared\Kernel;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
  * @group Kernel
- * @group Locator
+ * @group AbstractLocatorLocatorTest
  */
 class AbstractLocatorLocatorTest extends \PHPUnit_Framework_TestCase
 {

@@ -18,7 +18,6 @@ class IdFilterUpdate extends AbstractIdFilter
      * @param array $ids
      * @param string $itemType
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return array
      */
     public function filter(array $ids, $itemType)

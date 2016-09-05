@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator
@@ -44,8 +46,8 @@ class IndexMapGenerator
     {
         $this->targetBaseDirectory = rtrim($targetDirectory, '/') . '/';
 
-        $loader = new \Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
-        $this->twig = new \Twig_Environment($loader, []);
+        $loader = new Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
+        $this->twig = new Twig_Environment($loader, []);
     }
 
     /**
@@ -87,7 +89,7 @@ class IndexMapGenerator
     protected function generateIndexMapClass($mappingName, array $mapping)
     {
         $fileName = $mappingName . self::CLASS_NAME_SUFFIX . self::CLASS_EXTENSION;
-        $templateData =  $this->getTemplateData($mappingName, $mapping);
+        $templateData = $this->getTemplateData($mappingName, $mapping);
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
         if (!is_dir($this->targetBaseDirectory)) {

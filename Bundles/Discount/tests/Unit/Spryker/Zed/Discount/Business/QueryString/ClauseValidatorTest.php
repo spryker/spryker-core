@@ -12,6 +12,15 @@ use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group ClauseValidatorTest
+ */
 class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -86,8 +95,8 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperatorsMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProviderMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorOperatorsMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface|null $metaDataProviderMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
      */

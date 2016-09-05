@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
+use PDO;
+use RuntimeException;
+
 /**
  * @property \PDO $resource
  *
@@ -34,7 +37,7 @@ abstract class Mysql extends AbstractKeyValue
             $port = $this->config['port'] ? $this->config['port'] : null;
 
             $dsn = 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database;
-            $resource = new \PDO(
+            $resource = new PDO(
                 $dsn,
                 $this->config['user'] ? $this->config['user'] : null,
                 $this->config['password'] ? $this->config['password'] : null
@@ -53,7 +56,7 @@ abstract class Mysql extends AbstractKeyValue
     protected function initDb()
     {
         if (empty($this->config['database'])) {
-            throw new \RuntimeException('Database is not defined in config');
+            throw new RuntimeException('Database is not defined in config');
         }
 
         $query = 'CREATE TABLE IF NOT EXISTS  ' . $this->getTableName() . " (

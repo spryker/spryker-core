@@ -19,7 +19,6 @@ class PaymentSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInte
 {
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

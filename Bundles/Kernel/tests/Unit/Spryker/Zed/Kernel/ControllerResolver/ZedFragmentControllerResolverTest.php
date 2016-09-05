@@ -11,9 +11,12 @@ use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @group Kernel
+ * @group Unit
+ * @group Spryker
  * @group Zed
+ * @group Kernel
  * @group ControllerResolver
+ * @group ZedFragmentControllerResolverTest
  */
 class ZedFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
 {

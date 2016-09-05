@@ -37,8 +37,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      *
-     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
-     *
      * @return array
      */
     public function triggerEvent($eventId, array $orderItems, $data)
@@ -57,8 +55,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
-     *
-     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
      *
      * @return array
      */
@@ -89,8 +85,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
-     *
      * @return array
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, $data)
@@ -110,8 +104,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param string $eventId
      * @param int $orderItemId
      * @param array $data
-     *
-     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
      *
      * @return array
      */

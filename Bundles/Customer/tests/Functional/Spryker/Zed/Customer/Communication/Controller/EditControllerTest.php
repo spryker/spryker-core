@@ -22,11 +22,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Customer
  * @group Communication
  * @group Controller
+ * @group EditControllerTest
  */
 class EditControllerTest extends Test
 {

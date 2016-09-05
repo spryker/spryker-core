@@ -208,8 +208,6 @@ class StateUpdater implements StateUpdaterInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
-     *
      * @return void
      */
     protected function transitionState(

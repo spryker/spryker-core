@@ -18,7 +18,11 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
- * @group PriceTest
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Price
+ * @group ReaderTest
  */
 class ReaderTest extends Test
 {

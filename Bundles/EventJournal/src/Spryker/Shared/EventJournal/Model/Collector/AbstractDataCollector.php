@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\EventJournal\Model\Collector;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 abstract class AbstractDataCollector implements DataCollectorInterface
 {
 

@@ -14,8 +14,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
      * @param string $key
      * @param mixed $value
      *
-     * @throws \Exception
-     *
      * @return mixed|void
      */
     public function set($key, $value)
@@ -28,8 +26,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 
     /**
      * @param array $items
-     *
-     * @throws \Exception
      *
      * @return mixed
      */
@@ -47,8 +43,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     /**
      * @param string $key
      *
-     * @throws \Exception
-     *
      * @return bool|mixed|\mysqli_result
      */
     public function delete($key)
@@ -61,8 +55,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 
     /**
      * @param array $keys
-     *
-     * @throws \Exception
      *
      * @return array
      */
@@ -78,8 +70,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return int
      */
     public function deleteAll()
@@ -90,8 +80,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     /**
      * @param string $key
      * @param mixed $value
-     *
-     * @throws \Exception
      *
      * @return bool|\mysqli_result
      */
@@ -114,8 +102,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 
     /**
      * @param string $key
-     *
-     * @throws \Exception
      *
      * @return bool|\mysqli_result
      */

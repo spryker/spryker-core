@@ -179,8 +179,6 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale()

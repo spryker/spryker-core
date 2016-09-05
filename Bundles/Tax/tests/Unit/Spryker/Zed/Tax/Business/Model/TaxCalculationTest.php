@@ -12,6 +12,15 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Tax
+ * @group Business
+ * @group Model
+ * @group TaxCalculationTest
+ */
 class TaxCalculationTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -30,13 +39,13 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
         $quoteTransfer->addItem($itemTransfer);
 
         $expenseTransfer = $this->createExpenseTransfer();
-        $expenseTransfer->setSumTaxAmount(25);
+        $expenseTransfer->setSumTaxAmount(30);
         $quoteTransfer->addExpense($expenseTransfer);
 
         $taxCalculation = $this->createTaxCalculation();
         $taxCalculation->recalculate($quoteTransfer);
 
-        $this->assertEquals(50, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
+        $this->assertSame(55, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
     /**
@@ -48,7 +57,6 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
      */
     protected function createTaxCalculation()

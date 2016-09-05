@@ -53,8 +53,6 @@ class TemplateManager implements TemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
-     *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function createTemplate($name, $path)
@@ -161,11 +159,6 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
-     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     protected function updateTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
@@ -188,8 +181,6 @@ class TemplateManager implements TemplateManagerInterface
 
     /**
      * @param int $idTemplate
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */

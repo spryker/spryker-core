@@ -123,6 +123,7 @@ class NonPersistentProvider implements StorageProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
+     * @throws \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @return bool
      */
     protected function isValidQuantity(ItemTransfer $itemTransfer)

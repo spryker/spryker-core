@@ -17,11 +17,14 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPlugin
+ * @group QueryExpander
+ * @group FacetQueryExpanderPluginFilteredQueryTest
  */
 class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpanderPluginQueryTest
 {
@@ -226,6 +229,13 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->setParameterName('bar')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
+            )
+            ->addFacet(
+                (new FacetConfigTransfer())
+                    ->setName('baz')
+                    ->setParameterName('baz')
+                    ->setFieldName(PageIndexMap::INTEGER_FACET)
+                ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
             );
 
         $expectedQuery = (new BoolQuery())
@@ -248,11 +258,25 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
                             'lte' => 78900,
                             'gte' => 45600,
+                        ]))))
+                ->addFilter((new Nested())
+                ->setPath(PageIndexMap::INTEGER_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term)
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'baz'))
+                    ->addFilter((new Range())
+                        ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
+                            'lte' => 45600,
+                            'gte' => 12300,
                         ]))));
 
                 $parameters = [
-                'foo' => 123, // simple value
-                'bar' => '456-789' // range value
+                    'foo' => 123, // simple value
+                    'bar' => '456-789', // range value as string
+                    'baz' => [
+                        'min' => 123,
+                        'max' => 456,
+                    ], // range value as array
                 ];
 
                 return [$searchConfig, $expectedQuery, $parameters];

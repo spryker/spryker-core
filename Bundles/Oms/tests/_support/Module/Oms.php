@@ -24,7 +24,7 @@ class Oms extends Module
      */
     public function triggerEventForNewOrderItems(array $idSalesOrderItems)
     {
-        $omsFacade  = new OmsFacade();
+        $omsFacade = new OmsFacade();
         $omsFacade->triggerEventForNewOrderItems($idSalesOrderItems);
     }
 
@@ -72,7 +72,6 @@ class Oms extends Module
     }
 
     /**
-     *
      * @return void
      */
     public function checkTimeout()

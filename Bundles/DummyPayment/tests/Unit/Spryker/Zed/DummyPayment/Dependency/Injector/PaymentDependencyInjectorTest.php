@@ -13,11 +13,13 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Dependency
- * @group PaymentDependencyInjector
+ * @group Injector
+ * @group PaymentDependencyInjectorTest
  */
 class PaymentDependencyInjectorTest extends \PHPUnit_Framework_TestCase
 {

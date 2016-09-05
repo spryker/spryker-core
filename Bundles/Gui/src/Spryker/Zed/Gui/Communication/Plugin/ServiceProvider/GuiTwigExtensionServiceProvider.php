@@ -61,7 +61,6 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @return \Twig_SimpleFunction[]
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getTwigFunctions()
     {
@@ -71,7 +70,6 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @return \Twig_SimpleFilter[]
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getTwigFilters()
     {

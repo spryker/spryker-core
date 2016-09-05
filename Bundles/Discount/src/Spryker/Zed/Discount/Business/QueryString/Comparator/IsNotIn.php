@@ -20,8 +20,6 @@ class IsNotIn implements ComparatorInterface
      * @param string $withValue
      *
      * @return bool
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -68,7 +66,6 @@ class IsNotIn implements ComparatorInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isValidValue($withValue)
     {

@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Spryker\Zed\Storage\Business\StorageFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Storage

@@ -61,7 +61,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @param string $itemType
      * @param string $itemId
-     * @param string $itemEvent|null
+     * @param string|null $itemEvent|null
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
@@ -84,8 +84,6 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param string $itemType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */

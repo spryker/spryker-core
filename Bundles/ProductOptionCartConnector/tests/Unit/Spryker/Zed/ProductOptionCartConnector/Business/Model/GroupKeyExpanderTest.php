@@ -12,6 +12,15 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOptionCartConnector
+ * @group Business
+ * @group Model
+ * @group GroupKeyExpanderTest
+ */
 class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
 {
 

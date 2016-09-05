@@ -12,6 +12,17 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Specification
+ * @group CollectorSpecification
+ * @group CollectorAndSpecificationTest
+ */
 class CollectorAndSpecificationTest extends \PHPUnit_Framework_TestCase
 {
 

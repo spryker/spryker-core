@@ -32,9 +32,6 @@ class CmsToUrlBridge implements CmsToUrlInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
@@ -47,9 +44,6 @@ class CmsToUrlBridge implements CmsToUrlInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

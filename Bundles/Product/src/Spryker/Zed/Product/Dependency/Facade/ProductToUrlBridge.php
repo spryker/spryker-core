@@ -31,9 +31,6 @@ class ProductToUrlBridge implements ProductToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)

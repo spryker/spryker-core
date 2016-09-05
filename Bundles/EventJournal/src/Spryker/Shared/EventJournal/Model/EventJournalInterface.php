@@ -10,6 +10,9 @@ namespace Spryker\Shared\EventJournal\Model;
 use Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface;
 use Spryker\Shared\EventJournal\Model\Writer\WriterInterface;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 interface EventJournalInterface
 {
 

@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
+namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -21,6 +21,15 @@ use Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group FinderTest
+ */
 class FinderTest extends StateMachineMocks
 {
 
@@ -155,9 +164,9 @@ class FinderTest extends StateMachineMocks
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface $builderMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface $handlerResolverMock
-     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainerMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface|null $builderMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface|null $stateMachineQueryContainerMock
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Finder
      */

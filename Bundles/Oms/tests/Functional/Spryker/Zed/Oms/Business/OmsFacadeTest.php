@@ -14,6 +14,14 @@ use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Oms
+ * @group Business
+ * @group OmsFacadeTest
+ */
 class OmsFacadeTest extends Test
 {
 

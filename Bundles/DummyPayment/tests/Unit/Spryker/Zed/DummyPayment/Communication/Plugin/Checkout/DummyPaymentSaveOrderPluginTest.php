@@ -12,11 +12,14 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentSaveOrderPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Communication
- * @group DummyPaymentSaveOrderPlugin
+ * @group Plugin
+ * @group Checkout
+ * @group DummyPaymentSaveOrderPluginTest
  */
 class DummyPaymentSaveOrderPluginTest extends \PHPUnit_Framework_TestCase
 {

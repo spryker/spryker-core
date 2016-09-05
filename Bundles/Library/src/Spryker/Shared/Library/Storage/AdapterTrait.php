@@ -62,8 +62,6 @@ trait AdapterTrait
     }
 
     /**
-     * @throws \Exception
-     *
      * @return mixed
      */
     protected function getResource()

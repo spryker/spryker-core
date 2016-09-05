@@ -64,7 +64,6 @@ abstract class AbstractKvProvider extends AbstractClientProvider
      * @param string $kvName
      *
      * @throws \ErrorException
-     * @throws \Exception
      *
      * @return array
      */

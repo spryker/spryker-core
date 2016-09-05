@@ -154,8 +154,6 @@ class Builder implements BuilderInterface
     /**
      * @param string $fileName
      *
-     * @throws \Spryker\Zed\Oms\Business\Exception\StatemachineException
-     *
      * @return \Symfony\Component\Finder\SplFileInfo
      */
     private function locateProcessDefinition($fileName)

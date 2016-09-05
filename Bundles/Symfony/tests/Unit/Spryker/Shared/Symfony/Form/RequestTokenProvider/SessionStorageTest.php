@@ -12,11 +12,13 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Shared
  * @group Symfony
  * @group Form
- * @group Extension
- * @group DoubleSubmitProtectionExtensionTest
+ * @group RequestTokenProvider
+ * @group SessionStorageTest
  */
 class SessionStorageTest extends Test
 {

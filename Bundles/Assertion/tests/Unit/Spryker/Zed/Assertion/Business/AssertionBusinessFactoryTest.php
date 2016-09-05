@@ -11,10 +11,12 @@ use Spryker\Zed\Assertion\Business\AssertionBusinessFactory;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Assertion
  * @group Business
+ * @group AssertionBusinessFactoryTest
  */
 class AssertionBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {

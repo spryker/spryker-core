@@ -8,7 +8,17 @@
 namespace Spryker\Zed\StockSalesConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\StockSalesConnector\StockSalesConnectorDependencyProvider;
 
 class StockSalesConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
+
+    /**
+     * @return \Spryker\Zed\StockSalesConnector\Dependency\Facade\StockSalesConnectorToStockInterface
+     */
+    public function getStockFacade()
+    {
+        return $this->getProvidedDependency(StockSalesConnectorDependencyProvider::FACADE_STOCK);
+    }
+
 }

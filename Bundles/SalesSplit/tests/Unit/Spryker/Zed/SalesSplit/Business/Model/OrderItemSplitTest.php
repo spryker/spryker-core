@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model\Validation;
+namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -16,6 +16,15 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
 use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemOptionMock;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesSplit
+ * @group Business
+ * @group Model
+ * @group OrderItemSplitTest
+ */
 class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
 {
 

@@ -20,11 +20,13 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group ProductCartConnector
  * @group Business
- * @group ProductCartPlugin
+ * @group Plugin
+ * @group ProductCartPluginTest
  */
 class ProductCartPluginTest extends Test
 {

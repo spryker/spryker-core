@@ -11,11 +11,12 @@ use Spryker\Zed\Refund\Communication\RefundCommunicationFactory;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Communication
- * @group RefundCommunicationFactory
+ * @group RefundCommunicationFactoryTest
  */
 class RefundCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
 {

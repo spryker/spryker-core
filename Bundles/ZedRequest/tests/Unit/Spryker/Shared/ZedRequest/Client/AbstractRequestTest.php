@@ -10,11 +10,12 @@ namespace Unit\Spryker\Shared\ZedRequest\Client;
 use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractRequest;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Shared
  * @group ZedRequest
  * @group Client
- * @group AbstractRequest
+ * @group AbstractRequestTest
  */
 class AbstractRequestTest extends \PHPUnit_Framework_TestCase
 {

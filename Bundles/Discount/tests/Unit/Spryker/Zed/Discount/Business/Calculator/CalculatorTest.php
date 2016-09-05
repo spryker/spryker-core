@@ -20,6 +20,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group CalculatorTest
+ */
 class CalculatorTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -146,10 +155,10 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $specificationBuilderMock
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacadeMock
-     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributorMock
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPluginMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface|null $specificationBuilderMock
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|null $messengerFacadeMock
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface|null $distributorMock
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|null $calculatorPluginMock
      *
      * @return \Spryker\Zed\Discount\Business\Calculator\Calculator
      */
