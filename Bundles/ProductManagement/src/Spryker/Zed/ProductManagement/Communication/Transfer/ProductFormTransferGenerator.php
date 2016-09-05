@@ -404,11 +404,15 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         foreach ($form->get(ProductFormAdd::FORM_PRICE_AND_STOCK) as $stockForm) {
             $stockData = $stockForm->getData();
             $type = $stockForm->get(StockForm::FIELD_TYPE)->getData();
+            $quantity = $stockForm->get(StockForm::FIELD_QUANTITY)->getData();
+            $isNeverOutOfStock = $stockForm->get(StockForm::FIELD_IS_NEVER_OUT_OF_STOCK)->getData();
 
             $stockTransfer = (new StockProductTransfer())
                 ->fromArray($stockData, true)
                 ->setSku($sku)
-                ->setStockType($type);
+                ->setQuantity($quantity)
+                ->setStockType($type)
+                ->setIsNeverOutOfStock($isNeverOutOfStock);
 
             $result[] = $stockTransfer;
         }
