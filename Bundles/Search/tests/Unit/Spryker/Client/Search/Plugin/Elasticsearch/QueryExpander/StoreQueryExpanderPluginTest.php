@@ -35,14 +35,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     public function testStoreQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery)
     {
-        /** @var \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit_Framework_MockObject_MockObject $queryExpander */
-        $queryExpander = $this->getMockBuilder(StoreQueryExpanderPlugin::class)
-            ->setMethods(['getStore'])
-            ->getMock();
-
-        $queryExpander
-            ->method('getStore')
-            ->willReturn('AB');
+        $queryExpander = $this->createStoreQueryExpanderPluginMock();
 
         $query = $queryExpander->expandQuery($this->createBaseQueryPlugin());
 
@@ -72,6 +65,22 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                     ->setField(PageIndexMap::STORE, 'AB')));
 
         return [$expectedQuery];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createStoreQueryExpanderPluginMock()
+    {
+        $queryExpander = $this->getMockBuilder(StoreQueryExpanderPlugin::class)
+            ->setMethods(['getStore'])
+            ->getMock();
+
+        $queryExpander
+            ->method('getStore')
+            ->willReturn('AB');
+
+        return $queryExpander;
     }
 
 }

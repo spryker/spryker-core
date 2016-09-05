@@ -35,14 +35,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     public function testLocalizedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery)
     {
-        /** @var \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit_Framework_MockObject_MockObject $queryExpander */
-        $queryExpander = $this->getMockBuilder(LocalizedQueryExpanderPlugin::class)
-            ->setMethods(['getCurrentLocale'])
-            ->getMock();
-
-        $queryExpander
-            ->method('getCurrentLocale')
-            ->willReturn('ab_CD');
+        $queryExpander = $this->createLocalizedQueryExpanderPluginMock();
 
         $query = $queryExpander->expandQuery($this->createBaseQueryPlugin());
 
@@ -72,6 +65,22 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                     ->setField(PageIndexMap::LOCALE, 'ab_CD')));
 
         return [$expectedQuery];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createLocalizedQueryExpanderPluginMock()
+    {
+        $queryExpander = $this->getMockBuilder(LocalizedQueryExpanderPlugin::class)
+            ->setMethods(['getCurrentLocale'])
+            ->getMock();
+
+        $queryExpander
+            ->method('getCurrentLocale')
+            ->willReturn('ab_CD');
+
+        return $queryExpander;
     }
 
 }
