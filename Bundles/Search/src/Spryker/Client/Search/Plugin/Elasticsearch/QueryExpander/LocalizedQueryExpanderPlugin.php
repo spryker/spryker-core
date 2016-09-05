@@ -45,7 +45,7 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
         $boolQuery = $this->getBoolQuery($query);
 
         $matchQuery = new Match();
-        $matchQuery->setField(PageIndexMap::LOCALE, $this->getFactory()->getStore()->getCurrentLocale());
+        $matchQuery->setField(PageIndexMap::LOCALE, $this->getCurrentLocale());
 
         $boolQuery->addMust($matchQuery);
     }
@@ -68,6 +68,14 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
         }
 
         return $boolQuery;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentLocale()
+    {
+        return $this->getFactory()->getStore()->getCurrentLocale();
     }
 
 }

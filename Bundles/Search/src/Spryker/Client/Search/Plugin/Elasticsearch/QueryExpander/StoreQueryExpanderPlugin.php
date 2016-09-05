@@ -45,7 +45,7 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $boolQuery = $this->getBoolQuery($query);
 
         $matchQuery = new Match();
-        $matchQuery->setField(PageIndexMap::STORE, $this->getFactory()->getStore()->getStoreName());
+        $matchQuery->setField(PageIndexMap::STORE, $this->getStore());
 
         $boolQuery->addMust($matchQuery);
     }
@@ -68,6 +68,14 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         }
 
         return $boolQuery;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStore()
+    {
+        return $this->getFactory()->getStore()->getStoreName();
     }
 
 }
