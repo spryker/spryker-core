@@ -362,7 +362,11 @@ class ProductManager implements ProductManagerInterface
                 ->setFkProductAbstract($idProductAbstract)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
-                ->setAttributes($jsonAttributes);
+                ->setAttributes($jsonAttributes)
+                ->setDescription($localizedAttributes->getDescription())
+                ->setMetaTitle($localizedAttributes->getMetaTitle())
+                ->setMetaKeywords($localizedAttributes->getMetaKeywords())
+                ->setMetaDescription($localizedAttributes->getMetaDescription());
 
             $localizedProductAttributesEntity->save();
         }

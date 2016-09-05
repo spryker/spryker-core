@@ -76,7 +76,7 @@ class EditController extends AddController
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
-                    $idProductAbstract
+                    $productAbstractTransfer->getSku()
                 ));
 
                 return $this->redirectResponse(sprintf(

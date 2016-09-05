@@ -61,7 +61,10 @@ class AddController extends AbstractController
                     ->getProductManagementFacade()
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
-                $this->addSuccessMessage('The product was added successfully.');
+                $this->addSuccessMessage(sprintf(
+                    'The product [%s] was added successfully.',
+                    $productAbstractTransfer->getSku()
+                ));
 
                 return $this->redirectResponse(sprintf(
                     '/product-management/edit?%s=%d',
@@ -111,38 +114,6 @@ class AddController extends AbstractController
         }
 
         return $attributeArray;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeMetadataTransfer[] $metadataCollection
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeCollection
-     *
-     * @return array
-     */
-    protected function getLocalizedAttributeMetadataNames(array $metadataCollection, array $attributeCollection)
-    {
-        $currentLocale = (int)$this->getFactory()
-            ->getLocaleFacade()
-            ->getCurrentLocale()
-            ->getIdLocale();
-
-        $result = [];
-        foreach ($metadataCollection as $type => $transfer) {
-            $result[$type] = $type;
-            if (!isset($attributeCollection[$type])) {
-                continue;
-            }
-
-            $attributeTransfer = $attributeCollection[$type];
-            foreach ($attributeTransfer->getLocalizedAttributes() as $localizedAttribute) {
-                if ((int)$localizedAttribute->getFkLocale() === $currentLocale) {
-                    $result[$type] = $localizedAttribute->getName();
-                    break;
-                }
-            }
-        }
-
-        return $result;
     }
 
     /**

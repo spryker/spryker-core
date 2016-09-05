@@ -88,11 +88,10 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedData = $this->generateLocalizedData($localeCollection, $formData);
 
         foreach ($localizedData as $localeCode => $data) {
-            $formName = ProductFormAdd::getGeneralFormName($localeCode);
             $localeTransfer = $this->localeFacade->getLocale($localeCode);
 
             $localizedAttributesTransfer = $this->createLocalizedAttributesTransfer(
-                $form->get($formName),
+                $form,
                 $attributeValues[$localeCode],
                 $localeTransfer
             );
@@ -206,8 +205,11 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    protected function createLocalizedAttributesTransfer(FormInterface $form, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
+    protected function createLocalizedAttributesTransfer(FormInterface $formObject, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
     {
+        $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
+        $form = $formObject->get($formName);
+
         $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
@@ -215,17 +217,12 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
         $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION)->getData());
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
 
-        if ($form->has(SeoForm::FIELD_META_TITLE)) {
-            $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE)->getData());
-        }
+        $formName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());
+        $form = $formObject->get($formName);
 
-        if ($form->has(SeoForm::FIELD_META_KEYWORDS)) {
-            $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS)->getData());
-        }
-
-        if ($form->has(SeoForm::FIELD_META_DESCRIPTION)) {
-            $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION)->getData());
-        }
+        $localizedAttributesTransfer->setMetaTitle($form->get(SeoForm::FIELD_META_TITLE)->getData());
+        $localizedAttributesTransfer->setMetaKeywords($form->get(SeoForm::FIELD_META_KEYWORDS)->getData());
+        $localizedAttributesTransfer->setMetaDescription($form->get(SeoForm::FIELD_META_DESCRIPTION)->getData());
 
         return $localizedAttributesTransfer;
     }
