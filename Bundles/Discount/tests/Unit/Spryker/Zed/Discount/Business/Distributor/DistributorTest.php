@@ -250,6 +250,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param int $discountAmount
+     *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function createDiscountTransfer($discountAmount)

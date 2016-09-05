@@ -178,6 +178,7 @@ $command</command>";
 
     /**
      * @throws \ErrorException
+     *
      * @return void
      */
     public function generateAction()

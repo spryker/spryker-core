@@ -28,6 +28,7 @@ class TestEnvironment
 
     /**
      * @throws \ErrorException
+     *
      * @return void
      */
     public static function forceSystemUnderTest()

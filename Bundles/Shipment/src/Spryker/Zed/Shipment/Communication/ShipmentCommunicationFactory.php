@@ -58,6 +58,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param array $data
      * @param array $options
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createMethodForm(array $data, array $options = [])

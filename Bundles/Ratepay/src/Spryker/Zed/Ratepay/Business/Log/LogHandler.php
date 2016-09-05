@@ -32,6 +32,7 @@ class LogHandler extends AbstractProcessingHandler
 
     /**
      * @param array $record
+     *
      * @return void
      */
     protected function write(array $record)

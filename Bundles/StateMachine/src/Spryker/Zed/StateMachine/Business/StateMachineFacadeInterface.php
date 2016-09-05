@@ -133,6 +133,7 @@ interface StateMachineFacadeInterface
      *
      * @param int $idStateMachineProcess
      * @param int $identifier
+     *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateHistoryByStateItemIdentifier($idStateMachineProcess, $identifier);

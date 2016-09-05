@@ -202,6 +202,7 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface $transactionHandler
+     *
      * @return void
      */
     protected function registerAllMethodMappers($transactionHandler)

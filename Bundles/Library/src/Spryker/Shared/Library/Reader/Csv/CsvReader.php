@@ -105,6 +105,7 @@ class CsvReader implements CsvReaderInterface
      * @param int $lineNumber
      *
      * @throws \UnexpectedValueException
+     *
      * @return array
      */
     protected function composeAndValidateLine(array $columns, array $data, $filename, $lineNumber)

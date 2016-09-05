@@ -108,6 +108,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @param string $itemType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
+     *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt);

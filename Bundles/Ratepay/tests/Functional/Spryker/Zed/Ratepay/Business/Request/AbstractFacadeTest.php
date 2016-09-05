@@ -192,6 +192,7 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\BaseResponse $expectedResponse
+     *
      * @return void
      */
     protected function convertResponseToTransfer($expectedResponse)
