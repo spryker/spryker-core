@@ -70,7 +70,6 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         }
 
         return $this->hydrateProductOptionGroupTransfer($productOptionGroupEntity);
-
     }
 
     /**

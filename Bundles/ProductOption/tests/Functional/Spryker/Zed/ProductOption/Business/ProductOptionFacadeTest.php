@@ -26,6 +26,14 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group ProductOptionFacadeTest
+ */
 class ProductOptionFacadeTest extends Test
 {
 
@@ -170,7 +178,6 @@ class ProductOptionFacadeTest extends Test
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
         $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionValueEntity->getPrice());
-
     }
 
     /**
@@ -256,7 +263,6 @@ class ProductOptionFacadeTest extends Test
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
         $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
-
     }
 
     /**
@@ -314,7 +320,6 @@ class ProductOptionFacadeTest extends Test
         $assignedAbstractProducts = $groupProducts->getSpyProductAbstracts();
 
         $this->assertEquals($assignedAbstractProducts[0]->getSku(), $productAbstractEntity->getSku());
-
     }
 
     /**
@@ -343,7 +348,6 @@ class ProductOptionFacadeTest extends Test
         $taxSetTaxRateEntity->save();
 
         return $taxSetEntity;
-
     }
 
     /**
@@ -360,7 +364,7 @@ class ProductOptionFacadeTest extends Test
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer|null $productOptionValueTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */

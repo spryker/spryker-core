@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\OptionGroup;
+namespace Unit\Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
@@ -21,6 +21,15 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Unit\Spryker\Zed\ProductOption\MockProvider;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group OptionGroup
+ * @group ProductOptionGroupSaverTest
+ */
 class ProductOptionGroupSaverTest extends MockProvider
 {
 
@@ -147,7 +156,6 @@ class ProductOptionGroupSaverTest extends MockProvider
         $isUpdated = $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
 
         $this->assertTrue($isUpdated);
-
     }
 
     /**
@@ -181,7 +189,6 @@ class ProductOptionGroupSaverTest extends MockProvider
             ->willReturn($productOptionGroupEntityMock);
 
         $productOptionGroupSaverMock->addProductAbstractToProductOptionGroup('123', 1);
-
     }
 
     /**
@@ -214,7 +221,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface|null $touchFacadeMock
-     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaverMock
+     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface|null $translationSaverMock
      *
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver|\PHPUnit_Framework_MockObject_MockObject
      */

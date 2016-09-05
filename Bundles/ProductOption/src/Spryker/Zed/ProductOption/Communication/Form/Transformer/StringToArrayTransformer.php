@@ -39,7 +39,6 @@ class StringToArrayTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function transform($value)
     {
@@ -72,7 +71,6 @@ class StringToArrayTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the original representation
      *
-     * @throws \Symfony\Component\Form\Exception\TransformationFailedException When the transformation fails.
      */
     public function reverseTransform($value)
     {

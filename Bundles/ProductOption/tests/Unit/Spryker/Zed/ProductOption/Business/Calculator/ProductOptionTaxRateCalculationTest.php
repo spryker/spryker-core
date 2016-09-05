@@ -20,7 +20,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  * @group Zed
  * @group ProductOption
  * @group Business
- * @group Model
+ * @group Calculator
  * @group ProductOptionTaxRateCalculationTest
  */
 class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase

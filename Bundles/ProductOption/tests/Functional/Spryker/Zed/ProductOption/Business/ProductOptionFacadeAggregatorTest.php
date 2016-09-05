@@ -23,6 +23,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOptionQuery;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group ProductOptionFacadeAggregatorTest
+ */
 class ProductOptionFacadeAggregatorTest extends Test
 {
 
@@ -41,7 +49,6 @@ class ProductOptionFacadeAggregatorTest extends Test
         $recalculatedOrderItemOptionTransfer = $recalculatedOrderItemTransfer->getProductOptions()[0];
 
         $this->assertSame(200, $recalculatedOrderItemOptionTransfer->getSumGrossPrice());
-
     }
 
     /**
@@ -103,11 +110,9 @@ class ProductOptionFacadeAggregatorTest extends Test
 
         $this->assertNotEmpty($salesOrderItemOptionEntity);
         $this->assertSame($salesOrderItemOptionEntity->getGrossPrice(), $prductOptionTransfer->getUnitGrossPrice());
-
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function createSalesOrderAddress()
@@ -134,7 +139,6 @@ class ProductOptionFacadeAggregatorTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function createOmsProcess()
@@ -147,7 +151,6 @@ class ProductOptionFacadeAggregatorTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     protected function createOmsState()

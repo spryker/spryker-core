@@ -26,6 +26,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @api
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      * @return void
      */
     public function validate($value, Constraint $constraint)
@@ -91,7 +92,6 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
         }
 
         return false;
-
     }
 
     /**

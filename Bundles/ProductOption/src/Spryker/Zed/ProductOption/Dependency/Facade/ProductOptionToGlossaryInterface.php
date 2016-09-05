@@ -22,7 +22,7 @@ interface ProductOptionToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *

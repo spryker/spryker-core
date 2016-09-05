@@ -32,7 +32,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

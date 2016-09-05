@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\OptionGroup;
+namespace Unit\Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -16,6 +16,15 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Unit\Spryker\Zed\ProductOption\MockProvider;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group OptionGroup
+ * @group ProductOptionOrderSaverTest
+ */
 class ProductOptionOrderSaverTest extends MockProvider
 {
 
@@ -63,11 +72,10 @@ class ProductOptionOrderSaverTest extends MockProvider
         $itemOptionTransfer = $orderItems[0]->getProductOptions()[0];
 
         $this->assertSame($itemOptionTransfer->getIdSalesOrderItemOption(), 1);
-
     }
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface|null $glossaryFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
      */

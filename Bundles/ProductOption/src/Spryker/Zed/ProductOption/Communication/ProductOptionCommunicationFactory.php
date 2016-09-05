@@ -29,7 +29,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
+     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider|null $productOptionGroupDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -51,7 +51,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
             $productOptionGroupDataProvider->getData(),
             array_merge(
                 [
-                'data_class'  => ProductOptionGroupTransfer::class
+                'data_class' => ProductOptionGroupTransfer::class
                 ],
                 $productOptionGroupDataProvider->getOptions()
             )
@@ -75,7 +75,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer|null $productOptionGroupTransfer
      *
      * @return \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider
      */
@@ -105,7 +105,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idProductOptionGroup
+     * @param int|null $idProductOptionGroup
      *
      * @return \Spryker\Zed\ProductOption\Communication\Table\ProductTable
      */

@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\OptionGroup;
+namespace Unit\Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
@@ -14,6 +14,15 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Unit\Spryker\Zed\ProductOption\MockProvider;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group OptionGroup
+ * @group TranslationSaverTest
+ */
 class TranslationSaverTest extends MockProvider
 {
 
@@ -70,8 +79,8 @@ class TranslationSaverTest extends MockProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacadeMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface|null $glossaryFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface|null $localeFacadeMock
      *
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver
      */

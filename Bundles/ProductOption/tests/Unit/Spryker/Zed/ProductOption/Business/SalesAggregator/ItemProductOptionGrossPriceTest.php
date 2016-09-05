@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\SalesAggregator;
+namespace Unit\Spryker\Zed\ProductOption\Business\SalesAggregator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -15,6 +15,15 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice;
 use Unit\Spryker\Zed\ProductOption\MockProvider;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductOption
+ * @group Business
+ * @group SalesAggregator
+ * @group ItemProductOptionGrossPriceTest
+ */
 class ItemProductOptionGrossPriceTest extends MockProvider
 {
 

@@ -28,7 +28,6 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      * @param string $keyName
      * @param array $data
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -39,9 +38,8 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -68,7 +66,6 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
