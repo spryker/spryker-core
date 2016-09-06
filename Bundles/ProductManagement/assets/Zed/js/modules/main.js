@@ -209,18 +209,21 @@ $(document).ready(function() {
         var $parent1 = $target.parent();
         var $parent2 = $parent1.parent();
         var $parent3 = $parent2.parent();
-        var $parent4 = $parent3.parent();
+
 
         var prototypeTemplate = $parent3.find('div.image_set_block');
-
         var valueCount = prototypeTemplate.data('valuecount');
         var newOptionFormHTML = prototypeTemplate.data('prototype');
         newOptionFormHTML = newOptionFormHTML.replace(/__image_set_name__/g, valueCount);
         var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
-        //newOptionForm.attr('class', 'sep_down');
-
         valueCount++;
         prototypeTemplate.data('valuecount', valueCount);
+
+
+        var prototypeList = prototypeTemplate.find('div.image_set_list');
+
+        console.log('prototypeList', prototypeList);
+
 
         $parent3.append(newOptionForm);
     });
