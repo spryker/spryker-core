@@ -155,9 +155,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     {
         $imageData = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());
 
-        return array_merge($formData, $imageData);
-
-
         $result = $formData;
         foreach ($formData as $name => $data) {
             if (array_key_exists($name, $imageData)) {
