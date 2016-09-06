@@ -10,11 +10,11 @@
         {% set form_group_errors_large_css = 'has-error' %}
     {% endif %}
 
-    <div id="image-set-list"
+    <div class="image_set_list"
          data-valuecount="{{ productImageSet.product_images|length }}"
          data-prototype="{{ form_widget(productImageSet.product_images.vars.prototype)|e }}"
     >
-        <div class="col-lg-12 sep_down">
+        <div class="col-lg-12 sep_down image_set_block">
             <div class="col-lg-2">
                 {% set css = '' %}
                 {% set form_group_errors_css = '' %}

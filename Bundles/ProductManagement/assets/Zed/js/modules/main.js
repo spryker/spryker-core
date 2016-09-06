@@ -182,20 +182,24 @@ $(document).ready(function() {
         });
     });
 
-    $('#add-another-option').click(function(event) {
+    $('.add-another-image').click(function(event) {
         event.preventDefault();
 
-        var valueList = $('#image-set-list');
-        var valueCount = valueList.data('valuecount');
-        var newOptionFormHTML = valueList.data('prototype');
+        var $target = $(event.target);
+        var $parent1 = $target.parent();
+        var $parent2 = $parent1.parent();
+        var prototypeTemplate = $parent2.find('div.image_set_list');
+
+        var valueCount = prototypeTemplate.data('valuecount');
+        var newOptionFormHTML = prototypeTemplate.data('prototype');
             newOptionFormHTML = newOptionFormHTML.replace(/__name__/g, valueCount);
         var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
         newOptionForm.attr('class', 'sep_down');
 
-        valueList.parent(valueList).append(newOptionForm);
+        prototypeTemplate.parent(prototypeTemplate).append(newOptionForm);
 
         valueCount++;
-        valueList.data('valuecount', valueCount);
+        prototypeTemplate.data('valuecount', valueCount);
     });
 
     $('.slick_demo_1').slick({
