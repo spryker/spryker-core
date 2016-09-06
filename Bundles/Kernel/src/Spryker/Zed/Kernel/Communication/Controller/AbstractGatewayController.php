@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Kernel\Communication\Controller;
 
-use Spryker\Shared\NewRelic\Api;
 use Spryker\Shared\ZedRequest\Client\Message;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
@@ -33,13 +32,6 @@ abstract class AbstractGatewayController extends AbstractController
      * @var \Spryker\Shared\ZedRequest\Client\Message[]
      */
     private $successMessages = [];
-
-    public function __construct()
-    {
-        // @todo this can be a plugin which listen for kernel.controller events
-        $newRelicApi = new Api();
-        $newRelicApi->addCustomParameter('Call_from', 'Yves');
-    }
 
     /**
      * @return bool

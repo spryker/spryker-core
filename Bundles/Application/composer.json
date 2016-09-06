@@ -18,7 +18,7 @@
     "spryker/library": "^2.0.0",
     "spryker/log": "^2.0.0",
     "spryker/monolog": "^2.0.0",
-    "spryker/new-relic": "^2.0.0",
+    "spryker/new-relic": "^2.1.0",
     "spryker/propel": "^2.0.0",
     "spryker/session": "^2.1.2",
     "spryker/silex": "^2.0.0",

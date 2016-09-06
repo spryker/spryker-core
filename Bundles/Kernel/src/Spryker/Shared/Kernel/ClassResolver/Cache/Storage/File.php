@@ -7,11 +7,11 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
+use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Library\DataDirectory;
-use Spryker\Shared\Library\Error\ErrorLogger;
 
 class File implements StorageInterface
 {
@@ -36,8 +36,7 @@ class File implements StorageInterface
                 '<?php return ' . $string . ';',
                 $flag
             );
-        } catch (\Exception $exception) {
-            ErrorLogger::log($exception);
+        } catch (Exception $exception) {
         }
     }
 
