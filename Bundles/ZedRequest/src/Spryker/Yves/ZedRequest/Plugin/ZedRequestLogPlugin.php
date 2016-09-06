@@ -10,6 +10,7 @@ namespace Spryker\Yves\ZedRequest\Plugin;
 use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 use Spryker\Shared\ZedRequest\Client\Middleware\MiddlewareInterface;
 
 class ZedRequestLogPlugin implements MiddlewareInterface
@@ -33,7 +34,7 @@ class ZedRequestLogPlugin implements MiddlewareInterface
     public function getCallable()
     {
         return Middleware::mapRequest(function (RequestInterface $request) {
-            if ($request->hasHeader('X-Yves-Host')) {
+            if ($request->hasHeader(AbstractHttpClient::HEADER_YVES_HOST)) {
                 $this->getLogger()->info(sprintf(
                     'Transfer request [%s] %s',
                     $request->getMethod(),

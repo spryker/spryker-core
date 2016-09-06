@@ -10,6 +10,7 @@ namespace Unit\Spryker\Yves\ZedRequest\Plugin;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use Psr\Log\LoggerInterface;
+use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
 
 /**
@@ -57,7 +58,7 @@ class ZedRequestLogPluginTest extends \PHPUnit_Framework_TestCase
         $handlerStack->push($zedRequestLogPluginMock->getCallable(), $zedRequestLogPluginMock->getName());
         $handler = $handlerStack->resolve();
         $request = new Request('POST', 'www.example.com');
-        $request = $request->withHeader('X-Yves-Host', 1);
+        $request = $request->withHeader(AbstractHttpClient::HEADER_YVES_HOST, 1);
         $handler($request, []);
     }
 

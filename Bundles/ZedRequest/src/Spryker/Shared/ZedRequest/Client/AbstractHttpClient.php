@@ -35,6 +35,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
 
+    const HEADER_YVES_USER_AGENT = 'User-Agent';
+    const HEADER_YVES_HOST = 'X-Yves-Host';
+    const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
+    const HEADER_ZED_HOST = 'X-Zed-Host';
+
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
@@ -167,9 +172,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function createGuzzleRequest($pathInfo)
     {
         $headers = [
-            'User-Agent' => 'Yves 2.0',
-            'X-Yves-Host' => 1,
-            'X-Internal-Request' => 1,
+            self::HEADER_YVES_USER_AGENT => 'Yves 2.0',
+            self::HEADER_YVES_HOST => 1,
+            self::HEADER_INTERNAL_REQUEST => 1,
         ];
 
         foreach ($this->getHeaders() as $header => $value) {
@@ -248,7 +253,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     protected function getTransferFromResponse(MessageResponseInterface $response, MessageRequestInterface $request)
     {
