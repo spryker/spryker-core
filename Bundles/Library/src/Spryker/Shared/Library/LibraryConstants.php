@@ -43,12 +43,12 @@ interface LibraryConstants
     const TRANSFER_DEBUG_SESSION_NAME = ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME;
 
     /**
-     * @deprecated Use ErrorConstants::YVES_ERROR_PAGE instead.
+     * @deprecated Use ErrorHandlerConstants::YVES_ERROR_PAGE instead.
      */
     const YVES_ERROR_PAGE = ApplicationConstants::YVES_ERROR_PAGE;
 
     /**
-     * @deprecated Use ErrorConstants::ERROR_RENDERER to choose renderer.
+     * @deprecated Use ErrorHandlerConstants::ERROR_RENDERER to choose renderer.
      */
     const YVES_SHOW_EXCEPTION_STACK_TRACE = ApplicationConstants::YVES_SHOW_EXCEPTION_STACK_TRACE;
 
@@ -78,12 +78,12 @@ interface LibraryConstants
     const YVES_STORAGE_SESSION_REDIS_PASSWORD = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD;
 
     /**
-     * @deprecated Use ErrorConstants::ZED_ERROR_PAGE instead.
+     * @deprecated Use ErrorHandlerConstants::ZED_ERROR_PAGE instead.
      */
     const ZED_ERROR_PAGE = ApplicationConstants::ZED_ERROR_PAGE;
 
     /**
-     * @deprecated Use ErrorConstants::ERROR_RENDERER to choose renderer.
+     * @deprecated Use ErrorHandlerConstants::ERROR_RENDERER to choose renderer.
      */
     const ZED_SHOW_EXCEPTION_STACK_TRACE = ApplicationConstants::ZED_SHOW_EXCEPTION_STACK_TRACE;
 
