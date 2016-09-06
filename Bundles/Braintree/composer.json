@@ -31,6 +31,10 @@
     "spryker/transfer": "^2.0.0",
     "spryker/url": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Braintree bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

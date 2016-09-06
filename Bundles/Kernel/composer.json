@@ -28,7 +28,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/console": "^2.0.1",
-    "spryker/testify": "^2.0.0"
+    "spryker/testify": "*"
   },
   "description": "Kernel bundle",
   "license": "proprietary",

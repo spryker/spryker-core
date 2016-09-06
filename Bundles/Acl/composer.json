@@ -3,11 +3,7 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Functional": "tests/"
     }
   },
   "require": {
@@ -22,6 +18,10 @@
     "spryker/symfony": "^2.0.0",
     "spryker/url": "^2.0.0",
     "spryker/user": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Acl bundle",
   "license": "proprietary",

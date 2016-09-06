@@ -18,6 +18,10 @@
     "spryker/propel": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Url bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -16,6 +16,10 @@
     "spryker/tax": "^3.0.0",
     "spryker/transfer": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "DiscountCalculationConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

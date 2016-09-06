@@ -22,6 +22,10 @@
     "spryker/touch": "^2.0.0",
     "spryker/twig": "^2.1.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Price bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

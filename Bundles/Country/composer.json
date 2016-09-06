@@ -19,6 +19,10 @@
     "spryker/messenger": "^2.0.0",
     "spryker/user": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Country bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

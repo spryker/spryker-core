@@ -18,6 +18,10 @@
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Stock bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

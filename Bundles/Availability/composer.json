@@ -17,6 +17,10 @@
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/stock": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Availability bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

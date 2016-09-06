@@ -30,6 +30,10 @@
     "symfony/var-dumper": "~2.6.13",
     "symfony/yaml": "~2.6.13"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Symfony bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

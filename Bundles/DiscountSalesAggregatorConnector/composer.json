@@ -13,6 +13,10 @@
     "spryker/sales": "^2.0.0",
     "spryker/tax": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "DiscountSalesAggregatorConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

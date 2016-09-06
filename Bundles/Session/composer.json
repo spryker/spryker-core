@@ -17,6 +17,10 @@
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Session bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

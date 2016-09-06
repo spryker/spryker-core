@@ -12,6 +12,10 @@
     "spryker/monolog": "^2.0.0",
     "spryker/silex": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Log bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

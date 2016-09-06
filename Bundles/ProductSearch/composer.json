@@ -23,7 +23,9 @@
     "spryker/touch": "^2.0.0"
   },
   "require-dev": {
-    "spryker/library": "^2.0.0"
+    "spryker/code-sniffer": "*",
+    "spryker/library": "^2.0.0",
+    "spryker/testify": "*"
   },
   "description": "ProductSearch bundle",
   "license": "proprietary",

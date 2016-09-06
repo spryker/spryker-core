@@ -3,7 +3,8 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Unit": "tests/"
+      "Unit": "tests/",
+      "Functional": "tests/"
     },
     "psr-4": {
       "Application\\Module\\": "tests/_support/Module"
@@ -28,6 +29,10 @@
     "spryker/url": "^2.0.0",
     "spryker/zed-request": "^2.0.0",
     "spryker/zend": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Application bundle",
   "license": "proprietary",
