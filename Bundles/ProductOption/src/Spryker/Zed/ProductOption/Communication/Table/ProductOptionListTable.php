@@ -53,7 +53,7 @@ class ProductOptionListTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {

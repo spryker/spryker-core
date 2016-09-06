@@ -184,8 +184,28 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
 }
 
 $(document).ready(function() {
-    allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'select', 'product_option_general_products_to_be_assigned');
-    productOptionTable = new TableHandler($('#product-option-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'deselect', 'product_option_general_products_to_be_de_assigned');
+
+    var currentTableId = 'products-to-assign';
+
+    allProductsTable = new TableHandler(
+        $('#product-table'),
+        $('#selectedProductsTable'),
+        'all_products_checkbox_',
+        'Products to be assigned',
+        'products-to-be-assigned',
+        'select',
+        'product_option_general_products_to_be_assigned'
+    );
+
+    productOptionTable = new TableHandler(
+        $('#product-option-table'),
+        $('#deselectedProductsTable'),
+        'product_category_checkbox_',
+        'Products to be deassigned',
+        'to-be-deassigned',
+        'deselect',
+        'product_option_general_products_to_be_de_assigned'
+    );
 
     $('#product-table').dataTable({
         destroy: true,
@@ -236,11 +256,21 @@ $(document).ready(function() {
                 productOptionTable.getSelector().removeProductFromSelection(idProduct);
                 destinationTable.dataTable().fnDeleteRow(index);
                 var checkbox = $('#' + productOptionTable.getCheckBoxNamePrefix() + idProduct);
-                checkbox.prop('checked', true);
             }
         });
 
         productOptionTable.updateSelectedProductsLabelCount();
+    };
+
+    productOptionTable.selectAll = function() {
+
+        var nodes = productOptionTable.getSourceTable().dataTable().fnGetNodes();
+        var sourceTableData = productOptionTable.getSourceTable().DataTable().rows().data();
+
+        $('input[type="checkbox"]', nodes).prop('checked', true);
+        sourceTableData.each(function(cellData, index) {
+            productOptionTable.removeSelectedProduct(cellData[0]);
+        });
     };
 
     $('#product-option-table').dataTable({
@@ -271,13 +301,51 @@ $(document).ready(function() {
         }
     });
 
-    $('.prcat-select-all a').on('click', function() {
-        allProductsTable.selectAll();
+
+    $('#product-selectors .btn').each(function(index, element) {
+        $(element).on('click', function(event) {
+
+            //$('#product-selectors .btn').addClass('btn-white');
+            $('#product-selectors .btn').removeClass('active');
+
+            $('#products-assignment > div').each(function(index, containerElement) {
+                $(containerElement).hide();
+            });
+
+            var targetElement = $(event.target);
+            targetElement.addClass('active');
+            //targetElement.removeClass('btn-white');
+
+            var dataElementId = targetElement.attr('id');
+            currentTableId = dataElementId;
+
+            if (dataElementId == 'products-to-assign' || dataElementId === 'assigned') {
+                $('#select-all-btn').show();
+            } else {
+                $('#select-all-btn').hide();
+            }
+
+            var productContainer = $('#products').find('[data-products="' + dataElementId + '"]');
+            $(productContainer).show();
+        });
+    });
+
+    $('#select-all').on('click', function() {
+        if (currentTableId == 'products-to-assign') {
+            allProductsTable.selectAll();
+        } else {
+            productOptionTable.selectAll();
+        }
         return false;
     });
 
-    $('.prcat-deselect-all a').on('click', function() {
-        productOptionTable.deSelectAll();
+    $('#deselect-all').on('click', function() {
+        if (currentTableId == 'products-to-assign') {
+            allProductsTable.deSelectAll();
+        } else {
+            productOptionTable.deSelectAll();
+        }
         return false;
     });
+
 });

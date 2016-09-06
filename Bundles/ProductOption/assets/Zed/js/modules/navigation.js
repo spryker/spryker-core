@@ -123,7 +123,7 @@ Navigation.prototype.showHideNavigationButtons = function(){
     if (self.currentTabPosition === 0) {
         $('#btn-tab-previous').addClass('hidden');
         $('#btn-tab-next').removeClass('hidden');
-    } else  if (self.currentTabPosition === (self.tabUrls.length - 1)) {
+    } else if (self.currentTabPosition === (self.tabUrls.length - 1)) {
         $('#btn-tab-previous').removeClass('hidden');
         $('#btn-tab-next').addClass('hidden');
     } else {
