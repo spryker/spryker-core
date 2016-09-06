@@ -4,3 +4,7 @@ tools:
 checks:
     php:
         code_rating: true
+
+filter:
+    excluded_paths:
+        - src/Spryker/Zed/Propel/Business/Builder/*
