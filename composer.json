@@ -9,7 +9,7 @@
     "mathiasverraes/money": "~3.0.0-beta2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "0.6.4"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
