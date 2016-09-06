@@ -9,6 +9,7 @@
         <column name="gross_price" type="INTEGER" required="true" default="0"/>
         <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
         <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>
 
