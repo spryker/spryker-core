@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Uni\Spryker\Zed\Development\Business\Composer\Updater;
+namespace Unit\Spryker\Zed\Development\Business\Composer\Updater;
 
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * @group Uni
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Development
@@ -56,7 +56,7 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
         $splFileInfo = $this->getSplFile();
 
         $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
-        $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function($path) use ($autoloadKey) {
+        $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function ($path) use ($autoloadKey) {
             $testPath = __DIR__ . '/tests/' . $autoloadKey;
 
             return ($path === $testPath);
@@ -83,7 +83,7 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
         unset($composerJson['autoload']['psr-0'][$autoloadKey]);
         $composerJson['autoload-dev']['psr-0'][$autoloadKey] = 'tests/';
         $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
-        $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function($path) use ($autoloadKey) {
+        $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function ($path) use ($autoloadKey) {
             $testPath = __DIR__ . '/tests/' . $autoloadKey;
 
             return ($path === $testPath);
