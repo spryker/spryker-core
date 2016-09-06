@@ -7,13 +7,14 @@
 
 namespace Spryker\Yves\Braintree;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Braintree\Form\CreditCardSubForm;
 use Spryker\Yves\Braintree\Form\DataProvider\CreditCardDataProvider;
 use Spryker\Yves\Braintree\Form\DataProvider\PayPalDataProvider;
 use Spryker\Yves\Braintree\Form\PayPalSubForm;
 use Spryker\Yves\Braintree\Handler\BraintreeHandler;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Zed\Braintree\BraintreeDependencyProvider;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToCurrencyInterface;
 
 /**
  * @method \Spryker\Client\Braintree\BraintreeClientInterface getClient()
@@ -58,15 +59,15 @@ class BraintreeFactory extends AbstractFactory
      */
     public function createBraintreeHandler()
     {
-        return new BraintreeHandler($this->getClient(), $this->getCurrencyManager());
+        return new BraintreeHandler($this->getClient(), $this->getCurrencyFacade());
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return BraintreeToCurrencyInterface
      */
-    protected function getCurrencyManager()
+    protected function getCurrencyFacade()
     {
-        return CurrencyManager::getInstance();
+        return $this->getProvidedDependency(BraintreeDependencyProvider::FACADE_CURRENCY);
     }
 
 }

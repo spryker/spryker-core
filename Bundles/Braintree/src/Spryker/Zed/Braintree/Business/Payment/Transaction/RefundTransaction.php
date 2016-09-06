@@ -8,27 +8,27 @@
 namespace Spryker\Zed\Braintree\Business\Payment\Transaction;
 
 use Braintree\Transaction as BraintreeTransaction;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface;
 
 class RefundTransaction extends AbstractTransaction
 {
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @var \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface
      */
-    protected $currencyManager;
+    protected $moneyFacade;
 
     /**
      * @param \Spryker\Zed\Braintree\BraintreeConfig $brainTreeConfig
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     * @param \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface $moneyFacade
      */
-    public function __construct(BraintreeConfig $brainTreeConfig, CurrencyManagerInterface $currencyManager)
+    public function __construct(BraintreeConfig $brainTreeConfig, BraintreeToMoneyInterface $moneyFacade)
     {
         parent::__construct($brainTreeConfig);
 
-        $this->currencyManager = $currencyManager;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -82,7 +82,7 @@ class RefundTransaction extends AbstractTransaction
             return null;
         }
 
-        return $this->currencyManager->convertCentToDecimal($refundTransfer->getAmount());
+        return $this->moneyFacade->convertIntegerToDecimal($refundTransfer->getAmount());
     }
 
     /**

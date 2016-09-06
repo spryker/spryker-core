@@ -12,10 +12,11 @@ use Braintree\Transaction;
 use Braintree\Transaction\StatusDetails;
 use DateTime;
 use Generated\Shared\Transfer\RefundTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\RefundTransaction;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyBridge;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface;
 use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundInterface;
 
 /**
@@ -72,9 +73,13 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
      */
     protected function getRefundTransactionMock($success = true)
     {
+        $moneyFacadeMock = $this->getMoneyFacadeMock();
         $refundTransactionMockBuilder = $this->getMockBuilder(RefundTransaction::class);
         $refundTransactionMockBuilder->setMethods(['refund', 'initializeBraintree']);
-        $refundTransactionMockBuilder->setConstructorArgs([new BraintreeConfig(), CurrencyManager::getInstance()]);
+        $refundTransactionMockBuilder->setConstructorArgs([
+            new BraintreeConfig(),
+            new BraintreeToMoneyBridge($moneyFacadeMock)
+        ]);
 
         if ($success) {
             $response = $this->getSuccessResponse();
@@ -140,7 +145,18 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
                 'status' => 'settling'
             ])
         ]);
+
         return $transaction;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getMoneyFacadeMock()
+    {
+        $moneyFacadeMock = $this->getMockBuilder(BraintreeToMoneyInterface::class)->getMock();
+
+        return $moneyFacadeMock;
     }
 
 }

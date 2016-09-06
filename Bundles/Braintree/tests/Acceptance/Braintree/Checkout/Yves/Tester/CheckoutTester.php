@@ -7,6 +7,7 @@
 
 namespace Acceptance\Braintree\Checkout\Yves\Tester;
 
+use Acceptance\Braintree\Checkout\Yves\PageObject\ProductDetailPage;
 use Braintree\YvesAcceptanceTester;
 
 class CheckoutTester extends YvesAcceptanceTester
@@ -51,7 +52,7 @@ class CheckoutTester extends YvesAcceptanceTester
     {
         $i = $this;
         $i->amOnPage($productIdentifier);
-        $i->click('Add to Cart');
+        $i->click(ProductDetailPage::BUTTON_ADD_TO_CART);
     }
 
     /**

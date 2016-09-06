@@ -16,9 +16,10 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Braintree\BraintreeConfig;
 use Spryker\Zed\Braintree\Business\Payment\Transaction\PreCheckTransaction;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyBridge;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface;
 
 /**
  * @group Functional
@@ -26,7 +27,7 @@ use Spryker\Zed\Braintree\Business\Payment\Transaction\PreCheckTransaction;
  * @group Zed
  * @group Braintree
  * @group Business
- * @group BraintreeFacadePreCheck
+ * @group BraintreeFacadePreCheckTest
  */
 class BraintreeFacadePreCheckTest extends AbstractFacadeTest
 {
@@ -74,11 +75,12 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
      */
     protected function getPreCheckTransactionMock($success = true)
     {
+        $moneyFacadeMock = $this->getMoneyFacadeMock();
         $preCheckTransactionMock = $this
             ->getMockBuilder(PreCheckTransaction::class)
             ->setMethods(['preCheck', 'initializeBraintree'])
             ->setConstructorArgs(
-                [new BraintreeConfig(), CurrencyManager::getInstance()]
+                [new BraintreeConfig(), new BraintreeToMoneyBridge($moneyFacadeMock)]
             )
             ->getMock();
 
@@ -148,6 +150,16 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getMoneyFacadeMock()
+    {
+        $moneyFacadeMock = $this->getMockBuilder(BraintreeToMoneyInterface::class)->getMock();
+
+        return $moneyFacadeMock;
     }
 
 }
