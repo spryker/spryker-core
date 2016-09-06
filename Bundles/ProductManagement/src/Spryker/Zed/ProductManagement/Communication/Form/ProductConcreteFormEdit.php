@@ -104,7 +104,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            if ((int)$dataToValidate[PriceForm::FIELD_PRICE] <= 0) {
+                            if ((int)$dataToValidate[PriceForm::FIELD_PRICE] < 0) {
                                 $context->addViolation('Please enter Price information under Price & Taxes');
                             }
                         },

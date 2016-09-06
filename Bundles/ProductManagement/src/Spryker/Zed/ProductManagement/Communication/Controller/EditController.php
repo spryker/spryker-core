@@ -160,9 +160,11 @@ class EditController extends AddController
                 ));
 
                 return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d#tab_variants',
+                    '/product-management/edit/variant?%s=%d&%s=%d',
                     self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract
+                    $idProductAbstract,
+                    self::PARAM_ID_PRODUCT,
+                    $idProduct
                 ));
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
