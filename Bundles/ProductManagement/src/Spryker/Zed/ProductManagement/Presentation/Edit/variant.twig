@@ -19,6 +19,7 @@
 
 {% block action %}
     {{ backActionButton('/product-management', 'List Products' | trans) }}
+    {{ backActionButton('/product-management/edit?id-product-abstract=' ~ idProductAbstract, 'Edit Abstract Product' | trans) }}
 {% endblock %}
 
 {% import _self as forms %}

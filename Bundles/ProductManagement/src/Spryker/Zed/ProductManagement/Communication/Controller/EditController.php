@@ -101,6 +101,8 @@ class EditController extends AddController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'variantTable' => $variantTable->render(),
+            'idProduct' => null,
+            'idProductAbstract' => $idProductAbstract,
         ]);
     }
 
@@ -176,7 +178,9 @@ class EditController extends AddController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
             'localeCollection' => $localeProvider->getLocaleCollection(),
-            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true)
+            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
+            'idProduct' => $idProduct,
+            'idProductAbstract' => $idProductAbstract,
         ]);
     }
 

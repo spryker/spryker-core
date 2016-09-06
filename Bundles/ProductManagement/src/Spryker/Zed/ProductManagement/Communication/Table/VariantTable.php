@@ -22,6 +22,7 @@ class VariantTable extends AbstractTable
     const COL_ID_PRODUCT = 'id_product';
     const COL_SKU = 'sku';
     const COL_STOCK = 'stock';
+    const COL_STATUS = 'status';
 
     const COL_ACTIONS = 'actions';
 
@@ -44,7 +45,6 @@ class VariantTable extends AbstractTable
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->idProductAbstract = $idProductAbstract;
         $this->defaultUrl = sprintf('variantTable?%s=%d', EditController::PARAM_ID_PRODUCT_ABSTRACT, $idProductAbstract);
-        //$this->defaultUrl = 'variantTable';
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
@@ -59,11 +59,13 @@ class VariantTable extends AbstractTable
             static::COL_ID_PRODUCT => 'Product ID',
             static::COL_SKU => 'Sku',
             static::COL_STOCK => 'Stock',
+            static::COL_STATUS => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_ACTIONS,
+            static::COL_STATUS,
         ]);
 
         $config->setSearchable([
@@ -73,6 +75,7 @@ class VariantTable extends AbstractTable
         $config->setSortable([
             SpyProductTableMap::COL_ID_PRODUCT,
             SpyProductTableMap::COL_SKU,
+            SpyProductTableMap::COL_IS_ACTIVE,
         ]);
 
         return $config;
@@ -91,7 +94,9 @@ class VariantTable extends AbstractTable
             ->innerJoinSpyProductAbstract()
             ->filterByFkProductAbstract($this->idProductAbstract)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-            ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU);
+            ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU)
+            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, static::COL_STATUS)
+        ;
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -114,8 +119,18 @@ class VariantTable extends AbstractTable
             static::COL_ID_PRODUCT  => $item[SpyProductTableMap::COL_ID_PRODUCT],
             static::COL_SKU => $item[static::COL_SKU],
             static::COL_STOCK => 'Stock',
+            static::COL_STATUS => $this->getStatusLabel($item[SpyProductTableMap::COL_IS_ACTIVE]),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($item)),
         ];
+    }
+
+    protected function getStatusLabel($status)
+    {
+        if (!$status) {
+            return '<span class="label">Inactive</span>';
+        }
+
+        return '<span class="label-info">Active</span>';
     }
 
     /**
