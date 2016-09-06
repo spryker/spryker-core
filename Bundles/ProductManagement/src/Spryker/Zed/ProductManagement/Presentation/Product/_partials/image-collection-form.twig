@@ -1,3 +1,8 @@
+<div class="image_set_list"
+     data-valuecount="{{ productImageSet.product_images|length }}"
+     data-prototype="{{ form_widget(productImageSet.product_images.vars.prototype)|e }}"
+>
+
 {% for productImage in productImageSet.product_images %}
     {% set form_group_errors_small_css = '' %}
     {% set form_group_errors_large_css = '' %}
@@ -10,44 +15,40 @@
         {% set form_group_errors_large_css = 'has-error' %}
     {% endif %}
 
-    <div class="image_set_list"
-         data-valuecount="{{ productImageSet.product_images|length }}"
-         data-prototype="{{ form_widget(productImageSet.product_images.vars.prototype)|e }}"
-    >
-        <div class="col-lg-12 sep_down image_set_block">
-            <div class="col-lg-2">
-                {% set css = '' %}
-                {% set form_group_errors_css = '' %}
-                {% if productImage.external_url_small.vars.attr.class is defined %}
-                    {% set css = productImage.external_url_small.vars.attr.class ~ ' ' ~ css %}
-                {% endif %}
+    <div class="col-lg-12 sep_down image_set_block">
+        <div class="col-lg-2">
+            {% set css = '' %}
+            {% set form_group_errors_css = '' %}
+            {% if productImage.external_url_small.vars.attr.class is defined %}
+                {% set css = productImage.external_url_small.vars.attr.class ~ ' ' ~ css %}
+            {% endif %}
 
-                {% if productImage.external_url_small.vars.errors|length %}
-                    {% set form_group_errors_css = 'has-error' %}
-                {% endif %}
+            {% if productImage.external_url_small.vars.errors|length %}
+                {% set form_group_errors_css = 'has-error' %}
+            {% endif %}
 
-                {{ form_row(productImage.image_preview_large_url) }}
-                {{ form_row(productImage.image_preview_large_url) }}
+            {{ form_row(productImage.image_preview_large_url) }}
+            {{ form_row(productImage.image_preview_large_url) }}
 
-                <div class='form-group {{ form_group_errors_css }}'>
-                    {{ form_row(productImage.image_preview) }}
-                </div>
-            </div>
-            <div class="col-lg-10">
-                {{ form_row(productImage.id_product_image) }}
-                {{ form_row(productImage.fk_image_set_id) }}
-
-                <div class='form-group {{ form_group_errors_small_css }}'>
-                    {{ form_row(productImage.external_url_small) }}
-                </div>
-
-                <div class='form-group {{ form_group_errors_large_css }}'>
-                    {{ form_row(productImage.external_url_large) }}
-                </div>
-
-                {{ form_row(productImage.sort_order) }}
+            <div class='form-group {{ form_group_errors_css }}'>
+                {{ form_row(productImage.image_preview) }}
             </div>
         </div>
-    </div>
+        <div class="col-lg-10">
+            {{ form_row(productImage.id_product_image) }}
+            {{ form_row(productImage.fk_image_set_id) }}
 
+            <div class='form-group {{ form_group_errors_small_css }}'>
+                {{ form_row(productImage.external_url_small) }}
+            </div>
+
+            <div class='form-group {{ form_group_errors_large_css }}'>
+                {{ form_row(productImage.external_url_large) }}
+            </div>
+
+            {{ form_row(productImage.sort_order) }}
+        </div>
+    </div>
 {% endfor %}
+
+</div>

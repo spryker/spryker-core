@@ -202,6 +202,29 @@ $(document).ready(function() {
         prototypeTemplate.data('valuecount', valueCount);
     });
 
+    $('.add-another-image-set').click(function(event) {
+        event.preventDefault();
+
+        var $target = $(event.target);
+        var $parent1 = $target.parent();
+        var $parent2 = $parent1.parent();
+        var $parent3 = $parent2.parent();
+        var $parent4 = $parent3.parent();
+
+        var prototypeTemplate = $parent3.find('div.image_set_block');
+
+        var valueCount = prototypeTemplate.data('valuecount');
+        var newOptionFormHTML = prototypeTemplate.data('prototype');
+        newOptionFormHTML = newOptionFormHTML.replace(/__image_set_name__/g, valueCount);
+        var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
+        //newOptionForm.attr('class', 'sep_down');
+
+        valueCount++;
+        prototypeTemplate.data('valuecount', valueCount);
+
+        $parent3.append(newOptionForm);
+    });
+
     $('.slick_demo_1').slick({
         dots: true
     });

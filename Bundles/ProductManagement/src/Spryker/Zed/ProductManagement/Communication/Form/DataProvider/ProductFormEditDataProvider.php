@@ -153,10 +153,21 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendAbstractProductImages(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        return array_merge(
-            $formData,
-            $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract())
-        );
+        $imageData = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());
+
+        return array_merge($formData, $imageData);
+
+
+        $result = $formData;
+        foreach ($formData as $name => $data) {
+            if (array_key_exists($name, $imageData)) {
+                if (!empty($imageData[$name])) {
+                    $result[$name] = $imageData[$name];
+                }
+            }
+        }
+
+        return $result;
     }
 
 }

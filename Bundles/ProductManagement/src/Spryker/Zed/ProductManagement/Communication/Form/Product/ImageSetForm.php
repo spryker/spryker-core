@@ -33,7 +33,6 @@ class ImageSetForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
-     * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -158,6 +157,7 @@ class ImageSetForm extends AbstractSubForm
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'prototype_name' => '__image_list_name__',
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($images, ExecutionContextInterface $context) {

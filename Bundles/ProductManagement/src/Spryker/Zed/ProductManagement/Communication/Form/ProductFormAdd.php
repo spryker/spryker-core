@@ -480,6 +480,7 @@ class ProductFormAdd extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'prototype_name' => '__image_set_name__',
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($imageSetCollection, ExecutionContextInterface $context) {

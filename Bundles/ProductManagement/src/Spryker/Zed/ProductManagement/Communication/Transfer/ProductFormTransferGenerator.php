@@ -364,6 +364,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     public function buildProductImageCollection(array $data)
     {
         $result = [];
+
         foreach ($data as $imageData) {
             $imageTransfer = new ProductImageTransfer();
             $imageData[ImageCollectionForm::FIELD_SORT_ORDER] = (int)$imageData[ImageCollectionForm::FIELD_SORT_ORDER];

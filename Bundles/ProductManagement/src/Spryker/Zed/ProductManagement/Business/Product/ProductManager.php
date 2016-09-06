@@ -241,7 +241,7 @@ class ProductManager implements ProductManagerInterface
             }
 
             $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-            if ($imageSetTransferCollection) {
+            if (!empty($imageSetTransferCollection)) {
                 foreach ($imageSetTransferCollection as $imageSetTransfer) {
                     $this->productImageFacade->persistProductImageSet($imageSetTransfer);
                 }
