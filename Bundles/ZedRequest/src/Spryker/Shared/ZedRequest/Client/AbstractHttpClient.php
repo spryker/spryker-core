@@ -181,9 +181,34 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $headers[$header] = $value;
         }
 
+        $pathInfo = $this->addRequestId($pathInfo);
+
         $request = new Psr7Request('POST', $this->baseUrl . $pathInfo, $headers);
 
         return $request;
+    }
+
+    /**
+     * @deprecated RequestId is added by ZedRequestHeaderMiddleware, when EventJournal is disabled the new Plugin should be added in projects if needed.
+     *
+     * @param string $pathInfo
+     *
+     * @return string
+     */
+    protected function addRequestId($pathInfo)
+    {
+        if (Config::get(EventJournalConstants::DISABLE_EVENT_JOURNAL, false)) {
+            return $pathInfo;
+        }
+
+        $char = (strpos($pathInfo, '?') === false) ? '?' : '&';
+        $eventJournal = new SharedEventJournal();
+        $event = new Event();
+        $eventJournal->applyCollectors($event);
+        $requestId = $event->getFields()['request_id'];
+        $pathInfo .= $char . 'yvesRequestId=' . $requestId;
+
+        return $pathInfo;
     }
 
     /**
