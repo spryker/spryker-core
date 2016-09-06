@@ -34,7 +34,7 @@ class ZedRequestLogPlugin implements MiddlewareInterface
     public function getCallable()
     {
         return Middleware::mapRequest(function (RequestInterface $request) {
-            if ($request->hasHeader(AbstractHttpClient::HEADER_YVES_HOST)) {
+            if ($request->hasHeader(AbstractHttpClient::HEADER_HOST_YVES)) {
                 $this->getLogger()->info(sprintf(
                     'Transfer request [%s] %s',
                     $request->getMethod(),

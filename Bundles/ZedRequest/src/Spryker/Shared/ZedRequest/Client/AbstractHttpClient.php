@@ -35,10 +35,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
 
-    const HEADER_YVES_USER_AGENT = 'User-Agent';
-    const HEADER_YVES_HOST = 'X-Yves-Host';
+    const HEADER_USER_AGENT = 'User-Agent';
+    const HEADER_HOST_YVES = 'X-Yves-Host';
     const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
-    const HEADER_ZED_HOST = 'X-Zed-Host';
+    const HEADER_HOST_ZED = 'X-Zed-Host';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
@@ -172,8 +172,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function createGuzzleRequest($pathInfo)
     {
         $headers = [
-            self::HEADER_YVES_USER_AGENT => 'Yves 2.0',
-            self::HEADER_YVES_HOST => 1,
+            self::HEADER_USER_AGENT => 'Yves 2.0',
+            self::HEADER_HOST_YVES => 1,
             self::HEADER_INTERNAL_REQUEST => 1,
         ];
 

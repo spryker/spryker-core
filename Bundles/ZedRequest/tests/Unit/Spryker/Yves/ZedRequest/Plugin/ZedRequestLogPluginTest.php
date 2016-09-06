@@ -58,7 +58,7 @@ class ZedRequestLogPluginTest extends \PHPUnit_Framework_TestCase
         $handlerStack->push($zedRequestLogPluginMock->getCallable(), $zedRequestLogPluginMock->getName());
         $handler = $handlerStack->resolve();
         $request = new Request('POST', 'www.example.com');
-        $request = $request->withHeader(AbstractHttpClient::HEADER_YVES_HOST, 1);
+        $request = $request->withHeader(AbstractHttpClient::HEADER_HOST_YVES, 1);
         $handler($request, []);
     }
 

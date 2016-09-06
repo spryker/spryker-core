@@ -34,7 +34,7 @@ class ZedResponseLogPlugin implements MiddlewareInterface
     public function getCallable()
     {
         return Middleware::mapResponse(function (ResponseInterface $response) {
-            if ($response->hasHeader(AbstractHttpClient::HEADER_ZED_HOST)) {
+            if ($response->hasHeader(AbstractHttpClient::HEADER_HOST_ZED)) {
                 $message = sprintf(
                     'Transfer response [%s]',
                     $response->getStatusCode()
