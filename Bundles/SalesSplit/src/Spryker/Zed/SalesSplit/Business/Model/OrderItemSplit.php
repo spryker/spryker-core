@@ -83,7 +83,7 @@ class OrderItemSplit implements OrderItemSplitInterface
 
         return $splitResponseTransfer
             ->setSuccess(true)
-            ->setIdOrderItem($newSalesOrderItem->getIdSalesOrderItem())
+            ->setIdSalesOrderItem($newSalesOrderItem->getIdSalesOrderItem())
             ->setSuccessMessage(
                 sprintf(
                     Messages::SPLIT_SUCCESS_MESSAGE,

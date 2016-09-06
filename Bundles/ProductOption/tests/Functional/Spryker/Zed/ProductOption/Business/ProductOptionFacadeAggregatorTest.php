@@ -68,10 +68,12 @@ class ProductOptionFacadeAggregatorTest extends Test
         $itemTransfer = new ItemTransfer();
 
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setSku('123');
         $productOptionTransfer->setSumGrossPrice(100);
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setSku('123');
         $productOptionTransfer->setSumGrossPrice(200);
         $itemTransfer->addProductOption($productOptionTransfer);
 
@@ -233,6 +235,7 @@ class ProductOptionFacadeAggregatorTest extends Test
         $salesOrderItemOptionEntity->setGroupName('group');
         $salesOrderItemOptionEntity->setValue('value');
         $salesOrderItemOptionEntity->setTaxRate(19);
+        $salesOrderItemOptionEntity->setSku('123');
         $salesOrderItemOptionEntity->save();
 
         return $salesOrderItemOptionEntity;
@@ -263,6 +266,7 @@ class ProductOptionFacadeAggregatorTest extends Test
         $productOptionTransfer->setValue('value');
         $productOptionTransfer->setGroupName('group name');
         $productOptionTransfer->setTaxRate(19);
+        $productOptionTransfer->setSku('124');
 
         if ($createOptions) {
             $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity($salesOrderItemEntity);
