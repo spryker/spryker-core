@@ -124,6 +124,11 @@ class VariantTable extends AbstractTable
         ];
     }
 
+    /**
+     * @param string $status
+     *
+     * @return string
+     */
     protected function getStatusLabel($status)
     {
         if (!$status) {
