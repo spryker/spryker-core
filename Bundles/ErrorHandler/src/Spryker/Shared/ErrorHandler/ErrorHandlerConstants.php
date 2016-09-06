@@ -12,7 +12,7 @@ interface ErrorHandlerConstants
 
     /**
      * Specification:
-     * - Absolute path to an html file which contains the error page for Zed. E.g. /var/www/public/Zed/error-page.html
+     * - Absolute path to an HTML file which contains the error page for Zed. E.g. /var/www/public/Zed/error-page.html
      *
      * @api
      */
@@ -20,7 +20,7 @@ interface ErrorHandlerConstants
 
     /**
      * Specification:
-     * - Absolute path to an html file which contains the error page for Yves. E.g. /var/www/public/Yves/error-page.html
+     * - Absolute path to an HTML file which contains the error page for Yves. E.g. /var/www/public/Yves/error-page.html
      *
      * @api
      */

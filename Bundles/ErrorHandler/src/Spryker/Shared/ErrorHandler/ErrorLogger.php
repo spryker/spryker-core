@@ -28,7 +28,7 @@ class ErrorLogger implements ErrorLoggerInterface
             $message = $this->buildMessage($exception);
             $this->createNewRelicApi()->noticeError($message, $exception);
             $this->getLogger()->critical($message, ['exception' => $exception]);
-        } catch (\Exception $internalException) {
+        } catch (Exception $internalException) {
             $this->createNewRelicApi()->noticeError($internalException->getMessage(), $exception);
         }
     }

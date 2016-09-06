@@ -77,7 +77,7 @@ class ErrorHandlerFactory
      */
     protected function isCliCall()
     {
-        return (PHP_SAPI === self::SAPI_CLI);
+        return (PHP_SAPI === static::SAPI_CLI);
     }
 
     /**

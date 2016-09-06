@@ -16,6 +16,7 @@ class ErrorHandler
 {
 
     const ZED = 'ZED';
+    const EXIT_CODE_ERROR = -1;
 
     /**
      * @var \Spryker\Shared\ErrorHandler\ErrorLoggerInterface
@@ -121,7 +122,7 @@ class ErrorHandler
      */
     protected function sendExitCode()
     {
-        exit(-1);
+        exit(self::EXIT_CODE_ERROR);
     }
 
 }
