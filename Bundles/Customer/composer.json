@@ -2,10 +2,7 @@
   "name": "spryker/customer",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     },
     "psr-4": {
       "Customer\\Module\\": "tests/"
@@ -51,5 +48,12 @@
   ],
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

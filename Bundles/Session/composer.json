@@ -2,8 +2,7 @@
   "name": "spryker/session",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "ClientUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -32,5 +31,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "ClientUnit": "tests/",
+      "SharedUnit": "tests/"
+    }
   }
 }

@@ -2,8 +2,7 @@
   "name": "spryker/log",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -27,5 +26,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

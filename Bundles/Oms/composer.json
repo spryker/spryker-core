@@ -2,10 +2,7 @@
   "name": "spryker/oms",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "Acceptance": "tests/"
+      "Spryker": "src/"
     },
     "psr-4": {
       "Oms\\Module\\": "tests/_support/Module"
@@ -45,5 +42,12 @@
   ],
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

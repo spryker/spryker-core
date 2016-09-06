@@ -2,13 +2,7 @@
   "name": "spryker/cart",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/",
-      "ClientUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -35,5 +29,12 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "ClientUnit": "tests/"
+    }
   }
 }
