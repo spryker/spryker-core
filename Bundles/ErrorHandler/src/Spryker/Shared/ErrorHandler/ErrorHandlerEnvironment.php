@@ -50,6 +50,7 @@ class ErrorHandlerEnvironment
 
     /**
      * @throws \ErrorException
+     *
      * @return void
      */
     protected function setErrorHandler()
@@ -96,6 +97,7 @@ class ErrorHandlerEnvironment
 
     /**
      * @throws \ErrorException
+     *
      * @return void
      */
     protected function setAssertOptions()
