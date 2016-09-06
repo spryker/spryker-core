@@ -2,9 +2,7 @@
   "name": "spryker/console",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -14,12 +12,12 @@
     "spryker/new-relic": "^2.1.0",
     "spryker/propel": "^2.0.0",
     "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^2.0.0",
+    "spryker/symfony": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/log": "^2.0.0"
+    "spryker/log": "^2.0.0",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/log": "If you want to use the Log feature in console commands, install this package and add ConsoleLogPlugin to the list of EventSubscriber in your ConsoleDependencyProvider"
