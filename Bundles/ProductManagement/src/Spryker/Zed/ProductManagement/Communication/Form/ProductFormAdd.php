@@ -488,6 +488,30 @@ class ProductFormAdd extends AbstractType
                                 return;
                             }
 
+                            $isEmpty = true;
+                            foreach ($imageSetCollection as $setData) {
+                                if (trim($setData[ImageSetForm::FIELD_SET_NAME]) !== '') {
+                                    $isEmpty = false;
+                                    break;
+                                }
+
+                                foreach ($setData[ImageSetForm::PRODUCT_IMAGES] as $productImage) {
+                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_SMALL]) !== '') {
+                                        $isEmpty = false;
+                                        break;
+                                    }
+
+                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_LARGE]) !== '') {
+                                        $isEmpty = false;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if ($isEmpty) {
+                                return;
+                            }
+
                             foreach ($imageSetCollection as $setData) {
                                 if (trim($setData[ImageSetForm::FIELD_SET_NAME]) === '') {
                                     $context->addViolation('Please enter Image Set Name under Images');
