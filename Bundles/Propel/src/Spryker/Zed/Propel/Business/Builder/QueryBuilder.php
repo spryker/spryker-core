@@ -16,6 +16,7 @@ class QueryBuilder extends PropelQueryBuilder
 
     /**
      * @param \Propel\Generator\Model\Column $col
+     *
      * @return string
      */
     protected function addFilterByColIn(Column $col)
@@ -121,6 +122,7 @@ SCRIPT;
      *
      * @param string &$script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col
+     *
      * @return void
      */
     protected function addFilterByCol(&$script, Column $col)

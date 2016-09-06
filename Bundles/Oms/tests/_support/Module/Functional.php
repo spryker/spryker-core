@@ -28,6 +28,7 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
+     *
      * @return void
      */
     public function _before(TestCase $test)
@@ -39,6 +40,7 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
+     *
      * @return void
      */
     public function _after(TestCase $test)
@@ -54,7 +56,8 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
-     * @apram $fail
+     * @param bool $fail
+     *
      * @return void
      */
     public function _failed(TestCase $test, $fail)

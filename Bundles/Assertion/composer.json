@@ -2,13 +2,16 @@
   "name": "spryker/assertion",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
     "spryker/kernel": "^2.0.0",
     "spryker/silex": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Assertion bundle",
   "license": "proprietary",
@@ -21,5 +24,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

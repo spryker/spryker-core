@@ -89,10 +89,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated The optional argument `$xmlFolder` will be removed in next major version.
+     * Note: The optional argument `$xmlFolder` will be removed in next major version.
      * Define paths to your process definition in `OmsConfig::getProcessDefinitionLocation()`
      *
-     * @param string|null $xmlFolder
+     * @param string|null $xmlFolder @deprecated Will be removed in next major version.
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */

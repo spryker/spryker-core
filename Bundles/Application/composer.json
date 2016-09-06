@@ -2,8 +2,7 @@
   "name": "spryker/application",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     },
     "psr-4": {
       "Application\\Module\\": "tests/_support/Module"
@@ -19,7 +18,7 @@
     "spryker/library": "^2.0.0",
     "spryker/log": "^2.0.0",
     "spryker/monolog": "^2.0.0",
-    "spryker/new-relic": "^2.0.0",
+    "spryker/new-relic": "^2.1.0",
     "spryker/propel": "^2.0.0",
     "spryker/session": "^2.1.2",
     "spryker/silex": "^2.0.0",
@@ -28,6 +27,10 @@
     "spryker/url": "^2.0.0",
     "spryker/zed-request": "^2.0.0",
     "spryker/zend": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Application bundle",
   "license": "proprietary",
@@ -40,5 +43,12 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

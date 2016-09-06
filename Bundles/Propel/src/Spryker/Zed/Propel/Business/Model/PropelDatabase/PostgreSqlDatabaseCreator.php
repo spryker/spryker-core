@@ -112,6 +112,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      * @param string $command
      *
      * @throws \RuntimeException
+     *
      * @return bool
      */
     protected function runProcess($command)

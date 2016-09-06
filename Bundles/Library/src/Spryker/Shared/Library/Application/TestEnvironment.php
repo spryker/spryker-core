@@ -9,6 +9,9 @@ namespace Spryker\Shared\Library\Application;
 
 use ErrorException;
 
+/**
+ * @deprecated Not needed anymore
+ */
 class TestEnvironment
 {
 
@@ -28,6 +31,7 @@ class TestEnvironment
 
     /**
      * @throws \ErrorException
+     *
      * @return void
      */
     public static function forceSystemUnderTest()

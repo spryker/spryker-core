@@ -19,6 +19,7 @@ class CurrentPasswordValidator extends ConstraintValidator
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
      * @return void
      */
     public function validate($value, Constraint $constraint)

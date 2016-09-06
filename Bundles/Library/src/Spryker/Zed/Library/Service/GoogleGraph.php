@@ -126,6 +126,7 @@ class GoogleGraph
      * @param string $contentType
      *
      * @throws \Exception
+     *
      * @return string
      */
     public function request($sendHeader = true, $contentType = 'gif')

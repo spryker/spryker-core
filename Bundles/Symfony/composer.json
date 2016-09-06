@@ -2,9 +2,7 @@
   "name": "spryker/symfony",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -30,6 +28,10 @@
     "symfony/var-dumper": "~2.6.13",
     "symfony/yaml": "~2.6.13"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Symfony bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -41,5 +43,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

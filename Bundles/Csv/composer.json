@@ -3,6 +3,10 @@
   "require": {
     "league/csv": "~8.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Csv bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -38,6 +38,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      * @param mixed $withValue
      *
      * @return bool
+     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
@@ -52,7 +53,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
 
         foreach ($this->operators as $operator) {
             if (!$operator->accept($clauseTransfer)) {
-                 continue;
+                continue;
             }
 
             $this->assertTypeAccepted($clauseTransfer->getAcceptedTypes(), $operator);

@@ -302,6 +302,7 @@ class PageManager implements PageManagerInterface
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getLocaleTransfer($idLocale)

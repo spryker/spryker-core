@@ -2,12 +2,7 @@
   "name": "spryker/gui",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -21,6 +16,10 @@
     "spryker/transfer": "^2.0.0",
     "spryker/twig": "^2.1.0",
     "spryker/url": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Gui bundle",
   "license": "proprietary",

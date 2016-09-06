@@ -3,17 +3,17 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
     "spryker/kernel": "^2.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/sales": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Nopayment bundle",
   "license": "proprietary",
@@ -26,5 +26,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

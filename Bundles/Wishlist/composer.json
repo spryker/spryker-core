@@ -2,8 +2,7 @@
   "name": "spryker/wishlist",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -16,6 +15,10 @@
     "spryker/symfony": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Wishlist bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -27,5 +30,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

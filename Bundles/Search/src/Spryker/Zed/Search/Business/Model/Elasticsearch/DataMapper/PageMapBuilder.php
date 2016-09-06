@@ -27,6 +27,7 @@ class PageMapBuilder implements PageMapBuilderInterface
      * @param mixed $value
      *
      * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function add(PageMapTransfer $pageMapTransfer, $fieldName, $name, $value)
