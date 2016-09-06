@@ -306,8 +306,11 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
 
     /**
      * Adds the function close for the delete function
+     *
      * @param string &$script The script will be modified in this method.
+     *
      * @see addDelete()
+     *
      * @return void
      **/
     protected function addDeleteClose(&$script)
