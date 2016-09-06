@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -35,14 +37,14 @@ class Writer implements WriterInterface
     public function persistProductImage(ProductImageTransfer $productImageTransfer)
     {
         $query = $this->productImageContainer
-            ->queryProductImage();
+            ->queryProductImage()
+            ->filterByIdProductImage($productImageTransfer->getIdProductImage());
 
-        if ($productImageTransfer->getIdProductImage()) {
-            $query
-                ->filterByIdProductImage($productImageTransfer->getIdProductImage());
+        $productImageEntity = $query->findOne();
+        if (!$productImageEntity) {
+            $productImageEntity = new SpyProductImage();
         }
 
-        $productImageEntity = $query->findOneOrCreate();
         $id = $productImageEntity->getIdProductImage();
         $productImageEntity->fromArray($productImageTransfer->toArray());
         $productImageEntity->setIdProductImage($id);
@@ -62,16 +64,16 @@ class Writer implements WriterInterface
     public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
         $query = $this->productImageContainer
-            ->queryProductImageSet();
+            ->queryProductImageSet()
+            ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet());
 
-        if ($productImageSetTransfer->getIdProductImageSet()) {
-            $query
-                ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet());
+        $productImageSetEntity = $query->findOne();
+        if (!$productImageSetEntity) {
+            $productImageSetEntity = new SpyProductImageSet();
         }
 
         $this->productImageContainer->getConnection()->beginTransaction();
         try {
-            $productImageSetEntity = $query->findOneOrCreate();
             $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
             $productImageSetEntity->save();
 
