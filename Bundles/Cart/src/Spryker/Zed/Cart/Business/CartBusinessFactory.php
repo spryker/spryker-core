@@ -13,7 +13,7 @@ use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\Cart\CartConfig getConfig()
+ * @method \Spryker\Zed\Cart\CartConfig createConfig()
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {

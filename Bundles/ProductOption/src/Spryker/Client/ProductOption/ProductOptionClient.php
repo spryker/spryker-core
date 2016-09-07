@@ -16,6 +16,9 @@ class ProductOptionClient extends AbstractClient implements ProductOptionClientI
 {
 
     /**
+     * Specification:
+     *   - Read product option from yves store
+     *
      * @api
      *
      * @param int $idAbstractProduct

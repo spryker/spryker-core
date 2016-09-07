@@ -16,7 +16,7 @@ class CartFixtureBusinessFactory extends CartBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\CartConfig
      */
-    public function getConfig()
+    public function createConfig()
     {
         return new CartConfig();
     }
