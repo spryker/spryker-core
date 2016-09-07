@@ -28,7 +28,6 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      * @param string $keyName
      * @param array $data
      *
-     *
      * @return string
      */
     public function translate($keyName, array $data = [])
@@ -39,7 +38,6 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
     /**
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
      *
      * @return string
      */
@@ -65,7 +63,6 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
-     *
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */

@@ -109,6 +109,7 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $expandedProductOptionTransfer
+     *
      * @return void
      */
     protected function translateOption(ProductOptionTransfer $expandedProductOptionTransfer)

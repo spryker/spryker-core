@@ -35,6 +35,7 @@ class ProductOptionTranslationForm extends AbstractType
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)

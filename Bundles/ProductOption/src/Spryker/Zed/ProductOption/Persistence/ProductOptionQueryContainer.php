@@ -32,7 +32,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @param string $sku
      *
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractBySku($sku)
@@ -212,7 +211,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     *
      * @api
      *
      * @param int[] $allIdOptionValueUsages
