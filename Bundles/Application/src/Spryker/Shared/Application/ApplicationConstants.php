@@ -63,7 +63,14 @@ interface ApplicationConstants
     const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
     const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
 
+    /**
+     * @deprecated Use ErrorConstants::YVES_ERROR_PAGE instead.
+     */
     const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
+
+    /**
+     * @deprecated Use ErrorConstants::ERROR_RENDERER to choose renderer.
+     */
     const YVES_SHOW_EXCEPTION_STACK_TRACE = 'YVES_SHOW_EXCEPTION_STACK_TRACE';
 
     const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
@@ -236,6 +243,9 @@ interface ApplicationConstants
      */
     const LOG_LEVEL = 'LOG_LEVEL';
 
+    /**
+     * @deprecated Use ErrorConstants::ERROR_LEVEL instead
+     */
     const ERROR_LEVEL = 'ERROR_LEVEL';
 
     const PROPEL = 'PROPEL';
@@ -246,7 +256,15 @@ interface ApplicationConstants
      * @deprecated Use StorageConstants::STORAGE_KV_SOURCE instead
      */
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
+
+    /**
+     * @deprecated Use ErrorConstants::ZED_ERROR_PAGE instead.
+     */
     const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
+
+    /**
+     * @deprecated Use ErrorConstants::ERROR_RENDERER to choose renderer.
+     */
     const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
 
     const APPLICATION_SPRYKER_ROOT = 'APPLICATION_SPRYKER_ROOT';

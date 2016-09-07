@@ -10,33 +10,21 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
-class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class KernelLogServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * {@inheritdoc}
+     * @param \Silex\Application $app
      *
      * @return void
      */
     public function register(Application $app)
     {
-        $app['url_matcher'] = $app->share(function () use ($app) {
-            /** @var \Symfony\Cmf\Component\Routing\ChainRouter $chainRouter */
-            $chainRouter = $app['routers'];
-            $chainRouter->setContext($app['request_context']);
-
-            return $chainRouter;
-        });
-
-        $app['routers'] = $app->share(function () use ($app) {
-            return new ChainRouter();
-        });
     }
 
     /**
@@ -46,6 +34,19 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function boot(Application $app)
     {
+        $this->getDispatcher($app)->addSubscriber(
+            $this->getFactory()->createKernelLogListener()
+        );
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    protected function getDispatcher(Application $app)
+    {
+        return $app['dispatcher'];
     }
 
 }
