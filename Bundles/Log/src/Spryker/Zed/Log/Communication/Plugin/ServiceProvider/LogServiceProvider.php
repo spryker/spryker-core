@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\Log\Communication\Plugin\ServiceProvider;
 
+use Monolog\Logger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Application\EventListener\KernelLogListener;
-use Spryker\Shared\Log\LoggerFactory;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Log\LogConstants;
 
 /**
  * @deprecated Use KernelLogServiceProvider instead.
@@ -25,6 +26,9 @@ class LogServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $app['monolog.level'] = function () {
+            return Config::get(LogConstants::LOG_LEVEL, Logger::ERROR);
+        };
     }
 
     /**
@@ -34,18 +38,6 @@ class LogServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $this->getDispatcher($app)->addSubscriber(
-            new KernelLogListener(LoggerFactory::getInstance())
-        );
     }
 
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcher
-     */
-    protected function getDispatcher(Application $app)
-    {
-        return $app['dispatcher'];
-    }
 }
