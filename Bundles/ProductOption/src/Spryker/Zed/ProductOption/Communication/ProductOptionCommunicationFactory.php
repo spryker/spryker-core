@@ -124,7 +124,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductOptionListTable(
             $this->getQueryContainer(),
-            $this->getCurrencyManager()
+            $this->getMoneyFacade()
         );
     }
 
@@ -157,7 +157,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createPriceTranformer()
     {
-        return new PriceTransformer($this->getCurrencyManager());
+        return new PriceTransformer($this->getMoneyFacade());
     }
 
     /**
@@ -177,11 +177,11 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
      */
-    public function getCurrencyManager()
+    public function getMoneyFacade()
     {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::CURRENCY_MANAGER);
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_MONEY);
     }
 
     /**

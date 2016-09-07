@@ -19,6 +19,7 @@
     "spryker/sales": "^2.0.0",
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
+    "spryker/money": "^0.1.0",
     "spryker/tax": "^2.0.0 || ^3.0.0",
     "spryker/touch": "^2.0.0",
     "spryker/url": "^2.0.0"

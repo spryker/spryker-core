@@ -48,7 +48,9 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
      */
     protected function expandProductOptionTransfers(ItemTransfer $itemTransfer)
     {
-        foreach ($itemTransfer->getProductOptions() as &$productOptionTransfer) {
+        $productOptions = $itemTransfer->getProductOptions();
+
+        foreach ($productOptions as &$productOptionTransfer) {
             $productOptionTransfer->requireIdProductOptionValue();
 
             $productOptionTransfer = $this->productOptionFacade->getProductOptionValue(

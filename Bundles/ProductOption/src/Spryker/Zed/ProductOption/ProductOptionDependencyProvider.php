@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductOption;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
@@ -23,12 +23,12 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_MONEY = 'FACADE_MONEY';
+
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const CURRENCY_MANAGER = 'CURRENCY_MANAGER';
+    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
 
     /**
@@ -102,8 +102,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::CURRENCY_MANAGER] = function (Container $container) {
-            return $this->getCurrencyManager();
+        $container[self::FACADE_MONEY] = function (Container $container) {
+            return new ProductOptionToMoneyBridge($container->getLocator()->money()->facade());
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
@@ -111,14 +111,6 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
-     */
-    protected function getCurrencyManager()
-    {
-        return CurrencyManager::getInstance();
     }
 
 }

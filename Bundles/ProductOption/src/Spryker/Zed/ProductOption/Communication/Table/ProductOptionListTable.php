@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionListTable extends AbstractTable
@@ -33,20 +33,20 @@ class ProductOptionListTable extends AbstractTable
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
      */
-    protected $currencyManager;
+    protected $moneyFacade;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface $moneyFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        CurrencyManagerInterface $currencyManager
+        ProductOptionToMoneyInterface $moneyFacade
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
-        $this->currencyManager = $currencyManager;
+        $this->moneyFacade = $moneyFacade;
     }
 
 
@@ -163,10 +163,10 @@ class ProductOptionListTable extends AbstractTable
         $names = '';
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
 
-            $amountInDecimal = $this->currencyManager->convertCentToDecimal($productOptionValueEntity->getPrice());
+            $moneyTransfer = $this->moneyFacade->fromInteger($productOptionValueEntity->getPrice());
 
             $names .= $this->wrapInlineCellItem(
-                $this->currencyManager->format($amountInDecimal)
+                $this->moneyFacade->formatWithSymbol($moneyTransfer)
             );
         }
         return $names;

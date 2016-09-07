@@ -6,23 +6,23 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceTransformer implements DataTransformerInterface
 {
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
      */
-    protected $currencyManager;
+    protected $moneyFacade;
 
     /**
-     * PriceTransformer constructor.
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface $moneyFacade
      */
-    public function __construct(CurrencyManagerInterface $currencyManager)
+    public function __construct(ProductOptionToMoneyInterface $moneyFacade)
     {
-        $this->currencyManager = $currencyManager;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -60,10 +60,9 @@ class PriceTransformer implements DataTransformerInterface
             return '0';
         }
 
-        return $this->currencyManager->format(
-            $this->currencyManager->convertCentToDecimal($value),
-            false
-        );
+        $moneyTransfer = $this->moneyFacade->fromInteger($value);
+
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
@@ -98,8 +97,8 @@ class PriceTransformer implements DataTransformerInterface
             return '0';
         }
 
-        return $this->currencyManager->convertDecimalToCent(
-            str_replace(',', '.', $value)
+        return $this->moneyFacade->convertDecimalToInteger(
+            (float)str_replace(',', '.', $value)
         );
     }
 
