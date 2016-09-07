@@ -26,7 +26,7 @@ interface ProductOptionToGlossaryInterface
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
-     * @return string
+     * @return bool
      */
     public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
 

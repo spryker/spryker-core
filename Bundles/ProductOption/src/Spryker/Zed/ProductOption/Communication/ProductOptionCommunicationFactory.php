@@ -33,9 +33,8 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductOptionGroup(
-        ProductOptionGroupDataProvider $productOptionGroupDataProvider = null
-    ) {
+    public function createProductOptionGroup(ProductOptionGroupDataProvider $productOptionGroupDataProvider)
+    {
         $productOptionValueForm = $this->createProductOptionValueForm();
         $createProductOptionTranslationForm = $this->createProductOptionTranslationForm();
 

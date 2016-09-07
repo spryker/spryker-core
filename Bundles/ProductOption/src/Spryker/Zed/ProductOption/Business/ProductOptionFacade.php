@@ -188,18 +188,18 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * Specification:
-     *  - Toggle option active/inactive
+     *  - Toggle option active/inactive, option wont be diplayed in Yves when disabled. Collectors have to run first.
      *
      * @api
      *
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *
-     * @return void
+     * @return bool
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductOptionGroupSaver()
             ->toggleOptionActive($idProductOptionGroup, $isActive);
     }

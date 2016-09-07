@@ -39,7 +39,7 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return string
+     * @return bool
      */
     public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
     {

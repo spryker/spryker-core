@@ -147,7 +147,7 @@ interface ProductOptionFacadeInterface
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *
-     * @return void
+     * @return bool
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive);
 

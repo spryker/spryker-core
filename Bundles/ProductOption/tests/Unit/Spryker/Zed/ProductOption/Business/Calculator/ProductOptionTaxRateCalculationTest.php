@@ -65,7 +65,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
+     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
@@ -76,7 +76,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
@@ -86,7 +86,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge
+     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge
      */
     protected function createProductOptionToTaxBridgeMock()
     {

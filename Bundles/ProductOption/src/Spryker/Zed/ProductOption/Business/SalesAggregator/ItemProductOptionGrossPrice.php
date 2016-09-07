@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
@@ -172,8 +173,8 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     {
         $saleOrderItemIds = $this->getSaleOrderItemIds($orderTransfer);
 
-        if (empty($saleOrderItemIds)) {
-            return [];
+        if (count($saleOrderItemIds) === 0) {
+            return new ObjectCollection();
         }
 
         return $this->salesQueryContainer

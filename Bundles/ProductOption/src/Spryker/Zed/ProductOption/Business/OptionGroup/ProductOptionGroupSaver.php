@@ -327,7 +327,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      */
     protected function getProductOptionValueEntity($idProductOptionValue = null)
     {
-        if ($idProductOptionValue) {
+        if ($idProductOptionValue !== null) {
             return $this->getProductOptionValueById($idProductOptionValue);
         }
 
