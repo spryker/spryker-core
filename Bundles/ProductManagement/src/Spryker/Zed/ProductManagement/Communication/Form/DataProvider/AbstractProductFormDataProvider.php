@@ -563,6 +563,10 @@ class AbstractProductFormDataProvider
 
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            if (!$attributeTransfer->getIsSuper()) {
+                continue;
+            }
+
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
 
             if ($isNew) {

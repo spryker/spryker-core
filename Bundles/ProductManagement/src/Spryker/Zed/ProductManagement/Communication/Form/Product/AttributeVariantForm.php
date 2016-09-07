@@ -22,7 +22,7 @@ class AttributeVariantForm extends AttributeAbstractForm
      *
      * @return $this
      */
-    protected function addValueField(FormBuilderInterface $builder, array $options = [])
+    protected function addValueField2(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
@@ -52,13 +52,13 @@ class AttributeVariantForm extends AttributeAbstractForm
 
         $input = new Select2ComboBoxType();
         $config['multiple'] = false;
-        $config['placeholder'] = '';
+        $config['placeholder'] = '-';
         $config['attr']['style'] .= ' width: 250px';
         $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
         $config['attr']['tags'] = false;
 
         if ($allowInput) {
-
+            $config['attr']['tags'] = true;
         }
         else {
             //$config['attr']['class'] .= ' ajax';

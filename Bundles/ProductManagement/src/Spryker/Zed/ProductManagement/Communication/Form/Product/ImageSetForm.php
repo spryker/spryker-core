@@ -95,11 +95,8 @@ class ImageSetForm extends AbstractSubForm
     {
         $builder
             ->add(self::FIELD_SET_NAME, 'text', [
-                'required' => true,
-                'label' => 'Image Set Name',
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'required' => false,
+                'label' => 'Image Set Name'
             ]);
 
         return $this;
