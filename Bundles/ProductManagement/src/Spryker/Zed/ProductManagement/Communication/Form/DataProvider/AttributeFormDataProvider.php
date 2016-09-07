@@ -55,7 +55,7 @@ class AttributeFormDataProvider
             AttributeForm::FIELD_KEY => $productManagementAttributeEntity->getSpyProductAttributeKey()->getKey(),
             AttributeForm::FIELD_INPUT_TYPE => $productManagementAttributeEntity->getInputType(),
             AttributeForm::FIELD_ALLOW_INPUT => $productManagementAttributeEntity->getAllowInput(),
-            AttributeForm::FIELD_IS_MULTIPLE => $productManagementAttributeEntity->getIsMultiple(),
+            AttributeForm::FIELD_IS_SUPER => $productManagementAttributeEntity->getIsSuper(),
             AttributeForm::FIELD_VALUES => array_keys($this->getValues($productManagementAttributeEntity)),
         ];
     }

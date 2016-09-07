@@ -28,7 +28,7 @@
         <property name="key" type="string" />
         <property name="inputType" type="string" />
         <property name="allowInput" type="bool" />
-        <property name="isMultiple" type="bool" />
+        <property name="isSuper" type="bool" />
         <property name="localizedKeys" type="LocalizedProductManagementAttributeKey[]" singular="localizedKey" />
         <property name="values" type="ProductManagementAttributeValue[]" singular="value" />
     </transfer>

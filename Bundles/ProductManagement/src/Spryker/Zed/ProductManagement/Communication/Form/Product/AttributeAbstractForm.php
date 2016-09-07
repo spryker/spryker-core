@@ -197,7 +197,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $inputManager = new AttributeInputManager();
         $inputType = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_INPUT_TYPE);
         $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
-        $isMultiple = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_MULTIPLE);
+        $isSuper = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_SUPER);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
         $isProductSpecific = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
@@ -230,7 +230,7 @@ class AttributeAbstractForm extends AbstractSubForm
                     )->findOne();
 
                 $input = new Select2ComboBoxType();
-                $config['multiple'] = $isMultiple;
+                $config['multiple'] = false;
                 $config['placeholder'] = '-';
                 $config['attr']['style'] .= ' width: 250px';
                 $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);

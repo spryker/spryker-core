@@ -39,7 +39,7 @@ class AbstractProductFormDataProvider
     const FORM_FIELD_NAME = 'name';
     const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
     const FORM_FIELD_LABEL = 'label';
-    const FORM_FIELD_MULTIPLE = 'multiple';
+    const FORM_FIELD_SUPER = 'super';
     const FORM_FIELD_INPUT_TYPE = 'input_type';
     const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
     const FORM_FIELD_NAME_DISABLED = 'name_disabled';
@@ -460,10 +460,6 @@ class AbstractProductFormDataProvider
                 $attributeValue = null;
             }
 
-            if ($attributeTransfer->getIsMultiple() && !is_array($attributeValue)) {
-                $attributeValue = [$attributeValue];
-            }
-
             $values[$type] = [
                 AttributeAbstractForm::FIELD_NAME => isset($attributeValue),
                 AttributeAbstractForm::FIELD_VALUE => $attributeValue,
@@ -489,7 +485,7 @@ class AbstractProductFormDataProvider
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = false;
             $id = $attributeTransfer->getIdProductManagementAttribute();
-            $isMultiple = $attributeTransfer->getIsMultiple();
+            $isSuper = $attributeTransfer->getIsSuper();
             $inputType = $attributeTransfer->getInputType();
             $allowInput = $attributeTransfer->getAllowInput();
             $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
@@ -502,7 +498,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_SUPER => $isSuper,
                 self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
@@ -522,7 +518,7 @@ class AbstractProductFormDataProvider
 
             $isProductSpecificAttribute = true;
             $id = null;
-            $isMultiple = false;
+            $isSuper = false;
             $inputType = self::DEFAULT_INPUT_TYPE;
             $allowInput = false;
             $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
@@ -544,7 +540,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_SUPER => $isSuper,
                 self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
@@ -568,14 +564,9 @@ class AbstractProductFormDataProvider
         $result = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
-            $isMultiple = $this->attributeTransferCollection->get($type)->getIsMultiple();
 
             if ($isNew) {
                 $value = null;
-            }
-
-            if ($isMultiple && !is_array($value)) {
-                $value = [$value];
             }
 
             $result[$type] = [
@@ -600,7 +591,6 @@ class AbstractProductFormDataProvider
     {
         $productAttributeKeys = $attributeProcessor->getAllKeys();
         $productAttributeValues = [];
-        $isMultiple = true;
 
         $values = [];
         foreach ($productAttributeKeys as $type => $tmp) {
@@ -612,6 +602,7 @@ class AbstractProductFormDataProvider
             $allowInput = false;
             $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
             $shouldBeTextArea = mb_strlen($value) > 255;
+            $isSuper = false;
 
             if ($isDefined) {
                 $isProductSpecificAttribute = false;
@@ -619,6 +610,7 @@ class AbstractProductFormDataProvider
                 $id = $attributeTransfer->getIdProductManagementAttribute();
                 $inputType = $attributeTransfer->getInputType();
                 $allowInput = $attributeTransfer->getAllowInput();
+                $isSuper = $attributeTransfer->getIsSuper();
             }
 
             if ($shouldBeTextArea) {
@@ -634,7 +626,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_MULTIPLE => $isMultiple,
+                self::FORM_FIELD_SUPER => $isSuper,
                 self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
@@ -645,7 +637,6 @@ class AbstractProductFormDataProvider
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = false;
             $id = $attributeTransfer->getIdProductManagementAttribute();
-            $inputType = $attributeTransfer->getInputType();
             $allowInput = $attributeTransfer->getAllowInput();
 
             $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
@@ -659,8 +650,8 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_MULTIPLE => $isMultiple,
-                self::FORM_FIELD_INPUT_TYPE => $inputType,
+                self::FORM_FIELD_SUPER => $attributeTransfer->getIsSuper(),
+                self::FORM_FIELD_INPUT_TYPE => $attributeTransfer->getInputType(),
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
                 self::FORM_FIELD_ALLOW_INPUT => $allowInput
@@ -688,7 +679,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_NAME => isset($value),
                 self::FORM_FIELD_PRODUCT_SPECIFIC => true,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
-                self::FORM_FIELD_MULTIPLE => false,
+                self::FORM_FIELD_SUPER => false,
                 self::FORM_FIELD_INPUT_TYPE => 'text',
                 self::FORM_FIELD_VALUE_DISABLED => true,
                 self::FORM_FIELD_NAME_DISABLED => true,
@@ -708,11 +699,6 @@ class AbstractProductFormDataProvider
     {
         $values = [];
         foreach ($productAttributes as $key => $value) {
-            $isMultiple = isset($value) && is_array($value);
-            if ($isMultiple && !is_array($value)) {
-                $value = [$value];
-            }
-
             $id = null;
             $attributeTransfer = $this->attributeTransferCollection->get($key);
             if ($attributeTransfer) {

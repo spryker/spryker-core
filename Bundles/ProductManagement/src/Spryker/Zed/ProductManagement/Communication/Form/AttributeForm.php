@@ -26,7 +26,7 @@ class AttributeForm extends AbstractType
     const FIELD_KEY = 'key';
     const FIELD_INPUT_TYPE = 'input_type';
     const FIELD_ALLOW_INPUT = 'allow_input';
-    const FIELD_IS_MULTIPLE = 'is_multiple';
+    const FIELD_IS_SUPER = 'is_super';
     const FIELD_VALUES = 'values';
 
     const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
@@ -102,7 +102,7 @@ class AttributeForm extends AbstractType
             ->addIdProductManagementAttribute($builder)
             ->addKeyField($builder, $options)
             ->addInputTypeField($builder, $options)
-            ->addIsMultipleField($builder, $options)
+            ->addIsSuperField($builder, $options)
             ->addValuesField($builder, $options)
             ->addAllowInputField($builder, $options);
     }
@@ -181,10 +181,10 @@ class AttributeForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsMultipleField(FormBuilderInterface $builder, array $options)
+    protected function addIsSuperField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_IS_MULTIPLE, 'checkbox', [
-            'label' => 'Allow multi select',
+        $builder->add(self::FIELD_IS_SUPER, 'checkbox', [
+            'label' => 'Super attribute',
             'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);
 
