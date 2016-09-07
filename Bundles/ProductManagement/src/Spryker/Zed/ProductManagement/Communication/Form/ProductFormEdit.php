@@ -96,7 +96,7 @@ class ProductFormEdit extends ProductFormAdd
      *
      * @return $this
      */
-    protected function addAttributeVariantForm(FormBuilderInterface $builder, array $options = [])
+    protected function addAttributeSuperForm(FormBuilderInterface $builder, array $options = [])
     {
         return $this;
     }

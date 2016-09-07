@@ -22,7 +22,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProduc
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
@@ -275,7 +275,7 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     public function generateVariantAttributeArrayFromData(array $data, array $attributeTransferCollection)
     {
         $result = [];
-        foreach ($data[ProductFormAdd::FORM_ATTRIBUTE_VARIANT] as $type => $values) {
+        foreach ($data[ProductFormAdd::FORM_ATTRIBUTE_SUPER] as $type => $values) {
             $attributeValues = $this->getVariantValues($values, $attributeTransferCollection[$type]);
             if ($attributeValues) {
                 $result[$type] = $attributeValues;
@@ -294,8 +294,8 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      */
     protected function getVariantValues(array $variantData, ProductManagementAttributeTransfer $attributeTransfer)
     {
-        $hasValue = $variantData[AttributeVariantForm::FIELD_NAME];
-        $values = (array)$variantData[AttributeVariantForm::FIELD_VALUE];
+        $hasValue = $variantData[AttributeSuperForm::FIELD_NAME];
+        $values = (array)$variantData[AttributeSuperForm::FIELD_VALUE];
 
         if (!$hasValue) {
             return null;

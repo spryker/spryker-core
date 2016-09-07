@@ -17,6 +17,7 @@
 {% block head_title -%}
     {{ widget_title | trans }} {% if idProduct > 0 %} [{{ idProduct }}] {% endif %}
 {%- endblock %}
+
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -24,7 +25,7 @@
 {% endblock %}
 
 {% if variant_tpl is not defined %}
-{% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-adding.twig' %}
+    {% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-adding.twig' %}
 {% endif %}
 
 

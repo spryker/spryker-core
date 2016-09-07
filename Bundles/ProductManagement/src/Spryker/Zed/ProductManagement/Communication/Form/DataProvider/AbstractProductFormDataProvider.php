@@ -165,7 +165,7 @@ class AbstractProductFormDataProvider
         $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, null, $isNew);
 
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
-        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_VARIANT] = $this->convertVariantAttributesToFormOptions($attributeProcessor, $isNew);
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_SUPER] = $this->convertVariantAttributesToFormOptions($attributeProcessor, $isNew);
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
@@ -183,7 +183,7 @@ class AbstractProductFormDataProvider
         $data = [
             ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductFormAdd::FIELD_SKU => null,
-            ProductFormAdd::FORM_ATTRIBUTE_VARIANT => $this->getAttributeVariantDefaultFields(),
+            ProductFormAdd::FORM_ATTRIBUTE_SUPER => $this->getAttributeVariantDefaultFields(),
             ProductFormAdd::FORM_PRICE_AND_TAX => [
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,

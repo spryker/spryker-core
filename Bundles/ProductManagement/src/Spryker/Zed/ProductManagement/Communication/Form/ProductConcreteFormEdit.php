@@ -131,14 +131,20 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
-                            $stockCount = 0;
                             foreach ($dataToValidate as $data) {
-                                $stockCount += (int)$data[StockForm::FIELD_QUANTITY];
-                            }
+                                $stockCount = (int)$data[StockForm::FIELD_QUANTITY];
+                                $stockType = $data[StockForm::FIELD_TYPE];
+                                $isNeverOutOfStock = (bool)$data[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK];
 
-                            if ($stockCount === 0 && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                $context->addViolation('Please enter Stock information under Price & Stock', [$context->getGroup()]);
-                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+                                if ($stockCount === 0 && !$isNeverOutOfStock) {
+                                    $context->addViolation(
+                                        sprintf(
+                                            'Please enter Stock information under Price & Stock for stock type: %s',
+                                            $stockType
+                                        ),
+                                        [$context->getGroup()]
+                                    );
+                                }
                             }
                         },
                     ],

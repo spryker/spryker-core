@@ -14,7 +14,7 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AttributeVariantForm extends AttributeAbstractForm
+class AttributeSuperForm extends AttributeAbstractForm
 {
 
     /**

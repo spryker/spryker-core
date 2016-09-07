@@ -5,7 +5,7 @@
 </div>
 
 <div class="panel-body second">
-    {% for input in form.attribute_variant %}
+    {% for input in form.attribute_super %}
         <div class='col-md-10 col-sm-12 col-lg-6'>
             <div class='row vertical-align attribute_metadata_row col-lg-12'>
                 <nobr>{{ form_row(input.name) }} {{ form_row(input.value) }} {{ form_row(input.value_hidden_id) }}</nobr>

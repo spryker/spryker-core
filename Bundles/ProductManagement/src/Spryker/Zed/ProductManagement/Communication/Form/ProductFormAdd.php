@@ -14,7 +14,7 @@ use Spryker\Zed\Gui\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeVariantForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
@@ -38,7 +38,7 @@ class ProductFormAdd extends AbstractType
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     const FORM_ATTRIBUTE_ABSTRACT = 'attribute_abstract';
-    const FORM_ATTRIBUTE_VARIANT = 'attribute_variant';
+    const FORM_ATTRIBUTE_SUPER = 'attribute_super';
     const FORM_GENERAL = 'general';
     const FORM_PRICE_AND_TAX = 'price_and_tax';
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
@@ -47,13 +47,13 @@ class ProductFormAdd extends AbstractType
     const FORM_IMAGE_SET = 'image_set';
 
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
-    const OPTION_ATTRIBUTE_VARIANT = 'option_attribute_variant';
+    const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
     const OPTION_ID_LOCALE = 'option_id_locale';
     const OPTION_TAX_RATES = 'option_tax_rates';
 
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
-    const VALIDATION_GROUP_ATTRIBUTE_VARIANT = 'validation_group_attribute_variant';
+    const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
     const VALIDATION_GROUP_GENERAL = 'validation_group_general';
     const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
@@ -110,7 +110,7 @@ class ProductFormAdd extends AbstractType
 
         $resolver->setRequired(self::OPTION_ID_LOCALE);
         $resolver->setRequired(self::OPTION_ATTRIBUTE_ABSTRACT);
-        $resolver->setRequired(self::OPTION_ATTRIBUTE_VARIANT);
+        $resolver->setRequired(self::OPTION_ATTRIBUTE_SUPER);
         $resolver->setRequired(self::OPTION_TAX_RATES);
 
         $validationGroups = $this->getValidationGroups();
@@ -137,7 +137,7 @@ class ProductFormAdd extends AbstractType
             self::VALIDATION_GROUP_PRICE_AND_TAX,
             self::VALIDATION_GROUP_PRICE_AND_STOCK,
             self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
-            self::VALIDATION_GROUP_ATTRIBUTE_VARIANT,
+            self::VALIDATION_GROUP_ATTRIBUTE_SUPER,
             self::VALIDATION_GROUP_SEO,
             self::VALIDATION_GROUP_IMAGE_SET,
         ];
@@ -156,7 +156,7 @@ class ProductFormAdd extends AbstractType
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
-            ->addAttributeVariantForm($builder, $options[self::OPTION_ATTRIBUTE_VARIANT])
+            ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
             ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder);
@@ -388,24 +388,24 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeVariantForm(FormBuilderInterface $builder, array $options = [])
+    protected function addAttributeSuperForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_ATTRIBUTE_VARIANT, 'collection', [
-                'type' => new AttributeVariantForm(
-                    self::FORM_ATTRIBUTE_VARIANT,
+            ->add(self::FORM_ATTRIBUTE_SUPER, 'collection', [
+                'type' => new AttributeSuperForm(
+                    self::FORM_ATTRIBUTE_SUPER,
                     $this->productManagementQueryContainer,
                     $this->localeProvider
                 ),
                 'options' => [
-                    AttributeVariantForm::OPTION_ATTRIBUTE => $options,
+                    AttributeSuperForm::OPTION_ATTRIBUTE => $options,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($attributes, ExecutionContextInterface $context) {
                             foreach ($attributes as $type => $valueSet) {
-                                if ($valueSet[AttributeVariantForm::FIELD_NAME] && empty($valueSet[AttributeVariantForm::FIELD_VALUE])) {
+                                if ($valueSet[AttributeSuperForm::FIELD_NAME] && empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
                                     $context->addViolation(sprintf(
                                         'Please enter value for variant attribute "%s" or disable it',
                                         $type
@@ -415,8 +415,8 @@ class ProductFormAdd extends AbstractType
 
                             $selectedAttributes = [];
                             foreach ($attributes as $type => $valueSet) {
-                                if (!empty($valueSet[AttributeVariantForm::FIELD_VALUE])) {
-                                    $selectedAttributes[] = $valueSet[AttributeVariantForm::FIELD_VALUE];
+                                if (!empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
+                                    $selectedAttributes[] = $valueSet[AttributeSuperForm::FIELD_VALUE];
                                     break;
                                 }
                             }
@@ -427,7 +427,7 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VARIANT]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_SUPER]
                 ])]
             ]);
 
