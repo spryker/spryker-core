@@ -64,7 +64,6 @@ class ProductOptionFacadeTest extends Test
         $this->assertSame($productOptionValueEntity->getPrice(), $producOptionValueTransfer->getPrice());
         $this->assertEquals($producOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
         $this->assertEquals($producOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
-
     }
 
     /**
