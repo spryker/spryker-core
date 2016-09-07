@@ -26,6 +26,9 @@ class ProductOptionValueForm extends AbstractType
     const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
     const FIELD_OPTION_HASH = 'optionHash';
 
+    const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
+    const NUMERIC_PATTERN = '/[0-9\.\,]+/';
+
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -88,7 +91,7 @@ class ProductOptionValueForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Regex([
-                    'pattern' => '/^[a-z0-9\.\_]+$/',
+                    'pattern' => self::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".'
                 ]),
             ],
@@ -131,7 +134,7 @@ class ProductOptionValueForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Regex([
-                    'pattern' => '/[0-9\.\,]+/',
+                    'pattern' => self::NUMERIC_PATTERN,
                     'message' => 'Invalid price provided. Valid values "0-9", ".", ",".'
                 ]),
             ],

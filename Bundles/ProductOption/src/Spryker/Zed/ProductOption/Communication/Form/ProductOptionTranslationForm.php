@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductOptionTranslationForm extends AbstractType
 {
@@ -54,7 +55,10 @@ class ProductOptionTranslationForm extends AbstractType
     {
         $builder->add(self::FIELD_NAME, 'text', [
             'label' => 'Value *',
-            'required' => false
+            'required' => false,
+            'constraints' => [
+                new NotBlank(),
+             ]
         ]);
 
         return $this;

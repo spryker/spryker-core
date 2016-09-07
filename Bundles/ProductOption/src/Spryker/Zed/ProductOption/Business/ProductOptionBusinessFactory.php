@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice;
 use Spryker\Zed\ProductOption\Business\SalesAggregator\SubtotalWithProductOptions;
@@ -45,6 +47,20 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionGroupSaver(
             $this->getQueryContainer(),
             $this->getTouchFacade(),
+            $this->createTranslationSaver(),
+            $this->createAbstractProductOptionSaver(),
+            $this->createProductOptionValueSaver()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver
+     */
+    public function createProductOptionValueSaver()
+    {
+        return new ProductOptionValueSaver(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
             $this->createTranslationSaver()
         );
     }
@@ -57,6 +73,17 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new TranslationSaver(
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver
+     */
+    public function createAbstractProductOptionSaver()
+    {
+        return new AbstractProductOptionSaver(
+            $this->getQueryContainer(),
+            $this->getTouchFacade()
         );
     }
 

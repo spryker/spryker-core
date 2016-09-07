@@ -7,6 +7,9 @@
 
 namespace Unit\Spryker\Zed\ProductOption;
 
+use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
+use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
@@ -58,6 +61,34 @@ class MockProvider extends \PHPUnit_Framework_TestCase
     protected function createSalesContainerMock()
     {
         return $this->getMockBuilder(SalesQueryContainerInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
+     */
+    protected function createAbstractOptionGroupSaverMock()
+    {
+        return $this->getMockBuilder(AbstractProductOptionSaverInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
+     */
+    protected function createProductOptionValueSaverMock()
+    {
+        return $this->getMockBuilder(ProductOptionValueSaverInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface
+     */
+    protected function createTranslationSaverMock()
+    {
+        return $this->getMockBuilder(TranslationSaverInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
     }
 
