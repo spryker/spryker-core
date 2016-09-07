@@ -9,6 +9,9 @@
     </p>
 </div>
 
+{#<div id="playerFields" data-prototype="{% filter escape %}{% include 'AcmeTeamBundle:Team:prototypePlayer.html.twig' with {'form': form.players.vars.prototype} %}{% endfilter %}">
+</div>#}
+
 <div class="panel-body second">
     <div class="tabs-container">
         <div class="tabs-top">
@@ -27,36 +30,8 @@
             form: form
             } %}
                 {% block tabContentRow %}
-                        <div class="panel-body">
-                            <div class="image_set_block"
-                                 data-valuecount="{{ form[formKey]|length }}"
-                                 data-prototype="<div class='panel-body'>{{ form_widget(form[formKey].vars.prototype)|e }}</div>"
-                            >
-                                {% for productImageSet in form[formKey] %}
-                                     {% set form_group_errors_css = '' %}
-
-                                    {% if productImageSet.name.vars.errors|length %}
-                                        {% set form_group_errors_css = 'has-error' %}
-                                    {% endif %}
-
-                                    <div class='form-group {{ form_group_errors_css }}'>
-                                        <div class="col-lg-12">
-                                            {{ form_row(productImageSet.id_product_image_set) }}
-                                            {{ form_row(productImageSet.fk_locale) }}
-                                            {{ form_row(productImageSet.fk_product) }}
-                                            {{ form_row(productImageSet.fk_product_abstract) }}
-
-                                            {{ form_row(productImageSet.name) }}
-                                        </div>
-                                    </div>
-
-                                    {% include '@ProductManagement/Product/_partials/image-collection-form.twig' %}
-                                {% endfor %}
-                            </div>
-
-                            <div class="form-group">
-                                <a href="#" class="btn btn-primary add-another-image">Add Image</a>
-                            </div>
+                    <div class="panel-body">
+                        {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
                     </div>
 
 {#                    <div class="panel-body">

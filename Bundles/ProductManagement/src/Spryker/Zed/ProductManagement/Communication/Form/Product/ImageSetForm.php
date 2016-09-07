@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -157,6 +158,7 @@ class ImageSetForm extends AbstractSubForm
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                //'data' => [AbstractProductFormDataProvider::getImageFields()],
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($images, ExecutionContextInterface $context) {

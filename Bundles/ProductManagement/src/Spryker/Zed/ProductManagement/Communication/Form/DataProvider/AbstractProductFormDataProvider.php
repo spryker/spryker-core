@@ -389,6 +389,29 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
+    public static function getImageFields()
+    {
+        return [
+            ImageSetForm::FIELD_SET_ID => null,
+            ImageSetForm::FIELD_SET_NAME => null,
+            ImageSetForm::PRODUCT_IMAGES => [[
+                ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
+                ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
+                ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL => null,
+                ImageCollectionForm::FIELD_FK_IMAGE_SET_ID => null,
+                ImageCollectionForm::FIELD_IMAGE_SMALL => null,
+                ImageCollectionForm::FIELD_IMAGE_LARGE => null,
+                ImageCollectionForm::FIELD_SORT_ORDER => null,
+                ImageSetForm::FIELD_SET_FK_LOCALE => null,
+                ImageSetForm::FIELD_SET_FK_PRODUCT => null,
+                ImageSetForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
+            ]]
+        ];
+    }
+
+    /**
+     * @return array
+     */
     protected function getPriceAndStockDefaultFields()
     {
         return $this->convertToFormValues($this->taxCollection);
