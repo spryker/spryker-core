@@ -38,7 +38,9 @@ class Sanitizer implements SanitizerInterface
     public function sanitize(array $data)
     {
         foreach ($data as $key => $value) {
-            $this->doSanitize($data, $key, $value);
+            $this->sanitizeIfAssociativeArray($data, $key, $value);
+            $this->sanitizeIfIndexedArray($data, $key, $value);
+            $this->sanitizeIfMatch($data, $key, $value);
         }
 
         return $data;
@@ -51,21 +53,38 @@ class Sanitizer implements SanitizerInterface
      *
      * @return void
      */
-    protected function doSanitize(array &$data, $key, $value)
+    protected function sanitizeIfAssociativeArray(array &$data, $key, $value)
+    {
+        if (is_array($value) && !$this->isIndexed($value)) {
+            $data[$key] = $this->sanitize($value);
+        }
+    }
+
+    /**
+     * @param array $data
+     * @param string $key
+     * @param string $value
+     *
+     * @return void
+     */
+    protected function sanitizeIfIndexedArray(array &$data, $key, $value)
+    {
+        if (is_array($value) && $this->isIndexed($value)) {
+            $data[$key] = $this->sanitizeIndexed($value);
+        }
+    }
+
+    /**
+     * @param array $data
+     * @param string $key
+     * @param string $value
+     *
+     * @return void
+     */
+    protected function sanitizeIfMatch(array &$data, $key, $value)
     {
         if ($this->matches($key)) {
             $data[$key] = $this->sanitizeValue($value, $key);
-            return;
-        }
-
-        if (is_array($value) && !$this->isIndexed($value)) {
-            $data[$key] = $this->sanitize($value);
-            return;
-        }
-
-        if (is_array($value) && $this->isIndexed($value)) {
-            $data[$key] = $this->sanitizeIndexed($value);
-            return;
         }
     }
 

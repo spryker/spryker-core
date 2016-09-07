@@ -96,13 +96,9 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
                 'confirm' => 'my secret password',
             ]
         ];
-        $expected = [
-            'foo' => 'bar',
-            'bar' => [
-                'sanitize' => static::SANITIZED_VALUE
-            ],
-            'password' => '***'
-        ];
+        $expected = $input;
+        $expected['bar']['sanitize'] = static::SANITIZED_VALUE;
+        $expected['password'] = static::SANITIZED_VALUE;
 
         $this->assertSame($expected, $sanitizer->sanitize($input));
     }
@@ -121,14 +117,8 @@ class SanitizerTest extends \PHPUnit_Framework_TestCase
                 ['baz' => 'bat'],
             ]
         ];
-
-        $expected = [
-            'foo' => 'bar',
-            [
-                ['sanitize' => static::SANITIZED_VALUE],
-                ['baz' => 'bat'],
-            ]
-        ];
+        $expected = $input;
+        $expected[0][0]['sanitize'] = static::SANITIZED_VALUE;
 
         $this->assertSame($expected, $sanitizer->sanitize($input));
     }
