@@ -12,7 +12,7 @@ interface LogConstants
 
     /**
      * Specification:
-     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
      *
      * @api
      */
