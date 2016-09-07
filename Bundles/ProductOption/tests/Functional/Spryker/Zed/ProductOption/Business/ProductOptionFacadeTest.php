@@ -23,7 +23,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
 /**
@@ -66,11 +65,6 @@ class ProductOptionFacadeTest extends Test
         $this->assertEquals($producOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
         $this->assertEquals($producOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
 
-        $glossaryFacade = $this->createGlossaryFacade();
-        $localeTransfer = $this->createLocaleTransfer();
-
-        $this->assertTrue($glossaryFacade->hasTranslation($producOptionValueTransfer->getValue(), $localeTransfer));
-        $this->assertTrue($glossaryFacade->hasTranslation($productOptionGroupTransfer->getName(), $localeTransfer));
     }
 
     /**
@@ -402,16 +396,6 @@ class ProductOptionFacadeTest extends Test
         $producOptionValueTransfer->setSku('sku_for_testing');
 
         return $producOptionValueTransfer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Glossary\Business\GlossaryFacade
-     */
-    protected function createGlossaryFacade()
-    {
-        $glossaryFacade = new GlossaryFacade();
-
-        return $glossaryFacade;
     }
 
     /**
