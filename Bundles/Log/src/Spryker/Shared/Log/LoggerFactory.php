@@ -58,13 +58,7 @@ class LoggerFactory
      */
     protected static function getLoggerClassName()
     {
-        if (Config::hasKey(LogConstants::LOGGER_CONFIG)) {
-            $loggerClass = Config::get(LogConstants::LOGGER_CONFIG);
-        } else {
-            $loggerClass = DefaultLoggerConfig::class;
-        }
-
-        return $loggerClass;
+        return Config::get(LogConstants::LOGGER_CONFIG, DefaultLoggerConfig::class);
     }
 
 }
