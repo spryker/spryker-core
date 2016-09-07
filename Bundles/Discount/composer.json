@@ -2,9 +2,7 @@
   "name": "spryker/discount",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
