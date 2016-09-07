@@ -34,6 +34,7 @@ class KernelLogListener implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     *
      * @return void
      */
     public function onKernelRequest(GetResponseEvent $event)
@@ -47,6 +48,7 @@ class KernelLogListener implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return void
      */
     protected function logRequest(Request $request)
@@ -64,6 +66,7 @@ class KernelLogListener implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     *
      * @return void
      */
     public function onKernelResponse(FilterResponseEvent $event)
@@ -77,6 +80,7 @@ class KernelLogListener implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Response $response
+     *
      * @return void
      */
     protected function logResponse(Response $response)

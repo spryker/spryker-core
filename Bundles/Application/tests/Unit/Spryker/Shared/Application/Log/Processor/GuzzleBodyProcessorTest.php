@@ -50,6 +50,7 @@ class GuzzleBodyProcessorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider guzzleBodies()
+     *
      * @param mixed $body
      * @param string $expected
      *
