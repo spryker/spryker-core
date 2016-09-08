@@ -64,11 +64,11 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use CustomerFacade::sendPasswordRestoreMail() instead
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     *
-     * @deprecated Use CustomerFacade::sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {

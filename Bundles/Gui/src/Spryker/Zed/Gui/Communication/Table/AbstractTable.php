@@ -169,11 +169,11 @@ abstract class AbstractTable
     /**
      * @todo CD-412 find a better solution (remove it)
      *
+     * @deprecated this method should not be needed.
+     *
      * @param string $name
      *
      * @return string
-     *
-     * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
     {

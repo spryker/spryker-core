@@ -37,9 +37,9 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param mixed $withValue
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {

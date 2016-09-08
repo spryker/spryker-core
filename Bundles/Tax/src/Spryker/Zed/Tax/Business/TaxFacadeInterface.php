@@ -213,9 +213,9 @@ interface TaxFacadeInterface
      *
      * @param int $id
      *
-     * @return void
-     *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxSet($id);
 
