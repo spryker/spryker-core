@@ -78,50 +78,6 @@ class StateMachineFacadeExceptionTest extends Test
     }
 
     /**
-     * @return void
-     */
-    public function testGetManualEventForStateMachineItemsShouldReturnAllEventsForProvidedStates()
-    {
-        $processName = self::TEST_PROCESS_NAME;
-        $firstItemIdentifier = 1985;
-        $secondItemIdentifier = 1988;
-
-        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
-        $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
-
-        $stateMachineHandler = new TestStateMachineHandler();
-        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
-
-        $stateMachineItems = [];
-        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
-        $stateMachineItems[$firstItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
-
-        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
-        $stateMachineItems[$secondItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
-
-        $stateMachineFacade->triggerEvent('ship order', $stateMachineItems[$secondItemIdentifier]);
-
-        $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItems);
-
-        $this->assertCount(2, $manualEvents);
-
-        $firstItemManualEvents = $manualEvents[$firstItemIdentifier];
-        $secondItemManualEvents = $manualEvents[$secondItemIdentifier];
-
-        $manualEvent = array_pop($firstItemManualEvents);
-        $this->assertEquals('check with condition', $manualEvent);
-
-        $manualEvent = array_pop($firstItemManualEvents);
-        $this->assertEquals('ship order', $manualEvent);
-
-        $manualEvent = array_pop($secondItemManualEvents);
-        $this->assertEquals('payment received', $manualEvent);
-    }
-
-    /**
-
-    /**
      *
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
