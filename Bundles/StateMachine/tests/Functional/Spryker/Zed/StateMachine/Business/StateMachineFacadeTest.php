@@ -162,7 +162,7 @@ class StateMachineFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetManualEventsForStateMachineItemShouldReturnsAllManualEventsForProvidedState()
+    public function testGetManualEventsForStateMachineItemShouldReturnAllManualEventsForProvidedState()
     {
         $processName = self::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -179,6 +179,8 @@ class StateMachineFacadeTest extends Test
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
         $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
+
+        //dd($manualEvents);
 
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertCount(2, $manualEvents);
