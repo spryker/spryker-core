@@ -290,6 +290,8 @@ class Process implements ProcessInterface
     }
 
     /**
+     * Gets all manual and all on enter events as manually executable ones.
+     *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
      */
     public function getManualEvents()

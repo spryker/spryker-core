@@ -180,8 +180,6 @@ class StateMachineFacadeTest extends Test
 
         $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
 
-        //dd($manualEvents);
-
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertCount(2, $manualEvents);
 
