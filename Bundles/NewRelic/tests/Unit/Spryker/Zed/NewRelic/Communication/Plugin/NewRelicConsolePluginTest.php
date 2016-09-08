@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\NewRelic\Communication\Plugin\NewRelicConsolePlugin;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
-use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\Output;
 
 /**
@@ -67,13 +67,9 @@ class NewRelicConsolePluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function getInputMock()
     {
-        $inputMock = $this->getMockBuilder(InputInterface::class)
-            ->setMethods([
-                'getFirstArgument', 'hasParameterOption', 'getParameterOption', 'bind', 'validate',
-                'getArguments', 'getArgument', 'setArgument', 'hasArgument',
-                'getOptions', 'getOption', 'setOption', 'hasOption',
-                'isInteractive', 'setInteractive',
-            ])
+        $inputMock = $this->getMockBuilder(ArrayInput::class)
+            ->setMethods(['getArguments', 'getOptions'])
+            ->disableOriginalConstructor()
             ->getMock();
 
         $testData = [
