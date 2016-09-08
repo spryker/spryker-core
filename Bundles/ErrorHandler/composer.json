@@ -2,7 +2,11 @@
   "name": "spryker/error-handler",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
       "Unit": "tests/"
     }
   },
