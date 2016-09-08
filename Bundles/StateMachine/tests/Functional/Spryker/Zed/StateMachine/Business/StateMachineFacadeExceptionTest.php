@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\StateMachine\Business;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
-use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandler;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
@@ -78,7 +77,6 @@ class StateMachineFacadeExceptionTest extends Test
     }
 
     /**
-     *
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
