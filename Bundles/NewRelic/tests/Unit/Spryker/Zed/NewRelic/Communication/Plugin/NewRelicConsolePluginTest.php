@@ -69,21 +69,10 @@ class NewRelicConsolePluginTest extends \PHPUnit_Framework_TestCase
     {
         $inputMock = $this->getMockBuilder(InputInterface::class)
             ->setMethods([
-                'getFirstArgument',
-                'hasParameterOption',
-                'getParameterOption',
-                'bind',
-                'validate',
-                'getArguments',
-                'getArgument',
-                'setArgument',
-                'hasArgument',
-                'getOptions',
-                'getOption',
-                'setOption',
-                'hasOption',
-                'isInteractive',
-                'setInteractive',
+                'getFirstArgument', 'hasParameterOption', 'getParameterOption', 'bind', 'validate',
+                'getArguments', 'getArgument', 'setArgument', 'hasArgument',
+                'getOptions', 'getOption', 'setOption', 'hasOption',
+                'isInteractive','setInteractive',
             ])
             ->getMock();
 
