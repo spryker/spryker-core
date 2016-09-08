@@ -28,12 +28,12 @@ class Application extends \Silex\Application
     /**
      * Returns a form.
      *
-     * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)->create(FooFormType::class);
-     *
      * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
      *
      * @see createBuilder()
+     *
+     * @deprecated Create forms inside your bundle's factory with getting the form factory,
+     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)->create(FooFormType::class);
      *
      * @param string|\Symfony\Component\Form\FormTypeInterface $type The type of the form
      * @param mixed $data The initial data
@@ -66,7 +66,7 @@ class Application extends \Silex\Application
     }
 
     /**
-     * Add a router to the list of routers.
+     * Adds a router to the list of routers.
      *
      * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router
