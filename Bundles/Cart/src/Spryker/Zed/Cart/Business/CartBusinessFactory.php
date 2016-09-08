@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Cart\CartConfig createConfig()
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {

@@ -34,7 +34,7 @@ trait BundleConfigResolverAwareTrait
      *
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    public function createConfig()
+    public function getConfig()
     {
         if ($this->config === null) {
             $this->config = $this->resolveBundleConfig();
