@@ -66,7 +66,7 @@ class GuzzleBodyProcessor
             $body = ['transfer-response' => $body];
         }
 
-        $body = $this->removeEmptyValues($body);
+        $body = $this->prepareValues($body);
 
         return $body;
     }
@@ -76,11 +76,14 @@ class GuzzleBodyProcessor
      *
      * @return array
      */
-    protected function removeEmptyValues(array $body)
+    protected function prepareValues(array $body)
     {
         foreach ($body as $key => $value) {
-            if (empty($value)) {
-                unset($body[$key]);
+            if (is_array($value)) {
+                $body[$key] = $this->prepareValues($value);
+            }
+            if (is_bool($value)) {
+                $body[$key] = (int)$value;
             }
         }
 
