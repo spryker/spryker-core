@@ -45,8 +45,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createStorageExporter(),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createStorageExporter()
         );
     }
 
@@ -188,8 +187,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($searchWriter),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createElasticsearchExporter($searchWriter)
         );
     }
 
@@ -201,8 +199,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($this->createSearchUpdateWriter()),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createElasticsearchExporter($this->createSearchUpdateWriter())
         );
     }
 

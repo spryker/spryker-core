@@ -23,13 +23,37 @@ class CollectorConfig extends AbstractBundleConfig
     const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
     const COLLECTOR_SEARCH_KEY = 'collector_search_key';
 
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_CATEGORYNODE = 'categorynode';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_NAVIGATION = 'navigation';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_TRANSLATION = 'translation';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_PAGE = 'page';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_BLOCK = 'block';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_REDIRECT = 'redirect';
+    /**
+     * @deprecated We generate the available collector types dynamically so this constant is not necessary any more.
+     */
     const COLLECTOR_TYPE_URL = 'url';
 
     const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
@@ -92,6 +116,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated We generate the available collector types dynamically so this config is not used any more.
+     *
      * @return array
      */
     public function getAvailableCollectorTypes()
