@@ -16,6 +16,7 @@ use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Table\FilterPreferencesTable;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
 use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferGenerator;
+use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListGenerator;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -120,6 +121,14 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     protected function createFilterGlossaryKeyBuilder()
     {
         return new FilterGlossaryKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListGeneratorInterface
+     */
+    public function createSortedProductSearchTransferListGenerator()
+    {
+        return new SortedProductSearchTransferListGenerator();
     }
 
 }

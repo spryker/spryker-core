@@ -278,20 +278,6 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - TODO: add specification
-     *
-     * @return void
-     */
-    public function touchProductSearchConfig()
-    {
-        $this
-            ->getFactory()
-            ->createProductSearchConfigMarker()
-            ->touchProductSearchConfig();
-    }
-
-    /**
-     * Specification:
      * - Touches abstract products which has an attribute that has not been synchronized yet.
      * - Asynchronous attribute means a product search attribute entity had been created/modified/deleted since last synchronization.
      * - After touch, product search attribute entities are marked as synchronized.
@@ -328,7 +314,24 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Touches the "product_search_config_extension" resource which will indicate the responsible collector to run next time collectors are executed.
+     *
+     * @return void
+     */
+    public function touchProductSearchConfigExtension()
+    {
+        $this
+            ->getFactory()
+            ->createProductSearchConfigExtensionMarker()
+            ->touchProductSearchConfigExtension();
+    }
+
+    /**
+     * Specification:
+     * - Executes the product search config extension collector.
+     * - The collected data is compatible with \Generated\Shared\Transfer\SearchConfigExtensionTransfer.
+     * - The collected data contains all the facet configurations provided by the database.
+     * - The facet configurations are stored in their defined order.
      *
      * @api
      *
@@ -342,7 +345,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @return void
      */
-    public function runProductSearchConfigStorageCollector(
+    public function runProductSearchConfigExtensionCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $locale,
         BatchResultInterface $result,
@@ -352,7 +355,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         OutputInterface $output
     )
     {
-        $collector = $this->getFactory()->createProductSearchConfigCollector();
+        $collector = $this->getFactory()->createProductSearchConfigExtensionCollector();
 
         $this
             ->getFactory()

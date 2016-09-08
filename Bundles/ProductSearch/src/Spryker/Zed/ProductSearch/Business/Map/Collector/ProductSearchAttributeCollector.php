@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business\Map\Collector;
 
 use Generated\Shared\Transfer\ProductSearchAttributeMapTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface;
 use Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
@@ -41,25 +42,17 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
     }
 
     /**
-     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
-     *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
      */
     public function getProductSearchAttributeMap()
     {
         $result = [];
-        $filterTypeConfigs = $this->productSearchConfig->getFilterTypeConfigs();
+        $availableProductSearchFilterConfigs = $this->productSearchConfig->getAvailableProductSearchFilterConfigs();
 
         foreach ($this->getAttributeList() as $productSearchAttributeTransfer) {
-            if (!isset($filterTypeConfigs[$productSearchAttributeTransfer->getFilterType()])) {
-                throw new InvalidFilterTypeException(sprintf(
-                    'Invalid filter type "%s"! Available options are [%s].',
-                    $productSearchAttributeTransfer->getFilterType(),
-                    implode(', ', array_keys($filterTypeConfigs))
-                ));
-            }
+            $this->assertFilterType($availableProductSearchFilterConfigs, $productSearchAttributeTransfer);
 
-            $targetField = $filterTypeConfigs[$productSearchAttributeTransfer->getFilterType()]->getFieldName();
+            $targetField = $availableProductSearchFilterConfigs[$productSearchAttributeTransfer->getFilterType()]->getFieldName();
 
             $result[] = (new ProductSearchAttributeMapTransfer())
                 ->setAttributeName($productSearchAttributeTransfer->getKey())
@@ -79,6 +72,25 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
         }
 
         return static::$attributeList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $availableProductSearchFilterConfigs
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer $productSearchAttributeTransfer
+     *
+     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
+     *
+     * @return void
+     */
+    protected function assertFilterType(array $availableProductSearchFilterConfigs, ProductSearchAttributeTransfer $productSearchAttributeTransfer)
+    {
+        if (!isset($availableProductSearchFilterConfigs[$productSearchAttributeTransfer->getFilterType()])) {
+            throw new InvalidFilterTypeException(sprintf(
+                'Invalid filter type "%s"! Available options are [%s].',
+                $productSearchAttributeTransfer->getFilterType(),
+                implode(', ', array_keys($availableProductSearchFilterConfigs))
+            ));
+        }
     }
 
 }

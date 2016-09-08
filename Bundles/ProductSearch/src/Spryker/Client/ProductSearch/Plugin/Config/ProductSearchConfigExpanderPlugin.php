@@ -28,7 +28,7 @@ class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements Search
         $data = $this->getProductSearchConfigExtensionData($key);
 
         if ($data) {
-            $productSearchConfigExtensionTransfer->fromArray($data);
+            $productSearchConfigExtensionTransfer->fromArray($data, true);
         }
 
         return $productSearchConfigExtensionTransfer;

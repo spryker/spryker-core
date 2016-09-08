@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\FilterGlossaryKeyBuilder;
+use Spryker\Shared\ProductSearch\Code\KeyBuilder\ProductSearchConfigExtensionKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
@@ -18,7 +19,7 @@ use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCo
 use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMapMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMarker;
-use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigMarker;
+use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigExtensionMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductSearch\Persistence\Collector\Propel\ProductSearchConfigExtensionCollectorQuery;
@@ -202,11 +203,12 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface
      */
-    public function createProductSearchConfigCollector()
+    public function createProductSearchConfigExtensionCollector()
     {
         $productSearchConfigCollector = new ProductSearchConfigExtensionCollector(
             $this->createAttributeReader(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createProductSearchConfigExtensionKeyBuilder()
         );
 
         $productSearchConfigCollector->setTouchQueryContainer(
@@ -217,6 +219,14 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         );
 
         return $productSearchConfigCollector;
+    }
+
+    /**
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createProductSearchConfigExtensionKeyBuilder()
+    {
+        return new ProductSearchConfigExtensionKeyBuilder();
     }
 
     /**
@@ -244,11 +254,11 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigMarkerInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigExtensionMarkerInterface
      */
-    public function createProductSearchConfigMarker()
+    public function createProductSearchConfigExtensionMarker()
     {
-        return new ProductSearchConfigMarker($this->getTouchFacade());
+        return new ProductSearchConfigExtensionMarker($this->getTouchFacade());
     }
 
 }

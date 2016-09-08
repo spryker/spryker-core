@@ -46,34 +46,15 @@ class FilterReorderController extends AbstractController
             return $this->jsonResponse();
         }
 
-        $productSearchAttributeList = $this->createProductSearchAttributeList($filterList);
+        $sortedProductSearchAttributeList = $this
+            ->getFactory()
+            ->createSortedProductSearchTransferListGenerator()
+            ->createList($filterList);
 
-        $this->getFacade()->updateProductSearchAttributeOrder($productSearchAttributeList);
-        $this->getFacade()->touchProductSearchConfig();
+        $this->getFacade()->updateProductSearchAttributeOrder($sortedProductSearchAttributeList);
+        $this->getFacade()->touchProductSearchConfigExtension();
 
         return $this->jsonResponse();
-    }
-
-    /**
-     * @param array $filterList
-     *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
-     */
-    protected function createProductSearchAttributeList(array $filterList)
-    {
-        $productSearchAttributeList = [];
-
-        $position = 1;
-        foreach ($filterList as $filter) {
-            $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
-            $productSearchAttributeTransfer
-                ->setIdProductSearchAttribute($filter[ProductSearchAttributeTransfer::ID_PRODUCT_SEARCH_ATTRIBUTE])
-                ->setPosition($position++);
-
-            $productSearchAttributeList[] = $productSearchAttributeTransfer;
-        }
-
-        return $productSearchAttributeList;
     }
 
 }

@@ -199,16 +199,6 @@ interface ProductSearchFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function touchProductSearchConfig();
-
-    /**
-     * Specification:
      * - Touches abstract products which has an attribute that has not been synchronized yet.
      * - Asynchronous attribute means a product search attribute entity had been created/modified/deleted since last synchronization.
      * - After touch, product search attribute entities are marked as synchronized.
@@ -233,7 +223,20 @@ interface ProductSearchFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Touches the "product_search_config_extension" resource which will indicate the responsible collector to run next time collectors are executed.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function touchProductSearchConfigExtension();
+
+    /**
+     * Specification:
+     * - Executes the product search config extension collector.
+     * - The collected data is compatible with \Generated\Shared\Transfer\SearchConfigExtensionTransfer.
+     * - The collected data contains all the facet configurations provided by the database.
+     * - The facet configurations are stored in their defined order.
      *
      * @api
      *
@@ -247,7 +250,7 @@ interface ProductSearchFacadeInterface
      *
      * @return void
      */
-    public function runProductSearchConfigStorageCollector(
+    public function runProductSearchConfigExtensionCollector(
         SpyTouchQuery $baseQuery,
         LocaleTransfer $locale,
         BatchResultInterface $result,

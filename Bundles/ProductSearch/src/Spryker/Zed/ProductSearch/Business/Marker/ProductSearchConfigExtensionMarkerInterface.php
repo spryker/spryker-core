@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Marker;
 
-interface ProductSearchConfigMarkerInterface
+interface ProductSearchConfigExtensionMarkerInterface
 {
 
     /**
      * @return void
      */
-    public function touchProductSearchConfig();
+    public function touchProductSearchConfigExtension();
 
 }

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class FilterPreferencesController extends AbstractController
@@ -72,7 +72,7 @@ class FilterPreferencesController extends AbstractController
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
-            $this->getFacade()->touchProductSearchConfig();
+            $this->getFacade()->touchProductSearchConfigExtension();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?id=%d',
@@ -113,7 +113,7 @@ class FilterPreferencesController extends AbstractController
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
-            $this->getFacade()->touchProductSearchConfig();
+            $this->getFacade()->touchProductSearchConfigExtension();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?id=%d',
@@ -161,7 +161,7 @@ class FilterPreferencesController extends AbstractController
         $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
 
         $this->getFacade()->deleteProductSearchAttribute($productSearchAttributeTransfer);
-        $this->getFacade()->touchProductSearchConfig();
+        $this->getFacade()->touchProductSearchConfigExtension();
 
         return $this->redirectResponse('/product-search/filter-preferences');
     }

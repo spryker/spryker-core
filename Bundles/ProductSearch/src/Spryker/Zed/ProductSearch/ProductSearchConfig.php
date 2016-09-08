@@ -18,7 +18,7 @@ class ProductSearchConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
-    public function getFilterTypeConfigs()
+    public function getAvailableProductSearchFilterConfigs()
     {
         return [
             'single-select' => (new FacetConfigTransfer())

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Collector\Storage;
 
+use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\ProductSearch\ProductSearchConstants;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface;
@@ -28,20 +30,24 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
     protected $productSearchConfig;
 
     /**
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
+     */
+    protected $keyBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface $attributeReader
      * @param \Spryker\Zed\ProductSearch\ProductSearchConfig $productSearchConfig
      */
-    public function __construct(AttributeReaderInterface $attributeReader, ProductSearchConfig $productSearchConfig)
+    public function __construct(AttributeReaderInterface $attributeReader, ProductSearchConfig $productSearchConfig, KeyBuilderInterface $keyBuilder)
     {
         $this->attributeReader = $attributeReader;
         $this->productSearchConfig = $productSearchConfig;
+        $this->keyBuilder = $keyBuilder;
     }
 
     /**
      * @param string $touchKey
      * @param array $collectItemData
-     *
-     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
      *
      * @return array
      */
@@ -49,20 +55,13 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
     {
         $searchConfigExtensionTransfer = new SearchConfigExtensionTransfer();
 
-        // TODO: refactor
-        $filterTypeConfigs = $this->productSearchConfig->getFilterTypeConfigs();
+        $availableProductSearchFilterConfigs = $this->productSearchConfig->getAvailableProductSearchFilterConfigs();
 
         $productSearchAttributeTransfers = $this->attributeReader->getAttributeList();
         foreach ($productSearchAttributeTransfers as $productSearchAttributeTransfer) {
-            if (!isset($filterTypeConfigs[$productSearchAttributeTransfer->getFilterType()])) {
-                throw new InvalidFilterTypeException(sprintf(
-                    'Invalid filter type "%s"! Available options are [%s].',
-                    $productSearchAttributeTransfer->getFilterType(),
-                    implode(', ', array_keys($filterTypeConfigs))
-                ));
-            }
+            $this->assertFilterType($availableProductSearchFilterConfigs, $productSearchAttributeTransfer);
 
-            $facetConfigTransfer = clone $filterTypeConfigs[$productSearchAttributeTransfer->getFilterType()];
+            $facetConfigTransfer = clone $availableProductSearchFilterConfigs[$productSearchAttributeTransfer->getFilterType()];
 
             $facetConfigTransfer
                 ->setName($productSearchAttributeTransfer->getKey())
@@ -75,11 +74,42 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
     }
 
     /**
+     * @param mixed $data
+     * @param string $localeName
+     * @param array $collectedItemData
+     *
+     * @return string
+     */
+    protected function collectKey($data, $localeName, array $collectedItemData)
+    {
+        return $this->keyBuilder->generateKey($data, $localeName);
+    }
+
+    /**
      * @return string
      */
     protected function collectResourceType()
     {
         return ProductSearchConstants::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $availableProductSearchFilterConfigs
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer $productSearchAttributeTransfer
+     *
+     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
+     *
+     * @return void
+     */
+    protected function assertFilterType(array $availableProductSearchFilterConfigs, ProductSearchAttributeTransfer $productSearchAttributeTransfer)
+    {
+        if (!isset($availableProductSearchFilterConfigs[$productSearchAttributeTransfer->getFilterType()])) {
+            throw new InvalidFilterTypeException(sprintf(
+                'Invalid filter type "%s"! Available options are [%s].',
+                $productSearchAttributeTransfer->getFilterType(),
+                implode(', ', array_keys($availableProductSearchFilterConfigs))
+            ));
+        }
     }
 
 }

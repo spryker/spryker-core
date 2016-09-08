@@ -99,10 +99,13 @@ class FilterPreferencesDataProvider
      */
     public function getOptions($idProductSearchAttribute = null)
     {
-        $filterTypeConfigOptions = array_keys($this->config->getFilterTypeConfigs());
+        $availableProductSearchFilterConfigKeys = array_keys($this->config->getAvailableProductSearchFilterConfigs());
 
         $options = [
-            FilterPreferencesForm::OPTION_FILTER_TYPE_CHOICES => array_combine($filterTypeConfigOptions, $filterTypeConfigOptions),
+            FilterPreferencesForm::OPTION_FILTER_TYPE_CHOICES => array_combine(
+                $availableProductSearchFilterConfigKeys,
+                $availableProductSearchFilterConfigKeys
+            ),
             FilterPreferencesForm::OPTION_IS_UPDATE => ($idProductSearchAttribute > 0),
         ];
 

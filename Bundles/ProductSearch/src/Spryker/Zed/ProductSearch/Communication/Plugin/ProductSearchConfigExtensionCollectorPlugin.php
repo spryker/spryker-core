@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
  */
-class ProductSearchConfigStorageCollectorPlugin extends AbstractCollectorPlugin
+class ProductSearchConfigExtensionCollectorPlugin extends AbstractCollectorPlugin
 {
 
     /**
@@ -44,7 +44,7 @@ class ProductSearchConfigStorageCollectorPlugin extends AbstractCollectorPlugin
         OutputInterface $output
     ) {
         $this->getFacade()
-            ->runProductSearchConfigStorageCollector($baseQuery, $locale, $result, $dataReader, $dataWriter, $touchUpdater, $output);
+            ->runProductSearchConfigExtensionCollector($baseQuery, $locale, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
 
 }
