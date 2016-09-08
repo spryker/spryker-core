@@ -80,15 +80,15 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     }
 
     /**
-     * @param array $customerParameter
+     * @param array $customParameter
      *
      * @return void
      */
-    protected function addCustomParameter(array $customerParameter)
+    protected function addCustomParameter(array $customParameter)
     {
         $newRelicApi = $this->getFactory()->getNewRelicApi();
 
-        foreach ($customerParameter as $key => $value) {
+        foreach ($customParameter as $key => $value) {
             if (is_array($value)) {
                 $value = implode(',', $value);
             }
