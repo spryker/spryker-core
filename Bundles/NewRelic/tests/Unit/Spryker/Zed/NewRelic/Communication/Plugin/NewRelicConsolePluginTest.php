@@ -72,7 +72,7 @@ class NewRelicConsolePluginTest extends \PHPUnit_Framework_TestCase
                 'getFirstArgument', 'hasParameterOption', 'getParameterOption', 'bind', 'validate',
                 'getArguments', 'getArgument', 'setArgument', 'hasArgument',
                 'getOptions', 'getOption', 'setOption', 'hasOption',
-                'isInteractive','setInteractive',
+                'isInteractive', 'setInteractive',
             ])
             ->getMock();
 
