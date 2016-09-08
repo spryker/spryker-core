@@ -90,9 +90,9 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      * @param int $currentTokenIndex
      * @param int $parenthesisDepth
      *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
+     *
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     protected function buildTree(array $tokens, &$currentTokenIndex = 0, &$parenthesisDepth = 0)
     {

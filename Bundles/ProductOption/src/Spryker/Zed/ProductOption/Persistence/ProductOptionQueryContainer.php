@@ -569,9 +569,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @param int $idProductOptionTypeUsage
-     *
      * @deprecated use queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code instead
+     *
+     * @param int $idProductOptionTypeUsage
      *
      * @return string|null
      */

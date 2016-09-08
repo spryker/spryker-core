@@ -16,10 +16,10 @@ class CategoryNameExistsValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
+     * @api
+     *
      * @param mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Category\Communication\Constraint\CategoryNameExists $constraint The constraint for the validation
-     *
-     * @api
      *
      * @return void
      */
