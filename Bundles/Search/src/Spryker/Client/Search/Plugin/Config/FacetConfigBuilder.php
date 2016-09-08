@@ -10,16 +10,31 @@ namespace Spryker\Client\Search\Plugin\Config;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+use Spryker\Shared\Search\SearchConstants;
 
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
 
-    // TODO: normalize available filter types (single-select, multi-select, range, boolean, *category*, *price-range*)
-    const TYPE_ENUMERATION = 'enumeration'; // TODO: deprecate
+    /**
+     * @deprecated Use SearchConstants::FACET_TYPE_ENUMERATION instead.
+     */
+    const TYPE_ENUMERATION = SearchConstants::FACET_TYPE_ENUMERATION;
+    /**
+     * @deprecated Currently not supported.
+     */
     const TYPE_BOOL = 'bool';
-    const TYPE_RANGE = 'range';
-    const TYPE_PRICE_RANGE = 'price-range';
-    const TYPE_CATEGORY = 'category';
+    /**
+     * @deprecated Use SearchConstants::FACET_TYPE_RANGE instead.
+     */
+    const TYPE_RANGE = SearchConstants::FACET_TYPE_RANGE;
+    /**
+     * @deprecated Use SearchConstants::FACET_TYPE_PRICE_RANGE instead.
+     */
+    const TYPE_PRICE_RANGE = SearchConstants::FACET_TYPE_PRICE_RANGE;
+    /**
+     * @deprecated Use SearchConstants::FACET_TYPE_CATEGORY instead.
+     */
+    const TYPE_CATEGORY = SearchConstants::FACET_TYPE_CATEGORY;
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer[]

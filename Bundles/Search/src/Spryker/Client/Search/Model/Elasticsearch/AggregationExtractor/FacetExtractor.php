@@ -46,7 +46,7 @@ class FacetExtractor implements AggregationExtractorInterface
         $facetResultTransfer
             ->setName($parameterName)
             ->setValues($facetResultValueTransfers)
-            ->setType($this->facetConfigTransfer->getType());
+            ->setConfig(clone $this->facetConfigTransfer);
 
         if (isset($requestParameters[$parameterName])) {
             $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);

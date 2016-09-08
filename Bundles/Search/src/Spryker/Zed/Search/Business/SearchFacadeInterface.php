@@ -108,6 +108,9 @@ interface SearchFacadeInterface
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
+     * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
+     *
      * Specification:
      * - Stores the given search cache configuration into the storage (Redis by default)
      *

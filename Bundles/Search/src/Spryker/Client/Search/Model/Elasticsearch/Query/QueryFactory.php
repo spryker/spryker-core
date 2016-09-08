@@ -8,8 +8,8 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Search\SearchConstants;
 
 class QueryFactory implements QueryFactoryInterface
 {
@@ -55,13 +55,13 @@ class QueryFactory implements QueryFactoryInterface
     protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         switch ($facetConfigTransfer->getType()) {
-            case FacetConfigBuilder::TYPE_RANGE:
+            case SearchConstants::FACET_TYPE_RANGE:
                 return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
-            case FacetConfigBuilder::TYPE_PRICE_RANGE:
+            case SearchConstants::FACET_TYPE_PRICE_RANGE:
                 return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
-            case FacetConfigBuilder::TYPE_CATEGORY:
+            case SearchConstants::FACET_TYPE_CATEGORY:
                 return $this->createTermQuery($facetConfigTransfer, $filterValue);
 
             default:

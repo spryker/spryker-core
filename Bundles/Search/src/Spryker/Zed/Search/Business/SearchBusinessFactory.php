@@ -188,6 +188,9 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
+     * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Config\SearchConfigCacheSaverInterface
      */
     public function createSearchConfigCacheSaver()

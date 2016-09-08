@@ -38,7 +38,7 @@ class RangeExtractor implements AggregationExtractorInterface
         $rangeResultTransfer = new RangeSearchResultTransfer();
         $rangeResultTransfer
             ->setName($this->facetConfigTransfer->getParameterName())
-            ->setType($this->facetConfigTransfer->getType());
+            ->setConfig(clone $this->facetConfigTransfer);
 
         $rangeResultTransfer = $this->setRangeResultValues($rangeResultTransfer, $aggregations, $requestParameters);
 

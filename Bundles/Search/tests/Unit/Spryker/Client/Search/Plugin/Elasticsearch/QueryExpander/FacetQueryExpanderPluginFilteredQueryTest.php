@@ -14,7 +14,7 @@ use Elastica\Query\Term;
 use Elastica\Query\Terms;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
+use Spryker\Shared\Search\SearchConstants;
 
 /**
  * @group Unit
@@ -221,21 +221,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->setName('foo')
                     ->setParameterName('foo')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
+                ->setType(SearchConstants::FACET_TYPE_PRICE_RANGE)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
+                ->setType(SearchConstants::FACET_TYPE_PRICE_RANGE)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(FacetConfigBuilder::TYPE_PRICE_RANGE)
+                ->setType(SearchConstants::FACET_TYPE_PRICE_RANGE)
             );
 
         $expectedQuery = (new BoolQuery())

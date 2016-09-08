@@ -9,6 +9,10 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Config;
 
 use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 
+/**
+ * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
+ * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
+ */
 interface SearchConfigCacheSaverInterface
 {
 

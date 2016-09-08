@@ -9,6 +9,7 @@ namespace Spryker\Zed\Search\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\SearchConfigCacheTransfer;
+use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -153,6 +154,9 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
+     * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
+     *
      * Specification:
      * - Stores the given search cache configuration into the storage (Redis by default)
      *

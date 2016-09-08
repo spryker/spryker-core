@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Client\Search\SearchFactory;
+use Spryker\Shared\Search\SearchConstants;
 
 /**
  * @group Unit
@@ -389,7 +389,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setName('foo')
                     ->setParameterName('foo')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(FacetConfigBuilder::TYPE_ENUMERATION)
+                    ->setType(SearchConstants::FACET_TYPE_ENUMERATION)
                     ->setIsMultiValued(true)
             )
             ->addFacet(
@@ -397,7 +397,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setName('bar')
                     ->setParameterName('bar')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                ->setType(FacetConfigBuilder::TYPE_ENUMERATION)
+                ->setType(SearchConstants::FACET_TYPE_ENUMERATION)
             );
 
         $aggregationResult = [

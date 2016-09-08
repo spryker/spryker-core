@@ -13,6 +13,10 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
+ * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
+ */
 class SearchConfigCacheSaver implements SearchConfigCacheSaverInterface
 {
 
@@ -36,7 +40,6 @@ class SearchConfigCacheSaver implements SearchConfigCacheSaverInterface
      */
     public function save(SearchConfigCacheTransfer $searchConfigCacheTransfer)
     {
-        //TODO: add another saver that works with collector rather saving directly to redis and be able to enable/disable it with configuration
         $searchConfigCacheKey = $this->getSearchConfigCacheKey();
         $this
             ->storageClient
