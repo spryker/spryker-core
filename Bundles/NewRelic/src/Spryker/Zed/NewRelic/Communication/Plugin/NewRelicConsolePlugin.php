@@ -66,11 +66,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
      */
     protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event)
     {
-        $newRelicApi = $this->getFactory()->getNewRelicApi();
-
-        foreach ($event->getInput()->getArguments() as $key => $value) {
-            $newRelicApi->addCustomParameter($key, $value);
-        }
+        $this->addCustomParameter($event->getInput()->getArguments());
     }
 
     /**
@@ -80,9 +76,22 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
      */
     protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event)
     {
+        $this->addCustomParameter($event->getInput()->getOptions());
+    }
+
+    /**
+     * @param array $customerParameter
+     *
+     * @return void
+     */
+    protected function addCustomParameter(array $customerParameter)
+    {
         $newRelicApi = $this->getFactory()->getNewRelicApi();
 
-        foreach ($event->getInput()->getOptions() as $key => $value) {
+        foreach ($customerParameter as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
             $newRelicApi->addCustomParameter($key, $value);
         }
     }
