@@ -7,11 +7,18 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
@@ -271,18 +278,16 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
-     * - Reads all product search attribute entities from the database in ascending order by position.
-     * - Generates a SearchConfigCacheTransfer with a list of FacetConfigTransfers based on the attributes.
-     * - Stores the generated search cache configuration into the storage (Redis by default)
+     * - TODO: add specification
      *
      * @return void
      */
-    public function saveProductSearchCacheConfig()
+    public function touchProductSearchConfig()
     {
         $this
             ->getFactory()
-            ->createProductSearchConfigCacheSaver()
-            ->saveProductSearchConfigCache();
+            ->createProductSearchConfigMarker()
+            ->touchProductSearchConfig();
     }
 
     /**
@@ -319,6 +324,40 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->getFactory()
             ->createProductSearchAttributeMapMarker()
             ->touchProductAbstract();
+    }
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     * @param BatchResultInterface $result
+     * @param ReaderInterface $dataReader
+     * @param WriterInterface $dataWriter
+     * @param TouchUpdaterInterface $touchUpdater
+     * @param OutputInterface $output
+     *
+     * @return void
+     */
+    public function runProductSearchConfigStorageCollector(
+        SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        ReaderInterface $dataReader,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater,
+        OutputInterface $output
+    )
+    {
+        $collector = $this->getFactory()->createProductSearchConfigCollector();
+
+        $this
+            ->getFactory()
+            ->getCollectorFacade()
+            ->runCollector($collector, $baseQuery, $locale, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
 
 }

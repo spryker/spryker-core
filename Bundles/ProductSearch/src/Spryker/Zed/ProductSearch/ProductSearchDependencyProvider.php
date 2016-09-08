@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductSearch;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductBridge;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
@@ -22,9 +22,10 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_GLOSSARY = 'glossary facade';
     const FACADE_TOUCH = 'touch facade';
-    const FACADE_SEARCH = 'search facade';
+    const FACADE_COLLECTOR = 'collector facade';
     const CLIENT_SEARCH = 'search client';
     const QUERY_CONTAINER_PRODUCT = 'product query container';
+    const QUERY_CONTAINER_TOUCH = 'touch query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,8 +38,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideLocaleFacade($container);
         $this->provideGlossaryFacade($container);
         $this->provideTouchFacade($container);
-        $this->provideSearchFacade($container);
+        $this->provideCollectorFacade($container);
         $this->provideSearchClient($container);
+        $this->provideTouchQueryContainer($container);
 
         return $container;
     }
@@ -119,10 +121,10 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function provideSearchFacade(Container $container)
+    protected function provideCollectorFacade(Container $container)
     {
-        $container[self::FACADE_SEARCH] = function (Container $container) {
-            return new ProductSearchToSearchBridge($container->getLocator()->search()->facade());
+        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+            return new ProductSearchToCollectorBridge($container->getLocator()->collector()->facade());
         };
     }
 
@@ -147,6 +149,18 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideTouchQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+            return $container->getLocator()->touch()->queryContainer();
         };
     }
 

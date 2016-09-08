@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business\Map;
+namespace Spryker\Zed\ProductSearch\Business\Map\Collector;
 
 interface ProductSearchAttributeMapCollectorInterface
 {

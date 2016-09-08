@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductSearch;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Shared\Search\SearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSearchConfig extends AbstractBundleConfig
@@ -21,22 +22,22 @@ class ProductSearchConfig extends AbstractBundleConfig
     {
         return [
             'single-select' => (new FacetConfigTransfer())
-                ->setType('single-select')
+                ->setType(SearchConstants::FACET_TYPE_ENUMERATION)
                 ->setFieldName(PageIndexMap::STRING_FACET)
                 ->setIsMultiValued(false),
 
             'multi-select' => (new FacetConfigTransfer())
-                ->setType('multi-select')
+                ->setType(SearchConstants::FACET_TYPE_ENUMERATION)
                 ->setFieldName(PageIndexMap::STRING_FACET)
                 ->setIsMultiValued(true),
 
             'range' => (new FacetConfigTransfer())
-                ->setType('range')
+                ->setType(SearchConstants::FACET_TYPE_RANGE)
                 ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setIsMultiValued(false),
 
             'price-range' => (new FacetConfigTransfer())
-                ->setType('price-range')
+                ->setType(SearchConstants::FACET_TYPE_PRICE_RANGE)
                 ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setIsMultiValued(false),
         ];

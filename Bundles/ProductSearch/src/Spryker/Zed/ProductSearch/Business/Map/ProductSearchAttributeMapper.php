@@ -8,18 +8,19 @@
 namespace Spryker\Zed\ProductSearch\Business\Map;
 
 use Generated\Shared\Transfer\PageMapTransfer;
+use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface[]
+     * @var \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[]
      */
     protected $attributeMapCollectors;
 
     /**
-     * @param array $attributeMapCollectors
+     * @param \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[] $attributeMapCollectors
      */
     public function __construct(array $attributeMapCollectors)
     {
@@ -43,7 +44,7 @@ class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterf
     }
 
     /**
-     * @param \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface $attributeMapCollector
+     * @param \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface $attributeMapCollector
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $attributes

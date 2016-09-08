@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business\Map;
+namespace Spryker\Zed\ProductSearch\Business\Map\Collector;
 
 use Generated\Shared\Transfer\ProductSearchAttributeMapTransfer;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface;
@@ -24,6 +24,11 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
      * @var \Spryker\Zed\ProductSearch\ProductSearchConfig
      */
     protected $productSearchConfig;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     */
+    protected static $attributeList;
 
     /**
      * @param \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface $attributeReader
@@ -45,7 +50,7 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
         $result = [];
         $filterTypeConfigs = $this->productSearchConfig->getFilterTypeConfigs();
 
-        foreach ($this->attributeReader->getAttributeList() as $productSearchAttributeTransfer) {
+        foreach ($this->getAttributeList() as $productSearchAttributeTransfer) {
             if (!isset($filterTypeConfigs[$productSearchAttributeTransfer->getFilterType()])) {
                 throw new InvalidFilterTypeException(sprintf(
                     'Invalid filter type "%s"! Available options are [%s].',
@@ -65,21 +70,15 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
     }
 
     /**
-     * @param array $attributeMaps
-     *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
      */
-    protected function processRawMap(array $attributeMaps)
+    protected function getAttributeList()
     {
-        $result = [];
-
-        foreach ($attributeMaps as $attributeName => $targetFields) {
-            $result[] = (new ProductSearchAttributeMapTransfer())
-                ->setAttributeName($attributeName)
-                ->setTargetFields($targetFields);
+        if (static::$attributeList === null) {
+            static::$attributeList = $this->attributeReader->getAttributeList();
         }
 
-        return $result;
+        return static::$attributeList;
     }
 
 }

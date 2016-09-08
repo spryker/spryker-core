@@ -72,7 +72,7 @@ class FilterPreferencesController extends AbstractController
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
-            $this->getFacade()->saveProductSearchCacheConfig();
+            $this->getFacade()->touchProductSearchConfig();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?id=%d',
@@ -113,7 +113,7 @@ class FilterPreferencesController extends AbstractController
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
-            $this->getFacade()->saveProductSearchCacheConfig();
+            $this->getFacade()->touchProductSearchConfig();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?id=%d',
@@ -161,7 +161,7 @@ class FilterPreferencesController extends AbstractController
         $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
 
         $this->getFacade()->deleteProductSearchAttribute($productSearchAttributeTransfer);
-        $this->getFacade()->saveProductSearchCacheConfig();
+        $this->getFacade()->touchProductSearchConfig();
 
         return $this->redirectResponse('/product-search/filter-preferences');
     }

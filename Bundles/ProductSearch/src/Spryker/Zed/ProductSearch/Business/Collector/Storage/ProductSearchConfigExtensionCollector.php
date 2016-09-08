@@ -5,15 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Business\Map;
+namespace Spryker\Zed\ProductSearch\Business\Collector\Storage;
 
-use Generated\Shared\Transfer\SearchConfigCacheTransfer;
+use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
+use Spryker\Shared\ProductSearch\ProductSearchConstants;
+use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface;
 use Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchInterface;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
-class ProductSearchConfigCacheSaver implements ProductSearchConfigCacheSaverInterface
+class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollector
 {
 
     /**
@@ -22,36 +23,33 @@ class ProductSearchConfigCacheSaver implements ProductSearchConfigCacheSaverInte
     protected $attributeReader;
 
     /**
-     * @var \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchInterface
-     */
-    protected $searchFacade;
-
-    /**
      * @var \Spryker\Zed\ProductSearch\ProductSearchConfig
      */
     protected $productSearchConfig;
 
     /**
      * @param \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface $attributeReader
-     * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\ProductSearch\ProductSearchConfig $productSearchConfig
      */
-    public function __construct(AttributeReaderInterface $attributeReader, ProductSearchToSearchInterface $searchFacade, ProductSearchConfig $productSearchConfig)
+    public function __construct(AttributeReaderInterface $attributeReader, ProductSearchConfig $productSearchConfig)
     {
         $this->attributeReader = $attributeReader;
-        $this->searchFacade = $searchFacade;
         $this->productSearchConfig = $productSearchConfig;
     }
 
     /**
+     * @param string $touchKey
+     * @param array $collectItemData
+     *
      * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
      *
-     * @return void
+     * @return array
      */
-    public function saveProductSearchConfigCache()
+    protected function collectItem($touchKey, array $collectItemData)
     {
-        $searchConfigCacheTransfer = new SearchConfigCacheTransfer();
+        $searchConfigExtensionTransfer = new SearchConfigExtensionTransfer();
 
+        // TODO: refactor
         $filterTypeConfigs = $this->productSearchConfig->getFilterTypeConfigs();
 
         $productSearchAttributeTransfers = $this->attributeReader->getAttributeList();
@@ -70,10 +68,18 @@ class ProductSearchConfigCacheSaver implements ProductSearchConfigCacheSaverInte
                 ->setName($productSearchAttributeTransfer->getKey())
                 ->setParameterName($productSearchAttributeTransfer->getKey());
 
-            $searchConfigCacheTransfer->addFacetConfig($facetConfigTransfer);
+            $searchConfigExtensionTransfer->addFacetConfig($facetConfigTransfer);
         }
 
-        $this->searchFacade->saveSearchConfigCache($searchConfigCacheTransfer);
+        return $searchConfigExtensionTransfer->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    protected function collectResourceType()
+    {
+        return ProductSearchConstants::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION;
     }
 
 }

@@ -12,14 +12,16 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeMapWriter;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeCollector;
-use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollector;
+use Spryker\Zed\ProductSearch\Business\Collector\Storage\ProductSearchConfigExtensionCollector;
+use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeCollector;
+use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper;
-use Spryker\Zed\ProductSearch\Business\Map\ProductSearchConfigCacheSaver;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMapMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMarker;
+use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGenerator;
+use Spryker\Zed\ProductSearch\Persistence\Collector\Propel\ProductSearchConfigExtensionCollectorQuery;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -57,7 +59,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface[]
+     * @return \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[]
      */
     protected function getAttributeMapCollectors()
     {
@@ -68,32 +70,20 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface
      */
     protected function createProductSearchAttributeMapCollector()
     {
-        return new ProductSearchAttributeMapCollector($this->getSearchClient()->getSearchConfig());
+        return new ProductSearchAttributeMapCollector($this->getQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapCollectorInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface
      */
     protected function createProductSearchAttributeCollector()
     {
         return new ProductSearchAttributeCollector(
             $this->createAttributeReader(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSearch\Business\Map\ProductSearchConfigCacheSaverInterface
-     */
-    public function createProductSearchConfigCacheSaver()
-    {
-        return new ProductSearchConfigCacheSaver(
-            $this->createAttributeReader(),
-            $this->getSearchFacade(),
             $this->getConfig()
         );
     }
@@ -145,14 +135,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToSearchInterface
-     */
-    public function getSearchFacade()
-    {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_SEARCH);
     }
 
     /**
@@ -215,6 +197,58 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface
+     */
+    public function createProductSearchConfigCollector()
+    {
+        $productSearchConfigCollector = new ProductSearchConfigExtensionCollector(
+            $this->createAttributeReader(),
+            $this->getConfig()
+        );
+
+        $productSearchConfigCollector->setTouchQueryContainer(
+            $this->getTouchQueryContainer()
+        );
+        $productSearchConfigCollector->setQueryBuilder(
+            $this->createProductSearchConfigPropelQuery()
+        );
+
+        return $productSearchConfigCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface
+     */
+    public function getCollectorFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_COLLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
+     */
+    protected function getTouchQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::QUERY_CONTAINER_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery
+     */
+    protected function createProductSearchConfigPropelQuery()
+    {
+        return new ProductSearchConfigExtensionCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigMarkerInterface
+     */
+    public function createProductSearchConfigMarker()
+    {
+        return new ProductSearchConfigMarker($this->getTouchFacade());
     }
 
 }
