@@ -20,7 +20,7 @@ class ServerProcessor
     const USER_AGENT = 'user_agent';
     const USER_IP = 'user_ip';
     const REQUEST_METHOD = 'request_method';
-    const REFERRER = 'referrer';
+    const REFERER = 'referer';
     const RECORD_EXTRA = 'extra';
 
     /**
@@ -47,7 +47,7 @@ class ServerProcessor
             static::USER_AGENT => $this->getUserAgent(),
             static::USER_IP => $this->getRemoteAddress(),
             static::REQUEST_METHOD => $this->getRequestMethod(),
-            static::REFERRER => $this->getHttpReferrer(),
+            static::REFERER => $this->getHttpReferer(),
         ];
     }
 
@@ -122,7 +122,7 @@ class ServerProcessor
     /**
      * @return string|null
      */
-    protected function getHttpReferrer()
+    protected function getHttpReferer()
     {
         return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
     }

@@ -87,7 +87,7 @@ class KernelLogListener implements EventSubscriberInterface
     {
         if ($response instanceof RedirectResponse) {
             $message = sprintf(
-                '%s Response %s [%s], target url %s',
+                '%s Response %s [%s], target URL %s',
                 $this->getSapi(),
                 APPLICATION,
                 $response->getStatusCode(),
