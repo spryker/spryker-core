@@ -116,22 +116,4 @@ class AddController extends AbstractController
         return $attributeArray;
     }
 
-    /**
-     * @param array $concreteProductCollection
-     *
-     * @return array
-     */
-    protected function someToView($idProductAbstract, array $concreteProductCollection)
-    {
-        $r = [];
-        foreach ($concreteProductCollection as $t) {
-            $c = $t->toArray(true);
-            ;
-            $c['attributes'] = $this->getFacade()->getProductAttributesByAbstractProductId($idProductAbstract);
-            $r[] = $c;
-        }
-
-        return $r;
-    }
-
 }

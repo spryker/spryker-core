@@ -334,18 +334,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * @api
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     * 
-     * TODO: remove this method, because models must not be given away for other bundles
-     */
-    public function getAttributeManager()
-    {
-        return $this->getFactory()->createAttributeManager();
-    }
-
-    /**
      * Specification:
      * - Checks if the product attribute key exists in database or not
      *

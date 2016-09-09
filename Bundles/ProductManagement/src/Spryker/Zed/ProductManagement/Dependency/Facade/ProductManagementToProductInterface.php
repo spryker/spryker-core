@@ -47,4 +47,18 @@ interface ProductManagementToProductInterface
      */
     public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
+
 }

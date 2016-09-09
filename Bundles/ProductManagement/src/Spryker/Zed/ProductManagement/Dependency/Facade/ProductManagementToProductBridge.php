@@ -75,4 +75,23 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
         return $this->productFacade->updateProductAttributeKey($productAttributeKeyTransfer);
     }
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku)
+    {
+        return $this->productFacade->hasProductAbstract($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku)
+    {
+        return $this->productFacade->hasProductConcrete($sku);
+    }
 }

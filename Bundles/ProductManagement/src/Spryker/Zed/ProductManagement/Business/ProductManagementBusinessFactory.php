@@ -31,9 +31,10 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     public function createProductManager()
     {
         return new ProductManager(
-            $this->getProductAttributeManager(),
+            $this->createAttributeManager(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
+            $this->getProductFacade(),
             $this->getTouchFacade(),
             $this->getUrlFacade(),
             $this->getLocaleFacade(),
@@ -41,14 +42,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getStockFacade(),
             $this->getProductImageFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    public function getProductAttributeManager()
-    {
-        return $this->getProductFacade()->getAttributeManager();
     }
 
     /**
@@ -158,6 +151,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     public function createAttributeManager()
     {
         return new AttributeManager(
+            $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->createProductAttributeTransferGenerator()
         );

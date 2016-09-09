@@ -236,13 +236,6 @@ interface ProductFacadeInterface
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
     /**
-     * @api
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    public function getAttributeManager();
-
-    /**
      * Specification:
      * - Checks if the product attribute key exists in database or not
      *
