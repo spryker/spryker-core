@@ -1,17 +1,17 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Filter Preferences' %}
+{% set widget_title = 'Edit filter order' %}
 
 {% block section_title widget_title | trans %}
 {% block head_title widget_title | trans %}
 
 {% block action %}
-    {{ backActionButton('/product-search/filter-preferences', 'Back to List' | trans) }}
+    {{ backActionButton('/product-search/filter-preferences', 'List of filters' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Edit filter order' | trans} %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: widget_title | trans} %}
 
         {% block widget_content %}
 

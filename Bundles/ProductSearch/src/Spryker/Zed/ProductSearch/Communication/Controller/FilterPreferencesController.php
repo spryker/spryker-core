@@ -163,6 +163,8 @@ class FilterPreferencesController extends AbstractController
         $this->getFacade()->deleteProductSearchAttribute($productSearchAttributeTransfer);
         $this->getFacade()->touchProductSearchConfigExtension();
 
+        $this->addSuccessMessage('Filter successfully deleted.');
+
         return $this->redirectResponse('/product-search/filter-preferences');
     }
 

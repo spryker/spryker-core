@@ -35,11 +35,6 @@ class ProductSearchConfig extends AbstractBundleConfig
                 ->setType(SearchConstants::FACET_TYPE_RANGE)
                 ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setIsMultiValued(false),
-
-            'price-range' => (new FacetConfigTransfer())
-                ->setType(SearchConstants::FACET_TYPE_PRICE_RANGE)
-                ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setIsMultiValued(false),
         ];
     }
 

@@ -1,28 +1,35 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set action_name = (app.request.query.get('id') > 0) ? 'Edit' : 'Create' %}
+{% set action_name = (app.request.query.get('id') > 0) ? 'Edit filter' : 'Create filter' %}
 
-{% block section_title 'Filter Preferences' | trans %}
-{% block head_title action_name ~ ' Filter' | trans %}
+{% block section_title action_name | trans %}
+{% block head_title action_name | trans %}
 
 {% block action %}
-    {{ backActionButton('/product-search/filter-preferences/', 'Back to filters' | trans) }}
+    {{ backActionButton('/product-search/filter-preferences', 'List of filters' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: action_name ~ ' Filter' } %}
-
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: action_name | trans } %}
         {% block widget_content %}
 
             {{ form_start(form) }}
 
-                {{ form_row(form.key) }}
+                <div class="form-group {% if form.key.vars.errors|length %}has-error{% endif %}">
+                    {{ form_label(form.key) }}
+                    {{ form_widget(form.key) }}
+                    {% if not form.key.vars.disabled %}
+                        <span class="help-block">{{ 'Type first three letters of an attribute key for suggestions.' | trans }}</span>
+                    {% endif %}
+                    {{ form_errors(form.key) }}
+                </div>
 
                 {{ form_row(form.filter_type) }}
 
-                <div class="well">
-                    <div class="tabs-container">
+                <h4>{{ 'Translation' | trans }}</h4>
+                <div class="tabs-container">
+                    <div class="tabs-left">
                         <ul class="nav nav-tabs">
                             {% for locale,localizedAttribute in form.translations %}
                                 {% set activeClass = '' %}
@@ -51,15 +58,11 @@
 
                                 <div id="content_{{ locale }}" class="tab-pane {{ activeClass }} tab-translation">
                                     <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
-                                                    {{ form_label(localizedAttribute.key_translation) }}
-                                                    <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="name-translation">{{ 'Copy to other languages' | trans }}</a>
-                                                    {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation'}}) }}
-                                                    {{ form_errors(localizedAttribute.key_translation) }}
-                                                </div>
-                                            </div>
+                                        <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
+                                            {{ form_label(localizedAttribute.key_translation) }}
+                                            <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="name-translation">{{ 'Copy to other languages' | trans }}</a>
+                                            {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation'}}) }}
+                                            {{ form_errors(localizedAttribute.key_translation) }}
                                         </div>
                                     </div>
                                 </div>
@@ -68,12 +71,11 @@
                     </div>
                 </div>
 
-                <input id="{{ form.vars.name }}_submit" type="submit" class="btn btn-primary" value="{{ 'Submit' | trans }} " />
+                <input id="{{ form.vars.name }}_submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }} " />
 
             {{ form_end(form) }}
 
         {% endblock %}
-
     {% endembed %}
 
 {% endblock %}

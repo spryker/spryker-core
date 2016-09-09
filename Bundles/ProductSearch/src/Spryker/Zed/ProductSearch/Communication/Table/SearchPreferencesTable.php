@@ -22,7 +22,7 @@ class SearchPreferencesTable extends AbstractTable
     const COL_COMPLETION_TERMS = 'completionTerms';
     const COL_FULL_TEXT = 'fullText';
     const COL_FULL_TEXT_BOOSTED = 'fullTextBoosted';
-    const ACTION = 'action';
+    const ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
@@ -48,7 +48,7 @@ class SearchPreferencesTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::ACTION);
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -60,11 +60,11 @@ class SearchPreferencesTable extends AbstractTable
     {
         return [
             self::COL_NAME => 'Attribute key',
-            self::COL_FULL_TEXT => 'Include for Full Text',
-            self::COL_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
-            self::COL_SUGGESTION_TERMS => 'Include for Suggestion',
-            self::COL_COMPLETION_TERMS => 'Include for Completion',
-            self::ACTION => 'Action',
+            self::COL_FULL_TEXT => 'Include for full text',
+            self::COL_FULL_TEXT_BOOSTED => 'Include for full text boosted',
+            self::COL_SUGGESTION_TERMS => 'Include for suggestion',
+            self::COL_COMPLETION_TERMS => 'Include for completion',
+            self::ACTIONS => 'Actions',
         ];
     }
 
@@ -110,7 +110,7 @@ class SearchPreferencesTable extends AbstractTable
                 self::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_FULL_TEXT_BOOSTED)),
                 self::COL_SUGGESTION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_SUGGESTION_TERMS)),
                 self::COL_COMPLETION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_COMPLETION_TERMS)),
-                self::ACTION => $this->getActions($productAttributeKeyEntity),
+                self::ACTIONS => $this->getActions($productAttributeKeyEntity),
             ];
         }
 

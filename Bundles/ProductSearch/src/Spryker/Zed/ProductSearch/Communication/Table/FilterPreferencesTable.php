@@ -20,7 +20,7 @@ class FilterPreferencesTable extends AbstractTable
     const COL_NAME = 'key';
     const COL_POSITION = SpyProductSearchAttributeTableMap::COL_POSITION;
     const COL_FILTER_TYPE = SpyProductSearchAttributeTableMap::COL_FILTER_TYPE;
-    const ACTION = 'action';
+    const ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
@@ -46,7 +46,7 @@ class FilterPreferencesTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::ACTION);
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -60,7 +60,7 @@ class FilterPreferencesTable extends AbstractTable
             self::COL_POSITION => 'Filter position',
             self::COL_NAME => 'Attribute key',
             self::COL_FILTER_TYPE => 'Filter type',
-            self::ACTION => 'Action',
+            self::ACTIONS => 'Actions',
         ];
     }
 
@@ -103,7 +103,7 @@ class FilterPreferencesTable extends AbstractTable
                 self::COL_POSITION => $productSearchAttributeEntity->getPosition(),
                 self::COL_NAME => $productSearchAttributeEntity->getSpyProductAttributeKey()->getKey(),
                 self::COL_FILTER_TYPE => $productSearchAttributeEntity->getFilterType(),
-                self::ACTION => $this->getActions($productSearchAttributeEntity->getIdProductSearchAttribute()),
+                self::ACTIONS => $this->getActions($productSearchAttributeEntity->getIdProductSearchAttribute()),
             ];
         }
 
@@ -135,14 +135,6 @@ class FilterPreferencesTable extends AbstractTable
     protected function getActions($idProductSearchAttribute)
     {
         $actions = [
-            $this->generateViewButton(
-                sprintf(
-                    '/product-search/filter-preferences/view?%s=%d',
-                    SearchPreferencesController::PARAM_ID,
-                    $idProductSearchAttribute
-                ),
-                'View'
-            ),
             $this->generateEditButton(
                 sprintf(
                     '/product-search/filter-preferences/edit?%s=%d',
@@ -150,6 +142,14 @@ class FilterPreferencesTable extends AbstractTable
                     $idProductSearchAttribute
                 ),
                 'Edit'
+            ),
+            $this->generateViewButton(
+                sprintf(
+                    '/product-search/filter-preferences/view?%s=%d',
+                    SearchPreferencesController::PARAM_ID,
+                    $idProductSearchAttribute
+                ),
+                'View'
             ),
             $this->generateRemoveButton(
                 sprintf(

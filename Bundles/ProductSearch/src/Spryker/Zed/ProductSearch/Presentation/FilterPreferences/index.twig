@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Filter Preferences' %}
+{% set widget_title = 'Filter preferences' %}
 
 {% block section_title widget_title | trans %}
 {% block head_title widget_title | trans %}
@@ -8,7 +8,7 @@
 {% block action %}
     {{ createActionButton('/product-search/filter-preferences/create', 'Create filter' | trans) }}
     {{ editActionButton('/product-search/filter-reorder', 'Edit filter order' | trans) }}
-    {{ viewActionButton('/product-search/filter-preferences/sync', 'Synchronize Filter Preferences' | trans, {'disabled':'disabled'}) }}
+    {{ viewActionButton('/product-search/filter-preferences/sync', 'Synchronize filter preferences' | trans) }}
 {% endblock %}
 
 {% block content %}
