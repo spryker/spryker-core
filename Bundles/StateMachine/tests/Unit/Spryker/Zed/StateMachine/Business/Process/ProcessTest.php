@@ -29,10 +29,8 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
      */
     public function testThatManualEventsIncludeOnEnterEvents()
     {
-        $process = $this->getProcessMock();
-
-        $transitions = $this->getTransitionsWithManualAndOnEnterEvents();
-        $process->expects($this->once())->method('getAllTransitions')->willReturn($transitions);
+        $process = $this->createProcess();
+        $process->setTransitions($this->getTransitionsWithManualAndOnEnterEvents());
 
         $result = $process->getManualEvents();
         $this->assertSame(2, count($result));
@@ -72,11 +70,11 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Process\Process
+     * @return \Spryker\Zed\StateMachine\Business\Process\Process
      */
-    protected function getProcessMock()
+    protected function createProcess()
     {
-        return $this->getMockBuilder(Process::class)->setMethods(['getAllTransitions'])->getMock();
+        return new Process();
     }
 
 }
