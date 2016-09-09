@@ -22,6 +22,7 @@ class AttributeController extends AbstractController
     const PARAM_ID = 'id';
     const PARAM_SEARCH_TEXT = 'q';
     const PARAM_TERM = 'term';
+    const PARAM_LOCALE_CODE = 'locale_code';
 
     /**
      * @return array
@@ -209,7 +210,15 @@ class AttributeController extends AbstractController
     {
         $idProductManagementAttribute = $this->castId($request->get(self::PARAM_ID));
         $searchText = trim($request->get(self::PARAM_SEARCH_TEXT));
-        $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+
+        try {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($request->get(self::PARAM_LOCALE_CODE));
+        }
+        catch (\Exception $e) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        }
+
+        $idLocale = $localeTransfer->getIdLocale();
         $total = $this->getFacade()->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale);
         $values = $this->getFacade()
             ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText);

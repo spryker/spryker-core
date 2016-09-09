@@ -58,7 +58,8 @@ $(document).ready(function() {
                 var p = {
                     q: params.term,
                     page: params.page,
-                    id: this.attr('id_attribute')
+                    id: this.attr('id_attribute'),
+                    locale_code: this.attr('locale_code')
                 };
 
                 return p;
@@ -80,7 +81,8 @@ $(document).ready(function() {
                 var p = {
                     q: params.term,
                     page: params.page,
-                    id: this.attr('id_attribute')
+                    id: this.attr('id_attribute'),
+                    locale_code: this.attr('locale_code')
                 };
 
                 return p;
@@ -133,6 +135,7 @@ $(document).ready(function() {
     $('.kv_attribute_autocomplete').each(function(key, value) {
         var input = $(value);
         var id = input.attr('id_attribute') || null;
+        var locale_code = input.attr('locale_code') || null;
 
         input.autocomplete({
             minLength: 0,
@@ -142,7 +145,8 @@ $(document).ready(function() {
                     dataType: "json",
                     data: {
                         q: request.term,
-                        id: id
+                        id: id,
+                        locale_code: locale_code
                     },
                     success: function(data) {
                         response($.map(data.values, function (item) {

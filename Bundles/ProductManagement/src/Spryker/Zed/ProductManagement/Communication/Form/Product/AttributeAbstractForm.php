@@ -88,7 +88,7 @@ class AttributeAbstractForm extends AbstractSubForm
                 'class' => 'attribute_metadata_value',
                 'style' => '',
                 'product_specific' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC],
-                'id_attribute' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ID]
+                'id_attribute' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ID],
             ],
             'constraints' => [
                 new NotBlank([

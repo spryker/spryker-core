@@ -38,7 +38,7 @@
                                         <div class='row vertical-align col-lg-12 attribute_metadata_row'>
                                             <div class='form-group {{ form_group_errors_css }}'>
                                                 {{ form_label(inputCollection.name) }} {{ form_label(inputCollection.value) }}
-                                                {{ form_widget(inputCollection.name) }} {{ form_widget(inputCollection.value) }}
+                                                {{ form_widget(inputCollection.name) }} {{ form_widget(inputCollection.value, { 'attr': {'locale_code': localeCode }}) }}
                                                 {{ form_errors(inputCollection.name) }} {{ form_errors(inputCollection.value) }}
                                                 {{ form_widget(inputCollection.value_hidden_id) }}
                                             </div>

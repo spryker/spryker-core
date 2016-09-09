@@ -22,7 +22,7 @@ class AttributeSuperForm extends AttributeAbstractForm
      *
      * @return $this
      */
-    protected function addValueField2(FormBuilderInterface $builder, array $options = [])
+    protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
         $attributes = $options[self::OPTION_ATTRIBUTE];
@@ -51,14 +51,14 @@ class AttributeSuperForm extends AttributeAbstractForm
             )->findOne();
 
         $input = new Select2ComboBoxType();
-        $config['multiple'] = false;
+        $config['multiple'] = true;
         $config['placeholder'] = '-';
         $config['attr']['style'] .= ' width: 250px';
         $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
         $config['attr']['tags'] = false;
 
         if ($allowInput) {
-            $config['attr']['tags'] = true;
+            //$config['attr']['tags'] = true;
         }
         else {
             //$config['attr']['class'] .= ' ajax';
