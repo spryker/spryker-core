@@ -45,12 +45,12 @@ class StateMachineFacadeExceptionTest extends Test
      */
     public function testGetManualEventsForStateMachineItemShouldReturnAlsoOnEnterEventsForProvidedState()
     {
-        $processName = self::TEST_PROCESS_NAME;
+        $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName($processName);
-        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_SM);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
 
         $stateMachineHandler = new TestStateMachineHandlerException();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);

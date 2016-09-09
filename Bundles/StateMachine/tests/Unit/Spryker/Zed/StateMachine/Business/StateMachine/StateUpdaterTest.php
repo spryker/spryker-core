@@ -135,14 +135,14 @@ class StateUpdaterTest extends StateMachineMocks
         $stateMachineItemTransfer->setProcessName('Test');
         $stateMachineItemTransfer->setIdentifier(1);
         $stateMachineItemTransfer->setStateName('target');
-        $stateMachineItemTransfer->setStateMachineName(self::TEST_STATE_MACHINE_NAME);
+        $stateMachineItemTransfer->setStateMachineName(static::TEST_STATE_MACHINE_NAME);
         $items[] = $stateMachineItemTransfer;
 
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setProcessName('Test');
         $stateMachineItemTransfer->setIdentifier(2);
         $stateMachineItemTransfer->setStateName('target');
-        $stateMachineItemTransfer->setStateMachineName(self::TEST_STATE_MACHINE_NAME);
+        $stateMachineItemTransfer->setStateMachineName(static::TEST_STATE_MACHINE_NAME);
         $items[] = $stateMachineItemTransfer;
 
         return $items;

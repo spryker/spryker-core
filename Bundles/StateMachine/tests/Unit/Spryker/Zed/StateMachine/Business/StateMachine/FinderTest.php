@@ -52,14 +52,14 @@ class FinderTest extends StateMachineMocks
 
         $finder = $this->createFinder($handlerResolverMock);
 
-        $subProcesses = $finder->getProcesses(self::TEST_STATE_MACHINE_NAME);
+        $subProcesses = $finder->getProcesses(static::TEST_STATE_MACHINE_NAME);
 
         $this->assertCount(2, $subProcesses);
 
         /* @var $subProcess StateMachineProcessTransfer  */
         $subProcess = array_pop($subProcesses);
         $this->assertInstanceOf(StateMachineProcessTransfer::class, $subProcess);
-        $this->assertEquals(self::TEST_STATE_MACHINE_NAME, $subProcess->getStateMachineName());
+        $this->assertEquals(static::TEST_STATE_MACHINE_NAME, $subProcess->getStateMachineName());
         $this->assertEquals('Process2', $subProcess->getProcessName());
     }
 
@@ -120,14 +120,14 @@ class FinderTest extends StateMachineMocks
 
         $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
 
-        $stateMachineProcessQuery = $this->getMock(SpyStateMachineProcessQuery::class);
+        $stateMachineProcessQuery = $this->getMockBuilder(SpyStateMachineProcessQuery::class)->getMock();
         $stateMachineProcessQuery->method('findOne')->willReturn(new SpyStateMachineProcess());
 
         $stateMachineQueryContainerMock->expects($this->once())
             ->method('queryProcessByStateMachineAndProcessName')
             ->willReturn($stateMachineProcessQuery);
 
-        $stateMachineItemStateQuery = $this->getMock(SpyStateMachineItemStateQuery::class);
+        $stateMachineItemStateQuery = $this->getMockBuilder(SpyStateMachineItemStateQuery::class)->getMock();
 
         $stateMachineItemEntity = new SpyStateMachineItemState();
         $stateMachineItemEntity->setIdStateMachineItemState(1);
@@ -151,7 +151,7 @@ class FinderTest extends StateMachineMocks
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName('Process1');
-        $stateMachineProcessTransfer->setStateMachineName(self::TEST_STATE_MACHINE_NAME);
+        $stateMachineProcessTransfer->setStateMachineName(static::TEST_STATE_MACHINE_NAME);
 
         $stateMachineItems = $finder->getItemsWithFlag($stateMachineProcessTransfer, 'test');
 
