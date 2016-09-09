@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
+namespace Unit\Spryker\Zed\StateMachine\Business\Process;
 
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
@@ -18,7 +18,7 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
  * @group Zed
  * @group StateMachine
  * @group Business
- * @group StateMachine
+ * @group Process
  * @group ProcessTest
  */
 class ProcessTest extends \PHPUnit_Framework_TestCase
@@ -27,11 +27,11 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testManualEvents()
+    public function testThatManualEventsIncludeOnEnterEvents()
     {
         $process = $this->getProcessMock();
 
-        $transitions = $this->getTransitions();
+        $transitions = $this->getTransitionsWithManualAndOnEnterEvents();
         $process->expects($this->once())->method('getAllTransitions')->willReturn($transitions);
 
         $result = $process->getManualEvents();
@@ -44,7 +44,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    protected function getTransitions()
+    protected function getTransitionsWithManualAndOnEnterEvents()
     {
         $transitions = [];
 
