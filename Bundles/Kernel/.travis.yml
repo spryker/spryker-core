@@ -27,7 +27,7 @@ script:
   -
 
 after_success:
-  - vendor/bin/coveralls -v --exclude-no-stmt
+  - travis_retry php vendor/bin/coveralls -vvv
 
 notifications:
   email: false
