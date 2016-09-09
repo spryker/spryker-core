@@ -1,9 +1,0 @@
-class_name: AcceptanceTester
-modules:
-    enabled:
-        - WebDriver:
-            url: ''
-            browser: phantomjs
-
-        - \Application\Module\Yves
-        - \Application\Module\Zed

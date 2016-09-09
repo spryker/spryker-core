@@ -161,7 +161,7 @@ class ZedBootstrap
     {
         $application = $this->application;
         $application['resolver'] = $this->application->share(function () use ($application) {
-            return new ZedFragmentControllerResolver($application, $application['logger']);
+            return new ZedFragmentControllerResolver($application);
         });
     }
 
