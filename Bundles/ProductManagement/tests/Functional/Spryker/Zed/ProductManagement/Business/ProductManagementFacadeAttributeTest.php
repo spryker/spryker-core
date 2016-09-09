@@ -19,6 +19,7 @@ use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
+use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\ProductManagementBusinessFactory;
 use Spryker\Zed\ProductManagement\Business\ProductManagementFacade;
@@ -356,11 +357,16 @@ class ProductManagementFacadeAttributeTest extends Test
             ->disableOriginalConstructor()
             ->getMock();
 
+        $glossaryKeyBuilderMock = $this->getMockBuilder(AttributeGlossaryKeyBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $attributeTranslatorMock = $this->getMockBuilder(AttributeTranslator::class)
             ->setConstructorArgs([
                 new ProductManagementQueryContainer(),
                 $productManagementToLocaleBridgeMock,
                 $productManagementToGlossaryBridgeMock,
+                $glossaryKeyBuilderMock
             ])
             ->setMethods(['getLocaleByName'])
             ->getMock();
