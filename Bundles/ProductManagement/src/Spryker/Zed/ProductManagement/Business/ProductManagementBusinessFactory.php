@@ -14,6 +14,8 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
+use Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManager;
+use Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManager;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
@@ -31,6 +33,39 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     public function createProductManager()
     {
         return new ProductManager(
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager(),
+            $this->getQueryContainer(),
+            $this->createProductConcreteManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManagerInterface
+     */
+    public function createProductAbstractManager()
+    {
+        return new ProductAbstractManager(
+            $this->createAttributeManager(),
+            $this->getProductQueryContainer(),
+            $this->getStockQueryContainer(),
+            $this->getProductFacade(),
+            $this->getTouchFacade(),
+            $this->getUrlFacade(),
+            $this->getLocaleFacade(),
+            $this->getPriceFacade(),
+            $this->getStockFacade(),
+            $this->getProductImageFacade(),
+            $this->createProductConcreteManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
+     */
+    public function createProductConcreteManager()
+    {
+        return new ProductConcreteManager(
             $this->createAttributeManager(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
