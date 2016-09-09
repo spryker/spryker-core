@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
@@ -72,9 +73,18 @@ class Writer implements WriterInterface
             $productImageSetEntity = new SpyProductImageSet();
         }
 
+        if ((int)$productImageSetTransfer->getIdProductAbstract() === 0 && (int)$productImageSetTransfer->getIdProduct()) {
+            throw new \Exception('ImageSet has no product assigned');
+        }
+
         $this->productImageContainer->getConnection()->beginTransaction();
         try {
             $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
+            $productImageSetEntity->setFkProductAbstract($productImageSetTransfer->getIdProductAbstract());
+            $productImageSetEntity->setFkProduct($productImageSetTransfer->getIdProduct());
+            if ($productImageSetTransfer->getLocale() instanceof LocaleTransfer) {
+                $productImageSetEntity->setFkLocale($productImageSetTransfer->getLocale()->getIdLocale());
+            }
             $productImageSetEntity->save();
 
             $productImageSetTransfer->setIdProductImageSet(

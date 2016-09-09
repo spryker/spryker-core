@@ -172,6 +172,14 @@ class ProductManager implements ProductManagerInterface
                 $this->priceFacade->persistAbstractProductPrice($priceTransfer);
             }
 
+            $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
+            if (!empty($imageSetTransferCollection)) {
+                foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                    $imageSetTransfer->setIdProductAbstract($idProductAbstract);
+                    $this->productImageFacade->persistProductImageSet($imageSetTransfer);
+                }
+            }
+
             $this->productQueryContainer->getConnection()->commit();
             return $idProductAbstract;
 
