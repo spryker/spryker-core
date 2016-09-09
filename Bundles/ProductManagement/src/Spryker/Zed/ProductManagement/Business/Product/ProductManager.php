@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
+use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -825,6 +826,27 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function loadImageSet(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $imageSets = $this->productImageFacade
+            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());
+
+        if ($imageSets === null) {
+            return $productAbstractTransfer;
+        }
+
+        $productAbstractTransfer->setImageSets(
+            new ArrayObject($imageSets)
+        );
+
+        return $productAbstractTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
@@ -917,6 +939,7 @@ class ProductManager implements ProductManagerInterface
         $productAbstractTransfer = $this->loadProductAbstractLocalizedAttributes($productAbstractTransfer);
         $productAbstractTransfer = $this->loadProductAbstractPrice($productAbstractTransfer);
         $productAbstractTransfer = $this->loadTaxRate($productAbstractTransfer);
+        $productAbstractTransfer = $this->loadImageSet($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }

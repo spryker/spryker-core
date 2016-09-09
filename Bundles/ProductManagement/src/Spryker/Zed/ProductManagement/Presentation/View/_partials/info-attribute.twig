@@ -1,8 +1,46 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
     {% block widget_content %}
 
-        <div class="col-lg-12">
-            Attributes
+        <div class="tabs-container">
+            <div class="tabs-top">
+                <ul class="nav nav-tabs">
+                    {% for localeCode,attributes in productAttributes %}
+                        {% set activeCss = '' %}
+
+                        {% if localeCode == 'default' %}
+                            {% set activeCss =  'active' %}
+                        {% endif %}
+
+                        <li class="{{ activeCss }}"><a href="#info_attributes_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="tab-content">
+                    {% for localeCode,attributes in productAttributes %}
+                        {% set activeCss = '' %}
+
+                        {% if localeCode == 'default' %}
+                            {% set activeCss =  'active' %}
+                        {% endif %}
+
+                        <div id="info_attributes_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+                            <div class="panel-body">
+                                {% for name,value in attributes %}
+                                    <div class="row">
+                                        <div class="col-xs-4"><b>{{ name }}</b></div>
+                                        <div class="col-xs-8">{{ value }}</div>
+                                    </div>
+                                    {% if not loop.last %}
+                                        <div class="hr-line-dashed"></div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+            </div>
         </div>
 
     {% endblock %}

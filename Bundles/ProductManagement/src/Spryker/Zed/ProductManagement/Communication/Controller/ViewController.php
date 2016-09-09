@@ -7,7 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,17 +52,21 @@ class ViewController extends AddController
             ->getProductManagementFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributeCollection = $this->normalizeAttributeArray(
-            $this->getFactory()->getProductAttributeCollection()
-        );
-
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
         $variantTable = $this
             ->getFactory()
             ->createVariantTable($idProductAbstract);
 
-        s($productAbstractTransfer->toArray(true));
+        $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productAbstractTransfer->getAttributes();
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
+        }
+
+        $imageSetCollection = $this->getFactory()->getProductImageFacade()
+            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());
+
+        $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
@@ -68,6 +77,9 @@ class ViewController extends AddController
             'variantTable' => $variantTable->render(),
             'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
+            'productAttributes' => $attributes,
+            'imageSetCollection' => $imageSets,
+            'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
         ]);
     }
 
@@ -98,54 +110,28 @@ class ViewController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
-        $dataProvider = $this->getFactory()->createProductVariantFormEditDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct),
-                $dataProvider->getOptions($idProductAbstract)
-            )
-            ->handleRequest($request);
+        $attributes[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $productTransfer->getAttributes();
+        foreach ($productTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();
+        }
 
-        if ($form->isValid()) {
-            try {
-                $productAbstractTransfer = $this->getFactory()
-                    ->getProductManagementFacade()
-                    ->getProductAbstractById($idProductAbstract);
+        $imageSetCollection = $this->getFactory()->getProductImageFacade()
+            ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());
 
-                $productConcreteTransfer = $this->getFactory()
-                    ->createProductFormTransferGenerator()
-                    ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
+        $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
-                $idProduct = $this->getFactory()
-                    ->getProductManagementFacade()
-                    ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
-
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was saved successfully.',
-                    $productConcreteTransfer->getSku()
-                ));
-
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract,
-                    self::PARAM_ID_PRODUCT,
-                    $idProduct
-                ));
-            } catch (CategoryUrlExistsException $exception) {
-                $this->addErrorMessage($exception->getMessage());
-            }
-        };
+        s($productTransfer->toArray());
 
         return $this->viewResponse([
-            'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
-            'idProduct' => $idProduct,
+            'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
+            'productAttributes' => $attributes,
+            'imageSetCollection' => $imageSets,
+            'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
         ]);
     }
 
@@ -165,6 +151,66 @@ class ViewController extends AddController
         return $this->jsonResponse(
             $variantTable->fetchData()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSetTransferCollection
+     *
+     * @return array
+     */
+    protected function getProductImageSetCollection($imageSetTransferCollection)
+    {
+        $localeCollection = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
+
+        $result = [];
+        $defaults = [];
+        foreach ($localeCollection as $localeTransfer) {
+            $data = [];
+            foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                if ($imageSetTransfer->getLocale() === null) {
+                    $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
+                    continue;
+                }
+
+                $fkLocale = (int)$imageSetTransfer->getLocale()->getIdLocale();
+                if ($fkLocale !== (int)$localeTransfer->getIdLocale()) {
+                    continue;
+                }
+
+                $data[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
+            }
+
+            $result[$localeTransfer->getLocaleName()] = array_values($data);
+        }
+
+        $result[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = array_values($defaults);
+
+        return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $imageSetTransfer
+     *
+     * @return array
+     */
+    protected function convertProductImageSet(ProductImageSetTransfer $imageSetTransfer)
+    {
+        $item = $imageSetTransfer->toArray();
+        $itemImages = [];
+
+        $imageUrlPrefix = $this->getFactory()->getConfig()->getImageUrlPrefix();
+
+        foreach ($imageSetTransfer->getProductImages() as $imageTransfer) {
+            $image = $imageTransfer->toArray();
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL] = $imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_LARGE];
+            $image[ImageCollectionForm::FIELD_FK_IMAGE_SET_ID] = $imageSetTransfer->getIdProductImageSet();
+            $itemImages[] = $image;
+        }
+
+        $item[ImageSetForm::PRODUCT_IMAGES] = $itemImages;
+
+        return $item;
     }
 
 }

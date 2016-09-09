@@ -1,9 +1,58 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO (Meta Information)' } %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Image Sets' } %}
     {% block widget_content %}
 
-        <div class="col-lg-12">
-            SEO (Meta Information)
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="tabs-container">
+                    <div class="tabs-top">
+                        <ul class="nav nav-tabs">
+                            {% for localeCode,imageSet in imageSetCollection %}
+                                {% set activeCss = '' %}
+
+                                {% if currentLocale == localeCode %}
+                                    {% set activeCss =  'active' %}
+                                {% endif %}
+
+                                <li class="{{ activeCss }}"><a href="#info_image_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+                            {% for localeCode,imageSets in imageSetCollection %}
+                                {% set activeCss = '' %}
+
+                                {% if currentLocale == localeCode %}
+                                    {% set activeCss =  'active' %}
+                                {% endif %}
+
+                                {% for imageSet in imageSets %}
+                                    <div id="info_image_{{ localeCode }}" class="tab-pane {{ activeCss }}">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-xs-2"><b>Name</b></div>
+                                                <div class="col-xs-10">{{ imageSet.name }}</div>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
+                                            <div class="row col-lg-12">
+                                                {% for image in imageSet.product_images %}
+                                                    <div class="col-lg-3">
+                                                        <img src="{{ imageUrlPrefix ~ image.external_url_small }}">
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
+
 
     {% endblock %}
 {% endembed %}
