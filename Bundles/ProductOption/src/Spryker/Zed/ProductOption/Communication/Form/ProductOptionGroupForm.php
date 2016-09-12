@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductOptionGroupForm extends AbstractType
@@ -29,6 +30,8 @@ class ProductOptionGroupForm extends AbstractType
     const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
     const PRODUCTS_TO_BE_DE_ASSIGNED = 'products_to_be_de_assigned';
     const PRODUCT_OPTION_VALUES_TO_BE_REMOVED = 'product_option_values_to_be_removed';
+
+    const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
 
     /**
      * @var \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm
@@ -107,6 +110,12 @@ class ProductOptionGroupForm extends AbstractType
         $builder->add(self::FIELD_NAME, 'text', [
             'label' => 'Group name translation key',
             'required' => false,
+            'constraints' => [
+                new Regex([
+                    'pattern' => self::ALPHA_NUMERIC_PATTERN,
+                    'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".'
+                ]),
+            ]
         ]);
 
         return $this;

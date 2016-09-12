@@ -22,7 +22,5 @@ $(document).ready(function() {
         $('#product_option_general').submit();
     });
 
-    if ($('#create-product-option').length) {
-        $('#add-another-option').trigger('click');
-    }
+    $('#add-another-option').trigger('click');
 });

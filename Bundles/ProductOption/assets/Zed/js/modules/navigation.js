@@ -46,7 +46,7 @@ Navigation.prototype.markValidationFailedTabs = function() {
             return;
         }
         var tabContentElementId = $(tabContent).attr('id');
-        $('#product-option-tabs').find('li a').each(function(index, tabElement) {
+        $('#product-option-tabs, #option-value-translations').find('li a').each(function(index, tabElement) {
             var jTabElement = $(tabElement);
             var elementHref = jTabElement.attr('href');
             if (elementHref.indexOf(tabContentElementId) > -1) {

@@ -255,7 +255,6 @@ $(document).ready(function() {
             if (parseInt(currentId) === parseInt(idProduct)) {
                 productOptionTable.getSelector().removeProductFromSelection(idProduct);
                 destinationTable.dataTable().fnDeleteRow(index);
-                var checkbox = $('#' + productOptionTable.getCheckBoxNamePrefix() + idProduct);
             }
         });
 
@@ -305,7 +304,6 @@ $(document).ready(function() {
     $('#product-selectors .btn').each(function(index, element) {
         $(element).on('click', function(event) {
 
-            //$('#product-selectors .btn').addClass('btn-white');
             $('#product-selectors .btn').removeClass('active');
 
             $('#products-assignment > div').each(function(index, containerElement) {
@@ -314,7 +312,6 @@ $(document).ready(function() {
 
             var targetElement = $(event.target);
             targetElement.addClass('active');
-            //targetElement.removeClass('btn-white');
 
             var dataElementId = targetElement.attr('id');
             currentTableId = dataElementId;

@@ -23,10 +23,6 @@ table.dataTable.gui-table-data {
   width: 100% !important;
 }
 
-.dataTables_scrollHeadInner {
-  width: 100% !important;
-}
-
 .translation-tabs {
    .tabs-left > .nav-tabs,
    .tabs-right > .nav-tabs {
@@ -46,6 +42,9 @@ table.dataTable.gui-table-data {
     border-left-color: #1ab394 !important;
     border-right-color: transparent !important;
     border-right: none;
+  }
+  .error-tab i {
+    color: #ffc333;
   }
 }
 

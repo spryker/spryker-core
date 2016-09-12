@@ -74,6 +74,10 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     {
         $productOptionGroupsTransfer = new ProductOptionGroupsTransfer();
         foreach ($productOptions as $productOption) {
+            if (count($productOption) === 0) {
+                continue;
+            }
+
             $productOptionGroupTransfer = new ProductOptionGroupTransfer();
             $productOptionGroupTransfer->fromArray($productOption, true);
 
