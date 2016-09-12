@@ -78,6 +78,8 @@ class ProductTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU,
         ]);
 
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
+
         return $config;
     }
 
