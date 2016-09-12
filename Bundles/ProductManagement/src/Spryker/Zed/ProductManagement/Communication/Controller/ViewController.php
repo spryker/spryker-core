@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -119,8 +117,6 @@ class ViewController extends AddController
             ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
-
-        s($productTransfer->toArray());
 
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
