@@ -445,7 +445,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\VariantGenerator
+     * @return \Spryker\Zed\ProductManagement\Business\Product\VariantGeneratorInterface
      */
     public function createProductMatrixGenerator()
     {

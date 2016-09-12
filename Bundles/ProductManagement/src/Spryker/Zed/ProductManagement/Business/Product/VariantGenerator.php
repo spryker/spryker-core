@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 
-class VariantGenerator
+class VariantGenerator implements VariantGeneratorInterface
 {
 
     const TOKENS = 'tokens';
@@ -139,7 +139,6 @@ class VariantGenerator
      */
     public function generateTokens(array $tokenAttributeCollection)
     {
-        print_r($tokenAttributeCollection);
         $attributeCount = count($tokenAttributeCollection);
         $current = array_pad([], $attributeCount, 0);
         $changeIndex = 0;
