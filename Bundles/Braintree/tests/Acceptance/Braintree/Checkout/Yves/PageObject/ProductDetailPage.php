@@ -13,4 +13,5 @@ class ProductDetailPage
     const URL = '/de/asus-vivowatch-50';
 
     const BUTTON_ADD_TO_CART = 'In den Warenkorb';
+
 }

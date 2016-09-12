@@ -10,7 +10,7 @@ namespace Spryker\Yves\Braintree\Handler;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Braintree\BraintreeClientInterface;
 use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToCurrencyInterface;
+use Spryker\Yves\Currency\Plugin\CurrencyPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class BraintreeHandler
@@ -32,18 +32,18 @@ class BraintreeHandler
     protected $braintreeClient;
 
     /**
-     * @var \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToCurrencyInterface
+     * @var \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface
      */
-    protected $currencyFacade;
+    protected $currencyPlugin;
 
     /**
      * @param \Spryker\Client\Braintree\BraintreeClientInterface $braintreeClient
-     * @param \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToCurrencyInterface $currencyFacade
+     * @param \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface $currencyPlugin
      */
-    public function __construct(BraintreeClientInterface $braintreeClient, BraintreeToCurrencyInterface $currencyFacade)
+    public function __construct(BraintreeClientInterface $braintreeClient, CurrencyPluginInterface $currencyPlugin)
     {
         $this->braintreeClient = $braintreeClient;
-        $this->currencyFacade = $currencyFacade;
+        $this->currencyPlugin = $currencyPlugin;
     }
 
     /**
@@ -109,7 +109,7 @@ class BraintreeHandler
      */
     protected function getCurrency()
     {
-        return $this->currencyFacade->getCurrent()->getCode();
+        return $this->currencyPlugin->getCurrent()->getCode();
     }
 
     /**

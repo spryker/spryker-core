@@ -13,8 +13,6 @@ use Spryker\Yves\Braintree\Form\DataProvider\PayPalDataProvider;
 use Spryker\Yves\Braintree\Form\PayPalSubForm;
 use Spryker\Yves\Braintree\Handler\BraintreeHandler;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Zed\Braintree\BraintreeDependencyProvider;
-use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToCurrencyInterface;
 
 /**
  * @method \Spryker\Client\Braintree\BraintreeClientInterface getClient()
@@ -59,15 +57,15 @@ class BraintreeFactory extends AbstractFactory
      */
     public function createBraintreeHandler()
     {
-        return new BraintreeHandler($this->getClient(), $this->getCurrencyFacade());
+        return new BraintreeHandler($this->getClient(), $this->getCurrencyPlugin());
     }
 
     /**
-     * @return BraintreeToCurrencyInterface
+     * @return \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface
      */
-    protected function getCurrencyFacade()
+    protected function getCurrencyPlugin()
     {
-        return $this->getProvidedDependency(BraintreeDependencyProvider::FACADE_CURRENCY);
+        return $this->getProvidedDependency(BraintreeDependencyProvider::PLUGIN_CURRENCY);
     }
 
 }

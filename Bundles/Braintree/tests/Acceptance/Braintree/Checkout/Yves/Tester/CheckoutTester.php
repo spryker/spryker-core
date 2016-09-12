@@ -118,8 +118,7 @@ class CheckoutTester extends YvesAcceptanceTester
         $i->submitForm('form[name=shipmentForm]', [
             'shipmentForm[idShipmentMethod]' => '1',
         ]);
-//        $i->click(['id' => CheckoutPage::SHIPMENT_SELECTION]);
-//        $i->click(CheckoutPage::BUTTON_GO_TO_PAYMENT);
+        $i->wait(5);
         $i->canSeeCurrentUrlEquals(CheckoutPage::URL_PAYMENT);
     }
 
@@ -200,6 +199,7 @@ class CheckoutTester extends YvesAcceptanceTester
         $i->fillField(['id' => 'email'], 'payment.test-123@spryker.com');
         $i->fillField(['id' => 'password'], 'spryker123');
         $i->click(['id' => 'btnLogin']);
+        $i->wait(10);
         $i->waitForElement(['id' => 'confirmButtonTop'], 30);
         $i->click(['id' => 'confirmButtonTop']);
         $i->switchToWindow();

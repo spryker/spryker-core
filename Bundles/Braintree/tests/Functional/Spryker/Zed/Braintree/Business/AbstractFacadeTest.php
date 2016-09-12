@@ -60,7 +60,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @param \Spryker\Zed\Braintree\Business\BraintreeBusinessFactory $braintreeBusinessFactoryMock
+     * @param \Spryker\Zed\Braintree\Business\BraintreeBusinessFactory|null $braintreeBusinessFactoryMock
      *
      * @return \Spryker\Zed\Braintree\Business\BraintreeFacade
      */

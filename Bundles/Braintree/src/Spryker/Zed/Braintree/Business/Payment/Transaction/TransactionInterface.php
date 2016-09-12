@@ -14,6 +14,7 @@ interface TransactionInterface
 
     /**
      * @param \Generated\Shared\Transfer\TransactionMetaTransfer $transactionMetaTransfer
+     *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
     public function executeTransaction(TransactionMetaTransfer $transactionMetaTransfer);
