@@ -12,6 +12,8 @@ interface ProductSearchConstants
 
     const PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX = 'product.filter.';
 
+    const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product_abstract'; // TODO: add constant for this in product bundle, then reference it here?
+
     const RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION = 'product_search_config_extension';
     const PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID = 1;
 

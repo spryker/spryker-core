@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelJoin;
+use Spryker\Shared\ProductSearch\ProductSearchConstants;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
@@ -121,7 +122,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
 
-        $this->touchFacade->bulkTouchSetActive('product_abstract', $productAbstractIds);
+        $this->touchFacade->bulkTouchSetActive(ProductSearchConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $productAbstractIds);
     }
 
     /**

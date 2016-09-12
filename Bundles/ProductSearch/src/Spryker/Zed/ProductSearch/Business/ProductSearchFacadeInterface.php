@@ -41,7 +41,6 @@ interface ProductSearchFacadeInterface
     /**
      * Specification:
      * - Marks the given product to be searchable.
-     * - Touches the product so next time the collector runs it will process it.
      *
      * @api
      *
@@ -55,7 +54,6 @@ interface ProductSearchFacadeInterface
     /**
      * Specification:
      * - Marks the given product to not to be searchable.
-     * - Touches the product so next time the collector will process it.
      *
      * @api
      *

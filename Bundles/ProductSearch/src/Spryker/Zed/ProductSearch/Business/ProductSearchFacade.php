@@ -51,7 +51,6 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     /**
      * Specification:
      * - Marks the given product to be searchable.
-     * - Touches the product so next time the collector runs it will process it.
      *
      * @api
      *
@@ -70,7 +69,6 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     /**
      * Specification:
      * - Marks the given product to not to be searchable.
-     * - Touches the product so next time the collector will process it.
      *
      * @api
      *

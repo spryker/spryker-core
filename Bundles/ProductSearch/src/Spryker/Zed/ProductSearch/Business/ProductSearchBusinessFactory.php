@@ -45,10 +45,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductSearchMarker()
     {
-        return new ProductSearchMarker(
-            $this->getTouchFacade(),
-            $this->getQueryContainer()
-        );
+        return new ProductSearchMarker($this->getQueryContainer());
     }
 
     /**
