@@ -11,7 +11,7 @@ use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
@@ -129,12 +129,47 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         try {
             $this->assertProductAbstractSkuIsUnique($productAbstractTransfer->getSku());
+
             $productAbstractEntity = $this->persistProductAbstractEntity($productAbstractTransfer);
 
             $idProductAbstract = $productAbstractEntity->getPrimaryKey();
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
             $this->attributeManager->createProductAbstractLocalizedAttributes($productAbstractTransfer);
+            $this->persistProductAbstractPrice($productAbstractTransfer);
+            $this->persistImageSets($productAbstractTransfer);
+
+            $this->productQueryContainer->getConnection()->commit();
+            return $idProductAbstract;
+
+        } catch (Exception $e) {
+            $this->productQueryContainer->getConnection()->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        try {
+            $idProductAbstract = (int)$productAbstractTransfer
+                ->requireIdProductAbstract()
+                ->getIdProductAbstract();
+
+            $this->assertProductAbstractExists($idProductAbstract);
+            $this->assertProductAbstractSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
+
+            $this->persistProductAbstractEntity($productAbstractTransfer);
+
+            $this->attributeManager->saveProductAbstractLocalizedAttributes($productAbstractTransfer);
             $this->persistProductAbstractPrice($productAbstractTransfer);
             $this->persistImageSets($productAbstractTransfer);
 
@@ -158,10 +193,10 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             $productAbstractTransfer->getAttributes()
         );
 
-        $productAbstractEntity = new SpyProductAbstract();
-        if ((int)$productAbstractTransfer->getIdProductAbstract() > 0) {
-            $productAbstractEntity->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
-        }
+        $productAbstractEntity = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->findOneOrCreate();
 
         $productAbstractEntity
             ->setAttributes($jsonAttributes)
@@ -212,83 +247,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        try {
-            $sku = $productAbstractTransfer->getSku();
-            $idProductAbstract = (int)$productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
-
-            $productAbstract = $this->productQueryContainer
-                ->queryProductAbstract()
-                ->filterByIdProductAbstract($idProductAbstract)
-                ->findOne();
-
-            if (!$productAbstract) {
-                throw new MissingProductException(sprintf(
-                    'Tried to retrieve an product abstract with id %s, but it does not exist.',
-                    $idProductAbstract
-                ));
-            }
-
-            $existingAbstractSku = $this->productQueryContainer
-                ->queryProductAbstractBySku($sku)
-                ->findOne();
-
-            if ($existingAbstractSku) {
-                if ($idProductAbstract !== (int)$existingAbstractSku->getIdProductAbstract()) {
-                    throw new ProductAbstractExistsException(sprintf(
-                        'Tried to create an product abstract with sku %s that already exists',
-                        $sku
-                    ));
-                }
-            }
-
-            $jsonAttributes = $this->attributeManager->encodeAttributes($productAbstractTransfer->getAttributes());
-
-            $productAbstract
-                ->setAttributes($jsonAttributes)
-                ->setSku($sku)
-                ->setFkTaxSet($productAbstractTransfer->getTaxSetId());
-
-            $this->priceFacade->persistAbstractProductPrice($productAbstractTransfer->getPrice());
-
-            $productAbstract->save();
-
-            $idProductAbstract = $productAbstract->getPrimaryKey();
-            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-            $this->attributeManager->saveProductAbstractLocalizedAttributes($productAbstractTransfer);
-
-            $priceTransfer = $productAbstractTransfer->getPrice();
-            if ($priceTransfer !== null) {
-                $priceTransfer->setIdProduct($idProductAbstract);
-                $this->priceFacade->persistAbstractProductPrice($priceTransfer);
-            }
-
-            $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-            if (!empty($imageSetTransferCollection)) {
-                foreach ($imageSetTransferCollection as $imageSetTransfer) {
-                    $this->productImageFacade->persistProductImageSet($imageSetTransfer);
-                }
-            }
-
-            $this->productQueryContainer->getConnection()->commit();
-
-            return $idProductAbstract;
-        } catch (Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
-    }
-
-    /**
      * @param string $sku
      *
      * @return int|null
@@ -317,8 +275,52 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     {
         if ($this->productFacade->hasProductAbstract($sku)) {
             throw new ProductAbstractExistsException(sprintf(
-                'Tried to create an product abstract with sku %s that already exists',
+                'Product abstract with sku %s already exists',
                 $sku
+            ));
+        }
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     *
+     * @return void
+     */
+    protected function assertProductAbstractSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $sku)
+    {
+        $isUnique = $this->productQueryContainer
+            ->queryProductAbstractBySku($sku)
+            ->filterByIdProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
+            ->count() <= 0;
+
+        if (!$isUnique) {
+            throw new ProductAbstractExistsException(sprintf(
+                'Product abstract with sku %s already exists',
+                $sku
+            ));
+        }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return void
+     */
+    protected function assertProductAbstractExists($idProductAbstract)
+    {
+        $productAbstractEntity = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->findOne();
+
+        if (!$productAbstractEntity) {
+            throw new MissingProductException(sprintf(
+                'Product abstract with id "%s" does not exist.',
+                $idProductAbstract
             ));
         }
     }
