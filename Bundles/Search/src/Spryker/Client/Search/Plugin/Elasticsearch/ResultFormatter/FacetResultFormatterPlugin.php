@@ -52,7 +52,6 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
 
             $aggregation = $this->getAggregationRawData($aggregations, $facetConfigTransfer);
 
-            // TODO: provide a test for the bug fix
             if ($aggregation) {
                 $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
             }

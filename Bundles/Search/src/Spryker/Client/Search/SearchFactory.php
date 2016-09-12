@@ -15,7 +15,6 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactor
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
-use Spryker\Client\Search\Plugin\Config\ExpandableSearchConfig;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
@@ -38,28 +37,18 @@ class SearchFactory extends AbstractFactory
     public function getSearchConfig()
     {
         if (static::$searchConfigInstance === null) {
-            static::$searchConfigInstance = $this->createExpandableSearchConfig();
+            static::$searchConfigInstance = $this->createSearchConfig();
         }
 
         return static::$searchConfigInstance;
     }
 
     /**
-     * @deprecated Use createExpandableSearchConfig() instead.
-     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function createSearchConfig()
     {
         return new SearchConfig();
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    public function createExpandableSearchConfig()
-    {
-        return new ExpandableSearchConfig();
     }
 
     /**

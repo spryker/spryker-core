@@ -77,8 +77,8 @@ class RangeExtractor implements AggregationExtractorInterface
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
-        $activeMin = (float)(isset($requestParameters[$parameterName]['min']) ? $requestParameters[$parameterName]['min'] : $min);
-        $activeMax = (float)(isset($requestParameters[$parameterName]['max']) ? $requestParameters[$parameterName]['max'] : $max);
+        $activeMin = (isset($requestParameters[$parameterName]['min']) ? $requestParameters[$parameterName]['min'] : $min);
+        $activeMax = (isset($requestParameters[$parameterName]['max']) ? $requestParameters[$parameterName]['max'] : $max);
 
         return [$activeMin, $activeMax];
     }
