@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use ArrayObject;
 use Exception;
-use Generated\Shared\Transfer\PriceProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -87,7 +86,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $productImageFacade;
 
     /**
-     * @var ProductConcreteManagerInterface
+     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
      */
     protected $productConcreteManager;
 
@@ -137,14 +136,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
             $this->attributeManager->createProductAbstractLocalizedAttributes($productAbstractTransfer);
             $this->persistProductAbstractPrice($productAbstractTransfer);
-
-            $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-            if (!empty($imageSetTransferCollection)) {
-                foreach ($imageSetTransferCollection as $imageSetTransfer) {
-                    $imageSetTransfer->setIdProductAbstract($idProductAbstract);
-                    $this->productImageFacade->persistProductImageSet($imageSetTransfer);
-                }
-            }
+            $this->persistImageSets($productAbstractTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
             return $idProductAbstract;
@@ -156,9 +148,9 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return SpyProductAbstract
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected function persistProductAbstractEntity(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -182,7 +174,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
@@ -202,7 +194,28 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
+     * @return void
+     */
+    protected function persistImageSets(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
+        if (!empty($imageSetTransferCollection)) {
+            foreach ($imageSetTransferCollection as $imageSetTransfer) {
+                $imageSetTransfer->setIdProductAbstract(
+                    $productAbstractTransfer
+                        ->requireIdProductAbstract()
+                        ->getIdProductAbstract()
+                );
+                $this->productImageFacade->persistProductImageSet($imageSetTransfer);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
      * @throws \Exception
+     *
      * @return int
      */
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
