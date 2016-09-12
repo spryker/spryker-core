@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use ArrayObject;
 use Exception;
+use Generated\Shared\Transfer\PriceProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
@@ -127,28 +129,14 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->productQueryContainer->getConnection()->beginTransaction();
 
         try {
-            $sku = $productAbstractTransfer->getSku();
-            $this->assertProductAbstractSkuIsUnique($sku);
+            $this->assertProductAbstractSkuIsUnique($productAbstractTransfer->getSku());
+            $productAbstractEntity = $this->persistProductAbstractEntity($productAbstractTransfer);
 
-            $jsonAttributes = $this->attributeManager->encodeAttributes($productAbstractTransfer->getAttributes());
-
-            $productAbstract = new SpyProductAbstract();
-            $productAbstract
-                ->setAttributes($jsonAttributes)
-                ->setSku($sku)
-                ->setFkTaxSet($productAbstractTransfer->getTaxSetId());
-
-            $productAbstract->save();
-
-            $idProductAbstract = $productAbstract->getPrimaryKey();
+            $idProductAbstract = $productAbstractEntity->getPrimaryKey();
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-            $this->attributeManager->createProductAbstractLocalizedAttributes($productAbstractTransfer);
 
-            $priceTransfer = $productAbstractTransfer->getPrice();
-            if ($priceTransfer !== null) {
-                $priceTransfer->setIdProduct($idProductAbstract);
-                $this->priceFacade->persistAbstractProductPrice($priceTransfer);
-            }
+            $this->attributeManager->createProductAbstractLocalizedAttributes($productAbstractTransfer);
+            $this->persistProductAbstractPrice($productAbstractTransfer);
 
             $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
             if (!empty($imageSetTransferCollection)) {
@@ -164,6 +152,50 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         } catch (Exception $e) {
             $this->productQueryContainer->getConnection()->rollBack();
             throw $e;
+        }
+    }
+
+    /**
+     * @param ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return SpyProductAbstract
+     */
+    protected function persistProductAbstractEntity(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $jsonAttributes = $this->attributeManager->encodeAttributes(
+            $productAbstractTransfer->getAttributes()
+        );
+
+        $productAbstractEntity = new SpyProductAbstract();
+        if ((int)$productAbstractTransfer->getIdProductAbstract() > 0) {
+            $productAbstractEntity->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        }
+
+        $productAbstractEntity
+            ->setAttributes($jsonAttributes)
+            ->setSku($productAbstractTransfer->getSku())
+            ->setFkTaxSet($productAbstractTransfer->getTaxSetId());
+
+        $productAbstractEntity->save();
+
+        return $productAbstractEntity;
+    }
+
+    /**
+     * @param ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $priceTransfer = $productAbstractTransfer->getPrice();
+        if ($priceTransfer instanceof ZedProductPriceTransfer) {
+            $priceTransfer->setIdProduct(
+                $productAbstractTransfer
+                    ->requireIdProductAbstract()
+                    ->getIdProductAbstract()
+            );
+            $this->priceFacade->persistAbstractProductPrice($priceTransfer);
         }
     }
 

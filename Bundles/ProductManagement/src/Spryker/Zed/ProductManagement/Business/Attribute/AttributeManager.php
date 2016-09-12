@@ -80,12 +80,13 @@ class AttributeManager implements AttributeManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     *
      * @return void
      */
     public function createProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -117,7 +118,9 @@ class AttributeManager implements AttributeManagerInterface
      */
     public function saveProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -148,7 +151,9 @@ class AttributeManager implements AttributeManagerInterface
      */
     public function createProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -174,7 +179,9 @@ class AttributeManager implements AttributeManagerInterface
      */
     public function saveProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        $idProductConcrete = $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete();
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -186,8 +193,8 @@ class AttributeManager implements AttributeManagerInterface
 
             $localizedProductAttributesEntity
                 ->setFkProduct($idProductConcrete)
-                ->setFkLocale($locale->getIdLocale())
-                ->setName($localizedAttributes->getName())
+                ->setFkLocale($locale->requireIdLocale()->getIdLocale())
+                ->setName($localizedAttributes->requireName()->getName())
                 ->setAttributes($jsonAttributes)
                 ->setDescription($localizedAttributes->getDescription());
 
@@ -251,7 +258,10 @@ class AttributeManager implements AttributeManagerInterface
             if (!array_key_exists($localeCode, $abstractLocalizedAttributes)) {
                 $abstractLocalizedAttributes[$localeCode] = $localizedAttribute->getAttributes();
             } else {
-                $abstractLocalizedAttributes[$localeCode] = array_merge($abstractLocalizedAttributes[$localeCode], $localizedAttribute->getAttributes());
+                $abstractLocalizedAttributes[$localeCode] = array_merge(
+                    $abstractLocalizedAttributes[$localeCode],
+                    $localizedAttribute->getAttributes()
+                );
             }
         }
 
@@ -267,7 +277,10 @@ class AttributeManager implements AttributeManagerInterface
                 if (!array_key_exists($localeCode, $localizedAttributes)) {
                     $localizedAttributes[$localeCode] = $localizedAttribute->getAttributes();
                 } else {
-                    $localizedAttributes[$localeCode] = array_merge($localizedAttributes[$localeCode], $localizedAttribute->getAttributes());
+                    $localizedAttributes[$localeCode] = array_merge(
+                        $localizedAttributes[$localeCode],
+                        $localizedAttribute->getAttributes()
+                    );
                 }
             }
         }
