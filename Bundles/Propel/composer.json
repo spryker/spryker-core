@@ -5,8 +5,14 @@
       "Spryker": "src/",
       "Function": "tests/"
     },
-    "psr-4": {
-      "Propel\\Module\\": "tests/_support/Module"
+    "autoload-dev": {
+      "psr-0": {
+        "Functional": "tests/",
+        "Unit": "tests/"
+      },
+      "psr-4": {
+        "Propel\\Module\\": "tests/_support/Module"
+      }
     }
   },
   "require": {
@@ -41,11 +47,5 @@
   ],
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }
