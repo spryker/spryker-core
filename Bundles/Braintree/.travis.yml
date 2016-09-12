@@ -12,6 +12,8 @@ cache:
     - vendor
     - $HOME/.composer/cache
 
+sudo: required
+
 env:
   global:
     - APPLICATION_ENV=development
