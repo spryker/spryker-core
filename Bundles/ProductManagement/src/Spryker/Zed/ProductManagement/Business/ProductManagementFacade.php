@@ -18,6 +18,18 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
 {
 
     /**
+     * Specification:
+     * - Add product abstract with its concrete variants
+     * - Add product abstract attributes information
+     * - Add product abstract meta information
+     * - Add product abstract images information
+     * - Add concrete product stock information
+     * - Add product abstract price information
+     * - Add product abstract tax information
+     * - Generates concrete products based on variant attributes
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract and concrete products are created but not activated or touched
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -35,6 +47,16 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     }
 
     /**
+     * Specification:
+     * - Save product abstract with its concrete variants
+     * - Save product abstract attributes information
+     * - Save product abstract meta information
+     * - Save product abstract images information
+     * - Save concrete product stock information
+     * - Save product abstract price information
+     * - Save product abstract tax information
+     * - Throws exception if product with same SKU exists
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -52,6 +74,66 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     }
 
     /**
+     * Specification:
+     * - Returns abstract product transfer with loaded attributes
+     * - Returns abstract product transfer with loaded price
+     * - Returns abstract product transfer with loaded tax
+     * - Returns abstract product transfer with loaded images
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstractById($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductAbstractById($idProductAbstract);
+    }
+
+    /**
+     * Specification:
+     * - Returns concrete product transfer with loaded attributes
+     * - Returns concrete product transfer with loaded price
+     * - Returns concrete product transfer with loaded stock
+     * - Returns concrete product transfer with loaded images
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     */
+    public function getProductConcreteById($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductConcreteById($idProduct);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * Specification:
+     * - Returns concrete product transfer collection with loaded attributes
+     * - Returns concrete product transfer collection with loaded price
+     * - Returns concrete product transfer collection with loaded stock
+     * - Returns concrete product transfer collection with loaded images
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -75,52 +157,6 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
         return $this->getFactory()
             ->createAttributeManager()
             ->getProductAttributeCollection();
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstractById($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductManager()
-            ->getProductAbstractById($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
-     */
-    public function getProductConcreteById($idProduct)
-    {
-        return $this->getFactory()
-            ->createProductManager()
-            ->getProductConcreteById($idProduct);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributesByAbstractProductId($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductManager()
-            ->getProductAttributesByAbstractProductId($idProductAbstract);
     }
 
     /**

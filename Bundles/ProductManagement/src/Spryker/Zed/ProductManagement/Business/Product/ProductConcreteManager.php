@@ -390,6 +390,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $transferCollection[$a] = $this->loadProductConcreteLocalizedAttributes($transferCollection[$a]);
             $transferCollection[$a] = $this->loadPriceForProductConcrete($transferCollection[$a]);
             $transferCollection[$a] = $this->loadStockForProductConcrete($transferCollection[$a]);
+            $transferCollection[$a] = $this->loadImageSetForProductConcrete($transferCollection[$a]);
         }
 
         return $transferCollection;

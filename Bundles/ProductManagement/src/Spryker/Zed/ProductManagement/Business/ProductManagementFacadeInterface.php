@@ -10,10 +10,25 @@ namespace Spryker\Zed\ProductManagement\Business;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementBusinessFactory getFactory()
+ */
 interface ProductManagementFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Add product abstract with its concrete variants
+     * - Add product abstract attributes information
+     * - Add product abstract meta information
+     * - Add product abstract images information
+     * - Add concrete product stock information
+     * - Add product abstract price information
+     * - Add product abstract tax information
+     * - Generates concrete products based on variant attributes
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract and concrete products are created but not activated or touched
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -26,6 +41,16 @@ interface ProductManagementFacadeInterface
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
+     * Specification:
+     * - Save product abstract with its concrete variants
+     * - Save product abstract attributes information
+     * - Save product abstract meta information
+     * - Save product abstract images information
+     * - Save concrete product stock information
+     * - Save product abstract price information
+     * - Save product abstract tax information
+     * - Throws exception if product with same SKU exists
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -38,38 +63,30 @@ interface ProductManagementFacadeInterface
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
+     * Specification:
+     * - Returns abstract product transfer with loaded attributes
+     * - Returns abstract product transfer with loaded price
+     * - Returns abstract product transfer with loaded tax
+     * - Returns abstract product transfer with loaded images
+     *
      * @api
      *
      * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
-     */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @return array
-     */
-    public function getProductAttributeCollection();
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function getProductAbstractById($idProductAbstract);
 
     /**
+     * Specification:
+     * - Returns concrete product transfer with loaded attributes
+     * - Returns concrete product transfer with loaded price
+     * - Returns concrete product transfer with loaded stock
+     * - Returns concrete product transfer with loaded images
+     *
      * @api
      *
      * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
      */
@@ -86,6 +103,28 @@ interface ProductManagementFacadeInterface
 
     /**
      * Specification:
+     * - Returns concrete product transfer collection with loaded attributes
+     * - Returns concrete product transfer collection with loaded price
+     * - Returns concrete product transfer collection with loaded stock
+     * - Returns concrete product transfer collection with loaded images
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection();
+
+    /**
+     * Specification:
      * - Searches for an existing product attribute key entity by the provided key in database or create it if does not exist
      * - Creates a new product management attribute entity with the given data and the found/created attribute key entity
      * - Creates a glossary key for the product attribute key with the configured prefix if does not exist already
@@ -98,7 +137,9 @@ interface ProductManagementFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+    public function createProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    );
 
     /**
      * Specification:
@@ -114,7 +155,9 @@ interface ProductManagementFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+    public function updateProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    );
 
     /**
      * Specification:
@@ -127,7 +170,9 @@ interface ProductManagementFacadeInterface
      *
      * @return void
      */
-    public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+    public function translateProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    );
 
     /**
      * @api
@@ -140,7 +185,13 @@ interface ProductManagementFacadeInterface
      *
      * @return array
      */
-    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
+    public function getAttributeValueSuggestions(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = 0,
+        $limit = 10
+    );
 
     /**
      * @api
