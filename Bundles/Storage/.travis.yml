@@ -16,8 +16,6 @@ env:
   global:
     - APPLICATION_ENV=development
     - APPLICATION_STORE=DE
-  matrix:
-    - COVERALLS=true
 
 install:
   - composer self-update && composer --version
@@ -25,7 +23,7 @@ install:
 
 script:
   - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml
-  - vendor/bin/codecept run --env isolated --coverage-xml
+  - vendor/bin/codecept run --coverage-xml
 
 after_success:
   - vendor/bin/coveralls -vvv
