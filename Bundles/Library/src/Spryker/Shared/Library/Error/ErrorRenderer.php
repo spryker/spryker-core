@@ -12,6 +12,9 @@ use Spryker\Shared\Library\Application\Version;
 use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
 use Spryker\Zed\Library\Sanitize\Html;
 
+/**
+ * @deprecated Use ErrorHandler bundle instead.
+ */
 class ErrorRenderer
 {
 

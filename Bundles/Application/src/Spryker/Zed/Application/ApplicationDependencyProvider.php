@@ -17,7 +17,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterSe
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NavigationServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingServiceProvider;
@@ -32,6 +31,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\NewRelic\Communication\Plugin\ServiceProvider\NewRelicRequestTransactionServiceProvider;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
@@ -61,6 +61,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getServiceProvider(Container $container)
     {
         $providers = [
+            new NewRelicRequestTransactionServiceProvider(),
             new RedirectAfterLoginProvider(),
             new RequestServiceProvider(),
             new SslServiceProvider(),
@@ -73,7 +74,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
             new UrlGeneratorServiceProvider(),
-            new NewRelicServiceProvider(),
+            new NewRelicRequestTransactionServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
             new NavigationServiceProvider(),

@@ -13,6 +13,7 @@ class VoucherFormDataProvider
 
     /**
      * @param int $idDiscount
+     *
      * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
      */
     public function getData($idDiscount)

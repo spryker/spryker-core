@@ -3,11 +3,7 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
@@ -21,6 +17,10 @@
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Payone bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -32,5 +32,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

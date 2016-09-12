@@ -194,8 +194,6 @@ class PageManager implements PageManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
-     *
      * @return void
      */
     public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
@@ -302,6 +300,7 @@ class PageManager implements PageManagerInterface
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getLocaleTransfer($idLocale)

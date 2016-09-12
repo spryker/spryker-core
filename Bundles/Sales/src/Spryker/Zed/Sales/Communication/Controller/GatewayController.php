@@ -29,6 +29,7 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @deprecated use getOrderByIdSalesOrder instead
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

@@ -37,9 +37,9 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $filename
      *
-     * @return \SplFileObject
-     *
      * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
+     *
+     * @return \SplFileObject
      */
     protected function createCsvFile($filename)
     {
@@ -105,6 +105,7 @@ class CsvReader implements CsvReaderInterface
      * @param int $lineNumber
      *
      * @throws \UnexpectedValueException
+     *
      * @return array
      */
     protected function composeAndValidateLine(array $columns, array $data, $filename, $lineNumber)

@@ -26,7 +26,7 @@ class BundleNameFinderTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             BundleNameFinder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/Project/src/',
-            BundleNameFinder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/Vendor/*/src/',
+            BundleNameFinder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/VendorMock/*/src/',
             BundleNameFinder::OPTION_KEY_APPLICATION => 'Application',
         ];
 

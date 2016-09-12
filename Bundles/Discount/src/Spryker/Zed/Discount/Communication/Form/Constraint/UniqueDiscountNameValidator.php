@@ -20,6 +20,7 @@ class UniqueDiscountNameValidator extends ConstraintValidator
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
      * @return void
      */
     public function validate($value, Constraint $constraint)

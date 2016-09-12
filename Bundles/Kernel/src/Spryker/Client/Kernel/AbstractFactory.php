@@ -130,9 +130,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClient
-     *
      * @deprecated Use getSessionClient() instead.
+     *
+     * @return \Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -148,9 +148,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClient
-     *
      * @deprecated Use getZedRequestClient() instead.
+     *
+     * @return \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected function createZedRequestClient()
     {
@@ -166,9 +166,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClient
-     *
      * @deprecated Use getStorageClient() instead.
+     *
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function createStorageClient()
     {
@@ -184,9 +184,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClient
-     *
      * @deprecated This method will be removed.
+     *
+     * @return \Spryker\Client\Search\SearchClient
      */
     protected function createSearchClient()
     {

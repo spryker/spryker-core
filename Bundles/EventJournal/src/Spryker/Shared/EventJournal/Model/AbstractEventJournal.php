@@ -13,6 +13,9 @@ use Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface;
 use Spryker\Shared\EventJournal\Model\Filter\FilterInterface;
 use Spryker\Shared\EventJournal\Model\Writer\WriterInterface;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 abstract class AbstractEventJournal implements EventJournalInterface
 {
 

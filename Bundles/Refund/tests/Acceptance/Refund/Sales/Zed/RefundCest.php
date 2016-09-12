@@ -46,6 +46,7 @@ class RefundCest
 
     /**
      * @group single
+     *
      * @param \Acceptance\Refund\Sales\Zed\Tester\RefundTester $i
      *
      * @return void

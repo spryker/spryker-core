@@ -83,6 +83,7 @@ class InstallmentConfigurationTest extends InstallmentAbstractTest
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse $expectedResponse
+     *
      * @return void
      */
     protected function convertResponseToTransfer($expectedResponse)

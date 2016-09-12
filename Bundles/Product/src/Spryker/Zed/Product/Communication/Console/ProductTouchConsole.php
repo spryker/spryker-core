@@ -63,6 +63,7 @@ class ProductTouchConsole extends Console
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @throws \Symfony\Component\Config\Definition\Exception\Exception
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

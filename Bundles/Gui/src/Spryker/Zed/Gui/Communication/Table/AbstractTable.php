@@ -169,11 +169,11 @@ abstract class AbstractTable
     /**
      * @todo CD-412 find a better solution (remove it)
      *
+     * @deprecated this method should not be needed.
+     *
      * @param string $name
      *
      * @return string
-     *
-     * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
     {
@@ -522,6 +522,7 @@ abstract class AbstractTable
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param array $order
+     *
      * @return string
      */
     protected function getOrderByColumn(ModelCriteria $query, TableConfiguration $config, array $order)
@@ -543,6 +544,7 @@ abstract class AbstractTable
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
      * @return array
      */
     protected function getColumnsList(ModelCriteria $query, TableConfiguration $config)

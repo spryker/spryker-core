@@ -19,6 +19,7 @@ class QueryStringValidator extends ConstraintValidator
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
      * @return void
      */
     public function validate($value, Constraint $constraint)

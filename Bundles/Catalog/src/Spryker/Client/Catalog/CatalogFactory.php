@@ -25,11 +25,11 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use getCatalogSearchQueryPlugin() method instead.
+     *
      * @param string $searchString
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     *
-     * @deprecated Use getCatalogSearchQueryPlugin() method instead.
      */
     public function createCatalogSearchQueryPlugin($searchString)
     {
@@ -45,9 +45,9 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     *
      * @deprecated Use getCatalogSearchQueryExpanderPlugins() method instead.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function createCatalogSearchQueryExpanderPlugins()
     {
@@ -63,9 +63,9 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
-     *
      * @deprecated Use getCatalogSearchResultFormatters() method instead.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function createCatalogSearchResultFormatters()
     {
@@ -81,9 +81,9 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Catalog\Model\Catalog
-     *
      * @deprecated See \Spryker\Client\Catalog\Model\Catalog for more info.
+     *
+     * @return \Spryker\Client\Catalog\Model\Catalog
      */
     public function createCatalogModel()
     {

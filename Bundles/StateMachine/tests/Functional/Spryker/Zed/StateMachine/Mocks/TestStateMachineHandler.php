@@ -115,6 +115,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemsByStateIds
+     *
      * @return void
      */
     public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds)

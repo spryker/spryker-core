@@ -3,11 +3,16 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Function": "tests/",
-      "Unit": "tests/"
+      "Function": "tests/"
     },
-    "psr-4": {
-      "Propel\\Module\\": "tests/_support/Module"
+    "autoload-dev": {
+      "psr-0": {
+        "Functional": "tests/",
+        "Unit": "tests/"
+      },
+      "psr-4": {
+        "Propel\\Module\\": "tests/_support/Module"
+      }
     }
   },
   "require": {
@@ -23,7 +28,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "^2.0.0"
+    "spryker/testify": "*"
   },
   "description": "Propel bundle",
   "license": "proprietary",

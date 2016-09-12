@@ -3,8 +3,7 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Function": "tests/",
-      "Unit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
@@ -29,6 +28,10 @@
     "spryker/url": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Payolution bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -40,5 +43,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

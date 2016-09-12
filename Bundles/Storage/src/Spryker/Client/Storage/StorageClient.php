@@ -270,11 +270,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
+     * @deprecated Use persistRequestCache() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return void
-     *
-     * @deprecated Use persistRequestCache() instead.
      */
     public static function persistCache(Request $request = null)
     {

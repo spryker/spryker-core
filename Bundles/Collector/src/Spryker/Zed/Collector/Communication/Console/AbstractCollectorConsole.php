@@ -16,8 +16,6 @@ abstract class AbstractCollectorConsole extends Console
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $resultData
      *
      * @return string
-     *
-     * @todo move into template
      */
     protected function buildSummary(array $resultData)
     {

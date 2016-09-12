@@ -9,6 +9,9 @@ namespace Spryker\Shared\EventJournal\Model\Collector;
 
 use Spryker\Zed\Library\Generator\StringGenerator;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class RequestDataCollector extends AbstractDataCollector
 {
 

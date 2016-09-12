@@ -107,6 +107,7 @@ class StateUpdater implements StateUpdaterInterface
      * @param string $targetState
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
      * @return void
      */
     protected function assertTransitionAlreadyProcessed(
