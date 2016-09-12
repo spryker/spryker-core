@@ -14,4 +14,6 @@ interface SearchConstants
 
     const SEARCH_CONFIG_CACHE_KEY = 'SEARCH_CONFIG_CACHE_KEY';
 
+    const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
+
 }

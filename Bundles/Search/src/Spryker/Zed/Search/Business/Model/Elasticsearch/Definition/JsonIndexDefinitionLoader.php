@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Json;
+use Spryker\Shared\Search\SearchConstants;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -145,6 +147,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
             $indexName = $storePrefix . $indexName;
         }
 
+        $indexName = $this->addSearchIndexNameSuffix($indexName);
+
         return $indexName;
     }
 
@@ -183,6 +187,19 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $indexName
+     *
+     * @return string
+     */
+    protected function addSearchIndexNameSuffix($indexName)
+    {
+        $suffix = Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
+        $indexName .= $suffix;
+
+        return $indexName;
     }
 
 }
