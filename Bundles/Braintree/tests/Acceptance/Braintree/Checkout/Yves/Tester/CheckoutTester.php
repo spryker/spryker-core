@@ -25,9 +25,9 @@ class CheckoutTester extends YvesAcceptanceTester
         $i->submitGuestCustomerForm();
         $i->submitAddressForm();
         $i->selectShipmentMethod();
-//        $i->seeBraintreePaymentMethods();
-//        $i->submitCreditCardForm();
-//        $i->submitOrder();
+        $i->seeBraintreePaymentMethods();
+        $i->submitCreditCardForm();
+        $i->submitOrder();
     }
 
     /**
@@ -113,9 +113,13 @@ class CheckoutTester extends YvesAcceptanceTester
     public function selectShipmentMethod()
     {
         $i = $this;
+
         $i->amOnPage(CheckoutPage::URL_SHIPMENT);
-        $i->click(['id' => CheckoutPage::SHIPMENT_SELECTION]);
-        $i->click(CheckoutPage::BUTTON_GO_TO_PAYMENT);
+        $i->submitForm('form[name=shipmentForm]', [
+            'shipmentForm[idShipmentMethod]' => '1',
+        ]);
+//        $i->click(['id' => CheckoutPage::SHIPMENT_SELECTION]);
+//        $i->click(CheckoutPage::BUTTON_GO_TO_PAYMENT);
         $i->canSeeCurrentUrlEquals(CheckoutPage::URL_PAYMENT);
     }
 
