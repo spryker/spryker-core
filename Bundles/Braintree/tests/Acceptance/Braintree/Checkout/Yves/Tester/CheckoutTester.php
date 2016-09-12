@@ -56,6 +56,7 @@ class CheckoutTester extends YvesAcceptanceTester
         $i = $this;
         $i->amOnPage($productIdentifier);
         $i->click(ProductDetailPage::BUTTON_ADD_TO_CART);
+        $i->wait(5);
     }
 
     /**
@@ -65,6 +66,7 @@ class CheckoutTester extends YvesAcceptanceTester
     {
         $i = $this;
         $i->click(CheckoutPage::BUTTON_CHECKOUT);
+        $i->wait(5);
     }
 
     /**

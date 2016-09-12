@@ -89,7 +89,8 @@ class AbstractFacadeTest extends Test
      */
     protected function setUpSalesOrderTestData()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
+        $country = SpyCountryQuery::create()->filterByIso2Code('DE')->findOneOrCreate();
+        $country->save();
 
         $billingAddress = (new SpySalesOrderAddress())
             ->setFkCountry($country->getIdCountry())

@@ -159,7 +159,9 @@ class SaverTest extends Test
      */
     protected function createOrderEntity()
     {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code('DE');
+        $countryEntity = SpyCountryQuery::create()->filterByIso2Code('DE')->findOneOrCreate();
+        $countryEntity->save();
+
         $billingAddressEntity = $this->createAndGetAddressEntity($countryEntity);
         $customerEntity = $this->createAndGetCustomerEntity();
 
