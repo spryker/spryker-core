@@ -13,8 +13,11 @@
     },
     "psr-4": {
       "Braintree\\Module\\": "tests/",
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "Oms\\Module\\": "vendor/spryker/oms/tests/_support/Module",
-      "Sales\\Module\\": "vendor/spryker/sales/tests/_support/Module"
+      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
+      "Sales\\Module\\": "vendor/spryker/sales/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
   },
   "require": {
