@@ -12,7 +12,6 @@ use LogicException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;

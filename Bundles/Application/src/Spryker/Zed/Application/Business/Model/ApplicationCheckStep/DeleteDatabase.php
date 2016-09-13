@@ -9,7 +9,6 @@ namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
 use PDO;
 use RuntimeException;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Symfony\Component\Process\Process;
