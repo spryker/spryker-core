@@ -19,7 +19,7 @@ env:
 
 install:
   - composer self-update && composer --version
-  - composer install --no-interaction --prefer-dist -vvv
+  - composer install --no-interaction --prefer-dist
 
 script:
   - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml
