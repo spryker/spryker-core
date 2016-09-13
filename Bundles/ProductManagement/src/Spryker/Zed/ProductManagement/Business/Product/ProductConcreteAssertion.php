@@ -100,26 +100,4 @@ class ProductConcreteAssertion implements ProductConcreteAssertionInterface
         }
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return void
-     */
-    public function assertProductAbstractExists($idProductAbstract)
-    {
-        $productAbstractEntity = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->findOne();
-
-        if (!$productAbstractEntity) {
-            throw new MissingProductException(sprintf(
-                'Product abstract with id "%s" does not exist.',
-                $idProductAbstract
-            ));
-        }
-    }
-
 }

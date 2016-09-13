@@ -79,6 +79,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->getStockFacade(),
             $this->getProductImageFacade(),
+            $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion()
         );
     }

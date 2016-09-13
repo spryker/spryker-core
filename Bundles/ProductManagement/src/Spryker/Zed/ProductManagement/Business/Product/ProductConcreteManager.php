@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -23,8 +22,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductIn
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -87,9 +84,14 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $productImageFacade;
 
     /**
+     * @var ProductAbstractAssertionInterface
+     */
+    protected $productAbstractAssertion;
+
+    /**
      * @var ProductConcreteAssertionInterface
      */
-    protected $productAssertion;
+    protected $productConcreteAssertion;
 
     public function __construct(
         AttributeManagerInterface $attributeManager,
@@ -102,7 +104,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToStockInterface $stockFacade,
         ProductManagementToProductImageInterface $productImageFacade,
-        ProductConcreteAssertionInterface $productAssertion
+        ProductAbstractAssertionInterface $productAbstractAssertion,
+        ProductConcreteAssertionInterface $productConcreteAssertion
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -114,7 +117,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->stockFacade = $stockFacade;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
-        $this->productAssertion = $productAssertion;
+        $this->productAbstractAssertion = $productAbstractAssertion;
+        $this->productConcreteAssertion = $productConcreteAssertion;
     }
 
     /**
@@ -130,7 +134,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
         try {
             $sku = $productConcreteTransfer->getSku();
-            $this->productAssertion->assertSkuUnique($sku);
+            $this->productConcreteAssertion->assertSkuUnique($sku);
 
             $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
@@ -172,9 +176,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
                 ->requireFkProductAbstract()
                 ->getFkProductAbstract();
 
-            $this->productAssertion->assertProductAbstractExists($idProductAbstract);
-            $this->productAssertion->assertProductExists($idProduct);
-            $this->productAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
+            $this->productAbstractAssertion->assertProductExists($idProductAbstract);
+            $this->productConcreteAssertion->assertProductExists($idProduct);
+            $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
 
             $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
@@ -240,21 +244,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         }
 
         return $transferCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
-     */
-    protected function loadProductData(ZedProductConcreteTransfer $productTransfer)
-    {
-        $this->loadLocalizedAttributes($productTransfer);
-        $this->loadPrice($productTransfer);
-        $this->loadStock($productTransfer);
-        $this->loadImageSet($productTransfer);
-
-        return $productTransfer;
     }
 
     /**
@@ -348,6 +337,21 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
                 $this->stockFacade->updateStockProduct($stockTransfer);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     *
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     */
+    protected function loadProductData(ZedProductConcreteTransfer $productTransfer)
+    {
+        $this->loadLocalizedAttributes($productTransfer);
+        $this->loadPrice($productTransfer);
+        $this->loadStock($productTransfer);
+        $this->loadImageSet($productTransfer);
+
+        return $productTransfer;
     }
 
     /**

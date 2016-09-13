@@ -65,9 +65,9 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
     public function assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $sku)
     {
         $isUnique = $this->productQueryContainer
-                ->queryProductAbstractBySku($sku)
-                ->filterByIdProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
-                ->count() <= 0;
+            ->queryProductAbstractBySku($sku)
+            ->filterByIdProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
+            ->count() <= 0;
 
         if (!$isUnique) {
             throw new ProductAbstractExistsException(sprintf(
@@ -84,7 +84,7 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
      *
      * @return void
      */
-    public function assertProductAbstractExists($idProductAbstract)
+    public function assertProductExists($idProductAbstract)
     {
         $productAbstractEntity = $this->productQueryContainer
             ->queryProductAbstract()

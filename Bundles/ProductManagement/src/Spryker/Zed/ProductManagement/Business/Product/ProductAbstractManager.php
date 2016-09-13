@@ -11,7 +11,6 @@ use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
@@ -22,8 +21,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductIn
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -171,7 +168,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
                 ->requireIdProductAbstract()
                 ->getIdProductAbstract();
 
-            $this->productAssertion->assertProductAbstractExists($idProductAbstract);
+            $this->productAssertion->assertProductExists($idProductAbstract);
             $this->productAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
 
             $this->persistEntity($productAbstractTransfer);
