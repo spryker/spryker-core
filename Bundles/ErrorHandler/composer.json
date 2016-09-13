@@ -31,5 +31,11 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }
