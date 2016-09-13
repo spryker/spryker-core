@@ -11,6 +11,7 @@ use PDO;
 use RuntimeException;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Symfony\Component\Process\Process;
 
 class DeleteDatabase extends AbstractApplicationCheckStep
@@ -23,7 +24,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     {
         $this->info('Delete database');
 
-        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === Config::get(ApplicationConstants::ZED_DB_ENGINE_PGSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
             $this->deletePostgresDatabaseIfExists();
         } else {
             $this->deleteMysqlDatabaseIfExists();
@@ -40,7 +41,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         $dropDatabaseCommand = sprintf(
             'psql -U %s -w  -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid() AND pg_stat_activity.datname = \'%s\';"',
             'postgres',
-            Config::get(ApplicationConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE)
         );
 
         $process = new Process($dropDatabaseCommand);
@@ -63,7 +64,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         $dropDatabaseCommand = sprintf(
             'psql -U %s -w  -c "DROP DATABASE IF EXISTS \"%s\";"',
             'postgres',
-            Config::get(ApplicationConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE)
         );
 
         $process = new Process($dropDatabaseCommand);
@@ -80,15 +81,15 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     protected function deleteMysqlDatabaseIfExists()
     {
         $con = new PDO(
-            Config::get(ApplicationConstants::ZED_DB_ENGINE)
+            Config::get(PropelConstants::ZED_DB_ENGINE)
             . ':host='
-            . Config::get(ApplicationConstants::ZED_DB_HOST)
-            . ';port=' . Config::get(ApplicationConstants::ZED_DB_PORT),
-            Config::get(ApplicationConstants::ZED_DB_USERNAME),
-            Config::get(ApplicationConstants::ZED_DB_PASSWORD)
+            . Config::get(PropelConstants::ZED_DB_HOST)
+            . ';port=' . Config::get(PropelConstants::ZED_DB_PORT),
+            Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_PASSWORD)
         );
 
-        $q = 'DROP DATABASE IF EXISTS ' . Config::get(ApplicationConstants::ZED_DB_DATABASE);
+        $q = 'DROP DATABASE IF EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE);
         $con->exec($q);
     }
 

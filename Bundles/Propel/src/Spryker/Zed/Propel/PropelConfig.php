@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Propel;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -52,8 +51,18 @@ class PropelConfig extends AbstractBundleConfig
     public function getPropelSchemaPathPatterns()
     {
         return [
-            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Zed/*/Persistence/Propel/Schema/',
+            $this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()),
         ];
+    }
+
+    /**
+     * @deprecated Only needed for BC reasons. Use PropelConstants::SCHEMA_FILE_PATH_PATTERN to define the path instead.
+     *
+     * @return string
+     */
+    private function getSchemaPathPattern()
+    {
+        return $this->get('APPLICATION_SPRYKER_ROOT') . '/*/src/*/Zed/*/Persistence/Propel/Schema/';
     }
 
     /**
