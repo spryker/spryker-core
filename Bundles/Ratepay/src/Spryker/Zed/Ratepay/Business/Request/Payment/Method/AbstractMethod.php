@@ -116,7 +116,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $paymentData = $this->getTransferObjectFromPayment($payment);
 
         /**
-         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm $request
+         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_DELIVER_CONFIRM);
 
@@ -138,7 +138,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $paymentData = $this->getTransferObjectFromPayment($payment);
 
         /**
-         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm $request
+         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_CANCEL);
 
@@ -160,7 +160,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $paymentData = $this->getTransferObjectFromPayment($payment);
 
         /**
-         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm $request
+         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REFUND);
 

@@ -92,6 +92,7 @@ class OrderPaymentRequestMapper extends BaseMapper
         $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
         $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
         $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
+        $expenses = $this->orderTransfer->getExpenses();
 
         $this->ratepayPaymentRequestTransfer
             ->setOrderId($this->orderEntity->getIdSalesOrder())
@@ -104,6 +105,10 @@ class OrderPaymentRequestMapper extends BaseMapper
             ->setBillingAddress($billingAddress)
             ->setShippingAddress($shippingAddress)
         ;
+        if (count($expenses)) {
+            $this->ratepayPaymentRequestTransfer
+                ->setShippingTaxRate($expenses[0]->getTaxRate());
+        }
         $basketItems = $this->orderTransfer->requireItems()->getItems();
         $grouppedItems = [];
         foreach ($basketItems as $basketItem) {

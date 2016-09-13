@@ -61,6 +61,7 @@ class QuotePaymentRequestMapper extends BaseMapper
         $customerTransfer = $this->quoteTransfer->requireCustomer()->getCustomer();
         $billingAddress = $this->quoteTransfer->getBillingAddress();
         $shippingAddress = $this->quoteTransfer->getShippingAddress();
+        $expenses = $this->quoteTransfer->getExpenses();
 
         $this->ratepayPaymentRequestTransfer
             ->setRatepayPaymentInit($this->ratepayPaymentInitTransfer)
@@ -79,6 +80,10 @@ class QuotePaymentRequestMapper extends BaseMapper
             ->setBillingAddress($billingAddress)
             ->setShippingAddress($shippingAddress)
         ;
+        if (count($expenses)) {
+            $this->ratepayPaymentRequestTransfer
+                ->setShippingTaxRate($expenses[0]->getTaxRate());
+        }
         if (method_exists($this->paymentData, 'getBankAccountHolder')) {
             $this->ratepayPaymentRequestTransfer
                 ->setBankAccountHolder($this->paymentData->getBankAccountHolder());

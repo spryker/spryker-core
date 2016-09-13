@@ -58,7 +58,7 @@ class BasketMapper extends BaseMapper
 
             ->setShippingUnitPrice($shippingUnitPrice)
             ->setShippingTitle(self::DEFAULT_SHIPPING_NODE_VALUE)
-            ->setShippingTaxRate(self::DEFAULT_SHIPPING_TAX_RATE)
+            ->setShippingTaxRate($this->ratepayPaymentRequestTransfer->getShippingTaxRate())
 
             ->setDiscountTitle(self::DEFAULT_DISCOUNT_NODE_VALUE)
             ->setDiscountUnitPrice(self::DEFAULT_DISCOUNT_UNIT_PRICE * self::BASKET_DISCOUNT_COEFFICIENT)
