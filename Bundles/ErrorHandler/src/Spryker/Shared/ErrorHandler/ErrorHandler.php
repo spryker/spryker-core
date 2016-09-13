@@ -9,7 +9,6 @@ namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
 use Exception;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 
 class ErrorHandler
@@ -50,7 +49,6 @@ class ErrorHandler
 
         try {
             $this->send500Header();
-            $this->doDatabaseRollback();
             $this->cleanOutputBuffer();
             echo $this->errorRenderer->render($exception);
         } catch (Exception $internalException) {
@@ -91,19 +89,6 @@ class ErrorHandler
     {
         if (!headers_sent()) {
             header('HTTP/1.0 500 Internal Server Error');
-        }
-    }
-
-    /**
-     * @TODO FW check
-     * Check if needed, maybe propel does this by default.
-     *
-     * @return void
-     */
-    protected function doDatabaseRollback()
-    {
-        if (APPLICATION === static::ZED && class_exists(Propel::class, false)) {
-            Propel::getConnection()->rollBack();
         }
     }
 
