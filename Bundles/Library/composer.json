@@ -16,7 +16,7 @@
     "spryker/kernel": "^2.0.0",
     "spryker/monolog": "^2.0.0",
     "spryker/new-relic": "^2.0.0",
-    "propel/propel": "2.0.0-alpha5",
+    "spryker/propel": "^2.0.0",
     "spryker/redis": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",
@@ -29,8 +29,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "^2.0.0"
+    "spryker/testify": "*"
   },
   "description": "Library bundle",
   "license": "proprietary",
