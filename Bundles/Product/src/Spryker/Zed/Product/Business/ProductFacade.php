@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
@@ -23,15 +22,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param \SplFileInfo $file
+     * @param string $sku
      *
-     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
+     * @return bool
      */
-    public function importProductsFromFile(\SplFileInfo $file)
+    public function hasProductAbstract($sku)
     {
-        return $this->getFactory()
-            ->createProductImporter()
-            ->importFile($file);
+        $productManager = $this->getFactory()->createProductManager();
+
+        return $productManager->hasProductAbstract($sku);
     }
 
     /**
@@ -53,18 +52,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return int
      */
-    public function getProductConcreteIdBySku($sku)
-    {
-        return $this->getFactory()->createProductManager()->getProductConcreteIdBySku($sku);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return int
-     */
     public function getProductAbstractIdByConcreteSku($sku)
     {
         return $this->getFactory()->createProductManager()->getProductAbstractIdByConcreteSku($sku);
@@ -73,83 +60,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param string $attributeName
-     *
-     * @return bool
-     * 
-     * TODO: remove
-     */
-    public function hasAttribute($attributeName)
-    {
-        $attributeManager = $this->getFactory()->createAttributeManager();
-
-        return $attributeManager->hasAttribute($attributeName);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $attributeType
-     *
-     * @return bool
-     *
-     * TODO: remove
-     */
-    public function hasAttributeType($attributeType)
-    {
-        $attributeManager = $this->getFactory()->createAttributeManager();
-
-        return $attributeManager->hasAttributeType($attributeType);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $name
-     * @param string $inputType
-     * @param int|null $fkParentAttributeType
-     *
-     * @return int
-     *
-     * TODO: remove
-     */
-    public function createAttributeType($name, $inputType, $fkParentAttributeType = null)
-    {
-        $attributeManager = $this->getFactory()->createAttributeManager();
-
-        return $attributeManager->createAttributeType($name, $inputType, $fkParentAttributeType);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $attributeName
-     * @param string $attributeType
-     * @param bool $isEditable
-     *
-     * @return int
-     *
-     * TODO: remove
-     */
-    public function createAttribute($attributeName, $attributeType, $isEditable = true)
-    {
-        $attributeManager = $this->getFactory()->createAttributeManager();
-
-        return $attributeManager->createAttribute($attributeName, $attributeType, $isEditable);
-    }
-
-    /**
-     * @api
-     *
      * @param string $sku
      *
-     * @return bool
+     * @return string
      */
-    public function hasProductAbstract($sku)
+    public function getAbstractSkuFromProductConcrete($sku)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        return $productManager->hasProductAbstract($sku);
+        return $this->getFactory()->createProductManager()->getAbstractSkuFromProductConcrete($sku);
     }
 
     /**
@@ -183,114 +100,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
+     * @param string $sku
      *
      * @return int
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
+    public function getProductConcreteIdBySku($sku)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        return $productManager->createProductConcrete($productConcreteTransfer, $idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductAbstract)
-    {
-        $productManager = $this->getFactory()->createProductManager();
-
-        $productManager->touchProductActive($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductAbstract)
-    {
-        $productManager = $this->getFactory()->createProductManager();
-
-        $productManager->touchProductInactive($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductAbstract)
-    {
-        $productManager = $this->getFactory()->createProductManager();
-
-        $productManager->touchProductDeleted($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createProductUrl($sku, $url, LocaleTransfer $locale)
-    {
-        return $this->getFactory()->createProductManager()->createProductUrl($sku, $url, $locale);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
-    {
-        return $this->getFactory()->createProductManager()->createAndTouchProductUrl($sku, $url, $locale);
-    }
-
-    /**
-     * @deprecated
-     *
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
-     * @return void
-     *
-     * TODO: remove me
-     */
-    public function install(MessengerInterface $messenger = null)
-    {
-        $this->getFactory()->createInstaller($messenger)->install();
-    }
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return string
-     */
-    public function getAbstractSkuFromProductConcrete($sku)
-    {
-        return $this->getFactory()->createProductManager()->getAbstractSkuFromProductConcrete($sku);
+        return $this->getFactory()->createProductManager()->getProductConcreteIdBySku($sku);
     }
 
     /**
@@ -308,15 +124,16 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return int
      */
-    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
     {
-        return $this->getFactory()->createProductManager()->createAndTouchProductUrlByIdProduct($idProductAbstract, $url, $locale);
+        $productManager = $this->getFactory()->createProductManager();
+
+        return $productManager->createProductConcrete($productConcreteTransfer, $idProductAbstract);
     }
 
     /**
@@ -401,6 +218,90 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createAttributeKeyManager()
             ->updateAttributeKey($productAttributeKeyTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductActive($idProductAbstract)
+    {
+        $productManager = $this->getFactory()->createProductManager();
+
+        $productManager->touchProductActive($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductAbstract)
+    {
+        $productManager = $this->getFactory()->createProductManager();
+
+        $productManager->touchProductInactive($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract)
+    {
+        $productManager = $this->getFactory()->createProductManager();
+
+        $productManager->touchProductDeleted($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createProductUrl($sku, $url, LocaleTransfer $locale)
+    {
+        return $this->getFactory()->createProductManager()->createProductUrl($sku, $url, $locale);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
+    {
+        return $this->getFactory()->createProductManager()->createAndTouchProductUrl($sku, $url, $locale);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
+    {
+        return $this->getFactory()->createProductManager()->createAndTouchProductUrlByIdProduct($idProductAbstract, $url, $locale);
     }
 
 }

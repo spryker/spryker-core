@@ -82,67 +82,7 @@ class ProductFacadeTest extends Test
         $this->productQueryContainer = new ProductQueryContainer();
     }
 
-    /**
-     * @group Product
-     *
-     * @return void
-     */
-    public function testCreateAttributeTypeCreatesAndReturnsId()
-    {
-        $attributeTypeQuery = $this->productQueryContainer->queryAttributeTypeByName('AnAttributeType');
-        $this->assertEquals(0, $attributeTypeQuery->count());
-
-        $idAttributeType = $this->productFacade->createAttributeType('AnAttributeType', 'input');
-
-        $this->assertEquals(1, $attributeTypeQuery->count());
-        $this->assertEquals($idAttributeType, $attributeTypeQuery->findOne()->getIdProductAttributeType());
-    }
-
-    /**
-     * @group Product
-     *
-     * @return void
-     */
-    public function testCreateAttributeCreatesAndReturnsId()
-    {
-        $this->productFacade->createAttributeType('AnAttributeType', 'input');
-        $attributeQuery = $this->productQueryContainer->queryAttributeByName('ANonExistentAttribute');
-        $this->assertEquals(0, $attributeQuery->count());
-
-        $idAttribute = $this->productFacade->createAttribute('ANonExistentAttribute', 'AnAttributeType');
-
-        $this->assertEquals(1, $attributeQuery->count());
-        $this->assertEquals($idAttribute, $attributeQuery->findOne()->getIdProductAttributesMetadata());
-    }
-
-    /**
-     * @group Product
-     *
-     * @return void
-     */
-    public function testHasAttributeTypeReturnsRightValue()
-    {
-        $this->assertFalse($this->productFacade->hasAttributeType('AnAttributeType'));
-        $this->productFacade->createAttributeType('AnAttributeType', 'input');
-        $this->assertTrue($this->productFacade->hasAttributeType('AnAttributeType'));
-    }
-
-    /**
-     * @group Product
-     *
-     * @return void
-     */
-    public function testHasAttributeReturnsRightValue()
-    {
-        $this->assertFalse($this->productFacade->hasAttribute('AnAttribute'));
-
-        $this->productFacade->createAttributeType('AnAttributeType', 'input');
-        $this->productFacade->createAttribute('AnAttribute', 'AnAttributeType');
-
-        $this->assertTrue($this->productFacade->hasAttribute('AnAttribute'));
-    }
-
-    /**
+   /**
      * @group Product
      *
      * @return void

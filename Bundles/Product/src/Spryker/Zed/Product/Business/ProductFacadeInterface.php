@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface ProductFacadeInterface
 {
@@ -19,18 +18,16 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param \SplFileInfo $file
+     * @param string $sku
      *
-     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
+     * @return bool
      */
-    public function importProductsFromFile(\SplFileInfo $file);
+    public function hasProductAbstract($sku);
 
     /**
      * @api
      *
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -41,19 +38,6 @@ interface ProductFacadeInterface
      *
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function getProductConcreteIdBySku($sku);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdByConcreteSku($sku);
@@ -61,56 +45,11 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param string $attributeName
-     *
-     * @return bool
-     */
-    public function hasAttribute($attributeName);
-
-    /**
-     * @api
-     *
-     * @param string $attributeType
-     *
-     * @return bool
-     */
-    public function hasAttributeType($attributeType);
-
-    /**
-     * @api
-     *
-     * @param string $name
-     * @param string $inputType
-     * @param int|null $fkParentAttributeType
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
-     *
-     * @return int
-     */
-    public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
-
-    /**
-     * @api
-     *
-     * @param string $attributeName
-     * @param string $attributeType
-     * @param bool $isEditable
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
-     *
-     * @return int
-     */
-    public function createAttribute($attributeName, $attributeType, $isEditable = true);
-
-    /**
-     * @api
-     *
      * @param string $sku
      *
-     * @return bool
+     * @return string
      */
-    public function hasProductAbstract($sku);
+    public function getAbstractSkuFromProductConcrete($sku);
 
     /**
      * @api
@@ -133,87 +72,11 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
+     * @param string $sku
      *
      * @return int
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createProductUrl($sku, $url, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger = null);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return string
-     */
-    public function getAbstractSkuFromProductConcrete($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @api
@@ -227,13 +90,21 @@ interface ProductFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return int
      */
-    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param string $abstractSku
+     *
+     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
+     */
+    public function getProductVariantsByAbstractSku($abstractSku);
 
     /**
      * Specification:
@@ -284,5 +155,65 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
      */
     public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductActive($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createProductUrl($sku, $url, LocaleTransfer $locale);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
 }
