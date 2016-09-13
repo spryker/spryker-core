@@ -21,6 +21,7 @@ $config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 
 $config[PropelConstants::ZED_DB_PORT] = (getenv(PropelConstants::ZED_DB_PORT)) ?: 5432;
 $config[PropelConstants::ZED_DB_ENGINE] = (getenv(PropelConstants::ZED_DB_ENGINE)) ?: $config[PropelConstants::ZED_DB_ENGINE_PGSQL];
+$config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 
 $currentStore = Store::getInstance()->getStoreName();
 
