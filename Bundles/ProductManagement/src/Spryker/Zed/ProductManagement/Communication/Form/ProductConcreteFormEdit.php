@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;

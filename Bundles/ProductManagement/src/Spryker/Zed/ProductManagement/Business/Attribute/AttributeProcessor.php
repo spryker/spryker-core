@@ -43,7 +43,7 @@ class AttributeProcessor implements AttributeProcessorInterface
         array $concreteLocalizedAttributes = []
     ) {
         $this->abstractAttributes = $abstractAttributes;
-        $this->concreteAttributes =  $concreteAttributes;
+        $this->concreteAttributes = $concreteAttributes;
         $this->abstractLocalizedAttributes = $abstractLocalizedAttributes;
         $this->concreteLocalizedAttributes = $concreteLocalizedAttributes;
     }

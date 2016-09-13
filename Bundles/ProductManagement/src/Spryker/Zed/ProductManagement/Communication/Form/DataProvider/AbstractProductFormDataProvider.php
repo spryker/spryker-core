@@ -115,7 +115,6 @@ class AbstractProductFormDataProvider
      */
     protected $imageUrlPrefix;
 
-
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
@@ -439,7 +438,7 @@ class AbstractProductFormDataProvider
 
     /**
      * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     * @param string $localeCode
+     * @param string|null $localeCode
      * @param bool|false $isNew
      *
      * @return array
@@ -474,7 +473,7 @@ class AbstractProductFormDataProvider
 
     /**
      * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     * @param string $localeCode
+     * @param string|null $localeCode
      * @param bool|false $isNew
      *
      * @return array

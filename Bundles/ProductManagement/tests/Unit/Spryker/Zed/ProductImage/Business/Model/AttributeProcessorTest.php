@@ -11,6 +11,15 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductImage
+ * @group Business
+ * @group Model
+ * @group AttributeProcessorTest
+ */
 class AttributeProcessorTest extends Test
 {
 
@@ -48,7 +57,6 @@ class AttributeProcessorTest extends Test
      * @var \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
     protected $attributeProcessor;
-
 
     protected function setUp()
     {

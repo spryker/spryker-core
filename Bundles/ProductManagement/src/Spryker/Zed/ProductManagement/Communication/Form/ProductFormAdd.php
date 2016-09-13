@@ -484,7 +484,7 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($imageSetCollection, ExecutionContextInterface $context) {
-                    return;
+                            return;
 
                             if (array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
                                 return;

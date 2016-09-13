@@ -59,11 +59,9 @@ class AttributeSuperForm extends AttributeAbstractForm
 
         if ($allowInput) {
             //$config['attr']['tags'] = true;
-        }
-        else {
+        } else {
             //$config['attr']['class'] .= ' ajax';
         }
-
 
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);

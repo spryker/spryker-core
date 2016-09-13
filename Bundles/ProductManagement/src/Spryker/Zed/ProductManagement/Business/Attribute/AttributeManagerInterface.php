@@ -25,7 +25,7 @@ interface AttributeManagerInterface
     public function getProductAttributeValueCollection();
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */

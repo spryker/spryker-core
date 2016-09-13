@@ -30,7 +30,6 @@ interface ProductConcreteManagerInterface
     /**
      * @param int $idProduct
      *
-     *
      * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer|null
      */
     public function getProductConcreteById($idProduct);

@@ -28,8 +28,6 @@ class ProductManagementToStockBridge implements ProductManagementToStockInterfac
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
-     *
      * @return int
      */
     public function createStockProduct(StockProductTransfer $stockProductTransfer)

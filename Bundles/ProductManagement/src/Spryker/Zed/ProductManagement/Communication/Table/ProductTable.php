@@ -117,7 +117,7 @@ class ProductTable extends AbstractTable
     protected function generateItem(array $item)
     {
         return [
-            static::COL_ID_PRODUCT_ABSTRACT  => $item[static::COL_ID_PRODUCT_ABSTRACT],
+            static::COL_ID_PRODUCT_ABSTRACT => $item[static::COL_ID_PRODUCT_ABSTRACT],
             static::COL_SKU => $item[static::COL_SKU],
             static::COL_NAME => 'Name',
             static::COL_PRICE => 'Price',

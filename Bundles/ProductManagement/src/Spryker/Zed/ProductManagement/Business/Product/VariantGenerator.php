@@ -29,7 +29,7 @@ class VariantGenerator implements VariantGeneratorInterface
     protected function generateSkuFromTokens(array $orderedTokenCollection)
     {
         $sku = '';
-        for ($a=0; $a<count($orderedTokenCollection); $a++) {
+        for ($a = 0; $a < count($orderedTokenCollection); $a++) {
             foreach ($orderedTokenCollection[$a] as $type => $value) {
                 $sku .= $type . self::SKU_TYPE_SEPARATOR . $value . self::SKU_VALUE_SEPARATOR;
             }
@@ -123,7 +123,7 @@ class VariantGenerator implements VariantGeneratorInterface
     protected function convertTokensIntoAttributes(array $tokenCollection)
     {
         $attributes = [];
-        for ($a=0; $a<count($tokenCollection); $a++) {
+        for ($a = 0; $a < count($tokenCollection); $a++) {
             foreach ($tokenCollection[$a] as $attributeType => $attributeValue) {
                 $attributes[$attributeType] = $attributeValue;
             }

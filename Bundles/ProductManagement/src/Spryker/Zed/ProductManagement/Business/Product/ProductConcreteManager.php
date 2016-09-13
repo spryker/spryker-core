@@ -84,12 +84,12 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $productImageFacade;
 
     /**
-     * @var ProductAbstractAssertionInterface
+     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractAssertionInterface
      */
     protected $productAbstractAssertion;
 
     /**
-     * @var ProductConcreteAssertionInterface
+     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteAssertionInterface
      */
     protected $productConcreteAssertion;
 

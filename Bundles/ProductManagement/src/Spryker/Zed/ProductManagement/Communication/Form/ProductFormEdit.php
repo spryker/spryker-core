@@ -26,7 +26,7 @@ class ProductFormEdit extends ProductFormAdd
     {
         $validationGroups = parent::getValidationGroups();
 
-        return array_filter($validationGroups, function($item){
+        return array_filter($validationGroups, function ($item) {
             return $item !== ImageSetForm::VALIDATION_GROUP_IMAGE_COLLECTION;
         });
     }

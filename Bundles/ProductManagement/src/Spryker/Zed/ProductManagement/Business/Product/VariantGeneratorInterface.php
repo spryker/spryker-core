@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface VariantGeneratorInterface
 {
+
     /**
      * @param array $tokenAttributeCollection
      *
@@ -42,4 +43,5 @@ interface VariantGeneratorInterface
      * @return array|\Generated\Shared\Transfer\ZedProductConcreteTransfer[]
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
+
 }

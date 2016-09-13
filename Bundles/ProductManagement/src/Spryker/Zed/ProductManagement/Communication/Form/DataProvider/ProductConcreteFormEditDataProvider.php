@@ -143,7 +143,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         foreach ($stockCollection as $stockTransfer) {
             $stock[StockForm::FIELD_HIDDEN_FK_STOCK] = $stockTransfer->getFkStock();
             $stock[StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID] = $stockTransfer->getIdStockProduct();
-            $stock[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK] = (bool) $stockTransfer->getIsNeverOutOfStock();
+            $stock[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK] = (bool)$stockTransfer->getIsNeverOutOfStock();
             $stock[StockForm::FIELD_TYPE] = $stockTransfer->getStockType();
             $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
 

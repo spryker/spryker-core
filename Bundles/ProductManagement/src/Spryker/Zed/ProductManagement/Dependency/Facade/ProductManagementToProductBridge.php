@@ -94,4 +94,5 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     {
         return $this->productFacade->hasProductConcrete($sku);
     }
+
 }

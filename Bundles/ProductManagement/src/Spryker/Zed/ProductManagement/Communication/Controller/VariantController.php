@@ -62,7 +62,7 @@ class VariantController extends AbstractController
 
         $a = [];
         foreach ($matrix as $p) {
-            $a[]  = $p->toArray(true);
+            $a[] = $p->toArray(true);
         }
 
         return new JsonResponse([

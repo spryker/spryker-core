@@ -35,8 +35,6 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
      *
-     * @throws \Exception
-     *
      * @return int
      */
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
@@ -61,8 +59,6 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
-     *
-     * @throws \Exception
      *
      * @return int
      */

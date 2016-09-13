@@ -237,8 +237,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
                 if ($allowInput) {
                     $config['attr']['tags'] = true;
-                }
-                else {
+                } else {
                     //$config['attr']['class'] .= ' ajax';
                 }
             } else {

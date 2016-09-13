@@ -289,7 +289,6 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      * @param array $variantData
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
      *
-     *
      * @return array|null
      */
     protected function getVariantValues(array $variantData, ProductManagementAttributeTransfer $attributeTransfer)

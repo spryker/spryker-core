@@ -95,7 +95,7 @@ class AddController extends AbstractController
     {
         $values = [];
         foreach ($keys as $key) {
-            $values[$key] =  $attributes[$key];
+            $values[$key] = $attributes[$key];
         }
 
         return $values;

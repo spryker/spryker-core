@@ -71,6 +71,7 @@ interface ProductManagerInterface
      * @param array $productConcreteCollection
      *
      * @throws \Exception
+     *
      * @return int
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);

@@ -28,10 +28,12 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBri
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
+ * @group ProductManagement
  * @group Business
- * @group ProductManagementFacade
+ * @group ProductManagementFacadeAttributeTest
  */
 class ProductManagementFacadeAttributeTest extends Test
 {

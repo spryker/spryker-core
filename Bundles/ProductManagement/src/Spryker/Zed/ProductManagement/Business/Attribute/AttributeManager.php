@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;

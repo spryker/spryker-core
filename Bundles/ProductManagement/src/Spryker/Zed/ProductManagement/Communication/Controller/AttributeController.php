@@ -213,8 +213,7 @@ class AttributeController extends AbstractController
 
         try {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($request->get(self::PARAM_LOCALE_CODE));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         }
 

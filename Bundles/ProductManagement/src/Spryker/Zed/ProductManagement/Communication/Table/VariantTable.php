@@ -16,6 +16,7 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class VariantTable extends AbstractTable
 {
+
     const TABLE_IDENTIFIER = 'product-variant-table';
 
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -95,8 +96,7 @@ class VariantTable extends AbstractTable
             ->filterByFkProductAbstract($this->idProductAbstract)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU)
-            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, static::COL_STATUS)
-        ;
+            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, static::COL_STATUS);
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -116,7 +116,7 @@ class VariantTable extends AbstractTable
     protected function generateItem(array $item)
     {
         return [
-            static::COL_ID_PRODUCT  => $item[SpyProductTableMap::COL_ID_PRODUCT],
+            static::COL_ID_PRODUCT => $item[SpyProductTableMap::COL_ID_PRODUCT],
             static::COL_SKU => $item[static::COL_SKU],
             static::COL_STOCK => 'Stock',
             static::COL_STATUS => $this->getStatusLabel($item[SpyProductTableMap::COL_IS_ACTIVE]),
@@ -148,7 +148,8 @@ class VariantTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->generateViewButton(
-            sprintf('/product-management/view/variant?%s=%d&%s=%d',
+            sprintf(
+                '/product-management/view/variant?%s=%d&%s=%d',
                 EditController::PARAM_ID_PRODUCT,
                 $item[SpyProductTableMap::COL_ID_PRODUCT],
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
@@ -158,7 +159,8 @@ class VariantTable extends AbstractTable
         );
 
         $urls[] = $this->generateViewButton(
-            sprintf('/product-management/edit/variant?%s=%d&%s=%d',
+            sprintf(
+                '/product-management/edit/variant?%s=%d&%s=%d',
                 EditController::PARAM_ID_PRODUCT,
                 $item[SpyProductTableMap::COL_ID_PRODUCT],
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,

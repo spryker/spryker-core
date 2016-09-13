@@ -85,7 +85,7 @@ class AttributeTable extends AbstractTable
         $productAbstractCollection = [];
         foreach ($queryResults as $item) {
             $productAbstractCollection[] = [
-                static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE  => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
+                static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
                 SpyProductAttributeKeyTableMap::COL_KEY => $item[SpyProductAttributeKeyTableMap::COL_KEY],
                 static::COL_INPUT_TYPE => $item[static::COL_INPUT_TYPE],
                 static::COL_ACTIONS => implode(' ', $this->createActionColumn($item)),
