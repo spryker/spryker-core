@@ -61,16 +61,25 @@ class PartialBasketMapper extends BaseMapper
             $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts();
         }
 
+        $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
+        $shippingUnitPrice = $this->centsToDecimal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
+
         $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
             ->setAmount($this->centsToDecimal($grandTotal))
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
 
+            ->setShippingUnitPrice($shippingUnitPrice)
             ->setShippingTitle(BasketMapper::DEFAULT_SHIPPING_NODE_VALUE)
             ->setShippingTaxRate(BasketMapper::DEFAULT_SHIPPING_TAX_RATE)
 
             ->setDiscountTitle(BasketMapper::DEFAULT_DISCOUNT_NODE_VALUE)
             ->setDiscountUnitPrice(BasketMapper::DEFAULT_DISCOUNT_UNIT_PRICE * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate(BasketMapper::DEFAULT_DISCOUNT_TAX_RATE);
+
+        if (count($this->quoteTransfer->getExpenses())) {
+            $this->requestTransfer->getShoppingBasket()
+                ->setShippingTaxRate($this->quoteTransfer->getExpenses()[0]->getTaxRate());
+        }
     }
 
 }
