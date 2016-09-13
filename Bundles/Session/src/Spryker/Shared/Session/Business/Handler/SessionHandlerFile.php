@@ -127,11 +127,9 @@ class SessionHandlerFile implements \SessionHandlerInterface
             $startTime = microtime(true);
             unlink($file);
             $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
-
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     /**

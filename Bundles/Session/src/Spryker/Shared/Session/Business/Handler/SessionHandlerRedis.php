@@ -123,10 +123,10 @@ class SessionHandlerRedis implements \SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
-        $result = $this->connection->del($key);
+        $this->connection->del($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
-        return $result ? true : false;
+        return true;
     }
 
     /**
