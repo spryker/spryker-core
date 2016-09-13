@@ -2,6 +2,8 @@
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Propel\Business\Builder\ObjectBuilder;
+use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
 use Spryker\Zed\Propel\PropelConfig;
 
 $config[PropelConstants::ZED_DB_ENGINE_MYSQL] = PropelConfig::DB_ENGINE_MYSQL;
@@ -69,8 +71,8 @@ $config[PropelConstants::PROPEL] = [
         'objectModel' => [
             'defaultKeyType' => 'fieldName',
             'builders' => [
-                'object' => '\Spryker\Zed\Propel\Business\Builder\ObjectBuilder',
-                'query' => '\Spryker\Zed\Propel\Business\Builder\QueryBuilder',
+                'object' => ObjectBuilder::class,
+                'query' => QueryBuilder::class,
             ],
         ],
     ],
