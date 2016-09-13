@@ -241,7 +241,7 @@ class Customer
         $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
             ->findOne();
         if ($customerEntity === null) {
-            throw new CustomerNotFoundException('Customer not found.');
+            throw new CustomerNotFoundException(sprintf('Customer for registration key %s not found', $customerTransfer->getRegistrationKey()));
         }
 
         $customerEntity->setRegistered(new \DateTime());
@@ -526,7 +526,12 @@ class Customer
             return $customerEntity;
         }
 
-        throw new CustomerNotFoundException();
+        throw new CustomerNotFoundException(sprintf(
+            'Customer not found by either ID %s, email %s or restore password key %s.',
+            $customerTransfer->getIdCustomer(),
+            $customerTransfer->getEmail(),
+            $customerTransfer->getRestorePasswordKey()
+        ));
     }
 
     /**
