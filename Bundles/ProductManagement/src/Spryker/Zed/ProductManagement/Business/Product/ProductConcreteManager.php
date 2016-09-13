@@ -86,6 +86,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected $productImageFacade;
 
+    /**
+     * @var ProductConcreteAssertionInterface
+     */
+    protected $productAssertion;
+
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
@@ -96,7 +101,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         ProductManagementToLocaleInterface $localeFacade,
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToStockInterface $stockFacade,
-        ProductManagementToProductImageInterface $productImageFacade
+        ProductManagementToProductImageInterface $productImageFacade,
+        ProductConcreteAssertionInterface $productAssertion
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -108,6 +114,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->stockFacade = $stockFacade;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
+        $this->productAssertion = $productAssertion;
     }
 
     /**
@@ -123,7 +130,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
         try {
             $sku = $productConcreteTransfer->getSku();
-            $this->assertSkuUnique($sku);
+            $this->productAssertion->assertSkuUnique($sku);
 
             $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
@@ -165,9 +172,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
                 ->requireFkProductAbstract()
                 ->getFkProductAbstract();
 
-            $this->assertProductAbstractExists($idProductAbstract);
-            $this->assertProductExists($idProduct);
-            $this->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
+            $this->productAssertion->assertProductAbstractExists($idProductAbstract);
+            $this->productAssertion->assertProductExists($idProduct);
+            $this->productAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
 
             $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
@@ -450,90 +457,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
-     *
-     * @return void
-     */
-    protected function assertSkuUnique($sku)
-    {
-        if ($this->productFacade->hasProductConcrete($sku)) {
-            throw new ProductConcreteExistsException(sprintf(
-                'Tried to create a product concrete with sku %s, but it already exists',
-                $sku
-            ));
-        }
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return void
-     */
-    protected function assertProductExists($idProduct)
-    {
-        $productEntity = $this->productQueryContainer
-            ->queryProduct()
-            ->filterByIdProduct($idProduct)
-            ->findOne();
-
-        if (!$productEntity) {
-            throw new MissingProductException(sprintf(
-                'Product concrete with id "%s" does not exist.',
-                $idProduct
-            ));
-        }
-    }
-
-    /**
-     * @param int $idProduct
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
-     *
-     * @return void
-     */
-    protected function assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku)
-    {
-        $isUnique = $this->productQueryContainer
-                ->queryProductConcreteBySku($sku)
-                ->filterByIdProduct($idProduct, Criteria::NOT_EQUAL)
-                ->count() <= 0;
-
-        if (!$isUnique) {
-            throw new ProductConcreteExistsException(sprintf(
-                'Product concrete with sku %s already exists',
-                $sku
-            ));
-        }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return void
-     */
-    protected function assertProductAbstractExists($idProductAbstract)
-    {
-        $productAbstractEntity = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->findOne();
-
-        if (!$productAbstractEntity) {
-            throw new MissingProductException(sprintf(
-                'Product abstract with id "%s" does not exist.',
-                $idProductAbstract
-            ));
-        }
     }
 
 }

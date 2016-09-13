@@ -14,7 +14,9 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
+use Spryker\Zed\ProductManagement\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManager;
+use Spryker\Zed\ProductManagement\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManager;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
@@ -56,7 +58,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->getStockFacade(),
             $this->getProductImageFacade(),
-            $this->createProductConcreteManager()
+            $this->createProductConcreteManager(),
+            $this->createProductAbstractAssertion()
         );
     }
 
@@ -75,7 +78,8 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getPriceFacade(),
             $this->getStockFacade(),
-            $this->getProductImageFacade()
+            $this->getProductImageFacade(),
+            $this->createProductConcreteAssertion()
         );
     }
 
@@ -246,6 +250,28 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function createAttributeGlossaryKeyBuilder()
     {
         return new AttributeGlossaryKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractAssertionInterface
+     */
+    protected function createProductAbstractAssertion()
+    {
+        return new ProductAbstractAssertion(
+            $this->getProductFacade(),
+            $this->getProductQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteAssertionInterface
+     */
+    protected function createProductConcreteAssertion()
+    {
+        return new ProductConcreteAssertion(
+            $this->getProductFacade(),
+            $this->getProductQueryContainer()
+        );
     }
 
 }

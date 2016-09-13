@@ -90,6 +90,11 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      */
     protected $productConcreteManager;
 
+    /**
+     * @var ProductAbstractAssertionInterface
+     */
+    protected $productAssertion;
+
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
@@ -101,7 +106,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToStockInterface $stockFacade,
         ProductManagementToProductImageInterface $productImageFacade,
-        ProductConcreteManagerInterface $productConcreteManager
+        ProductConcreteManagerInterface $productConcreteManager,
+        ProductAbstractAssertionInterface $productAssertion
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -114,6 +120,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
         $this->productConcreteManager = $productConcreteManager;
+        $this->productAssertion = $productAssertion;
     }
 
     /**
@@ -128,7 +135,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->productQueryContainer->getConnection()->beginTransaction();
 
         try {
-            $this->assertSkuIsUnique($productAbstractTransfer->getSku());
+            $this->productAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
 
             $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
 
@@ -164,8 +171,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
                 ->requireIdProductAbstract()
                 ->getIdProductAbstract();
 
-            $this->assertProductAbstractExists($idProductAbstract);
-            $this->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
+            $this->productAssertion->assertProductAbstractExists($idProductAbstract);
+            $this->productAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
 
             $this->persistEntity($productAbstractTransfer);
 
@@ -308,67 +315,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
                     ->getIdProductAbstract()
             );
             $this->productImageFacade->persistProductImageSet($imageSetTransfer);
-        }
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     *
-     * @return void
-     */
-    protected function assertSkuIsUnique($sku)
-    {
-        if ($this->productFacade->hasProductAbstract($sku)) {
-            throw new ProductAbstractExistsException(sprintf(
-                'Product abstract with sku %s already exists',
-                $sku
-            ));
-        }
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     *
-     * @return void
-     */
-    protected function assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $sku)
-    {
-        $isUnique = $this->productQueryContainer
-            ->queryProductAbstractBySku($sku)
-            ->filterByIdProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
-            ->count() <= 0;
-
-        if (!$isUnique) {
-            throw new ProductAbstractExistsException(sprintf(
-                'Product abstract with sku %s already exists',
-                $sku
-            ));
-        }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return void
-     */
-    protected function assertProductAbstractExists($idProductAbstract)
-    {
-        $productAbstractEntity = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->findOne();
-
-        if (!$productAbstractEntity) {
-            throw new MissingProductException(sprintf(
-                'Product abstract with id "%s" does not exist.',
-                $idProductAbstract
-            ));
         }
     }
 
