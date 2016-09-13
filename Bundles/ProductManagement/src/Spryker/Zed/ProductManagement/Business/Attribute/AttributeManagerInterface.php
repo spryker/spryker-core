@@ -25,35 +25,18 @@ interface AttributeManagerInterface
     public function getProductAttributeValueCollection();
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function createProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    public function saveProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer);
+    public function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function createProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    public function saveProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer);
+    public function persistProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param array $data

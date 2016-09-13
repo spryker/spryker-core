@@ -139,7 +139,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             $idProductAbstract = $productAbstractEntity->getPrimaryKey();
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-            $this->attributeManager->createProductAbstractLocalizedAttributes($productAbstractTransfer);
+            $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
             $this->persistPrice($productAbstractTransfer);
             $this->persistImageSets($productAbstractTransfer);
 
@@ -173,7 +173,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
             $this->persistEntity($productAbstractTransfer);
 
-            $this->attributeManager->saveProductAbstractLocalizedAttributes($productAbstractTransfer);
+            $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
             $this->persistPrice($productAbstractTransfer);
             $this->persistImageSets($productAbstractTransfer);
 

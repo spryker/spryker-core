@@ -141,7 +141,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $idProductConcrete = $productConcreteEntity->getPrimaryKey();
             $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-            $this->attributeManager->createProductConcreteLocalizedAttributes($productConcreteTransfer);
+            $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
             return $idProductConcrete;
@@ -185,7 +185,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $idProductConcrete = $productConcreteEntity->getPrimaryKey();
             $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-            $this->attributeManager->saveProductConcreteLocalizedAttributes($productConcreteTransfer);
+            $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
             $this->persistPrice($productConcreteTransfer);
             $this->persistImageSets($productConcreteTransfer);
             $this->persistStock($productConcreteTransfer);

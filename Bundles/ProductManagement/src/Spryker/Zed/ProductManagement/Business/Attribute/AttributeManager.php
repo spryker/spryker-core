@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
@@ -82,41 +81,7 @@ class AttributeManager implements AttributeManagerInterface
      *
      * @return void
      */
-    public function createProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        $idProductAbstract = $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
-
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
-            $locale = $localizedAttributes->getLocale();
-            if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
-                continue;
-            }
-
-            $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
-
-            $productAbstractAttributesEntity = new SpyProductAbstractLocalizedAttributes();
-            $productAbstractAttributesEntity
-                ->setFkProductAbstract($idProductAbstract)
-                ->setFkLocale($locale->getIdLocale())
-                ->setName($localizedAttributes->getName())
-                ->setDescription($localizedAttributes->getDescription())
-                ->setMetaTitle($localizedAttributes->getMetaTitle())
-                ->setMetaDescription($localizedAttributes->getMetaDescription())
-                ->setMetaKeywords($localizedAttributes->getMetaKeywords())
-                ->setAttributes($encodedAttributes);
-
-            $productAbstractAttributesEntity->save();
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    public function saveProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
+    public function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
         $idProductAbstract = $productAbstractTransfer
             ->requireIdProductAbstract()
@@ -149,35 +114,7 @@ class AttributeManager implements AttributeManagerInterface
      *
      * @return void
      */
-    public function createProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer)
-    {
-        $idProductConcrete = $productConcreteTransfer
-            ->requireIdProductConcrete()
-            ->getIdProductConcrete();
-
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
-            $locale = $localizedAttributes->getLocale();
-            $this->checkProductConcreteAttributesDoNotExist($idProductConcrete, $locale);
-
-            $jsonAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
-
-            $productAttributeEntity = new SpyProductLocalizedAttributes();
-            $productAttributeEntity
-                ->setFkProduct($idProductConcrete)
-                ->setFkLocale($locale->getIdLocale())
-                ->setName($localizedAttributes->getName())
-                ->setAttributes($jsonAttributes);
-
-            $productAttributeEntity->save();
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    public function saveProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer)
+    public function persistProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer)
     {
         $idProductConcrete = $productConcreteTransfer
             ->requireIdProductConcrete()
@@ -318,25 +255,6 @@ class AttributeManager implements AttributeManagerInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
-     *
-     * @return void
-     */
-    protected function checkProductConcreteAttributesDoNotExist($idProductConcrete, LocaleTransfer $locale)
-    {
-        if ($this->hasProductConcreteAttributes($idProductConcrete, $locale)) {
-            throw new ProductConcreteAttributesExistException(sprintf(
-                'Tried to create product concrete attributes for product id %s, locale id %s, but they exist',
-                $idProductConcrete,
-                $locale->getIdLocale()
-            ));
-        }
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
      * @return bool
      */
     protected function hasProductConcreteAttributes($idProductConcrete, LocaleTransfer $locale)
@@ -347,6 +265,25 @@ class AttributeManager implements AttributeManagerInterface
         );
 
         return $query->count() > 0;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
+     *
+     * @return void
+     */
+    protected function assertProductConcreteAttributesDoNotExist($idProductConcrete, LocaleTransfer $locale)
+    {
+        if ($this->hasProductConcreteAttributes($idProductConcrete, $locale)) {
+            throw new ProductConcreteAttributesExistException(sprintf(
+                'Tried to create product concrete attributes for product id %s, locale id %s, but they exist',
+                $idProductConcrete,
+                $locale->getIdLocale()
+            ));
+        }
     }
 
 }
