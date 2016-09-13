@@ -33,13 +33,12 @@ interface ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
+    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param int $idProductAbstract

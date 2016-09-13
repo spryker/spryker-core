@@ -13,9 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
@@ -114,32 +112,33 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
+     *
+     * @throws \Exception
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
+    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        $sku = $productConcreteTransfer->getSku();
-        $this->assertProductConcreteSkuUnique($sku);
+        $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $encodedAttributes = $this->attributeManager->encodeAttributes($productConcreteTransfer->getAttributes());
+        try {
+            $sku = $productConcreteTransfer->getSku();
+            $this->assertProductConcreteSkuUnique($sku);
 
-        $productConcreteEntity = new SpyProduct();
-        $productConcreteEntity
-            ->setSku($sku)
-            ->setFkProductAbstract($idProductAbstract)
-            ->setAttributes($encodedAttributes)
-            ->setIsActive($productConcreteTransfer->getIsActive());
+            $productConcreteEntity = $this->persistProductConcreteEntity($productConcreteTransfer);
 
-        $productConcreteEntity->save();
+            $idProductConcrete = $productConcreteEntity->getPrimaryKey();
+            $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
-        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+            $this->attributeManager->createProductConcreteLocalizedAttributes($productConcreteTransfer);
 
-        $this->attributeManager->createProductConcreteLocalizedAttributes($productConcreteTransfer);
+            $this->productQueryContainer->getConnection()->commit();
+            return $idProductConcrete;
 
-        return $idProductConcrete;
+        } catch (Exception $e) {
+            $this->productQueryContainer->getConnection()->rollBack();
+            throw $e;
+        }
     }
 
     /**
@@ -231,6 +230,38 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         }
     }
 
+
+    /**
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    protected function persistProductConcreteEntity(ZedProductConcreteTransfer $productConcreteTransfer)
+    {
+        $sku = $productConcreteTransfer
+            ->requireSku()
+            ->getSku();
+
+        $fkProductAbstract = $productConcreteTransfer
+            ->requireFkProductAbstract()
+            ->getFkProductAbstract();
+
+        $encodedAttributes = $this->attributeManager->encodeAttributes(
+            $productConcreteTransfer->getAttributes()
+        );
+
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity
+            ->setSku($sku)
+            ->setFkProductAbstract($fkProductAbstract)
+            ->setAttributes($encodedAttributes)
+            ->setIsActive($productConcreteTransfer->getIsActive());
+
+        $productConcreteEntity->save();
+
+        return $productConcreteEntity;
+    }
+
     /**
      * @param string $sku
      *
@@ -318,7 +349,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
     /**
      * @param int $idProduct
-     *
      *
      * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer|null
      */

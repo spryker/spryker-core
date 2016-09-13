@@ -13,11 +13,10 @@ interface ProductConcreteManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
+    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer

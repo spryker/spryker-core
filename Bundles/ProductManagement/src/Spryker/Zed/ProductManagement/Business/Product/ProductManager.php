@@ -29,13 +29,12 @@ class ProductManager implements ProductManagerInterface
      */
     protected $productManagementQueryContainer;
 
-
     public function __construct(
         ProductAbstractManagerInterface $productAbstractManagerInterface,
         ProductConcreteManagerInterface $productConcreteManager,
         ProductManagementQueryContainerInterface $productManagementQueryContainer
-    )
-    {
+    ) {
+
         $this->productAbstractManager = $productAbstractManagerInterface;
         $this->productConcreteManager = $productConcreteManager;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -73,18 +72,16 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
+    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->productConcreteManager->createProductConcrete($productConcreteTransfer, $idProductAbstract);
+        return $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
-     *
      *
      * @return int
      */
@@ -115,9 +112,10 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
+     *
      * @return int
      */
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
@@ -129,7 +127,8 @@ class ProductManager implements ProductManagerInterface
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
             foreach ($productConcreteCollection as $productConcrete) {
-                $this->createProductConcrete($productConcrete, $idProductAbstract);
+                $productConcrete->setFkProductAbstract($idProductAbstract);
+                $this->createProductConcrete($productConcrete);
             }
 
             $this->productManagementQueryContainer->getConnection()->commit();
@@ -147,6 +146,7 @@ class ProductManager implements ProductManagerInterface
      * @param array|\Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
+     *
      * @return int
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
@@ -164,7 +164,7 @@ class ProductManager implements ProductManagerInterface
                     $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
                     $this->saveProductConcrete($productConcreteTransfer);
                 } else {
-                    $this->createProductConcrete($productConcreteTransfer, $idProductAbstract);
+                    $this->createProductConcrete($productConcreteTransfer);
                 }
             }
 
