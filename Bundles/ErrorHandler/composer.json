@@ -18,7 +18,8 @@
   },
   "require-dev": {
     "spryker/library": "^2.0.0",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/kernel": "^2.0.0"
   },
   "description": "ErrorHandler bundle",
   "license": "proprietary",
