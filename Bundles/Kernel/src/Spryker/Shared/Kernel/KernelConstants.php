@@ -23,7 +23,7 @@ interface KernelConstants
     /**
      * @deprecated Use PropelConstants::PROPEL instead.
      */
-    const PROPEL = ApplicationConstants::PROPEL;
+    const PROPEL = 'PROPEL';
 
     const STORE_PREFIX = ApplicationConstants::STORE_PREFIX;
 
