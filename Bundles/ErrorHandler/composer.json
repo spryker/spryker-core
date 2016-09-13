@@ -17,9 +17,9 @@
     "spryker/new-relic": "^2.1.0"
   },
   "require-dev": {
-    "spryker/library": "^2.0.0",
-    "spryker/testify": "*",
-    "spryker/kernel": "^2.0.0"
+    "spryker/code-sniffer": "*",
+    "spryker/kernel": "^2.0.0",
+    "spryker/testify": "*"
   },
   "description": "ErrorHandler bundle",
   "license": "proprietary",
