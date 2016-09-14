@@ -59,9 +59,9 @@ class Request extends Base
     {
         $result = parent::buildData();
         $result['content'] = [
-            $this->getPayment()->getRootTag() => $this->getPayment(),
             $this->getCustomer()->getRootTag() => $this->getCustomer(),
             $this->getShoppingBasket()->getRootTag() => $this->getShoppingBasket(),
+            $this->getPayment()->getRootTag() => $this->getPayment(),
         ];
 
         return $result;

@@ -39,21 +39,25 @@ class Address extends AbstractBuilder implements BuilderInterface
             ? $this->requestTransfer->getBillingAddress()
             : $this->requestTransfer->getShippingAddress();
 
-        $result = [
-            '@type' => $this->addressType,
-            'street' => $addressTransfer->getStreet(),
-            'street-additional' => $addressTransfer->getStreetAdditional(),
-            'street-number' => $addressTransfer->getStreetNumber(),
-            'zip-code' => $addressTransfer->getZipCode(),
-            'city' => $addressTransfer->getCity(),
-            'country-code' => $addressTransfer->getCountryCode(),
-        ];
+        $result = ['@type' => $this->addressType];
         if ($addressTransfer->getFirstName() !== null) {
             $result['first-name'] = $addressTransfer->getFirstName();
         }
         if ($addressTransfer->getLastName() !== null) {
             $result['last-name'] = $addressTransfer->getLastName();
         }
+        $result = array_merge(
+            $result,
+            [
+                'street' => $addressTransfer->getStreet(),
+                'street-additional' => $addressTransfer->getStreetAdditional(),
+                'street-number' => $addressTransfer->getStreetNumber(),
+                'zip-code' => $addressTransfer->getZipCode(),
+                'city' => $addressTransfer->getCity(),
+                'country-code' => $addressTransfer->getCountryCode(),
+            ]
+        );
+
 
         return $result;
     }

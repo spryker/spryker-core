@@ -105,9 +105,9 @@ class InstallmentDataProvider extends DataProviderAbstract
     protected function setInstallmentDefaultAmount(QuoteTransfer $quoteTransfer, $configurationResponseTransfer)
     {
         $installmentTransfer = $quoteTransfer->getPayment()->getRatepayInstallment();
-        if ($installmentTransfer->getInterestRate() === null) {
+//        if ($installmentTransfer->getInterestRate() === null) {
             $installmentTransfer->setInterestRate($configurationResponseTransfer->getInterestrateDefault());
-        }
+//        }
     }
 
 }
