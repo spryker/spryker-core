@@ -10,7 +10,7 @@ namespace Spryker\Zed\Product\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactoryInterface getFactory()
  */
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
