@@ -18,7 +18,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
      */
-    private $productFacade;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
@@ -36,7 +36,7 @@ class ProductManager implements ProductManagerInterface
     public function expandItems(CartChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($cartItem->getSku());
+            $productConcreteTransfer = $this->getAndValidateProductConcrete($cartItem->getSku());
 
             $cartItem->setId($productConcreteTransfer->getIdProductConcrete())
                 ->setSku($productConcreteTransfer->getSku())
@@ -44,11 +44,8 @@ class ProductManager implements ProductManagerInterface
                 ->setAbstractSku($productConcreteTransfer->getAbstractSku())
                 ->setName(
                     $this->getLocalizedProductName($productConcreteTransfer)
-                );
-
-            if ($productConcreteTransfer->getTaxRate() !== null) {
-                $cartItem->setTaxRate($productConcreteTransfer->getTaxRate());
-            }
+                )
+                ->setTaxRate((float)$productConcreteTransfer->getTaxRate());
         }
 
         return $change;
@@ -69,6 +66,38 @@ class ProductManager implements ProductManagerInterface
         }
 
         return $productConcreteTransfer->getSku();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function getAndValidateProductConcrete($sku)
+    {
+        $productConcreteTransfer = $this->productFacade->getProductConcrete($sku);
+
+        $sku = $productConcreteTransfer
+            ->requireSku()
+            ->getSku();
+
+        $abstractSku = $productConcreteTransfer
+            ->requireAbstractSku()
+            ->getAbstractSku();
+
+        $fkProductAbstract = $productConcreteTransfer
+            ->requireFkProductAbstract()
+            ->getFkProductAbstract();
+
+        $taxRate = $productConcreteTransfer
+            ->requireTaxRate()
+            ->getTaxRate();
+
+        $attributes = $productConcreteTransfer
+            ->requireAttributes()
+            ->getAttributes();
+
+        return $productConcreteTransfer;
     }
 
 }
