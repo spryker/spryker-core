@@ -38,7 +38,7 @@ interface ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
      */
     public function convertProductCollection(ObjectCollection $productCollection);
 
