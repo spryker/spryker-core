@@ -8,9 +8,8 @@
 namespace Application\Module;
 
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
-use Codeception\Module;
 
-class Zed extends Module
+class Zed extends Infrastructure
 {
 
     const I_WAS_HERE = 'I_WAS_HERE';
@@ -20,7 +19,7 @@ class Zed extends Module
      */
     public function amZed()
     {
-        $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.dev']);
+        $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.test']);
 
         return $this;
     }

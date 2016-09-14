@@ -25,7 +25,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyIndexDefinitionLoading()
     {
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/EmptyIndex'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores()
@@ -46,7 +46,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleIndexDefinitionLoadingWithMultipleMappingTypes()
     {
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores()
@@ -62,7 +62,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleIndexDefinitionSettings()
     {
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores()
@@ -95,7 +95,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleIndexDefinitionMappings()
     {
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores()
@@ -124,9 +124,43 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testIsIndexNameSuffixUsedWhenProvided()
+    {
+        $suffix = '_suffix';
+
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
+            [__DIR__ . '/Fixtures/SingleIndex'],
+            $this->createJsonIndexDefinitionMerger(),
+            $this->getStores(),
+            $suffix
+        );
+
+        $expectedMappings = [
+            'page1' => [
+                'properties' => [
+                    'foo' => [
+                        'analyzer' => 'my_analyzer',
+                    ],
+                    'bar' => [
+                        'properties' => [
+                            'baz' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
+
+        $this->assertEquals($expectedMappings, $definitions['de_foo'. $suffix]->getMappings());
+    }
+
+    /**
+     * @return void
+     */
     public function testMultipleIndexDefinitionLoading()
     {
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/MultipleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores()
@@ -172,7 +206,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
             ->setSettings([])
             ->setMappings([]);
 
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/Merge/*/'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores()
@@ -191,7 +225,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $stores = ['A', 'B', 'C'];
 
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/Stores/Core/'],
             $this->createJsonIndexDefinitionMerger(),
             $stores
@@ -211,7 +245,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $stores = ['A', 'B'];
 
-        $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
+        $jsonIndexDefinitionLoader = $this->createJsonIndexDefinitionLoader(
             [
                 __DIR__ . '/Fixtures/Stores/Core/',
                 __DIR__ . '/Fixtures/Stores/Project/',
@@ -258,6 +292,31 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($store1ExpectedDefinition, $definitions['a_foo']);
         $this->assertEquals($store2ExpectedDefinition, $definitions['b_foo']);
+    }
+
+    /**
+     * @param array $sourceDirectories
+     * @param JsonIndexDefinitionMerger $definitionMerger
+     * @param array $stores
+     * @param string $suffix
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|JsonIndexDefinitionLoader
+     */
+    protected function createJsonIndexDefinitionLoader(
+        array $sourceDirectories,
+        JsonIndexDefinitionMerger $definitionMerger,
+        array $stores,
+        $suffix = ''
+    ) {
+        $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
+            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $stores])
+            ->setMethods(['getIndexNameSuffix'])
+            ->getMock();
+
+        $jsonIndexDefinitionLoader->method('getIndexNameSuffix')
+            ->willReturn($suffix);
+
+        return $jsonIndexDefinitionLoader;
     }
 
     /**

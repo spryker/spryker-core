@@ -7,9 +7,7 @@
 
 namespace Application\Module;
 
-use Codeception\Module;
-
-class Yves extends Module
+class Yves extends Infrastructure
 {
 
     /**
@@ -17,7 +15,7 @@ class Yves extends Module
      */
     public function amYves()
     {
-        $this->getModule('WebDriver')->_reconfigure(['url' => 'http://www.de.spryker.dev']);
+        $this->getModule('WebDriver')->_reconfigure(['url' => 'http://www.de.spryker.test']);
 
         return $this;
     }

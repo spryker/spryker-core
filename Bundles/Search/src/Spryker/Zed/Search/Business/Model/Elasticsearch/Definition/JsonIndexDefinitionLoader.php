@@ -196,10 +196,17 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function addSearchIndexNameSuffix($indexName)
     {
-        $suffix = Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
-        $indexName .= $suffix;
+        $indexName .= $this->getIndexNameSuffix();
 
         return $indexName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIndexNameSuffix()
+    {
+        return Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
     }
 
 }
