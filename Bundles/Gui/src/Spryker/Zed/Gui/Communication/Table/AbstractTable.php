@@ -12,8 +12,8 @@ use LogicException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Library\Generator\StringGenerator;
@@ -591,7 +591,7 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(ApplicationConstants::ZED_DB_ENGINE);
+                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
                 // @todo fix this in CD-412
                 if ($sqlDriver === 'pgsql') {
                     $filter = '::TEXT';
