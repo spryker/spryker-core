@@ -31,7 +31,7 @@ interface ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
      */
     public function convertProduct(SpyProduct $productEntity);
 
