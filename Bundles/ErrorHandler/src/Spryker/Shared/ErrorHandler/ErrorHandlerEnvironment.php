@@ -68,7 +68,7 @@ class ErrorHandlerEnvironment
      */
     protected function setExceptionHandler()
     {
-        $exceptionHandler = function (Exception $exception) {
+        $exceptionHandler = function ($exception) {
             $errorHandler = $this->getErrorHandler();
             $errorHandler()->handleException($exception);
         };
