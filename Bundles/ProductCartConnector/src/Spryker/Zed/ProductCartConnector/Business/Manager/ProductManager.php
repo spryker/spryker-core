@@ -52,6 +52,8 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
+     * TODO: move it to Product bundle
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return string
