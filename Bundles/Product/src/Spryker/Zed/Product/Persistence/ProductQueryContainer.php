@@ -7,17 +7,6 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Join;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -49,6 +38,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * TODO move to Tax bundle
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -143,93 +134,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      * @api
      *
      * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function querySkuFromProductAbstractById($idProductAbstract)
-    {
-        return $this->getFactory()->createProductAbstractQuery()
-            ->filterByIdProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryAbstractSkuForm()
-    {
-        return $this->getFactory()->createProductAbstractQuery()
-            ->select([
-                SpyProductAbstractTableMap::COL_SKU => 'value',
-                SpyProductAbstractTableMap::COL_SKU => 'label',
-            ])
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, 'value')
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, 'label');
-    }
-
-    /**
-     * @api
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryConcreteSkuForm()
-    {
-        return $this->getFactory()->createProductQuery()
-            ->select([
-                SpyProductTableMap::COL_SKU => 'value',
-                SpyProductTableMap::COL_SKU => 'label',
-            ])
-            ->withColumn(SpyProductTableMap::COL_SKU, 'value')
-            ->withColumn(SpyProductTableMap::COL_SKU, 'label');
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
-     */
-    public function queryAttributesMetadata()
-    {
-        return $this->getFactory()
-            ->createProductAttributesMetadataQuery()
-            ->orderByKey();
-    }
-
-    /**
-     * @api
-     *
-     * @param string $attributeName
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
-     */
-    public function queryAttributeByName($attributeName)
-    {
-        $query = $this->getFactory()->createProductAttributesMetadataQuery();
-        $query->filterByKey($attributeName);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param string $attributeType
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
-     */
-    public function queryAttributeTypeByName($attributeType)
-    {
-        $query = $this->getFactory()->createProductAttributeTypeQuery();
-        $query->filterByName($attributeType);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -260,156 +164,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->filterByFkLocale($fkCurrentLocale);
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     *
-     * @return $this
-     */
-    public function joinProductConcreteCollection(ModelCriteria $expandableQuery)
-    {
-        $expandableQuery
-            ->addJoinObject(
-                new Join(
-                    SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                    SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                    Criteria::LEFT_JOIN
-                ),
-                'productConcreteJoin'
-            );
-
-        $expandableQuery->addJoinCondition(
-            'productConcreteJoin',
-            SpyProductTableMap::COL_IS_ACTIVE,
-            true,
-            Criteria::EQUAL
-        );
-
-        $expandableQuery->withColumn(
-            'GROUP_CONCAT(spy_product.sku)',
-            'concrete_skus'
-        );
-
-        return $this;
-    }
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return $this
-     */
-    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale)
-    {
-        $expandableQuery
-            ->addJoin(
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::INNER_JOIN
-            );
-
-        $expandableQuery
-            ->addJoin(
-                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
-                SpyLocaleTableMap::COL_ID_LOCALE,
-                Criteria::INNER_JOIN
-            );
-
-        $expandableQuery->addAnd(
-            SpyLocaleTableMap::COL_ID_LOCALE,
-            $locale->getIdLocale(),
-            Criteria::EQUAL
-        );
-        $expandableQuery->addAnd(
-            SpyLocaleTableMap::COL_IS_ACTIVE,
-            true,
-            Criteria::EQUAL
-        );
-
-        $expandableQuery
-            ->addJoinObject(
-                (new Join(
-                    SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                    SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT,
-                    Criteria::LEFT_JOIN
-                ))->setRightTableAlias('product_urls'),
-                'productUrlsJoin'
-            );
-
-        $expandableQuery->addJoinCondition(
-            'productUrlsJoin',
-            'product_urls.fk_locale = ' .
-            SpyLocaleTableMap::COL_ID_LOCALE
-        );
-
-        $expandableQuery
-            ->addJoinObject(
-                new Join(
-                    SpyProductTableMap::COL_ID_PRODUCT,
-                    SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
-                    Criteria::INNER_JOIN
-                ),
-                'productAttributesJoin'
-            );
-
-        $expandableQuery->addJoinCondition(
-            'productAttributesJoin',
-            SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ' .
-            SpyLocaleTableMap::COL_ID_LOCALE
-        );
-
-        $expandableQuery->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, 'id_product_abstract');
-
-        $expandableQuery->withColumn(
-            SpyProductAbstractTableMap::COL_ATTRIBUTES,
-            'abstract_attributes'
-        );
-        $expandableQuery->withColumn(
-            SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES,
-            'abstract_localized_attributes'
-        );
-        $expandableQuery->withColumn(
-            "GROUP_CONCAT(spy_product.attributes SEPARATOR '$%')",
-            'concrete_attributes'
-        );
-        $expandableQuery->withColumn(
-            "GROUP_CONCAT(spy_product_localized_attributes.attributes SEPARATOR '$%')",
-            'concrete_localized_attributes'
-        );
-        $expandableQuery->withColumn(
-            'GROUP_CONCAT(product_urls.url)',
-            'product_urls'
-        );
-        $expandableQuery->withColumn(
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-            'abstract_name'
-        );
-        $expandableQuery->withColumn(
-            'GROUP_CONCAT(spy_product_localized_attributes.name)',
-            'concrete_names'
-        );
-
-        return $this;
-    }
-
-    /**
-     * @api
-     *
-     * @todo refactor queries from below
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProductConcreteByProductAbstract(SpyProductAbstract $productAbstract)
-    {
-        return $this->getFactory()->createProductQuery()
-            ->filterByFkProductAbstract($productAbstract->getIdProductAbstract());
     }
 
     /**

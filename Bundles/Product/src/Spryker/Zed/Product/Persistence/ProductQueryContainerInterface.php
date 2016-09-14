@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductQueryContainerInterface extends QueryContainerInterface
@@ -86,37 +84,6 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param string $attributeName
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
-     *
-     * TODO: remove
-     */
-    public function queryAttributeByName($attributeName);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
-     *
-     * TODO: remove
-     */
-    public function queryAttributesMetadata();
-
-    /**
-     * @api
-     *
-     * @param string $attributeType
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
-     *
-     * TODO: remove
-     */
-    public function queryAttributeTypeByName($attributeType);
-
-    /**
-     * @api
-     *
      * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
@@ -133,25 +100,6 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     *
-     * @return $this
-     */
-    public function joinProductConcreteCollection(ModelCriteria $expandableQuery);
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return $this
-     */
-    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
