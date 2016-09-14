@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface AttributeManagerInterface
 {
@@ -32,11 +32,11 @@ interface AttributeManagerInterface
     public function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function persistProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer);
+    public function persistProductConcreteLocalizedAttributes(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param array $data
@@ -63,7 +63,7 @@ interface AttributeManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $concreteProductCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $concreteProductCollection
      *
      * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */

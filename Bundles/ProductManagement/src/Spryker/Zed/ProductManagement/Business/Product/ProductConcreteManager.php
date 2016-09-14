@@ -11,7 +11,7 @@ use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductTransferGenerator;
@@ -122,13 +122,13 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Exception
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
@@ -153,13 +153,13 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Exception
      *
      * @return int
      */
-    public function saveProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
@@ -203,7 +203,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function getProductConcreteById($idProduct)
     {
@@ -226,7 +226,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {
@@ -247,11 +247,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    protected function persistEntity(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function persistEntity(ProductConcreteTransfer $productConcreteTransfer)
     {
         $sku = $productConcreteTransfer
             ->requireSku()
@@ -282,11 +282,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    protected function persistPrice(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function persistPrice(ProductConcreteTransfer $productConcreteTransfer)
     {
         $priceTransfer = $productConcreteTransfer->getPrice();
         if ($priceTransfer instanceof ZedProductPriceTransfer) {
@@ -300,11 +300,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    protected function persistImageSets(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function persistImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
         $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
         if (empty($imageSetTransferCollection)) {
@@ -322,11 +322,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    protected function persistStock(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function persistStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
         $stockCollection = $productConcreteTransfer->getStock();
@@ -340,11 +340,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadProductData(ZedProductConcreteTransfer $productTransfer)
+    protected function loadProductData(ProductConcreteTransfer $productTransfer)
     {
         $this->loadLocalizedAttributes($productTransfer);
         $this->loadPrice($productTransfer);
@@ -355,11 +355,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadPrice(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function loadPrice(ProductConcreteTransfer $productConcreteTransfer)
     {
         $priceTransfer = $this->priceFacade->getProductConcretePrice(
             $productConcreteTransfer->getIdProductConcrete()
@@ -375,11 +375,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadStock(ZedProductConcreteTransfer $productConcreteTransfer)
+    protected function loadStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         $stockCollection = $this->stockQueryContainer
             ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
@@ -402,11 +402,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadImageSet(ZedProductConcreteTransfer $productTransfer)
+    protected function loadImageSet(ProductConcreteTransfer $productTransfer)
     {
         $imageSets = $this->productImageFacade
             ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());
@@ -423,11 +423,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadLocalizedAttributes(ZedProductConcreteTransfer $productTransfer)
+    protected function loadLocalizedAttributes(ProductConcreteTransfer $productTransfer)
     {
         $productAttributeCollection = $this->productQueryContainer
             ->queryProductLocalizedAttributes($productTransfer->getIdProductConcrete())
@@ -450,11 +450,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productConcreteTransfer)
+    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->productQueryContainer
             ->queryProduct()

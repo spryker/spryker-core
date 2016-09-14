@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
@@ -71,21 +71,21 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
      */
-    public function saveProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer)
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
     }
@@ -103,7 +103,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function getProductConcreteById($idProduct)
     {
@@ -112,7 +112,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -143,7 +143,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array|\Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
+     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -181,7 +181,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {

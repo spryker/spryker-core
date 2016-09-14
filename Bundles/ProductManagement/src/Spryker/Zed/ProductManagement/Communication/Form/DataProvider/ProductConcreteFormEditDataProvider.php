@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -86,12 +86,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array
      */
-    protected function appendVariantGeneralAndSeoData(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
+    protected function appendVariantGeneralAndSeoData(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
         $localizedData = $productTransfer->getLocalizedAttributes();
@@ -122,12 +122,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array
      */
-    protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
+    protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
         $priceTransfer = $this->priceFacade->getProductConcretePrice($productTransfer->getIdProductConcrete());
         if ($priceTransfer) {
@@ -155,12 +155,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array
      */
-    protected function appendVariantAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
+    protected function appendVariantAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
         $attributesData = $productTransfer->getLocalizedAttributes();
@@ -197,12 +197,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array
      */
-    protected function appendConcreteProductImages(ProductAbstractTransfer $productAbstractTransfer, ZedProductConcreteTransfer $productTransfer, array $formData)
+    protected function appendConcreteProductImages(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
         return array_merge(
             $formData,

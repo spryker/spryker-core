@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
@@ -134,13 +134,13 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function buildProductConcreteTransfer(ProductAbstractTransfer $productAbstractTransfer, FormInterface $form, $idProduct)
     {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
 
-        $productConcreteTransfer = new ZedProductConcreteTransfer();
+        $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($idProduct);
         $productConcreteTransfer->setAttributes([]);
         $productConcreteTransfer->setSku($sku);

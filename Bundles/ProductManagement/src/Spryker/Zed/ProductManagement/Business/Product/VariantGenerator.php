@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 
 class VariantGenerator implements VariantGeneratorInterface
@@ -186,7 +186,7 @@ class VariantGenerator implements VariantGeneratorInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -217,14 +217,14 @@ class VariantGenerator implements VariantGeneratorInterface
      * @param string $concreteSku
      * @param array $attributeTokens
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function createProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
         $concreteSku,
         array $attributeTokens
     ) {
-        return (new ZedProductConcreteTransfer())
+        return (new ProductConcreteTransfer())
             ->fromArray($productAbstractTransfer->toArray(), true)
             ->setSku($concreteSku)
             ->setAbstractSku($productAbstractTransfer->getSku())

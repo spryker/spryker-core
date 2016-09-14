@@ -32,7 +32,7 @@ interface ProductManagementFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -54,7 +54,7 @@ interface ProductManagementFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -88,7 +88,7 @@ interface ProductManagementFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcreteById($idProduct);
 
@@ -112,7 +112,7 @@ interface ProductManagementFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 

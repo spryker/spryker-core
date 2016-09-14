@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business\Transfer;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -52,11 +52,11 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function convertProduct(SpyProduct $productEntity)
     {
-        $productTransfer = (new ZedProductConcreteTransfer())
+        $productTransfer = (new ProductConcreteTransfer())
             ->fromArray($productEntity->toArray(), true);
 
         $attributes = $this->decodeAttributes($productEntity->getAttributes());
@@ -74,7 +74,7 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function convertProductCollection(ObjectCollection $productCollection)
     {

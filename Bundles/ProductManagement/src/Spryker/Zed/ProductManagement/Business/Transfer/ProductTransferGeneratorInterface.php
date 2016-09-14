@@ -31,14 +31,14 @@ interface ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function convertProduct(SpyProduct $productEntity);
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function convertProductCollection(ObjectCollection $productCollection);
 

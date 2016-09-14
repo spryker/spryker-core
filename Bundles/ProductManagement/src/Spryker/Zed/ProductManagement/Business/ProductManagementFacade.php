@@ -33,7 +33,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
@@ -58,7 +58,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
@@ -100,7 +100,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcreteById($idProduct)
     {
@@ -134,7 +134,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductManagerInterface
 {
@@ -32,13 +32,13 @@ interface ProductManagerInterface
     public function getProductAbstractIdBySku($sku);
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
-    public function createProductConcrete(ZedProductConcreteTransfer $productConcreteTransfer);
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param int $idProductAbstract
@@ -54,7 +54,7 @@ interface ProductManagerInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function getProductConcreteById($idProduct);
 
@@ -79,7 +79,7 @@ interface ProductManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ZedProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 

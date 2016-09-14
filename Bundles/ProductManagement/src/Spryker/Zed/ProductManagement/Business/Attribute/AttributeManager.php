@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -109,11 +109,11 @@ class AttributeManager implements AttributeManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function persistProductConcreteLocalizedAttributes(ZedProductConcreteTransfer $productConcreteTransfer)
+    public function persistProductConcreteLocalizedAttributes(ProductConcreteTransfer $productConcreteTransfer)
     {
         $idProductConcrete = $productConcreteTransfer
             ->requireIdProductConcrete()
@@ -179,7 +179,7 @@ class AttributeManager implements AttributeManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ZedProductConcreteTransfer[] $concreteProductCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $concreteProductCollection
      *
      * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
