@@ -67,7 +67,7 @@ class PrepaymentSubForm extends SubFormAbstract
     {
         parent::buildForm($builder, $options);
 
-        $this->addAcceptInquiry($builder);
+//        $this->addAcceptInquiry($builder);
     }
 
     /**
