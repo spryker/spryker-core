@@ -34,6 +34,7 @@
 
     <transfer name="PageMap">
         <property name="searchResultData" type="SearchResultDataMap[]" />
+        <property name="type" type="string" />
         <property name="store" type="string" />
         <property name="locale" type="string" />
         <property name="fullText" type="array" />
