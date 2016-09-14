@@ -11,7 +11,7 @@ interface ProductDiscountConnectorQueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKeys();
 

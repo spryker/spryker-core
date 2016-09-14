@@ -8,46 +8,25 @@
 namespace Spryker\Zed\Product\Business\Attribute;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface AttributeManagerInterface
 {
 
     /**
-     * @param string $attributeName
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function hasAttribute($attributeName);
+    public function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param string $attributeType
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function hasAttributeType($attributeType);
-
-    /**
-     * @param string $attributeName
-     * @param string $attributeType
-     * @param bool $isEditable
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
-     *
-     * @return int
-     */
-    public function createAttribute($attributeName, $attributeType, $isEditable = true);
-
-    /**
-     * @param string $name
-     * @param string $inputType
-     * @param int|null $fkParentAttributeType
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
-     *
-     * @return int
-     */
-    public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
+    public function persistProductConcreteLocalizedAttributes(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param array $data
@@ -57,5 +36,30 @@ interface AttributeManagerInterface
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
     public function createLocalizedAttributesTransfer(array $data, $attributeJson, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function encodeAttributes(array $attributes);
+
+    /**
+     * @param string $json
+     *
+     * @return array
+     */
+    public function decodeAttributes($json);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $concreteProductCollection
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function buildAttributeProcessor(
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $concreteProductCollection = []
+    );
 
 }

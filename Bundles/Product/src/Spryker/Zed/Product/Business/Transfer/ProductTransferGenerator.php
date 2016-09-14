@@ -29,6 +29,7 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
 
         $attributes = $this->decodeAttributes($productAbstractEntity->getAttributes());
         $productAbstractTransfer->setAttributes($attributes);
+        $productAbstractTransfer->setTaxSetId($productAbstractEntity->getFkTaxSet());
 
         return $productAbstractTransfer;
     }
@@ -63,9 +64,8 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
         $productTransfer->setIdProductConcrete($productEntity->getIdProduct());
 
         if ($productEntity->getSpyProductAbstract()) {
-            $abstractTransfer = $this->convertProductAbstract($productEntity->getSpyProductAbstract());
-            $productTransfer->setProductAbstractSku($abstractTransfer->getSku());
-            $productTransfer->setIdProductAbstract($abstractTransfer->getIdProductAbstract());
+            $productTransfer->setAbstractSku($productEntity->getSpyProductAbstract()->getSku());
+            $productTransfer->setFkProductAbstract($productEntity->getSpyProductAbstract()->getIdProductAbstract());
         }
 
         return $productTransfer;

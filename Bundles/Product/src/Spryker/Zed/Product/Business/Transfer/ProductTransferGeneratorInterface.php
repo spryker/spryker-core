@@ -24,7 +24,7 @@ interface ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntityCollection
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
     public function convertProductAbstractCollection(ObjectCollection $productAbstractEntityCollection);
 
@@ -38,7 +38,7 @@ interface ProductTransferGeneratorInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productCollection
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function convertProductCollection(ObjectCollection $productCollection);
 

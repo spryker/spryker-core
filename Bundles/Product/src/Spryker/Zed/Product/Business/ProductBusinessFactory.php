@@ -8,16 +8,12 @@
 namespace Spryker\Zed\Product\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
-use Spryker\Zed\Product\Business\Importer\FileImporter;
-use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
-use Spryker\Zed\Product\Business\Internal\Install;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
@@ -41,76 +37,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function getYvesUrl()
     {
         return $this->getConfig()->getHostYves();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\FileImporter
-     */
-    public function createProductImporter()
-    {
-        $importer = new FileImporter(
-            $this->createImportProductValidator(),
-            $this->createImportProductBuilder(),
-            $this->createProductWriter(),
-            $this->createProductBatchResult()
-        );
-
-        return $importer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator
-     */
-    protected function createImportProductValidator()
-    {
-        return new ImportProductValidator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface
-     */
-    protected function createImportProductBuilder()
-    {
-        return new ProductBuilder();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface
-     */
-    protected function createProductWriter()
-    {
-        return new ProductWriter(
-            $this->createProductAbstractWriter(),
-            $this->createProductConcreteWriter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface
-     */
-    protected function createProductAbstractWriter()
-    {
-        return new ProductAbstractWriter(
-            $this->getCurrentLocale()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface
-     */
-    protected function createProductConcreteWriter()
-    {
-        return new ProductConcreteWriter(
-            $this->getCurrentLocale()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface
-     */
-    protected function createProductBatchResult()
-    {
-        return new ProductBatchResult();
     }
 
     /**
@@ -141,6 +67,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * TODO Remove when ZedProductConcreteTransfer is removed
+     *
      * @return \Spryker\Zed\Product\Business\Product\ProductVariantBuilder
      */
     public function createProductVariantBuilder()

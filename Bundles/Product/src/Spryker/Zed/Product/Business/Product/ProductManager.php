@@ -562,8 +562,8 @@ class ProductManager implements ProductManagerInterface
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($concreteSku)
             ->setIdProductConcrete($productConcrete[self::COL_ID_PRODUCT_CONCRETE])
-            ->setProductAbstractSku($productConcrete[self::COL_ABSTRACT_SKU])
-            ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
+            ->setAbstractSku($productConcrete[self::COL_ABSTRACT_SKU])
+            ->setFkProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($productConcrete[self::COL_NAME]);
 
         return $productConcreteTransfer;

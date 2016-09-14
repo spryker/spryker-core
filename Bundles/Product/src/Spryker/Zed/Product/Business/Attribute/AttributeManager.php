@@ -9,12 +9,10 @@ namespace Spryker\Zed\Product\Business\Attribute;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAttributesMetadata;
-use Orm\Zed\Product\Persistence\SpyProductAttributeType;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Library\Json;
-use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
-use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
-use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
+use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AttributeManager implements AttributeManagerInterface
@@ -34,138 +32,66 @@ class AttributeManager implements AttributeManagerInterface
     }
 
     /**
-     * @param string $attributeName
-     *
-     * @return bool
-     */
-    public function hasAttribute($attributeName)
-    {
-        $attributeQuery = $this->productQueryContainer->queryAttributeByName($attributeName);
-
-        return $attributeQuery->count() > 0;
-    }
-
-    /**
-     * @param string $attributeType
-     *
-     * @return bool
-     */
-    public function hasAttributeType($attributeType)
-    {
-        $attributeTypeQuery = $this->productQueryContainer->queryAttributeTypeByName($attributeType);
-
-        return $attributeTypeQuery->count() > 0;
-    }
-
-    /**
-     * @param string $attributeType
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeType
-     */
-    protected function getAttributeType($attributeType)
-    {
-        $attributeTypeQuery = $this->productQueryContainer->queryAttributeTypeByName($attributeType);
-        $attributeType = $attributeTypeQuery->findOne();
-
-        if (!$attributeType) {
-            throw new MissingAttributeTypeException(
-                sprintf(
-                    'Tried to retrieve a missing attribute type: %s',
-                    $attributeType
-                )
-            );
-        }
-
-        return $attributeType;
-    }
-
-    /**
-     * @param string $attributeName
-     * @param string $attributeType
-     * @param bool $isEditable
-     *
-     * @return int
-     */
-    public function createAttribute($attributeName, $attributeType, $isEditable = true)
-    {
-        $this->checkAttributeDoesNotExist($attributeName);
-
-        $attributeTypeId = $this->getAttributeType($attributeType)->getPrimaryKey();
-
-        $attributeEntity = (new SpyProductAttributesMetadata())
-            ->setKey($attributeName)
-            ->setFkType($attributeTypeId)
-            ->setIsEditable($isEditable);
-
-        $attributeEntity->save();
-
-        return $attributeEntity->getPrimaryKey();
-    }
-
-    /**
-     * @param string $attributeName
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    protected function checkAttributeDoesNotExist($attributeName)
+    public function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
-        if ($this->hasAttribute($attributeName)) {
-            throw new AttributeExistsException(
-                sprintf(
-                    'Tried to create an attribute that already exists: %s',
-                    $attributeName
-                )
-            );
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
+
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $locale = $localizedAttributes->getLocale();
+            $jsonAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
+
+            $localizedProductAttributesEntity = $this->productQueryContainer
+                ->queryProductAbstractAttributeCollection($idProductAbstract, $locale->getIdLocale())
+                ->findOneOrCreate();
+
+            $localizedProductAttributesEntity
+                ->setFkProductAbstract($idProductAbstract)
+                ->setFkLocale($locale->getIdLocale())
+                ->setName($localizedAttributes->getName())
+                ->setAttributes($jsonAttributes)
+                ->setDescription($localizedAttributes->getDescription())
+                ->setMetaTitle($localizedAttributes->getMetaTitle())
+                ->setMetaKeywords($localizedAttributes->getMetaKeywords())
+                ->setMetaDescription($localizedAttributes->getMetaDescription());
+
+            $localizedProductAttributesEntity->save();
         }
     }
 
     /**
-     * @param string $name
-     * @param string $inputType
-     * @param int|null $fkParentAttributeType
-     *
-     * @return int
-     */
-    public function createAttributeType($name, $inputType, $fkParentAttributeType = null)
-    {
-        $this->checkAttributeTypeDoesNotExist($name);
-
-        $attributeTypeEntity = (new SpyProductAttributeType())
-            ->setName($name)
-            ->setInputRepresentation($inputType)
-            ->setFkProductAttributeTypeParent($fkParentAttributeType);
-
-        $attributeTypeEntity->save();
-
-        return $attributeTypeEntity->getPrimaryKey();
-    }
-
-    /**
-     * @param string $name
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    protected function checkAttributeTypeDoesNotExist($name)
+    public function persistProductConcreteLocalizedAttributes(ProductConcreteTransfer $productConcreteTransfer)
     {
-        if ($this->hasAttributeType($name)) {
-            throw new AttributeTypeExistsException(
-                sprintf(
-                    'Tried to create an attribute type that already exists: %s',
-                    $name
-                )
-            );
-        }
-    }
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
 
-    protected function jsonToAttributes($json)
-    {
-        return Json::decode($json, true);
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $locale = $localizedAttributes->getLocale();
+            $jsonAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
+
+            $localizedProductAttributesEntity = $this->productQueryContainer
+                ->queryProductConcreteAttributeCollection($idProductConcrete, $locale->getIdLocale())
+                ->findOneOrCreate();
+
+            $localizedProductAttributesEntity
+                ->setFkProduct($idProductConcrete)
+                ->setFkLocale($locale->requireIdLocale()->getIdLocale())
+                ->setName($localizedAttributes->requireName()->getName())
+                ->setAttributes($jsonAttributes)
+                ->setDescription($localizedAttributes->getDescription());
+
+            $localizedProductAttributesEntity->save();
+        }
     }
 
     /**
@@ -180,12 +106,139 @@ class AttributeManager implements AttributeManagerInterface
         $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
             ->fromArray($data, true)
             ->setAttributes(
-                $this->jsonToAttributes($attributeJson)
+                $this->decodeAttributes($attributeJson)
             )
-            ->setLocale($localeTransfer)
-        ;
+            ->setLocale($localeTransfer);
 
         return $localizedAttributesTransfer;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function encodeAttributes(array $attributes)
+    {
+        return Json::encode($attributes);
+    }
+
+    /**
+     * @param string $json
+     *
+     * @return array
+     */
+    public function decodeAttributes($json)
+    {
+        return Json::decode($json, true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $concreteProductCollection
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function buildAttributeProcessor(ProductAbstractTransfer $productAbstractTransfer, array $concreteProductCollection = [])
+    {
+        $attributeProcessor = new AttributeProcessor();
+        $abstractLocalizedAttributes = [];
+
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            /* @var \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttribute */
+            $localeCode = $localizedAttribute->getLocale()->getLocaleName();
+            if (!array_key_exists($localeCode, $abstractLocalizedAttributes)) {
+                $abstractLocalizedAttributes[$localeCode] = $localizedAttribute->getAttributes();
+            } else {
+                $abstractLocalizedAttributes[$localeCode] = array_merge(
+                    $abstractLocalizedAttributes[$localeCode],
+                    $localizedAttribute->getAttributes()
+                );
+            }
+        }
+
+        $localizedAttributes = [];
+        foreach ($concreteProductCollection as $productTransfer) {
+            $attributeProcessor->setConcreteAttributes(
+                $productTransfer->getAttributes()
+            );
+
+            foreach ($productTransfer->getLocalizedAttributes() as $localizedAttribute) {
+                /* @var \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttribute */
+                $localeCode = $localizedAttribute->getLocale()->getLocaleName();
+                if (!array_key_exists($localeCode, $localizedAttributes)) {
+                    $localizedAttributes[$localeCode] = $localizedAttribute->getAttributes();
+                } else {
+                    $localizedAttributes[$localeCode] = array_merge(
+                        $localizedAttributes[$localeCode],
+                        $localizedAttribute->getAttributes()
+                    );
+                }
+            }
+        }
+
+        $attributeProcessor->setConcreteLocalizedAttributes($localizedAttributes);
+
+        $attributeProcessor->setAbstractAttributes(
+            $productAbstractTransfer->getAttributes()
+        );
+
+        $attributeProcessor->setAbstractLocalizedAttributes(
+            $abstractLocalizedAttributes
+        );
+
+        return $attributeProcessor;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    protected function hasProductAbstractAttributes($idProductAbstract, LocaleTransfer $locale)
+    {
+        $query = $this->productQueryContainer->queryProductAbstractAttributeCollection(
+            $idProductAbstract,
+            $locale->getIdLocale()
+        );
+
+        return $query->count() > 0;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    protected function hasProductConcreteAttributes($idProductConcrete, LocaleTransfer $locale)
+    {
+        $query = $this->productQueryContainer->queryProductConcreteAttributeCollection(
+            $idProductConcrete,
+            $locale->getIdLocale()
+        );
+
+        return $query->count() > 0;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
+     *
+     * @return void
+     */
+    protected function assertProductConcreteAttributesDoNotExist($idProductConcrete, LocaleTransfer $locale)
+    {
+        if ($this->hasProductConcreteAttributes($idProductConcrete, $locale)) {
+            throw new ProductConcreteAttributesExistException(sprintf(
+                'Tried to create product concrete attributes for product id %s, locale id %s, but they exist',
+                $idProductConcrete,
+                $locale->getIdLocale()
+            ));
+        }
     }
 
 }
