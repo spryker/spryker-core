@@ -458,7 +458,7 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
                 'Failed to unserialize %s. Updating or clearing your data source may solve this problem.',
                 get_class($this)
             ));
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new TransferUnserializationException(sprintf(
                 'Failed to unserialize %s. Updating or clearing your data source may solve this problem.',
                 get_class($this)
