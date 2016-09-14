@@ -7,12 +7,29 @@
 
 namespace Application\Module;
 
+use Codeception\TestCase;
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
 
 class Zed extends Infrastructure
 {
 
     const I_WAS_HERE = 'I_WAS_HERE';
+
+    /**
+     * @param \Codeception\TestCase $test
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function _before(TestCase $test)
+    {
+        parent::_before($test);
+
+        $process = $this->runTestSetup('--restore');
+        if ($process->getExitCode() != 0) {
+            throw new \Exception('An error in data restore occured: '. $process->getErrorOutput());
+        }
+    }
 
     /**
      * @return $this

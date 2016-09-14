@@ -7,7 +7,6 @@
 namespace Application\Module;
 
 use Codeception\Module;
-use Codeception\TestCase;
 use Symfony\Component\Process\Process;
 
 class Infrastructure extends Module
@@ -15,29 +14,11 @@ class Infrastructure extends Module
     const TEST_ENV_SCRIPT = 'setup_test.sh';
 
     /**
-     * @param \Codeception\TestCase $test
-     * @throws \Exception
-     *
-     * @return void
-     */
-    public function _before(TestCase $test)
-    {
-        parent::_before($test);
-
-        $process = $this->runTestSetup('--restore');
-        $process->run();
-        if ($process->getExitCode() != 0) {
-            throw new \Exception('An error in data restore occured: '. $process->getErrorOutput());
-        }
-    }
-
-    /**
      * @return $this
      */
     public function runCollectors()
     {
-        $process = $this->runTestSetup('--collectors');
-        $process->run();
+        $this->runTestSetup('--collectors');
 
         return $this;
     }
@@ -54,6 +35,9 @@ class Infrastructure extends Module
             APPLICATION_ROOT_DIR,
             $argument
         ));
+
+        $process->run();
+
         return $process;
     }
 }
