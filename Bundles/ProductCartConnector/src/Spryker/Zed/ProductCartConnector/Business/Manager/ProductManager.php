@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductManager implements ProductManagerInterface
@@ -38,9 +40,11 @@ class ProductManager implements ProductManagerInterface
 
             $cartItem->setId($productConcreteTransfer->getIdProductConcrete())
                 ->setSku($productConcreteTransfer->getSku())
-                ->setIdProductAbstract($productConcreteTransfer->getIdProductAbstract())
-                ->setAbstractSku($productConcreteTransfer->getProductAbstractSku())
-                ->setName($productConcreteTransfer->getName());
+                ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+                ->setAbstractSku($productConcreteTransfer->getAbstractSku())
+                ->setName(
+                    $this->getLocalizedProductName($productConcreteTransfer)
+                );
 
             if ($productConcreteTransfer->getTaxRate() !== null) {
                 $cartItem->setTaxRate($productConcreteTransfer->getTaxRate());
@@ -48,6 +52,23 @@ class ProductManager implements ProductManagerInterface
         }
 
         return $change;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string
+     */
+    protected function getLocalizedProductName(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $currentLocale = Store::getInstance()->getCurrentLocale();
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if (strcasecmp($localizedAttribute->getLocale()->getLocaleName(), $currentLocale) === 0) {
+                return $localizedAttribute->getName();
+            }
+        }
+
+        return $productConcreteTransfer->getSku();
     }
 
 }
