@@ -18,15 +18,6 @@ class Zed extends Module
     /**
      * @return $this
      */
-    public function runCollector()
-    {
-        die('Tina Turner');
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
     public function amZed()
     {
         $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.dev']);
