@@ -55,6 +55,9 @@ class PageRemover implements PageRemoverInterface
             }
 
             $this->cmsQueryContainer->getConnection()->commit();
+        } catch (\Throwable $e) {
+            $this->cmsQueryContainer->getConnection()->rollBack();
+            throw $e;
         } catch (\Exception $e) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $e;

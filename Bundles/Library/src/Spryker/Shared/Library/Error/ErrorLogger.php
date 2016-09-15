@@ -24,11 +24,11 @@ class ErrorLogger
 {
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      *
      * @return void
      */
-    public static function log(Exception $exception)
+    public static function log($exception)
     {
         $newRelicApi = new Api();
 
@@ -38,7 +38,7 @@ class ErrorLogger
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param bool $ignoreInternalExceptions
@@ -46,7 +46,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToEventJournal(
-        Exception $exception,
+        $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
         $ignoreInternalExceptions = false
@@ -61,6 +61,10 @@ class ErrorLogger
             $event->setField(Event::FIELD_NAME, 'exception');
             self::addDeploymentInformation($event);
             $eventJournal->saveEvent($event);
+        } catch (\Throwable $internalException) {
+            if (!$ignoreInternalExceptions) {
+                self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
+            }
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
                 self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
@@ -69,7 +73,7 @@ class ErrorLogger
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param bool $ignoreInternalExceptions
@@ -77,7 +81,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToNewRelic(
-        Exception $exception,
+        $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
         $ignoreInternalExceptions = false
@@ -85,6 +89,10 @@ class ErrorLogger
         try {
             $message = $message = get_class($exception) . ' - ' . $exception->getMessage() . ' in file "' . $exception->getFile() . '"';
             $newRelicApi->noticeError($message, $exception);
+        } catch (\Throwable $internalException) {
+            if (!$ignoreInternalExceptions) {
+                self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
+            }
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
                 self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
@@ -93,14 +101,14 @@ class ErrorLogger
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      *
      * @return void
      */
     protected static function sendExceptionToFile(
-        Exception $exception,
+        $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi
     ) {
@@ -108,6 +116,9 @@ class ErrorLogger
             $message = ErrorRenderer::renderException($exception);
 
             Log::log($message, 'exception.log');
+        } catch (\Throwable $internalException) {
+            self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
+            self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
         } catch (\Exception $internalException) {
             self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
             self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);

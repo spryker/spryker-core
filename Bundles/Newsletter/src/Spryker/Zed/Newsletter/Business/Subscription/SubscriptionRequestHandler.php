@@ -84,6 +84,9 @@ class SubscriptionRequestHandler
             }
 
             $connection->commit();
+        } catch (\Throwable $e) {
+            $connection->rollBack();
+            throw $e;
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
@@ -117,6 +120,9 @@ class SubscriptionRequestHandler
             }
 
             $connection->commit();
+        } catch (\Throwable $e) {
+            $connection->rollBack();
+            throw $e;
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;

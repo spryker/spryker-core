@@ -44,6 +44,8 @@ class NavigationCollector implements NavigationCollectorInterface
     {
         try {
             $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
+        } catch (\Throwable $e) {
+            $navigationDefinition = new Config([]);
         } catch (\Exception $e) {
             $navigationDefinition = new Config([]);
         }

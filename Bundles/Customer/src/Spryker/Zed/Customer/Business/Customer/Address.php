@@ -493,6 +493,9 @@ class Address
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
             $connection->commit();
+        } catch (\Throwable $e) {
+            $connection->rollBack();
+            throw $e;
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
@@ -525,6 +528,9 @@ class Address
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
             $connection->commit();
+        } catch (\Throwable $e) {
+            $connection->rollBack();
+            throw $e;
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;

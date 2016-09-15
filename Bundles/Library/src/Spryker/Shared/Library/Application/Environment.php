@@ -216,8 +216,8 @@ class Environment
         );
 
         set_exception_handler(
-            function (\Exception $e) use ($initErrorHandler) {
-                $initErrorHandler()->handleException($e);
+            function ($exception) use ($initErrorHandler) {
+                $initErrorHandler()->handleException($exception);
             }
         );
 

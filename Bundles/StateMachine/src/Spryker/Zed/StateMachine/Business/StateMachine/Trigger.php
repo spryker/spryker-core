@@ -267,6 +267,11 @@ class Trigger implements TriggerInterface
 
             try {
                 $commandPlugin->run($stateMachineItemTransfer);
+            } catch (\Throwable $e) {
+                $this->transitionLog->setIsError(true);
+                $this->transitionLog->setErrorMessage(get_class($commandPlugin) . ' - ' . $e->getMessage());
+                $this->transitionLog->saveAll();
+                throw $e;
             } catch (\Exception $e) {
                 $this->transitionLog->setIsError(true);
                 $this->transitionLog->setErrorMessage(get_class($commandPlugin) . ' - ' . $e->getMessage());

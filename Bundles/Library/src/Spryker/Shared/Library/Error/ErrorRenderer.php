@@ -21,11 +21,11 @@ class ErrorRenderer
     const SAPI_CLI = 'cli';
 
     /**
-     * @param \Exception $e
+     * @param \Exception|\Throwable $e
      *
      * @return string
      */
-    protected static function renderForWeb(Exception $e)
+    protected static function renderForWeb($e)
     {
         $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
 
@@ -58,11 +58,11 @@ class ErrorRenderer
     }
 
     /**
-     * @param \Exception $e
+     * @param \Exception|\Throwable $e
      *
      * @return string
      */
-    protected static function renderForCli(Exception $e)
+    protected static function renderForCli($e)
     {
         if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
             $uri = implode(' ', $_SERVER['argv']);
@@ -93,11 +93,11 @@ class ErrorRenderer
     }
 
     /**
-     * @param \Exception $e
+     * @param \Exception|\Throwable $e
      *
      * @return string
      */
-    public static function renderException(Exception $e)
+    public static function renderException($e)
     {
         if (self::isCliCall()) {
             return self::renderForCli($e);

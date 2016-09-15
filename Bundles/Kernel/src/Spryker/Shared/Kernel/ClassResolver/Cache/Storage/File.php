@@ -49,6 +49,8 @@ class File implements StorageInterface
             $cache = include $this->getCacheFilename();
 
             return $cache ?: [];
+        } catch (\Throwable $e) {
+            return [];
         } catch (\Exception $e) {
             return [];
         }

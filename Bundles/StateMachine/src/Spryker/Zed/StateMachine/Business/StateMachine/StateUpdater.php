@@ -85,6 +85,9 @@ class StateUpdater implements StateUpdaterInterface
 
                 $this->transitionState($sourceState, $targetState, $stateMachineItemTransfer, $process);
             }
+        } catch (\Throwable $e) {
+            $this->getConnection()->rollBack();
+            throw $e;
         } catch (\Exception $e) {
             $this->getConnection()->rollBack();
             throw $e;

@@ -80,6 +80,8 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
             Propel::getConnection();
 
             return true;
+        } catch (\Throwable $e) {
+            return false;
         } catch (\Exception $e) {
             return false;
         }

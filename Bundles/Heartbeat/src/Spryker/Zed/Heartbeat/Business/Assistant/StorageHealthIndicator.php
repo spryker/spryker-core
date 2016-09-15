@@ -47,6 +47,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $this->client->set(self::KEY_HEARTBEAT, 'ok');
+        } catch (\Throwable $e) {
+            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
+            $this->addDysfunction($e->getMessage());
         } catch (\Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
             $this->addDysfunction($e->getMessage());
@@ -60,6 +63,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $this->client->get(self::KEY_HEARTBEAT);
+        } catch (\Throwable $e) {
+            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
+            $this->addDysfunction($e->getMessage());
         } catch (\Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
             $this->addDysfunction($e->getMessage());

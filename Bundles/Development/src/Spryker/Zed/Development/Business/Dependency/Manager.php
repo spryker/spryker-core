@@ -45,6 +45,8 @@ class Manager
         foreach ($allForeignBundles as $foreignBundle) {
             try {
                 $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
+            } catch (\Throwable $e) {
+                $dependencies = []; // TODO illegal try-catch
             } catch (\Exception $e) {
                 $dependencies = []; // TODO illegal try-catch
             }

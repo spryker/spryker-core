@@ -128,6 +128,11 @@ class Condition implements ConditionInterface
 
         try {
             $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
+        } catch (\Throwable $e) {
+            $transactionLogger->setIsError(true);
+            $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
+            $transactionLogger->saveAll();
+            throw $e;
         } catch (\Exception $e) {
             $transactionLogger->setIsError(true);
             $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
