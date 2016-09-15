@@ -39,7 +39,7 @@ class InstallmentCalculationMapperTest extends AbstractMapperTest
             ->map();
 
         $this->assertEquals('calculation-by-rate', $this->requestTransfer->getInstallmentCalculation()->getSubType());
-        $this->assertEquals(99, $this->requestTransfer->getInstallmentCalculation()->getAmount());
+        $this->assertEquals(18, $this->requestTransfer->getInstallmentCalculation()->getAmount());
         $this->assertEquals(14, $this->requestTransfer->getInstallmentCalculation()->getCalculationRate());
         $this->assertEquals(3, $this->requestTransfer->getInstallmentCalculation()->getMonth());
         $this->assertEquals(28, $this->requestTransfer->getInstallmentCalculation()->getPaymentFirstday());

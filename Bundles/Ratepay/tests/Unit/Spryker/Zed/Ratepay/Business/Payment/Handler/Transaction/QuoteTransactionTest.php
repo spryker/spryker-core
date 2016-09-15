@@ -10,10 +10,12 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Payment\Handler\Transaction;
 use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
 use Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
+use Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InitPaymentTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InstallmentCalculationTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InstallmentConfigurationTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\RequestPaymentTransaction;
+use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Elv;
 
 /**
  * @group Unit
@@ -46,10 +48,13 @@ class QuoteTransactionTest extends BaseTransactionTest
      */
     public function testInitPayment()
     {
-        $transactionHandler = $this->getTransactionHandlerObject(InitPaymentTransaction::class);
+        $additionalMockMethods = [
+            'getMethodMapper' => $this->mockPaymentMethod(Elv::class)
+        ];
+        $transactionHandler = $this->getTransactionHandlerObject(InitPaymentTransaction::class, $additionalMockMethods);
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
 
-        $ratepayResponseTransfer = $transactionHandler->request($this->mockQuoteTransfer());
+        $ratepayResponseTransfer = $transactionHandler->request($this->mockRatepayPaymentInitTransfer());
 
         $this->assertInstanceOf(RatepayResponseTransfer::class, $ratepayResponseTransfer);
 
@@ -64,10 +69,13 @@ class QuoteTransactionTest extends BaseTransactionTest
      */
     public function testRequestPayment()
     {
-        $transactionHandler = $this->getTransactionHandlerObject(RequestPaymentTransaction::class);
+        $additionalMockMethods = [
+            'getMethodMapper' => $this->mockPaymentMethod(Elv::class)
+        ];
+        $transactionHandler = $this->getTransactionHandlerObject(RequestPaymentTransaction::class, $additionalMockMethods);
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
 
-        $ratepayResponseTransfer = $transactionHandler->request($this->mockQuoteTransfer());
+        $ratepayResponseTransfer = $transactionHandler->request($this->mockRatepayPaymentRequestTransfer());
 
         $this->assertInstanceOf(RatepayResponseTransfer::class, $ratepayResponseTransfer);
 
@@ -83,7 +91,7 @@ class QuoteTransactionTest extends BaseTransactionTest
     public function testInstallmentConfiguration()
     {
         $additionalMockMethods = [
-            'getMethodMapper' => $this->mockModelPaymentConfiguration()
+            'getMethodMapper' => $this->mockPaymentMethod(Installment::class)
         ];
         $transactionHandler = $this->getTransactionHandlerObject(InstallmentConfigurationTransaction::class, $additionalMockMethods);
         $transactionHandler->registerMethodMapper($this->mockMethodInstallmentConfiguration());
@@ -104,7 +112,7 @@ class QuoteTransactionTest extends BaseTransactionTest
     public function testInstallmentCalculation()
     {
         $additionalMockMethods = [
-            'getMethodMapper' => $this->mockModelPaymentCalculation()
+            'getMethodMapper' => $this->mockPaymentMethod(Installment::class)
         ];
 
         $transactionHandler = $this->getTransactionHandlerObject(InstallmentCalculationTransaction::class, $additionalMockMethods);
