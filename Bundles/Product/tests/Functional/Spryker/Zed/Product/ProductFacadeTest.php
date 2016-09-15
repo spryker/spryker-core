@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Product;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -42,7 +43,10 @@ class ProductFacadeTest extends Test
 
     const TAX_RATE_PERCENTAGE = 10;
 
-    const PRODUCT_CONCRETE_NAME = 'Product concrete name';
+    const PRODUCT_CONCRETE_NAME = [
+        'en_US' => 'Product concrete name en_US',
+        'de_DE' => 'Product concrete name de_DE',
+    ];
 
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacade
@@ -261,7 +265,9 @@ class ProductFacadeTest extends Test
             ->setSku(self::SKU_PRODUCT_ABSTRACT);
 
         $localizedAttributesEntity = new SpyProductLocalizedAttributes();
-        $localizedAttributesEntity->setName(self::PRODUCT_CONCRETE_NAME)
+        $localizedAttributesEntity->setName(
+            self::PRODUCT_CONCRETE_NAME[$localeTransfer->getLocaleName()]
+        )
             ->setAttributes('')
             ->setFkLocale($localeTransfer->getIdLocale());
 
@@ -273,11 +279,18 @@ class ProductFacadeTest extends Test
             ->save();
 
         $productConcreteTransfer = $this->productFacade->getProductConcrete($productConcreteEntity->getSku());
-        $this->assertEquals(self::PRODUCT_CONCRETE_NAME, $productConcreteTransfer->getName());
+
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            $this->assertEquals(
+                self::PRODUCT_CONCRETE_NAME[$localeTransfer->getLocaleName()],
+                $localizedAttributesTransfer->getName()
+            );
+        }
+
         $this->assertEquals(self::SKU_PRODUCT_CONCRETE, $productConcreteTransfer->getSku());
-        $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $productConcreteTransfer->getProductAbstractSku());
+        $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $productConcreteTransfer->getAbstractSku());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $productConcreteTransfer->getIdProductConcrete());
-        $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $productConcreteTransfer->getIdProductAbstract());
+        $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $productConcreteTransfer->getFkProductAbstract());
     }
 
     /**

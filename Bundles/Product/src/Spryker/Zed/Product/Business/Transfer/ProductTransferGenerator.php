@@ -93,7 +93,13 @@ class ProductTransferGenerator implements ProductTransferGeneratorInterface
      */
     protected function decodeAttributes($json)
     {
-        return Json::decode($json, true);
+        $value = Json::decode($json, true);
+
+        if (!is_array($value)) {
+            $value = [];
+        }
+
+        return $value;
     }
 
 }

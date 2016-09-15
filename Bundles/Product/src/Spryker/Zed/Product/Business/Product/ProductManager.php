@@ -15,7 +15,6 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
@@ -253,8 +252,6 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * TODO: move to ProductConcreteManager
-     *
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -263,24 +260,10 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductConcrete($concreteSku)
     {
-        $idProduct = (int) $this->productConcreteManager->getProductConcreteIdBySku($concreteSku);
-        $productConcreteTransfer = $this->productConcreteManager->getProductConcreteById($idProduct);
-
-        if (!$productConcreteTransfer) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $concreteSku
-                )
-            );
-        }
-
-        return $productConcreteTransfer;
+        return $this->productConcreteManager->getProductConcrete($concreteSku);
     }
 
     /**
-     * TODO: move to ProductConcreteManager
-     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -289,23 +272,10 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAbstractIdByConcreteSku($sku)
     {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
-
-        if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
-        }
-
-        return $productConcrete->getFkProductAbstract();
+        return $this->productConcreteManager->getProductAbstractIdByConcreteSku($sku);
     }
 
     /**
-     * TODO: move to ProductAbstractManager
-     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -314,20 +284,8 @@ class ProductManager implements ProductManagerInterface
      */
     public function getAbstractSkuFromProductConcrete($sku)
     {
-        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
-
-        if (!$productConcrete) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
-        }
-
-        return $productConcrete->getSpyProductAbstract()->getSku();
+        return $this->productAbstractManager->getAbstractSkuFromProductConcrete($sku);
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

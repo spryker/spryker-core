@@ -13,4 +13,79 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface ProductConcreteManagerInterface
 {
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function getProductConcreteById($idProduct);
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function getProductConcreteIdBySku($sku);
+
+    /**
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete($concreteSku);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
+    /**
+     * @param string $sku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteSku($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    public function findProductEntityByAbstract(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productConcreteTransfer
+    );
+
 }

@@ -10,7 +10,9 @@ namespace Spryker\Zed\Product;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToTaxBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 
@@ -18,16 +20,14 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_URL = 'FACADE_URL';
-    const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
+    const FACADE_TAX = 'FACADE_TAX';
+    const FACADE_URL = 'FACADE_URL';
+    const FACADE_TOUCH = 'FACADE_TOUCH';
 
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
-
-    //TODO: PLUGIN
-    const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
-    const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,6 +50,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new ProductToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container[self::FACADE_PRICE] = function (Container $container) {
+            return new ProductToPriceBridge($container->getLocator()->price()->facade());
         };
 
         return $container;

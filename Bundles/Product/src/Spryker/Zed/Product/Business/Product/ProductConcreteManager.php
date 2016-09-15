@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
@@ -223,6 +224,30 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete($concreteSku)
+    {
+        $idProduct = (int) $this->getProductConcreteIdBySku($concreteSku);
+        $productConcreteTransfer = $this->getProductConcreteById($idProduct);
+
+        if (!$productConcreteTransfer) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
+                    $concreteSku
+                )
+            );
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -243,6 +268,31 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         }
 
         return $transferCollection;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteSku($sku)
+    {
+        $productConcrete = $this->productQueryContainer
+            ->queryProductConcreteBySku($sku)
+            ->findOne();
+
+        if (!$productConcrete) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
+                    $sku
+                )
+            );
+        }
+
+        return $productConcrete->getFkProductAbstract();
     }
 
     /**
