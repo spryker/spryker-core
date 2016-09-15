@@ -1,8 +1,0 @@
-{% extends "@application/layout/partials/header.twig" %}
-
-{% block formSearch %}
-    <form action="/fact-finder">
-        <button class="search__button js-search-button">Search</button>
-        <input name="q" type="text" class="search__box js-search-box" value="{{ app.request.get('q') }}" />
-    </form>
-{% endblock formSearch %}

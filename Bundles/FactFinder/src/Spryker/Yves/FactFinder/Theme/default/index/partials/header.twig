@@ -1,0 +1,14 @@
+{% extends "@application/layout/partials/header.twig" %}
+
+{% block header %}
+    <div class="large-6 columns show-for-large">
+        {% include '@FactFinder/index/partials/search-form.twig' %}
+    </div>
+
+    <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
+        {% if app['cart.quantity'] > 0 %}
+            <span class="warning badge">{{ app['cart.quantity'] }}</span>
+        {% endif %}
+        <i class="fa fa-bars"></i>
+    </a>
+{% endblock %}
