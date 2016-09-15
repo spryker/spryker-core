@@ -43,7 +43,6 @@ class Validator implements ValidatorInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryBuilderException
      *
      * @return array|\string[]
-     *
      */
     public function validateByType($type, $queryString)
     {
@@ -73,7 +72,6 @@ class Validator implements ValidatorInterface
         }
 
         return $validationMessages;
-
     }
 
     /**

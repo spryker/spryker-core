@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\Payolution\Dependency\Injector;
+namespace Unit\Spryker\Yves\Payolution\Handler;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -19,10 +19,12 @@ use Spryker\Yves\Payolution\Handler\PayolutionHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Payolution
- * @group PayolutionHandler
+ * @group Handler
+ * @group PayolutionHandlerTest
  */
 class PayolutionHandlerTest extends \PHPUnit_Framework_TestCase
 {

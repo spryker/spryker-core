@@ -19,6 +19,16 @@ use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group Payment
+ * @group MethodMapper
+ * @group InvoiceTest
+ */
 class InvoiceTest extends Test
 {
 

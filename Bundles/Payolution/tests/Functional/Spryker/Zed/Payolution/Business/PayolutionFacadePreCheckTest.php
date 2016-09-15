@@ -16,6 +16,14 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group PayolutionFacadePreCheckTest
+ */
 class PayolutionFacadePreCheckTest extends AbstractFacadeTest
 {
 

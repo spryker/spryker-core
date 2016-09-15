@@ -12,6 +12,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Calculation
+ * @group Business
+ * @group Model
+ * @group Calculator
+ * @group ExpenseGrossSumAmountCalculatorTest
+ */
 class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

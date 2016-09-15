@@ -45,8 +45,6 @@ abstract class AbstractClient
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractFactory
      */
     private function resolveFactory()
@@ -63,6 +61,8 @@ abstract class AbstractClient
     }
 
     /**
+     * @throws \BadMethodCallException
+     *
      * @return \Spryker\Client\ZedRequest\Stub\BaseStub
      */
     protected function getZedStub()

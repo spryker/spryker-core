@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Availability;
+namespace Functional\Spryker\Zed\Availability\Business;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -22,17 +22,18 @@ use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Spryker\Zed\Kernel\Container;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
- * @group Business
  * @group Availability
+ * @group Business
  * @group SellableTest
  */
 class SellableTest extends Test
 {
 
     /**
-     * @var \Spryker\Zed\Availability\Business\AvailabilityFacade
+     * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
     private $availabilityFacade;
 

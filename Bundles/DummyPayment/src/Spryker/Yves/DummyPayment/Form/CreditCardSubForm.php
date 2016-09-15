@@ -19,7 +19,7 @@ class CreditCardSubForm extends AbstractSubForm
 
     const FIELD_CARD_TYPE = 'card_type';
     const FIELD_CARD_NUMBER = 'card_number';
-    const FIELD_NAME_ON_CARD= 'name_on_card';
+    const FIELD_NAME_ON_CARD = 'name_on_card';
     const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
     const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
     const FIELD_CARD_SECURITY_CODE = 'card_security_code';

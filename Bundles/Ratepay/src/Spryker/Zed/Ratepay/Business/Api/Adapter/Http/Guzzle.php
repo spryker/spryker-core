@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Adapter\Http;
 
-use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Http\Exception\RequestException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use Spryker\Zed\Ratepay\Business\Api\Constants;
 use Spryker\Zed\Ratepay\Business\Exception\ApiHttpRequestException;
 
@@ -18,7 +19,7 @@ class Guzzle extends AbstractHttpAdapter
     const DEFAULT_TIMEOUT = 45;
 
     /**
-     * @var \Guzzle\Http\Client
+     * @var \GuzzleHttp\Client
      */
     protected $client;
 
@@ -29,7 +30,7 @@ class Guzzle extends AbstractHttpAdapter
     {
         parent::__construct($gatewayUrl);
 
-        $this->client = new GuzzleClient([
+        $this->client = new Client([
             'timeout' => self::DEFAULT_TIMEOUT,
         ]);
     }
@@ -37,18 +38,20 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param string $data
      *
-     * @return \Guzzle\Http\Message\RequestInterface
+     * @return \Psr\Http\Message\RequestInterface
      */
     protected function buildRequest($data)
     {
-        return $this->client->post(
-            $this->gatewayUrl,
-            ['Content-Type' => Constants::REQUEST_HEADER_CONTENT_TYPE]
-        )->setBody($data);
+        $headers = [
+            'Content-Type' => Constants::REQUEST_HEADER_CONTENT_TYPE
+        ];
+        $request = new Request('POST', $this->gatewayUrl, $headers, $data);
+
+        return $request;
     }
 
     /**
-     * @param \Guzzle\Http\Message\RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \Spryker\Zed\Ratepay\Business\Exception\ApiHttpRequestException
      *
@@ -57,12 +60,12 @@ class Guzzle extends AbstractHttpAdapter
     protected function send($request)
     {
         try {
-            $response = $request->send();
+            $response = $this->client->send($request);
         } catch (RequestException $requestException) {
             throw new ApiHttpRequestException($requestException->getMessage());
         }
 
-        return $response->getbody(true);
+        return $response->getBody();
     }
 
 }

@@ -9,6 +9,9 @@ namespace Spryker\Client\EventJournal;
 
 use Spryker\Shared\EventJournal\Model\AbstractEventJournal;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournal extends AbstractEventJournal
 {
 }

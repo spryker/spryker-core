@@ -22,6 +22,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group SpecificationBuilderTest
+ */
 class SpecificationBuilderTest extends Test
 {
 
@@ -35,7 +44,6 @@ class SpecificationBuilderTest extends Test
         $specification = $decisionRuleSpecificationBuilder->buildFromQueryString('sku = "123"');
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $specification);
-
     }
 
     /**
@@ -50,7 +58,6 @@ class SpecificationBuilderTest extends Test
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
-
     }
 
     /**
@@ -65,7 +72,6 @@ class SpecificationBuilderTest extends Test
         );
 
         $this->assertInstanceOf(DecisionRuleOrSpecification::class, $specification);
-
     }
 
     /**
@@ -80,7 +86,6 @@ class SpecificationBuilderTest extends Test
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
-
     }
 
     /**
@@ -162,7 +167,6 @@ class SpecificationBuilderTest extends Test
             $this->createComparatorOperators(),
             $this->createLogicalComparators()
         );
-
     }
 
     /**

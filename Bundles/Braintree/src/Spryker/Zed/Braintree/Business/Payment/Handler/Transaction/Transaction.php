@@ -295,8 +295,6 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      * @param string $transactionCode
      * @param int $idPayment
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLog
      */
     protected function logApiRequest($transactionId, $transactionType, $transactionCode, $idPayment)

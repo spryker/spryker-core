@@ -40,6 +40,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
 
     /**
      * @throws \Spryker\Zed\Graph\Communication\Exception\GraphNotInitializedException
+     *
      * @return \Spryker\Shared\Graph\GraphInterface
      */
     protected function getGraph()

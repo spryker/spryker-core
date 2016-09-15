@@ -120,8 +120,6 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
-     * @throws Exception\UserNotFoundException
-     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user)

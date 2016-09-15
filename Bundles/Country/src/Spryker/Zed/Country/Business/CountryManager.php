@@ -60,9 +60,9 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param string $countryName
-     *
      * @deprecated Use getPreferredCountryByName()
+     *
+     * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
@@ -90,12 +90,10 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param string $iso2code
-     * @param array $countryData
-     *
      * @deprecated Use saveCountry() instead.
      *
-     * @throws \Spryker\Zed\Country\Business\Exception\CountryExistsException
+     * @param string $iso2code
+     * @param array $countryData
      *
      * @return int
      */

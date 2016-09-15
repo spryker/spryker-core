@@ -6,6 +6,8 @@
 namespace Spryker\Shared\Library\Currency;
 
 /**
+ * @deprecated Use Money Bundle instead
+ *
  * This class is the central math class for currency arithmetic operations
  */
 interface CurrencyManagerInterface

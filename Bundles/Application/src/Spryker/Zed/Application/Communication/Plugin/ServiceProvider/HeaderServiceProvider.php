@@ -44,6 +44,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
      * Sets cache control and store information in headers.
      *
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event A FilterResponseEvent instance
+     *
      * @return void
      */
     public function onKernelResponse(FilterResponseEvent $event)

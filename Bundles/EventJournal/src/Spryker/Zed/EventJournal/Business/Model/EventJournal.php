@@ -9,6 +9,9 @@ namespace Spryker\Zed\EventJournal\Business\Model;
 
 use Spryker\Shared\EventJournal\Model\AbstractEventJournal;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournal extends AbstractEventJournal
 {
 }

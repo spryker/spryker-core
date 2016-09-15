@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\Payment\Dependency\Plugin;
+namespace Unit\Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
@@ -14,11 +14,14 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Payment
  * @group Dependency
- * @group CheckoutPluginCollection
+ * @group Plugin
+ * @group Checkout
+ * @group CheckoutPluginCollectionTest
  */
 class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
 {

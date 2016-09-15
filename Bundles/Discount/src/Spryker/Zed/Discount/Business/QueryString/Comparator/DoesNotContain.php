@@ -18,14 +18,12 @@ class DoesNotContain implements ComparatorInterface
      * @param string $withValue
      *
      * @return bool
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
         $this->isValidValue($withValue);
 
-        return (stripos(trim($withValue), $clauseTransfer->getValue())  === false);
+        return (stripos(trim($withValue), $clauseTransfer->getValue()) === false);
     }
 
     /**
@@ -63,7 +61,6 @@ class DoesNotContain implements ComparatorInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isValidValue($withValue)
     {

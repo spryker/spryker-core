@@ -4,8 +4,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Ratepay\Business\Api\Converter;
+namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Mapper
+ * @group InstallmentCalculationMapperTest
+ */
 class InstallmentCalculationMapperTest extends AbstractMapperTest
 {
 
@@ -34,7 +44,6 @@ class InstallmentCalculationMapperTest extends AbstractMapperTest
         $this->assertEquals(3, $this->requestTransfer->getInstallmentCalculation()->getMonth());
         $this->assertEquals(28, $this->requestTransfer->getInstallmentCalculation()->getPaymentFirstday());
         $this->assertEquals('2016-05-15', $this->requestTransfer->getInstallmentCalculation()->getCalculationStart());
-
     }
 
 }

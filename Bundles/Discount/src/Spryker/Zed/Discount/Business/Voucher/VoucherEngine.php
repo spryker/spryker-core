@@ -49,8 +49,6 @@ class VoucherEngine implements VoucherEngineInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createVoucherCode(DiscountVoucherTransfer $discountVoucherTransfer)
@@ -204,7 +202,6 @@ class VoucherEngine implements VoucherEngineInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\VoucherEngineException
      *
      * @return string
-     *
      */
     protected function getRandomVoucherCode($length)
     {

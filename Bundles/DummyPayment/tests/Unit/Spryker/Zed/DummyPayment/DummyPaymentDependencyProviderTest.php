@@ -12,10 +12,11 @@ use Spryker\Zed\DummyPayment\DummyPaymentDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
- * @group DummyPaymentDependencyProvider
+ * @group DummyPaymentDependencyProviderTest
  */
 class DummyPaymentDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {

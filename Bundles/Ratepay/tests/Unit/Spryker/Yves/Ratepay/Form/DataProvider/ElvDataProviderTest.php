@@ -13,10 +13,13 @@ use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
 use Spryker\Yves\Ratepay\Form\DataProvider\ElvDataProvider;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Ratepay
- * @group ElvDataProvider
+ * @group Form
+ * @group DataProvider
+ * @group ElvDataProviderTest
  */
 class ElvDataProviderTest extends AbstractDataProviderTest
 {

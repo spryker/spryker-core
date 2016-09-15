@@ -13,11 +13,14 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\Refund;
 use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group DummyPayment
  * @group Business
- * @group Refund
+ * @group Model
+ * @group Payment
+ * @group RefundTest
  */
 class RefundTest extends \PHPUnit_Framework_TestCase
 {

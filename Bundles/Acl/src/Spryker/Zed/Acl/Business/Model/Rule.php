@@ -72,8 +72,6 @@ class Rule implements RuleInterface
     /**
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
-     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
-     *
      * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function addRule(RuleTransfer $ruleTransfer)

@@ -73,7 +73,6 @@ class QueryStringController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
-     *
      */
     public function validateQueryStringAction(Request $request)
     {

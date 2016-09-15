@@ -9,6 +9,13 @@ namespace Unit\Spryker\Zed\Application;
 
 use Spryker\Zed\Application\ApplicationConfig;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Application
+ * @group ApplicationConfigTest
+ */
 class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
 {
 

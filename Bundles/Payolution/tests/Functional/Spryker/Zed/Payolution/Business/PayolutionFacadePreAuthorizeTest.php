@@ -10,6 +10,14 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group PayolutionFacadePreAuthorizeTest
+ */
 class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
 {
 

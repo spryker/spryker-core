@@ -71,8 +71,6 @@ class Persistence implements PersistenceInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function getProcessId(StateMachineProcessTransfer $stateMachineProcessTransfer)
@@ -191,7 +189,6 @@ class Persistence implements PersistenceInterface
     }
 
     /**
-     *
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemStateEntity
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
@@ -247,7 +244,6 @@ class Persistence implements PersistenceInterface
      */
     public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer)
     {
-
         $stateMachineItemTransfer->requireIdentifier()
             ->requireIdItemState();
 
@@ -344,8 +340,6 @@ class Persistence implements PersistenceInterface
      * @param \DateTime $timeoutDate
      * @param string $eventName
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
      */
     public function saveStateMachineItemTimeout(
@@ -383,8 +377,6 @@ class Persistence implements PersistenceInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess
      */
     protected function saveStateMachineProcess(StateMachineProcessTransfer $stateMachineProcessTransfer)
@@ -400,8 +392,6 @@ class Persistence implements PersistenceInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateName
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState
      */

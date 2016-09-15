@@ -8,10 +8,15 @@
 namespace Spryker\Shared\EventJournal\Model\Writer;
 
 use Spryker\Shared\EventJournal\Model\EventInterface;
-use Spryker\Shared\NewRelic\Api as NewRelicApi;
+use Spryker\Shared\NewRelic\NewRelicApiTrait;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class Newrelic extends AbstractWriter
 {
+
+    use NewRelicApiTrait;
 
     const TYPE = 'newrelic';
 
@@ -22,7 +27,7 @@ class Newrelic extends AbstractWriter
      */
     public function write(EventInterface $event)
     {
-        $api = new NewRelicApi();
+        $api = $this->createNewRelicApi();
 
         foreach ($event as $field => $value) {
             $api->addCustomParameter($field, $value);

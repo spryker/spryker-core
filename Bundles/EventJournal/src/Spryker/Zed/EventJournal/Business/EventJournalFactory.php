@@ -10,6 +10,9 @@ namespace Spryker\Zed\EventJournal\Business;
 use Spryker\Zed\EventJournal\Business\Model\EventJournal;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournalFactory extends AbstractBusinessFactory
 {
 

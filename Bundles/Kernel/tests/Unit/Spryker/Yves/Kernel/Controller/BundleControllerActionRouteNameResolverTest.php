@@ -5,16 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\Kernel;
+namespace Unit\Spryker\Yves\Kernel\Controller;
 
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group BundleControllerActionRouteNameResolver
+ * @group Controller
+ * @group BundleControllerActionRouteNameResolverTest
  */
 class BundleControllerActionRouteNameResolverTest extends \PHPUnit_Framework_TestCase
 {

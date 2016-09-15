@@ -4,15 +4,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Bundles\Application\tests\Unit\Spryker\Zed\Application\Communication;
+namespace Unit\Spryker\Zed\Application\Communication;
 
 use Spryker\Zed\Application\Communication\ZedBootstrap;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
- * @group ZedBootstrap
+ * @group Communication
+ * @group ZedBootstrapTest
  */
 class ZedBootstrapTest extends \PHPUnit_Framework_TestCase
 {

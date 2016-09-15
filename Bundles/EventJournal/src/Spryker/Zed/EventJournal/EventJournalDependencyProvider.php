@@ -10,6 +10,9 @@ namespace Spryker\Zed\EventJournal;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournalDependencyProvider extends AbstractBundleDependencyProvider
 {
 

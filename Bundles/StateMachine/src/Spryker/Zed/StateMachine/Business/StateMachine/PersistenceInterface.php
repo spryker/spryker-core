@@ -52,7 +52,6 @@ interface PersistenceInterface
     public function getStateHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess);
 
     /**
-     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
@@ -95,7 +94,6 @@ interface PersistenceInterface
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout
-     *
      */
     public function saveStateMachineItemTimeout(
         StateMachineItemTransfer $stateMachineItemTransfer,

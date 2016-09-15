@@ -9,6 +9,16 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Order\MethodMapper;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Spryker\Zed\Ratepay\Business\Order\MethodMapper\Invoice;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Order
+ * @group MethodMapper
+ * @group InvoiceTest
+ */
 class InvoiceTest extends BaseMethodMapperTest
 {
 

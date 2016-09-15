@@ -8,8 +8,9 @@
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
 use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\ZedRequest\Business\Client\Request as ClientRequest;
 
-class Request extends \Spryker\Shared\Library\Communication\Request
+class Request extends ClientRequest
 {
 
     /**

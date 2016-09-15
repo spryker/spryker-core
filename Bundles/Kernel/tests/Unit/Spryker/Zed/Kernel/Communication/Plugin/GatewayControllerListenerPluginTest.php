@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin;
 
+use LogicException;
 use ReflectionClass;
 use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
@@ -23,11 +24,13 @@ use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\Request;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Communication
- * @group GatewayControllerListenerPlugin
+ * @group Plugin
+ * @group GatewayControllerListenerPluginTest
  */
 class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 {
@@ -105,7 +108,8 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfTwoTransferParameterGivenPluginMustThrowException()
     {
-        $this->setExpectedException('\LogicException', 'Only one transfer object can be received in yves-action');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Only one transfer object can be received in yves-action');
 
         $action = 'twoTransferParametersAction';
         $controllerCallable = $this->executeMockedListenerTest($action);
@@ -117,7 +121,8 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfTooManyTransferParameterGivenPluginMustThrowException()
     {
-        $this->setExpectedException('\LogicException', 'Only one transfer object can be received in yves-action');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Only one transfer object can be received in yves-action');
 
         $action = 'tooManyParametersAction';
         $controllerCallable = $this->executeMockedListenerTest($action);
@@ -129,7 +134,8 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfPassedParameterIsNotAClassPluginMustThrowException()
     {
-        $this->setExpectedException('\LogicException', 'You need to specify a class for the parameter in the yves-action.');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('You need to specify a class for the parameter in the yves-action.');
 
         $action = 'noClassParameterAction';
         $controllerCallable = $this->executeMockedListenerTest($action);
@@ -141,7 +147,8 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenObjectIsNotTransferClassPluginMustThrowException()
     {
-        $this->setExpectedException('\LogicException', 'Only transfer classes are allowed in yves action as parameter');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Only transfer classes are allowed in yves action as parameter');
 
         $transfer = new stdClass();
         $controllerCallable = $this->executeMockedListenerTest('notTransferAction', $transfer);

@@ -13,11 +13,14 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Communication
- * @group HstsServiceProvider
+ * @group Plugin
+ * @group ServiceProvider
+ * @group HstsServiceProviderTest
  */
 class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
 {

@@ -220,8 +220,6 @@ class Group implements GroupInterface
      * @param int $idGroup
      * @param int $idUser
      *
-     * @throws \Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasUserException
-     *
      * @return int
      */
     public function addUser($idGroup, $idUser)
@@ -243,7 +241,6 @@ class Group implements GroupInterface
      * @param int $idUser
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -299,8 +296,6 @@ class Group implements GroupInterface
     /**
      * @param int $id
      *
-     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
-     *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroupById($id)
@@ -353,8 +348,6 @@ class Group implements GroupInterface
 
     /**
      * @param int $idGroup
-     *
-     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */

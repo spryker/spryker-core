@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Library\Error\ErrorLogger;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -21,6 +21,8 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
 {
+
+    use LoggerTrait;
 
     const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
 
@@ -161,7 +163,6 @@ class Calculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountsTransfer
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
-     *
      */
     protected function sortByDiscountAmountDescending(array $collectedDiscountsTransfer)
     {
@@ -192,8 +193,8 @@ class Calculator implements CalculatorInterface
                 );
 
             return $collectorComposite->collect($quoteTransfer);
-        } catch (QueryStringException $e) {
-            ErrorLogger::log($e);
+        } catch (QueryStringException $exception) {
+            $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
         }
 
         return [];

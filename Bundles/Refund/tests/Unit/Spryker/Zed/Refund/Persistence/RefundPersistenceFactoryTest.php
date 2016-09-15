@@ -11,11 +11,12 @@ use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Spryker\Zed\Refund\Persistence\RefundPersistenceFactory;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Persistence
- * @group RefundPersistenceFactory
+ * @group RefundPersistenceFactoryTest
  */
 class RefundPersistenceFactoryTest extends \PHPUnit_Framework_TestCase
 {

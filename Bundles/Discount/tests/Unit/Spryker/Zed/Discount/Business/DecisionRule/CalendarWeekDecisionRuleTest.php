@@ -5,13 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Collector;
+namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DecisionRule
+ * @group CalendarWeekDecisionRuleTest
+ */
 class CalendarWeekDecisionRuleTest extends BaseRuleTester
 {
 
@@ -28,7 +37,7 @@ class CalendarWeekDecisionRuleTest extends BaseRuleTester
         });
 
         $calendarWeekDecisionRule = $this->createCalendarWeekDecisionRule($comparatorMock, $dateTime);
-        $isSatisfied =$calendarWeekDecisionRule->isSatisfiedBy(
+        $isSatisfied = $calendarWeekDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
             $this->createClauseTransfer($dateTime->format(CalendarWeekDecisionRule::DATE_FORMAT))

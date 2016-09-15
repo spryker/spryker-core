@@ -7,18 +7,22 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferDefinitionBuilder
+ * @group Model
+ * @group Generator
+ * @group TransferDefinitionBuilderTest
  */
 class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,8 +36,9 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
             __DIR__ . '/Fixtures/Project/',
         ];
 
+        $finder = new TransferDefinitionFinder($directories);
         $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $directories);
+        $loader = new TransferDefinitionLoader($finder, $normalizer);
         $transferDefinitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
@@ -45,7 +50,7 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
 
         $transferDefinition = $result[0];
-        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition', $transferDefinition);
+        $this->assertInstanceOf(ClassDefinition::class, $transferDefinition);
     }
 
 }

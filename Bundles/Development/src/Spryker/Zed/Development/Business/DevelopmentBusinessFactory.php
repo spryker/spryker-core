@@ -12,6 +12,7 @@ use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
+use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater;
@@ -113,8 +114,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getGraph()
@@ -636,6 +635,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonRequireUpdater())
             ->addUpdater($this->createComposerJsonRequireExternalUpdater())
             ->addUpdater($this->createComposerJsonStabilityUpdater())
+            ->addUpdater($this->createComposerJsonAutoloadUpdater())
             ->addUpdater($this->createComposerJsonBranchAliasUpdater());
 
         return $updaterComposite;
@@ -677,7 +677,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater
      */
     protected function createComposerJsonRequireExternalUpdater()
     {
@@ -694,6 +694,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonStabilityUpdater()
     {
         return new StabilityUpdater('dev');
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
+     */
+    protected function createComposerJsonAutoloadUpdater()
+    {
+        return new AutoloadUpdater();
     }
 
     /**

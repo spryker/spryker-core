@@ -18,6 +18,14 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Tax
+ * @group Business
+ * @group TaxFacadeRateCalculationTest
+ */
 class TaxFacadeRateCalculationTest extends Test
 {
 
@@ -65,7 +73,6 @@ class TaxFacadeRateCalculationTest extends Test
      * @param string $iso2Code
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function createAbstractProductWithTaxSet($taxRate, $iso2Code)
     {

@@ -17,7 +17,6 @@ class BaseCollector
      * @param \ArrayObject $originalItemCalculatedDiscounts
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
-     *
      */
     protected function createDiscountableItemTransfer($grossPrice, $quantity, \ArrayObject $originalItemCalculatedDiscounts)
     {

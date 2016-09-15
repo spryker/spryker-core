@@ -10,11 +10,12 @@ namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Shared\Url\Url;
+use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -24,8 +25,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
-    const REQUEST_URI = 'request uri';
-    const LOGIN_URI = '/auth/login';
+    const REFERER = 'referer';
 
     /**
      * @param \Silex\Application $app
@@ -43,51 +43,72 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::REQUEST, [$this, 'onKernelRequest']);
         $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse']);
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
      * @return void
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event)
     {
-        $request = $event->getRequest();
+        $requestUri = $event->getRequest()->getRequestUri();
 
-        if ($this->canRedirectAfterLogin($request)) {
-            $requestUri = $request->getRequestUri();
-            $request->getSession()->set(self::REQUEST_URI, $requestUri);
+        if (preg_match('/_profiler/', $requestUri)) {
+            return;
         }
+
+        $this->handleRedirectToLogin($event);
+        $this->handleRedirectFromLogin($event);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
-     * @return bool
+     * @return void
      */
-    protected function canRedirectAfterLogin(Request $request)
+    protected function handleRedirectToLogin(FilterResponseEvent $event)
     {
-        if ($request->getMethod() !== Request::METHOD_GET) {
-            return false;
+        $response = $event->getResponse();
+        if (!($response instanceof RedirectResponse)) {
+            return;
         }
 
-        if ($this->isAuthenticated($request)) {
-            return false;
+        $targetUrl = $response->getTargetUrl();
+        if ($targetUrl !== AuthConfig::DEFAULT_URL_LOGIN) {
+            return;
         }
 
-        $requestUri = $request->getRequestUri();
+        $redirectTo = $event->getRequest()->getRequestUri();
 
-        if ($requestUri === self::LOGIN_URI) {
-            return false;
+        if ($redirectTo === AuthConfig::DEFAULT_URL_REDIRECT) {
+            return;
         }
 
-        if (preg_match('/_profiler/', $requestUri)) {
-            return false;
+        $url = Url::generate($targetUrl, [static::REFERER => $redirectTo]);
+        $event->setResponse(new RedirectResponse($url->build()));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     *
+     * @return void
+     */
+    protected function handleRedirectFromLogin(FilterResponseEvent $event)
+    {
+        $request = $event->getRequest();
+
+        if ($request->getPathInfo() !== AuthConfig::DEFAULT_URL_LOGIN) {
+            return;
         }
 
-        return true;
+        $referer = $request->query->get(static::REFERER);
+        if (!$referer || !$this->isAuthenticated($request)) {
+            return;
+        }
+
+        $event->setResponse(new RedirectResponse($referer));
     }
 
     /**
@@ -113,24 +134,6 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
         }
 
         return true;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     *
-     * @return null
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
-    {
-        $request = $event->getRequest();
-        if (!$request->hasSession()) {
-            return null;
-        }
-        $session = $request->getSession();
-        if ($session->has(self::REQUEST_URI) && $this->isAuthenticated($request)) {
-            $event->setResponse(new RedirectResponse($session->get(self::REQUEST_URI)));
-            $session->remove(self::REQUEST_URI);
-        }
     }
 
 }

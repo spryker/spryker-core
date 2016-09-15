@@ -103,8 +103,6 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()

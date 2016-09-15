@@ -34,8 +34,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
+     * @param int|null $idDiscount
      *
-     * @param int $idDiscount
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createDiscountForm($idDiscount = null)
@@ -52,7 +52,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountFormType,
             $discountDataProvider->getData($idDiscount),
             [
-              'data_class'  => DiscountConfiguratorTransfer::class
+              'data_class' => DiscountConfiguratorTransfer::class
             ]
         );
     }
@@ -97,7 +97,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -110,7 +109,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountVoucherFormType,
             $discountVoucherTransfer,
             [
-                'data_class'  => DiscountVoucherTransfer::class
+                'data_class' => DiscountVoucherTransfer::class
             ]
         );
     }

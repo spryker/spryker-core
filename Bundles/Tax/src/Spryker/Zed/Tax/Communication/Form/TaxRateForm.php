@@ -102,7 +102,6 @@ class TaxRateForm extends AbstractType
         ]);
 
         return $this;
-
     }
 
     /**

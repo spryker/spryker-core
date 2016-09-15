@@ -7,8 +7,10 @@
 
 namespace Spryker\Shared\Library\Application;
 
-use Spryker\Shared\Application\ApplicationConstants;
+use ErrorException;
+use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Shared\Library\LibraryConstants;
@@ -24,31 +26,22 @@ class Environment
     ];
 
     /**
-     * @throws \Exception
-     *
      * @return void
      */
     public static function initialize()
     {
         date_default_timezone_set('UTC');
 
-        self::defineEnvironment();
-        self::defineStore();
-        self::defineApplication();
-        self::defineApplicationRootDir();
-        self::defineApplicationSourceDir();
-        self::defineApplicationStaticDir();
-        self::defineApplicationVendorDir();
-        self::defineApplicationDataDir();
+        static::defineEnvironment();
+        static::defineStore();
+        static::defineApplication();
+        static::defineApplicationRootDir();
+        static::defineApplicationSourceDir();
+        static::defineApplicationStaticDir();
+        static::defineApplicationVendorDir();
+        static::defineApplicationDataDir();
+        static::initializeErrorHandlerEnvironment();
 
-        $errorCode = error_reporting();
-        self::initializeErrorHandler();
-
-        $configErrorCode = Config::get(ApplicationConstants::ERROR_LEVEL);
-        if ($configErrorCode !== $errorCode) {
-            error_reporting($configErrorCode);
-            self::initializeErrorHandler();
-        }
         ini_set('display_errors', Config::get(LibraryConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
@@ -57,6 +50,15 @@ class Environment
         self::initializeLocale($locale);
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
+    }
+
+    /**
+     * @return void
+     */
+    protected static function initializeErrorHandlerEnvironment()
+    {
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
     }
 
     /**
@@ -101,13 +103,14 @@ class Environment
 
     /**
      * @throws \Exception
+     *
      * @return void
      */
     protected static function defineApplication()
     {
         if (!defined('APPLICATION')) {
             if (!getenv('APPLICATION')) {
-                throw new \Exception('Can not get APPLICATION environment variable');
+                throw new Exception('Can not get APPLICATION environment variable');
             }
             define('APPLICATION', getenv('APPLICATION'));
         }
@@ -115,13 +118,14 @@ class Environment
 
     /**
      * @throws \Exception
+     *
      * @return void
      */
     protected static function defineApplicationRootDir()
     {
         if (!defined('APPLICATION_ROOT_DIR')) {
             if (!getenv('APPLICATION_ROOT_DIR')) {
-                throw new \Exception('Can not get APPLICATION_ROOT_DIR environment variable');
+                throw new Exception('Can not get APPLICATION_ROOT_DIR environment variable');
             }
             define('APPLICATION_ROOT_DIR', getenv('APPLICATION_ROOT_DIR'));
         }
@@ -187,6 +191,10 @@ class Environment
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
      *
+     * @deprecated Use ErrorHandlerEnvironment instead
+     *
+     * @throws \ErrorException
+     *
      * @return void
      */
     protected static function initializeErrorHandler()
@@ -200,7 +208,7 @@ class Environment
         $errorLevel = error_reporting();
         set_error_handler(
             function ($errno, $errstr, $errfile, $errline) use ($initErrorHandler) {
-                throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+                throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
             },
             $errorLevel
         );
@@ -225,7 +233,7 @@ class Environment
             function ($script, $line, $message) {
                 $parsedMessage = trim(preg_replace('~^.*/\*(.*)\*/~i', '$1', $message));
                 $message = $parsedMessage ?: 'Assertion failed: ' . $message;
-                throw new \ErrorException($message, 0, 0, $script, $line);
+                throw new ErrorException($message, 0, 0, $script, $line);
             }
         );
     }

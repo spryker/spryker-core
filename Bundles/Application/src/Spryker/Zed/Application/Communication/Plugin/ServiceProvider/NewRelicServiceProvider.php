@@ -11,10 +11,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\System;
+use Spryker\Shared\NewRelic\NewRelicApi;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use NewRelicServiceProvider from NewRelic bundle instead
+ *
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
@@ -33,8 +36,6 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
     /**
      * @param \Silex\Application $app
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function boot(Application $app)
@@ -51,12 +52,12 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
 
             $store = Store::getInstance();
 
-            $this->getFactory()->createNewRelicApi()
-                ->setNameOfTransaction($transactionName)
-                ->addCustomParameter('request_uri', $requestUri)
-                ->addCustomParameter('host', $host)
-                ->addCustomParameter('store', $store->getStoreName())
-                ->addCustomParameter('locale', $store->getCurrentLocale());
+            $newRelicApi = new NewRelicApi();
+            $newRelicApi->setNameOfTransaction($transactionName);
+            $newRelicApi->addCustomParameter('request_uri', $requestUri);
+            $newRelicApi->addCustomParameter('host', $host);
+            $newRelicApi->addCustomParameter('store', $store->getStoreName());
+            $newRelicApi->addCustomParameter('locale', $store->getCurrentLocale());
         });
     }
 

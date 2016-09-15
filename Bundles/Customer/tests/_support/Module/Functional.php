@@ -28,7 +28,7 @@ class Functional extends Module
 {
 
     /**
-     * @param array $config
+     * @param array|null $config
      */
     public function __construct($config = null)
     {
@@ -86,6 +86,7 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
+     *
      * @return void
      */
     public function _before(TestCase $test)
@@ -97,6 +98,7 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
+     *
      * @return void
      */
     public function _after(TestCase $test)
@@ -112,7 +114,8 @@ class Functional extends Module
 
     /**
      * @param \Codeception\TestCase $test
-     * @apram $fail
+     * @param bool $fail
+     *
      * @return void
      */
     public function _failed(TestCase $test, $fail)

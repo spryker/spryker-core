@@ -10,10 +10,11 @@ namespace Unit\Spryker\Yves\Kernel;
 use Spryker\Yves\Kernel\BundleControllerAction;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group BundleControllerAction
+ * @group BundleControllerActionTest
  */
 class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
 {

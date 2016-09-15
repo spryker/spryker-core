@@ -11,6 +11,17 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Specification
+ * @group DecisionRuleSpecification
+ * @group DecisionRuleOrSpecificationTest
+ */
 class DecisionRuleOrSpecificationTest extends \PHPUnit_Framework_TestCase
 {
 

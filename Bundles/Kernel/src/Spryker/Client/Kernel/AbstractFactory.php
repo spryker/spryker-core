@@ -9,6 +9,7 @@ namespace Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Shared\Kernel\ContainerGlobals;
 
 abstract class AbstractFactory
 {
@@ -40,10 +41,7 @@ abstract class AbstractFactory
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            $dependencyProvider = $this->resolveDependencyProvider();
-            $container = new Container();
-            $this->provideExternalDependencies($dependencyProvider, $container);
-            $this->container = $container;
+            $this->container = $this->createContainerWithProvidedDependencies();
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -54,8 +52,47 @@ abstract class AbstractFactory
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function createContainerWithProvidedDependencies()
+    {
+        $container = $this->createContainer();
+        $dependencyProvider = $this->resolveDependencyProvider();
+        $this->provideExternalDependencies($dependencyProvider, $container);
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use `createContainer()` instead
      *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        return $this->createContainer();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function createContainer()
+    {
+        $containerGlobals = $this->createContainerGlobals();
+        $container = new Container($containerGlobals->getContainerGlobals());
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ContainerGlobals
+     */
+    protected function createContainerGlobals()
+    {
+        return new ContainerGlobals();
+    }
+
+    /**
      * @return \Spryker\Client\Kernel\AbstractDependencyProvider
      */
     protected function resolveDependencyProvider()
@@ -64,9 +101,19 @@ abstract class AbstractFactory
     }
 
     /**
+     * @deprecated Use `createDependencyProviderResolver` instead
+     *
      * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
+    {
+        return $this->createDependencyProviderResolver();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
+     */
+    protected function createDependencyProviderResolver()
     {
         return new DependencyProviderResolver();
     }
@@ -83,9 +130,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClient
-     *
      * @deprecated Use getSessionClient() instead.
+     *
+     * @return \Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -101,9 +148,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClient
-     *
      * @deprecated Use getZedRequestClient() instead.
+     *
+     * @return \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected function createZedRequestClient()
     {
@@ -119,9 +166,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClient
-     *
      * @deprecated Use getStorageClient() instead.
+     *
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function createStorageClient()
     {
@@ -137,9 +184,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClient
-     *
      * @deprecated This method will be removed.
+     *
+     * @return \Spryker\Client\Search\SearchClient
      */
     protected function createSearchClient()
     {

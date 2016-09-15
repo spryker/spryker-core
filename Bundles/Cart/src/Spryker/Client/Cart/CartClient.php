@@ -82,7 +82,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
         return $this->getZedStub()->addItem($cartChangeTransfer);
-
     }
 
     /**
@@ -92,8 +91,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     *
-     * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -111,7 +108,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
-     *
      */
     protected function findItem($sku, $groupKey = null)
     {
@@ -138,10 +134,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param string|null $groupKey
      * @param int $quantity
      *
-     * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
-     *
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {

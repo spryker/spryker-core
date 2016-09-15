@@ -19,6 +19,15 @@ use Spryker\Zed\Wishlist\Business\Model\CustomerInterface;
 use Spryker\Zed\Wishlist\Business\Storage\Propel;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Wishlist
+ * @group Business
+ * @group Storage
+ * @group PropelTest
+ */
 class PropelTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -240,6 +249,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $value
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Wishlist\Business\Model\CustomerInterface
      */
     protected function getCustomerMock($value = null)
@@ -324,6 +334,15 @@ trait WishlistSpyTrait
 
 }
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Wishlist
+ * @group Business
+ * @group Storage
+ * @group WishlistItemSpy
+ */
 class WishlistItemSpy extends SpyWishlistItem
 {
 
@@ -331,6 +350,15 @@ class WishlistItemSpy extends SpyWishlistItem
 
 }
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Wishlist
+ * @group Business
+ * @group Storage
+ * @group WishlistSpy
+ */
 class WishlistSpy extends SpyWishlist
 {
 

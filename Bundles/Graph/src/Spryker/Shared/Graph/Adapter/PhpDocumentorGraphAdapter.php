@@ -136,8 +136,6 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param string $type
      * @param string|null $fileName
      *
-     * @throws \phpDocumentor\GraphViz\Exception
-     *
      * @return string
      */
     public function render($type, $fileName = null)

@@ -32,6 +32,12 @@ use Spryker\Zed\Payolution\Business\PayolutionFacade;
  * This test case doesn't use any mocks to prevent calling Payolution's
  * servers. Gateway environment is defined in the configuration files.
  * Test can be enabled/disabled using the $enableTests member variable.
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group PayolutionFacadeGatewayTest
  */
 class PayolutionFacadeGatewayTest extends Test
 {
@@ -286,8 +292,6 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     private function setBaseTestData()
@@ -323,8 +327,6 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     private function setPaymentTestData()

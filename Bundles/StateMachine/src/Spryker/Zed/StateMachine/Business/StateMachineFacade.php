@@ -19,7 +19,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
 {
 
     /**
-     *
      * Trigger when first time adding item to state machine process
      *
      * Specification:
@@ -36,7 +35,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      * @param int $identifier - this is id of foreign entity you want to track in state machine, it's stored in history table.
      *
      * @return int
-     *
      */
     public function triggerForNewStateMachineItem(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
@@ -151,7 +149,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      *  Specification:
      *  - Read all processes from given state machine
      *  - Using graph library draw graph
@@ -159,9 +156,9 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $highlightState
-     * @param string $format
-     * @param int $fontSize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return string
      */
@@ -199,7 +196,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      *  Specification:
      *  - Read state machine process list
      *  - Find all manual events
@@ -272,7 +268,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      * Specification:
      *  - Get history for given state machine item reading state machine history table
      *
@@ -309,7 +304,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *
      * Specification:
      *  - Find all items without flag for given state machine and process, parse xml.
      *

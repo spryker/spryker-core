@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-class DefinitionNormalizer
+class DefinitionNormalizer implements DefinitionNormalizerInterface
 {
 
     const KEY_BUNDLE = 'bundle';

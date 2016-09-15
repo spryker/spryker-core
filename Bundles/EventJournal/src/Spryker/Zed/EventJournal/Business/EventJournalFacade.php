@@ -11,6 +11,8 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @deprecated Use Log bundle instead
+ *
  * @method \Spryker\Zed\EventJournal\Business\EventJournalFactory getFactory()
  */
 class EventJournalFacade extends AbstractFacade implements EventJournalFacadeInterface

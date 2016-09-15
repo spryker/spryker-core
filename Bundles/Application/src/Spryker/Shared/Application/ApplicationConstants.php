@@ -37,6 +37,7 @@ interface ApplicationConstants
     const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
     const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
     const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
+
     /**
      * @deprecated Use Session bundle SessionConstants::YVES_SESSION_SAVE_HANDLER instead.
      */
@@ -63,7 +64,14 @@ interface ApplicationConstants
     const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
     const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
 
+    /**
+     * @deprecated Use ErrorHandlerConstants::YVES_ERROR_PAGE instead.
+     */
     const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
+
+    /**
+     * @deprecated Use ErrorHandlerConstants::ERROR_RENDERER to choose renderer.
+     */
     const YVES_SHOW_EXCEPTION_STACK_TRACE = 'YVES_SHOW_EXCEPTION_STACK_TRACE';
 
     const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
@@ -81,30 +89,37 @@ interface ApplicationConstants
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PROTOCOL = SessionConstants::YVES_SESSION_REDIS_PROTOCOL;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PASSWORD = SessionConstants::YVES_SESSION_REDIS_PASSWORD;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_HOST = SessionConstants::YVES_SESSION_REDIS_HOST;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PORT = SessionConstants::YVES_SESSION_REDIS_PORT;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_DATABASE = SessionConstants::YVES_SESSION_REDIS_DATABASE;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_FILE_PATH = SessionConstants::YVES_SESSION_FILE_PATH;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
@@ -114,38 +129,47 @@ interface ApplicationConstants
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_REDIS_PROTOCOL = SessionConstants::ZED_SESSION_REDIS_PROTOCOL;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_REDIS_HOST = SessionConstants::ZED_SESSION_REDIS_HOST;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_REDIS_PORT = SessionConstants::ZED_SESSION_REDIS_PORT;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_REDIS_PASSWORD = SessionConstants::ZED_SESSION_REDIS_PASSWORD;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_REDIS_DATABASE = SessionConstants::ZED_SESSION_REDIS_DATABASE;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_FILE_PATH = SessionConstants::ZED_SESSION_FILE_PATH;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_PERSISTENT_CONNECTION = SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_TIME_TO_LIVE = SessionConstants::ZED_SESSION_TIME_TO_LIVE;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const ZED_STORAGE_SESSION_COOKIE_NAME = SessionConstants::ZED_SESSION_COOKIE_NAME;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
@@ -176,20 +200,63 @@ interface ApplicationConstants
     const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
-     * Database
+     * @deprecated Use PropelConstants::PROPEL instead
+     */
+    const PROPEL = 'PROPEL';
+
+    /**
+     * @deprecated Use PropelConstants::PROPEL_DEBUG instead
+     */
+    const PROPEL_DEBUG = 'PROPEL_DEBUG';
+
+    /**
+     * @deprecated Use PropelConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead
+     */
+    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_USERNAME instead
      */
     const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_PASSWORD instead
+     */
     const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_DATABASE instead
+     */
     const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_HOST instead
+     */
     const ZED_DB_HOST = 'ZED_DB_HOST';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_PORT instead
+     */
     const ZED_DB_PORT = 'ZED_DB_PORT';
 
     /**
-     * Database engines
+     * @deprecated Use PropelConstants::ZED_DB_ENGINE instead
      */
     const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_ENGINE_MYSQL instead
+     */
     const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_ENGINE_PGSQL instead
+     */
     const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_SUPPORTED_ENGINES instead
+     */
     const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 
     /**
@@ -231,19 +298,33 @@ interface ApplicationConstants
     const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
-    /* @deprecated Use LogConstants::LOG_LEVEL instead */
+    /**
+     * @deprecated Use LogConstants::LOG_LEVEL instead
+     */
     const LOG_LEVEL = 'LOG_LEVEL';
 
+    /**
+     * @deprecated Use ErrorHandlerConstants::ERROR_LEVEL instead
+     */
     const ERROR_LEVEL = 'ERROR_LEVEL';
 
-    const PROPEL = 'PROPEL';
-    const PROPEL_DEBUG = 'PROPEL_DEBUG';
-    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
-
+    /**
+     * @deprecated Use StorageConstants::STORAGE_KV_SOURCE instead
+     */
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
+
+    /**
+     * @deprecated Use ErrorHandlerConstants::ZED_ERROR_PAGE instead.
+     */
     const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
+
+    /**
+     * @deprecated Use ErrorHandlerConstants::ERROR_RENDERER to choose renderer.
+     */
     const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
 
     const APPLICATION_SPRYKER_ROOT = 'APPLICATION_SPRYKER_ROOT';
+
+    const FORM_FACTORY = 'FORM_FACTORY';
 
 }

@@ -9,6 +9,9 @@ namespace Spryker\Client\EventJournal;
 
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 interface EventJournalClientInterface
 {
 

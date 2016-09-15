@@ -9,6 +9,9 @@ namespace Spryker\Shared\EventJournal\Model;
 
 use Spryker\Zed\Library\Generator\StringGenerator;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class Event implements EventInterface
 {
 
@@ -46,8 +49,6 @@ class Event implements EventInterface
      * @param string $name
      * @param array|string $data
      *
-     * @throws \Spryker\Shared\EventJournal\Model\DataInvalidException
-     *
      * @return void
      */
     public function setStaticField($name, $data)
@@ -59,8 +60,6 @@ class Event implements EventInterface
     /**
      * @param string $name
      * @param array|string $data
-     *
-     * @throws \Spryker\Shared\EventJournal\Model\DataInvalidException
      *
      * @return void
      */
@@ -95,8 +94,6 @@ class Event implements EventInterface
 
     /**
      * @param array $fields
-     *
-     * @throws \Spryker\Shared\EventJournal\Model\DataInvalidException
      *
      * @return void
      */

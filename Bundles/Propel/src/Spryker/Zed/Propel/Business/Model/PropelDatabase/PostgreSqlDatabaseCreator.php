@@ -34,8 +34,6 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return bool
      */
     protected function existsDatabase()
@@ -46,8 +44,6 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return bool
      */
     protected function createDatabase()
@@ -114,6 +110,8 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
      * Check if exit code can be used to return bool
      *
      * @param string $command
+     *
+     * @throws \RuntimeException
      *
      * @return bool
      */

@@ -9,7 +9,7 @@ namespace Spryker\Shared\Session\Business\Model;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Environment;
-use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\NewRelic\NewRelicApiTrait;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
@@ -17,6 +17,8 @@ use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 
 abstract class SessionFactory
 {
+
+    use NewRelicApiTrait;
 
     const BUCKET_NAME_POSTFIX = 'sessions';
     const PASSWORD = 'password';
@@ -36,7 +38,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerCouchbase($this->getNewRelicApi(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
+        $handler = new SessionHandlerCouchbase($this->createNewRelicApi(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -55,7 +57,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerMysql($this->getNewRelicApi(), $hosts, $user, $password, $lifetime);
+        $handler = new SessionHandlerMysql($this->createNewRelicApi(), $hosts, $user, $password, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -69,7 +71,7 @@ abstract class SessionFactory
     public function registerRedisSessionHandler($savePath)
     {
         $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerRedis($savePath, $lifetime, $this->getNewRelicApi());
+        $handler = new SessionHandlerRedis($savePath, $lifetime, $this->createNewRelicApi());
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -83,7 +85,7 @@ abstract class SessionFactory
     public function registerFileSessionHandler($savePath)
     {
         $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerFile($savePath, $lifetime, $this->getNewRelicApi());
+        $handler = new SessionHandlerFile($savePath, $lifetime, $this->createNewRelicApi());
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -169,11 +171,13 @@ abstract class SessionFactory
     }
 
     /**
-     * @return \Spryker\Shared\NewRelic\Api
+     * @deprecated Please use `createNewRelicApi()` instead
+     *
+     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
      */
     protected function getNewRelicApi()
     {
-        return new Api();
+        return $this->createNewRelicApi();
     }
 
 }

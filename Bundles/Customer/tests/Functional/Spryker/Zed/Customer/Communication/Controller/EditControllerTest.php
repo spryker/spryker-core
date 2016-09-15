@@ -22,11 +22,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Customer
  * @group Communication
  * @group Controller
+ * @group EditControllerTest
  */
 class EditControllerTest extends Test
 {
@@ -165,7 +167,6 @@ class EditControllerTest extends Test
         $result = $this->controller->indexAction($request);
 
         return $this->getFormDataFromResult($result['form']);
-
     }
 
     /**

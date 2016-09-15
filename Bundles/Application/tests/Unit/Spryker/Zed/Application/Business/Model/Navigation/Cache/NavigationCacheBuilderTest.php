@@ -10,11 +10,15 @@ namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group NavigationCache
+ * @group Model
+ * @group Navigation
+ * @group Cache
+ * @group NavigationCacheBuilderTest
  */
 class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
 {

@@ -42,7 +42,6 @@ class MoneyValueConverter implements MoneyValueConverterInterface
         } else {
             $this->convertSinglePrice($clauseTransfer);
         }
-
     }
 
     /**

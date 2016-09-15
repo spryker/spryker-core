@@ -15,7 +15,7 @@ use Acceptance\Refund\Sales\Zed\Tester\RefundTester;
  * @group Refund
  * @group Sales
  * @group Zed
- * @group Refund
+ * @group RefundCest
  */
 class RefundCest
 {
@@ -46,6 +46,7 @@ class RefundCest
 
     /**
      * @group single
+     *
      * @param \Acceptance\Refund\Sales\Zed\Tester\RefundTester $i
      *
      * @return void

@@ -32,8 +32,6 @@ class PaymentPluginExecutor
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
-     *
      * @return void
      */
     public function executePreCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
@@ -48,8 +46,6 @@ class PaymentPluginExecutor
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
-     *
      * @return void
      */
     public function executeOrderSaverPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
@@ -63,8 +59,6 @@ class PaymentPluginExecutor
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @throws \Spryker\Zed\Payment\Business\Exception\PaymentProviderNotFoundException
      *
      * @return void
      */

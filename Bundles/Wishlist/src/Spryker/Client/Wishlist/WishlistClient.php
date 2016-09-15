@@ -152,7 +152,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return Session\WishlistSessionInterface
+     * @return \Spryker\Client\Wishlist\Session\WishlistSessionInterface
      */
     protected function getSession()
     {
@@ -160,7 +160,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return Zed\WishlistStubInterface
+     * @return \Spryker\Client\Wishlist\Zed\WishlistStubInterface
      */
     protected function getZedStub()
     {
@@ -168,7 +168,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return Storage\WishlistStorageInterface
+     * @return \Spryker\Client\Wishlist\Storage\WishlistStorageInterface
      */
     protected function getStorage()
     {

@@ -7,6 +7,15 @@
 
 namespace Unit\Spryker\Zed\Product\Business\Model;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Product
+ * @group Business
+ * @group Model
+ * @group FilesystemTest
+ */
 class FilesystemTest extends \PHPUnit_Framework_TestCase
 {
 

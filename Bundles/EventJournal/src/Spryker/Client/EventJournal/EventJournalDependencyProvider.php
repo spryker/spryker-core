@@ -9,6 +9,9 @@ namespace Spryker\Client\EventJournal;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class EventJournalDependencyProvider extends AbstractDependencyProvider
 {
 }

@@ -3,10 +3,7 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
@@ -17,6 +14,10 @@
     "spryker/kernel": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/zend": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Development bundle",
   "license": "proprietary",
@@ -29,5 +30,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

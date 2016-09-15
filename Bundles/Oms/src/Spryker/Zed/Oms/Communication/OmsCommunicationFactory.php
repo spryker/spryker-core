@@ -18,7 +18,7 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Table\TransitionLogTable
+     * @return \Spryker\Zed\Oms\Communication\Table\TransitionLogTable
      */
     public function createTransitionLogTable()
     {

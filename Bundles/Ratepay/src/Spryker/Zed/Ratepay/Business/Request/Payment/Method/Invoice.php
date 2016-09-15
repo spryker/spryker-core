@@ -23,6 +23,7 @@ class Invoice extends AbstractMethod
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer
      */
     public function getPaymentData(QuoteTransfer $quoteTransfer)
@@ -34,7 +35,6 @@ class Invoice extends AbstractMethod
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer

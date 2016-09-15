@@ -15,10 +15,12 @@ use Spryker\Zed\Graph\Communication\GraphCommunicationFactory;
 use Spryker\Zed\Graph\GraphConfig;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Graph
  * @group Communication
+ * @group GraphCommunicationFactoryTest
  */
 class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
 {

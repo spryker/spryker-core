@@ -28,16 +28,16 @@ class Application extends \Silex\Application
     /**
      * Returns a form.
      *
-     * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
+     * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
      *
      * @see createBuilder()
+     *
+     * @deprecated Create forms inside your bundle's factory with getting the form factory,
+     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)->create(FooFormType::class);
      *
      * @param string|\Symfony\Component\Form\FormTypeInterface $type The type of the form
      * @param mixed $data The initial data
      * @param array $options The options
-     *
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
      * @return \Symfony\Component\Form\FormInterface The form named after the type
      */
@@ -58,8 +58,6 @@ class Application extends \Silex\Application
      * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options The options
      *
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
-     *
      * @return \Symfony\Component\Form\FormInterface The form named after the type
      */
     public function buildForm(AbstractForm $form, array $options = [])
@@ -68,7 +66,7 @@ class Application extends \Silex\Application
     }
 
     /**
-     * Add a router to the list of routers.
+     * Adds a router to the list of routers.
      *
      * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router

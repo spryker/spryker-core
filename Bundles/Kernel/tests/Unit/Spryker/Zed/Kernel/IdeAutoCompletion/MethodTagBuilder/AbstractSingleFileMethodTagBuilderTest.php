@@ -5,13 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
 use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\SingleFileMethodTagBuilder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
+ * @group IdeAutoCompletion
  * @group MethodTagBuilder
+ * @group AbstractSingleFileMethodTagBuilderTest
  */
 class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +30,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             SingleFileMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Layer/',
             SingleFileMethodTagBuilder::OPTION_KEY_FILE_NAME_SUFFIX => 'CoreOnly.php',
             SingleFileMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src',
-            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src',
+            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendorMock/*/*/src',
         ]);
 
         $expectedMethodTag =
@@ -44,7 +49,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             SingleFileMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Layer/',
             SingleFileMethodTagBuilder::OPTION_KEY_FILE_NAME_SUFFIX => 'CoreAndProject.php',
             SingleFileMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src',
-            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src',
+            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendorMock/*/*/src',
         ]);
 
         $expectedMethodTag =
@@ -63,7 +68,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             SingleFileMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Layer/',
             SingleFileMethodTagBuilder::OPTION_KEY_FILE_NAME_SUFFIX => 'ProjectOnly.php',
             SingleFileMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src',
-            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src',
+            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendorMock/*/*/src',
         ]);
 
         $expectedMethodTag =
@@ -82,7 +87,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             SingleFileMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'NotExisting/',
             SingleFileMethodTagBuilder::OPTION_KEY_FILE_NAME_SUFFIX => 'Facade.php',
             SingleFileMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src',
-            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src',
+            SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendorMock/*/*/src',
         ]);
 
         $givenMethodTags = [];

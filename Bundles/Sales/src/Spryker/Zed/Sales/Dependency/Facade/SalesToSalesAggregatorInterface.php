@@ -27,7 +27,6 @@ interface SalesToSalesAggregatorInterface
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
 
     /**
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

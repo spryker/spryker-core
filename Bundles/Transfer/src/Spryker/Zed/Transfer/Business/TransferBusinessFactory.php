@@ -9,14 +9,16 @@ namespace Spryker\Zed\Transfer\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
-use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Spryker\Zed\Transfer\Business\Model\TransferValidator;
 
 /**
  * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
@@ -27,7 +29,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return \Spryker\Zed\Transfer\Business\Model\TransferGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferGeneratorInterface
      */
     public function createTransferGenerator(LoggerInterface $messenger)
     {
@@ -39,7 +41,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     protected function createClassGenerator()
     {
@@ -49,7 +51,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder|\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     protected function createTransferDefinitionBuilder()
     {
@@ -61,18 +63,19 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
     protected function createLoader()
     {
         return new TransferDefinitionLoader(
+            $this->createFinder(),
             $this->createDefinitionNormalizer(),
             $this->getConfig()->getSourceDirectories()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\TransferCleaner
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */
     public function createTransferCleaner()
     {
@@ -82,7 +85,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface
      */
     protected function createTransferDefinitionMerger()
     {
@@ -90,7 +93,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface
      */
     protected function createClassDefinition()
     {
@@ -98,11 +101,34 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
      */
     protected function createDefinitionNormalizer()
     {
         return new DefinitionNormalizer();
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferValidatorInterface
+     */
+    public function createValidator(LoggerInterface $messenger)
+    {
+        return new TransferValidator(
+            $messenger,
+            $this->createFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
+     */
+    protected function createFinder()
+    {
+        return new TransferDefinitionFinder(
+            $this->getConfig()->getSourceDirectories()
+        );
     }
 
 }

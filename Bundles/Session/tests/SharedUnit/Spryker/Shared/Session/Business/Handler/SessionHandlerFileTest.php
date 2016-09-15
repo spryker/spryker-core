@@ -7,7 +7,7 @@
 
 namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 
-use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\NewRelic\NewRelicApi;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -197,11 +197,11 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Shared\NewRelic\Api
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelic\NewRelicApiInterface
      */
     protected function createNewRelicApiMock()
     {
-        $mock = $this->getMockBuilder(Api::class)
+        $mock = $this->getMockBuilder(NewRelicApi::class)
             ->disableOriginalConstructor()
             ->getMock();
 

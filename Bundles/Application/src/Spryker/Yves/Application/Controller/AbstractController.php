@@ -116,8 +116,6 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return $this
      */
     protected function addSuccessMessage($message)
@@ -130,8 +128,6 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return $this
      */
     protected function addInfoMessage($message)
@@ -143,8 +139,6 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     *
-     * @throws \ErrorException
      *
      * @return $this
      */
@@ -170,6 +164,8 @@ abstract class AbstractController
      * @TODO rethink
      *
      * @param string $role
+     *
+     * @throws \LogicException
      *
      * @return mixed
      */
@@ -235,6 +231,8 @@ abstract class AbstractController
     }
 
     /**
+     * @throws \LogicException
+     *
      * @return mixed
      */
     protected function getUser()
@@ -282,8 +280,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     private function resolveClient()
@@ -312,8 +308,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     private function resolveFactory()

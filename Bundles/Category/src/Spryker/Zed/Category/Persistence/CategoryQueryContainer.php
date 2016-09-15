@@ -206,8 +206,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @param int $idNode
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableParentEntries($idNode)
@@ -332,8 +330,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idLocale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
@@ -619,8 +615,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $name
      * @param int $idLocale
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryCategoryAttributesByName($name, $idLocale)
@@ -634,8 +628,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @api
      *
      * @param int $idLocale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
@@ -696,8 +688,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $leftTableAlias
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -839,8 +829,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinRelatedCategoryQueryWithUrls(
@@ -912,8 +900,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @param string $categoryName
      * @param int $idLocale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

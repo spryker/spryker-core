@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -20,6 +21,15 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group DiscountTest
+ */
 class DiscountTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -102,7 +112,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
             ->willReturn($discountQueryMock);
 
         $discountQueryMock2 = $this->createDiscountQueryMock();
-        $discountQueryMock2->method('find')->willReturn([]);
+        $discountQueryMock2->method('find')->willReturn(new ObjectCollection());
 
         $discounts[] = $this->createDiscountEntity(100, 123);
         $queryContainerMock->expects($this->once())
@@ -394,7 +404,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param int $amount
-     * @param string $voucherCoder
+     * @param string|null $voucherCoder
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */

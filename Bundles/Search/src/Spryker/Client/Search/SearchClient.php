@@ -23,8 +23,6 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function checkConnection()

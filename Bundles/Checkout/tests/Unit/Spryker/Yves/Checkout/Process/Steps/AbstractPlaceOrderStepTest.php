@@ -16,10 +16,13 @@ use Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
  * @group Spryker
- * @group Zed
+ * @group Yves
  * @group Checkout
- * @group AbstractPlaceOrderStep
+ * @group Process
+ * @group Steps
+ * @group AbstractPlaceOrderStepTest
  */
 class AbstractPlaceOrderStepTest extends \PHPUnit_Framework_TestCase
 {

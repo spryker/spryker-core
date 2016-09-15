@@ -10,7 +10,12 @@ namespace Unit\Spryker\Client\ZedRequest\Client;
 use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
- * @group Communication
+ * @group Unit
+ * @group Spryker
+ * @group Client
+ * @group ZedRequest
+ * @group Client
+ * @group MessageTest
  */
 class MessageTest extends \PHPUnit_Framework_TestCase
 {

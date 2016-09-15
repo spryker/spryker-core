@@ -17,9 +17,11 @@ use Spryker\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint
 use Spryker\Zed\Mail\Business\MandrillMailSender;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Mail
+ * @group Business
  * @group MailSenderTest
  *
  * @see https://mandrillapp.com/api/docs/messages.php.html#method-send-template

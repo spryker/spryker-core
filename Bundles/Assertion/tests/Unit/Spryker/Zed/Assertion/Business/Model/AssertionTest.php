@@ -5,15 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Assertion;
+namespace Unit\Spryker\Zed\Assertion\Business\Model;
 
 use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Assertion
+ * @group Business
+ * @group Model
+ * @group AssertionTest
  */
 class AssertionTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,7 +48,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1.1', true],
             ['1foo', false],
             [[], false],
-            [new \StdClass(), false],
+            [new \stdClass(), false],
         ];
     }
 
@@ -74,7 +78,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1.1', true],
             ['1foo', false],
             [[], false],
-            [new \StdClass(), false],
+            [new \stdClass(), false],
         ];
     }
 
@@ -106,7 +110,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1.1', false],
             ['foo1bar', true],
             ['1foo', true],
-            [new \StdClass(), false],
+            [new \stdClass(), false],
             [[], false],
             ['foo.bar', false],
         ];
@@ -135,7 +139,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1', false],
             ['1.1', false],
             ['foo1bar', false],
-            [new \StdClass(), false],
+            [new \stdClass(), false],
             ['foo.bar', false],
             ['foobar', true],
         ];

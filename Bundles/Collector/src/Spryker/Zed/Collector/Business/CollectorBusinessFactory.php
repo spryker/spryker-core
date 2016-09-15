@@ -329,13 +329,13 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSearchWriter()
     {
-        $elasticSearchWriter = new ElasticsearchWriter(
+        $elasticsearchWriter = new ElasticsearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
         );
 
-        return $elasticSearchWriter;
+        return $elasticsearchWriter;
     }
 
     /**
@@ -371,13 +371,13 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSearchMarkerWriter()
     {
-        $elasticSearchWriter = new ElasticsearchMarkerWriter(
+        $elasticsearchMarkerWriter = new ElasticsearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
         );
 
-        return $elasticSearchWriter;
+        return $elasticsearchMarkerWriter;
     }
 
     /**

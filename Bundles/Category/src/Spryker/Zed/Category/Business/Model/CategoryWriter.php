@@ -33,8 +33,6 @@ class CategoryWriter implements CategoryWriterInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \ErrorException
-     *
      * @return int
      */
     public function create(CategoryTransfer $category, LocaleTransfer $locale)
@@ -67,8 +65,6 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     public function delete($idCategory)
@@ -85,8 +81,6 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function saveCategory(CategoryTransfer $category)
@@ -101,8 +95,6 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

@@ -46,6 +46,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             MessengerConfig::setMessageTray(MessengerConstants::IN_MEMORY_TRAY);
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);
+
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
 
@@ -61,7 +62,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param string $action
      *
-     * @throw \LogicException
+     * @throws \LogicException
      *
      * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
@@ -175,6 +176,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
     /**
      * @param string $className
+     *
+     * @throws \LogicException
      *
      * @return bool
      */

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Transfer\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class TransferCleaner
+class TransferCleaner implements TransferCleanerInterface
 {
 
     /**

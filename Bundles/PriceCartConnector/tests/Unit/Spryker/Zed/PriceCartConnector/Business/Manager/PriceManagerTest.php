@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PriceCartConnector\Business;
+namespace Unit\Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -14,11 +14,13 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group PriceCartConnector
  * @group Business
- * @group PriceManager
+ * @group Manager
+ * @group PriceManagerTest
  */
 class PriceManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,10 +43,12 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
         $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice');
 
-        $modifiedItems = $priceManager->addGrossPriceToItems($itemCollection);
+        $modifiedItemCollection = $priceManager->addGrossPriceToItems($itemCollection);
 
-        foreach ($modifiedItems as $modifiedItem) {
-            $this->assertEquals(1000, $modifiedItem->getGrossPrice());
+        $this->assertSame(1, $modifiedItemCollection->getItems()->count());
+
+        foreach ($modifiedItemCollection->getItems() as $modifiedItem) {
+            $this->assertSame(1000, $modifiedItem->getUnitGrossPrice());
         }
     }
 

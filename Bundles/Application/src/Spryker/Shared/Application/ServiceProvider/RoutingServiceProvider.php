@@ -32,13 +32,11 @@ class RoutingServiceProvider implements ServiceProviderInterface
         });
 
         $app['routers'] = $app->share(function () use ($app) {
-            return new ChainRouter($app['logger']);
+            return new ChainRouter();
         });
     }
 
     /**
-     * @codeCoverageIgnore
-     *
      * @param \Silex\Application $app
      *
      * @return void

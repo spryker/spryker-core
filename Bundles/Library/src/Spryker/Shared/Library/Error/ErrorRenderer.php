@@ -7,10 +7,14 @@
 
 namespace Spryker\Shared\Library\Error;
 
+use Exception;
 use Spryker\Shared\Library\Application\Version;
 use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
 use Spryker\Zed\Library\Sanitize\Html;
 
+/**
+ * @deprecated Use ErrorHandler bundle instead.
+ */
 class ErrorRenderer
 {
 
@@ -21,7 +25,7 @@ class ErrorRenderer
      *
      * @return string
      */
-    protected static function renderForWeb(\Exception $e)
+    protected static function renderForWeb(Exception $e)
     {
         $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
 
@@ -58,7 +62,7 @@ class ErrorRenderer
      *
      * @return string
      */
-    protected static function renderForCli(\Exception $e)
+    protected static function renderForCli(Exception $e)
     {
         if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
             $uri = implode(' ', $_SERVER['argv']);
@@ -93,7 +97,7 @@ class ErrorRenderer
      *
      * @return string
      */
-    public static function renderException(\Exception $e)
+    public static function renderException(Exception $e)
     {
         if (self::isCliCall()) {
             return self::renderForCli($e);

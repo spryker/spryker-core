@@ -26,8 +26,6 @@ class Sales extends Module
 {
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function createOrder()
@@ -58,8 +56,6 @@ class Sales extends Module
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function addOrderDetails(SpySalesOrder $salesOrderEntity)
@@ -73,8 +69,6 @@ class Sales extends Module
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -93,9 +87,6 @@ class Sales extends Module
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
      * @return \Orm\Zed\Country\Persistence\SpyCountry
      */
     protected function getCountryEntity()
@@ -116,8 +107,6 @@ class Sales extends Module
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function addShipment(SpySalesOrder $salesOrderEntity)
@@ -130,8 +119,6 @@ class Sales extends Module
     /**
      * @param int $idSalesOrder
      * @param array $salesOrderItem
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -149,8 +136,6 @@ class Sales extends Module
 
     /**
      * @param array $salesOrderItem
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
@@ -210,9 +195,6 @@ class Sales extends Module
     /**
      * @param array $salesOrderItem
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     protected function getOrderItemState(array $salesOrderItem)
@@ -227,9 +209,6 @@ class Sales extends Module
 
     /**
      * @param array $salesOrderItem
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */

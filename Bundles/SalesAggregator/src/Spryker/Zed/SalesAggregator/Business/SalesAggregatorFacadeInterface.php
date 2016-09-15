@@ -27,7 +27,6 @@ interface SalesAggregatorFacadeInterface
     public function getOrderTotalsByIdSalesOrder($idSalesOrder);
 
     /**
-     *
      * Specification:
      *  - Reads order from database and stores in order transfer
      *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
@@ -41,7 +40,6 @@ interface SalesAggregatorFacadeInterface
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
 
     /**
-     *
      *  Specification:
      *  - Use existing OrderTransfer instead fo quering database
      *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
@@ -55,7 +53,6 @@ interface SalesAggregatorFacadeInterface
     public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer);
 
     /**
-     *
      * Specification:
      *  - Iterate order exepenses and sum up amounts
      *
@@ -68,7 +65,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderExpenseAmounts(OrderTransfer $orderTransfer);
 
     /**
-     *
      *  Specification:
      *  - Sum up expenses and subtotals
      *
@@ -84,7 +80,6 @@ interface SalesAggregatorFacadeInterface
      * Specification:
      *  - Sum up item amounts before discounts
      *
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -94,7 +89,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderItemAmounts(OrderTransfer $orderTransfer);
 
     /**
-     *
      * Specification:
      *  - Sum up order subtotal
      *
@@ -107,7 +101,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderSubtotal(OrderTransfer $orderTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate item tax amount
      *
@@ -120,7 +113,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate order total tax amount
      *
@@ -133,7 +125,6 @@ interface SalesAggregatorFacadeInterface
     public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate order expense tax amount
      *

@@ -11,10 +11,13 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group StepEngine
- * @group StepEngineStepHandlerPluginCollection
+ * @group Dependency
+ * @group Plugin
+ * @group StepHandlerPluginCollectionTest
  */
 class StepHandlerPluginCollectionTest extends \PHPUnit_Framework_TestCase
 {

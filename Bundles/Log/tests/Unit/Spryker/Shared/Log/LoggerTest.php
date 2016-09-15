@@ -13,6 +13,13 @@ use Spryker\Shared\Log\LoggerTrait;
 use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig;
 use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig2;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
+ * @group Log
+ * @group LoggerTest
+ */
 class LoggerTest extends Test
 {
 

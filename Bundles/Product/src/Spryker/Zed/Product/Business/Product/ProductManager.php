@@ -105,9 +105,6 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
@@ -180,9 +177,6 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return void
      */
     protected function createProductAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer)
@@ -209,8 +203,6 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -304,9 +296,6 @@ class ProductManager implements ProductManagerInterface
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
@@ -390,9 +379,6 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -488,10 +474,6 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
@@ -506,10 +488,6 @@ class ProductManager implements ProductManagerInterface
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
@@ -521,10 +499,6 @@ class ProductManager implements ProductManagerInterface
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

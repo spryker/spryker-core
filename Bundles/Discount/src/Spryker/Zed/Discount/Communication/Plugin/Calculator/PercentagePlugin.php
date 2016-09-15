@@ -54,7 +54,6 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
      * @param int $amount
      *
      * @return string
-     *
      */
     public function getFormattedAmount($amount)
     {

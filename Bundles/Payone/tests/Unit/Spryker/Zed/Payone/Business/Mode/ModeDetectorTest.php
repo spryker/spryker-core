@@ -12,7 +12,13 @@ use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Zed\Payone\PayoneConfig;
 
 /**
- * @group ModeDetector
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payone
+ * @group Business
+ * @group Mode
+ * @group ModeDetectorTest
  */
 class ModeDetectorTest extends \PHPUnit_Framework_TestCase
 {

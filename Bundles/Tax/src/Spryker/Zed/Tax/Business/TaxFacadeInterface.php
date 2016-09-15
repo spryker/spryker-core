@@ -84,7 +84,6 @@ interface TaxFacadeInterface
     public function getTaxSet($id);
 
     /**
-     *
      * Specification:
      *  - Check if tax set exist with given primary id
      *
@@ -113,7 +112,6 @@ interface TaxFacadeInterface
     public function createTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
-     *
      * Specification:
      *  - Update existing tax rate
      *
@@ -215,9 +213,9 @@ interface TaxFacadeInterface
      *
      * @param int $id
      *
-     * @return void
-     *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxSet($id);
 
@@ -306,7 +304,6 @@ interface TaxFacadeInterface
     public function getDefaultTaxRate();
 
     /**
-     *
      * Specification:
      *  - Calculate tax amount from given price and rate
      *  - Share rounding error between calls to this method.

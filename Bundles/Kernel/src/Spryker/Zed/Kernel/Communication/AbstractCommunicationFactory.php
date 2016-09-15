@@ -37,8 +37,6 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function resolveFacade()

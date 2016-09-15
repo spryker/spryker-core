@@ -27,7 +27,7 @@ class MethodForm extends AbstractType
     const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
-    const FIELD_TAX_SET_FIELD ='fkTaxSet';
+    const FIELD_TAX_SET_FIELD = 'fkTaxSet';
 
     const OPTION_CARRIER_CHOICES = 'carrier_choices';
     const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
@@ -86,6 +86,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addCarrierField(FormBuilderInterface $builder, array $options)
@@ -105,6 +106,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addDefaultPriceField(FormBuilderInterface $builder)
@@ -127,6 +129,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
@@ -145,6 +148,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addAvailabilityPluginField(FormBuilderInterface $builder, array $options)
@@ -162,6 +166,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addPricePluginField(FormBuilderInterface $builder, array $options)
@@ -179,6 +184,7 @@ class MethodForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
      * @return $this
      */
     protected function addDeliveryTimePluginField(FormBuilderInterface $builder, array $options)
@@ -195,6 +201,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
@@ -208,6 +215,7 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return $this
      */
     protected function addIdField(FormBuilderInterface $builder)

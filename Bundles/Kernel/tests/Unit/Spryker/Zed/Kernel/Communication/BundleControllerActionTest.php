@@ -11,8 +11,12 @@ use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group RouteNameResolver
+ * @group Communication
+ * @group BundleControllerActionTest
  */
 class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
 {

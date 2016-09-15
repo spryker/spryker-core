@@ -55,8 +55,6 @@ class MysqlRead extends Mysql implements ReadInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     public function getAllKeys()
@@ -77,8 +75,6 @@ class MysqlRead extends Mysql implements ReadInterface
 
     /**
      * @param string $key
-     *
-     * @throws \Exception
      *
      * @return mixed
      */
@@ -103,8 +99,6 @@ class MysqlRead extends Mysql implements ReadInterface
 
     /**
      * @param array $keys
-     *
-     * @throws \Exception
      *
      * @return void
      */

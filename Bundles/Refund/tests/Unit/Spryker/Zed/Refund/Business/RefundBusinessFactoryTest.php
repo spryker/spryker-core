@@ -13,11 +13,12 @@ use Spryker\Zed\Refund\Business\Model\RefundSaverInterface;
 use Spryker\Zed\Refund\Business\RefundBusinessFactory;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Refund
  * @group Business
- * @group RefundBusinessFactory
+ * @group RefundBusinessFactoryTest
  */
 class RefundBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {

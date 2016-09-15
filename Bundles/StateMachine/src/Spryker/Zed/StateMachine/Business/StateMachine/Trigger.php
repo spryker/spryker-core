@@ -87,8 +87,6 @@ class Trigger implements TriggerInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
      *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
-     *
      * @return int
      */
     public function triggerForNewStateMachineItem(
@@ -394,10 +392,7 @@ class Trigger implements TriggerInterface
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $identifier
      *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
-     *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
-     *
      */
     protected function createItemTransferForNewProcess(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
@@ -466,7 +461,6 @@ class Trigger implements TriggerInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      *
      * @return void
-     *
      */
     protected function assertInitialStateCreated($idStateMachineItemState, $initialStateName)
     {
@@ -486,7 +480,6 @@ class Trigger implements TriggerInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
      *
      * @return void
-     *
      */
     protected function assertProcessCreated($idStateMachineProcess)
     {
@@ -507,7 +500,6 @@ class Trigger implements TriggerInterface
      * @throws \Spryker\Zed\StateMachine\Business\Exception\CommandNotFoundException
      *
      * @return void
-     *
      */
     protected function assertCommandIsSet($commandString, StateMachineHandlerInterface $stateMachineHandler)
     {

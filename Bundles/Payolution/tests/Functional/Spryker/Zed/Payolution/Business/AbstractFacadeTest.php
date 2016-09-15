@@ -25,6 +25,14 @@ use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group AbstractFacadeTest
+ */
 class AbstractFacadeTest extends Test
 {
 

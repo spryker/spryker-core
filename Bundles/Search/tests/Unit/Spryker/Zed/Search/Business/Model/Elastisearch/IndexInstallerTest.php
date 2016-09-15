@@ -15,9 +15,13 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLo
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Search
  * @group Business
- * @group Elasticsearch
+ * @group Model
+ * @group Elastisearch
  * @group IndexInstallerTest
  */
 class IndexInstallerTest extends \PHPUnit_Framework_TestCase

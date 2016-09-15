@@ -65,8 +65,6 @@ class DependencyTreeBuilder
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     public function buildDependencyTree()
