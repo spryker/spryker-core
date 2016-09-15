@@ -37,9 +37,12 @@ class ViolationFinder implements ViolationFinderInterface
         $isViolation = false;
 
         foreach ($this->violationFinder as $violationFinder) {
-            if ($violationFinder->isViolation($dependency)) {
-                $isViolation = true;
+            if (!$violationFinder->isViolation($dependency)) {
+                continue;
             }
+
+            $isViolation = true;
+            break;
         }
 
         return $isViolation;
