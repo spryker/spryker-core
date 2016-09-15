@@ -49,4 +49,11 @@ interface ProductAbstractManagerInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract);
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku);
+
 }

@@ -201,23 +201,42 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function getProductConcreteIdBySku($sku)
+    {
+        $productEntity = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku($sku)
+            ->findOne();
+
+        if (!$productEntity) {
+            return null;
+        }
+
+        return $productEntity->getIdProduct();
+    }
+
+    /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function getProductConcreteById($idProduct)
     {
-        $product = $this->productQueryContainer
+        $productEntity = $this->productQueryContainer
             ->queryProduct()
             ->filterByIdProduct($idProduct)
             ->findOne();
 
-        if (!$product) {
+        if (!$productEntity) {
             return null;
         }
 
         $transferGenerator = new ProductTransferGenerator();
-        $productTransfer = $transferGenerator->convertProduct($product);
+        $productTransfer = $transferGenerator->convertProduct($productEntity);
         $productTransfer = $this->loadProductData($productTransfer);
 
         return $productTransfer;

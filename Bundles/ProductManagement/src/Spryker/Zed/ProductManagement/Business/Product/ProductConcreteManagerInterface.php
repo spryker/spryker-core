@@ -28,6 +28,13 @@ interface ProductConcreteManagerInterface
     public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function getProductConcreteIdBySku($sku);
+
+    /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null

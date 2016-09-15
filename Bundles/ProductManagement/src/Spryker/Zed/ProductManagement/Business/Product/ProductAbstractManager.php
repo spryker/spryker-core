@@ -121,6 +121,18 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku)
+    {
+        $productAbstractQuery = $this->productQueryContainer->queryProductAbstractBySku($sku);
+
+        return $productAbstractQuery->count() > 0;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @throws \Exception
