@@ -23,6 +23,7 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractManager implements ProductAbstractManagerInterface
 {
+
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
@@ -62,7 +63,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
      */
     protected $productConcreteManager;
-
 
     public function __construct(
         AttributeManagerInterface $attributeManager,

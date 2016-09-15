@@ -167,6 +167,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKey()

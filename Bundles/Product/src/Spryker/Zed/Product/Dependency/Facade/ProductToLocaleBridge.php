@@ -52,12 +52,11 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     /**
      * @param int $idLocale
      *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleById($idLocale)
     {
         return $this->localeFacade->getLocaleById($idLocale);
     }
+
 }

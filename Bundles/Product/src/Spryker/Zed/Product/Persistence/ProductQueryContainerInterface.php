@@ -102,6 +102,8 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKey();

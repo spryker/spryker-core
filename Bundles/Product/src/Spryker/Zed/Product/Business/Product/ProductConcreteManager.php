@@ -10,8 +10,8 @@ namespace Spryker\Zed\Product\Business\Product;
 use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -232,7 +232,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function getProductConcrete($concreteSku)
     {
-        $idProduct = (int) $this->getProductConcreteIdBySku($concreteSku);
+        $idProduct = (int)$this->getProductConcreteIdBySku($concreteSku);
         $productConcreteTransfer = $this->getProductConcreteById($idProduct);
 
         if (!$productConcreteTransfer) {
@@ -331,7 +331,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void

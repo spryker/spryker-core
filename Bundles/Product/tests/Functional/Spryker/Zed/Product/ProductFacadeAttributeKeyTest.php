@@ -13,10 +13,11 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Product\Business\ProductFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
- * @group Business
- * @group ProductFacadeTest
+ * @group Product
+ * @group ProductFacadeAttributeKeyTest
  */
 class ProductFacadeAttributeKeyTest extends Test
 {

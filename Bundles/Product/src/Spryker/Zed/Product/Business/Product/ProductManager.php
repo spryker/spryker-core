@@ -10,7 +10,6 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -155,6 +154,7 @@ class ProductManager implements ProductManagerInterface
     {
         return $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
     }
+
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -254,8 +254,6 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $concreteSku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
@@ -266,8 +264,6 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdByConcreteSku($sku)
@@ -277,8 +273,6 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return string
      */

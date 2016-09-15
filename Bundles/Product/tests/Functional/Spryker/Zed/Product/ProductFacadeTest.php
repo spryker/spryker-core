@@ -8,7 +8,6 @@
 namespace Functional\Spryker\Zed\Product;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -87,10 +86,10 @@ class ProductFacadeTest extends Test
     }
 
    /**
-     * @group Product
-     *
-     * @return void
-     */
+    * @group Product
+    *
+    * @return void
+    */
     public function testCreateProductAbstractCreatesAndReturnsId()
     {
         $productAbstractQuery = $this->productQueryContainer->queryProductAbstractBySku('AnProductAbstractSku');

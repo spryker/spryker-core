@@ -41,9 +41,10 @@ interface ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @return int
-     * @internal param int $idProductAbstract
      *
+     * @return int
+     *
+     * @internal param int $idProductAbstract
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 
