@@ -17,12 +17,17 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_LOCALE = 'facade locale';
-    const FACADE_URL = 'facade url';
-    const FACADE_TOUCH = 'facade touch';
-    const FACADE_PRODUCT_CATEGORY = 'facade product category';
-    const FACADE_PRODUCT_OPTION = 'facade product option';
-    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'query container product category';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_URL = 'FACADE_URL';
+    const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
+    const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
+
+    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+
+    //TODO: PLUGIN
+    const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
+    const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,6 +46,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new ProductToTaxBridge($container->getLocator()->tax()->facade());
         };
 
         return $container;

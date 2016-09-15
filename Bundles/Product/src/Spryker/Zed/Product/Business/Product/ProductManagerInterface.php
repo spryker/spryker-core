@@ -41,13 +41,11 @@ interface ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
-     *
      * @return int
+     * @internal param int $idProductAbstract
+     *
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param string $sku

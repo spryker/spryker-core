@@ -125,15 +125,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
      *
      * @return int
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->createProductConcrete($productConcreteTransfer, $idProductAbstract);
+        return $productManager->createProductConcrete($productConcreteTransfer);
     }
 
     /**

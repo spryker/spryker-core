@@ -104,7 +104,9 @@ class ProductCategoryFacadeTest extends Test
         $productConcreteTransfer->setAttributes([]);
         $productConcreteTransfer->addLocalizedAttributes($localizedAttributes);
         $productConcreteTransfer->setIsActive(true);
-        $this->productFacade->createProductConcrete($productConcreteTransfer, $idProductAbstract);
+        $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+
+        $this->productFacade->createProductConcrete($productConcreteTransfer);
 
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);

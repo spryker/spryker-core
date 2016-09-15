@@ -145,7 +145,9 @@ class ProductFacadeTest extends Test
         $productConcrete->setAttributes([]);
         $productConcrete->addLocalizedAttributes($this->createLocalizedAttributesTransfer());
         $productConcrete->setIsActive(true);
-        $idProductConcrete = $this->productFacade->createProductConcrete($productConcrete, $idProductAbstract);
+        $productConcrete->setFkProductAbstract($idProductAbstract);
+
+        $idProductConcrete = $this->productFacade->createProductConcrete($productConcrete);
 
         $this->assertEquals(1, $productConcreteQuery->count());
         $this->assertEquals($idProductConcrete, $productConcreteQuery->findOne()->getIdProduct());
@@ -172,7 +174,9 @@ class ProductFacadeTest extends Test
         $productConcrete->setAttributes([]);
         $productConcrete->addLocalizedAttributes($this->createLocalizedAttributesTransfer());
         $productConcrete->setIsActive(true);
-        $this->productFacade->createProductConcrete($productConcrete, $idProductAbstract);
+        $productConcrete->setFkProductAbstract($idProductAbstract);
+
+        $this->productFacade->createProductConcrete($productConcrete);
 
         $this->assertTrue($this->productFacade->hasProductConcrete('AProductConcreteSku'));
     }
@@ -224,7 +228,9 @@ class ProductFacadeTest extends Test
         $productConcrete->setAttributes([]);
         $productConcrete->addLocalizedAttributes($this->createLocalizedAttributesTransfer());
         $productConcrete->setIsActive(true);
-        $this->productFacade->createProductConcrete($productConcrete, $idProductAbstract);
+        $productConcrete->setFkProductAbstract($idProductAbstract);
+
+        $this->productFacade->createProductConcrete($productConcrete);
 
         $this->assertTrue($this->productFacade->hasProductConcrete(self::SKU_PRODUCT_CONCRETE));
 

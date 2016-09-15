@@ -15,6 +15,10 @@ use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
+use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
+use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
+use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
 use Spryker\Zed\Product\ProductDependencyProvider;
@@ -54,16 +58,48 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductManager()
     {
-        if ($this->productManager === null) {
-            $this->productManager = new ProductManager(
-                $this->getQueryContainer(),
-                $this->getTouchFacade(),
-                $this->getUrlFacade(),
-                $this->getLocaleFacade()
-            );
-        }
+        return new ProductManager(
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager(),
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getUrlFacade(),
+            $this->getLocaleFacade()
+        );
+    }
 
-        return $this->productManager;
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
+     */
+    public function createProductAbstractManager()
+    {
+        return new ProductAbstractManager(
+            $this->createAttributeManager(),
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getUrlFacade(),
+            $this->getLocaleFacade(),
+            $this->getPriceFacade(),
+            $this->createProductConcreteManager(),
+            $this->createProductAbstractAssertion()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
+     */
+    public function createProductConcreteManager()
+    {
+        return new ProductConcreteManager(
+            $this->createAttributeManager(),
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getUrlFacade(),
+            $this->getLocaleFacade(),
+            $this->getPriceFacade(),
+            $this->createProductAbstractAssertion(),
+            $this->createProductConcreteAssertion()
+        );
     }
 
     /**
@@ -74,6 +110,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductVariantBuilder()
     {
          return new ProductVariantBuilder($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeKeyManagerInterface
+     */
+    public function createAttributeKeyManager()
+    {
+        return new AttributeKeyManager($this->getQueryContainer());
     }
 
     /**
@@ -109,11 +153,31 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeKeyManagerInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface
      */
-    public function createAttributeKeyManager()
+    protected function getPriceFacade()
     {
-        return new AttributeKeyManager($this->getQueryContainer());
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
+     */
+    protected function createProductAbstractAssertion()
+    {
+        return new ProductAbstractAssertion(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteAssertionInterface
+     */
+    protected function createProductConcreteAssertion()
+    {
+        return new ProductConcreteAssertion(
+            $this->getQueryContainer()
+        );
     }
 
 }

@@ -14,16 +14,12 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToProductImageInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToStockInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductConcreteManager implements ProductConcreteManagerInterface
 {
@@ -39,21 +35,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
-     */
-    protected $productPriceContainer;
-
-    /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
-     */
-    protected $stockQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
     protected $touchFacade;
@@ -64,11 +45,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $urlFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToStockInterface
-     */
-    protected $stockFacade;
-
-    /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected $localeFacade;
@@ -77,11 +53,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface
      */
     protected $priceFacade;
-
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToProductImageInterface
-     */
-    protected $productImageFacade;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
@@ -96,30 +67,33 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
-        StockQueryContainerInterface $stockQueryContainer,
-        ProductFacadeInterface $productFacade,
         ProductToTouchInterface $touchFacade,
         ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade,
         ProductToPriceInterface $priceFacade,
-        ProductToStockInterface $stockFacade,
-        ProductToProductImageInterface $productImageFacade,
-        ProductConcreteManagerInterface $productConcreteManager,
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
-        $this->productFacade = $productFacade;
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
         $this->priceFacade = $priceFacade;
-        $this->stockFacade = $stockFacade;
-        $this->stockQueryContainer = $stockQueryContainer;
-        $this->productImageFacade = $productImageFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->productConcreteAssertion = $productConcreteAssertion;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku)
+    {
+        return $this->productQueryContainer
+            ->queryProductConcreteBySku($sku)
+            ->count() > 0;
     }
 
     /**
@@ -230,6 +204,25 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function getProductConcreteIdBySku($sku)
+    {
+        $productEntity = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku($sku)
+            ->findOne();
+
+        if (!$productEntity) {
+            return null;
+        }
+
+        return $productEntity->getIdProduct();
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -315,6 +308,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function persistImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
+        return;
         $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
         if (empty($imageSetTransferCollection)) {
             return;
@@ -339,6 +333,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function persistStock(ProductConcreteTransfer $productConcreteTransfer)
     {
+        return;
         /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
         $stockCollection = $productConcreteTransfer->getStock();
         foreach ($stockCollection as $stockTransfer) {
@@ -395,6 +390,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function loadStock(ProductConcreteTransfer $productConcreteTransfer)
     {
+        return;
         $stockCollection = $this->stockQueryContainer
             ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
             ->innerJoinStock()
@@ -424,6 +420,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function loadImageSet(ProductConcreteTransfer $productTransfer)
     {
+        return;
+
         $imageSets = $this->productImageFacade
             ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());
 

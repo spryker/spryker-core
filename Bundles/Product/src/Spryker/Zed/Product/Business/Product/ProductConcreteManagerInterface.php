@@ -13,42 +13,4 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface ProductConcreteManagerInterface
 {
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
-    public function getProductConcreteById($idProduct);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
-     */
-    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
-
 }

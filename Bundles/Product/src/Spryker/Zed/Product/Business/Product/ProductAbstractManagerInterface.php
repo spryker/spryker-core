@@ -10,43 +10,4 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 interface ProductAbstractManagerInterface
 {
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    public function getProductAbstractIdBySku($sku);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
-     */
-    public function getProductAbstractById($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributesByAbstractProductId($idProductAbstract);
-
 }

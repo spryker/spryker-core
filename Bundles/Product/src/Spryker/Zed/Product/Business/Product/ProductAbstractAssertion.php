@@ -10,16 +10,10 @@ namespace Spryker\Zed\Product\Business\Product;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractAssertion implements ProductAbstractAssertionInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
-    protected $productFacade;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -27,14 +21,10 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
     protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
-    public function __construct(
-        ProductFacadeInterface $productFacade,
-        ProductQueryContainerInterface $productQueryContainer
-    ) {
-        $this->productFacade = $productFacade;
+    public function __construct(ProductQueryContainerInterface $productQueryContainer)
+    {
         $this->productQueryContainer = $productQueryContainer;
     }
 
@@ -47,7 +37,11 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
      */
     public function assertSkuIsUnique($sku)
     {
-        if ($this->productFacade->hasProductAbstract($sku)) {
+        $productExists = $this->productQueryContainer
+            ->queryProductAbstractBySku($sku)
+            ->count() > 0;
+
+        if ($productExists) {
             throw new ProductAbstractExistsException(sprintf(
                 'Product abstract with sku %s already exists',
                 $sku
@@ -86,12 +80,12 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
      */
     public function assertProductExists($idProductAbstract)
     {
-        $productAbstractEntity = $this->productQueryContainer
+        $productExists = $this->productQueryContainer
             ->queryProductAbstract()
             ->filterByIdProductAbstract($idProductAbstract)
-            ->findOne();
+            ->count() > 0;
 
-        if (!$productAbstractEntity) {
+        if (!$productExists) {
             throw new MissingProductException(sprintf(
                 'Product abstract with id "%s" does not exist.',
                 $idProductAbstract

@@ -91,11 +91,10 @@ interface ProductFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
      *
      * @return int
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @api

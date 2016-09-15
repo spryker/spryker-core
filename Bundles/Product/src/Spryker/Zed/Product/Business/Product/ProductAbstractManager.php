@@ -16,16 +16,12 @@ use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToProductImageInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToStockInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductAbstractManager implements ProductAbstractManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
@@ -35,16 +31,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
-     */
-    protected $productPriceContainer;
-
-    /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
-     */
-    protected $stockQueryContainer;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
@@ -57,11 +43,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $urlFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToStockInterface
-     */
-    protected $stockFacade;
-
-    /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected $localeFacade;
@@ -72,32 +53,25 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $priceFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToProductImageInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
      */
-    protected $productImageFacade;
+    protected $productAbstractAssertion;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
+     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
      */
     protected $productConcreteManager;
 
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
-     */
-    protected $productAssertion;
 
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
-        StockQueryContainerInterface $stockQueryContainer,
         ProductToTouchInterface $touchFacade,
         ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade,
         ProductToPriceInterface $priceFacade,
-        ProductToStockInterface $stockFacade,
-        ProductToProductImageInterface $productImageFacade,
         ProductConcreteManagerInterface $productConcreteManager,
-        ProductAbstractAssertionInterface $productAssertion
+        ProductAbstractAssertionInterface $productAbstractAssertion
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -105,11 +79,20 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
         $this->priceFacade = $priceFacade;
-        $this->stockFacade = $stockFacade;
-        $this->stockQueryContainer = $stockQueryContainer;
-        $this->productImageFacade = $productImageFacade;
         $this->productConcreteManager = $productConcreteManager;
-        $this->productAssertion = $productAssertion;
+        $this->productAbstractAssertion = $productAbstractAssertion;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku)
+    {
+        $productAbstractQuery = $this->productQueryContainer->queryProductAbstractBySku($sku);
+
+        return $productAbstractQuery->count() > 0;
     }
 
     /**
@@ -124,7 +107,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->productQueryContainer->getConnection()->beginTransaction();
 
         try {
-            $this->productAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
+            $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
 
             $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
 
@@ -161,8 +144,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
                 ->requireIdProductAbstract()
                 ->getIdProductAbstract();
 
-            $this->productAssertion->assertProductExists($idProductAbstract);
-            $this->productAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
+            $this->productAbstractAssertion->assertProductExists($idProductAbstract);
+            $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
 
             $this->persistEntity($productAbstractTransfer);
 
