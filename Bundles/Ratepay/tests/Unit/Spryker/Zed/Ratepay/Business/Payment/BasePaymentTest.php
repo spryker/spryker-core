@@ -8,13 +8,18 @@
 namespace Unit\Spryker\Zed\Ratepay\Business\Payment;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+use Generated\Shared\Transfer\RatepayRequestShoppingBasketItemTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
@@ -27,10 +32,12 @@ use Spryker\Zed\Ratepay\Business\Api\Builder\Payment;
 use Spryker\Zed\Ratepay\Business\Api\Constants;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
+use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request;
+use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Elv;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
@@ -84,13 +91,18 @@ class BasePaymentTest extends Test
      * @param string $className
      * @param array $additionalMockMethods
      *
-     * @return \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface
+     * @return \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\PaymentInitTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\RequestPaymentTransaction
      */
     protected function getTransactionHandlerObject($className, $additionalMockMethods = [])
     {
+        $additionalMethods = [];
+        foreach ($additionalMockMethods as $method => $return) {
+            $additionalMethods[] = $method;
+        }
+
         $executionAdapter = $this->getMockBuilder(Guzzle::class)
             ->disableOriginalConstructor()
-            ->setMethods(['sendRequest', 'getMethodMapper'])
+            ->setMethods(array_merge(['sendRequest'], $additionalMethods))
             ->getMock();
 
         $executionAdapter->method('sendRequest')
@@ -109,11 +121,17 @@ class BasePaymentTest extends Test
                 $converterFactory,
                 $this->mockRatepayQueryContainer()
             ])
-            ->setMethods(['logInfo'])
+            ->setMethods(array_merge(['logInfo'], $additionalMethods))
             ->getMock();
 
         $transactionHandler->method('logInfo')
             ->willReturn(null);
+
+        foreach ($additionalMockMethods as $method => $return) {
+            $transactionHandler->method($method)
+                ->willReturn($return);
+        }
+
 
         return $transactionHandler;
     }
@@ -167,14 +185,76 @@ class BasePaymentTest extends Test
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setPayment($paymentTransfer);
 
-        $quoteTransfer->setCustomer($this->mockCustomerTransfer());
+        $quoteTransfer
+            ->setCustomer($this->mockCustomerTransfer())
+            ->setBillingAddress($this->mockAddressTransfer())
+            ->setShippingAddress($this->mockAddressTransfer())
+        ;
 
         $total = new TotalsTransfer();
-        $total->setGrandTotal(9900)
-            ->setExpenseTotal(8900);
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
         $quoteTransfer->setTotals($total);
 
+        $quoteTransfer->addItem($this->mockItemTransfer());
+
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mockItemTransfer()
+    {
+        $item = new ItemTransfer();
+        $item
+            ->setName('1test')
+            ->setSku('133333')
+            ->setAbstractSku('133333333333')
+            ->setQuantity(3)
+            ->setTaxRate(19)
+            ->setUnitGrossPriceWithProductOptions(1000)
+            ->setGroupKey('133333333333')
+        ;
+        return $item;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RatepayPaymentInitTransfer
+     */
+    protected function mockRatepayPaymentInitTransfer()
+    {
+        $ratepayPaymentInitTransfer = new RatepayPaymentInitTransfer();
+        $ratepayPaymentInitTransfer
+            ->setTransactionId('58-201604122719694')
+            ->setTransactionShortId('5QTZ.2VWD.OMWW.9D3E')
+        ;
+
+        return $ratepayPaymentInitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer $paymentData
+     *
+     * @return \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
+     */
+    protected function mockRatepayPaymentRequestTransfer($paymentData = null)
+    {
+        if ($paymentData === null) {
+            $paymentData = $this->mockPaymentElvTransfer();
+        }
+
+        $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
+        $ratepayPaymentInitTransfer = $this->mockRatepayPaymentInitTransfer();
+        $quotePaymentRequestMapper = new QuotePaymentRequestMapper(
+            $ratepayPaymentRequestTransfer,
+            $ratepayPaymentInitTransfer,
+            $this->mockQuoteTransfer(),
+            $paymentData
+        );
+        $quotePaymentRequestMapper->map();
+
+        return $ratepayPaymentRequestTransfer;
     }
 
     /**
@@ -380,8 +460,7 @@ class BasePaymentTest extends Test
     {
         $this->mapperFactory
             ->getPaymentMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )->map();
 
         $this->requestTransfer->getPayment()->setMethod('');
@@ -470,6 +549,47 @@ class BasePaymentTest extends Test
             ->setDebitPayType('invoice');
 
         return $ratepayPaymentInstallmentTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function mockAddressTransfer()
+    {
+        $address = new AddressTransfer();
+        $address->setFirstName('fn')
+            ->setLastName('ln')
+            ->setPhone('0491234567')
+            ->setCity('Berlin')
+            ->setIso2Code('iso2')
+            ->setAddress1('addr1')
+            ->setAddress2('addr2')
+            ->setZipCode('zip');
+
+        return $address;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return \Spryker\Zed\Ratepay\Business\Request\Payment\Method\AbstractMethod
+     */
+    protected function mockPaymentMethod($className)
+    {
+        $paymentMethod = $this->getMockBuilder($className)
+            ->disableOriginalConstructor()
+            ->setMethods(['paymentInit', 'paymentRequest', 'configurationRequest', 'calculationRequest'])
+            ->getMock();
+        $paymentMethod->method('paymentInit')
+            ->willReturn('');
+        $paymentMethod->method('paymentRequest')
+            ->willReturn('');
+        $paymentMethod->method('configurationRequest')
+            ->willReturn($this->mockModelPaymentConfiguration());
+        $paymentMethod->method('calculationRequest')
+            ->willReturn($this->mockModelPaymentCalculation());
+
+        return $paymentMethod;
     }
 
 }
