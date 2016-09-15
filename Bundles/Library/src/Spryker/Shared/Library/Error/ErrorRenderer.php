@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Library\Error;
 
-use Exception;
 use Spryker\Shared\Library\Application\Version;
 use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
 use Spryker\Zed\Library\Sanitize\Html;

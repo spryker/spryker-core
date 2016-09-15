@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Library\Error;
 
-use Exception;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Shared\EventJournal\Model\EventJournalInterface;
