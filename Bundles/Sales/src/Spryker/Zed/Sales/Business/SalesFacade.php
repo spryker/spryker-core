@@ -60,6 +60,24 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification:
+     *  - Returns the order for the given customer id and sales order id.
+     *  - Aggregates order totals calls -> SalesAggregator
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createOrderHydrator()
+            ->getCustomerOrder($orderTransfer);
+    }
+
+    /**
+     * Specification:
      * - Save order and items to database
      * - Set "is test" flag
      * - update checkout response with saved order data
