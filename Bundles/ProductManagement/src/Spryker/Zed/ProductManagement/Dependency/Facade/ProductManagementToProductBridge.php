@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 
 class ProductManagementToProductBridge implements ProductManagementToProductInterface
@@ -23,16 +24,6 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     public function __construct($productFacade)
     {
         $this->productFacade = $productFacade;
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     *
-     * TODO: remove, because of invalid business class leaking
-     */
-    public function getAttributeManager()
-    {
-        return $this->productFacade->getAttributeManager();
     }
 
     /**
@@ -93,6 +84,58 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     public function hasProductConcrete($sku)
     {
         return $this->productFacade->hasProductConcrete($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function getProductConcreteById($idProduct)
+    {
+        return $this->productFacade->getProductConcreteById($idProduct);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    {
+        return $this->productFacade->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    {
+        return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
     }
 
 }
