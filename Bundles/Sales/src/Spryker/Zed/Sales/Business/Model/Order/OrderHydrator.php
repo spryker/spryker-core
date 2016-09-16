@@ -57,11 +57,27 @@ class OrderHydrator implements OrderHydratorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
-     *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getCustomerOrder(OrderTransfer $orderTransfer)
+    {
+        $orderEntity = $this->getOrder($orderTransfer);
+
+        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+
+        $orderTransfer = $this->createOrderTransfer($orderEntity);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function getOrder($orderTransfer)
     {
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
@@ -79,11 +95,7 @@ class OrderHydrator implements OrderHydratorInterface
             ));
         }
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
-
-        $orderTransfer = $this->createOrderTransfer($orderEntity);
-
-        return $orderTransfer;
+        return $orderEntity;
     }
 
     /**
