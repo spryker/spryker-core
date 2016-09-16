@@ -69,6 +69,8 @@ class SystemUnderTestBootstrap
         error_reporting(E_ALL | E_STRICT);
         ini_set('display_errors', 1);
 
+        putenv("SESSION_IS_TEST=true");
+
         defined('APPLICATION') || define('APPLICATION', strtoupper($application));
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
 

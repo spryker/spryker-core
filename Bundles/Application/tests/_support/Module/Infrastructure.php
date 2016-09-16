@@ -6,12 +6,12 @@
 
 namespace Application\Module;
 
-use Codeception\Module;
 use Symfony\Component\Process\Process;
+use Codeception\Module;
 
 class Infrastructure extends Module
 {
-    const TEST_ENV_SCRIPT = 'setup_test.sh';
+    const TEST_ENV_SCRIPT = 'setup_test';
 
     /**
      * @return $this
@@ -32,12 +32,20 @@ class Infrastructure extends Module
     {
         $process = new Process(sprintf(
             '%s' . self::TEST_ENV_SCRIPT . ' %s',
-            APPLICATION_ROOT_DIR,
+            $this->getSetupScriptPath(),
             $argument
         ));
 
         $process->run();
 
         return $process;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSetupScriptPath()
+    {
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
     }
 }

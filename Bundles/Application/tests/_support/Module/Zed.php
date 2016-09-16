@@ -9,6 +9,8 @@ namespace Application\Module;
 
 use Codeception\TestCase;
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
+use Propel\Runtime\Propel;
+use \Silex\Application;
 
 class Zed extends Infrastructure
 {
@@ -25,7 +27,9 @@ class Zed extends Infrastructure
     {
         parent::_before($test);
 
+        Propel::closeConnections();
         $process = $this->runTestSetup('--restore');
+
         if ($process->getExitCode() != 0) {
             throw new \Exception('An error in data restore occured: '. $process->getErrorOutput());
         }

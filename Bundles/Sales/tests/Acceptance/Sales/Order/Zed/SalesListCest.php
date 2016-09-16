@@ -39,6 +39,9 @@ class SalesListCest
      */
     public function testICanGoToLatestOrderDetailsPage(SalesListTester $i)
     {
+        $idSalesOrder = $i->createOrder();
+        $i->createSalesOrderItemForOrder($idSalesOrder);
+
         $latestOrderId = $i->grabLatestOrderId();
         $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
 
