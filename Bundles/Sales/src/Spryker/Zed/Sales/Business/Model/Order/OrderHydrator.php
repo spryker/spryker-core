@@ -61,7 +61,7 @@ class OrderHydrator implements OrderHydratorInterface
      */
     public function getCustomerOrder(OrderTransfer $orderTransfer)
     {
-        $orderEntity = $this->getOrder($orderTransfer);
+        $orderEntity = $this->getOrderEntity($orderTransfer);
 
         $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
 
@@ -77,7 +77,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function getOrder(OrderTransfer $orderTransfer)
+    protected function getOrderEntity(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
