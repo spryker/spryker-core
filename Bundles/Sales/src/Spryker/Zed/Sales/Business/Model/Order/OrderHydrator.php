@@ -77,7 +77,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function getOrder($orderTransfer)
+    protected function getOrder(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
