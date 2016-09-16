@@ -8,73 +8,41 @@
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductManagerInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     *
-     * @return int
-     */
-    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
-    public function getProductAbstractIdBySku($sku);
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
-     */
-    public function getProductAbstractById($idProductAbstract);
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
      * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function getProductConcreteById($idProduct);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $productConcreteCollection
+     * @api
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
      */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $productConcreteCollection
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+    public function getProductAttributesByAbstractProductId($idProductAbstract);
 
     /**
      * @param int $idProductAbstract
@@ -82,12 +50,5 @@ interface ProductManagerInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributesByAbstractProductId($idProductAbstract);
 
 }

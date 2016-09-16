@@ -53,7 +53,7 @@ class EditController extends AddController
             ->handleRequest($request);
 
         $concreteProductCollection = $this->getFactory()
-            ->getProductManagementFacade()
+            ->getProductFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         $attributeCollection = $this->normalizeAttributeArray(
@@ -71,7 +71,7 @@ class EditController extends AddController
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
                 $idProductAbstract = $this->getFactory()
-                    ->getProductManagementFacade()
+                    ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, []);
 
                 $this->addSuccessMessage(sprintf(
@@ -122,7 +122,7 @@ class EditController extends AddController
         ));
 
         $productTransfer = $this->getFactory()
-            ->getProductManagementFacade()
+            ->getProductFacade()
             ->getProductConcreteById($idProduct);
 
         if (!$productTransfer) {
@@ -153,7 +153,7 @@ class EditController extends AddController
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
                 $idProduct = $this->getFactory()
-                    ->getProductManagementFacade()
+                    ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
 
                 $this->addSuccessMessage(sprintf(

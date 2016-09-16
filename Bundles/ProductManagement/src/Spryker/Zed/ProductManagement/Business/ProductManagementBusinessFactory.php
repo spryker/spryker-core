@@ -14,10 +14,6 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductManagement\Business\Product\ProductAbstractAssertion;
-use Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManager;
-use Spryker\Zed\ProductManagement\Business\Product\ProductConcreteAssertion;
-use Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManager;
 use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
@@ -28,59 +24,64 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductManagement\Business\Product\ProductManagerInterface
      */
     public function createProductManager()
     {
         return new ProductManager(
-            $this->createProductAbstractManager(),
-            $this->createProductConcreteManager(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslatorInterface
+     */
+    public function createAttributeTranslator()
+    {
+        return new AttributeTranslator(
             $this->getQueryContainer(),
-            $this->createProductConcreteManager()
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManagerInterface
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface
      */
-    public function createProductAbstractManager()
+    public function createAttributeManager()
     {
-        return new ProductAbstractManager(
-            $this->createAttributeManager(),
+        return new AttributeManager(
             $this->getProductQueryContainer(),
-            $this->getStockQueryContainer(),
-            $this->getProductFacade(),
-            $this->getTouchFacade(),
-            $this->getUrlFacade(),
-            $this->getLocaleFacade(),
-            $this->getPriceFacade(),
-            $this->getStockFacade(),
-            $this->getProductImageFacade(),
-            $this->createProductConcreteManager(),
-            $this->createProductAbstractAssertion()
+            $this->getQueryContainer(),
+            $this->createProductAttributeTransferGenerator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriterInterface
      */
-    public function createProductConcreteManager()
+    public function createAttributeWriter()
     {
-        return new ProductConcreteManager(
-            $this->createAttributeManager(),
-            $this->getProductQueryContainer(),
-            $this->getStockQueryContainer(),
+        return new AttributeWriter(
+            $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getTouchFacade(),
-            $this->getUrlFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeValueWriter(),
+            $this->createAttributeGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeReaderInterface
+     */
+    public function createAttributeReader()
+    {
+        return new AttributeReader(
+            $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade(),
-            $this->getStockFacade(),
-            $this->getProductImageFacade(),
-            $this->createProductAbstractAssertion(),
-            $this->createProductConcreteAssertion()
+            $this->createProductAttributeTransferGenerator()
         );
     }
 
@@ -165,50 +166,11 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslatorInterface
-     */
-    public function createAttributeTranslator()
-    {
-        return new AttributeTranslator(
-            $this->getQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
-        );
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface
-     */
-    public function createAttributeManager()
-    {
-        return new AttributeManager(
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->createProductAttributeTransferGenerator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriterInterface
-     */
-    public function createAttributeWriter()
-    {
-        return new AttributeWriter(
-            $this->getQueryContainer(),
-            $this->getProductFacade(),
-            $this->getGlossaryFacade(),
-            $this->createAttributeValueWriter(),
-            $this->createAttributeGlossaryKeyBuilder()
-        );
     }
 
     /**
@@ -218,18 +180,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeValueWriter(
             $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeReaderInterface
-     */
-    public function createAttributeReader()
-    {
-        return new AttributeReader(
-            $this->getQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->createProductAttributeTransferGenerator()
         );
     }
 
@@ -251,28 +201,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function createAttributeGlossaryKeyBuilder()
     {
         return new AttributeGlossaryKeyBuilder();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractAssertionInterface
-     */
-    protected function createProductAbstractAssertion()
-    {
-        return new ProductAbstractAssertion(
-            $this->getProductFacade(),
-            $this->getProductQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteAssertionInterface
-     */
-    protected function createProductConcreteAssertion()
-    {
-        return new ProductConcreteAssertion(
-            $this->getProductFacade(),
-            $this->getProductQueryContainer()
-        );
     }
 
 }

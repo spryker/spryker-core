@@ -8,96 +8,44 @@
 namespace Spryker\Zed\ProductManagement\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 
 class ProductManager implements ProductManagerInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManagerInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
-    protected $productAbstractManager;
+    protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      */
-    protected $productConcreteManager;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
-     */
-    protected $productManagementQueryContainer;
-
-    public function __construct(
-        ProductAbstractManagerInterface $productAbstractManagerInterface,
-        ProductConcreteManagerInterface $productConcreteManager,
-        ProductManagementQueryContainerInterface $productManagementQueryContainer
-    ) {
-
-        $this->productAbstractManager = $productAbstractManagerInterface;
-        $this->productConcreteManager = $productConcreteManager;
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
+    public function __construct(ProductManagementToProductInterface $productFacade)
+    {
+        $this->productFacade = $productFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
-    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
     {
-        return $this->productAbstractManager->createProductAbstract($productAbstractTransfer);
+        return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
-    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
     {
-        return $this->productAbstractManager->saveProductAbstract($productAbstractTransfer);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    public function getProductAbstractIdBySku($sku)
-    {
-        return $this->productAbstractManager->getProductAbstractIdBySku($sku);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
-     */
-    public function getProductAbstractById($idProductAbstract)
-    {
-        return $this->productAbstractManager->getProductAbstractById($idProductAbstract);
+        return $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
     }
 
     /**
@@ -107,85 +55,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductConcreteById($idProduct)
     {
-        return $this->productConcreteManager->getProductConcreteById($idProduct);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
-    {
-        $this->productManagementQueryContainer->getConnection()->beginTransaction();
-
-        try {
-            $idProductAbstract = $this->createProductAbstract($productAbstractTransfer);
-            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
-            foreach ($productConcreteCollection as $productConcrete) {
-                $productConcrete->setFkProductAbstract($idProductAbstract);
-                $this->createProductConcrete($productConcrete);
-            }
-
-            $this->productManagementQueryContainer->getConnection()->commit();
-
-            return $idProductAbstract;
-
-        } catch (\Exception $e) {
-            $this->productManagementQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
-    {
-        $this->productManagementQueryContainer->getConnection()->beginTransaction();
-
-        try {
-            $idProductAbstract = $this->saveProductAbstract($productAbstractTransfer);
-
-            foreach ($productConcreteCollection as $productConcreteTransfer) {
-                $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
-
-                $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstract($productAbstractTransfer, $productConcreteTransfer);
-                if ($productConcreteEntity) {
-                    $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
-                    $this->saveProductConcrete($productConcreteTransfer);
-                } else {
-                    $this->createProductConcrete($productConcreteTransfer);
-                }
-            }
-
-            $this->productManagementQueryContainer->getConnection()->commit();
-
-            return $idProductAbstract;
-
-        } catch (\Exception $e) {
-            $this->productManagementQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract)
-    {
-        return $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        return $this->productFacade->getProductConcreteById($idProduct);
     }
 
     /**
@@ -195,7 +65,17 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
-        return $this->productAbstractManager->getProductAttributesByAbstractProductId($idProductAbstract);
+        return $this->productFacade->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    {
+        return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
     }
 
 }

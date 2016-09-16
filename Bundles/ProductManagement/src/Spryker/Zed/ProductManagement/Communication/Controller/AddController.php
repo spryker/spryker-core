@@ -54,11 +54,11 @@ class AddController extends AbstractController
                     ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
 
                 $concreteProductCollection = $this->getFactory()
-                    ->createProductMatrixGenerator()
+                    ->createProductVariantGenerator()
                     ->generate($productAbstractTransfer, $attributeValues);
 
                 $idProductAbstract = $this->getFactory()
-                    ->getProductManagementFacade()
+                    ->getProductFacade()
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
                 $this->addSuccessMessage(sprintf(

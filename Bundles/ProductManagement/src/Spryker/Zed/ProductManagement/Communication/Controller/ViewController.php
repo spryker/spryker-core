@@ -47,7 +47,7 @@ class ViewController extends AddController
         }
 
         $concreteProductCollection = $this->getFactory()
-            ->getProductManagementFacade()
+            ->getProductFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
@@ -97,7 +97,7 @@ class ViewController extends AddController
         ));
 
         $productTransfer = $this->getFactory()
-            ->getProductManagementFacade()
+            ->getProductFacade()
             ->getProductConcreteById($idProduct);
 
         if (!$productTransfer) {

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductManagement\Business\Product\VariantGenerator;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeForm;
@@ -30,6 +29,7 @@ use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGe
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
+use Spryker\Zed\Product\Business\Product\VariantGenerator;
 
 /**
  * @TODO Move attribute and form methods into separate factories
@@ -445,9 +445,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\VariantGeneratorInterface
+     * @return \Spryker\Zed\Product\Business\Product\VariantGeneratorInterface
      */
-    public function createProductMatrixGenerator()
+    public function createProductVariantGenerator()
     {
         return new VariantGenerator();
     }
