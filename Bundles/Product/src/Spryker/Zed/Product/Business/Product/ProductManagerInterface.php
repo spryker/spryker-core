@@ -40,6 +40,13 @@ interface ProductManagerInterface
     public function getProductAbstractIdBySku($sku);
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductAbstractById($idProductAbstract);
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
@@ -63,6 +70,13 @@ interface ProductManagerInterface
      * @return int
      */
     public function getProductConcreteIdBySku($sku);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function getProductConcreteById($idProduct);
 
     /**
      * @param int $idProductAbstract
@@ -157,5 +171,47 @@ interface ProductManagerInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract);
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductVariantsByAbstractSku($abstractSku);
 
 }

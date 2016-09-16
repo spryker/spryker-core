@@ -16,6 +16,7 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
+use Spryker\Zed\Product\Business\Product\VariantGenerator;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -105,6 +106,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductVariantBuilder()
     {
          return new ProductVariantBuilder($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\VariantGeneratorInterface
+     */
+    public function createProductVariantGenerator()
+    {
+        return new VariantGenerator();
     }
 
     /**

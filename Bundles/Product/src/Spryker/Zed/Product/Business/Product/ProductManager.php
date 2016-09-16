@@ -56,7 +56,6 @@ class ProductManager implements ProductManagerInterface
         ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade
     ) {
-
         $this->productAbstractManager = $productAbstractManagerInterface;
         $this->productConcreteManager = $productConcreteManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -366,6 +365,18 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
+        return $this->productAbstractManager->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductVariantsByAbstractSku($abstractSku)
+    {
+        $idProductAbstract = (int)$this->productAbstractManager->getProductAbstractIdBySku($abstractSku);
+
         return $this->productAbstractManager->getProductAttributesByAbstractProductId($idProductAbstract);
     }
 

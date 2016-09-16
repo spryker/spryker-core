@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Business\Product;
+namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 
 class VariantGenerator implements VariantGeneratorInterface
 {
@@ -46,7 +45,7 @@ class VariantGenerator implements VariantGeneratorInterface
      */
     protected function formatConcreteSku($abstractSku, $concreteSku)
     {
-        return AbstractProductFormDataProvider::slugify(sprintf(
+        return self::slugify(sprintf(
             '%s%s%s',
             $abstractSku,
             self::SKU_ABSTRACT_SEPARATOR,
@@ -231,6 +230,26 @@ class VariantGenerator implements VariantGeneratorInterface
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setAttributes($attributeTokens)
             ->setIsActive(false);
+    }
+
+    /**
+     * TODO: DRY
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public static function slugify($value)
+    {
+        if (function_exists('iconv')) {
+            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
+        }
+
+        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
+        $value = mb_strtolower($value);
+        $value = str_replace(' ', '-', $value);
+
+        return $value;
     }
 
 }

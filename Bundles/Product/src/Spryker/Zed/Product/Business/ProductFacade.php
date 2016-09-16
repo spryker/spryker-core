@@ -20,6 +20,72 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Add product abstract with its concrete variants
+     * - Add product abstract attributes information
+     * - Add product abstract meta information
+     * - Add product abstract images information
+     * - Add concrete product stock information
+     * - Add product abstract price information
+     * - Add product abstract tax information
+     * - Generates concrete products based on variant attributes
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract and concrete products are created but not activated or touched
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->addProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * Specification:
+     * - Save product abstract with its concrete variants
+     * - Save product abstract attributes information
+     * - Save product abstract meta information
+     * - Save product abstract images information
+     * - Save concrete product stock information
+     * - Save product abstract price information
+     * - Save product abstract tax information
+     * - Throws exception if product with same SKU exists
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @return int
+     */
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->saveProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $productManager = $this->getFactory()->createProductManager();
+
+        return $productManager->createProductAbstract($productAbstractTransfer);
+    }
+
+    /**
      * @api
      *
      * @param string $sku
@@ -43,6 +109,26 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAbstractIdBySku($sku)
     {
         return $this->getFactory()->createProductManager()->getProductAbstractIdBySku($sku);
+    }
+
+    /**
+     * Specification:
+     * - Returns abstract product transfer with loaded attributes
+     * - Returns abstract product transfer with loaded price
+     * - Returns abstract product transfer with loaded tax
+     * - Returns abstract product transfer with loaded images
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstractById($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductAbstractById($idProductAbstract);
     }
 
     /**
@@ -72,15 +158,29 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductAttributesByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
      */
-    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->createProductAbstract($productAbstractTransfer);
+        return $productManager->createProductConcrete($productConcreteTransfer);
     }
 
     /**
@@ -110,6 +210,25 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns concrete product transfer with loaded attributes
+     * - Returns concrete product transfer with loaded price
+     * - Returns concrete product transfer with loaded stock
+     * - Returns concrete product transfer with loaded images
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcreteById($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getProductConcreteById($idProduct);
+    }
+    /**
      * @api
      *
      * @param string $concreteSku
@@ -124,29 +243,36 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $productManager = $this->getFactory()->createProductManager();
-
-        return $productManager->createProductConcrete($productConcreteTransfer);
-    }
-
-    /**
-     * @api
-     *
      * @param string $abstractSku
      *
      * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
      */
     public function getProductVariantsByAbstractSku($abstractSku)
     {
+        //TODO FIX ME
         return $this->getFactory()
-           ->createProductVariantBuilder()
+           ->createProductManager()
            ->getProductVariantsByAbstractSku($abstractSku);
+    }
+
+    /**
+     * Specification:
+     * - Returns concrete product transfer collection with loaded attributes
+     * - Returns concrete product transfer collection with loaded price
+     * - Returns concrete product transfer collection with loaded stock
+     * - Returns concrete product transfer collection with loaded images
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->getConcreteProductsByAbstractProductId($idProductAbstract);
     }
 
     /**
@@ -220,6 +346,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * TODO: check / implement product activation / deactivation workflow
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -234,6 +362,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * TODO: check / implement product activation / deactivation workflow
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -248,6 +378,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * TODO: check / implement product deletion workflow*
+     *
      * @api
      *
      * @param int $idProductAbstract

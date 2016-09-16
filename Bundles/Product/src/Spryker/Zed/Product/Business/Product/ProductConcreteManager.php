@@ -338,7 +338,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected function persistPrice(ProductConcreteTransfer $productConcreteTransfer)
     {
         $priceTransfer = $productConcreteTransfer->getPrice();
-        if ($priceTransfer instanceof ZedProductPriceTransfer) {
+        if ($priceTransfer instanceof ZedProductPriceTransfer) { //TODO Remove ZedProductPriceTransfer, update PriceProductTransfer
             $priceTransfer->setIdProduct(
                 $productConcreteTransfer
                     ->requireIdProductConcrete()
