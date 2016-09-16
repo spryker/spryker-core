@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Collector;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Propel\PropelConstants;
 
 interface CollectorConstants
 {
@@ -15,8 +16,8 @@ interface CollectorConstants
     const ELASTICA_PARAMETER__DOCUMENT_TYPE = ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE;
     const ELASTICA_PARAMETER__INDEX_NAME = ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME;
 
-    const ZED_DB_ENGINE = ApplicationConstants::ZED_DB_ENGINE;
-    const ZED_DB_ENGINE_MYSQL = ApplicationConstants::ZED_DB_ENGINE_MYSQL;
-    const ZED_DB_ENGINE_PGSQL = ApplicationConstants::ZED_DB_ENGINE_PGSQL;
+    const ZED_DB_ENGINE = PropelConstants::ZED_DB_ENGINE;
+    const ZED_DB_ENGINE_MYSQL = PropelConstants::ZED_DB_ENGINE_MYSQL;
+    const ZED_DB_ENGINE_PGSQL = PropelConstants::ZED_DB_ENGINE_PGSQL;
 
 }

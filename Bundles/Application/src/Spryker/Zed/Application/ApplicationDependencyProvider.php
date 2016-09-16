@@ -17,7 +17,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterSe
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NavigationServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingServiceProvider;
@@ -75,7 +74,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
             new UrlGeneratorServiceProvider(),
-            new NewRelicServiceProvider(),
+            new NewRelicRequestTransactionServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
             new NavigationServiceProvider(),

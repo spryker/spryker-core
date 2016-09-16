@@ -37,9 +37,9 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $filename
      *
-     * @return \SplFileObject
-     *
      * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
+     *
+     * @return \SplFileObject
      */
     protected function createCsvFile($filename)
     {

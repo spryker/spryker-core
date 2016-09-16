@@ -55,9 +55,9 @@ class CollectorProvider implements SpecificationProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
-     *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
+     *
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     public function getSpecificationContext(ClauseTransfer $clauseTransfer)
     {

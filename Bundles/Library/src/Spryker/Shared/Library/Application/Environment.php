@@ -9,8 +9,8 @@ namespace Spryker\Shared\Library\Application;
 
 use ErrorException;
 use Exception;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Shared\Library\LibraryConstants;
@@ -32,23 +32,16 @@ class Environment
     {
         date_default_timezone_set('UTC');
 
-        self::defineEnvironment();
-        self::defineStore();
-        self::defineApplication();
-        self::defineApplicationRootDir();
-        self::defineApplicationSourceDir();
-        self::defineApplicationStaticDir();
-        self::defineApplicationVendorDir();
-        self::defineApplicationDataDir();
+        static::defineEnvironment();
+        static::defineStore();
+        static::defineApplication();
+        static::defineApplicationRootDir();
+        static::defineApplicationSourceDir();
+        static::defineApplicationStaticDir();
+        static::defineApplicationVendorDir();
+        static::defineApplicationDataDir();
+        static::initializeErrorHandlerEnvironment();
 
-        $errorCode = error_reporting();
-        self::initializeErrorHandler();
-
-        $configErrorCode = Config::get(ApplicationConstants::ERROR_LEVEL);
-        if ($configErrorCode !== $errorCode) {
-            error_reporting($configErrorCode);
-            self::initializeErrorHandler();
-        }
         ini_set('display_errors', Config::get(LibraryConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
@@ -57,6 +50,15 @@ class Environment
         self::initializeLocale($locale);
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
+    }
+
+    /**
+     * @return void
+     */
+    protected static function initializeErrorHandlerEnvironment()
+    {
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
     }
 
     /**
@@ -188,6 +190,8 @@ class Environment
     /**
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
+     *
+     * @deprecated Use ErrorHandlerEnvironment instead
      *
      * @throws \ErrorException
      *

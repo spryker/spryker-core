@@ -75,9 +75,9 @@ class SubRequestHandler implements SubRequestHandlerInterface
     /**
      * @param string[] $urlParts
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
+     *
+     * @return bool
      */
     protected function validateUrlParts(array $urlParts)
     {

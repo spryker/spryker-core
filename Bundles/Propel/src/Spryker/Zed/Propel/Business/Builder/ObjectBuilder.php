@@ -12,9 +12,9 @@ use Propel\Generator\Model\Column;
 use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Application\Environment;
+use Spryker\Shared\Propel\PropelConstants;
 
 class ObjectBuilder extends PropelObjectBuilder
 {
@@ -26,7 +26,7 @@ class ObjectBuilder extends PropelObjectBuilder
     {
         parent::__construct($table);
 
-        Environment::initialize('Zed');
+        Environment::initialize();
     }
 
     /**
@@ -174,7 +174,7 @@ class ObjectBuilder extends PropelObjectBuilder
                         break;";
         }
 
-        if (Config::get(ApplicationConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
+        if (Config::get(PropelConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
             $script .= "
                 }
             }
@@ -190,7 +190,7 @@ class ObjectBuilder extends PropelObjectBuilder
 ";
         }
 
-        if (!Config::get(ApplicationConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
+        if (!Config::get(PropelConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
             $script .= "
                 }
             }

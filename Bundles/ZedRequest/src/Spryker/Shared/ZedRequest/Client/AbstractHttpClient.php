@@ -19,12 +19,14 @@ use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
+use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
@@ -33,16 +35,39 @@ abstract class AbstractHttpClient implements HttpClientInterface
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
 
+    const HEADER_USER_AGENT = 'User-Agent';
+    const HEADER_HOST_YVES = 'X-Yves-Host';
+    const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
+    const HEADER_HOST_ZED = 'X-Zed-Host';
+
+    /**
+     * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     */
     const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
 
+    /**
+     * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     */
     const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
 
+    /**
+     * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     */
     const EVENT_FIELD_PATH_INFO = 'path_info';
 
+    /**
+     * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     */
     const EVENT_FIELD_SUB_TYPE = 'sub_type';
 
+    /**
+     * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     */
     const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
 
+    /**
+     * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     */
     const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
 
     /**
@@ -62,8 +87,6 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @var int
-     *
-     * @todo Add ths timeout to config so this could be edited easily and from configuration level #894
      */
     protected static $timeoutInSeconds = 60;
 
@@ -115,37 +138,30 @@ abstract class AbstractHttpClient implements HttpClientInterface
         array $metaTransfers = [],
         $timeoutInSeconds = null
     ) {
-
         static::$requestCounter++;
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
-
         $request = $this->createGuzzleRequest($pathInfo);
+
         $this->logRequest($pathInfo, $requestTransfer, (string)$request->getBody());
 
         try {
             $response = $this->sendRequest($request, $requestTransfer, $timeoutInSeconds);
         } catch (GuzzleRequestException $e) {
-            $requestException = new RequestException($e->getMessage(), $e->getCode(), $e);
-            $requestException->setExtra((string)$e->getResponse()->getBody());
+            $message = $e->getMessage();
+            $response = $e->getResponse();
+            if ($response) {
+                $message .= PHP_EOL . PHP_EOL . $response->getBody();
+            }
+            $requestException = new RequestException($message, $e->getCode(), $e);
 
             throw $requestException;
         }
-
         $responseTransfer = $this->getTransferFromResponse($response, $request);
+
         $this->logResponse($pathInfo, $responseTransfer, (string)$response->getBody());
 
         return $responseTransfer;
-    }
-
-    /**
-     * @param string $pathInfo
-     *
-     * @return bool
-     */
-    protected function isLoggingAllowed($pathInfo)
-    {
-        return strpos($pathInfo, 'heartbeat');
     }
 
     /**
@@ -156,13 +172,33 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function createGuzzleRequest($pathInfo)
     {
         $headers = [
-            'User-Agent' => 'Yves 2.0',
-            'X-Yves-Host' => 1,
-            'X-Internal-Request' => 1,
+            self::HEADER_USER_AGENT => 'Yves 2.0',
+            self::HEADER_HOST_YVES => 1,
+            self::HEADER_INTERNAL_REQUEST => 1,
         ];
 
         foreach ($this->getHeaders() as $header => $value) {
             $headers[$header] = $value;
+        }
+
+        $pathInfo = $this->addRequestId($pathInfo);
+
+        $request = new Psr7Request('POST', $this->baseUrl . $pathInfo, $headers);
+
+        return $request;
+    }
+
+    /**
+     * @deprecated RequestId is added by ZedRequestHeaderMiddleware, when EventJournal is disabled the new Plugin should be added in projects if needed.
+     *
+     * @param string $pathInfo
+     *
+     * @return string
+     */
+    protected function addRequestId($pathInfo)
+    {
+        if (Config::get(EventJournalConstants::DISABLE_EVENT_JOURNAL, false)) {
+            return $pathInfo;
         }
 
         $char = (strpos($pathInfo, '?') === false) ? '?' : '&';
@@ -172,9 +208,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $requestId = $event->getFields()['request_id'];
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
-        $request = new Psr7Request('POST', $this->baseUrl . $pathInfo, $headers);
-
-        return $request;
+        return $pathInfo;
     }
 
     /**
@@ -217,9 +251,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function sendRequest(MessageRequestInterface $request, ObjectInterface $requestTransfer, $timeoutInSeconds = null)
     {
+        $handlerStackContainer = new HandlerStackContainer();
         $config = [
             'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
             'connect_timeout' => 1.5,
+            'handler' => $handlerStackContainer->getHandlerStack()
         ];
         $config = $this->addCookiesToForwardDebugSession($config);
         $client = new Client($config);
@@ -238,6 +274,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
@@ -256,6 +293,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
+     * @deprecated Requests logged within GuzzleLogServiceProvider() add this one to your Bootstrap.
+     *
      * @param string $pathInfo
      * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $requestTransfer
      * @param string $rawBody
@@ -268,6 +307,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
+     * @deprecated Response logged within GuzzleLogServiceProvider() add this one to your Bootstrap.
+     *
      * @param string $pathInfo
      * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $responseTransfer
      * @param string $rawBody
@@ -280,6 +321,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
+     * @deprecated This method was used by logRequest() and logResponse(). You can also use the LoggerTrait.
+     *
      * @param string $pathInfo
      * @param string $subType
      * @param \Spryker\Shared\ZedRequest\Client\EmbeddedTransferInterface $transfer
@@ -289,6 +332,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function doLog($pathInfo, $subType, EmbeddedTransferInterface $transfer, $rawBody)
     {
+        if (Config::get(EventJournalConstants::DISABLE_EVENT_JOURNAL, false)) {
+            return;
+        }
+
         $eventJournal = new SharedEventJournal();
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
@@ -299,11 +346,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $event->setField(static::EVENT_FIELD_TRANSFER_DATA, null);
             $event->setField(static::EVENT_FIELD_TRANSFER_CLASS, null);
         }
-
         $event->setField(Event::FIELD_NAME, 'transfer');
         $event->setField(static::EVENT_FIELD_PATH_INFO, $pathInfo);
         $event->setField(static::EVENT_FIELD_SUB_TYPE, $subType);
-
         $eventJournal->saveEvent($event);
     }
 
