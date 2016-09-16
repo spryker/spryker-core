@@ -255,7 +255,6 @@ class OrderHydrator implements OrderHydratorInterface
         }
     }
 
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
