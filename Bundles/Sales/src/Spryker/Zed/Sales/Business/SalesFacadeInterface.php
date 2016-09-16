@@ -20,8 +20,8 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Add username to comment
-     * - Save comment to database
+     * - Adds username to comment
+     * - Saves comment to database
      *
      * @api
      *
@@ -33,7 +33,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Return the distinct states of all order items for the given order id
+     * - Returns the distinct states of all order items for the given order id
      *
      * @api
      *
@@ -45,7 +45,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Return all comments for the given order id
+     * - Returns all comments for the given order id
      *
      * @api
      *
@@ -57,9 +57,10 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Save order and items to database
-     * - Set "is test" flag
-     * - update checkout response with saved order data
+     * - Saves order and items to database
+     * - Sets "is test" flag
+     * - Updates checkout response with saved order data
+     * - Sets initial state for state machine
      *
      * @api
      *
@@ -111,6 +112,22 @@ interface SalesFacadeInterface
     public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
 
     /**
+     * Specification:
+     *  - Returns the order for the given customer id and sales order id.
+     *  - Aggregates order totals calls -> SalesAggregator
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrder(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Returns the order for the given sales oder id.
+     *
      * @api
      *
      * @param int $idSalesOrder

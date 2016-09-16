@@ -78,10 +78,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification:
-     * - Save order and items to database
-     * - Set "is test" flag
-     * - update checkout response with saved order data
-     * - set initial state for state machine
+     * - Saves order and items to database
+     * - Sets "is test" flag
+     * - Updates checkout response with saved order data
+     * - Sets initial state for state machine
      *
      * @api
      *
@@ -99,8 +99,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification:
-     * - Add username to comment
-     * - Save comment to database
+     * - Adds username to comment
+     * - Saves comment to database
      *
      * @api
      *
@@ -117,7 +117,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification:
-     * - Return the distinct states of all order items for the given order id
+     * - Returns the distinct states of all order items for the given order id
      *
      * @api
      *
@@ -134,7 +134,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification:
-     * - Return all comments for the given order id
+     * - Returns all comments for the given order id
      *
      * @api
      *
@@ -151,7 +151,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification
-     * - Update sales order with data from order transfer
+     * - Updates sales order with data from order transfer
      * - Returns true if order was successfully updated
      *
      * @api
