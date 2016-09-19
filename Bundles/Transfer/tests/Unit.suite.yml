@@ -1,5 +1,5 @@
 class_name: UnitTester
 modules:
     enabled:
-        - Asserts
+        - \Testify\Module\Environment
         - \Transfer\Module\Unit

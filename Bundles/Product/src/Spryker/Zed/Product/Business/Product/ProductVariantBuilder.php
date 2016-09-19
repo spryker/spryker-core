@@ -187,13 +187,6 @@ class ProductVariantBuilder implements ProductVariantBuilderInterface
         unset($localizedAttributes['attributes']);
         $productVariantTransfer->fromArray($localizedAttributes, true);
 
-
-
-
-
-
-
-
         $productVariantTransfer->setLocaleName($localizedAttributeEntity->getLocale()->getLocaleName());
 
         $localizedAttributes = array_merge(

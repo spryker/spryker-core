@@ -3,9 +3,16 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
     },
     "psr-4": {
-      "Transfer\\Module\\": "tests/_support/Module"
+      "Transfer\\Module\\": "tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module"
     }
   },
   "require": {
@@ -36,10 +43,10 @@
   "config": {
     "sort-packages": true
   },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
     }
-  }
+  ]
 }
