@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\Transfer;
 
 use ArrayObject;
+use InvalidArgumentException;
 use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 
@@ -445,6 +446,18 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer->setTransferCollection($collection);
 
         $this->assertCount(2, $transfer->getTransferCollection());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromArrayShouldThrowInvalidArgumentExceptionWhenMissingPropertyCanBeIgnoredAndPropertyExistsButExpectedTypeDoesNotMatch()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not call "setArray(string)" (type string) in "Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer". Maybe there is a type miss match.');
+
+        $abstractTransfer = new AbstractTransfer();
+        $abstractTransfer->fromArray(['array' => 'string']);
     }
 
 }

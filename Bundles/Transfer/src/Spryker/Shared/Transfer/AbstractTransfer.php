@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Transfer;
 
 use ArrayObject;
+use Exception;
 use InvalidArgumentException;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
@@ -132,7 +133,7 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
             }
 
-            $this->callSetMethod($property, $value, $ignoreMissingProperty);
+            $this->callSetMethod($property, $value);
         }
 
         return $this;
@@ -276,24 +277,21 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
     /**
      * @param string $property
      * @param mixed $value
-     * @param bool $ignoreMissingProperty
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    private function callSetMethod($property, $value, $ignoreMissingProperty)
+    private function callSetMethod($property, $value)
     {
         $setter = 'set' . ucfirst($property);
 
         try {
             $this->$setter($value);
-        } catch (\Exception $e) {
-            if ($ignoreMissingProperty === false) {
-                throw new InvalidArgumentException(
-                    sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
-                );
-            }
+        } catch (Exception $e) {
+            throw new InvalidArgumentException(
+                sprintf('Could not call "%s(%s)" (type %s) in "%s". Maybe there is a type miss match.', $setter, $value, gettype($value), get_class($this))
+            );
         }
     }
 
