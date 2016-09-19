@@ -20,7 +20,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
  * @group ProductSearch
  * @group Business
  * @group ProductSearchFacade
- * @group ProductSearchPreferencesTest
+ * @group ProductSearchAttributeMapTest
  */
 class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 {
@@ -211,7 +211,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 
     /**
      * @param string $attributeKey
-     * @param boolean $synced
+     * @param boolean|bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap
      */

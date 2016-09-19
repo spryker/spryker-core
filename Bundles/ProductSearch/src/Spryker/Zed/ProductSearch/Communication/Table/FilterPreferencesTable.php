@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Table;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;

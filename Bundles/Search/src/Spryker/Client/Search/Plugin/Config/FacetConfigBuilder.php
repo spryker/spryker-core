@@ -10,31 +10,9 @@ namespace Spryker\Client\Search\Plugin\Config;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
-use Spryker\Shared\Search\SearchConstants;
 
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
-
-    /**
-     * @deprecated Use SearchConstants::FACET_TYPE_ENUMERATION instead.
-     */
-    const TYPE_ENUMERATION = SearchConstants::FACET_TYPE_ENUMERATION;
-    /**
-     * @deprecated Currently not supported.
-     */
-    const TYPE_BOOL = 'bool';
-    /**
-     * @deprecated Use SearchConstants::FACET_TYPE_RANGE instead.
-     */
-    const TYPE_RANGE = SearchConstants::FACET_TYPE_RANGE;
-    /**
-     * @deprecated Use SearchConstants::FACET_TYPE_PRICE_RANGE instead.
-     */
-    const TYPE_PRICE_RANGE = SearchConstants::FACET_TYPE_PRICE_RANGE;
-    /**
-     * @deprecated Use SearchConstants::FACET_TYPE_CATEGORY instead.
-     */
-    const TYPE_CATEGORY = SearchConstants::FACET_TYPE_CATEGORY;
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer[]

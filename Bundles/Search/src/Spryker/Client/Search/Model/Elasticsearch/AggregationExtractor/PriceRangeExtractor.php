@@ -8,8 +8,6 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Generated\Shared\Transfer\RangeSearchResultTransfer;
-use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregation;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 
 class PriceRangeExtractor extends RangeExtractor

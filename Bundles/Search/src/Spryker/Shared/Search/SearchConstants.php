@@ -19,18 +19,6 @@ interface SearchConstants
     const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
-     * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
-     * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
-     *
-     * Dynamic search configuration need to be cached in order to not to loose performance when searching on Yves side.
-     * This config setting is must be set for the name of the cache key.
-     * E.g. `$config[SearchConstants::SEARCH_CONFIG_CACHE_KEY] = 'search_config_cache';`.
-     *
-     * @api
-     */
-    const SEARCH_CONFIG_CACHE_KEY = 'SEARCH_CONFIG_CACHE_KEY';
-
-    /**
      * Available facet types
      */
     const FACET_TYPE_ENUMERATION = 'enumeration';

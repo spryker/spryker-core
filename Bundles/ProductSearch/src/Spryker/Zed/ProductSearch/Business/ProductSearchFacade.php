@@ -314,6 +314,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      * Specification:
      * - Touches the "product_search_config_extension" resource which will indicate the responsible collector to run next time collectors are executed.
      *
+     * @api
+     *
      * @return void
      */
     public function touchProductSearchConfigExtension()
@@ -333,13 +335,13 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
-     * @param ReaderInterface $dataReader
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
-     * @param OutputInterface $output
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -351,8 +353,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    )
-    {
+    ) {
         $collector = $this->getFactory()->createProductSearchConfigExtensionCollector();
 
         $this

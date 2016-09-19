@@ -85,6 +85,8 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryUnusedProductAttributeKeys();
 
     /**
+     * @api
+     *
      * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -92,11 +94,15 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeBySynced($synced);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
      */
     public function queryProductSearchAttributeArchive();
 
     /**
+     * @api
+     *
      * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
@@ -104,6 +110,8 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeMapBySynced($synced);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
      */
     public function queryProductSearchAttributeMapArchive();

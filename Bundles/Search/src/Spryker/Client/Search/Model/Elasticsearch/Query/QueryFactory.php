@@ -146,6 +146,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createCurrencyManager()
     {
+        // TODO: replace deprecated currency manager with new version
         return CurrencyManager::getInstance();
     }
 

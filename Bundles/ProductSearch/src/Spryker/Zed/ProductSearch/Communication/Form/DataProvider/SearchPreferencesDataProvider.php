@@ -27,7 +27,7 @@ class SearchPreferencesDataProvider
     }
 
     /**
-     * @param int $idProductAttributeKey
+     * @param int|null $idProductAttributeKey
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class SearchPreferencesDataProvider
     }
 
     /**
-     * @param int $idProductAttributeKey
+     * @param int|null $idProductAttributeKey
      *
      * @return array
      */

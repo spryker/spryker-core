@@ -66,7 +66,7 @@ class FilterPreferencesDataProvider
     }
 
     /**
-     * @param int $idProductSearchAttribute
+     * @param int|null $idProductSearchAttribute
      *
      * @return array
      */
@@ -93,7 +93,7 @@ class FilterPreferencesDataProvider
     }
 
     /**
-     * @param int $idProductSearchAttribute
+     * @param int|null $idProductSearchAttribute
      *
      * @return array
      */

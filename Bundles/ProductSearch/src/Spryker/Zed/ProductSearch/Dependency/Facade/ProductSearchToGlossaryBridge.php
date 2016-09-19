@@ -44,8 +44,6 @@ class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function updateAndTouchTranslation($keyName, $locale, $value, $isActive = true)
@@ -68,8 +66,6 @@ class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
@@ -91,8 +87,6 @@ class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
      * @param string $oldKeyName
      * @param string $newKeyName
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     *
      * @return bool
      */
     public function updateKey($oldKeyName, $newKeyName)
@@ -102,8 +96,6 @@ class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
 
     /**
      * @param string $keyName
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      *
      * @return int
      */

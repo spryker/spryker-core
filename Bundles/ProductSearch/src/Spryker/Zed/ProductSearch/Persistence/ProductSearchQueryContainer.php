@@ -203,6 +203,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -216,6 +218,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
      */
     public function queryProductSearchAttributeArchive()
@@ -226,6 +230,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
@@ -239,6 +245,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
      */
     public function queryProductSearchAttributeMapArchive()

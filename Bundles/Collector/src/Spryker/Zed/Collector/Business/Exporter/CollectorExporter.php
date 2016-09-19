@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
-use Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -60,7 +59,7 @@ class CollectorExporter
     {
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
-        $availableTypes = $this->getAvailableCollectorTypes($types) ;
+        $availableTypes = $this->getAvailableCollectorTypes($types);
 
         $output->writeln('');
         $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));
@@ -174,8 +173,6 @@ class CollectorExporter
 
     /**
      * @param array $types
-     *
-     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException
      *
      * @return array
      */

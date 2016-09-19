@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Search\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
@@ -106,20 +105,5 @@ interface SearchFacadeInterface
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
-
-    /**
-     * @deprecated Provide a list of \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface
-     * in \Pyz\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins() instead.
-     *
-     * Specification:
-     * - Stores the given search cache configuration into the storage (Redis by default)
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
-     *
-     * @return void
-     */
-    public function saveSearchConfigCache(SearchConfigCacheTransfer $searchConfigCacheTransfer);
 
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocalizedProductSearchAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 
@@ -30,7 +29,7 @@ class ProductAttributeTransferGenerator implements ProductAttributeTransferGener
     protected $glossaryFacade;
 
     /**
-     * @var GlossaryKeyBuilderInterface $glossaryKeyBuilder
+     * @var \Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
      */
     protected $glossaryKeyBuilder;
 

@@ -17,6 +17,15 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group ProductSearch
+ * @group Business
+ * @group ProductSearchFacade
+ * @group AbstractProductSearchFacadeTest
+ */
 abstract class AbstractProductSearchFacadeTest extends Test
 {
 
