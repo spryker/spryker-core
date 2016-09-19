@@ -12,8 +12,6 @@ env:
   global:
     - APPLICATION_ENV=development
     - APPLICATION_STORE=DE
-  matrix:
-    - COVERALLS=true
 
 install:
   - composer self-update && composer --version
