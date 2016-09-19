@@ -15,6 +15,11 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $messenger;
+
+    /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     private $generator;

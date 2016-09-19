@@ -13,11 +13,6 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
-    public function getUses();
-
-    /**
-     * @return array
-     */
     public function getConstants();
 
     /**

@@ -290,7 +290,9 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
             $this->$setter($value);
         } catch (Exception $e) {
             throw new InvalidArgumentException(
-                sprintf('Could not call "%s(%s)" (type %s) in "%s". Maybe there is a type miss match.', $setter, $value, gettype($value), get_class($this))
+                sprintf('Could not call "%s(%s)" (type %s) in "%s". Maybe there is a type miss match.', $setter, $value, gettype($value), get_class($this)),
+                $e->getCode(),
+                $e
             );
         }
     }

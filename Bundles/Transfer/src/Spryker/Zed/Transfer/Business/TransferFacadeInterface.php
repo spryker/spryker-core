@@ -13,6 +13,10 @@ interface TransferFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Loads all *transfer.xml definitions
+     * - Generates transfer objects
+     *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
@@ -22,10 +26,26 @@ interface TransferFacadeInterface
     public function generateTransferObjects(LoggerInterface $messenger);
 
     /**
+     * Specification:
+     * - Deletes all generated transfer objects
+     *
      * @api
      *
      * @return void
      */
     public function deleteGeneratedTransferObjects();
+
+    /**
+     * Specification:
+     * - Validates all generated transfer objects
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function validateTransferObjects(LoggerInterface $messenger, array $options);
 
 }
