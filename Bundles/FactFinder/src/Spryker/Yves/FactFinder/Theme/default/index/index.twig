@@ -1,8 +1,4 @@
-{% extends "@application/layout/layout.twig" %}
-
-{% block headerMain %}
-    {% include "@FactFinder/index/partials/header.twig" with {'hideUserMenu': hideUserMenu|default(false)} %}
-{% endblock headerMain %}
+{% extends "@FactFinder/layout/layout.twig" %}
 
 {% block content %}
     {% include "@FactFinder/index/catalog.twig" %}
