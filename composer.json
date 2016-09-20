@@ -79,12 +79,15 @@
       "Unit\\Spryker\\Client\\Catalog\\": "Bundles/Catalog/tests",
       "Spryker\\Shared\\Catalog\\": "Bundles/Catalog/src",
       "Unit\\Spryker\\Shared\\Catalog\\": "Bundles/Catalog/tests",
+
       "Spryker\\Shared\\Category\\": "Bundles/Category/src",
       "Unit\\Spryker\\Shared\\Category\\": "Bundles/Category/tests",
       "Functional\\Spryker\\Shared\\Category\\": "Bundles/Category/tests",
       "Spryker\\Zed\\Category\\": "Bundles/Category/src",
       "Unit\\Spryker\\Zed\\Category\\": "Bundles/Category/tests",
       "Functional\\Spryker\\Zed\\Category\\": "Bundles/Category/tests",
+      "Acceptance\\Category\\": "Bundles/Category/tests",
+
       "Spryker\\Client\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Shared\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Client\\Checkout\\": "Bundles/Checkout/src",
@@ -530,6 +533,7 @@
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",
       "Braintree\\Module\\": "Bundles/Braintree/tests/_support/Module",
+      "Catalog\\Module\\": "Bundles/Catalog/tests/_support/Module",
       "Config\\Module\\": "Bundles/Config/tests/_support/Module",
       "Customer\\Module\\": "Bundles/Customer/tests/_support/Module",
       "ErrorHandler\\Module\\": "Bundles/ErrorHandler/tests/_support/Module",
