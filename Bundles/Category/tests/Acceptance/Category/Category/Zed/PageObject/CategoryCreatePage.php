@@ -7,15 +7,10 @@
 
 namespace Acceptance\Category\Category\Zed\PageObject;
 
-class CategoryListPage
+class CategoryCreatePage
 {
 
-    const URL = '/category';
-
-    const SELECTOR_TABLE = 'dataTables_wrapper';
-    const SELECTOR_CATEGORIES_LIST = 'categories-list';
-
-    const BUTTON_CREATE_CATEGORY = 'Create Category';
+    const URL = '/product-category/add';
 
 
 }

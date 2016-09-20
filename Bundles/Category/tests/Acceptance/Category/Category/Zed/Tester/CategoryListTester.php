@@ -7,8 +7,8 @@
 
 namespace Acceptance\Category\Category\Zed\Tester;
 
-use Category\AcceptanceTester;
+use Category\ZedAcceptanceTester;
 
-class CategoryListTester extends AcceptanceTester
+class CategoryListTester extends ZedAcceptanceTester
 {
 }
