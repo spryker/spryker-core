@@ -16,9 +16,9 @@ namespace Category;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends \Codeception\Actor
+class AcceptanceTester extends \Codeception\Actor
 {
 
-    use _generated\FunctionalTesterActions;
+    use _generated\AcceptanceTesterActions;
 
 }

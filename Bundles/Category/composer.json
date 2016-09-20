@@ -5,6 +5,17 @@
       "Spryker": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Category\\Module\\": "tests/",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/"
+    }
+  },
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/graph": "^2.0.0",
@@ -32,11 +43,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
   }
 }
