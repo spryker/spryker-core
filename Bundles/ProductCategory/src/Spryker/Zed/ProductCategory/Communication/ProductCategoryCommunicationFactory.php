@@ -44,7 +44,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \ErrorException
      *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
