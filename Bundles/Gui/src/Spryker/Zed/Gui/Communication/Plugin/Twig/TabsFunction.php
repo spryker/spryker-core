@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Generated\Shared\Transfer\ZedTabsViewTransfer;
+use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Shared\Twig\TwigFunction;
 use Twig_Environment;
 
@@ -44,14 +44,14 @@ class TabsFunction extends TwigFunction
 
     /**
      * @param \Twig_Environment $twig
-     * @param \Generated\Shared\Transfer\ZedTabsViewTransfer $zedTabsViewTransfer
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $TabsViewTransfer
      * @param array $context
      *
      * @return string
      */
-    public function tabs(Twig_Environment $twig, ZedTabsViewTransfer $zedTabsViewTransfer, array $context = [])
+    public function tabs(Twig_Environment $twig, TabsViewTransfer $TabsViewTransfer, array $context = [])
     {
-        $context['zedTabsViewTransfer'] = $zedTabsViewTransfer;
+        $context['tabsViewTransfer'] = $TabsViewTransfer;
 
         return $twig->render('@Gui/Tabs/tabs.twig', $context);
     }

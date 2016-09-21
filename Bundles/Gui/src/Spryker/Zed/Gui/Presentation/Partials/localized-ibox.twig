@@ -12,7 +12,7 @@
 #}
 {% extends '@Gui/Partials/ibox.twig' %}
 
-{% set nation = (localeName|slice(3,2))|lower %}
+{% set region = (localeName|slice(3,2))|lower %}
 {% block title %}
-    <span class="flag flag-{{ nation }}"></span> {{ localeName }}
+    <span class="flag flag-{{ region }}"></span> {{ localeName }}
 {% endblock %}

@@ -7,54 +7,49 @@
 
 namespace Spryker\Zed\Gui\Communication\Tabs;
 
-use Generated\Shared\Transfer\ZedTabsViewTransfer;
+use Generated\Shared\Transfer\TabsViewTransfer;
 
 abstract class AbstractTabs implements TabsInterface
 {
 
     /**
-     * @var \Generated\Shared\Transfer\ZedTabsViewTransfer
-     */
-    protected $zedTabsViewTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\ZedTabsViewTransfer
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
     public function createView()
     {
-        $zedTabsViewTransfer = $this->createZedTabsViewTransfer();
-        $zedTabsViewTransfer = $this->build($zedTabsViewTransfer);
-        $this->ensureActive($zedTabsViewTransfer);
+        $tabsViewTransfer = $this->createTabsViewTransfer();
+        $tabsViewTransfer = $this->build($tabsViewTransfer);
+        $this->ensureActive($tabsViewTransfer);
 
-        return $zedTabsViewTransfer;
+        return $tabsViewTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedTabsViewTransfer $zedTabsViewTransfer
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
-     * @return \Generated\Shared\Transfer\ZedTabsViewTransfer
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    abstract protected function build(ZedTabsViewTransfer $zedTabsViewTransfer);
+    abstract protected function build(TabsViewTransfer $tabsViewTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ZedTabsViewTransfer $zedTabsViewTransfer
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return void
      */
-    private function ensureActive(ZedTabsViewTransfer $zedTabsViewTransfer)
+    private function ensureActive(TabsViewTransfer $tabsViewTransfer)
     {
-        if ($zedTabsViewTransfer->getActiveTabName() === null && $zedTabsViewTransfer->getTabs()->count()) {
-            $firstTabName = $zedTabsViewTransfer->getTabs()[0]->getName();
-            $zedTabsViewTransfer->setActiveTabName($firstTabName);
+        if ($tabsViewTransfer->getActiveTabName() === null && $tabsViewTransfer->getTabs()->count()) {
+            $firstTabName = $tabsViewTransfer->getTabs()[0]->getName();
+            $tabsViewTransfer->setActiveTabName($firstTabName);
         }
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ZedTabsViewTransfer
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function createZedTabsViewTransfer()
+    protected function createTabsViewTransfer()
     {
-        return new ZedTabsViewTransfer();
+        return new TabsViewTransfer();
     }
 
 }

@@ -11,7 +11,7 @@ interface TabsInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\ZedTabsViewTransfer
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
     public function createView();
 
