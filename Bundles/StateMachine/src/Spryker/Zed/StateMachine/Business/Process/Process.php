@@ -30,7 +30,7 @@ class Process implements ProcessInterface
     /**
      * @var bool
      */
-    protected $main;
+    protected $main = false;
 
     /**
      * @var string
@@ -79,7 +79,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param mixed $main
+     * @param bool $main
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getMain()
     {
@@ -290,6 +290,8 @@ class Process implements ProcessInterface
     }
 
     /**
+     * Gets all manual and all on enter events as manually executable ones.
+     *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
      */
     public function getManualEvents()
@@ -299,7 +301,7 @@ class Process implements ProcessInterface
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
                 $event = $transition->getEvent();
-                if ($event->isManual()) {
+                if ($event->isManual() || $event->isOnEnter()) {
                     $manuallyExecutableEventList[] = $event;
                 }
             }

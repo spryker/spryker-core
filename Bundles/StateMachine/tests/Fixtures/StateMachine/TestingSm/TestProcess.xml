@@ -42,7 +42,7 @@
                 <event>send invoice</event>
             </transition>
 
-            <transition happy="true" condition="Test/Condition">
+            <transition happy="true" condition="Test/IsInvoiceSent">
                 <source>invoice sent</source>
                 <target>order exported</target>
                  <event>export order</event>
@@ -68,7 +68,7 @@
                 <event>check with condition</event>
             </transition>
 
-            <transition  condition="Test/Condition">
+            <transition condition="Test/Condition">
                 <source>state with condition</source>
                 <target>order shipped</target>
             </transition>
@@ -143,8 +143,8 @@
         </transitions>
 
         <events>
-            <event name="create invoice" onEnter="true" command="Test/Command" />
-            <event name="send invoice" onEnter="true" />
+            <event name="create invoice" onEnter="true" command="Test/CreateInvoice" />
+            <event name="send invoice" onEnter="true" command="Test/SendInvoice"/>
             <event name="export order" onEnter="true" />
             <event name="ship order" manual="true" />
             <event name="check with condition" manual="true" />
