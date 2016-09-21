@@ -9,7 +9,7 @@
     <ul class="nav nav-tabs">
         {% for tab in tabsViewTransfer.tabs %}
             <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}">
-                <a href="#tab-content-{{ tab.name }}" data-toggle="tab">{{ tab.title }}</a>
+                <a href="#tab-content-{{ tab.name }}" data-toggle="tab">{{ tab.title | trans }}</a>
             </li>
         {% endfor %}
     </ul>
