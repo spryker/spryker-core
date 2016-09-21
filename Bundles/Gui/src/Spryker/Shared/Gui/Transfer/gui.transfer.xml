@@ -34,7 +34,7 @@
 
     <transfer name="ZedTabsView">
         <property name="tabs" type="ZedTab[]" singular="tab" />
-        <property name="active" type="string"/>
+        <property name="activeTabName" type="string"/>
         <property name="footerTemplate" type="string"/>
         <property name="isNavigable" type="bool"/>
     </transfer>

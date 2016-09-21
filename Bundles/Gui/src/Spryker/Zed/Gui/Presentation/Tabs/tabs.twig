@@ -8,7 +8,7 @@
 <div class="tabs-container {% if zedTabsViewTransfer.isNavigable %}tabs-navigable{% endif %}">
     <ul class="nav nav-tabs">
         {% for tab in zedTabsViewTransfer.tabs %}
-            <li class="{% if zedTabsViewTransfer.active == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}">
+            <li class="{% if zedTabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}">
                 <a href="#tab-content-{{ tab.name }}" data-toggle="tab">{{ tab.title }}</a>
             </li>
         {% endfor %}
@@ -16,7 +16,7 @@
 
     <div class="tab-content">
         {% for tab in zedTabsViewTransfer.tabs %}
-            <div id="tab-content-{{ tab.name }}" class="tab-pane {% if zedTabsViewTransfer.active == tab.name %}active{% endif %}">
+            <div id="tab-content-{{ tab.name }}" class="tab-pane {% if zedTabsViewTransfer.activeTabName == tab.name %}active{% endif %}">
                 <div class="panel-body">
                     {% include tab.template %}
                 </div>

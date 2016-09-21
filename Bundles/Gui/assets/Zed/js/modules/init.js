@@ -13,13 +13,13 @@ $(document).ready(function() {
     // editor
     $('.html-editor').summernote(editor.getConfig());
 
-    /** Draw data tables */
+    /* Draw data tables */
     $('.gui-table-data').dataTable({
         scrollX: 'auto',
         autoWidth: false
     });
 
-    /** Draw data tables without search */
+    /* Draw data tables without search */
     $('.gui-table-data-no-search').dataTable({
         bFilter: false,
         bInfo: false,
@@ -27,7 +27,7 @@ $(document).ready(function() {
         autoWidth: false
     });
 
-    /** all elements with the same class will have the same height */
+    /* All elements with the same class will have the same height */
     $('.fix-height').sprykerFixHeight();
 
     $('.spryker-form-autocomplete').each(function(key, value) {
@@ -41,7 +41,7 @@ $(document).ready(function() {
         });
     });
 
-    /** trigger change status active|inactive with an ajax call when click on checkbox */
+    /* Trigger change status active|inactive with an ajax call when click on checkbox */
     $('.gui-table-data').on('click', '.active-checkbox', function() {
         var elementId = $(this).attr('id').replace('active-', '');
         spyAj.setUrl('/discount/voucher/status').changeActiveStatus(elementId);
@@ -69,7 +69,7 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
     $('.spryker-form-select2combobox').select2();
 
-    /** Navigable tabs */
+    /* Navigable tabs */
     $('.tabs-container.tabs-navigable').each(function(index, item){
         new TabsNavigation(item);
     });

@@ -43,9 +43,9 @@ abstract class AbstractTabs implements TabsInterface
      */
     private function ensureActive(ZedTabsViewTransfer $zedTabsViewTransfer)
     {
-        if ($zedTabsViewTransfer->getActive() === null && $zedTabsViewTransfer->getTabs()->count()) {
+        if ($zedTabsViewTransfer->getActiveTabName() === null && $zedTabsViewTransfer->getTabs()->count()) {
             $firstTabName = $zedTabsViewTransfer->getTabs()[0]->getName();
-            $zedTabsViewTransfer->setActive($firstTabName);
+            $zedTabsViewTransfer->setActiveTabName($firstTabName);
         }
     }
 
