@@ -14,56 +14,13 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Discount' | trans } %}
-
-        {% block widget_content %}
-
-            <div class="tabs-container tabs-manager">
-                <ul id="discount-tabs" class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a class="tab-item" data-toggle="tab" href="#general">{{ 'General information' | trans }}</a></li>
-                    <li role="presentation"><a class="tab-item" data-toggle="tab" href="#discount">{{ 'Discount calculation' | trans }}</a></li>
-                    <li role="presentation"><a class="tab-item" data-toggle="tab" href="#conditions">{{ 'Conditions' | trans }}</a></li>
-                    {% if  discountConfigurator.discountGeneral.discountType == 'voucher' %}
-                       <li role="presentation"><a class="tab-item" data-toggle="tab" href="#codes">{{ 'Voucher codes' | trans }}</a></li>
-                    {% endif %}
-                </ul>
-
-                <div class="tab-content ">
-
-                    <div id="general" class="tab-pane active">
-                        <div class="panel-body">
-                            {{ form_start(discountForm, {attr: {'id' : 'discount-form'}}) }}
-                            {% include '@Discount/Index/partial/general.twig' %}
-                        </div>
-                    </div>
-                    <div id="discount" class="tab-pane">
-                        <div class="panel-body">
-                            {% include '@Discount/Index/partial/calculation.twig' %}
-                        </div>
-                    </div>
-                    <div id="conditions" class="tab-pane">
-                        <div class="panel-body">
-                            {% include '@Discount/Index/partial/condition.twig' %}
-                            {{ form_end(discountForm) }}
-                        </div>
-                    </div>
-
-                    {% if  discountConfigurator.discountGeneral.discountType == 'voucher' %}
-                    <div id="codes" class="tab-pane">
-                        <div class="panel-body">
-                            {% include '@Discount/Index/partial/voucher.twig' %}
-                        </div>
-                    </div>
-                    {% endif %}
-                </div>
-                <hr>
-                {% include '@Discount/Index/_form-submit.twig' %}
-            </div>
-
-
-        {% endblock %}
-
-    {% endembed %}
+    {{ tabs(discountFormTabs, {
+        'discountForm': discountForm,
+        'voucherForm': voucherForm,
+        'discountConfigurator': discountConfigurator,
+        'idDiscount': idDiscount,
+        'voucherCodesTable': voucherCodesTable
+    }) }}
 
 {% endblock %}
 

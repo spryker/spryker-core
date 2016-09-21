@@ -52,8 +52,13 @@ class IndexController extends AbstractController
             );
         }
 
+        $discountFormTabs = $this
+            ->getFactory()
+            ->createDiscountFormTabs($discountForm);
+
         return array_merge([
             'discountForm' => $discountForm->createView(),
+            'discountFormTabs' => $discountFormTabs->createView(),
         ]);
     }
 
@@ -85,12 +90,17 @@ class IndexController extends AbstractController
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
 
+        $discountFormTabs = $this
+            ->getFactory()
+            ->createDiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
+
         return [
             'discountForm' => $discountForm->createView(),
             'idDiscount' => $idDiscount,
             'voucherCodesTable' => $voucherCodesTable,
             'voucherForm' => $voucherForm->createView(),
             'discountConfigurator' => $discountConfiguratorTransfer,
+            'discountFormTabs' => $discountFormTabs->createView(),
         ];
     }
 
