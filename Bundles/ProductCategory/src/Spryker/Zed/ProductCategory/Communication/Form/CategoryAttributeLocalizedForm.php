@@ -69,6 +69,7 @@ class CategoryAttributeLocalizedForm extends AbstractType
         $builder
             ->add(self::FIELD_META_TITLE, 'text', [
                 'label' => 'Meta Title',
+                'required' => false,
             ]);
 
         return $this;
@@ -84,6 +85,7 @@ class CategoryAttributeLocalizedForm extends AbstractType
         $builder
             ->add(self::FIELD_META_DESCRIPTION, 'textarea', [
                 'label' => 'Meta Description',
+                'required' => false,
             ]);
 
         return $this;
@@ -99,6 +101,7 @@ class CategoryAttributeLocalizedForm extends AbstractType
         $builder
             ->add(self::FIELD_META_KEYWORDS, 'textarea', [
                 'label' => 'Meta Keywords',
+                'required' => false,
             ]);
 
         return $this;

@@ -51,7 +51,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return array
      */
     public function nodeAction(Request $request)
     {

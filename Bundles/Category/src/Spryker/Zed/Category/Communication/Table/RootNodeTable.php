@@ -115,9 +115,10 @@ class RootNodeTable extends AbstractTable
             Url::generate(self::URL_PRODUCT_CATEGORY_ADD, [
                 self::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
             ]),
-            '<i class="fa fa-plus"></i></a>',
+            '<i class="fa fa-plus"></i>',
             [
                 self::BUTTON_ICON => null,
+                'title' => 'Add Category to this node'
             ]
         );
 
@@ -129,6 +130,7 @@ class RootNodeTable extends AbstractTable
             [
                 self::BUTTON_ICON => null,
                 'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE]),
+                'title' => 'Reorder assigned Categories'
             ]
         );
 
