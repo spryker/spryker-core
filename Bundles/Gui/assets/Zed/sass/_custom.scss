@@ -172,3 +172,42 @@ table.dataTable thead th.sorting_desc:after {
 }
 /* .. datatables sorting icons */
 
+/* Nested panels... */
+.ibox.nested {
+  margin-bottom: 5px;
+
+  .ibox-title {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+  }
+
+  .ibox-content {
+    border: 1px solid #ddd;
+  }
+}
+/* .. Nested panels */
+
+/* Tabs .. */
+.tabs-container {
+  .nav-tabs {
+    li.error {
+      a {
+        color: #a94442 !important;
+      }
+    }
+    li.error:not(.active) {
+      a {
+        border-color: #ebccd1;
+        background-color: #f2dede;
+      }
+    }
+  }
+}
+.tabs-footer {
+  color: inherit;
+  border: 1px solid #e7eaec;
+  border-top: none;
+  background: #ffffff;
+  padding: 10px 15px;
+}
+/* .. Tabs */

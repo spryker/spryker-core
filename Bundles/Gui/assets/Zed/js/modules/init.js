@@ -7,6 +7,7 @@
 
 var SprykerAjax = require('./legacy/SprykerAjax');
 var editor = require('ZedGuiEditorConfiguration');
+var TabsNavigation = require('./libs/tabs-navigation');
 
 $(document).ready(function() {
     // editor
@@ -67,4 +68,9 @@ $(document).ready(function() {
 
     $('.dropdown-toggle').dropdown();
     $('.spryker-form-select2combobox').select2();
+
+    /** Navigable tabs */
+    $('.tabs-container.tabs-navigable').each(function(index, item){
+        new TabsNavigation(item);
+    });
 });
