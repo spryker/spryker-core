@@ -30,14 +30,14 @@ abstract class AbstractTabs implements TabsInterface
     }
 
     /**
-     * @param ZedTabsViewTransfer $zedTabsViewTransfer
+     * @param \Generated\Shared\Transfer\ZedTabsViewTransfer $zedTabsViewTransfer
      *
      * @return \Generated\Shared\Transfer\ZedTabsViewTransfer
      */
     abstract protected function build(ZedTabsViewTransfer $zedTabsViewTransfer);
 
     /**
-     * @param ZedTabsViewTransfer $zedTabsViewTransfer
+     * @param \Generated\Shared\Transfer\ZedTabsViewTransfer $zedTabsViewTransfer
      *
      * @return void
      */
