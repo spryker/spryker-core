@@ -13,7 +13,7 @@ use Spryker\Zed\ProductSearch\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Symfony\Component\Form\FormInterface;
 
-class AttributeFormTransferGenerator implements AttributeFormTransferGeneratorInterface
+class AttributeFormTransferBuilder implements AttributeFormTransferBuilderInterface
 {
 
     /**

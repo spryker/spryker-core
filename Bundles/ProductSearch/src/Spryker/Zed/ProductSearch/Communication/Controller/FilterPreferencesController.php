@@ -68,7 +68,7 @@ class FilterPreferencesController extends AbstractController
         if ($form->isValid()) {
             $productSearchAttributeTransfer = $this
                 ->getFactory()
-                ->createAttributeFormTransferGenerator()
+                ->createAttributeFormTransferBuilder()
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
@@ -109,7 +109,7 @@ class FilterPreferencesController extends AbstractController
         if ($form->isValid()) {
             $productSearchAttributeTransfer = $this
                 ->getFactory()
-                ->createAttributeFormTransferGenerator()
+                ->createAttributeFormTransferBuilder()
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);

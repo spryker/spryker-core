@@ -15,8 +15,8 @@ use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Table\FilterPreferencesTable;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
-use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferGenerator;
-use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListGenerator;
+use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferBuilder;
+use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListBuilder;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -108,11 +108,11 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferGeneratorInterface
+     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferBuilderInterface
      */
-    public function createAttributeFormTransferGenerator()
+    public function createAttributeFormTransferBuilder()
     {
-        return new AttributeFormTransferGenerator();
+        return new AttributeFormTransferBuilder();
     }
 
     /**
@@ -124,11 +124,11 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListGeneratorInterface
+     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListBuilderInterface
      */
-    public function createSortedProductSearchTransferListGenerator()
+    public function createSortedProductSearchTransferListBuilder()
     {
-        return new SortedProductSearchTransferListGenerator();
+        return new SortedProductSearchTransferListBuilder();
     }
 
 }

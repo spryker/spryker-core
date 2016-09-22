@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSearch\Communication\Transfer;
 
 use Symfony\Component\Form\FormInterface;
 
-interface AttributeFormTransferGeneratorInterface
+interface AttributeFormTransferBuilderInterface
 {
 
     /**

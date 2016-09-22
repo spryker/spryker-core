@@ -15,7 +15,7 @@ use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 
-class ProductAttributeTransferGenerator implements ProductAttributeTransferGeneratorInterface
+class ProductAttributeTransferBuilder implements ProductAttributeTransferBuilderInterface
 {
 
     /**

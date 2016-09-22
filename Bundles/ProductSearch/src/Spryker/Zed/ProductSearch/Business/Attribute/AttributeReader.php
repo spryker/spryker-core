@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
-use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGeneratorInterface;
+use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferBuilderInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
@@ -27,23 +27,23 @@ class AttributeReader implements AttributeReaderInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferBuilderInterface
      */
-    protected $productAttributeTransferGenerator;
+    protected $productAttributeTransferBuilder;
 
     /**
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGeneratorInterface $productAttributeTransferGenerator
+     * @param \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferBuilderInterface $productAttributeTransferBuilder
      */
     public function __construct(
         ProductSearchQueryContainerInterface $productSearchQueryContainer,
         ProductSearchToLocaleInterface $localeFacade,
-        ProductAttributeTransferGeneratorInterface $productAttributeTransferGenerator
+        ProductAttributeTransferBuilderInterface $productAttributeTransferBuilder
     ) {
         $this->productSearchQueryContainer = $productSearchQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->productAttributeTransferGenerator = $productAttributeTransferGenerator;
+        $this->productAttributeTransferBuilder = $productAttributeTransferBuilder;
     }
 
     /**
@@ -59,7 +59,7 @@ class AttributeReader implements AttributeReaderInterface
             return null;
         }
 
-        return $this->productAttributeTransferGenerator
+        return $this->productAttributeTransferBuilder
             ->convertProductAttribute($attributeEntity);
     }
 
@@ -110,7 +110,7 @@ class AttributeReader implements AttributeReaderInterface
             ->find();
 
         foreach ($productSearchAttributeEntities as $productSearchAttributeEntity) {
-            $productSearchAttributes[] = $this->productAttributeTransferGenerator
+            $productSearchAttributes[] = $this->productAttributeTransferBuilder
                 ->convertProductAttribute($productSearchAttributeEntity);
         }
 

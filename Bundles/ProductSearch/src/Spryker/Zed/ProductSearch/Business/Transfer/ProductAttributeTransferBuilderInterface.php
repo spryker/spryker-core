@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSearch\Business\Transfer;
 
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
 
-interface ProductAttributeTransferGeneratorInterface
+interface ProductAttributeTransferBuilderInterface
 {
 
     /**

@@ -21,7 +21,7 @@ use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMapMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigExtensionMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
-use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGenerator;
+use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferBuilder;
 use Spryker\Zed\ProductSearch\Persistence\Collector\Propel\ProductSearchConfigExtensionCollectorQuery;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
@@ -151,16 +151,16 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new AttributeReader(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createProductAttributeTransferGenerator()
+            $this->createProductAttributeTransferBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferBuilderInterface
      */
-    protected function createProductAttributeTransferGenerator()
+    protected function createProductAttributeTransferBuilder()
     {
-        return new ProductAttributeTransferGenerator(
+        return new ProductAttributeTransferBuilder(
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
             $this->createFilterGlossaryKeyBuilder()
