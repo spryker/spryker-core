@@ -203,7 +203,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Symfony\Component\Form\FormInterface $discountForm
-     * @param \Symfony\Component\Form\FormInterface $voucherForm
+     * @param \Symfony\Component\Form\FormInterface|null $voucherForm
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfigurator
      *
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
