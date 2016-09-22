@@ -12,8 +12,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Session\Business\Handler\NativeRedisSessionHandler;
-use Spryker\Shared\Session\Business\Handler\RedisSessionHandler;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
