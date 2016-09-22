@@ -3,7 +3,7 @@
 {% block section_title 'View discount' %}
 
 {% block action %}
-    {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfiguratorTransfer.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}
+    {{ editActionButton(url('/discount/index/edit', {'id-discount' : discountConfigurator.discountGeneral.idDiscount}), 'Edit' | trans, {'id': 'create-discount-button'}) }}
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
 
@@ -17,22 +17,22 @@
                <tr>
                    <td style="width: 150px;">{{ 'Discount Type:' | trans }}</td>
                    <td>
-                       {{ discountConfiguratorTransfer.discountGeneral.discountType|replace('_', ' ')|trans  }}
+                       {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
                    </td>
                </tr>
                <tr>
                    <td>{{ 'Name:' | trans }}</td>
-                   <td>{{ discountConfiguratorTransfer.discountGeneral.displayName }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.displayName }}</td>
                </tr>
                <tr>
                    <td>{{ 'Description:' | trans }}</td>
-                   <td>{{ discountConfiguratorTransfer.discountGeneral.description }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.description }}</td>
                </tr>
 
                <tr>
                    <td>{{ 'Exclusive:' | trans }}</td>
                    <td>
-                       {% if discountConfiguratorTransfer.discountGeneral.isExclusive %}
+                       {% if discountConfigurator.discountGeneral.isExclusive %}
                            {{ 'Yes' | trans }}
                        {% else %}
                            {{ 'No' | trans }}
@@ -41,11 +41,11 @@
                </tr>
                <tr>
                    <td>{{ 'Valid from:' | trans }}</td>
-                   <td>{{ discountConfiguratorTransfer.discountGeneral.validFrom|date }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.validFrom|date }}</td>
                </tr>
                <tr>
                    <td>{{ 'Valid until:' | trans }}</td>
-                   <td>{{ discountConfiguratorTransfer.discountGeneral.validTo|date }}</td>
+                   <td>{{ discountConfigurator.discountGeneral.validTo|date }}</td>
                </tr>
            </table>
 
@@ -53,15 +53,15 @@
           <table class="table">
               <tr>
                   <td style="width: 150px;">{{ 'Type:' | trans }}</td>
-                  <td>{{ discountConfiguratorTransfer.discountCalculator.calculatorPlugin|replace({'_' :' ', 'PLUGIN' : ''})|capitalize }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.calculatorPlugin|replace({'_' :' ', 'PLUGIN' : ''})|capitalize }}</td>
               </tr>
               <tr>
                   <td>{{ 'Amount:' | trans }}</td>
-                  <td>{{ discountConfiguratorTransfer.discountCalculator.amount }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.amount }}</td>
               </tr>
               <tr>
                   <td>{{ 'Apply to:' | trans }}</td>
-                  <td>{{ discountConfiguratorTransfer.discountCalculator.collectorQueryString }}</td>
+                  <td>{{ discountConfigurator.discountCalculator.collectorQueryString }}</td>
               </tr>
           </table>
 
@@ -70,8 +70,8 @@
           <table class="table">
               <tr>
                   <td>
-                      {% if discountConfiguratorTransfer.discountCondition.decisionRuleQueryString %}
-                        {{ discountConfiguratorTransfer.discountCondition.decisionRuleQueryString }}
+                      {% if discountConfigurator.discountCondition.decisionRuleQueryString %}
+                        {{ discountConfigurator.discountCondition.decisionRuleQueryString }}
                       {% else %}
                           {{  'No conditions, discount always applied.' | trans }}
                       {% endif %}
@@ -79,7 +79,7 @@
               </tr>
           </table>
 
-            {% if discountConfiguratorTransfer.discountGeneral.discountType == 'voucher' %}
+            {% if discountConfigurator.discountGeneral.discountType == 'voucher' %}
                 <hr>
                 <p><strong>{{ 'Generated Discount Codes' | trans }}</strong></p>
                 {{ voucherCodesTable | raw }}
