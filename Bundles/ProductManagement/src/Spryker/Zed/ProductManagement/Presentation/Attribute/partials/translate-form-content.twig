@@ -2,87 +2,46 @@
     {% set readOnly = false %}
 {% endif %}
 
-<div class="well">
-    <div class="tabs-container">
-        <ul class="nav nav-tabs">
-            {% for locale,localizedAttribute in form.translations %}
-                {% set activeClass = '' %}
-                {% set invalidClass = '' %}
+<div class="form-group">
+    {% for locale,localizedAttribute in form.translations %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale, 'collapsed': (not loop.first), 'hasError': (not localizedAttribute.vars.valid) } %}
+            {% block content %}
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        {{ form_row(localizedAttribute.id_product_management_attribute) }}
 
-                {% if currentLocale == locale %}
-                    {% set activeClass =  'active' %}
-                {% endif %}
-
-                {% if errors.general is defined %}
-                    {% if locale in errors.general|keys %}
-                        {% set invalidClass = 'invalid-tab' %}
-                    {% endif %}
-                {% endif %}
-
-                <li class="{{ activeClass }} {{ invalidClass }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
-            {% endfor %}
-        </ul>
-
-        <div class="tab-content">
-            {% for locale,localizedAttribute in form.translations %}
-                {% set activeClass = '' %}
-                {% if currentLocale == locale %}
-                    {% set activeClass = 'active' %}
-                {% endif %}
-
-                <div id="content_{{ locale }}" class="tab-pane {{ activeClass }} tab-translation">
-                    <div class="panel-body">
-                        <div class="row form-group">
-                            <div class="col-sm-4">
-                                {{ form_row(localizedAttribute.id_product_management_attribute) }}
-
-                                {{ form_row(localizedAttribute.key) }}
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(localizedAttribute.key_translation) }}
-                                    {% if not readOnly %}
-                                        <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="name-translation">{{ 'Copy to other languages' | trans }}</a>
-                                    {% endif %}
-                                    {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation'}}) }}
-                                    {{ form_errors(localizedAttribute.key_translation) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        {{ form_row(localizedAttribute.translate_values, {'attr': {'class': 'translate_values_checkbox'}}) }}
-
-                        <div class="value_translation_container">
-                            {% if localizedAttribute.value_translations|length %}
-                                <div class="row form-group">
-                                    <div class="col-sm-4">
-                                        <label class="control-label">{{ form_label(localizedAttribute.value_translations) }}</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        {% if not readOnly %}
-                                            <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="value-translation">{{ 'Copy to other languages' | trans }}</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                {% for valueTranslationForm in localizedAttribute.value_translations %}
-                                    <div class="row form-group">
-                                        <div class="col-sm-4">
-                                            {{ form_widget(valueTranslationForm.id_product_management_attribute_value) }}
-                                            {{ form_widget(valueTranslationForm.value) }}
-                                        </div>
-                                        <div class="col-sm-8 {% if valueTranslationForm.translation.vars.errors|length %}has-error{% endif %}">
-                                            {{ form_widget(valueTranslationForm.translation, {'attr': {'class': 'value-translation'}}) }}
-                                            {{ form_errors(valueTranslationForm.translation) }}
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                {{ form_widget(localizedAttribute.value_translations) }}
-                            {% endif %}
+                        {{ form_row(localizedAttribute.key) }}
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(localizedAttribute.key_translation) }}
+                            {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation', 'data-translation-key': localizedAttribute.key.vars.value}}) }}
+                            {{ form_errors(localizedAttribute.key_translation) }}
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    </div>
+
+                {{ form_row(localizedAttribute.translate_values, {'attr': {'class': 'translate_values_checkbox'}}) }}
+
+                <div class="value_translation_container">
+                    {% if localizedAttribute.value_translations|length %}
+                        {% for valueTranslationForm in localizedAttribute.value_translations %}
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    {{ form_widget(valueTranslationForm.id_product_management_attribute_value) }}
+                                    {{ form_widget(valueTranslationForm.value) }}
+                                </div>
+                                <div class="col-sm-8 {% if valueTranslationForm.translation.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_widget(valueTranslationForm.translation, {'attr': {'class': 'value-translation', 'data-translation-key': valueTranslationForm.value.vars.value}}) }}
+                                    {{ form_errors(valueTranslationForm.translation) }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ form_widget(localizedAttribute.value_translations) }}
+                    {% endif %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
 </div>

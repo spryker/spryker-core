@@ -47,57 +47,48 @@
                     <td>{{ (attributeTransfer.allowInput ? 'yes' : 'no') | trans }}</td>
                 </tr>
             </table>
+        {% endblock %}
+    {% endembed %}
 
-            <div class="tabs-container well">
-                <ul class="nav nav-tabs">
-                    {% for locale in locales %}
-                        <li class="{% if loop.first %}active{% endif %}"><a href="#{{ locale.localeName }}" data-toggle="tab">{{ locale.localeName }}</a></li>
-                    {% endfor %}
-                </ul>
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Translations' } %}
+        {% block widget_content %}
+            {% for locale in locales %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (not loop.first) } %}
+                    {% block content %}
+                        <h4>{{ 'Attribute name translation' | trans }}</h4>
+                        <table class="table">
+                            <tr>
+                                <td style="width: 220px;">{{ attributeTransfer.key }}:</td>
+                                <td>
+                                    {% for localizedAttributeKeyTransfer in attributeTransfer.localizedKeys %}
+                                        {% if localizedAttributeKeyTransfer.localeName == locale.localeName %}
+                                            {{ localizedAttributeKeyTransfer.keyTranslation }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
 
-                <div class="tab-content">
-
-                    {% for locale in locales %}
-                        <div id="{{ locale.localeName }}" class="tab-pane {% if loop.first %}active{% endif %}">
-                            <div class="panel-body">
-
-                                <h4>{{ 'Attribute name translation' | trans }}</h4>
-                                <table class="table">
+                        {% if attributeTransfer.values|length and attributeTransfer.values[0].localizedValues|length %}
+                            <h4>{{ 'Predefined value translations' | trans }}</h4>
+                            <table class="table">
+                                {% for valueTransfer in attributeTransfer.values %}
                                     <tr>
-                                        <td style="width: 220px;">{{ attributeTransfer.key }}:</td>
+                                        <td style="width: 220px;">{{ valueTransfer.value }}:</td>
                                         <td>
-                                            {% for localizedAttributeKeyTransfer in attributeTransfer.localizedKeys %}
-                                                {% if localizedAttributeKeyTransfer.localeName == locale.localeName %}
-                                                    {{ localizedAttributeKeyTransfer.keyTranslation }}
+                                            {% for localizedAttributeValueTransfer in valueTransfer.localizedValues %}
+                                                {% if localizedAttributeValueTransfer.fkLocale == locale.idLocale %}
+                                                    {{ localizedAttributeValueTransfer.translation }}
                                                 {% endif %}
                                             {% endfor %}
                                         </td>
                                     </tr>
-                                </table>
-
-                                {% if attributeTransfer.values|length and attributeTransfer.values[0].localizedValues|length %}
-                                    <h4>{{ 'Predefined value translations' | trans }}</h4>
-                                    <table class="table">
-                                        {% for valueTransfer in attributeTransfer.values %}
-                                            <tr>
-                                                <td style="width: 220px;">{{ valueTransfer.value }}:</td>
-                                                <td>
-                                                    {% for localizedAttributeValueTransfer in valueTransfer.localizedValues %}
-                                                        {% if localizedAttributeValueTransfer.fkLocale == locale.idLocale %}
-                                                            {{ localizedAttributeValueTransfer.translation }}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                </div>
-            </div>
+                                {% endfor %}
+                            </table>
+                        {% endif %}
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
 
         {% endblock %}
     {% endembed %}

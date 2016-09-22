@@ -4,19 +4,19 @@
         <li class="disabled"><a>{{ '2. Translations' | trans }}</a></li>
     </ul>
 
-    <div class="tab-content">
-        <div id="tab_general" class="tab-pane active">
-            <div class="panel-body">
-                {{ form_start(form) }}
+    {{ form_start(form) }}
+        <div class="tab-content">
+            <div id="tab_general" class="tab-pane active">
+                <div class="panel-body">
 
-                <div class="well">
                     {% include '@ProductManagement/Attribute/partials/attribute-form-content.twig' %}
+
                 </div>
-
-                <input type="submit" class="btn btn-primary" value="{{ 'Next' | trans }} " />
-
-                {{ form_end(form) }}
             </div>
         </div>
-    </div>
+
+        <div class="tabs-footer">
+            <input type="submit" class="btn btn-primary" value="{{ 'Next' | trans }} " />
+        </div>
+    {{ form_end(form) }}
 </div>
