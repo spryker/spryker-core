@@ -56,10 +56,10 @@ class IndexController extends AbstractController
             ->getFactory()
             ->createDiscountFormTabs($discountForm);
 
-        return array_merge([
+        return [
             'discountForm' => $discountForm->createView(),
             'discountFormTabs' => $discountFormTabs->createView(),
-        ]);
+        ];
     }
 
     /**
