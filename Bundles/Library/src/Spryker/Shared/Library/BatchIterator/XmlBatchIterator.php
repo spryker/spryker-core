@@ -81,8 +81,6 @@ class XmlBatchIterator implements CountableIteratorInterface
                 );
 
                 $this->batchData = $this->batchData[$this->rootNodeName];
-            } catch (\Throwable $exception) {
-                $this->batchData = [];
             } catch (\Exception $exception) {
                 $this->batchData = [];
             }

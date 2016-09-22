@@ -237,9 +237,6 @@ class TouchRecord implements TouchRecordInterface
                     SpyTouchTableMap::COL_ITEM_EVENT_DELETED
                 );
             $deletedCount = $this->removeTouchEntries($touchListQuery);
-        } catch (\Throwable $exception) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (\Exception $exception) {
             $this->touchQueryContainer->getConnection()->rollBack();
             throw $exception;

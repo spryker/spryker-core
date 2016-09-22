@@ -60,10 +60,6 @@ class ErrorLogger
             $event->setField(Event::FIELD_NAME, 'exception');
             self::addDeploymentInformation($event);
             $eventJournal->saveEvent($event);
-        } catch (\Throwable $internalException) {
-            if (!$ignoreInternalExceptions) {
-                self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
-            }
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
                 self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
@@ -88,10 +84,6 @@ class ErrorLogger
         try {
             $message = $message = get_class($exception) . ' - ' . $exception->getMessage() . ' in file "' . $exception->getFile() . '"';
             $newRelicApi->noticeError($message, $exception);
-        } catch (\Throwable $internalException) {
-            if (!$ignoreInternalExceptions) {
-                self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
-            }
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
                 self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
@@ -115,9 +107,6 @@ class ErrorLogger
             $message = ErrorRenderer::renderException($exception);
 
             Log::log($message, 'exception.log');
-        } catch (\Throwable $internalException) {
-            self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
-            self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
         } catch (\Exception $internalException) {
             self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
             self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);

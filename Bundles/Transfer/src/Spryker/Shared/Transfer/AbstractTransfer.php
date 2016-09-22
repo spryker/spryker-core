@@ -453,11 +453,6 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
         try {
             $this->fromArray(Json::decode($serialized, true), true);
             $this->initCollectionProperties();
-        } catch (\Throwable $throwable) {
-            throw new TransferUnserializationException(sprintf(
-                'Failed to unserialize %s. Updating or clearing your data source may solve this problem.',
-                get_class($this)
-            ));
         } catch (\Exception $exception) {
             throw new TransferUnserializationException(sprintf(
                 'Failed to unserialize %s. Updating or clearing your data source may solve this problem.',

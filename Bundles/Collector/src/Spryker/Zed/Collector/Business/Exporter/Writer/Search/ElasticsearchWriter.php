@@ -88,8 +88,6 @@ class ElasticsearchWriter implements WriterInterface
             $this->index->flush(true);
 
             return $response->isOk();
-        } catch (\Throwable $exception) {
-            return true;
         } catch (\Exception $exception) {
             return true;
         }
