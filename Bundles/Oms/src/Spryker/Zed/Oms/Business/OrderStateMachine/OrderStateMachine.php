@@ -515,14 +515,6 @@ class OrderStateMachine implements OrderStateMachineInterface
 
                     return $orderItems;
                 }
-            } catch (Throwable $e) {
-                $log->setIsError(true);
-                $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
-                $log->saveAll();
-
-                if ($type !== self::BY_ITEM) {
-                    throw $e;
-                }
             } catch (Exception $e) {
                 $log->setIsError(true);
                 $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
