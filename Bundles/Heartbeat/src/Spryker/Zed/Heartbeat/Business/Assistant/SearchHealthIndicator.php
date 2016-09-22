@@ -44,9 +44,6 @@ class SearchHealthIndicator extends AbstractHealthIndicator implements HealthInd
     {
         try {
             $this->client->getStatus();
-        } catch (\Throwable $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_CONNECT_TO_SEARCH);
-            $this->addDysfunction($e->getMessage());
         } catch (\Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_CONNECT_TO_SEARCH);
             $this->addDysfunction($e->getMessage());

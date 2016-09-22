@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Session\Business\Handler\NativeRedisSessionHandler;
+use Spryker\Shared\Session\Business\Handler\RedisSessionHandler;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
@@ -45,6 +47,10 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function register(Application $app)
     {
+        $saveHandler = Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER);
+        $savePath = $this->getSavePath($saveHandler);
+        $app['session.storage.handler'] = new RedisSessionHandler($savePath);
+
         $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
 
         $app['session.storage.options'] = [
@@ -54,8 +60,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             'cookie_httponly' => true,
             'use_only_cookies' => true,
         ];
-
-        $this->client->setContainer($app['session']);
     }
 
     /**
@@ -69,8 +73,9 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return;
         }
 
+        $this->client->setContainer($app['session']);
+
         $saveHandler = Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER);
-        $savePath = $this->getSavePath($saveHandler);
 
         $sessionHelper = new SessionFactory();
 

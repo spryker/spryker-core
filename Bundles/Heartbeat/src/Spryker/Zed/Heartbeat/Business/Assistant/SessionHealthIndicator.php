@@ -33,9 +33,6 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $_SESSION[self::KEY_HEARTBEAT] = 'ok';
-        } catch (\Throwable $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_SESSION);
-            $this->addDysfunction($e->getMessage());
         } catch (\Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_SESSION);
             $this->addDysfunction($e->getMessage());
@@ -49,9 +46,6 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $status = $_SESSION[self::KEY_HEARTBEAT];
-        } catch (\Throwable $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_SESSION);
-            $this->addDysfunction($e->getMessage());
         } catch (\Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_SESSION);
             $this->addDysfunction($e->getMessage());

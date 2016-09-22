@@ -77,12 +77,6 @@ class SequenceNumber implements SequenceNumberInterface
             $sequence->save();
 
             $this->connection->commit();
-        } catch (\Throwable $e) {
-            $this->connection->rollback();
-
-            throw new InvalidSequenceNumberException(
-                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage()
-            );
         } catch (\Exception $e) {
             $this->connection->rollback();
 

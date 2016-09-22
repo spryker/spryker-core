@@ -50,10 +50,6 @@ class InitializeDatabaseConsole extends Console
                 $plugin->setMessenger($messenger);
                 $plugin->run();
             }
-        } catch (\Throwable $e) {
-            $this->error($e->getMessage());
-
-            return static::CODE_ERROR;
         } catch (\Exception $e) {
             $this->error($e->getMessage());
 

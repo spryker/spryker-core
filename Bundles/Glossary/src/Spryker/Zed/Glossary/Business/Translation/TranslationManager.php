@@ -392,9 +392,6 @@ class TranslationManager implements TranslationManagerInterface
             }
 
             Propel::getConnection()->commit();
-        } catch (\Throwable $e) {
-            Propel::getConnection()->rollBack();
-            throw $e;
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
             throw $e;
