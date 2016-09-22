@@ -24,6 +24,7 @@ class InstallmentSubForm extends SubFormAbstract
     const OPTION_MONTH_ALLOWED = 'interest_month';
 
     const FIELD_INTEREST_RATE = 'interest_rate';
+    const FIELD_INTEREST_RATE_DEFAULT = 'interest_rate_default';
     const FIELD_BANK_ACCOUNT_HOLDER = 'bank_account_holder';
     const FIELD_BANK_ACCOUNT_BIC = 'bank_account_bic';
     const FIELD_BANK_ACCOUNT_IBAN = 'bank_account_iban';
@@ -97,7 +98,9 @@ class InstallmentSubForm extends SubFormAbstract
             ->addBankAccountBic($builder)
             ->addBankAccountIban($builder)
             ->addAllowedMonth($builder, $options)
-            ->addInterestRate($builder);
+            ->addInterestRate($builder)
+            ->addInterestRateDefault($builder)
+        ;
     }
 
     /**
@@ -196,6 +199,28 @@ class InstallmentSubForm extends SubFormAbstract
 //                'required' => true,
                 'constraints' => [
 //                    $this->createNotBlankConstraint(),
+                ],
+                'attr' => [
+                ]
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addInterestRateDefault($builder)
+    {
+        $builder->add(
+            self::FIELD_INTEREST_RATE_DEFAULT,
+            'text',
+            [
+                'label' => false,
+                'constraints' => [
                 ],
                 'attr' => [
                     'readonly' => 'readonly'
