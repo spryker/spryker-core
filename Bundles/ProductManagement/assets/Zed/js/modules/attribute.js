@@ -23,24 +23,6 @@ $(document).ready(function() {
     });
 
     /**
-     * Copy translations to other languages on click
-     */
-    $('.copy-to-other-languages').on('click', function() {
-        var sourceTab = $(this).data('sourceTab');
-        var sourceInputClass = $(this).data('sourceInputClass');
-
-        $('#' + sourceTab).find('.' + sourceInputClass).each(function(i, input) {
-            var valueToCopy = $(input).val();
-
-            $('.tab-translation')
-                .not('#' + sourceTab)
-                .find('.' + sourceInputClass)
-                .eq(i)
-                .val(valueToCopy);
-        });
-    });
-
-    /**
      * Toggle predefined value translation
      */
     $('.translate_values_checkbox').on('change', function() {
