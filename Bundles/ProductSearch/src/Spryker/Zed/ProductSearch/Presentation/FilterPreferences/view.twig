@@ -31,38 +31,24 @@
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Translations' } %}
         {% block widget_content %}
-            <div class="tabs-container">
-                <div class="tabs-left">
-                    <ul class="nav nav-tabs">
-                        {% for locale in locales %}
-                            <li class="{% if loop.first %}active{% endif %}"><a href="#{{ locale.localeName }}" data-toggle="tab">{{ locale.localeName }}</a></li>
-                        {% endfor %}
-                    </ul>
-
-                    <div class="tab-content">
-
-                        {% for locale in locales %}
-                            <div id="{{ locale.localeName }}" class="tab-pane {% if loop.first %}active{% endif %}">
-                                <div class="panel-body">
-                                    <table>
-                                        <tr>
-                                            <th style="width: 220px;">{{ 'Filter name' | trans }}:</th>
-                                            <td>
-                                                {% for localizedAttributeKeyTransfer in attributeTransfer.localizedKeys %}
-                                                    {% if localizedAttributeKeyTransfer.localeName == locale.localeName %}
-                                                        {{ localizedAttributeKeyTransfer.keyTranslation }}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
+            {% for locale in locales %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (not loop.first) } %}
+                    {% block content %}
+                        <table>
+                            <tr>
+                                <th style="width: 220px;">{{ 'Filter name' | trans }}:</th>
+                                <td>
+                                    {% for localizedAttributeKeyTransfer in attributeTransfer.localizedKeys %}
+                                        {% if localizedAttributeKeyTransfer.localeName == locale.localeName %}
+                                            {{ localizedAttributeKeyTransfer.keyTranslation }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
 
         {% endblock %}
     {% endembed %}

@@ -16,62 +16,33 @@
 
             {{ form_start(form) }}
 
-                <div class="form-group {% if form.key.vars.errors|length %}has-error{% endif %}">
-                    {{ form_label(form.key) }}
-                    {{ form_widget(form.key) }}
-                    {% if not form.key.vars.disabled %}
-                        <span class="help-block">{{ 'Type first three letters of an attribute key for suggestions.' | trans }}</span>
-                    {% endif %}
-                    {{ form_errors(form.key) }}
-                </div>
+            <div class="form-group {% if form.key.vars.errors|length %}has-error{% endif %}">
+                {{ form_label(form.key) }}
+                {{ form_widget(form.key) }}
+                {% if not form.key.vars.disabled %}
+                    <span class="help-block">{{ 'Type first three letters of an attribute key for suggestions.' | trans }}</span>
+                {% endif %}
+                {{ form_errors(form.key) }}
+            </div>
 
-                {{ form_row(form.filter_type) }}
+            {{ form_row(form.filter_type) }}
 
-                <h4>{{ 'Translation' | trans }}</h4>
-                <div class="tabs-container">
-                    <div class="tabs-left">
-                        <ul class="nav nav-tabs">
-                            {% for locale,localizedAttribute in form.translations %}
-                                {% set activeClass = '' %}
-                                {% set invalidClass = '' %}
+            <h4>{{ 'Translations' | trans }}</h4>
+            <div class="form-group">
+                {% for locale,localizedAttribute in form.translations %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale, 'collapsed': (not loop.first), 'hasError': (not localizedAttribute.vars.valid) } %}
+                        {% block content %}
+                            <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
+                                {{ form_label(localizedAttribute.key_translation) }}
+                                {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation', 'data-translation-key': localizedAttribute.key_translation.vars.name}}) }}
+                                {{ form_errors(localizedAttribute.key_translation) }}
+                            </div>
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
 
-                                {% if currentLocale == locale %}
-                                    {% set activeClass =  'active' %}
-                                {% endif %}
-
-                                {% if errors.general is defined %}
-                                    {% if locale in errors.general|keys %}
-                                        {% set invalidClass = 'invalid-tab' %}
-                                    {% endif %}
-                                {% endif %}
-
-                                <li class="{{ activeClass }} {{ invalidClass }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
-                            {% endfor %}
-                        </ul>
-
-                        <div class="tab-content">
-                            {% for locale,localizedAttribute in form.translations %}
-                                {% set activeClass = '' %}
-                                {% if currentLocale == locale %}
-                                    {% set activeClass = 'active' %}
-                                {% endif %}
-
-                                <div id="content_{{ locale }}" class="tab-pane {{ activeClass }} tab-translation">
-                                    <div class="panel-body">
-                                        <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
-                                            {{ form_label(localizedAttribute.key_translation) }}
-                                            <a class="btn btn-xs btn-link copy-to-other-languages" data-source-tab="content_{{ locale }}" data-source-input-class="name-translation">{{ 'Copy to other languages' | trans }}</a>
-                                            {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation'}}) }}
-                                            {{ form_errors(localizedAttribute.key_translation) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-
-                <input id="{{ form.vars.name }}_submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }} " />
+            <input id="{{ form.vars.name }}_submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }} " />
 
             {{ form_end(form) }}
 
