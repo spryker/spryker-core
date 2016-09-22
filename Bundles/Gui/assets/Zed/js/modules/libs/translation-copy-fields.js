@@ -40,8 +40,9 @@ TranslationCopyFields.prototype.addCopyButtons = function() {
  */
 TranslationCopyFields.prototype.copy = function(button, field) {
     var self = this;
+    var selector = 'input[' + self.translationDataAttributeName + '="' + $(field).data(self.translationDataAttribute) + '"]';
 
-    $('input[' + self.translationDataAttributeName + '="' + $(field).data(self.translationDataAttribute) + '"]').val(field.value);
+    $(selector).val(field.value);
 
     button.find('span')
         .removeClass('fa-copy')

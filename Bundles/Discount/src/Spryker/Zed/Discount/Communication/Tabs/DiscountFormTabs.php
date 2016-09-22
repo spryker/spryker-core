@@ -30,18 +30,21 @@ class DiscountFormTabs extends AbstractTabs
     /**
      * @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    protected $discountConfigurator;
+    protected $discountConfiguratorTransfer;
 
     /**
      * @param \Symfony\Component\Form\FormInterface $discountForm
      * @param \Symfony\Component\Form\FormInterface|null $voucherForm
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfigurator
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfiguratorTransfer
      */
-    public function __construct(FormInterface $discountForm, FormInterface $voucherForm = null, DiscountConfiguratorTransfer $discountConfigurator = null)
-    {
+    public function __construct(
+        FormInterface $discountForm,
+        FormInterface $voucherForm = null,
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
+    ) {
         $this->discountForm = $discountForm;
         $this->voucherForm = $voucherForm;
-        $this->discountConfigurator = $discountConfigurator;
+        $this->discountConfiguratorTransfer = $discountConfiguratorTransfer;
     }
 
     /**
@@ -131,7 +134,7 @@ class DiscountFormTabs extends AbstractTabs
      */
     protected function addVoucherCodesTab(TabsViewTransfer $tabsViewTransfer)
     {
-        if (!$this->discountConfigurator || $this->discountConfigurator->getDiscountGeneral()->getDiscountType() !== DiscountConstants::TYPE_VOUCHER) {
+        if (!$this->isVoucherType()) {
             return $this;
         }
 
@@ -161,6 +164,14 @@ class DiscountFormTabs extends AbstractTabs
         if ($this->discountForm->isSubmitted() && !$this->discountForm->get($subForm)->isValid()) {
             $tabItemTransfer->setHasError(true);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVoucherType()
+    {
+        return $this->discountConfiguratorTransfer && $this->discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() == DiscountConstants::TYPE_VOUCHER;
     }
 
 }

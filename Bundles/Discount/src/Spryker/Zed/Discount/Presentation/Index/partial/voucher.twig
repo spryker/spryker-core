@@ -28,9 +28,9 @@
 
 {{ form_end(voucherForm) }}
 
-{% if discountConfigurator.discountVoucher and discountConfigurator.discountVoucher.fkDiscountVoucherPool %}
- {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfigurator.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
- {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfigurator.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
+{% if discountConfiguratorTransfer.discountVoucher and discountConfiguratorTransfer.discountVoucher.fkDiscountVoucherPool %}
+ {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfiguratorTransfer.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
+ {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfiguratorTransfer.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
 {% endif %}
 
 {% if voucherCodesTable is defined %}

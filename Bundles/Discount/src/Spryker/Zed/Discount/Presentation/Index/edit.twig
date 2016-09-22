@@ -3,7 +3,7 @@
 {% block section_title 'Edit discount' | trans %}
 
 {% block action %}
-    {% if discountConfigurator.getDiscountGeneral.isActive %}
+    {% if discountConfiguratorTransfer.getDiscountGeneral.isActive %}
         {{ removeActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'deactivate'}), 'Deactivate' | trans) }}
     {% else %}
         {{ viewActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'activate'}), 'Activate' | trans) }}
@@ -17,7 +17,7 @@
     {{ tabs(discountFormTabs, {
         'discountForm': discountForm,
         'voucherForm': voucherForm,
-        'discountConfigurator': discountConfigurator,
+        'discountConfiguratorTransfer': discountConfiguratorTransfer,
         'idDiscount': idDiscount,
         'voucherCodesTable': voucherCodesTable
     }) }}

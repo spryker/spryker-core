@@ -99,7 +99,7 @@ class IndexController extends AbstractController
             'idDiscount' => $idDiscount,
             'voucherCodesTable' => $voucherCodesTable,
             'voucherForm' => $voucherForm->createView(),
-            'discountConfigurator' => $discountConfiguratorTransfer,
+            'discountConfiguratorTransfer' => $discountConfiguratorTransfer,
             'discountFormTabs' => $discountFormTabs->createView(),
         ];
     }
@@ -144,7 +144,7 @@ class IndexController extends AbstractController
         $this->setFormattedCalculatorDiscountAmount($discountConfiguratorTransfer);
 
         return [
-            'discountConfigurator' => $discountConfiguratorTransfer,
+            'discountConfiguratorTransfer' => $discountConfiguratorTransfer,
             'voucherCodesTable' => $voucherCodesTable,
         ];
     }
