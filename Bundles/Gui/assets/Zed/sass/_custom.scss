@@ -179,10 +179,25 @@ table.dataTable thead th.sorting_desc:after {
   .ibox-title {
     background-color: #f5f5f5;
     border: 1px solid #ddd;
+
+    .collapse-link {
+      color: inherit;
+    }
   }
 
   .ibox-content {
     border: 1px solid #ddd;
+  }
+}
+
+.ibox.error {
+  .ibox-title {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+  }
+  .ibox-content {
+    border-color: #ebccd1;
   }
 }
 /* .. Nested panels */

@@ -8,6 +8,7 @@
 var SprykerAjax = require('./legacy/SprykerAjax');
 var editor = require('ZedGuiEditorConfiguration');
 var TabsNavigation = require('./libs/tabs-navigation');
+var TranslationCopyFields = require('./libs/translation-copy-fields');
 
 $(document).ready(function() {
     // editor
@@ -73,4 +74,7 @@ $(document).ready(function() {
     $('.tabs-container.tabs-navigable').each(function(index, item){
         new TabsNavigation(item);
     });
+
+    /* Init translation copy fields */
+    new TranslationCopyFields();
 });

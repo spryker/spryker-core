@@ -3,11 +3,11 @@
 
   Example usage:
 
-    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': 'en_US', 'collapsed': true} %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': 'en_US', 'collapsed': true, 'hasError': true} %}
         {% block content %}
             My english content
         {% endblock %}
-    {% endebbed %}
+    {% endembed %}
 
 #}
 {% extends '@Gui/Partials/ibox.twig' %}
