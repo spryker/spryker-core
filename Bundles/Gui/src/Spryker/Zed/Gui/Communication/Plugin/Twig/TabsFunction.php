@@ -44,14 +44,14 @@ class TabsFunction extends TwigFunction
 
     /**
      * @param \Twig_Environment $twig
-     * @param \Generated\Shared\Transfer\TabsViewTransfer $TabsViewTransfer
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      * @param array $context
      *
      * @return string
      */
-    public function tabs(Twig_Environment $twig, TabsViewTransfer $TabsViewTransfer, array $context = [])
+    public function tabs(Twig_Environment $twig, TabsViewTransfer $tabsViewTransfer, array $context = [])
     {
-        $context['tabsViewTransfer'] = $TabsViewTransfer;
+        $context['tabsViewTransfer'] = $tabsViewTransfer;
 
         return $twig->render('@Gui/Tabs/tabs.twig', $context);
     }
