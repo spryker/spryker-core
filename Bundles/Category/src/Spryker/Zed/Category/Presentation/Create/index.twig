@@ -1,0 +1,38 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Category Create' | trans %}
+{% endif %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/category', 'List Categories' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(categoryForm) }}
+            {{ form_widget(categoryForm) }}
+                <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}"/>
+            {{ form_end(categoryForm) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productcategory-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productcategory-main.js"></script>
+{% endblock %}

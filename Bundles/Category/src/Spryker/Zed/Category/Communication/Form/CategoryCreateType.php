@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategory\Communication\Form;
+namespace Spryker\Zed\Category\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
@@ -13,14 +13,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CategoryFormAdd extends AbstractType
+class CategoryCreateType extends AbstractType
 {
 
     const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
 
     const FIELD_NAME = 'name';
     const FIELD_CATEGORY_KEY = 'category_key';
-    const FIELD_PK_CATEGORY_NODE = 'id_category_node';
     const FIELD_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
     const FIELD_FK_NODE_CATEGORY = 'fk_category';
 
@@ -53,27 +52,8 @@ class CategoryFormAdd extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addNameField($builder)
             ->addCategoryKeyField($builder)
-            ->addCategoryNodeField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES])
-            ->addPkCategoryNodeField($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addNameField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_NAME, 'text', [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
-
-        return $this;
+            ->addCategoryNodeField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES]);
     }
 
     /**
@@ -105,20 +85,8 @@ class CategoryFormAdd extends AbstractType
             ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
                 'label' => 'Parent',
                 'choices' => $choices,
-                'required' => false,
+                'required' => false
             ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addPkCategoryNodeField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_PK_CATEGORY_NODE, 'hidden');
 
         return $this;
     }

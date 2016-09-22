@@ -85,9 +85,9 @@ class NodeController extends AbstractController
         }
 
         return $this->jsonResponse([
-                'code' => Response::HTTP_OK,
-                'message' => 'Category nodes successfully reordered',
-            ]);
+            'code' => Response::HTTP_OK,
+            'message' => 'Category nodes successfully reordered.',
+        ]);
     }
 
 }

@@ -38,7 +38,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
                 $categoryEntity = $categoryEntity->toArray();
 
                 $formData = [
-                    self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
+                    self::ID_CATEGORY => $categoryEntity[self::ID_CATEGORY],
                     CategoryFormAdd::FIELD_PK_CATEGORY_NODE => $categoryEntity[CategoryFormAdd::FIELD_PK_CATEGORY_NODE],
                     CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE],
                     CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE],
@@ -58,7 +58,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
     protected function getDefaultFormFields($idParentNode = null)
     {
         return [
-            self::PK_CATEGORY => null,
+            self::ID_CATEGORY => null,
             CategoryFormAdd::FIELD_PK_CATEGORY_NODE => null,
             CategoryFormAdd::FIELD_FK_PARENT_CATEGORY_NODE => $idParentNode,
             CategoryFormEdit::LOCALIZED_ATTRIBUTES => $this->getAttributesDefaultFields()

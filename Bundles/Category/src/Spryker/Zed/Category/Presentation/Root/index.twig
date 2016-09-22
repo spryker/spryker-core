@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Category' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ createActionButton('/category/create', 'Create Category' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes listing' } %}
+        {% block widget_content %}
+            {{ rootCategories | raw }}
+            <div class="progress hidden" id="category-loader">
+                <div class="progress-bar progress-bar-100 progress-bar-striped active" role="progressbar"></div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-category-main.js"></script>
+{% endblock %}

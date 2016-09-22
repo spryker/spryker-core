@@ -30,36 +30,36 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
-    public function create(CategoryTransfer $category, LocaleTransfer $locale)
+    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {
         $categoryEntity = new SpyCategory();
-        $categoryEntity->fromArray($category->toArray());
+        $categoryEntity->fromArray($categoryTransfer->toArray());
         $categoryEntity->save();
 
         $idCategory = $categoryEntity->getPrimaryKey();
-        $category->setIdCategory($idCategory);
+        $categoryTransfer->setIdCategory($idCategory);
 
-        $this->persistCategoryAttribute($category, $locale);
+        $this->persistCategoryAttribute($categoryTransfer, $localeTransfer);
 
         return $idCategory;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function update(CategoryTransfer $category, LocaleTransfer $locale)
+    public function update(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {
-        $this->persistCategoryAttribute($category, $locale);
+        $this->persistCategoryAttribute($categoryTransfer, $localeTransfer);
 
-        $this->saveCategory($category);
+        $this->saveCategory($categoryTransfer);
     }
 
     /**
@@ -79,45 +79,45 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    protected function saveCategory(CategoryTransfer $category)
+    protected function saveCategory(CategoryTransfer $categoryTransfer)
     {
-        $categoryEntity = $this->getCategoryEntity($category->getIdCategory());
-        $categoryEntity->fromArray($category->toArray());
+        $categoryEntity = $this->getCategoryEntity($categoryTransfer->getIdCategory());
+        $categoryEntity->fromArray($categoryTransfer->toArray());
         $categoryEntity->save();
 
         return $categoryEntity;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function persistCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
+    protected function persistCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {
-        $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($category->getIdCategory())
-            ->filterByFkLocale($locale->getIdLocale())
+        $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($categoryTransfer->getIdCategory())
+            ->filterByFkLocale($localeTransfer->getIdLocale())
             ->findOneOrCreate();
 
-        $this->saveCategoryAttribute($category, $locale, $categoryAttributeEntity);
+        $this->saveCategoryAttribute($categoryTransfer, $localeTransfer, $categoryAttributeEntity);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
+    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {
         $categoryAttributeEntity = new SpyCategoryAttribute();
 
-        $this->saveCategoryAttribute($category, $locale, $categoryAttributeEntity);
+        $this->saveCategoryAttribute($categoryTransfer, $localeTransfer, $categoryAttributeEntity);
     }
 
     /**
@@ -138,14 +138,14 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
      */
-    protected function getAttributeEntity($idCategory, LocaleTransfer $locale)
+    protected function getAttributeEntity($idCategory, LocaleTransfer $localeTransfer)
     {
         return $this->queryContainer
-            ->queryAttributeByCategoryIdAndLocale($idCategory, $locale->getIdLocale())
+            ->queryAttributeByCategoryIdAndLocale($idCategory, $localeTransfer->getIdLocale())
             ->findOne();
     }
 
@@ -160,20 +160,20 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
      *
      * @return void
      */
     protected function saveCategoryAttribute(
-        CategoryTransfer $category,
-        LocaleTransfer $locale,
+        CategoryTransfer $categoryTransfer,
+        LocaleTransfer $localeTransfer,
         SpyCategoryAttribute $categoryAttributeEntity
     ) {
-        $categoryAttributeEntity->fromArray($category->toArray());
-        $categoryAttributeEntity->setFkCategory($category->getIdCategory());
-        $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
+        $categoryAttributeEntity->fromArray($categoryTransfer->toArray());
+        $categoryAttributeEntity->setFkCategory($categoryTransfer->getIdCategory());
+        $categoryAttributeEntity->setFkLocale($localeTransfer->getIdLocale());
 
         $categoryAttributeEntity->save();
     }

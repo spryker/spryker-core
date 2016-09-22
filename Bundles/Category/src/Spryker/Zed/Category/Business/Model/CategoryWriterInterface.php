@@ -14,20 +14,20 @@ interface CategoryWriterInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
-    public function create(CategoryTransfer $category, LocaleTransfer $locale);
+    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function update(CategoryTransfer $category, LocaleTransfer $locale);
+    public function update(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * @param int $idCategory
@@ -37,11 +37,11 @@ interface CategoryWriterInterface
     public function delete($idCategory);
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale);
+    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
 
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Category\Communication;
 
 use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Form\CategoryCreateType;
+use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
@@ -47,6 +49,14 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
      * @return \Spryker\Zed\Category\Communication\Table\RootNodeTable
      */
     public function createRootNodeTable()
@@ -55,6 +65,33 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
         $locale = $this->getCurrentLocale();
 
         return new RootNodeTable($categoryQueryContainer, $locale->getIdLocale());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryCreateForm()
+    {
+        $categoryCreateForm = new CategoryCreateType();
+        $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create(
+            $categoryCreateForm,
+            $categoryCreateDataFormProvider->getData(),
+            $categoryCreateDataFormProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider
+     */
+    protected function createCategoryCreateFormDataProvider()
+    {
+        return new CategoryCreateDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**

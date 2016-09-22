@@ -60,7 +60,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
             $localizedAttributes = array_merge($this->getAttributesDefaultFields(), $foo);
 
             $formData = [
-                self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
+                self::ID_CATEGORY => $categoryEntity[self::ID_CATEGORY],
                 //node
                 CategoryFormEdit::FIELD_PK_CATEGORY_NODE => $categoryEntity[CategoryFormEdit::FIELD_PK_CATEGORY_NODE],
                 CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE => $categoryEntity[CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE],
@@ -89,7 +89,7 @@ class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
     {
         return [
             //node
-            self::PK_CATEGORY => null,
+            self::ID_CATEGORY => null,
             CategoryFormEdit::FIELD_PK_CATEGORY_NODE => null,
             CategoryFormEdit::FIELD_FK_PARENT_CATEGORY_NODE => null,
             CategoryFormEdit::FIELD_FK_NODE_CATEGORY => null,

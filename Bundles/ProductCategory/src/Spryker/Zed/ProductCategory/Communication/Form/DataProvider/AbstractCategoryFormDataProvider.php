@@ -18,7 +18,7 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterfa
 class AbstractCategoryFormDataProvider
 {
 
-    const PK_CATEGORY = 'id_category';
+    const ID_CATEGORY = 'id_category';
     const LOCALE_NAME = 'locale_name';
 
     /**
