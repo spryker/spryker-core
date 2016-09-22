@@ -68,8 +68,10 @@
     <div class="ratepay-installment-calculation-type ratepay-installment-calculation-by-rate">
         <div class="small-12 columns">
             <label>
-                {{ 'payment.ratepay.installment_calculator.interest_rate' | trans }}
+                {{ 'payment.ratepay.installment_calculator.interest_rate_desired' | trans }}
                 {{ form_widget(form.ratepayInstallment.interest_rate, { 'attr': {'placeholder': 'payment.ratepay.installment_calculator.interest_rate' | trans } }) }}
+                {{ 'payment.ratepay.installment_calculator.interest_rate_default' | trans }}
+                {{ form_widget(form.ratepayInstallment.interest_rate_default, { 'attr': {'placeholder': 'payment.ratepay.installment_calculator.interest_rate' | trans } }) }}
             </label>
             {{ form_errors(form.ratepayInstallment.interest_rate) }}
         </div>

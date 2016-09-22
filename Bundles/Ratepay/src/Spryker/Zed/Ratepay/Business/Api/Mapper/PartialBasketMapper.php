@@ -28,6 +28,11 @@ class PartialBasketMapper extends BaseMapper
     protected $basketItems;
 
     /**
+     * @var bool
+     */
+    protected $shippingAlreadySent;
+
+    /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
      */
     protected $requestTransfer;
@@ -36,18 +41,21 @@ class PartialBasketMapper extends BaseMapper
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
+     * @param bool $shippingAlreadySent
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
         $quoteTransfer,
         $ratepayPaymentTransfer,
         array $basketItems,
+        $shippingAlreadySent,
         RatepayRequestTransfer $requestTransfer
     ) {
 
         $this->quoteTransfer = $quoteTransfer;
         $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
         $this->basketItems = $basketItems;
+        $this->shippingAlreadySent = $shippingAlreadySent;
         $this->requestTransfer = $requestTransfer;
     }
 
@@ -60,21 +68,25 @@ class PartialBasketMapper extends BaseMapper
         foreach ($this->basketItems as $basketItem) {
             $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts();
         }
-
-        $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
-        $shippingUnitPrice = $this->centsToDecimal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
-
-        $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
-            ->setAmount($this->centsToDecimal($grandTotal))
+        $shoppingBasket = $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket();
+        $shoppingBasket
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
-
-            ->setShippingUnitPrice($shippingUnitPrice)
-            ->setShippingTitle(BasketMapper::DEFAULT_SHIPPING_NODE_VALUE)
-            ->setShippingTaxRate(BasketMapper::DEFAULT_SHIPPING_TAX_RATE)
 
             ->setDiscountTitle(BasketMapper::DEFAULT_DISCOUNT_NODE_VALUE)
             ->setDiscountUnitPrice(BasketMapper::DEFAULT_DISCOUNT_UNIT_PRICE * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate(BasketMapper::DEFAULT_DISCOUNT_TAX_RATE);
+
+        if (!$this->shippingAlreadySent) {
+            $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
+            $shippingUnitPrice = $totalsTransfer->requireExpenseTotal()->getExpenseTotal();
+            $grandTotal += $shippingUnitPrice;
+
+            $shoppingBasket
+                ->setShippingUnitPrice($this->centsToDecimal($shippingUnitPrice))
+                ->setShippingTitle(BasketMapper::DEFAULT_SHIPPING_NODE_VALUE)
+                ->setShippingTaxRate(BasketMapper::DEFAULT_SHIPPING_TAX_RATE);
+        }
+        $shoppingBasket->setAmount($this->centsToDecimal($grandTotal));
 
         if (count($this->quoteTransfer->getExpenses())) {
             $this->requestTransfer->getShoppingBasket()

@@ -126,6 +126,7 @@
 
         <property name="debitPayType" type="string"/>
 
+        <property name="interestRateDefault" type="float"/>
         <property name="interestRate" type="float"/>
         <property name="interestMonth" type="int"/>
 

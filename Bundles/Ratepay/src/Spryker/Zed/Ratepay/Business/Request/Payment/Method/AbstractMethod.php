@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
+use Spryker\Zed\Ratepay\Business\Api\Constants;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface;
 use Spryker\Zed\Ratepay\Business\Request\RequestMethodInterface;
@@ -113,7 +114,15 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     public function deliveryConfirm(OrderTransfer $orderTransfer, array $orderItems)
     {
         $payment = $this->loadOrderPayment($orderTransfer);
+        $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_DELIVER_CONFIRM);
         $paymentData = $this->getTransferObjectFromPayment($payment);
+        $shippingAlreadySent = false;
+        /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
+        foreach ($paymentLogs as $paymentLog) {
+            if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_DELIVER_CONFIRM] == $paymentLog->getResponseResultCode()) {
+                $shippingAlreadySent = true;
+            }
+        }
 
         /**
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
@@ -121,7 +130,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_DELIVER_CONFIRM);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems);
+        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $shippingAlreadySent);
 
         return $request;
     }
@@ -135,7 +144,15 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     public function paymentCancel(OrderTransfer $orderTransfer, array $orderItems)
     {
         $payment = $this->loadOrderPayment($orderTransfer);
+        $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_CANCEL);
         $paymentData = $this->getTransferObjectFromPayment($payment);
+        $shippingAlreadySent = false;
+        /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
+        foreach ($paymentLogs as $paymentLog) {
+            if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_CANCEL] == $paymentLog->getResponseResultCode()) {
+                $shippingAlreadySent = true;
+            }
+        }
 
         /**
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
@@ -143,7 +160,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_CANCEL);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems);
+        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $shippingAlreadySent);
 
         return $request;
     }
@@ -157,7 +174,15 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     public function paymentRefund(OrderTransfer $orderTransfer, array $orderItems)
     {
         $payment = $this->loadOrderPayment($orderTransfer);
+        $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_REFUND);
         $paymentData = $this->getTransferObjectFromPayment($payment);
+        $shippingAlreadySent = false;
+        /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
+        foreach ($paymentLogs as $paymentLog) {
+            if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_REFUND] == $paymentLog->getResponseResultCode()) {
+                $shippingAlreadySent = true;
+            }
+        }
 
         /**
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
@@ -165,7 +190,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REFUND);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems);
+        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $shippingAlreadySent);
 
         return $request;
     }
@@ -258,13 +283,14 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param bool $shippingAlreadySent
      *
      * @return void
      */
-    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems)
+    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $shippingAlreadySent=false)
     {
         $this->mapperFactory
-            ->getPartialBasketMapper($dataTransfer, $paymentData, $orderItems)
+            ->getPartialBasketMapper($dataTransfer, $paymentData, $orderItems, $shippingAlreadySent)
             ->map();
 
         $grouppedItems = [];
@@ -326,6 +352,26 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
             ->findByFkSalesOrder(
                 $orderTransfer->requireIdSalesOrder()->getIdSalesOrder()
             )->getFirst();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string|null $type
+     *
+     * @return array \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog
+     */
+    protected function loadOrderPaymentLogs(OrderTransfer $orderTransfer, $type = null)
+    {
+        $query = $this->queryContainer
+            ->queryPaymentLog();
+        if ($type !== null) {
+            $query = $query->filterByMessage($type);
+        }
+        $query = $query->findByFkSalesOrder(
+            $orderTransfer->requireIdSalesOrder()->getIdSalesOrder()
+        );
+
+        return $query->getData();
     }
 
 }
