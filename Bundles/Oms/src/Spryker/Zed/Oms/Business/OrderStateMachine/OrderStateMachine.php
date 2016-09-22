@@ -25,7 +25,6 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Throwable;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
@@ -333,7 +332,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
      *
      * @throws \Exception
-     * @throws \Throwable
      *
      * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
@@ -348,11 +346,6 @@ class OrderStateMachine implements OrderStateMachineInterface
 
                 try {
                     $conditionCheck = $conditionModel->check($orderItem);
-                } catch (Throwable $e) {
-                    $log->setIsError(true);
-                    $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
-                    $log->saveAll();
-                    throw $e;
                 } catch (Exception $e) {
                     $log->setIsError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
