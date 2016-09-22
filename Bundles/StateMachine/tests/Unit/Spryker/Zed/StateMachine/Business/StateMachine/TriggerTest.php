@@ -68,7 +68,7 @@ class TriggerTest extends StateMachineMocks
 
         $finderMock->expects($this->once())
             ->method('findProcessByStateMachineAndProcessName')
-            ->willReturn($this->createProcesses()[self::PROCESS_NAME]);
+            ->willReturn($this->createProcesses()[static::PROCESS_NAME]);
 
         $finderMock->expects($this->exactly(2))
             ->method('filterItemsWithOnEnterEvent')
@@ -88,10 +88,10 @@ class TriggerTest extends StateMachineMocks
         );
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
-        $stateMachineProcessTransfer->setStateMachineName(self::TESTING_STATE_MACHINE);
-        $stateMachineProcessTransfer->setProcessName(self::PROCESS_NAME);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_STATE_MACHINE);
+        $stateMachineProcessTransfer->setProcessName(static::PROCESS_NAME);
 
-        $affectedItems = $trigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, self::ITEM_IDENTIFIER);
+        $affectedItems = $trigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, static::ITEM_IDENTIFIER);
 
         $this->assertEquals(1, $affectedItems);
     }
@@ -145,7 +145,7 @@ class TriggerTest extends StateMachineMocks
             $conditionMock
         );
 
-        $affectedItems = $trigger->triggerConditionsWithoutEvent(self::TESTING_STATE_MACHINE);
+        $affectedItems = $trigger->triggerConditionsWithoutEvent(static::TESTING_STATE_MACHINE);
 
         $this->assertEquals(1, $affectedItems);
     }
@@ -171,7 +171,7 @@ class TriggerTest extends StateMachineMocks
             $conditionMock
         );
 
-        $affectedItems = $trigger->triggerForTimeoutExpiredItems(self::TESTING_STATE_MACHINE);
+        $affectedItems = $trigger->triggerForTimeoutExpiredItems(static::TESTING_STATE_MACHINE);
 
         $this->assertEquals(1, $affectedItems);
     }
@@ -213,7 +213,7 @@ class TriggerTest extends StateMachineMocks
 
         $event = new Event();
         $event->setName('event');
-        $event->setCommand(self::TEST_COMMAND);
+        $event->setCommand(static::TEST_COMMAND);
 
         $transition = new Transition();
         $state = new State();
@@ -231,7 +231,7 @@ class TriggerTest extends StateMachineMocks
 
         $process->addState($state);
 
-        $processes[self::PROCESS_NAME] = $process;
+        $processes[static::PROCESS_NAME] = $process;
 
         return $processes;
     }
@@ -243,7 +243,7 @@ class TriggerTest extends StateMachineMocks
     {
         $items['event'] = [];
         $stateMachineItemTransfer = new StateMachineItemTransfer();
-        $stateMachineItemTransfer->setProcessName(self::PROCESS_NAME);
+        $stateMachineItemTransfer->setProcessName(static::PROCESS_NAME);
         $stateMachineItemTransfer->setIdentifier(1);
         $stateMachineItemTransfer->setStateName('new');
         $items['event'][] = $stateMachineItemTransfer;
@@ -280,10 +280,10 @@ class TriggerTest extends StateMachineMocks
             $commandMock = $this->createCommandMock();
 
             $handlerMock = $this->createStateMachineHandlerMock();
-            $handlerMock->method('getActiveProcesses')->willReturn([self::PROCESS_NAME]);
-            $handlerMock->method('getInitialStateForProcess')->willReturn(self::INITIAL_STATE);
+            $handlerMock->method('getActiveProcesses')->willReturn([static::PROCESS_NAME]);
+            $handlerMock->method('getInitialStateForProcess')->willReturn(static::INITIAL_STATE);
             $handlerMock->method('getCommandPlugins')->willReturn([
-                self::TEST_COMMAND => $commandMock
+                static::TEST_COMMAND => $commandMock
             ]);
             $handlerResolverMock->method('get')->willReturn($handlerMock);
         }
@@ -342,7 +342,7 @@ class TriggerTest extends StateMachineMocks
 
         $finderMock->expects($this->once())
             ->method('findProcessByStateMachineAndProcessName')
-            ->willReturn($this->createProcesses()[self::PROCESS_NAME]);
+            ->willReturn($this->createProcesses()[static::PROCESS_NAME]);
 
         $finderMock->expects($this->once())
             ->method('filterItemsWithOnEnterEvent')
@@ -391,7 +391,7 @@ class TriggerTest extends StateMachineMocks
         $stateMachineItemTransfer->setStateName('new');
         $stateMachineItemTransfer->setIdItemState(1);
         $stateMachineItemTransfer->setEventName('event');
-        $stateMachineItemTransfer->setProcessName(self::PROCESS_NAME);
+        $stateMachineItemTransfer->setProcessName(static::PROCESS_NAME);
 
         return $stateMachineItemTransfer;
     }

@@ -30,7 +30,7 @@ class HandlerResolverTest extends StateMachineMocks
      */
     public function testHandlerResolverShouldReturnInstanceOfHandlerWhenCorrectNameGiven()
     {
-        $handlerResolver = $this->createHandlerResolver()->get(self::TEST_HANDLER_NAME);
+        $handlerResolver = $this->createHandlerResolver()->get(static::TEST_HANDLER_NAME);
 
         $this->assertInstanceOf(StateMachineHandlerInterface::class, $handlerResolver);
     }
@@ -51,7 +51,7 @@ class HandlerResolverTest extends StateMachineMocks
     protected function createHandlerResolver()
     {
         $stateMachineHandlerMock = $this->createStateMachineHandlerMock();
-        $stateMachineHandlerMock->method('getStateMachineName')->willReturn(self::TEST_HANDLER_NAME);
+        $stateMachineHandlerMock->method('getStateMachineName')->willReturn(static::TEST_HANDLER_NAME);
 
         return new HandlerResolver([$stateMachineHandlerMock]);
     }

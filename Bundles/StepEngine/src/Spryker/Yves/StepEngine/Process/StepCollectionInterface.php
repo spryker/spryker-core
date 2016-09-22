@@ -26,7 +26,7 @@ interface StepCollectionInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function canAccessStep(StepInterface $step, Request $request, AbstractTransfer $dataTransfer);
 
@@ -41,7 +41,7 @@ interface StepCollectionInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      *
-     * @return null|\Spryker\Yves\StepEngine\Dependency\Step\StepInterface
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
     public function getNextStep(StepInterface $currentStep);
 

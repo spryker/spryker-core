@@ -200,20 +200,63 @@ interface ApplicationConstants
     const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
-     * Database
+     * @deprecated Use PropelConstants::PROPEL instead
+     */
+    const PROPEL = 'PROPEL';
+
+    /**
+     * @deprecated Use PropelConstants::PROPEL_DEBUG instead
+     */
+    const PROPEL_DEBUG = 'PROPEL_DEBUG';
+
+    /**
+     * @deprecated Use PropelConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead
+     */
+    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_USERNAME instead
      */
     const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_PASSWORD instead
+     */
     const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_DATABASE instead
+     */
     const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_HOST instead
+     */
     const ZED_DB_HOST = 'ZED_DB_HOST';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_PORT instead
+     */
     const ZED_DB_PORT = 'ZED_DB_PORT';
 
     /**
-     * Database engines
+     * @deprecated Use PropelConstants::ZED_DB_ENGINE instead
      */
     const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_ENGINE_MYSQL instead
+     */
     const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_ENGINE_PGSQL instead
+     */
     const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
+
+    /**
+     * @deprecated Use PropelConstants::ZED_DB_SUPPORTED_ENGINES instead
+     */
     const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 
     /**
@@ -264,10 +307,6 @@ interface ApplicationConstants
      * @deprecated Use ErrorHandlerConstants::ERROR_LEVEL instead
      */
     const ERROR_LEVEL = 'ERROR_LEVEL';
-
-    const PROPEL = 'PROPEL';
-    const PROPEL_DEBUG = 'PROPEL_DEBUG';
-    const PROPEL_SHOW_EXTENDED_EXCEPTION = 'PROPEL_SHOW_EXTENDED_EXCEPTION';
 
     /**
      * @deprecated Use StorageConstants::STORAGE_KV_SOURCE instead
