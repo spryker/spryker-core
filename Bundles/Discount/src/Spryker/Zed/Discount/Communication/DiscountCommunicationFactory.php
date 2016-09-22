@@ -204,16 +204,16 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param \Symfony\Component\Form\FormInterface $discountForm
      * @param \Symfony\Component\Form\FormInterface|null $voucherForm
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfigurator
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfiguratorTransfer
      *
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
     public function createDiscountFormTabs(
         FormInterface $discountForm,
         FormInterface $voucherForm = null,
-        DiscountConfiguratorTransfer $discountConfigurator = null
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
-        return new DiscountFormTabs($discountForm, $voucherForm, $discountConfigurator);
+        return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
     }
 
 }
