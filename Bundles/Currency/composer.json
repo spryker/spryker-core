@@ -2,6 +2,7 @@
   "name": "spryker/currency",
   "require": {
     "spryker/kernel": "^2.0.0",
+    "spryker/transfer": "^2.0.0",
     "spryker/symfony": "^2.1.3"
   },
   "require-dev": {
@@ -32,6 +33,7 @@
     },
     "psr-4": {
       "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module"
     }
   },
