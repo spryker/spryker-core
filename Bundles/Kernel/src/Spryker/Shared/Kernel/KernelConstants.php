@@ -19,7 +19,11 @@ interface KernelConstants
     const PROJECT_NAMESPACE = ApplicationConstants::PROJECT_NAMESPACE;
     const PROJECT_NAMESPACES = ApplicationConstants::PROJECT_NAMESPACES;
     const PROJECT_TIMEZONE = ApplicationConstants::PROJECT_TIMEZONE;
-    const PROPEL = ApplicationConstants::PROPEL;
+
+    /**
+     * @deprecated Use PropelConstants::PROPEL instead.
+     */
+    const PROPEL = 'PROPEL';
 
     const STORE_PREFIX = ApplicationConstants::STORE_PREFIX;
 

@@ -260,9 +260,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return array
-     *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
+     * @return array
      */
     protected function createMainSubProcess()
     {

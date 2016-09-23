@@ -13,6 +13,9 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\LogConstants;
 
+/**
+ * @deprecated Use \Spryker\Shared\Application\EventListener\KernelLogListener instead.
+ */
 class LogServiceProvider implements ServiceProviderInterface
 {
 

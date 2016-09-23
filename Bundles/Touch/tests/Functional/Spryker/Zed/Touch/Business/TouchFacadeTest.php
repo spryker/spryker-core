@@ -49,9 +49,9 @@ class TouchFacadeTest extends Test
     }
 
     /**
-     * @deprecated This can be removed when all `TouchFacadeInterface::bulkTouch*` methods are removed
-     *
      * @dataProvider bulkTouchSetMethodsDataProvider
+     *
+     * @deprecated This can be removed when all `TouchFacadeInterface::bulkTouch*` methods are removed
      *
      * @param string $method
      * @param array $itemIds
