@@ -40,6 +40,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $parser = $this->getParser($locale);
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode($isoCode);
+
         $moneyTransfer = $parser->parse($value, $currencyTransfer);
 
         $this->assertSame($expectedAmount, $moneyTransfer->getAmount());
@@ -53,9 +54,8 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         return [
             ['10,00 €', 'de_DE', 'EUR', '1000'],
             ['10,99 €', 'de_DE', 'EUR', '1099'],
-            ['10,99', 'de_DE', 'EUR', '1099'],
-            ['¥ 1000', 'de_DE', 'YEN', '1000'],
-            ['¥ 1099', 'de_DE', 'YEN', '1099'],
+            ['1000 ¥', 'de_DE', 'JPY', '1000'],
+            ['1099 ¥', 'de_DE', 'JPY', '1099'],
         ];
     }
 
