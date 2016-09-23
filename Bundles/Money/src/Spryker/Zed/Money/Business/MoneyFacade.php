@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Money\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Money\MoneyConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -102,6 +103,22 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
             $moneyTransfer,
             MoneyConstants::FORMATTER_WITHOUT_SYMBOL
         );
+    }
+
+    /**
+     * Specification:
+     * - Parses a formatted string representation to MoneyTransfer
+     *
+     * @api
+     *
+     * @param string $value
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function parse($value, CurrencyTransfer $currencyTransfer)
+    {
+        return $this->getFactory()->createMoneyParser()->parse($value, $currencyTransfer);
     }
 
     /**

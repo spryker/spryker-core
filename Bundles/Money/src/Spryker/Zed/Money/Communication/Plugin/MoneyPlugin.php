@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Money\Communication\Plugin;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -76,6 +77,21 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
     {
         return $this->getFacade()->formatWithoutSymbol($moneyTransfer);
+    }
+
+    /**
+     * This money will return a MoneyTransfer parsed from the given value.
+     *
+     * E.g. `$value = 10,00 €` `CurrencyTransfer::$code = EUR` will return `MoneyTransfer::$amount(1000)`
+     *
+     * @param string $value
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function parse($value, CurrencyTransfer $currencyTransfer)
+    {
+        return $this->getFacade()->parse($value, $currencyTransfer);
     }
 
     /**

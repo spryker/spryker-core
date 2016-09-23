@@ -5,6 +5,16 @@
       "Spryker": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/Config/tests/_support",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support"
+    }
+  },
   "require": {
     "mathiasverraes/money": "~3.0.0-beta2",
     "spryker/currency": "^0.1.0",
@@ -14,6 +24,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/config": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "Money bundle",
@@ -28,10 +39,10 @@
   "config": {
     "sort-packages": true
   },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
     }
-  }
+  ]
 }
