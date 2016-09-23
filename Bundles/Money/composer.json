@@ -11,8 +11,9 @@
       "Unit": "tests/"
     },
     "psr-4": {
-      "Config\\Module\\": "vendor/spryker/Config/tests/_support",
-      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support"
+      "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module"
     }
   },
   "require": {
