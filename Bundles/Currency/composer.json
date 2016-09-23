@@ -1,10 +1,5 @@
 {
   "name": "spryker/currency",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "spryker/kernel": "^2.0.0",
     "spryker/symfony": "^2.1.3"
@@ -21,10 +16,19 @@
   "config": {
     "sort-packages": true
   },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module"
     }
   }
 }

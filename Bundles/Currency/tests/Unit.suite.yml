@@ -1,4 +1,5 @@
 class_name: UnitTester
 modules:
     enabled:
-        - \Currency\Module\Unit
+      - \Testify\Module\Environment
+      - \Currency\Module\Unit
