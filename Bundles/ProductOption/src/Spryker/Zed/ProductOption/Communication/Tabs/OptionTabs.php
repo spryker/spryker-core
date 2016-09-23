@@ -16,12 +16,13 @@ class OptionTabs extends AbstractTabs
 {
 
     /**
-     * @var FormInterface
+     * @var \Symfony\Component\Form\FormInterface
      */
     protected $productOptionGroupForm;
 
     /**
      * OptionTabs constructor.
+     *
      * @param \Symfony\Component\Form\FormInterface $productOptionGroupForm
      */
     public function __construct(FormInterface $productOptionGroupForm)
@@ -78,9 +79,11 @@ class OptionTabs extends AbstractTabs
     }
 
     /**
-     * @param $tabItemTransfer
+     * @param \Generated\Shared\Transfer\TabItemTransfer $tabItemTransfer
+     *
+     * @return void
      */
-    protected function setHasError($tabItemTransfer)
+    protected function setHasError(TabItemTransfer $tabItemTransfer)
     {
         if ($this->productOptionGroupForm->isSubmitted() && !$this->productOptionGroupForm->isValid()) {
             $tabItemTransfer->setHasError(true);
@@ -99,4 +102,5 @@ class OptionTabs extends AbstractTabs
 
         return $this;
     }
+
 }

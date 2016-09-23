@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOption\Communication;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
-use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
