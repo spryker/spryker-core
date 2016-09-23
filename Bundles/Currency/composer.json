@@ -30,5 +30,11 @@
       "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }
