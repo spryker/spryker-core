@@ -1,0 +1,18 @@
+{#
+  Display collapsible ibox with flags for localized data.
+
+  Example usage:
+
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': 'en_US', 'collapsed': true, 'hasError': true} %}
+        {% block content %}
+            My english content
+        {% endblock %}
+    {% endembed %}
+
+#}
+{% extends '@Gui/Partials/ibox.twig' %}
+
+{% set region = (localeName|slice(3,2))|lower %}
+{% block title %}
+    <span class="flag flag-{{ region }}"></span> {{ localeName }}
+{% endblock %}

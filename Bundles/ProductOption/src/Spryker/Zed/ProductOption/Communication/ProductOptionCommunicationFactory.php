@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Communication;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
@@ -19,7 +20,9 @@ use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransf
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionListTable;
 use Spryker\Zed\ProductOption\Communication\Table\ProductOptionTable;
 use Spryker\Zed\ProductOption\Communication\Table\ProductTable;
+use Spryker\Zed\ProductOption\Communication\Tabs\OptionTabs;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -134,6 +137,16 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $productOptionGroupForm
+     *
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createOptionTabs(FormInterface $productOptionGroupForm)
+    {
+        return new OptionTabs($productOptionGroupForm);
     }
 
     /**

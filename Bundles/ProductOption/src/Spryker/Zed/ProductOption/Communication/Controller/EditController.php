@@ -56,12 +56,15 @@ class EditController extends BaseOptionController
         $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
         $availableLocales = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
 
+        $optionTabs = $this->getFactory()->createOptionTabs($productOptionGroupForm);
+
         return [
             'productOptionsTable' => $productOptionsTable->render(),
             'productsTable' => $productTable->render(),
             'productOptionGroup' => $productOptionGroupTransfer,
             'generalForm' => $productOptionGroupForm->createView(),
             'availableLocales' => $availableLocales,
+            'optionTabs' => $optionTabs->createView(),
         ];
     }
 

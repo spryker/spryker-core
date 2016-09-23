@@ -6,6 +6,7 @@
 
 'use strict';
 
+var TranslationCopyFields = require('ZedGuiModules/libs/translation-copy-fields');
 require('./main');
 
 function OptionValueFormHandler() {
@@ -19,9 +20,9 @@ function OptionValueFormHandler() {
     this.newOptionFormHTML = this.optionValueList.data('prototype');
     this.translationFormHTML = this.optionValueTranslationsElement.data('prototype');
     this.valuesToBeRemovedField = $('#product_option_general_product_option_values_to_be_removed');
+    this.translationCopyButton = new TranslationCopyFields();
 
     this.addProductOptionValueForm();
-    this.addCopyTranslationTrigger();
     if (this.optionValueCount > 0) {
         this.initialiseExistingProductValueForms();
     }
@@ -80,6 +81,7 @@ OptionValueFormHandler.prototype.addProductOptionValueForm = function() {
         valueLabelElement.text(self.optionValueCount + '. ' + currentLabelText);
 
         self.optionValueList.append(newOptionForm);
+
     });
 };
 
@@ -118,13 +120,11 @@ OptionValueFormHandler.prototype.addOptionFormActions = function(productOptionVa
         productOptionValueFormSelector.getSkuField().val(valueWithPrefix);
 
     });
-
-    this.addCopyTranslationTrigger();
 };
 
 OptionValueFormHandler.prototype.addOptionTranslations = function addOptionTranslations(idOfRelatedOption, productOptionValueFormSelector) {
 
-    var translationPanels = this.optionValueTranslationsElement.find('.panel-body');
+    var translationPanels = this.optionValueTranslationsElement.find('.ibox-content');
     var self = this;
 
     translationPanels.each(function(index, element) {
@@ -133,10 +133,15 @@ OptionValueFormHandler.prototype.addOptionTranslations = function addOptionTrans
 
         var translationFormHTML = self.translationFormHTML.replace(/__name__/g, self.valueTranslationCount);
         var newOptionValueTranslationForm = $(jQuery.parseHTML(translationFormHTML));
+        $(element).append(newOptionValueTranslationForm);
 
         var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector(newOptionValueTranslationForm);
 
-        productOptionValueTranslationFormSelector.getLocaleCodeField().val($(element).data('locale-code'));
+        productOptionValueTranslationFormSelector.getLocaleCodeField().val(
+            $(element).parent().parent().data('locale-code')
+        );
+
+        productOptionValueTranslationFormSelector.getNameField().attr({'data-translation-key': idOfRelatedOption});
 
         productOptionValueTranslationFormSelector.getKeyField().val(
             productOptionValueFormSelector.getValueField().val()
@@ -144,36 +149,16 @@ OptionValueFormHandler.prototype.addOptionTranslations = function addOptionTrans
 
         productOptionValueTranslationFormSelector.getRelatedOptionHashKeyField().val(idOfRelatedOption);
 
+        self.translationCopyButton.addCopyButtons();
+
         var nameLabelElement = productOptionValueTranslationFormSelector.getTranslationLabel();
         var currentLabelText = nameLabelElement.text();
 
         nameLabelElement.text(self.optionValueCount + '. ' + currentLabelText);
 
-        $(element).append(newOptionValueTranslationForm);
     });
 };
 
-OptionValueFormHandler.prototype.addCopyTranslationTrigger = function() {
-
-    $('.copy-language').on('click', function (event) {
-        event.preventDefault();
-
-        var valueTranslationForm = $(event.target).parent().parent().parent();
-
-        var productOptionValueTranslationFormSelector = new ProductOptionTranslationFormSelector($(valueTranslationForm));
-
-        var relatedOptionHash = productOptionValueTranslationFormSelector.getRelatedOptionHashKeyField().val();
-        var translationVal = productOptionValueTranslationFormSelector.getNameField().val();
-
-        $('.translation-tabs').find('.form-product-option-translation-row').each(function (index, element) {
-
-            var productOptionTranslationSelector = new ProductOptionTranslationFormSelector($(element));
-            if (relatedOptionHash && productOptionTranslationSelector.getRelatedOptionHashKeyField().val() == relatedOptionHash) {
-                productOptionTranslationSelector.getNameField().val(translationVal);
-            }
-        });
-    });
-};
 
 function ProductOptionValueFormSelector(form) {
     this.form = form;
@@ -220,7 +205,7 @@ ProductOptionTranslationFormSelector.prototype.getRelatedOptionHashKeyField = fu
 };
 
 ProductOptionTranslationFormSelector.prototype.getTranslationLabel = function() {
-    return this.getNameField().prev()
+    return this.getNameField().parent().prev()
 };
 
 ProductOptionTranslationFormSelector.prototype.getNameField = function() {

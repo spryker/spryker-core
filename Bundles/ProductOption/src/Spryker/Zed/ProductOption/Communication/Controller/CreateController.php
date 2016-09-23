@@ -47,10 +47,13 @@ class CreateController extends BaseOptionController
 
         $productTable = $this->getFactory()->createProductTable();
 
+        $optionTabs = $this->getFactory()->createOptionTabs($productOptionGroupForm);
+
         return [
             'generalForm' => $productOptionGroupForm->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'productsTable' => $productTable->render(),
+            'optionTabs' => $optionTabs->createView()
         ];
     }
 

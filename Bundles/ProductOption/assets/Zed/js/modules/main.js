@@ -8,12 +8,10 @@
 require('ZedGui');
 require('../../sass/main.scss');
 
-var Navigation = require('./navigation');
 var OptionValueFormHandler = require('./product-option-value-form-handler');
 
 $(document).ready(function() {
 
-    new Navigation();
     new OptionValueFormHandler();
 
     $('#create-product-option-button').on('click', function(event) {
@@ -23,4 +21,14 @@ $(document).ready(function() {
     });
 
     $('#add-another-option').trigger('click');
+
+    $('.ibox-content').each(function(index, content) {
+        var hasErrors = $(content).find('.has-error, .alert-danger');
+        if (hasErrors.length == 0) {
+            return;
+        }
+
+        $(content).parent().addClass('error');
+
+    });
 });

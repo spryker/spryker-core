@@ -8,13 +8,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create product option' } %}
-
-        {% block widget_content %}
-             {% include '@ProductOption/_partial/tabs.twig' %}
-        {% endblock %}
-
-    {% endembed %}
+    {{ tabs(optionTabs, {'generalForm' : generalForm, 'availableLocales' : availableLocales, 'productsTable' : productsTable}) }}
 
 {% endblock %}
 
