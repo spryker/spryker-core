@@ -100,7 +100,7 @@ class Address
         $addressEntity = $addressQuery->findOne();
 
         if ($addressEntity === null) {
-            throw new AddressNotFoundException(sprintf('Address not found for ID %s (and optional customer ID %s).', $idAddress, $idCustomer));
+            throw new AddressNotFoundException(sprintf('Address not found for ID `%s` (and optional customer ID `%s`).', $idAddress, $idCustomer));
         }
 
         $addressTransfer = $this->entityToAddressTransfer($addressEntity);
@@ -184,7 +184,7 @@ class Address
 
         if (!$entity) {
             throw new AddressNotFoundException(sprintf(
-                'Address not found for ID %s and customer email %s.',
+                'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             ));
@@ -212,7 +212,7 @@ class Address
 
         if (!$entity) {
             throw new AddressNotFoundException(sprintf(
-                'Address not found for ID %s and customer email %s.',
+                'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             ));
@@ -313,7 +313,7 @@ class Address
 
         if ($customer === null) {
             throw new CustomerNotFoundException(sprintf(
-                'Customer not found for email %s or ID %s.',
+                'Customer not found for email `%s` or ID `%s`.',
                 $addressTransfer->getEmail(),
                 $addressTransfer->getFkCustomer()
             ));
@@ -342,7 +342,7 @@ class Address
 
         if ($customer === null) {
             throw new CustomerNotFoundException(sprintf(
-                'Customer not found for email %s or ID %s.',
+                'Customer not found for email `%s` or ID `%s`.',
                 $customerTransfer->getEmail(),
                 $customerTransfer->getIdCustomer()
             ));
@@ -362,7 +362,7 @@ class Address
 
         if ($idCountry === null) {
             throw new CountryNotFoundException(sprintf(
-                'Country not found for ISO code %s.',
+                'Country not found for ISO code `%s`.',
                 $this->getIsoCode()
             ));
         }
@@ -427,7 +427,7 @@ class Address
 
         if (!$entity) {
             throw new AddressNotFoundException(sprintf(
-                'Address not found for ID %s and customer email %s.',
+                'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             ));
@@ -583,7 +583,7 @@ class Address
 
         if (!$addressEntity) {
             throw new AddressNotFoundException(sprintf(
-                'Address not found for ID %s and customer email %s.',
+                'Address not found for ID `%s` and customer email `%s`.',
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             ));
