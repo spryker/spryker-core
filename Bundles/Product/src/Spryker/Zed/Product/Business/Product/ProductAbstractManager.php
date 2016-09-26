@@ -9,8 +9,8 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use ArrayObject;
 use Exception;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -287,8 +287,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected function persistPrice(ProductAbstractTransfer $productAbstractTransfer)
     {
         $priceTransfer = $productAbstractTransfer->getPrice();
-        if ($priceTransfer instanceof ZedProductPriceTransfer) {
-            $priceTransfer->setIdProduct(
+        if ($priceTransfer instanceof PriceProductTransfer) {
+            $priceTransfer->setIdProductAbstract(
                 $productAbstractTransfer
                     ->requireIdProductAbstract()
                     ->getIdProductAbstract()

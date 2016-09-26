@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 class ProductManagementToPriceBridge implements ProductManagementToPriceInterface
 {
@@ -29,7 +29,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
      * @param int $idAbstractProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceType = null)
     {
@@ -40,7 +40,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
      * @param int $idProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceType = null)
     {
@@ -48,21 +48,21 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null)
+    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null)
     {
         return $this->priceFacade->persistAbstractProductPrice($priceTransfer, $priceType);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null)
+    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceType = null)
     {
         return $this->priceFacade->persistConcreteProductPrice($priceTransfer, $priceType);
     }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Price\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface PriceFacadeInterface
@@ -37,7 +36,7 @@ interface PriceFacadeInterface
      * @param int $idAbstractProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceType = null);
 
@@ -47,7 +46,7 @@ interface PriceFacadeInterface
      * @param int $idProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\PriceProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceType = null);
 
@@ -117,19 +116,19 @@ interface PriceFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
+    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
+    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceType = null);
 
 }

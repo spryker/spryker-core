@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Generated\Shared\Transfer\PriceProductAbstractTransfer;
-use Generated\Shared\Transfer\PriceProductConcreteTransfer;
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
@@ -91,7 +89,7 @@ class Reader implements ReaderInterface
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
@@ -106,10 +104,10 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        $priceTransfer = (new ZedProductPriceTransfer())
+        $priceTransfer = (new PriceProductTransfer())
             ->setIdProduct($idAbstractProduct)
             ->setPrice($priceEntity->getPrice())
-            ->setPriceType($priceTypeName);
+            ->setPriceTypeName($priceTypeName);
 
         return $priceTransfer;
     }
@@ -120,7 +118,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Exception
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceTypeName = null)
     {
@@ -135,10 +133,10 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        $priceTransfer = (new ZedProductPriceTransfer())
+        $priceTransfer = (new PriceProductTransfer())
             ->setIdProduct($idProduct)
             ->setPrice($priceEntity->getPrice())
-            ->setPriceType($priceTypeName);
+            ->setPriceTypeName($priceTypeName);
 
         return $priceTransfer;
     }

@@ -3,12 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/transfer-01.xsd" >
 
-    <transfer name="ZedProductPrice">
-        <property name="idProduct" type="int" />
-        <property name="price" type="int" />
-        <property name="priceType" type="string" />
-    </transfer>
-
     <transfer name="ProductManagementAttribute">
         <property name="idProductManagementAttribute" type="int" />
         <property name="key" type="string" />

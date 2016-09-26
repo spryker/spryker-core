@@ -5,7 +5,7 @@
 
     <transfer name="PriceProduct">
         <property name="idPriceProduct" type="int" />
-        <property name="price" type="string" />
+        <property name="price" type="int" />
         <property name="isActive" type="string" />
         <property name="priceTypeName" type="string" />
         <property name="idProduct" type="int" />

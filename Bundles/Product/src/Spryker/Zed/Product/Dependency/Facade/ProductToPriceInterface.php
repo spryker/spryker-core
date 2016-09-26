@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface ProductToPriceInterface
 {
@@ -16,7 +16,7 @@ interface ProductToPriceInterface
      * @param int $idAbstractProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductAbstractPrice($idAbstractProduct, $priceType = null);
 
@@ -24,25 +24,25 @@ interface ProductToPriceInterface
      * @param int $idProduct
      * @param null $priceType
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceType = null);
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceType = null);
+    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null);
 
     /**
-     * @param \Generated\Shared\Transfer\ZedProductPriceTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
      * @throws \Exception
      *
      * @return int
      */
-    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null);
+    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null);
 
 }

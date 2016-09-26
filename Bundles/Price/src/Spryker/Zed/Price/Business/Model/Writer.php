@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException;
@@ -255,14 +254,14 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param ZedProductPriceTransfer $priceTransfer
+     * @param PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
      * @throws \Exception
      *
      * @return int
      */
-    public function persistAbstractProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null)
+    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
     {
         $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
         $priceTypeEntity = $this->queryContainer
@@ -289,14 +288,14 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param ZedProductPriceTransfer $priceTransfer
+     * @param PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
      * @throws \Exception
      *
      * @return int
      */
-    public function persistConcreteProductPrice(ZedProductPriceTransfer $priceTransfer, $priceTypeName = null)
+    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
     {
         $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
         $priceTypeEntity = $this->queryContainer

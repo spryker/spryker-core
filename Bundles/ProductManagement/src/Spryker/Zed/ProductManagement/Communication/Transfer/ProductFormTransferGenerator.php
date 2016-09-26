@@ -10,13 +10,13 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ZedProductPriceTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
@@ -310,15 +310,15 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function buildProductAbstractPriceTransfer(FormInterface $form)
     {
         $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
         $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
-        $priceTransfer = (new ZedProductPriceTransfer())
-            ->setIdProduct($idProductAbstract)
+        $priceTransfer = (new PriceProductTransfer())
+            ->setIdProductAbstract($idProductAbstract)
             ->setPrice($price);
 
         return $priceTransfer;
@@ -383,13 +383,13 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ZedProductPriceTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function buildProductConcretePriceTransfer(FormInterface $form, $idProduct)
     {
         $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
 
-        $priceTransfer = (new ZedProductPriceTransfer())
+        $priceTransfer = (new PriceProductTransfer())
             ->setIdProduct($idProduct)
             ->setPrice($price);
 
