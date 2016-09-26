@@ -105,7 +105,7 @@ class Reader implements ReaderInterface
         }
 
         $priceTransfer = (new PriceProductTransfer())
-            ->setIdProduct($idAbstractProduct)
+            ->setIdProductAbstract($idAbstractProduct)
             ->setPrice($priceEntity->getPrice())
             ->setPriceTypeName($priceTypeName);
 
