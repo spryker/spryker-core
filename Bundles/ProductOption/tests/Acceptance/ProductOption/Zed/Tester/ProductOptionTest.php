@@ -7,6 +7,9 @@
 
 namespace Acceptance\ProductOption\Zed\Tester;
 
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use ProductOption\ZedAcceptanceTester;
 
 /**
@@ -21,6 +24,10 @@ class ProductOptionTest extends ZedAcceptanceTester
 
     const LANGUAGE_SWITCH_XPATH = '//*[@id="option-value-translations"]/div[2]/div/div[1]/a';
 
+    /**
+     * @var array
+     */
+    protected $locales = ['en_US', 'de_DE'];
 
     /**
      * @param array $values
@@ -79,13 +86,17 @@ class ProductOptionTest extends ZedAcceptanceTester
 
 
     /**
-     * @return void
+     * @param array $productIds
+     *
+     * @return array
      */
-    public function assignRandomProducts()
+    public function assignProducts($productIds = [])
     {
-        $this->click('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]/a');
-        $this->click('//*[@id="all_products_checkbox_1"]');
-        $this->click('//*[@id="all_products_checkbox_2"]');
+        $this->selectProductTab();
+
+        foreach ($productIds as $id) {
+            $this->click('//*[@id="all_products_checkbox_' . $id . '"]');
+        }
     }
 
     /**
@@ -97,6 +108,103 @@ class ProductOptionTest extends ZedAcceptanceTester
     {
         $this->click('#products-to-be-assigned');
         $this->click("//a[@data-id='" . $idProduct . "']");
+    }
+
+    /**
+     * @return void
+     */
+    public function selectProductTab()
+    {
+        $this->click('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]/a');
+    }
+
+    /**
+     * @return void
+     */
+    public function submitProductGroupForm()
+    {
+        $this->click('#create-product-option-button');
+    }
+
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    public function createProductOptionGroupTransfer()
+    {
+        $productOptionGroupTransfer = new ProductOptionGroupTransfer();
+        $productOptionGroupTransfer->setName('group.name.translation.key.edit');
+        $productOptionGroupTransfer->setFkTaxSet(1);
+
+        $this->addGroupNameTranslations($productOptionGroupTransfer);
+
+        $productOptionValueTransfer = new ProductOptionValueTransfer();
+        $productOptionValueTransfer->setValue('option.value.translation.key.edit');
+        $productOptionValueTransfer->setPrice(1000);
+        $productOptionValueTransfer->setSku('testing_sky_' . rand(1, 999));
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+        $this->addOptionValueTranslations($productOptionValueTransfer, $productOptionGroupTransfer);
+
+        $productOptionValueTransfer = new ProductOptionValueTransfer();
+        $productOptionValueTransfer->setValue('option.value.translation.key.edit.second');
+        $productOptionValueTransfer->setPrice(2000);
+        $productOptionValueTransfer->setSku('testing_sky_second' . rand(1, 999));
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+        $this->addOptionValueTranslations($productOptionValueTransfer, $productOptionGroupTransfer);
+
+        $productOptionGroupTransfer->addProductsToBeAssigned([1, 2, 3]);
+
+        return $productOptionGroupTransfer;
+    }
+
+    /**
+     * @param string $translationKey
+     * @param string $localeIsoCode
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer
+     */
+    protected function createTranslation($translationKey, $localeIsoCode)
+    {
+        $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
+        $productOptionTranslationTransfer->setKey($translationKey);
+        $productOptionTranslationTransfer->setName('Translation1');
+        $productOptionTranslationTransfer->setLocaleCode($localeIsoCode);
+
+        return $productOptionTranslationTransfer;
+    }
+
+    /**
+     * @param ProductOptionValueTransfer $productOptionValueTransfer
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    protected function addOptionValueTranslations(
+        ProductOptionValueTransfer $productOptionValueTransfer,
+        ProductOptionGroupTransfer $productOptionGroupTransfer
+    ) {
+        foreach ($this->locales as $locale) {
+            $productOptionTranslationTransfer = $this->createTranslation(
+                $productOptionValueTransfer->getValue(),
+                $locale
+            );
+            $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
+        }
+    }
+
+    /**
+     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return void
+     */
+    protected function addGroupNameTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    {
+        foreach ($this->locales as $locale) {
+            $productOptionTranslationTransfer = $this->createTranslation($productOptionGroupTransfer->getName(), $locale);
+            $productOptionGroupTransfer->addGroupNameTranslation($productOptionTranslationTransfer);
+        }
     }
 
 }

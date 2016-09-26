@@ -22,10 +22,25 @@ function OptionValueFormHandler() {
     this.valuesToBeRemovedField = $('#product_option_general_product_option_values_to_be_removed');
     this.translationCopyButton = new TranslationCopyFields();
 
-    this.addProductOptionValueForm();
+    if (!this.haveEmptyOptionForm() && !$("#product_option_general_idProductOptionGroup").val()) {
+        this.addProductOptionValueForm();
+    }
+
     if (this.optionValueCount > 0) {
         this.initialiseExistingProductValueForms();
     }
+}
+
+OptionValueFormHandler.prototype.haveEmptyOptionForm = function() {
+
+    var haveEmptyOptionValueForm = false;
+    $('#option-value-list').find("input[id$='value']").each(function(index, element) {
+        if (!$(element).val()) {
+            haveEmptyOptionValueForm = true;
+        }
+    });
+
+    return haveEmptyOptionValueForm;
 }
 
 OptionValueFormHandler.prototype.initialiseExistingProductValueForms = function() {

@@ -45,11 +45,11 @@ class ProductOptionCreateCest
 
         $i->assertSame($translationToCopy, $copiedValue, 'Value Successfully copied to other translation');
 
-        $i->assignRandomProducts();
+        $i->assignProducts([1, 2]);
 
         $i->unassignProduct(1);
 
-        $i->click('#create-product-option-button');
+        $i->submitProductGroupForm();
 
         $i->see(ProductOptionCreatePage::PRODUCT_OPTION_CREATED_SUCCESS_MESSAGE);
     }
