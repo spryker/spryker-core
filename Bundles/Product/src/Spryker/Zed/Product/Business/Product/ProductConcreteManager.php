@@ -65,6 +65,21 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected $productConcreteAssertion;
 
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected $pluginsCreateCollection;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected $pluginsUpdateCollection;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected $pluginsReadCollection;
+
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
@@ -73,7 +88,10 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         ProductToLocaleInterface $localeFacade,
         ProductToPriceInterface $priceFacade,
         ProductAbstractAssertionInterface $productAbstractAssertion,
-        ProductConcreteAssertionInterface $productConcreteAssertion
+        ProductConcreteAssertionInterface $productConcreteAssertion,
+        array $pluginsCreateCollection,
+        array $pluginsReadCollection,
+        array $pluginsUpdateCollection
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -83,6 +101,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->priceFacade = $priceFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->productConcreteAssertion = $productConcreteAssertion;
+        $this->pluginsCreateCollection = $pluginsCreateCollection;
+        $this->pluginsReadCollection = $pluginsReadCollection;
+        $this->pluginsUpdateCollection = $pluginsUpdateCollection;
     }
 
     /**
@@ -112,6 +133,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $sku = $productConcreteTransfer->getSku();
             $this->productConcreteAssertion->assertSkuUnique($sku);
 
+            $this->triggerBeforeCreatePlugins($productConcreteTransfer);
+
             $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
             $idProductConcrete = $productConcreteEntity->getPrimaryKey();
@@ -120,8 +143,10 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
             $this->persistPrice($productConcreteTransfer);
 
-            $this->persistImageSets($productConcreteTransfer); //TODO: PLUGIN
-            $this->persistStock($productConcreteTransfer); //TODO: PLUGIN
+            //$this->persistImageSets($productConcreteTransfer); //TODO: PLUGIN
+            //$this->persistStock($productConcreteTransfer); //TODO: PLUGIN
+
+            $this->triggerAfterCreatePlugins($productConcreteTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
             return $idProductConcrete;
@@ -160,6 +185,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $this->productConcreteAssertion->assertProductExists($idProduct);
             $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
 
+            $this->triggerBeforeUpdatePlugins($productConcreteTransfer);
+
             $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
             $idProductConcrete = $productConcreteEntity->getPrimaryKey();
@@ -168,8 +195,10 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
             $this->persistPrice($productConcreteTransfer);
 
-            $this->persistImageSets($productConcreteTransfer);  //TODO: PLUGIN
-            $this->persistStock($productConcreteTransfer);  //TODO: PLUGIN
+            //$this->persistImageSets($productConcreteTransfer);  //TODO: PLUGIN
+            //$this->persistStock($productConcreteTransfer);  //TODO: PLUGIN
+
+            $this->triggerAfterUpdatePlugins($productConcreteTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
 
@@ -404,8 +433,10 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->loadLocalizedAttributes($productTransfer);
         $this->loadPrice($productTransfer);
 
-        $this->loadStock($productTransfer); //TODO: PLUGIN
-        $this->loadImageSet($productTransfer);  //TODO: PLUGIN
+        $this->triggerLoadPlugins($productTransfer);
+
+        //$this->loadStock($productTransfer); //TODO: PLUGIN
+        //$this->loadImageSet($productTransfer);  //TODO: PLUGIN
 
         return $productTransfer;
     }
@@ -524,6 +555,66 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function triggerBeforeCreatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsCreateCollection as $plugin) {
+            $plugin->run($productConcreteTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function triggerAfterCreatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsCreateCollection as $plugin) {
+            $plugin->run($productConcreteTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function triggerBeforeUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsUpdateCollection as $plugin) {
+            $plugin->run($productConcreteTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function triggerAfterUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsUpdateCollection as $plugin) {
+            $plugin->run($productConcreteTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function triggerLoadPlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsReadCollection as $plugin) {
+            $plugin->run($productConcreteTransfer);
+        }
     }
 
 }
