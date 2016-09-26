@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Money\Parser\IntlMoneyParser;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
-class Parser
+class Parser implements ParserInterface
 {
 
     /**
