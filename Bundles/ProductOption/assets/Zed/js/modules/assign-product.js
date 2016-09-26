@@ -322,7 +322,7 @@ $(document).ready(function() {
                 $('#select-all-btn').hide();
             }
 
-            var productContainer = $('#products').find('[data-products="' + dataElementId + '"]');
+            var productContainer = $('#products-assignment').find('[data-products="' + dataElementId + '"]');
             $(productContainer).show();
         });
     });
