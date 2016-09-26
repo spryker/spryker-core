@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Money\Parser;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Money\Parser\IntlMoneyParser;
+use Money\MoneyParser;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
 class Parser implements ParserInterface
@@ -17,7 +17,7 @@ class Parser implements ParserInterface
     /**
      * @var \Money\Parser\IntlMoneyParser
      */
-    protected $intlMoneyParser;
+    protected $moneyParser;
 
     /**
      * @var \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
@@ -25,12 +25,12 @@ class Parser implements ParserInterface
     protected $moneyToTransferMapper;
 
     /**
-     * @param \Money\Parser\IntlMoneyParser $intlMoneyParser
+     * @param \Money\MoneyParser $moneyParser
      * @param \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface $moneyToTransferMapper
      */
-    public function __construct(IntlMoneyParser $intlMoneyParser, MoneyToTransferMapperInterface $moneyToTransferMapper)
+    public function __construct(MoneyParser $moneyParser, MoneyToTransferMapperInterface $moneyToTransferMapper)
     {
-        $this->intlMoneyParser = $intlMoneyParser;
+        $this->moneyParser = $moneyParser;
         $this->moneyToTransferMapper = $moneyToTransferMapper;
     }
 
@@ -42,7 +42,7 @@ class Parser implements ParserInterface
      */
     public function parse($value, CurrencyTransfer $currencyTransfer)
     {
-        $money = $this->intlMoneyParser->parse($value, $currencyTransfer->getCode());
+        $money = $this->moneyParser->parse($value, $currencyTransfer->getCode());
 
         return $this->moneyToTransferMapper->convert($money);
     }
