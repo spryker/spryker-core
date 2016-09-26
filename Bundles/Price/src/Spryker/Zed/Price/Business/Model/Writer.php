@@ -292,7 +292,7 @@ class Writer implements WriterInterface
 
         $priceEntity = $this->queryContainer
             ->queryPriceProduct()
-            ->filterByFkProductAbstract($priceTransfer->getIdProductAbstract())
+            ->filterByFkProductAbstract($priceTransfer->requireIdProductAbstract()->getIdProductAbstract())
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->findOneOrCreate();
 
@@ -319,7 +319,7 @@ class Writer implements WriterInterface
 
         $priceEntity = $this->queryContainer
             ->queryPriceProduct()
-            ->filterByFkProduct($priceTransfer->getIdProduct())
+            ->filterByFkProduct($priceTransfer->requireIdProduct()->getIdProduct())
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->filterByFkProductAbstract(null, Criteria::ISNULL)
             ->findOneOrCreate();
