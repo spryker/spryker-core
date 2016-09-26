@@ -307,7 +307,7 @@ class WriterTest extends Test
     /**
      * @return void
      */
-    public function testPersistAbstractPriceShouldUpdatePrice()
+    public function SKIP_testPersistAbstractPriceShouldUpdatePrice()
     {
         $productAbstract = SpyProductAbstractQuery::create()->filterBySku(self::SKU_PRODUCT_ABSTRACT)->findOne();
         if ($productAbstract === null) {
