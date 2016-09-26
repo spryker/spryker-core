@@ -37,7 +37,7 @@ class ViewController extends AddController
         ));
 
         $productAbstractTransfer = $this->getFactory()
-            ->getProductManagementFacade()
+            ->getProductFacade()
             ->getProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {

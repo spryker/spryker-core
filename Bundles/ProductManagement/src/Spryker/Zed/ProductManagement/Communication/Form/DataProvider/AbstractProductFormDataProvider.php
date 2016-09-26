@@ -12,9 +12,8 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface;
-use Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface;
+use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
+use Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
@@ -96,11 +95,6 @@ class AbstractProductFormDataProvider
     protected $priceFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface
-     */
-    protected $productManagementFacade;
-
-    /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Spryker\Shared\Library\Collection\CollectionInterface
      */
     protected $attributeTransferCollection;
@@ -123,7 +117,6 @@ class AbstractProductFormDataProvider
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
-        ProductManagementFacadeInterface $productManagementFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $attributeCollection,
@@ -138,7 +131,6 @@ class AbstractProductFormDataProvider
         $this->localeProvider = $localeProvider;
         $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
-        $this->productManagementFacade = $productManagementFacade;
         $this->currentLocale = $currentLocale;
         $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->taxCollection = $taxCollection;
@@ -437,7 +429,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      * @param string|null $localeCode
      * @param bool|false $isNew
      *
@@ -472,7 +464,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      * @param string|null $localeCode
      * @param bool|false $isNew
      *
@@ -551,7 +543,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      * @param bool|false $isNew
      *
      * @return array
@@ -585,7 +577,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface $attributeProcessor
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      * @param bool|false $isNew
      *
      * @return array

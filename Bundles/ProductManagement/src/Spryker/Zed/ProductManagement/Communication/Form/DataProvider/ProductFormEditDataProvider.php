@@ -26,7 +26,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     public function getData($idProductAbstract)
     {
         $formData = $this->getDefaultFormFields();
-        $productAbstractTransfer = $this->productManagementFacade->getProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
 
         if ($productAbstractTransfer) {
             $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);

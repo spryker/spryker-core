@@ -382,7 +382,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function persistStock(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return;
+        return $productConcreteTransfer;
         /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
         $stockCollection = $productConcreteTransfer->getStock();
         foreach ($stockCollection as $stockTransfer) {
@@ -439,7 +439,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function loadStock(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return;
+        return $productConcreteTransfer;
         $stockCollection = $this->stockQueryContainer
             ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
             ->innerJoinStock()
@@ -469,7 +469,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function loadImageSet(ProductConcreteTransfer $productTransfer)
     {
-        return;
+        return $productTransfer;
 
         $imageSets = $this->productImageFacade
             ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());

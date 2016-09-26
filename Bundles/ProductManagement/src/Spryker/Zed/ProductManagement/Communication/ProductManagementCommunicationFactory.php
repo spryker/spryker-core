@@ -107,7 +107,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
-            $this->getProductManagementFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -131,7 +130,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
-            $this->getProductManagementFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -155,7 +153,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
-            $this->getProductManagementFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
@@ -245,20 +242,12 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface
-     */
-    public function getProductManagementFacade()
-    {
-        return $this->getFacade();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection()
     {
         return $this->reindexAttributeCollection(
-            $this->getProductManagementFacade()->getProductAttributeCollection()
+            $this->getFacade()->getProductAttributeCollection()
         );
     }
 

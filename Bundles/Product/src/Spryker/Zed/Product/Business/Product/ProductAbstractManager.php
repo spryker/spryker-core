@@ -352,7 +352,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      */
     protected function loadImageSet(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return;
+        return $productAbstractTransfer;
 
         $imageSets = $this->productImageFacade
             ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());

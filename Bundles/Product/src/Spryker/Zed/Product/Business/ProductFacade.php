@@ -160,7 +160,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {

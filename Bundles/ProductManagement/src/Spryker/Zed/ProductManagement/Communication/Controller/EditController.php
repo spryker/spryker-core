@@ -34,7 +34,7 @@ class EditController extends AddController
         ));
 
         $productAbstractTransfer = $this->getFactory()
-            ->getProductManagementFacade()
+            ->getProductFacade()
             ->getProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
@@ -145,7 +145,7 @@ class EditController extends AddController
         if ($form->isValid()) {
             try {
                 $productAbstractTransfer = $this->getFactory()
-                    ->getProductManagementFacade()
+                    ->getProductFacade()
                     ->getProductAbstractById($idProductAbstract);
 
                 $productConcreteTransfer = $this->getFactory()

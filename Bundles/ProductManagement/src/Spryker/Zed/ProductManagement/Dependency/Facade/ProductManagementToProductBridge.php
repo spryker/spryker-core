@@ -109,6 +109,16 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function getProductAbstractById($idProductAbstract)
+    {
+        return $this->productFacade->getProductAbstractById($idProductAbstract);
+    }
+
+    /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -121,7 +131,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     /**
      * @param int $idProductAbstract
      *
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessorInterface
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
     public function getProductAttributesByAbstractProductId($idProductAbstract)
     {
