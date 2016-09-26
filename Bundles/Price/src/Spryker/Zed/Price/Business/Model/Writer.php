@@ -202,7 +202,9 @@ class Writer implements WriterInterface
     protected function setPriceType(PriceProductTransfer $priceProductTransfer)
     {
         if ($priceProductTransfer->getPriceTypeName() === null) {
-            $priceProductTransfer->setPriceTypeName($this->priceConfig->getPriceTypeDefaultName());
+            $priceProductTransfer->setPriceTypeName(
+                $this->priceConfig->getPriceTypeDefaultName()
+            );
         }
 
         return $priceProductTransfer;
@@ -222,7 +224,9 @@ class Writer implements WriterInterface
             throw new \Exception(self::ENTITY_NOT_FOUND);
         }
 
-        return $this->queryContainer->queryPriceProductEntity($idPriceProduct)->findOne();
+        return $this->queryContainer
+            ->queryPriceProductEntity($idPriceProduct)
+            ->findOne();
     }
 
     /**
@@ -254,14 +258,13 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceTransfer
-     * @param null $priceTypeName
+     * @param string $priceTypeName
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException
      *
-     * @return int
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
-    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
+    protected function getPriceTypeEntity($priceTypeName)
     {
         $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
         $priceTypeEntity = $this->queryContainer
@@ -269,16 +272,31 @@ class Writer implements WriterInterface
             ->findOne();
 
         if (!$priceTypeEntity) {
-            throw new UndefinedPriceTypeException('Undefined product price type: '. $priceTypeName);
+            throw new UndefinedPriceTypeException('Undefined product price type: ' . $priceTypeName);
         }
+
+        return $priceTypeEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param null $priceTypeName
+     *
+     * @throws \Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException
+     *
+     * @return int
+     */
+    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
+    {
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTypeName);
 
         $priceEntity = $this->queryContainer
             ->queryPriceProduct()
-            ->filterByFkProductAbstract($priceTransfer->getIdProduct())
+            ->filterByFkProductAbstract($priceTransfer->getIdProductAbstract())
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->findOneOrCreate();
 
-        $priceEntity->setFkProductAbstract($priceTransfer->getIdProduct());
+        $priceEntity->setFkProductAbstract($priceTransfer->getIdProductAbstract());
         $priceEntity->setFkPriceType($priceTypeEntity->getIdPriceType());
         $priceEntity->setPrice($priceTransfer->getPrice());
 
@@ -288,23 +306,16 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException
      *
      * @return int
      */
     public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
     {
-        $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
-        $priceTypeEntity = $this->queryContainer
-            ->queryPriceType($priceTypeName)
-            ->findOne();
-
-        if (!$priceTypeEntity) {
-            throw new UndefinedPriceTypeException('Undefined product price type: '. $priceTypeName);
-        }
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTypeName);
 
         $priceEntity = $this->queryContainer
             ->queryPriceProduct()
