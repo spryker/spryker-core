@@ -176,8 +176,8 @@ class ProductOptionTest extends ZedAcceptanceTester
     }
 
     /**
-     * @param ProductOptionValueTransfer $productOptionValueTransfer
-     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */
@@ -195,7 +195,7 @@ class ProductOptionTest extends ZedAcceptanceTester
     }
 
     /**
-     * @param ProductOptionGroupTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
      * @return void
      */

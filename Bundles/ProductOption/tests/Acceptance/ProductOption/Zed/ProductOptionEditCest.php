@@ -10,11 +10,19 @@ use Acceptance\ProductOption\Zed\PageObject\ProductOptionEditPage;
 use Acceptance\ProductOption\Zed\Tester\ProductOptionTest;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 
+/**
+ * @group Acceptance
+ * @group ProductOption
+ * @group Zed
+ * @group ProductOptionEditCest
+ */
 class ProductOptionEditCest
 {
 
     /**
      * @param \Acceptance\ProductOption\Zed\Tester\ProductOptionTest $i
+     *
+     * @return void
      */
     public function testEditOptionWithMultipleValues(ProductOptionTest $i)
     {
@@ -26,7 +34,7 @@ class ProductOptionEditCest
         $idProductOptionGroup = $this->createProductOptionFacade()
             ->saveProductOptionGroup($productOptionGroupTransfer);
 
-        $i->amOnPage(sprintf(ProductOptionEditPage::URL, (int) $idProductOptionGroup));
+        $i->amOnPage(sprintf(ProductOptionEditPage::URL, (int)$idProductOptionGroup));
 
         $idTaxSet = 2;
         $i->selectOption('#product_option_general_fkTaxSet', $idTaxSet);
@@ -65,7 +73,6 @@ class ProductOptionEditCest
 
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a[1]');
         $i->canSee(ProductOptionEditPage::PRODUCT_GROUP_EDIT_ACTIVATE_SUCCESS_MESSAGE);
-
     }
 
 
@@ -76,6 +83,5 @@ class ProductOptionEditCest
     {
         return new ProductOptionFacade();
     }
-
 
 }
