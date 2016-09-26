@@ -31,7 +31,6 @@ class CreateController extends AbstractController
         if ($form->isValid()) {
             $categoryTransfer = $form->getData();
             $this->getFacade()->createCategory($categoryTransfer);
-            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($categoryTransfer) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
         }
 
         return $this->viewResponse([
