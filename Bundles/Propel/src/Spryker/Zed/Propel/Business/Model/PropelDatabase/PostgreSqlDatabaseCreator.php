@@ -101,9 +101,8 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     protected function getSudoCreateCommand()
     {
         return sprintf(
-            'sudo createdb %s -E UTF8 -T template0 -U %s',
-            Config::get(PropelConstants::ZED_DB_DATABASE),
-            Config::get(PropelConstants::ZED_DB_USERNAME)
+            'sudo createdb %s -E UTF8 -T template0',
+            Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }
 

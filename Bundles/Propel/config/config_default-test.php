@@ -2,6 +2,8 @@
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Propel\Business\Builder\ObjectBuilder;
+use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
 use Spryker\Zed\Propel\PropelConfig;
 
 $config[PropelConstants::ZED_DB_ENGINE_MYSQL] = PropelConfig::DB_ENGINE_MYSQL;
@@ -11,10 +13,11 @@ $config[PropelConstants::ZED_DB_SUPPORTED_ENGINES] = [
     PropelConfig::DB_ENGINE_PGSQL => 'PostgreSql'
 ];
 
-$config[PropelConstants::ZED_DB_USERNAME] = (getenv(PropelConstants::ZED_DB_USERNAME)) ?: 'development';
+$config[PropelConstants::ZED_DB_USERNAME] = (getenv(PropelConstants::ZED_DB_USERNAME)) ?: 'postgres';
 $config[PropelConstants::ZED_DB_PASSWORD] = (getenv(PropelConstants::ZED_DB_PASSWORD)) ?: 'mate20mg';
 $config[PropelConstants::ZED_DB_DATABASE] = (getenv(PropelConstants::ZED_DB_DATABASE)) ?: 'DE_test_zed';
 $config[PropelConstants::ZED_DB_HOST] = (getenv(PropelConstants::ZED_DB_HOST)) ?: '127.0.0.1';
+$config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 
 $config[PropelConstants::ZED_DB_PORT] = (getenv(PropelConstants::ZED_DB_PORT)) ?: 5432;
 $config[PropelConstants::ZED_DB_ENGINE] = (getenv(PropelConstants::ZED_DB_ENGINE)) ?: $config[PropelConstants::ZED_DB_ENGINE_PGSQL];
@@ -69,8 +72,8 @@ $config[PropelConstants::PROPEL] = [
         'objectModel' => [
             'defaultKeyType' => 'fieldName',
             'builders' => [
-                'object' => '\Spryker\Zed\Propel\Business\Builder\ObjectBuilder',
-                'query' => '\Spryker\Zed\Propel\Business\Builder\QueryBuilder',
+                'object' => ObjectBuilder::class,
+                'query' => QueryBuilder::class,
             ],
         ],
     ],

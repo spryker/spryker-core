@@ -9,13 +9,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Attribute' } %}
-        {% block widget_content %}
-
-            {% include '@ProductManagement/Attribute/partials/attribute-form.twig' %}
-
-        {% endblock %}
-    {% endembed %}
+    {% include '@ProductManagement/Attribute/partials/attribute-form.twig' %}
 
 {% endblock %}
 

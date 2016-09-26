@@ -84,7 +84,7 @@ class StepCollection implements StepCollectionInterface
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return array
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
     protected function getCompletedSteps(AbstractTransfer $dataTransfer)
     {

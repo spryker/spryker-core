@@ -1,5 +1,7 @@
 class_name: UnitTester
 modules:
-    enabled:
-        - Asserts
-        - \ErrorHandler\Module\Unit
+  enabled:
+    - Asserts
+    - \Testify\Module\Environment
+    - \Config\Module\ConfigInit
+    - \ErrorHandler\Module\Unit
