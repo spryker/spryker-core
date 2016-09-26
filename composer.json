@@ -342,6 +342,7 @@
       "Spryker\\Client\\ProductOption\\": "Bundles/ProductOption/src",
       "Unit\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
       "Functional\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
+      "Acceptance\\ProductOption\\": "Bundles/ProductOption/tests",
       "Spryker\\Zed\\ProductOption\\": "Bundles/ProductOption/src",
       "Unit\\Spryker\\Zed\\ProductOption\\": "Bundles/ProductOption/tests",
       "Functional\\Spryker\\Zed\\ProductOption\\": "Bundles/ProductOption/tests",
