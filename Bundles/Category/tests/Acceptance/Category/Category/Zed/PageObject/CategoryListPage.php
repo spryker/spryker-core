@@ -10,7 +10,7 @@ namespace Acceptance\Category\Category\Zed\PageObject;
 class CategoryListPage
 {
 
-    const URL = '/category';
+    const URL = '/category/root';
 
     const SELECTOR_TABLE = 'dataTables_wrapper';
     const SELECTOR_CATEGORIES_LIST = 'categories-list';

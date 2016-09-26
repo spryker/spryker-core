@@ -10,10 +10,9 @@ namespace Acceptance\Category\Category\Zed\PageObject;
 class CategoryCreatePage
 {
 
-    const URL = '/product-category/add';
+    const URL = '/category/create';
 
-    const FORM_FIELD_CATEGORY_NAME = 'category[name]';
     const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
     const FORM_FIELD_CATEGORY_PARENT = 'category[fk_parent_category_node]';
-    const FORM_SUBMIT_BUTTON = 'Add';
+    const FORM_SUBMIT_BUTTON = 'Create';
 }

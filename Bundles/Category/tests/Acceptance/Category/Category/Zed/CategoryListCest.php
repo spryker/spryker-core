@@ -55,11 +55,10 @@ class CategoryListCest
         $i->click(CategoryListPage::BUTTON_CREATE_CATEGORY);
         $i->amOnPage(CategoryCreatePage::URL);
 
-        $i->fillField('category[name]', 'New Category');
         $i->fillField('category[category_key]', 'new-category-key');
         $i->selectOption('category[fk_parent_category_node]', 1);
 
-        $i->click('Add');
+        $i->click('Create');
 
         $i->waitForText('The category was added successfully.', 10);
     }
