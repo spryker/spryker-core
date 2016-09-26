@@ -257,10 +257,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductTaxCollection()
     {
         $taxSet = $this->getTaxFacade()->getTaxSets();
-        $taxSet = $taxSet->getTaxSets();
 
         $result = [];
-        foreach ($taxSet as $tax) {
+        foreach ($taxSet->getTaxSets() as $tax) {
             $result[$tax->getIdTaxSet()] = $tax->getName();
         }
 

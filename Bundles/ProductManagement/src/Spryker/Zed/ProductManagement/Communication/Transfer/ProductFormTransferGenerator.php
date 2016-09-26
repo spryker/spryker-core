@@ -342,11 +342,9 @@ class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterf
                 $imageSetTransfer = (new ProductImageSetTransfer())
                     ->fromArray($imageSet->getData(), true);
 
-                try {
+                if ($this->localeFacade->hasLocale($localeCode)) {
                     $localeTransfer = $this->localeFacade->getLocale($localeCode);
                     $imageSetTransfer->setLocale($localeTransfer);
-                } catch (\Exception $e) {
-
                 }
 
                 $productImages = $this->buildProductImageCollection(

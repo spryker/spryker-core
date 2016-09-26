@@ -42,6 +42,16 @@ class ProductManagementToLocaleBridge implements ProductManagementToLocaleInterf
     }
 
     /**
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    public function hasLocale($localeName)
+    {
+        return $this->localeFacade->hasLocale($localeName);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection()

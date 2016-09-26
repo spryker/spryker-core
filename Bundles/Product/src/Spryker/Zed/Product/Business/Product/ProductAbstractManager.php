@@ -60,7 +60,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $productAbstractAssertion;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
      */
     protected $productConcreteManager;
 

@@ -14,7 +14,6 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductManagement\Business\Product\ProductManager;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -24,15 +23,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Product\ProductManagerInterface
-     */
-    public function createProductManager()
-    {
-        return new ProductManager(
-            $this->getProductFacade()
-        );
-    }
 
     /**
      * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslatorInterface

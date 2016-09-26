@@ -39,12 +39,12 @@ class ProductManager implements ProductManagerInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductAbstractManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
      */
     protected $productAbstractManager;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\Product\ProductConcreteManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
      */
     protected $productConcreteManager;
 
