@@ -105,16 +105,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * TODO Remove when ZedProductConcreteTransfer is removed
-     *
-     * @return \Spryker\Zed\Product\Business\Product\ProductVariantBuilder
-     */
-    public function createProductVariantBuilder()
-    {
-         return new ProductVariantBuilder($this->getQueryContainer());
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Business\Product\VariantGeneratorInterface
      */
     public function createProductVariantGenerator()
