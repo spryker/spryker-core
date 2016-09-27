@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ReaderInterface
 {
 
@@ -88,5 +90,12 @@ interface ReaderInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct
      */
     public function getStockProductById($idStockProduct);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
 
 }

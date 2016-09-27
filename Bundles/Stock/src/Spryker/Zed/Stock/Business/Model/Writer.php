@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
@@ -228,6 +229,42 @@ class Writer implements WriterInterface
         $this->insertActiveTouchRecordStockProduct($stockProduct);
 
         return $stockProduct->getPrimaryKey();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->persistStockProduct($productConcreteTransfer->getStock());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->persistStockProduct((array) $productConcreteTransfer->getStock());
+    }
+
+    /**
+     * @param array $stockCollection|\Generated\Shared\Transfer\StockProductTransfer[]
+     *
+     * @return void
+     */
+    protected function persistStockProduct(array $stockCollection)
+    {
+        foreach ($stockCollection as $stockTransfer) {
+            if (!$this->reader->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
+                $this->createStockProduct($stockTransfer);
+            } else {
+                $this->updateStockProduct($stockTransfer);
+            }
+        }
     }
 
 }

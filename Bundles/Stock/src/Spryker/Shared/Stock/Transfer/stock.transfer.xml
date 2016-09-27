@@ -17,5 +17,10 @@
         <property name="name" type="string" />
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="stock" type="StockProduct[]" />
+    </transfer>
+
+
 </transfers>
 

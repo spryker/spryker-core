@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Business;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -141,6 +142,48 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getIdStockProduct($sku, $stockType)
     {
         return $this->getFactory()->createReaderModel()->getIdStockProduct($sku, $stockType);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->getFactory()
+            ->createWriterModel()
+            ->runProductConcreteCreatePluginRun($productConcreteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->getFactory()
+            ->createWriterModel()
+            ->runProductConcreteUpdatePlugin($productConcreteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->getFactory()
+            ->createReaderModel()
+            ->runProductConcreteReadPlugin($productConcreteTransfer);
     }
 
 }

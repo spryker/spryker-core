@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
@@ -216,6 +218,31 @@ class Reader implements ReaderInterface
         $stockTypeCount = $this->queryContainer->queryStockByName($stockType)->count();
 
         return $stockTypeCount > 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $stockCollection = $this->queryContainer
+            ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
+            ->innerJoinStock()
+            ->find();
+
+        if ($stockCollection === null) {
+            return;
+        }
+
+        foreach ($stockCollection as $stockEntity) {
+            $stockTransfer = (new StockProductTransfer())
+                ->fromArray($stockEntity->toArray(), true)
+                ->setStockType($stockEntity->getStock()->getName());
+
+            $productConcreteTransfer->addStock($stockTransfer);
+        }
     }
 
 }

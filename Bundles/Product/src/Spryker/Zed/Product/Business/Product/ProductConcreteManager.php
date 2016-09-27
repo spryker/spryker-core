@@ -143,9 +143,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
             $this->persistPrice($productConcreteTransfer);
 
-            //$this->persistImageSets($productConcreteTransfer); //TODO: PLUGIN
-            //$this->persistStock($productConcreteTransfer); //TODO: PLUGIN
-
             $this->triggerAfterCreatePlugins($productConcreteTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
@@ -195,9 +192,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
             $this->persistPrice($productConcreteTransfer);
 
-            //$this->persistImageSets($productConcreteTransfer);  //TODO: PLUGIN
-            //$this->persistStock($productConcreteTransfer);  //TODO: PLUGIN
-
             $this->triggerAfterUpdatePlugins($productConcreteTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
@@ -217,17 +211,17 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function getProductConcreteById($idProduct)
     {
-        $product = $this->productQueryContainer
+        $productEntity = $this->productQueryContainer
             ->queryProduct()
             ->filterByIdProduct($idProduct)
             ->findOne();
 
-        if (!$product) {
+        if (!$productEntity) {
             return null;
         }
 
         $transferGenerator = new ProductTransferGenerator();
-        $productTransfer = $transferGenerator->convertProduct($product);
+        $productTransfer = $transferGenerator->convertProduct($productEntity);
         $productTransfer = $this->loadProductData($productTransfer);
 
         return $productTransfer;
@@ -378,52 +372,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function persistImageSets(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return;
-        $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
-        if (empty($imageSetTransferCollection)) {
-            return;
-        }
-
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
-                $productConcreteTransfer
-                    ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
-            );
-            $this->productImageFacade->persistProductImageSet($imageSetTransfer);
-        }
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function persistStock(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $productConcreteTransfer;
-        /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
-        $stockCollection = $productConcreteTransfer->getStock();
-        foreach ($stockCollection as $stockTransfer) {
-            if (!$this->stockFacade->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
-                $this->stockFacade->createStockProduct($stockTransfer);
-            } else {
-                $this->stockFacade->updateStockProduct($stockTransfer);
-            }
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -434,9 +382,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->loadPrice($productTransfer);
 
         $this->triggerLoadPlugins($productTransfer);
-
-        //$this->loadStock($productTransfer); //TODO: PLUGIN
-        //$this->loadImageSet($productTransfer);  //TODO: PLUGIN
 
         return $productTransfer;
     }
@@ -459,61 +404,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $productConcreteTransfer->setPrice($priceTransfer);
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function loadStock(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $productConcreteTransfer;
-        $stockCollection = $this->stockQueryContainer
-            ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
-            ->innerJoinStock()
-            ->find();
-
-        if ($stockCollection === null) {
-            return $productConcreteTransfer;
-        }
-
-        foreach ($stockCollection as $stockEntity) {
-            $stockTransfer = (new StockProductTransfer())
-                ->fromArray($stockEntity->toArray(), true)
-                ->setStockType($stockEntity->getStock()->getName());
-
-            $productConcreteTransfer->addStock($stockTransfer);
-        }
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function loadImageSet(ProductConcreteTransfer $productTransfer)
-    {
-        return $productTransfer;
-
-        $imageSets = $this->productImageFacade
-            ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());
-
-        if ($imageSets === null) {
-            return $productTransfer;
-        }
-
-        $productTransfer->setImageSets(
-            new ArrayObject($imageSets)
-        );
-
-        return $productTransfer;
     }
 
     /**

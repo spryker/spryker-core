@@ -13,7 +13,6 @@
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="taxRate" type="float" />
         <property name="price" type="PriceProduct" />
-        <property name="stock" type="StockProduct[]" />
     </transfer>
 
     <transfer name="ProductAbstract">
