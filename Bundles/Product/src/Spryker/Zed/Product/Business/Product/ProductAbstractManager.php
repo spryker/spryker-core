@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -177,8 +177,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
             $this->persistPrice($productAbstractTransfer);
 
-            //$this->persistImageSets($productAbstractTransfer); //TODO: PLUGIN
-
             $this->triggerAfterUpdatePlugins($productAbstractTransfer);
 
             $this->productQueryContainer->getConnection()->commit();
@@ -224,7 +222,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferGenerator();
+        $transferGenerator = new ProductTransferMapper();
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
         $productAbstractTransfer = $this->loadTaxSetId($productAbstractTransfer);

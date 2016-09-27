@@ -11,7 +11,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Propel\Runtime\Collection\ObjectCollection;
 
-interface ProductImageTransferGeneratorInterface
+interface ProductImageTransferMapperInterface
 {
 
     /**

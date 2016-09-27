@@ -11,7 +11,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 
-interface ProductTransferGeneratorInterface
+interface ProductTransferMapperInterface
 {
 
     /**

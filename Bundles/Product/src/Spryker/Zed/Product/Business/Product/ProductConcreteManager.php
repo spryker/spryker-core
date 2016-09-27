@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -218,7 +218,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferGenerator();
+        $transferGenerator = new ProductTransferMapper();
         $productTransfer = $transferGenerator->convertProduct($productEntity);
         $productTransfer = $this->loadProductData($productTransfer);
 
@@ -281,7 +281,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->joinSpyProductAbstract()
             ->find();
 
-        $transferGenerator = new ProductTransferGenerator();
+        $transferGenerator = new ProductTransferMapper();
         $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
 
         for ($a = 0; $a < count($transferCollection); $a++) {

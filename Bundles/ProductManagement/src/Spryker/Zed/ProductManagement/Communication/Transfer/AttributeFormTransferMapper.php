@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Symfony\Component\Form\FormInterface;
 
-class AttributeFormTransferGenerator implements AttributeFormTransferGeneratorInterface
+class AttributeFormTransferMapper implements AttributeFormTransferMapperInterface
 {
 
     /**

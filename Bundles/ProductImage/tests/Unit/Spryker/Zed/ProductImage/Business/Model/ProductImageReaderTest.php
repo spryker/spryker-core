@@ -10,7 +10,7 @@ namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
-use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator;
+use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
@@ -41,7 +41,7 @@ class ProductImageReaderTest extends Test
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
     protected $transferGenerator;
 
@@ -49,7 +49,7 @@ class ProductImageReaderTest extends Test
     {
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();
-        $this->transferGenerator = new ProductImageTransferGenerator(
+        $this->transferGenerator = new ProductImageTransferMapper(
             $this->localeFacade
         );
 

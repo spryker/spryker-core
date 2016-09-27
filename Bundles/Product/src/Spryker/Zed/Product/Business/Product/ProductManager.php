@@ -292,24 +292,17 @@ class ProductManager implements ProductManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        //TODO: remove try/catches
-        try {
-            $idProductAbstract = $this->createProductAbstract($productAbstractTransfer);
-            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $idProductAbstract = $this->createProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-            foreach ($productConcreteCollection as $productConcrete) {
-                $productConcrete->setFkProductAbstract($idProductAbstract);
-                $this->createProductConcrete($productConcrete);
-            }
-
-            $this->productQueryContainer->getConnection()->commit();
-
-            return $idProductAbstract;
-
-        } catch (\Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
+        foreach ($productConcreteCollection as $productConcrete) {
+            $productConcrete->setFkProductAbstract($idProductAbstract);
+            $this->createProductConcrete($productConcrete);
         }
+
+        $this->productQueryContainer->getConnection()->commit();
+
+        return $idProductAbstract;
     }
 
     /**
@@ -324,29 +317,23 @@ class ProductManager implements ProductManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        try {
-            $idProductAbstract = $this->saveProductAbstract($productAbstractTransfer);
+        $idProductAbstract = $this->saveProductAbstract($productAbstractTransfer);
 
-            foreach ($productConcreteCollection as $productConcreteTransfer) {
-                $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        foreach ($productConcreteCollection as $productConcreteTransfer) {
+            $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
 
-                $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstract($productAbstractTransfer, $productConcreteTransfer);
-                if ($productConcreteEntity) {
-                    $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
-                    $this->saveProductConcrete($productConcreteTransfer);
-                } else {
-                    $this->createProductConcrete($productConcreteTransfer);
-                }
+            $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstract($productAbstractTransfer, $productConcreteTransfer);
+            if ($productConcreteEntity) {
+                $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
+                $this->saveProductConcrete($productConcreteTransfer);
+            } else {
+                $this->createProductConcrete($productConcreteTransfer);
             }
-
-            $this->productQueryContainer->getConnection()->commit();
-
-            return $idProductAbstract;
-
-        } catch (\Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
         }
+
+        $this->productQueryContainer->getConnection()->commit();
+
+        return $idProductAbstract;
     }
 
     /**

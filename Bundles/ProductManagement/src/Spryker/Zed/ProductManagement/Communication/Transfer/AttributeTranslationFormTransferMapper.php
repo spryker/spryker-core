@@ -15,7 +15,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslat
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeValueTranslationForm;
 use Symfony\Component\Form\FormInterface;
 
-class AttributeTranslationFormTransferGenerator implements AttributeTranslationFormTransferGeneratorInterface
+class AttributeTranslationFormTransferMapper implements AttributeTranslationFormTransferMapperInterface
 {
 
     /**

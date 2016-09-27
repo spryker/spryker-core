@@ -38,8 +38,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * TODO move to Tax bundle
-     *
      * @api
      *
      * @param int $idProductAbstract

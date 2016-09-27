@@ -34,7 +34,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInt
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
 
-class ProductFormTransferGenerator implements ProductFormTransferGeneratorInterface
+class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 {
 
     /**

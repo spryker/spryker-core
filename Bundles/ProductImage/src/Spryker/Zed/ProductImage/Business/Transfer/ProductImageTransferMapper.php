@@ -16,7 +16,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 
-class ProductImageTransferGenerator implements ProductImageTransferGeneratorInterface
+class ProductImageTransferMapper implements ProductImageTransferMapperInterface
 {
 
     /**

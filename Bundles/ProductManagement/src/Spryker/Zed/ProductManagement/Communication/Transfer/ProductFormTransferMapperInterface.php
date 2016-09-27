@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 
-interface ProductFormTransferGeneratorInterface
+interface ProductFormTransferMapperInterface
 {
 }

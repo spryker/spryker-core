@@ -14,7 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Library\Json;
 
-class ProductTransferGenerator implements ProductTransferGeneratorInterface
+class ProductTransferMapper implements ProductTransferMapperInterface
 {
 
     /**

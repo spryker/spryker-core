@@ -42,7 +42,7 @@ class ProductImageWriterTest extends Test
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
     protected $transferGenerator;
 

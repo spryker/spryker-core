@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface;
+use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -22,7 +22,7 @@ class Reader implements ReaderInterface
     protected $productImageContainer;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
     protected $transferGenerator;
 
@@ -31,7 +31,7 @@ class Reader implements ReaderInterface
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,
-        ProductImageTransferGeneratorInterface $transferGenerator
+        ProductImageTransferMapperInterface $transferGenerator
     ) {
         $this->productImageContainer = $productImageContainer;
         $this->transferGenerator = $transferGenerator;
