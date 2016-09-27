@@ -44,17 +44,16 @@ class ProductManager implements ProductManagerInterface
     {
         foreach ($change->getItems() as $cartItem) {
             $productConcreteTransfer = $this->getAndValidateProductConcrete($cartItem->getSku());
+            $localizedProductName = $this->productFacade->getLocalizedProductConcreteName(
+                $productConcreteTransfer,
+                $this->localeFacade->getCurrentLocale()
+            );
 
             $cartItem->setId($productConcreteTransfer->getIdProductConcrete())
                 ->setSku($productConcreteTransfer->getSku())
                 ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
                 ->setAbstractSku($productConcreteTransfer->getAbstractSku())
-                ->setName(
-                    $this->productFacade->getLocalizedProductConcreteName(
-                        $productConcreteTransfer,
-                        $this->localeFacade->getCurrentLocale()
-                    )
-                );
+                ->setName($localizedProductName);
         }
 
         return $change;
