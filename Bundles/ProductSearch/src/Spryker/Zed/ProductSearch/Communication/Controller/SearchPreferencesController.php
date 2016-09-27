@@ -69,6 +69,8 @@ class SearchPreferencesController extends AbstractController
 
             $this->getFacade()->createProductSearchPreferences($productSearchPreferencesTransfer);
 
+            $this->addSuccessMessage('Attribute to search was added successfully.');
+
             return $this->redirectResponse('/product-search/search-preferences');
         }
 
@@ -102,6 +104,10 @@ class SearchPreferencesController extends AbstractController
             $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 
             $this->getFacade()->updateProductSearchPreferences($productSearchPreferencesTransfer);
+
+            $this->addSuccessMessage('Attribute to search was successfully updated.');
+
+            return $this->redirectResponse('/product-search/search-preferences');
         }
 
         return $this->viewResponse([
@@ -123,6 +129,8 @@ class SearchPreferencesController extends AbstractController
 
         $this->getFacade()->cleanProductSearchPreferences($productSearchPreferencesTransfer);
 
+        $this->addSuccessMessage('Attribute to search was successfully deactivated.');
+
         return $this->redirectResponse('/product-search/search-preferences');
     }
 
@@ -132,6 +140,8 @@ class SearchPreferencesController extends AbstractController
     public function syncAction()
     {
         $this->getFacade()->touchProductAbstractByAsynchronousAttributeMap();
+
+        $this->addSuccessMessage('Search preferences synchronization was successful.');
 
         return $this->redirectResponse('/product-search/search-preferences');
     }

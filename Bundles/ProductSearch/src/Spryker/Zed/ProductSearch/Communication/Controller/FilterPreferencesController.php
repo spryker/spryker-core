@@ -189,6 +189,8 @@ class FilterPreferencesController extends AbstractController
     {
         $this->getFacade()->touchProductAbstractByAsynchronousAttributes();
 
+        $this->addSuccessMessage('Filter preferences synchronization was successful.');
+
         return $this->redirectResponse('/product-search/filter-preferences');
     }
 

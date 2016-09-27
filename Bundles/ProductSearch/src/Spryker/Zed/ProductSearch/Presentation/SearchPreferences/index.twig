@@ -7,7 +7,7 @@
 
 {% block action %}
     {{ createActionButton('/product-search/search-preferences/create', 'Add attribute to search' | trans) }}
-    {{ viewActionButton('/product-search/search-preferences/sync', 'Synchronize search preferences' | trans) }}
+    {{ viewActionButton('/product-search/search-preferences/sync', 'Synchronize search preferences' | trans, {'id': 'syncSearchPreferences'}) }}
 {% endblock %}
 
 {% block content %}

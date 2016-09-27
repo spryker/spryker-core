@@ -6,9 +6,9 @@
 {% block head_title widget_title | trans %}
 
 {% block action %}
-    {{ createActionButton('/product-search/filter-preferences/create', 'Create filter' | trans) }}
-    {{ editActionButton('/product-search/filter-reorder', 'Edit filter order' | trans) }}
-    {{ viewActionButton('/product-search/filter-preferences/sync', 'Synchronize filter preferences' | trans) }}
+    {{ createActionButton('/product-search/filter-preferences/create', 'Create filter' | trans, {'id': 'createFilter'}) }}
+    {{ editActionButton('/product-search/filter-reorder', 'Edit filter order' | trans, {'id': 'editFilter'}) }}
+    {{ viewActionButton('/product-search/filter-preferences/sync', 'Synchronize filter preferences' | trans, {'id': 'syncFilters'}) }}
 {% endblock %}
 
 {% block content %}
