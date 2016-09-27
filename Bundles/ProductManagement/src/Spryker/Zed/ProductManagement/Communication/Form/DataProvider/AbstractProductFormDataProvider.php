@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
@@ -25,6 +23,8 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInte
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
+use Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 

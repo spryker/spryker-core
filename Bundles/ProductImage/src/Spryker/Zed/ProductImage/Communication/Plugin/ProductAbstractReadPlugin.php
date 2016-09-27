@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductImage\Communication\Plugin;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;

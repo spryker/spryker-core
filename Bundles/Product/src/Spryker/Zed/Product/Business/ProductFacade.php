@@ -228,6 +228,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createProductManager()
             ->getProductConcreteById($idProduct);
     }
+
     /**
      * @api
      *

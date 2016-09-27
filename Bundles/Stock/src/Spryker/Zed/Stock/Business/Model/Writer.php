@@ -248,7 +248,7 @@ class Writer implements WriterInterface
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->persistStockProduct((array) $productConcreteTransfer->getStock());
+        $this->persistStockProduct((array)$productConcreteTransfer->getStock());
     }
 
     /**

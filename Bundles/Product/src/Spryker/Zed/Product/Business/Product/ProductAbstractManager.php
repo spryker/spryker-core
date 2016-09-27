@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;

@@ -13,11 +13,21 @@ use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductImage
+ * @group Business
+ * @group Model
+ * @group ProductImageReaderTest
+ */
 class ProductImageReaderTest extends Test
 {
+
     /**
-      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
-      */
+     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
+     */
     protected $queryContainer;
 
     /**
@@ -35,11 +45,10 @@ class ProductImageReaderTest extends Test
      */
     protected $transferGenerator;
 
-
     protected function setUp()
     {
         $this->queryContainer = new ProductImageQueryContainer();
-        $this->localeFacade =  new LocaleFacade();
+        $this->localeFacade = new LocaleFacade();
         $this->transferGenerator = new ProductImageTransferGenerator(
             $this->localeFacade
         );

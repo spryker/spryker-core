@@ -26,6 +26,7 @@ interface WriterInterface
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
     public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer);

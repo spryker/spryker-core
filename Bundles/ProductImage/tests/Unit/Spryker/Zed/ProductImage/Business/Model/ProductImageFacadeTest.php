@@ -10,6 +10,15 @@ namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 use Codeception\TestCase\Test;
 use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductImage
+ * @group Business
+ * @group Model
+ * @group ProductImageFacadeTest
+ */
 class ProductImageFacadeTest extends Test
 {
 
@@ -17,7 +26,6 @@ class ProductImageFacadeTest extends Test
      * @var \Spryker\Zed\ProductImage\Business\Model\ReaderInterface
      */
     protected $facade;
-
 
     protected function setUp()
     {
