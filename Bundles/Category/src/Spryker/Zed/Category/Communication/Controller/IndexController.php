@@ -22,6 +22,31 @@ class IndexController extends AbstractController
 
     const PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
+    /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $rootCategories = $this->getFactory()
+            ->createRootNodeTable();
+
+        return $this->viewResponse([
+            'rootCategories' => $rootCategories->render(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function rootNodeTableAction()
+    {
+        $table = $this->getFactory()
+            ->createRootNodeTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,75 +65,75 @@ class IndexController extends AbstractController
             'idCategoryNode' => $idCategoryNode,
         ]);
     }
-//
-//    /**
-//     * @param \Symfony\Component\HttpFoundation\Request $request
-//     *
-//     * @return \Symfony\Component\HttpFoundation\JsonResponse
-//     */
-//    public function nodeByNameAction(Request $request)
-//    {
-//        $categoryName = $request->request->get('category-name');
-//
-//        $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
-//            trim($categoryName),
-//            $this->getFactory()->getCurrentLocale()
-//        );
-//
-//        $children = $this->getCategoryChildrenByIdCategory($idCategory);
-//
-//        return $this->jsonResponse([
-//            'code' => Response::HTTP_OK,
-//            'data' => $children,
-//            'idCategoryNode' => $idCategory,
-//        ]);
-//    }
-//
-//    /**
-//     * @param \Symfony\Component\HttpFoundation\Request $request
-//     *
-//     * @return array
-//     */
-//    public function attributesAction(Request $request)
-//    {
-//        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
-//
-//        /** @var \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable $table */
-//        $table = $this->getFactory()
-//            ->createCategoryAttributeTable($idCategory);
-//
-//        $tableData = $this->getTableArrayFormat($table);
-//
-//        return $this->viewResponse($tableData);
-//    }
-//
-//    /**
-//     * @param \Symfony\Component\HttpFoundation\Request $request
-//     *
-//     * @return array
-//     */
-//    public function urlsAction(Request $request)
-//    {
-//        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
-//
-//        $table = $this->getFactory()
-//            ->createUrlTable($idCategory);
-//
-//        $tableData = $this->getTableArrayFormat($table);
-//
-//        return $this->viewResponse($tableData);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function rebuildClosureTableAction()
-//    {
-//        $this->getFacade()
-//            ->rebuildClosureTable();
-//
-//        exit('<br/>Done');
-//    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function nodeByNameAction(Request $request)
+    {
+        $categoryName = $request->request->get('category-name');
+
+        $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
+            trim($categoryName),
+            $this->getFactory()->getCurrentLocale()
+        );
+
+        $children = $this->getCategoryChildrenByIdCategory($idCategory);
+
+        return $this->jsonResponse([
+            'code' => Response::HTTP_OK,
+            'data' => $children,
+            'idCategoryNode' => $idCategory,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function attributesAction(Request $request)
+    {
+        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
+
+        /** @var \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable $table */
+        $table = $this->getFactory()
+            ->createCategoryAttributeTable($idCategory);
+
+        $tableData = $this->getTableArrayFormat($table);
+
+        return $this->viewResponse($tableData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function urlsAction(Request $request)
+    {
+        $idCategory = $this->castId($request->get(self::PARAM_ID_CATEGORY_NODE));
+
+        $table = $this->getFactory()
+            ->createUrlTable($idCategory);
+
+        $tableData = $this->getTableArrayFormat($table);
+
+        return $this->viewResponse($tableData);
+    }
+
+    /**
+     * @return void
+     */
+    public function rebuildClosureTableAction()
+    {
+        $this->getFacade()
+            ->rebuildClosureTable();
+
+        exit('<br/>Done');
+    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable $table

@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Category\Communication\Form\CategoryCreateType;
+use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryCreateDataProvider
 {
+
     const DATA_CLASS = 'data_class';
 
     /**
@@ -37,13 +39,20 @@ class CategoryCreateDataProvider
         $this->localeFacade = $localeFacade;
     }
 
-
     /**
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function getData()
     {
-        return new CategoryTransfer();
+        $categoryTransfer = new CategoryTransfer();
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
+            $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
+            $categoryLocalizedAttributesTransfer->setLocale($localTransfer);
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+        }
+
+        return $categoryTransfer;
     }
 
     /**
@@ -51,13 +60,51 @@ class CategoryCreateDataProvider
      */
     public function getOptions()
     {
-        $parentCategories = $this->getCategoriesWithPaths();
-
+        $parentCategories = $this->getCategoriesWithPaths2();
+//echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($parentCategories) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
         return [
             static::DATA_CLASS => CategoryTransfer::class,
-            CategoryCreateType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
-
+            CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCategoriesWithPaths2()
+    {
+        $idLocale = $this->getIdLocale();
+        $categoryEntityList = $this->queryContainer->queryCategory($idLocale)->find();
+
+        $categories = [];
+        $pathCache = [];
+
+        foreach ($categoryEntityList as $categoryEntity) {
+            foreach ($categoryEntity->getNodes() as $nodeEntity) {
+                if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
+                    $path = $this->buildPath($nodeEntity);
+                } else {
+                    $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
+                }
+
+                $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)
+                    ->getFirst()
+                    ->getName();
+
+//                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryName;
+
+                $categoryTransfer = new CategoryTransfer();
+                $categoryTransfer->setPath($path);
+                $categoryTransfer->setIdCategory($nodeEntity->getIdCategoryNode());
+                $categoryTransfer->setName($categoryName);
+
+                $categories[] = $categoryTransfer;
+            }
+        }
+
+//        $categories = $this->sortCategoriesWithPaths($categories);
+
+        return $categories;
     }
 
     /**

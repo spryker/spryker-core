@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Category\Communication;
 
 use Spryker\Zed\Category\CategoryDependencyProvider;
-use Spryker\Zed\Category\Communication\Form\CategoryCreateType;
+use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
@@ -72,7 +72,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryCreateForm()
     {
-        $categoryCreateForm = new CategoryCreateType();
+        $categoryCreateForm = new CategoryType();
         $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
         $formFactory = $this->getFormFactory();
 

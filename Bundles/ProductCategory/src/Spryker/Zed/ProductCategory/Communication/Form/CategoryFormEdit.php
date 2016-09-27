@@ -19,13 +19,13 @@ class CategoryFormEdit extends CategoryFormAdd
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
 
-    const CATEGORY_IS_ACTIVE = 'is_active';
-    const CATEGORY_IS_IN_MENU = 'is_in_menu';
-    const CATEGORY_IS_CLICKABLE = 'is_clickable';
-    const CATEGORY_NODE_IS_MAIN = 'is_main';
-    const CATEGORY_NODE_ORDER = 'node_order';
+    const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_IS_IN_MENU = 'is_in_menu';
+    const FIELD_IS_CLICKABLE = 'is_clickable';
+    const FIELD_IS_MAIN = 'is_main';
+    const FIELD_NODE_ORDER = 'node_order';
 
-    const EXTRA_PARENTS = 'extra_parents';
+    const FIELD_EXTRA_PARENTS = 'extra_parents';
     const LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
@@ -108,7 +108,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsActiveField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_ACTIVE, 'checkbox', [
+            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ]);
 
@@ -123,7 +123,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsInMenuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_IN_MENU, 'checkbox', [
+            ->add(self::FIELD_IS_IN_MENU, 'checkbox', [
                 'label' => 'Show in Menu',
             ]);
 
@@ -138,7 +138,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsClickableField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_CLICKABLE, 'hidden', [
+            ->add(self::FIELD_IS_CLICKABLE, 'hidden', [
                 'label' => 'Clickable',
             ]);
 
@@ -154,7 +154,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::EXTRA_PARENTS, new Select2ComboBoxType(), [
+            ->add(self::FIELD_EXTRA_PARENTS, new Select2ComboBoxType(), [
                 'label' => 'Additional Parents',
                 'choices' => $choices,
                 'multiple' => true,

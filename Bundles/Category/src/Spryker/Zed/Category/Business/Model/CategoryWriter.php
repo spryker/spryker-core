@@ -31,11 +31,11 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return int
      */
-    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
         $categoryEntity = new SpyCategory();
         $categoryEntity->fromArray($categoryTransfer->toArray());
@@ -94,11 +94,11 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    protected function persistCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    protected function persistCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
         $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($categoryTransfer->getIdCategory())
             ->filterByFkLocale($localeTransfer->getIdLocale())
