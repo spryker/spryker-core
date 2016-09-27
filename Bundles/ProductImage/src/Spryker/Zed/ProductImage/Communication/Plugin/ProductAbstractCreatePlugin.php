@@ -19,6 +19,8 @@ class ProductAbstractCreatePlugin extends AbstractPlugin implements ProductAbstr
 {
 
     /**
+     * TODO add return transfer
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
      *
      * @return void

@@ -292,6 +292,7 @@ class ProductManager implements ProductManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
+        //TODO: remove try/catches
         try {
             $idProductAbstract = $this->createProductAbstract($productAbstractTransfer);
             $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -363,9 +364,9 @@ class ProductManager implements ProductManagerInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    public function getProductAttributeProcessor($idProductAbstract)
     {
-        return $this->productAbstractManager->getProductAttributesByAbstractProductId($idProductAbstract);
+        return $this->productAbstractManager->getProductAttributeProcessor($idProductAbstract);
     }
 
     /**
@@ -373,11 +374,59 @@ class ProductManager implements ProductManagerInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductVariantsByAbstractSku($abstractSku)
+    public function getProductAttributeProcessorByAbstractSku($abstractSku)
     {
         $idProductAbstract = (int)$this->productAbstractManager->getProductAbstractIdBySku($abstractSku);
 
-        return $this->productAbstractManager->getProductAttributesByAbstractProductId($idProductAbstract);
+        return $this->productAbstractManager->getProductAttributeProcessor($idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->getProductNameFromLocalizedAttributes(
+            (array)$productAbstractTransfer->getLocalizedAttributes(),
+            $localeTransfer,
+            $productAbstractTransfer->getSku()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->getProductNameFromLocalizedAttributes(
+            (array)$productConcreteTransfer->getLocalizedAttributes(),
+            $localeTransfer,
+            $productConcreteTransfer->getSku()
+        );
+    }
+
+    /**
+     * @param array $localizedAttributeCollection
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $default
+     *
+     * @return null
+     */
+    protected function getProductNameFromLocalizedAttributes(array $localizedAttributeCollection, LocaleTransfer $localeTransfer, $default = null)
+    {
+        foreach ($localizedAttributeCollection as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+                return $localizedAttribute->getName();
+            }
+        }
+
+        return $default;
     }
 
 }

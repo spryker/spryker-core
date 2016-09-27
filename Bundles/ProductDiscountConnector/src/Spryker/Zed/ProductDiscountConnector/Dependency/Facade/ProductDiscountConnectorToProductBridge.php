@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
+
 class ProductDiscountConnectorToProductBridge implements ProductDiscountConnectorToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      */
-    public function __construct($productFacade)
+    public function __construct(ProductFacadeInterface $productFacade)
     {
         $this->productFacade = $productFacade;
     }
@@ -26,11 +28,11 @@ class ProductDiscountConnectorToProductBridge implements ProductDiscountConnecto
     /**
      * @param string $abstractSku
      *
-     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductVariantsByAbstractSku($abstractSku)
+    public function getProductAttributeProcessorByAbstractSku($abstractSku)
     {
-        return $this->productFacade->getProductVariantsByAbstractSku($abstractSku);
+        return $this->productFacade->getProductAttributeProcessorByAbstractSku($abstractSku);
     }
 
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ProductCartConnectorToProductInterface
 {
 
@@ -16,5 +19,13 @@ interface ProductCartConnectorToProductInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
 
 }

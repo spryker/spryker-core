@@ -124,7 +124,7 @@ interface ProductFacadeInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductAttributesByAbstractProductId($idProductAbstract);
+    public function getProductAttributeProcessor($idProductAbstract);
 
     /**
      * @api
@@ -167,9 +167,9 @@ interface ProductFacadeInterface
      *
      * @param string $abstractSku
      *
-     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductVariantsByAbstractSku($abstractSku);
+    public function getProductAttributeProcessorByAbstractSku($abstractSku);
 
     /**
      * Specification:
@@ -316,5 +316,25 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
 
 }

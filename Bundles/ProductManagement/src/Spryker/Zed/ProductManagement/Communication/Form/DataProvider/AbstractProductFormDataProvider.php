@@ -145,7 +145,7 @@ class AbstractProductFormDataProvider
     public function getOptions($idProductAbstract = null)
     {
         $isNew = $idProductAbstract === null;
-        $attributeProcessor = $this->productFacade->getProductAttributesByAbstractProductId($idProductAbstract);
+        $attributeProcessor = $this->productFacade->getProductAttributeProcessor($idProductAbstract);
 
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
@@ -327,7 +327,7 @@ class AbstractProductFormDataProvider
     protected function getAttributeAbstractDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
-        $attributeProcessor = $this->productFacade->getProductAttributesByAbstractProductId(null);
+        $attributeProcessor = $this->productFacade->getProductAttributeProcessor(null);
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {

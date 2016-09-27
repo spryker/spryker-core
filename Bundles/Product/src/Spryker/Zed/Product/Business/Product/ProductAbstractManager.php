@@ -240,7 +240,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    public function getProductAttributeProcessor($idProductAbstract)
     {
         $attributeProcessor = new AttributeProcessor();
         $productAbstractTransfer = $this->getProductAbstractById($idProductAbstract);

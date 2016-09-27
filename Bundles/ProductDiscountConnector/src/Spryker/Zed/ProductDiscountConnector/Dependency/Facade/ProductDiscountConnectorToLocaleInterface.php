@@ -1,18 +1,18 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
-interface ProductDiscountConnectorToProductInterface
+interface ProductDiscountConnectorToLocaleInterface
 {
 
     /**
-     * @param string $abstractSku
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku);
+    public function getLocaleCollection();
 
 }
