@@ -95,10 +95,6 @@ class ProductManager implements ProductManagerInterface
             ->requireTaxRate()
             ->getTaxRate();
 
-        $attributes = $productConcreteTransfer
-            ->requireAttributes()
-            ->getAttributes();
-
         return $productConcreteTransfer;
     }
 
