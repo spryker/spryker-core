@@ -25,20 +25,7 @@ class ProductAbstractCreatePlugin extends AbstractPlugin implements ProductAbstr
      */
     public function run(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-        if (empty($imageSetTransferCollection)) {
-            return;
-        }
-
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
-                $productAbstractTransfer
-                    ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
-            );
-
-            $this->getFacade()->persistProductImageSet($imageSetTransfer);
-        }
+        $this->getFacade()->runProductAbstractCreatePlugin($productAbstractTransfer);
     }
 
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
@@ -60,6 +62,27 @@ class Reader implements ReaderInterface
             ->find();
 
         return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+    }
+
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $imageSetCollection = $this->getProductImagesSetCollectionByProductAbstractId(
+            $productAbstractTransfer->getIdProductAbstract()
+        );
+
+        if ($imageSetCollection === null) {
+            return;
+        }
+
+        $productAbstractTransfer->setImageSets(
+            new ArrayObject($imageSetCollection)
+        );
     }
 
 }

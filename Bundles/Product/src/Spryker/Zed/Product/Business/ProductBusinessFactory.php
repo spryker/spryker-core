@@ -15,7 +15,6 @@ use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
 use Spryker\Zed\Product\Business\Product\VariantGenerator;
 use Spryker\Zed\Product\ProductDependencyProvider;
 

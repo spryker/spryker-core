@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -35,5 +36,19 @@ interface WriterInterface
      * @return int
      */
     public function persistProductImageRelation($idProductImageSet, $idProductImage);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer);
 
 }

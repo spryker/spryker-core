@@ -26,17 +26,7 @@ class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstrac
      */
     public function run(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $imageSetCollection = $this->getFacade()->getProductImagesSetCollectionByProductAbstractId(
-            $productAbstractTransfer->getIdProductAbstract()
-        );
-
-        if ($imageSetCollection === null) {
-            return;
-        }
-
-        $productAbstractTransfer->setImageSets(
-            new ArrayObject($imageSetCollection)
-        );
+        $this->getFacade()->runProductAbstractReadPlugin($productAbstractTransfer);
     }
 
 }

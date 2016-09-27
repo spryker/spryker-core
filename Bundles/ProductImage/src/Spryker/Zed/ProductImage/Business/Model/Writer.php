@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImage\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
@@ -60,6 +61,7 @@ class Writer implements WriterInterface
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
     public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
@@ -136,6 +138,52 @@ class Writer implements WriterInterface
         );
 
         return $productImageRelationEntity->getIdProductImageSetToProductImage();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
+        if (empty($imageSetTransferCollection)) {
+            return;
+        }
+
+        foreach ($imageSetTransferCollection as $imageSetTransfer) {
+            $imageSetTransfer->setIdProductAbstract(
+                $productAbstractTransfer
+                    ->requireIdProductAbstract()
+                    ->getIdProductAbstract()
+            );
+
+            $this->persistProductImageSet($imageSetTransfer); //TODO add createProductImageSet() and use the entry point
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
+        if (empty($imageSetTransferCollection)) {
+            return;
+        }
+
+        foreach ($imageSetTransferCollection as $imageSetTransfer) {
+            $imageSetTransfer->setIdProductAbstract(
+                $productAbstractTransfer
+                    ->requireIdProductAbstract()
+                    ->getIdProductAbstract()
+            );
+
+            $this->persistProductImageSet($imageSetTransfer); //TODO add updateProductImageSet() and use the entry point
+        }
     }
 
 }
