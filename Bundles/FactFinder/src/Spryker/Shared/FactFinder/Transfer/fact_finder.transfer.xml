@@ -17,6 +17,7 @@
 
     <transfer name="FactFinderSearchRequest">
         <property name="query" type="string"/>
+        <property name="page" type="string"/>
     </transfer>
 
     <transfer name="FactFinderSearchResponse">

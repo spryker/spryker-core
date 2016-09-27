@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\FactFinder;
 
+use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
+
 interface FactFinderClientInterface
 {
 
@@ -33,10 +35,10 @@ interface FactFinderClientInterface
     /**
      * @api
      *
-     * @param string $searchString
+     * @param \Generated\Shared\Transfer\FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
-    public function search($searchString);
+    public function search(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer);
 
     /**
      * Returns the stored quote

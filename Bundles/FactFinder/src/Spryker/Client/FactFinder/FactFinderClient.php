@@ -51,14 +51,11 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     /**
      * @api
      *
-     * @param string $searchString
+     * @param \Generated\Shared\Transfer\FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
-    public function search($searchString)
+    public function search(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer)
     {
-        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
-        $factFinderSearchRequestTransfer->setQuery($searchString);
-
         $quoteTransfer = $this->getQuote();
         $quoteTransfer->setFactFinderSearchRequest($factFinderSearchRequestTransfer);
 

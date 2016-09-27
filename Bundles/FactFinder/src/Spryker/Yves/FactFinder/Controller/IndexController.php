@@ -7,7 +7,9 @@
 
 namespace Spryker\Yves\FactFinder\Controller;
 
+use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Spryker\Yves\Application\Controller\AbstractController;
+use Spryker\Yves\FactFinder\Communication\Plugin\Provider\FactFinderControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,11 +27,17 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $searchString = $request->query->get('q', '');
+        $page = $request->query->get('page');
 
-        $ffSearchResponseTransfer = $this->getClient()->search($searchString);
+        $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
+        $factFinderSearchRequestTransfer->setQuery($searchString);
+        $factFinderSearchRequestTransfer->setPage($page);
+
+        $ffSearchResponseTransfer = $this->getClient()->search($factFinderSearchRequestTransfer);
 
         return [
-            'searchResponse' => $ffSearchResponseTransfer
+            'searchResponse' => $ffSearchResponseTransfer,
+            'pagingRote' => FactFinderControllerProvider::ROUTE_FACT_FINDER,
         ];
     }
 
