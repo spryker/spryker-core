@@ -14,7 +14,6 @@
         <property name="taxRate" type="float" />
         <property name="price" type="PriceProduct" />
         <property name="stock" type="StockProduct[]" />
-        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -24,7 +23,6 @@
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />
         <property name="taxRate" type="float" />
-        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
         <property name="taxSetId" type="int" />
         <property name="price" type="PriceProduct" />
     </transfer>
