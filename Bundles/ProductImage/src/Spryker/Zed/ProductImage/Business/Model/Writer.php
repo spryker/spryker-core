@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
@@ -148,9 +149,6 @@ class Writer implements WriterInterface
     public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer)
     {
         $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-        if (empty($imageSetTransferCollection)) {
-            return;
-        }
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
             $imageSetTransfer->setIdProductAbstract(
@@ -171,15 +169,52 @@ class Writer implements WriterInterface
     public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
         $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-        if (empty($imageSetTransferCollection)) {
-            return;
-        }
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
             $imageSetTransfer->setIdProductAbstract(
                 $productAbstractTransfer
                     ->requireIdProductAbstract()
                     ->getIdProductAbstract()
+            );
+
+            $this->persistProductImageSet($imageSetTransfer); //TODO add updateProductImageSet() and use the entry point
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
+
+        foreach ($imageSetTransferCollection as $imageSetTransfer) {
+            $imageSetTransfer->setIdProduct(
+                $productConcreteTransfer
+                    ->requireIdProductConcrete()
+                    ->getIdProductConcrete()
+            );
+
+            $this->persistProductImageSet($imageSetTransfer); //TODO add createProductImageSet() and use the entry point
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
+
+        foreach ($imageSetTransferCollection as $imageSetTransfer) {
+            $imageSetTransfer->setIdProductAbstract(
+                $productConcreteTransfer
+                    ->requireIdProductConcrete()
+                    ->getIdProductConcrete()
             );
 
             $this->persistProductImageSet($imageSetTransfer); //TODO add updateProductImageSet() and use the entry point

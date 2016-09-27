@@ -345,33 +345,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function loadImageSet(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        return $productAbstractTransfer;
-
-        $imageSets = $this->productImageFacade
-            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());
-
-        if ($imageSets === null) {
-            return $productAbstractTransfer;
-        }
-
-        $productAbstractTransfer->setImageSets(
-            new ArrayObject($imageSets)
-        );
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

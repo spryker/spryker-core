@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImage\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -50,5 +51,19 @@ interface WriterInterface
      * @return void
      */
     public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer);
 
 }

@@ -13,10 +13,10 @@ interface ProductAbstractPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
      *
      * @return void
      */
-    public function run(ProductAbstractTransfer $productAbstractTransfer);
+    public function run(ProductAbstractTransfer $productConcreteTransfer);
 
 }

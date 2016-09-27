@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImage\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ReaderInterface
 {
@@ -32,5 +33,12 @@ interface ReaderInterface
      * @return void
      */
     public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
 
 }

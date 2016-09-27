@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImage\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -114,6 +115,48 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         $this->getFactory()
             ->createProductImageReader()
             ->runProductAbstractReadPlugin($productAbstractTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->getFactory()
+            ->createProductImageWriter()
+            ->runProductConcreteCreatePluginRun($productConcreteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->getFactory()
+            ->createProductImageWriter()
+            ->runProductConcreteUpdatePlugin($productConcreteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $this->getFactory()
+            ->createProductImageReader()
+            ->runProductConcreteReadPlugin($productConcreteTransfer);
     }
 
 }
