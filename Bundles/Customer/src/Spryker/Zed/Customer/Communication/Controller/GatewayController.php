@@ -110,7 +110,7 @@ class GatewayController extends AbstractGatewayController
             return $this->getFacade()
                 ->getCustomer($customerTransfer);
         } catch (CustomerNotFoundException $e) {
-            return $customerTransfer;
+            return new CustomerTransfer();
         }
     }
 
