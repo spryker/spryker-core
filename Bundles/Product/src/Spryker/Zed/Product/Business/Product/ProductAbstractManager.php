@@ -395,7 +395,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected function triggerBeforeCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
     {
         foreach ($this->pluginsCreateCollection as $plugin) {
-            $plugin->createBefore($productAbstractTransfer);
+            $plugin->run($productAbstractTransfer);
         }
     }
 

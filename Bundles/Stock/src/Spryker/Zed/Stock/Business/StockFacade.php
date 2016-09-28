@@ -155,7 +155,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     {
         $this->getFactory()
             ->createWriterModel()
-            ->runProductConcreteCreatePluginRun($productConcreteTransfer);
+            ->runProductConcreteCreatePlugin($productConcreteTransfer);
     }
 
     /**

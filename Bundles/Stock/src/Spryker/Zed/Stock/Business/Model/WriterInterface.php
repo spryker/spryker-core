@@ -65,7 +65,7 @@ interface WriterInterface
      *
      * @return void
      */
-    public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer);
+    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
