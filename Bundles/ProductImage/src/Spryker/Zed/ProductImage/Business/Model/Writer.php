@@ -81,39 +81,34 @@ class Writer implements WriterInterface
         }
 
         $this->productImageContainer->getConnection()->beginTransaction();
-        try {
-            $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
-            $productImageSetEntity->setFkProductAbstract($productImageSetTransfer->getIdProductAbstract());
-            $productImageSetEntity->setFkProduct($productImageSetTransfer->getIdProduct());
-            if ($productImageSetTransfer->getLocale() instanceof LocaleTransfer) {
-                $productImageSetEntity->setFkLocale($productImageSetTransfer->getLocale()->getIdLocale());
-            }
-            $productImageSetEntity->save();
 
-            $productImageSetTransfer->setIdProductImageSet(
-                $productImageSetEntity->getIdProductImageSet()
-            );
-
-            $updatedImageCollection = [];
-            foreach ($productImageSetTransfer->getProductImages() as $imageTransfer) {
-                $imageTransfer = $this->persistProductImage($imageTransfer);
-                $this->persistProductImageRelation($productImageSetTransfer->getIdProductImageSet(), $imageTransfer->getIdProductImage());
-
-                $updatedImageCollection[] = $imageTransfer;
-            }
-
-            $productImageSetTransfer->setProductImages(
-                new \ArrayObject($updatedImageCollection)
-            );
-
-            $this->productImageContainer->getConnection()->commit();
-
-            return $productImageSetTransfer;
-
-        } catch (\Exception $e) {
-            $this->productImageContainer->getConnection()->beginTransaction();
-            throw $e;
+        $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
+        $productImageSetEntity->setFkProductAbstract($productImageSetTransfer->getIdProductAbstract());
+        $productImageSetEntity->setFkProduct($productImageSetTransfer->getIdProduct());
+        if ($productImageSetTransfer->getLocale() instanceof LocaleTransfer) {
+            $productImageSetEntity->setFkLocale($productImageSetTransfer->getLocale()->getIdLocale());
         }
+        $productImageSetEntity->save();
+
+        $productImageSetTransfer->setIdProductImageSet(
+            $productImageSetEntity->getIdProductImageSet()
+        );
+
+        $updatedImageCollection = [];
+        foreach ($productImageSetTransfer->getProductImages() as $imageTransfer) {
+            $imageTransfer = $this->persistProductImage($imageTransfer);
+            $this->persistProductImageRelation($productImageSetTransfer->getIdProductImageSet(), $imageTransfer->getIdProductImage());
+
+            $updatedImageCollection[] = $imageTransfer;
+        }
+
+        $productImageSetTransfer->setProductImages(
+            new \ArrayObject($updatedImageCollection)
+        );
+
+        $this->productImageContainer->getConnection()->commit();
+
+        return $productImageSetTransfer;
     }
 
     /**
@@ -144,7 +139,7 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -159,12 +154,14 @@ class Writer implements WriterInterface
 
             $this->persistProductImageSet($imageSetTransfer); //TODO add createProductImageSet() and use the entry point
         }
+
+        return $productAbstractTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -179,12 +176,14 @@ class Writer implements WriterInterface
 
             $this->persistProductImageSet($imageSetTransfer); //TODO add updateProductImageSet() and use the entry point
         }
+
+        return $productAbstractTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -199,12 +198,14 @@ class Writer implements WriterInterface
 
             $this->persistProductImageSet($imageSetTransfer); //TODO add createProductImageSet() and use the entry point
         }
+
+        return $productConcreteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -219,6 +220,8 @@ class Writer implements WriterInterface
 
             $this->persistProductImageSet($imageSetTransfer); //TODO add updateProductImageSet() and use the entry point
         }
+
+        return $productConcreteTransfer;
     }
 
 }

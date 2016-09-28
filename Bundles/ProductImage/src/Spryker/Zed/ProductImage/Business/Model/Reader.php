@@ -65,11 +65,10 @@ class Reader implements ReaderInterface
         return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -78,18 +77,20 @@ class Reader implements ReaderInterface
         );
 
         if ($imageSetCollection === null) {
-            return;
+            return $productAbstractTransfer;
         }
 
         $productAbstractTransfer->setImageSets(
             new ArrayObject($imageSetCollection)
         );
+
+        return $productAbstractTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -98,12 +99,14 @@ class Reader implements ReaderInterface
         );
 
         if ($imageSetCollection === null) {
-            return;
+            return $productConcreteTransfer;
         }
 
         $productConcreteTransfer->setImageSets(
             new ArrayObject($imageSetCollection)
         );
+
+        return $productConcreteTransfer;
     }
 
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
+use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
@@ -21,9 +22,9 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  * @group ProductImage
  * @group Business
  * @group Model
- * @group ProductImageTransferGeneratorTest
+ * @group ProductImageTransferMapperTest
  */
-class ProductImageTransferGeneratorTest extends Test
+class ProductImageTransferMapperTest extends Test
 {
 
     /**
@@ -51,7 +52,7 @@ class ProductImageTransferGeneratorTest extends Test
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();
         $this->transferGenerator = new ProductImageTransferMapper(
-            $this->localeFacade
+            new ProductImageToLocaleBridge($this->localeFacade)
         );
 
         $this->reader = new Reader(
