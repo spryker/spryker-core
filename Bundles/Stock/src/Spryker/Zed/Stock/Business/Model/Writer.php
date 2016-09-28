@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -61,13 +60,15 @@ class Writer implements WriterInterface
      */
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
+
         $stockEntity = new SpyStock();
         $stockEntity
             ->setName($stockTypeTransfer->getName())
             ->save();
         $this->insertActiveTouchRecordStockType($stockEntity);
-        Propel::getConnection()->commit();
+
+        $this->queryContainer->getConnection()->commit();
 
         return $stockEntity->getPrimaryKey();
     }
@@ -81,17 +82,20 @@ class Writer implements WriterInterface
      */
     public function updateStockType(TypeTransfer $stockTypeTransfer)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
+
         $stockTypeEntity = $this->queryContainer
             ->queryStockByName($stockTypeTransfer->getName())
             ->findOne();
+
         if ($stockTypeEntity === null) {
             throw new StockTypeNotFoundException();
         }
+
         $stockTypeEntity->setName($stockTypeTransfer->getName());
         $stockTypeEntity->save();
 
-        Propel::getConnection()->commit();
+        $this->queryContainer->getConnection()->commit();
 
         return $stockTypeEntity->getIdStock();
     }
@@ -103,14 +107,14 @@ class Writer implements WriterInterface
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
 
         $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
-        $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
+        $idStockProduct = $this->createStockProductEntity($transferStockProduct, $idStockType, $idProduct);
 
-        Propel::getConnection()->commit();
+        $this->queryContainer->getConnection()->commit();
 
         return $idStockProduct;
     }
@@ -122,7 +126,7 @@ class Writer implements WriterInterface
      */
     public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
 
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $idStock = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
@@ -136,7 +140,7 @@ class Writer implements WriterInterface
             ->save();
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
 
-        Propel::getConnection()->commit();
+        $this->queryContainer->getConnection()->commit();
 
         return $stockProductEntity->getPrimaryKey();
     }
@@ -150,17 +154,18 @@ class Writer implements WriterInterface
      */
     public function decrementStock($sku, $stockType, $decrementBy = 1)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
+
         $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
-        $stockProductEntity = $this->queryContainer->queryStockProductByStockAndProduct(
-            $idStock,
-            $idProduct
-        )->findOneOrCreate();
+        $stockProductEntity = $this->queryContainer
+            ->queryStockProductByStockAndProduct($idStock, $idProduct)
+            ->findOneOrCreate();
 
         $stockProductEntity->decrement($decrementBy);
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
-        Propel::getConnection()->commit();
+
+        $this->queryContainer->getConnection()->commit();
     }
 
     /**
@@ -172,17 +177,19 @@ class Writer implements WriterInterface
      */
     public function incrementStock($sku, $stockType, $incrementBy = 1)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
+
         $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
-        $stockProductEntity = $this->queryContainer->queryStockProductByStockAndProduct(
-            $idStock,
-            $idProduct
-        )->findOneOrCreate();
+
+        $stockProductEntity = $this->queryContainer
+            ->queryStockProductByStockAndProduct($idStock, $idProduct)
+            ->findOneOrCreate();
 
         $stockProductEntity->increment($incrementBy);
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
-        Propel::getConnection()->commit();
+
+        $this->queryContainer->getConnection()->commit();
     }
 
     /**
@@ -218,7 +225,7 @@ class Writer implements WriterInterface
      *
      * @return int
      */
-    protected function saveStockProduct(StockProductTransfer $transferStockProduct, $idStockType, $idProduct)
+    protected function createStockProductEntity(StockProductTransfer $transferStockProduct, $idStockType, $idProduct)
     {
         $stockProduct = new SpyStockProduct();
         $stockProduct->setFkProduct($idProduct)
@@ -226,6 +233,7 @@ class Writer implements WriterInterface
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
             ->setQuantity($transferStockProduct->getQuantity())
             ->save();
+
         $this->insertActiveTouchRecordStockProduct($stockProduct);
 
         return $stockProduct->getPrimaryKey();
@@ -238,7 +246,7 @@ class Writer implements WriterInterface
      */
     public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->persistStockProduct((array) $productConcreteTransfer->getStock());
+        $this->persistStockProductCollection((array)$productConcreteTransfer->getStock());
     }
 
     /**
@@ -248,7 +256,7 @@ class Writer implements WriterInterface
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->persistStockProduct((array)$productConcreteTransfer->getStock());
+        $this->persistStockProductCollection((array)$productConcreteTransfer->getStock());
     }
 
     /**
@@ -256,7 +264,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function persistStockProduct(array $stockCollection)
+    protected function persistStockProductCollection(array $stockCollection)
     {
         foreach ($stockCollection as $stockTransfer) {
             if (!$this->reader->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
