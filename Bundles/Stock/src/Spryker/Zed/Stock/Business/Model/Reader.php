@@ -223,7 +223,7 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -233,7 +233,7 @@ class Reader implements ReaderInterface
             ->find();
 
         if ($stockCollection === null) {
-            return;
+            return $productConcreteTransfer;
         }
 
         foreach ($stockCollection as $stockEntity) {
@@ -243,6 +243,8 @@ class Reader implements ReaderInterface
 
             $productConcreteTransfer->addStock($stockTransfer);
         }
+
+        return $productConcreteTransfer;
     }
 
 }

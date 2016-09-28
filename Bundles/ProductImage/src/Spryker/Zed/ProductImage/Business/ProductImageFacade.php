@@ -80,11 +80,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function runProductAbstractCreatePlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductImageWriter()
             ->runProductAbstractCreatePluginRun($productAbstractTransfer);
     }
@@ -94,11 +94,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductImageWriter()
             ->runProductAbstractUpdatePlugin($productAbstractTransfer);
     }
@@ -108,11 +108,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductImageReader()
             ->runProductAbstractReadPlugin($productAbstractTransfer);
     }
@@ -122,11 +122,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductImageWriter()
             ->runProductConcreteCreatePluginRun($productConcreteTransfer);
     }
@@ -136,11 +136,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductImageWriter()
             ->runProductConcreteUpdatePlugin($productConcreteTransfer);
     }
@@ -150,11 +150,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductImageReader()
             ->runProductConcreteReadPlugin($productConcreteTransfer);
     }

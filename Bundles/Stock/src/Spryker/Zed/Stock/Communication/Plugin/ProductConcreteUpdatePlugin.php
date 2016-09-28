@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface;
 
 /**
- * @method \Spryker\Zed\Stock\Business\StockFacade getFacade()
+ * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
  * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
  */
 class ProductConcreteUpdatePlugin extends AbstractPlugin implements ProductConcretePluginInterface
@@ -21,11 +21,11 @@ class ProductConcreteUpdatePlugin extends AbstractPlugin implements ProductConcr
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function run(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFacade()->runProductConcreteUpdatePlugin($productConcreteTransfer);
+        return $this->getFacade()->runProductConcreteUpdatePlugin($productConcreteTransfer);
     }
 
 }

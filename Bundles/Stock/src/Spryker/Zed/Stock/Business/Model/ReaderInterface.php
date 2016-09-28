@@ -94,7 +94,7 @@ interface ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
 

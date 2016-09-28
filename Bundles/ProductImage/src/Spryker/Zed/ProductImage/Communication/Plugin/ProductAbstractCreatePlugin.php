@@ -19,15 +19,13 @@ class ProductAbstractCreatePlugin extends AbstractPlugin implements ProductAbstr
 {
 
     /**
-     * TODO add return transfer
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function run(ProductAbstractTransfer $productConcreteTransfer)
     {
-        $this->getFacade()->runProductAbstractCreatePlugin($productConcreteTransfer);
+        return $this->getFacade()->runProductAbstractCreatePlugin($productConcreteTransfer);
     }
 
 }

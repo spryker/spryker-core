@@ -149,11 +149,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriterModel()
             ->runProductConcreteCreatePlugin($productConcreteTransfer);
     }
@@ -163,11 +163,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriterModel()
             ->runProductConcreteUpdatePlugin($productConcreteTransfer);
     }
@@ -177,11 +177,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createReaderModel()
             ->runProductConcreteReadPlugin($productConcreteTransfer);
     }

@@ -15,7 +15,7 @@ interface ProductAbstractPluginInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function run(ProductAbstractTransfer $productConcreteTransfer);
 

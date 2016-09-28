@@ -63,14 +63,14 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer);
 

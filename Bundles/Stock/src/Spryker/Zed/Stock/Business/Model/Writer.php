@@ -242,21 +242,25 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
         $this->persistStockProductCollection((array)$productConcreteTransfer->getStock());
+
+        return $productConcreteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
         $this->persistStockProductCollection((array)$productConcreteTransfer->getStock());
+
+        return $productConcreteTransfer;
     }
 
     /**
