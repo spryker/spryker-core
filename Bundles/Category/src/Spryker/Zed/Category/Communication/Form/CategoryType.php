@@ -12,6 +12,7 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -40,13 +41,13 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES);
     }
@@ -159,20 +160,15 @@ class CategoryType extends AbstractType
      */
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
-        $builder
-            ->add(static::FIELD_PARENT_NODE, 'choice', [
+
+        $builder->add(static::FIELD_PARENT_NODE, 'choice', [
                 'data_class' => CategoryTransfer::class,
                 'label' => 'Parent',
                 'choices' => $choices,
-                'choice_label' => function(CategoryTransfer $categoryTransfer, $key, $index) {
-                    return $categoryTransfer->getName();
-                },
-//                'choice_attr' => function($category, $key, $index) {
-//                    return ['class' => 'category_'.strtolower($category->getName())];
-//                },
-                'group_by' => function(CategoryTransfer $categoryTransfer, $key, $index) {
-                    return $categoryTransfer->getPath();
-                },
+                'choices_as_values' => true,
+                'choice_label' => 'name',
+                'choice_value' => 'idCategory',
+                'group_by' => 'path',
                 'required' => false
             ]);
 
@@ -188,11 +184,15 @@ class CategoryType extends AbstractType
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::FIELD_EXTRA_PARENTS, new Select2ComboBoxType(), [
+            ->add(self::FIELD_EXTRA_PARENTS, 'choice', [
 //                'data_class' => CategoryTransfer::class,
                 'label' => 'Additional Parents',
                 'choices' => $choices,
+                'choices_as_values' => true,
+                'choice_label' => 'name',
+                'choice_value' => 'idCategory',
                 'multiple' => true,
+                'group_by' => 'path',
                 'required' => false,
                 'mapped' => false
             ]);

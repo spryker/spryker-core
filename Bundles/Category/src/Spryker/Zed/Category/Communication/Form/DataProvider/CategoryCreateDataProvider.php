@@ -61,7 +61,7 @@ class CategoryCreateDataProvider
     public function getOptions()
     {
         $parentCategories = $this->getCategoriesWithPaths2();
-//echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($parentCategories) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+
         return [
             static::DATA_CLASS => CategoryTransfer::class,
             CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
@@ -90,8 +90,6 @@ class CategoryCreateDataProvider
                 $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)
                     ->getFirst()
                     ->getName();
-
-//                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryName;
 
                 $categoryTransfer = new CategoryTransfer();
                 $categoryTransfer->setPath($path);
