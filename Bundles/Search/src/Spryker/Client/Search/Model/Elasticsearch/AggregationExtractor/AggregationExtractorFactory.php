@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Shared\Search\SearchConstants;
 
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
@@ -63,7 +63,7 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      */
     protected function createPriceRangeExtractor(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new PriceRangeExtractor($facetConfigTransfer, $this->createCurrencyManager());
+        return new PriceRangeExtractor($facetConfigTransfer, $this->getMoneyPlugin());
     }
 
     /**
@@ -87,12 +87,11 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Shared\Money\Plugin\MoneyPluginInterface
      */
-    protected function createCurrencyManager()
+    protected function getMoneyPlugin()
     {
-        // TODO: replace deprecated currency manager with new version
-        return CurrencyManager::getInstance();
+        return new MoneyPlugin();
     }
 
 }

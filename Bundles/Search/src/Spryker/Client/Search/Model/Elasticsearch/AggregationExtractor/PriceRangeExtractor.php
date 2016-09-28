@@ -8,25 +8,25 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
 
 class PriceRangeExtractor extends RangeExtractor
 {
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Shared\Money\Plugin\MoneyPluginInterface
      */
-    protected $currencyManager;
+    protected $moneyPlugin;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Shared\Money\Plugin\MoneyPluginInterface $moneyPlugin
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, CurrencyManager $currencyManager)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, MoneyPluginInterface $moneyPlugin)
     {
         parent::__construct($facetConfigTransfer);
 
-        $this->currencyManager = $currencyManager;
+        $this->moneyPlugin = $moneyPlugin;
     }
 
     /**
@@ -58,8 +58,8 @@ class PriceRangeExtractor extends RangeExtractor
         $activeMax = (isset($requestParameters[$parameterName]['max']) ? $requestParameters[$parameterName]['max'] : null);
 
         return [
-            $activeMin !== null ? $this->currencyManager->convertDecimalToCent($activeMin) : $min,
-            $activeMax !== null ? $this->currencyManager->convertDecimalToCent($activeMax) : $max,
+            $activeMin !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMin) : $min,
+            $activeMax !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMax) : $max,
         ];
     }
 
