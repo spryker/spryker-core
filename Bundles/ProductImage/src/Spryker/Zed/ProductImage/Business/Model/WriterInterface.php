@@ -20,7 +20,35 @@ interface WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
+    public function createProductImage(ProductImageTransfer $productImageTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function updateProductImage(ProductImageTransfer $productImageTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
     public function persistProductImage(ProductImageTransfer $productImageTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    public function createProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    public function updateProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer

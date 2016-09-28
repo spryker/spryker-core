@@ -14,10 +14,40 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * TODO add delete
+ *
  * @method \Spryker\Zed\ProductImage\Business\ProductImageBusinessFactory getFactory()
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function createProductImage(ProductImageTransfer $productImageTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->createProductImage($productImageTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function updateProductImage(ProductImageTransfer $productImageTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->updateProductImage($productImageTransfer);
+    }
 
     /**
      * @api

@@ -24,17 +24,17 @@ class Reader implements ReaderInterface
     /**
      * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
-    protected $transferGenerator;
+    protected $transferMapper;
 
     /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,
-        ProductImageTransferMapperInterface $transferGenerator
+        ProductImageTransferMapperInterface $transferMapper
     ) {
         $this->productImageContainer = $productImageContainer;
-        $this->transferGenerator = $transferGenerator;
+        $this->transferMapper = $transferMapper;
     }
 
     /**
@@ -48,7 +48,7 @@ class Reader implements ReaderInterface
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-        return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+        return $this->transferMapper->convertProductImageSetCollection($imageCollection);
     }
 
     /**
@@ -62,7 +62,7 @@ class Reader implements ReaderInterface
             ->queryImageSetByProductId($idProduct)
             ->find();
 
-        return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+        return $this->transferMapper->convertProductImageSetCollection($imageCollection);
     }
 
     /**
@@ -73,7 +73,9 @@ class Reader implements ReaderInterface
     public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductAbstractId(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer
+                ->requireIdProductAbstract()
+                ->getIdProductAbstract()
         );
 
         if ($imageSetCollection === null) {
@@ -95,7 +97,9 @@ class Reader implements ReaderInterface
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductId(
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer
+                ->requireIdProductConcrete()
+                ->getIdProductConcrete()
         );
 
         if ($imageSetCollection === null) {
