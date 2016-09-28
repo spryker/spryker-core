@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Transfer;
 
-interface SortedProductSearchTransferListBuilderInterface
+interface SortedProductSearchTransferListMapperInterface
 {
 
     /**

@@ -15,8 +15,8 @@ use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Table\FilterPreferencesTable;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
-use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferBuilder;
-use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListBuilder;
+use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferMapper;
+use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListMapper;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
@@ -108,11 +108,11 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferBuilderInterface
+     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferMapperInterface
      */
-    public function createAttributeFormTransferBuilder()
+    public function createAttributeFormTransferMapper()
     {
-        return new AttributeFormTransferBuilder();
+        return new AttributeFormTransferMapper();
     }
 
     /**
@@ -124,11 +124,11 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListBuilderInterface
+     * @return \Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListMapperInterface
      */
-    public function createSortedProductSearchTransferListBuilder()
+    public function createSortedProductSearchTransferListMapper()
     {
-        return new SortedProductSearchTransferListBuilder();
+        return new SortedProductSearchTransferListMapper();
     }
 
 }

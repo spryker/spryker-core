@@ -47,7 +47,7 @@ class FilterReorderController extends AbstractController
 
         $sortedProductSearchAttributeList = $this
             ->getFactory()
-            ->createSortedProductSearchTransferListBuilder()
+            ->createSortedProductSearchTransferListMapper()
             ->createList($filterList);
 
         $this->getFacade()->updateProductSearchAttributeOrder($sortedProductSearchAttributeList);

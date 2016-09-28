@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSearch\Communication\Transfer;
 
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 
-class SortedProductSearchTransferListBuilder implements SortedProductSearchTransferListBuilderInterface
+class SortedProductSearchTransferListMapper implements SortedProductSearchTransferListMapperInterface
 {
 
     /**
