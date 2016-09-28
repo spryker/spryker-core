@@ -1,0 +1,123 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if idCategory is not defined %}
+    {% set idCategory = 0 %}
+{% endif %}
+
+{% block head_title -%}
+    {{ 'Product Category' | trans }} {% if idCategory > 0 %} [{{ idCategory }}] {% endif %}
+{%- endblock %}
+{% block section_title %}{{ 'Product Category' | trans }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/category', 'List Categories' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Assign' | trans } %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+            {{ form_row(form.id_category) }}
+            {{ form_row(form.products_to_be_assigned) }}
+            {{ form_row(form.products_to_be_de_assigned) }}
+            {{ form_row(form.product_order) }}
+            {{ form_row(form._token) }}
+
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2" id="assigned-tab-label">Products to be assigned</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            {{ productsTable | raw }}
+
+                            <div class="prcat-select-all">
+                                <a href="#" class="btn btn-primary ">Select All</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            <h3>Selected products</h3>
+                            <table class="table table-striped table-bordered table-hover gui-table-data" id="selectedProductsTable" data-paging="false">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>SKU</th>
+                                        <th>Name</th>
+                                        <th>Selected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-11">Products in this category</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-21" id="deassigned-tab-label">Products to be deassigned</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-11" class="tab-pane active">
+                        <div class="panel-body">
+                            {{ productCategoriesTable | raw }}
+
+                            <div class="prcat-deselect-all">
+                                <a href="#" class="btn btn-primary ">Deselect All</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-21" class="tab-pane">
+                        <div class="panel-body">
+                            <h3>Deselected products</h3>
+                            <table class="table table-striped table-bordered table-hover gui-table-data" id="deselectedProductsTable" data-paging="false">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>SKU</th>
+                                        <th>Name</th>
+                                        <th>Selected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
+            <br/>
+            <br/>
+
+            {{ form_end(form) }}
+
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet"  href="/assets/css/spryker-zed-productcategory-main.css" />
+{% endblock %}
+
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productcategory-assign.js"></script>
+{% endblock %}

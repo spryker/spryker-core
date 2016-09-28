@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductCategory\Communication\Form\AssignForm;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
@@ -44,7 +45,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     public function getProductFacade()
@@ -184,6 +184,18 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getPropelConnection()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAssignForm(array $data)
+    {
+        $formType = new AssignForm();
+
+        return $this->getFormFactory()->create($formType, $data, []);
     }
 
 }
