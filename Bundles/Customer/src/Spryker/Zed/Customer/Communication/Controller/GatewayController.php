@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
+use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -105,10 +106,12 @@ class GatewayController extends AbstractGatewayController
      */
     public function customerAction(CustomerTransfer $customerTransfer)
     {
-        $result = $this->getFacade()
-            ->getCustomer($customerTransfer);
-
-        return $result;
+        try {
+            return $this->getFacade()
+                ->getCustomer($customerTransfer);
+        } catch (CustomerNotFoundException $e) {
+            return $customerTransfer;
+        }
     }
 
     /**
