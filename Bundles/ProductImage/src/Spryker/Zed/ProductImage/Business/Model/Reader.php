@@ -73,9 +73,7 @@ class Reader implements ReaderInterface
     public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductAbstractId(
-            $productAbstractTransfer
-                ->requireIdProductAbstract()
-                ->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract()
         );
 
         if ($imageSetCollection === null) {
@@ -97,9 +95,7 @@ class Reader implements ReaderInterface
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductId(
-            $productConcreteTransfer
-                ->requireIdProductConcrete()
-                ->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete()
         );
 
         if ($imageSetCollection === null) {

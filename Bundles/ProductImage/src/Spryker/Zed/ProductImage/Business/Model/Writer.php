@@ -208,13 +208,15 @@ class Writer implements WriterInterface
      */
     public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer)
     {
+        if (!$productAbstractTransfer->getIdProductAbstract()) {
+            return $productAbstractTransfer;
+        }
+
         $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
             $imageSetTransfer->setIdProductAbstract(
-                $productAbstractTransfer
-                    ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
+                $productAbstractTransfer->getIdProductAbstract()
             );
 
             $this->createProductImageSet($imageSetTransfer);
@@ -252,13 +254,15 @@ class Writer implements WriterInterface
      */
     public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer)
     {
+        if (!$productConcreteTransfer->getIdProductConcrete()) {
+            return $productConcreteTransfer;
+        }
+
         $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
             $imageSetTransfer->setIdProduct(
-                $productConcreteTransfer
-                    ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
+                $productConcreteTransfer->getIdProductConcrete()
             );
 
             $this->createProductImageSet($imageSetTransfer);
@@ -283,7 +287,7 @@ class Writer implements WriterInterface
                     ->getIdProductConcrete()
             );
 
-            $this->updateProductImageSet($imageSetTransfer); //TODO add updateProductImageSet() and use the entry point
+            $this->updateProductImageSet($imageSetTransfer);
         }
 
         return $productConcreteTransfer;
