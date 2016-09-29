@@ -9,12 +9,11 @@ namespace Spryker\Zed\ProductManagement\Business;
 
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeManager;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriter;
-use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGenerator;
+use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -34,18 +33,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
             $this->createAttributeGlossaryKeyBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeManagerInterface
-     */
-    public function createAttributeManager()
-    {
-        return new AttributeManager(
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->createProductAttributeTransferGenerator()
         );
     }
 
@@ -174,11 +161,11 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     * @return \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface
      */
     protected function createProductAttributeTransferGenerator()
     {
-        return new ProductAttributeTransferGenerator(
+        return new ProductAttributeTransferMapper(
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
             $this->createAttributeGlossaryKeyBuilder()

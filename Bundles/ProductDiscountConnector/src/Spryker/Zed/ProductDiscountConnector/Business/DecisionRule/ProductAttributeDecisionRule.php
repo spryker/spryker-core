@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,15 +11,11 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
+use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface;
 
 class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterface
 {
-
-    /**
-     * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface
-     */
-    protected $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface
@@ -26,17 +23,29 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
     protected $discountFacade;
 
     /**
+     * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface $productFacade
      * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductDiscountConnectorToProductInterface $productFacade,
-        ProductDiscountConnectorToDiscountInterface $discountFacade
+        ProductDiscountConnectorToDiscountInterface $discountFacade,
+        ProductDiscountConnectorToLocaleInterface $localeFacade
     ) {
         $this->productFacade = $productFacade;
         $this->discountFacade = $discountFacade;
+        $this->localeFacade = $localeFacade;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -50,12 +59,12 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
+        $attributeProcessor = $this->productFacade->getProductAttributeProcessorByAbstractSku(
+            $currentItemTransfer->getAbstractSku()
+        );
 
-        $productVariants = $this->productFacade
-            ->getProductVariantsByAbstractSku($currentItemTransfer->getAbstractSku());
-
-        foreach ($productVariants as $productVariantTransfer) {
-            $attributes = $productVariantTransfer->getAttributes();
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $attributes = $attributeProcessor->mergeAttributes($localeTransfer->getLocaleName());
             foreach ($attributes as $attribute => $value) {
                 if ($clauseTransfer->getAttribute() !== $attribute) {
                     continue;
@@ -68,7 +77,6 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         }
 
         return false;
-
     }
 
 }

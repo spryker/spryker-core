@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -48,5 +50,59 @@ interface ProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductId($idProduct);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractCreatePlugin(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
 
 }

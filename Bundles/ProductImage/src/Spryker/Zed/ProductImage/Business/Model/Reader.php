@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
-use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface;
+use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -19,19 +22,19 @@ class Reader implements ReaderInterface
     protected $productImageContainer;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
-    protected $transferGenerator;
+    protected $transferMapper;
 
     /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,
-        ProductImageTransferGeneratorInterface $transferGenerator
+        ProductImageTransferMapperInterface $transferMapper
     ) {
         $this->productImageContainer = $productImageContainer;
-        $this->transferGenerator = $transferGenerator;
+        $this->transferMapper = $transferMapper;
     }
 
     /**
@@ -45,7 +48,7 @@ class Reader implements ReaderInterface
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-        return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+        return $this->transferMapper->convertProductImageSetCollection($imageCollection);
     }
 
     /**
@@ -59,7 +62,51 @@ class Reader implements ReaderInterface
             ->queryImageSetByProductId($idProduct)
             ->find();
 
-        return $this->transferGenerator->convertProductImageSetCollection($imageCollection);
+        return $this->transferMapper->convertProductImageSetCollection($imageCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $imageSetCollection = $this->getProductImagesSetCollectionByProductAbstractId(
+            $productAbstractTransfer->getIdProductAbstract()
+        );
+
+        if ($imageSetCollection === null) {
+            return $productAbstractTransfer;
+        }
+
+        $productAbstractTransfer->setImageSets(
+            new ArrayObject($imageSetCollection)
+        );
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $imageSetCollection = $this->getProductImagesSetCollectionByProductId(
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+
+        if ($imageSetCollection === null) {
+            return $productConcreteTransfer;
+        }
+
+        $productConcreteTransfer->setImageSets(
+            new ArrayObject($imageSetCollection)
+        );
+
+        return $productConcreteTransfer;
     }
 
 }

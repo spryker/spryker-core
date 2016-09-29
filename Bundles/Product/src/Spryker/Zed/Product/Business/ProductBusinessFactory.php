@@ -79,7 +79,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getPriceFacade(),
             $this->createProductConcreteManager(),
-            $this->createProductAbstractAssertion()
+            $this->createProductAbstractAssertion(),
+            $this->getProductAbstractCreatePlugins(),
+            $this->getProductAbstractReadPlugins(),
+            $this->getProductAbstractUpdatePlugins()
         );
     }
 
@@ -96,7 +99,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getPriceFacade(),
             $this->createProductAbstractAssertion(),
-            $this->createProductConcreteAssertion()
+            $this->createProductConcreteAssertion(),
+            $this->getProductConcreteCreatePlugins(),
+            $this->getProductConcreteReadPlugins(),
+            $this->getProductConcreteUpdatePlugins()
         );
     }
 
@@ -204,6 +210,54 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteAssertion(
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected function getProductAbstractCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected function getProductAbstractReadPlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected function getProductAbstractUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected function getProductConcreteCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected function getProductConcreteReadPlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected function getProductConcreteUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_UPDATE);
     }
 
 }

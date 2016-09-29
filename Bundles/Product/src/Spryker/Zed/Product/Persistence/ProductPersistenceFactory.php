@@ -55,8 +55,6 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory implements Pr
     }
 
     /**
-     * TODO: move to Tax bundle
-     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function createTaxSetQuery()

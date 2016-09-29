@@ -17,6 +17,7 @@ use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Library\Sanitize\Html;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 
 class OrdersTable extends AbstractTable
@@ -82,6 +83,7 @@ class OrdersTable extends AbstractTable
         $config->setSortable($this->getSortableFields());
 
         $config->addRawColumn(self::URL);
+        $config->addRawColumn(SpySalesOrderTableMap::COL_FK_CUSTOMER);
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -106,6 +108,25 @@ class OrdersTable extends AbstractTable
     }
 
     /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function formatCustomer(array $item)
+    {
+        $customer = $item[SpySalesOrderTableMap::COL_FIRST_NAME] . ' ' . $item[SpySalesOrderTableMap::COL_LAST_NAME];
+        $customer = Html::escape($customer);
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]) {
+            $url = Url::generate('/customer/view', [
+                'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+            ]);
+            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        }
+
+        return $customer;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -113,14 +134,15 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
-
         $queryResults = $this->runQuery($query, $config);
+
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_FK_CUSTOMER => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+                SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
                 SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],
                 self::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
@@ -224,12 +246,13 @@ class OrdersTable extends AbstractTable
     {
         return [
             SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
-            SpySalesOrderTableMap::COL_CREATED_AT => 'Timestamp',
-            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
+            SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
+            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
             self::GRAND_TOTAL => 'GrandTotal',
-            self::URL => 'Url',
+            self::URL => 'Actions',
         ];
     }
 
@@ -240,8 +263,8 @@ class OrdersTable extends AbstractTable
     {
         return [
             SpySalesOrderTableMap::COL_ID_SALES_ORDER,
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
-            SpySalesOrderTableMap::COL_FK_CUSTOMER,
             SpySalesOrderTableMap::COL_EMAIL,
             SpySalesOrderTableMap::COL_FIRST_NAME,
         ];
@@ -254,8 +277,8 @@ class OrdersTable extends AbstractTable
     {
         return [
             SpySalesOrderTableMap::COL_ID_SALES_ORDER,
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
-            SpySalesOrderTableMap::COL_FK_CUSTOMER,
             SpySalesOrderTableMap::COL_EMAIL,
             SpySalesOrderTableMap::COL_FIRST_NAME,
         ];

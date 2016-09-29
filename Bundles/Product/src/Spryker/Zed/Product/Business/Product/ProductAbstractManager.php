@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -64,6 +62,21 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      */
     protected $productConcreteManager;
 
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected $pluginsCreateCollection;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected $pluginsUpdateCollection;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected $pluginsReadCollection;
+
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
@@ -72,7 +85,10 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductToLocaleInterface $localeFacade,
         ProductToPriceInterface $priceFacade,
         ProductConcreteManagerInterface $productConcreteManager,
-        ProductAbstractAssertionInterface $productAbstractAssertion
+        ProductAbstractAssertionInterface $productAbstractAssertion,
+        array $pluginsCreateCollection,
+        array $pluginsReadCollection,
+        array $pluginsUpdateCollection
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -82,6 +98,9 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->priceFacade = $priceFacade;
         $this->productConcreteManager = $productConcreteManager;
         $this->productAbstractAssertion = $productAbstractAssertion;
+        $this->pluginsCreateCollection = $pluginsCreateCollection;
+        $this->pluginsReadCollection = $pluginsReadCollection;
+        $this->pluginsUpdateCollection = $pluginsUpdateCollection;
     }
 
     /**
@@ -99,40 +118,33 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws \Exception
-     *
      * @return int
      */
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        try {
-            $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
+        $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
 
-            $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
+        $productAbstractTransfer = $this->triggerBeforeCreatePlugins($productAbstractTransfer);
 
-            $idProductAbstract = $productAbstractEntity->getPrimaryKey();
-            $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
 
-            $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-            $this->persistPrice($productAbstractTransfer);
+        $idProductAbstract = $productAbstractEntity->getPrimaryKey();
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-            $this->persistImageSets($productAbstractTransfer); //TODO: PLUGIN
+        $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistPrice($productAbstractTransfer);
 
-            $this->productQueryContainer->getConnection()->commit();
-            return $idProductAbstract;
+        $productAbstractTransfer = $this->triggerAfterCreatePlugins($productAbstractTransfer);
 
-        } catch (Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
+        $this->productQueryContainer->getConnection()->commit();
+
+        return $idProductAbstract;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @throws \Exception
      *
      * @return int
      */
@@ -140,28 +152,24 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        try {
-            $idProductAbstract = (int)$productAbstractTransfer
-                ->requireIdProductAbstract()
-                ->getIdProductAbstract();
+        $idProductAbstract = (int)$productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
 
-            $this->productAbstractAssertion->assertProductExists($idProductAbstract);
-            $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
+        $this->productAbstractAssertion->assertProductExists($idProductAbstract);
+        $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
 
-            $this->persistEntity($productAbstractTransfer);
+        $productAbstractTransfer = $this->triggerBeforeUpdatePlugins($productAbstractTransfer);
 
-            $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-            $this->persistPrice($productAbstractTransfer);
+        $this->persistEntity($productAbstractTransfer);
+        $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistPrice($productAbstractTransfer);
 
-            $this->persistImageSets($productAbstractTransfer); //TODO: PLUGIN
+        $productAbstractTransfer = $this->triggerAfterUpdatePlugins($productAbstractTransfer);
 
-            $this->productQueryContainer->getConnection()->commit();
-            return $idProductAbstract;
+        $this->productQueryContainer->getConnection()->commit();
 
-        } catch (Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
+        return $idProductAbstract;
     }
 
     /**
@@ -198,13 +206,13 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferGenerator();
+        $transferGenerator = new ProductTransferMapper(); //TODO inject
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
         $productAbstractTransfer = $this->loadTaxSetId($productAbstractTransfer);
         $productAbstractTransfer = $this->loadPrice($productAbstractTransfer);
 
-        $productAbstractTransfer = $this->loadImageSet($productAbstractTransfer); //TODO: PLUGIN
+        $this->triggerLoadPlugins($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -214,16 +222,17 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    public function getProductAttributeProcessor($idProductAbstract)
     {
-        $attributeProcessor = new AttributeProcessor();
+        $attributeProcessor = new AttributeProcessor(); //TODO inject
         $productAbstractTransfer = $this->getProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
             return $attributeProcessor;
         }
 
-        $concreteProductCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $concreteProductCollection = $this->productConcreteManager
+            ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
         return $this->attributeManager->buildAttributeProcessor($productAbstractTransfer, $concreteProductCollection);
     }
@@ -298,32 +307,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function persistImageSets(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        return;
-
-        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-        if (empty($imageSetTransferCollection)) {
-            return;
-        }
-
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
-                $productAbstractTransfer
-                    ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
-            );
-            $this->productImageFacade->persistProductImageSet($imageSetTransfer);
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -344,33 +327,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function loadImageSet(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        return $productAbstractTransfer;
-
-        $imageSets = $this->productImageFacade
-            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());
-
-        if ($imageSets === null) {
-            return $productAbstractTransfer;
-        }
-
-        $productAbstractTransfer->setImageSets(
-            new ArrayObject($imageSets)
-        );
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -412,6 +368,76 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         }
 
         $productAbstractTransfer->setPrice($priceTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function triggerBeforeCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        foreach ($this->pluginsCreateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function triggerAfterCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        foreach ($this->pluginsCreateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function triggerBeforeUpdatePlugins(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        foreach ($this->pluginsUpdateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function triggerAfterUpdatePlugins(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        foreach ($this->pluginsUpdateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function triggerLoadPlugins(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        foreach ($this->pluginsReadCollection as $plugin) {
+            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
+        }
 
         return $productAbstractTransfer;
     }

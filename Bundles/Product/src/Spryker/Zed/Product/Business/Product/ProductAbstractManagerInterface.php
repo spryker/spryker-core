@@ -56,7 +56,7 @@ interface ProductAbstractManagerInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductAttributesByAbstractProductId($idProductAbstract);
+    public function getProductAttributeProcessor($idProductAbstract);
 
     /**
      * @param string $sku

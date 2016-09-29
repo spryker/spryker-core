@@ -10,14 +10,25 @@ namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
-use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator;
+use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
+use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductImage
+ * @group Business
+ * @group Model
+ * @group ProductImageReaderTest
+ */
 class ProductImageReaderTest extends Test
 {
+
     /**
-      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
-      */
+     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
+     */
     protected $queryContainer;
 
     /**
@@ -31,17 +42,16 @@ class ProductImageReaderTest extends Test
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
     protected $transferGenerator;
-
 
     protected function setUp()
     {
         $this->queryContainer = new ProductImageQueryContainer();
-        $this->localeFacade =  new LocaleFacade();
-        $this->transferGenerator = new ProductImageTransferGenerator(
-            $this->localeFacade
+        $this->localeFacade = new LocaleFacade();
+        $this->transferGenerator = new ProductImageTransferMapper(
+            new ProductImageToLocaleBridge($this->localeFacade)
         );
 
         $this->reader = new Reader(

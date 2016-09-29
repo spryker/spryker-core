@@ -19,4 +19,12 @@
         <property name="externalUrlLarge" type="string" />
     </transfer>
 
+    <transfer name="ProductAbstract">
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
+    </transfer>
+
 </transfers>

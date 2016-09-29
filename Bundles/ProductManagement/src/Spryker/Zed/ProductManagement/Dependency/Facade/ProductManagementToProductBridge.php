@@ -133,9 +133,9 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductAttributesByAbstractProductId($idProductAbstract)
+    public function getProductAttributeProcessor($idProductAbstract)
     {
-        return $this->productFacade->getProductAttributesByAbstractProductId($idProductAbstract);
+        return $this->productFacade->getProductAttributeProcessor($idProductAbstract);
     }
 
     /**

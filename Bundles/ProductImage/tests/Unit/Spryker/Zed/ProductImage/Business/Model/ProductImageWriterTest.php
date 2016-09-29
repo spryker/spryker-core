@@ -7,18 +7,24 @@
 
 namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Model\Writer;
-use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGenerator;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
-use Codeception\TestCase\Test;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group ProductImage
+ * @group Business
+ * @group Model
+ * @group ProductImageWriterTest
+ */
 class ProductImageWriterTest extends Test
 {
-
 
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
@@ -36,10 +42,9 @@ class ProductImageWriterTest extends Test
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
     protected $transferGenerator;
-
 
     protected function setUp()
     {
@@ -47,7 +52,7 @@ class ProductImageWriterTest extends Test
             new ProductImageQueryContainer()
         );
 
-        $this->localeFacade =  new LocaleFacade();
+        $this->localeFacade = new LocaleFacade();
     }
 
     public function testPersistProductImage()

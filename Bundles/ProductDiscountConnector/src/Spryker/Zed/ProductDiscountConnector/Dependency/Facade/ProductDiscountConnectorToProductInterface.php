@@ -11,8 +11,8 @@ interface ProductDiscountConnectorToProductInterface
     /**
      * @param string $abstractSku
      *
-     * @return \Generated\Shared\Transfer\ProductVariantTransfer[]
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function getProductVariantsByAbstractSku($abstractSku);
+    public function getProductAttributeProcessorByAbstractSku($abstractSku);
 
 }

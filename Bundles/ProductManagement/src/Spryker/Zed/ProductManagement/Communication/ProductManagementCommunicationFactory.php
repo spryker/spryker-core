@@ -25,9 +25,9 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
-use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGenerator;
-use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGenerator;
-use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator;
+use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapper;
+use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
+use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Product\Business\Product\VariantGenerator;
 
@@ -395,27 +395,27 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferGeneratorInterface
+     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapperInterface
      */
     public function createAttributeFormTransferGenerator()
     {
-        return new AttributeFormTransferGenerator();
+        return new AttributeFormTransferMapper();
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferGeneratorInterface
+     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapperInterface
      */
     public function createAttributeTranslationFormTransferGenerator()
     {
-        return new AttributeTranslationFormTransferGenerator();
+        return new AttributeTranslationFormTransferMapper();
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferGenerator
+     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper
      */
     public function createProductFormTransferGenerator()
     {
-        return new ProductFormTransferGenerator(
+        return new ProductFormTransferMapper(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->createLocaleProvider()

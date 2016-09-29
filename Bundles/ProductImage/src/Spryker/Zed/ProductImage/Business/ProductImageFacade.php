@@ -7,15 +7,47 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * TODO add delete
+ *
  * @method \Spryker\Zed\ProductImage\Business\ProductImageBusinessFactory getFactory()
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function createProductImage(ProductImageTransfer $productImageTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->createProductImage($productImageTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function updateProductImage(ProductImageTransfer $productImageTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->updateProductImage($productImageTransfer);
+    }
 
     /**
      * @api
@@ -71,6 +103,90 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->getProductImagesSetCollectionByProductId($idProduct);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractCreatePlugin(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->runProductAbstractCreatePluginRun($productAbstractTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->runProductAbstractUpdatePlugin($productAbstractTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->runProductAbstractReadPlugin($productAbstractTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->runProductConcreteCreatePluginRun($productConcreteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->runProductConcreteUpdatePlugin($productConcreteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->runProductConcreteReadPlugin($productConcreteTransfer);
     }
 
 }

@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -66,6 +64,21 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected $productConcreteAssertion;
 
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected $pluginsCreateCollection;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected $pluginsUpdateCollection;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected $pluginsReadCollection;
+
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
@@ -74,7 +87,10 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         ProductToLocaleInterface $localeFacade,
         ProductToPriceInterface $priceFacade,
         ProductAbstractAssertionInterface $productAbstractAssertion,
-        ProductConcreteAssertionInterface $productConcreteAssertion
+        ProductConcreteAssertionInterface $productConcreteAssertion,
+        array $pluginsCreateCollection,
+        array $pluginsReadCollection,
+        array $pluginsUpdateCollection
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -84,6 +100,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->priceFacade = $priceFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->productConcreteAssertion = $productConcreteAssertion;
+        $this->pluginsCreateCollection = $pluginsCreateCollection;
+        $this->pluginsReadCollection = $pluginsReadCollection;
+        $this->pluginsUpdateCollection = $pluginsUpdateCollection;
     }
 
     /**
@@ -107,30 +126,24 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        $sku = $productConcreteTransfer->getSku();
+        $this->productConcreteAssertion->assertSkuUnique($sku);
 
-        try {
-            $sku = $productConcreteTransfer->getSku();
-            $this->productConcreteAssertion->assertSkuUnique($sku);
+        $productConcreteTransfer = $this->triggerBeforeCreatePlugins($productConcreteTransfer);
 
-            $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
+        $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
-            $idProductConcrete = $productConcreteEntity->getPrimaryKey();
-            $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
+        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-            $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-            $this->persistPrice($productConcreteTransfer);
+        $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+        $this->persistPrice($productConcreteTransfer);
 
-            $this->persistImageSets($productConcreteTransfer); //TODO: PLUGIN
-            $this->persistStock($productConcreteTransfer); //TODO: PLUGIN
+        $productConcreteTransfer = $this->triggerAfterCreatePlugins($productConcreteTransfer);
 
-            $this->productQueryContainer->getConnection()->commit();
-            return $idProductConcrete;
+        $this->productQueryContainer->getConnection()->commit();
 
-        } catch (Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
+        return $idProductConcrete;
     }
 
     /**
@@ -144,42 +157,37 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        try {
-            $sku = $productConcreteTransfer
-                ->requireSku()
-                ->getSku();
+        $sku = $productConcreteTransfer
+            ->requireSku()
+            ->getSku();
 
-            $idProduct = (int)$productConcreteTransfer
-                ->requireIdProductConcrete()
-                ->getIdProductConcrete();
+        $idProduct = (int)$productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
 
-            $idProductAbstract = (int)$productConcreteTransfer
-                ->requireFkProductAbstract()
-                ->getFkProductAbstract();
+        $idProductAbstract = (int)$productConcreteTransfer
+            ->requireFkProductAbstract()
+            ->getFkProductAbstract();
 
-            $this->productAbstractAssertion->assertProductExists($idProductAbstract);
-            $this->productConcreteAssertion->assertProductExists($idProduct);
-            $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
+        $this->productAbstractAssertion->assertProductExists($idProductAbstract);
+        $this->productConcreteAssertion->assertProductExists($idProduct);
+        $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
 
-            $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
+        $productConcreteTransfer = $this->triggerBeforeUpdatePlugins($productConcreteTransfer);
 
-            $idProductConcrete = $productConcreteEntity->getPrimaryKey();
-            $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+        $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
 
-            $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-            $this->persistPrice($productConcreteTransfer);
+        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
+        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-            $this->persistImageSets($productConcreteTransfer);  //TODO: PLUGIN
-            $this->persistStock($productConcreteTransfer);  //TODO: PLUGIN
+        $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+        $this->persistPrice($productConcreteTransfer);
 
-            $this->productQueryContainer->getConnection()->commit();
+        $productConcreteTransfer = $this->triggerAfterUpdatePlugins($productConcreteTransfer);
 
-            return $idProductConcrete;
+        $this->productQueryContainer->getConnection()->commit();
 
-        } catch (Exception $e) {
-            $this->productQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
+        return $idProductConcrete;
     }
 
     /**
@@ -220,17 +228,17 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function getProductConcreteById($idProduct)
     {
-        $product = $this->productQueryContainer
+        $productEntity = $this->productQueryContainer
             ->queryProduct()
             ->filterByIdProduct($idProduct)
             ->findOne();
 
-        if (!$product) {
+        if (!$productEntity) {
             return null;
         }
 
-        $transferGenerator = new ProductTransferGenerator();
-        $productTransfer = $transferGenerator->convertProduct($product);
+        $transferGenerator = new ProductTransferMapper(); //TODO inject
+        $productTransfer = $transferGenerator->convertProduct($productEntity);
         $productTransfer = $this->loadProductData($productTransfer);
 
         return $productTransfer;
@@ -292,7 +300,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->joinSpyProductAbstract()
             ->find();
 
-        $transferGenerator = new ProductTransferGenerator();
+        $transferGenerator = new ProductTransferMapper(); //TODO inject
         $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
 
         for ($a = 0; $a < count($transferCollection); $a++) {
@@ -381,52 +389,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function persistImageSets(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return;
-        $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
-        if (empty($imageSetTransferCollection)) {
-            return;
-        }
-
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
-                $productConcreteTransfer
-                    ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
-            );
-            $this->productImageFacade->persistProductImageSet($imageSetTransfer);
-        }
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function persistStock(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $productConcreteTransfer;
-        /* @var \Generated\Shared\Transfer\StockProductTransfer[] $stockCollection */
-        $stockCollection = $productConcreteTransfer->getStock();
-        foreach ($stockCollection as $stockTransfer) {
-            if (!$this->stockFacade->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
-                $this->stockFacade->createStockProduct($stockTransfer);
-            } else {
-                $this->stockFacade->updateStockProduct($stockTransfer);
-            }
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -436,8 +398,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->loadLocalizedAttributes($productTransfer);
         $this->loadPrice($productTransfer);
 
-        $this->loadStock($productTransfer); //TODO: PLUGIN
-        $this->loadImageSet($productTransfer);  //TODO: PLUGIN
+        $this->triggerLoadPlugins($productTransfer);
 
         return $productTransfer;
     }
@@ -460,61 +421,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $productConcreteTransfer->setPrice($priceTransfer);
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function loadStock(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $productConcreteTransfer;
-        $stockCollection = $this->stockQueryContainer
-            ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
-            ->innerJoinStock()
-            ->find();
-
-        if ($stockCollection === null) {
-            return $productConcreteTransfer;
-        }
-
-        foreach ($stockCollection as $stockEntity) {
-            $stockTransfer = (new StockProductTransfer())
-                ->fromArray($stockEntity->toArray(), true)
-                ->setStockType($stockEntity->getStock()->getName());
-
-            $productConcreteTransfer->addStock($stockTransfer);
-        }
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * TODO: PLUGIN
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function loadImageSet(ProductConcreteTransfer $productTransfer)
-    {
-        return $productTransfer;
-
-        $imageSets = $this->productImageFacade
-            ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());
-
-        if ($imageSets === null) {
-            return $productTransfer;
-        }
-
-        $productTransfer->setImageSets(
-            new ArrayObject($imageSets)
-        );
-
-        return $productTransfer;
     }
 
     /**
@@ -556,6 +462,76 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function triggerBeforeCreatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsCreateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->run($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function triggerAfterCreatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsCreateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->run($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function triggerBeforeUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsUpdateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->run($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function triggerAfterUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsUpdateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->run($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function triggerLoadPlugins(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->pluginsReadCollection as $plugin) {
+            $productConcreteTransfer = $plugin->run($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
     }
 
 }

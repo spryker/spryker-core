@@ -8,12 +8,16 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductManager implements ProductManagerInterface
 {
+
+    /**
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
+     */
+    protected $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
@@ -21,10 +25,14 @@ class ProductManager implements ProductManagerInterface
     protected $productFacade;
 
     /**
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
      */
-    public function __construct(ProductCartConnectorToProductInterface $productFacade)
-    {
+    public function __construct(
+        ProductCartConnectorToLocaleInterface $localeFacade,
+        ProductCartConnectorToProductInterface $productFacade
+    ) {
+        $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
     }
 
@@ -37,37 +45,19 @@ class ProductManager implements ProductManagerInterface
     {
         foreach ($change->getItems() as $cartItem) {
             $productConcreteTransfer = $this->getAndValidateProductConcrete($cartItem->getSku());
+            $localizedProductName = $this->productFacade->getLocalizedProductConcreteName(
+                $productConcreteTransfer,
+                $this->localeFacade->getCurrentLocale()
+            );
 
             $cartItem->setId($productConcreteTransfer->getIdProductConcrete())
                 ->setSku($productConcreteTransfer->getSku())
                 ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
                 ->setAbstractSku($productConcreteTransfer->getAbstractSku())
-                ->setName(
-                    $this->getLocalizedProductName($productConcreteTransfer)
-                )
-                ->setTaxRate((float)$productConcreteTransfer->getTaxRate());
+                ->setName($localizedProductName);
         }
 
         return $change;
-    }
-
-    /**
-     * TODO: move it to Product bundle
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return string
-     */
-    protected function getLocalizedProductName(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $currentLocale = Store::getInstance()->getCurrentLocale();
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if (strcasecmp($localizedAttribute->getLocale()->getLocaleName(), $currentLocale) === 0) {
-                return $localizedAttribute->getName();
-            }
-        }
-
-        return $productConcreteTransfer->getSku();
     }
 
     /**
@@ -90,14 +80,6 @@ class ProductManager implements ProductManagerInterface
         $fkProductAbstract = $productConcreteTransfer
             ->requireFkProductAbstract()
             ->getFkProductAbstract();
-
-        $taxRate = $productConcreteTransfer
-            ->requireTaxRate()
-            ->getTaxRate();
-
-        $attributes = $productConcreteTransfer
-            ->requireAttributes()
-            ->getAttributes();
 
         return $productConcreteTransfer;
     }

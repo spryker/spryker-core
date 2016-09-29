@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ReaderInterface
 {
 
@@ -23,5 +26,19 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductId($idProduct);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
 
 }

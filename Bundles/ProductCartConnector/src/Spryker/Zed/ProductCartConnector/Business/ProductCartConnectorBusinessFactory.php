@@ -24,8 +24,25 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductManager()
     {
         return new ProductManager(
-            $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRODUCT)
+            $this->getLocaleFacade(),
+            $this->getProductFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
 }

@@ -9,13 +9,16 @@ namespace Spryker\Zed\ProductDiscountConnector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountBridge;
+use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleBridge;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductBridge;
 
 class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
@@ -25,17 +28,20 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
-            return new ProductDiscountConnectorToProductBridge(
-                $container->getLocator()->product()->facade()
-            );
+        $container[self::FACADE_DISCOUNT] = function (Container $container) {
+            return new ProductDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
         };
 
-        $container[self::FACADE_DISCOUNT] = function (Container $container) {
-            return new ProductDiscountConnectorToDiscountBridge(
-                $container->getLocator()->discount()->facade()
-            );
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new ProductDiscountConnectorToLocaleBridge($container->getLocator()->locale()->facade());
         };
+
+        $container[self::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductDiscountConnectorToProductBridge($container->getLocator()->product()->facade());
+        };
+
+
+        return $container;
     }
 
 }
