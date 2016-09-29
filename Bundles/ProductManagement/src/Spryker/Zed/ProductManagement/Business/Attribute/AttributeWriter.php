@@ -75,26 +75,14 @@ class AttributeWriter implements AttributeWriterInterface
     {
         $this->assertProductManagementAttributeTransferRequirements($productManagementAttributeTransfer);
 
-        $this->productManagementQueryContainer
-            ->getConnection()
-            ->beginTransaction();
+        $this->productManagementQueryContainer->getConnection()->beginTransaction();
 
-        try {
-            $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
-            $productManagementAttributeTransfer = $this->createProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
-            $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
-            $productManagementAttributeTransfer = $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
+        $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
+        $productManagementAttributeTransfer = $this->createProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
+        $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
+        $productManagementAttributeTransfer = $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
 
-            $this->productManagementQueryContainer
-                ->getConnection()
-                ->commit();
-        } catch (\Exception $e) {
-            $this->productManagementQueryContainer
-                ->getConnection()
-                ->rollBack();
-
-            throw $e;
-        }
+        $this->productManagementQueryContainer->getConnection()->commit();
 
         return $productManagementAttributeTransfer;
     }
@@ -111,28 +99,16 @@ class AttributeWriter implements AttributeWriterInterface
         $this->assertProductManagementAttributeTransferHasId($productManagementAttributeTransfer);
         $this->assertProductManagementAttributeTransferRequirements($productManagementAttributeTransfer);
 
-        $this->productManagementQueryContainer
-            ->getConnection()
-            ->beginTransaction();
+        $this->productManagementQueryContainer->getConnection()->beginTransaction();
 
-        try {
-            $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
-            $productManagementAttributeTransfer = $this->updateProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
-            $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
-            $productManagementAttributeTransfer = $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
+        $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productManagementAttributeTransfer);
+        $productManagementAttributeTransfer = $this->updateProductManagementAttributeEntity($productManagementAttributeTransfer, $productAttributeKeyTransfer);
+        $this->saveGlossaryKeyIfNotExists($productAttributeKeyTransfer);
+        $productManagementAttributeTransfer = $this->attributeValueWriter->saveProductAttributeValues($productManagementAttributeTransfer);
 
-            $this->productManagementQueryContainer
-                ->getConnection()
-                ->commit();
-        } catch (\Exception $e) {
-            $this->productManagementQueryContainer
-                ->getConnection()
-                ->rollBack();
+        $this->productManagementQueryContainer->getConnection()->commit();
 
-            throw $e;
-        }
-
-        return $productManagementAttributeTransfer;
+       return $productManagementAttributeTransfer;
     }
 
     /**
@@ -186,7 +162,6 @@ class AttributeWriter implements AttributeWriterInterface
             ->findOneByIdProductManagementAttribute($productManagementAttributeTransfer->getIdProductManagementAttribute());
 
         $productManagementAttributeEntity->fromArray($productManagementAttributeTransfer->modifiedToArray());
-
         $productManagementAttributeEntity->setFkProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
 
         $productManagementAttributeEntity->save();
