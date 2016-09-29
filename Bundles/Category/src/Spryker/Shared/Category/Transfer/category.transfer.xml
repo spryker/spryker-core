@@ -20,13 +20,13 @@
         <property name="metaDescription" type="string" />
         <property name="metaKeywords" type="string" />
 
-        <property name="parent" type="CategoryNode" />
-        <property name="extraParents" singular="extraParent" type="CategoryNode[]" />
-        <property name="categoryNode" type="CategoryNode" />
+        <property name="parent" type="Node" />
+        <property name="extraParents" singular="extraParent" type="Node[]" />
+        <property name="categoryNode" type="Node" />
         <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
     </transfer>
 
-    <transfer name="CategoryNode">
+    <transfer name="Node">
         <property name="idCategoryNode" type="int" />
         <property name="fkParentCategoryNode" type="int" />
         <property name="fkCategory" type="int" />
@@ -51,16 +51,6 @@
         <property name="name" type="string" />
         <property name="absolutePath" type="string" />
         <property name="relativePath" type="string" />
-    </transfer>
-
-    <!-- @deprecated, please use CategoryNode instead -->
-    <transfer name="Node">
-        <property name="idCategoryNode" type="int" />
-        <property name="fkCategory" type="int" />
-        <property name="fkParentCategoryNode" type="int" />
-        <property name="isRoot" type="bool" />
-        <property name="isMain" type="bool" />
-        <property name="nodeOrder" type="int" />
     </transfer>
 
 </transfers>

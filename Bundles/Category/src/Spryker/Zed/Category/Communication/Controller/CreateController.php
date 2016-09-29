@@ -34,11 +34,11 @@ class CreateController extends AbstractController
             try {
                 $this->getFacade()->create($categoryTransfer);
                 $this->addSuccessMessage('The category was added successfully.');
+
+                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }
-
-            return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
         }
 
         return $this->viewResponse([

@@ -126,7 +126,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     protected function createCategoryNode()
     {
         return new CategoryNode(
-            $this->getQueryContainer()
+            $this->createClosureTableWriter()
         );
     }
 

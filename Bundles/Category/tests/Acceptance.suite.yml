@@ -8,3 +8,4 @@ modules:
 
         - \Application\Module\Yves
         - \Application\Module\Zed
+        - \Category\Module\Category

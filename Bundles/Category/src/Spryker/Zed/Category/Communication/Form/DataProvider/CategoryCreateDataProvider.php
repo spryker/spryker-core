@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
@@ -84,7 +85,7 @@ class CategoryCreateDataProvider
                 $path = $this->buildPath($nodeEntity);
                 $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
 
-                $categoryNodeTransfer = new CategoryNodeTransfer();
+                $categoryNodeTransfer = new NodeTransfer();
                 $categoryNodeTransfer->setPath($path);
                 $categoryNodeTransfer->setIdCategoryNode($nodeEntity->getIdCategoryNode());
                 $categoryNodeTransfer->setName($categoryName);

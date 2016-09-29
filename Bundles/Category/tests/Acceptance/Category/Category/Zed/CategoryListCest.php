@@ -37,19 +37,7 @@ class CategoryListCest
      *
      * @return void
      */
-    public function testICanSeeCategoryTree(CategoryListTester $i)
-    {
-//        $i->amOnPage(CategoryListPage::URL);
-//        $i->wait(5);
-//        $i->seeElement(['id' => CategoryListPage::SELECTOR_CATEGORIES_LIST]);
-    }
-
-    /**
-     * @param \Acceptance\Category\Category\Zed\Tester\CategoryListTester $i
-     *
-     * @return void
-     */
-    public function testICanAddCategory(CategoryListTester $i)
+    public function testICanGoToCreateCategory(CategoryListTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->click(CategoryListPage::BUTTON_CREATE_CATEGORY);

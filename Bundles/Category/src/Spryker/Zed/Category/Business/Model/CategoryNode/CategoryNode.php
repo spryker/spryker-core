@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 
-use Generated\Shared\Transfer\CategoryNodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 
 class CategoryNode implements CategoryNodeInterface
 {
@@ -19,14 +18,14 @@ class CategoryNode implements CategoryNodeInterface
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
-    protected $queryContainer;
+    protected $closureTableWriter;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer)
+    public function __construct(ClosureTableWriterInterface $closureTableWriter)
     {
-        $this->queryContainer = $queryContainer;
+        $this->closureTableWriter = $closureTableWriter;
     }
 
     /**
@@ -42,10 +41,12 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity->setFkParentCategoryNode($categoryTransfer->getParent()->getIdCategoryNode());
         $categoryNodeEntity->save();
 
-        $categoryNodeTransfer = new CategoryNodeTransfer();
+        $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
 
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+
+        $this->closureTableWriter->create($categoryNodeTransfer);
     }
 
 }

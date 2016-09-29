@@ -68,17 +68,16 @@ class CategoryUrl implements CategoryUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */
-    protected function build(CategoryNodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    protected function build(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
         $pathParts = $this->queryContainer->queryPath(
             $categoryNodeTransfer->getIdCategoryNode(),
-            $localeTransfer->getIdLocale(),
-            true, true
+            $localeTransfer->getIdLocale()
         )->find();
 
         return $this->urlPathGenerator->generate($pathParts);
@@ -86,23 +85,21 @@ class CategoryUrl implements CategoryUrlInterface
 
     /**
      * @param $categoryNodeUrl
-     * @param $localeTransfer
-     * @param $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return void
      */
-    protected function createUrl($categoryNodeUrl, $localeTransfer, $categoryNodeTransfer)
+    protected function createUrl($categoryNodeUrl, LocaleTransfer $localeTransfer, NodeTransfer $categoryNodeTransfer)
     {
         try {
             $urlTransfer = $this->urlFacade->createUrl($categoryNodeUrl, $localeTransfer, CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $categoryNodeTransfer->getIdCategoryNode());
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
         } catch (UrlExistsException $e) {
             throw new CategoryUrlExistsException($e->getMessage(), $e->getCode(), $e);
         }
-
-//            $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
-        $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }
 
 }
