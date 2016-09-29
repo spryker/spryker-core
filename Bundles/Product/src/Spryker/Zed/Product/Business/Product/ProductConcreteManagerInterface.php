@@ -88,4 +88,25 @@ interface ProductConcreteManagerInterface
         ProductConcreteTransfer $productConcreteTransfer
     );
 
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductActive($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductConcrete);
+
 }

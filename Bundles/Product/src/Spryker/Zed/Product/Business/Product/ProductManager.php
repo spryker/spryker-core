@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -172,6 +173,7 @@ class ProductManager implements ProductManagerInterface
     public function touchProductActive($idProductAbstract)
     {
         $this->touchFacade->touchActive('product_abstract', $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
     }
 
     /**
@@ -244,7 +246,14 @@ class ProductManager implements ProductManagerInterface
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
-        $urlTransfer = $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
+        if ($this->urlFacade->hasUrl($url)) {
+            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+                $idProductAbstract,
+                $locale->getIdLocale()
+            );
+        } else {
+            $urlTransfer = $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
+        }
         $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
 
         return $urlTransfer;

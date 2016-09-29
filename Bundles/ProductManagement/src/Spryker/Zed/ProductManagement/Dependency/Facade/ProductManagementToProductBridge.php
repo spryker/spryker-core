@@ -148,4 +148,26 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
         return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
     }
 
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function activateProductConcrete($idProductConcrete)
+    {
+        return $this->productFacade->activateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
+     *
+     * @return bool
+     */
+    public function deActivateProductConcrete($idProductConcrete)
+    {
+        return $this->productFacade->deActivateProductConcrete($idProductConcrete);
+    }
+
 }

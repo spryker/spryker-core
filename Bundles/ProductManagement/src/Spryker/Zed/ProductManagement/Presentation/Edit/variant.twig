@@ -19,6 +19,19 @@
 
 {% block action %}
     {{ backActionButton('/product-management', 'List Products' | trans) }}
+    {% if currentProduct.is_active == 0 %}
+        {{ viewActionButton(
+             url('/product-management/variant/toggle-enable-product-variant', {
+                    'id_product_concrete': idProduct,
+                    'id_product_abstract': idProductAbstract,
+                    'activate': 1 }), 'Activate' | trans) }}
+    {% else %}
+        {{ removeActionButton(
+            url('/product-management/variant/toggle-enable-product-variant', {
+                'id_product_concrete': idProduct,
+                'id_product_abstract': idProductAbstract,
+                'activate': 0}), 'Deactivate' | trans) }}
+     {% endif %}
     {{ backActionButton('/product-management/edit?id-product-abstract=' ~ idProductAbstract, 'Edit Abstract Product' | trans) }}
 {% endblock %}
 

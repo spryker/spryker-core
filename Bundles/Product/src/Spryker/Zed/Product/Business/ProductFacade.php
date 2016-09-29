@@ -396,6 +396,42 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
+     * @param $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteActive($idProductConcrete)
+    {
+        $this->getFactory()->createProductConcreteManager()->touchProductActive($idProductConcrete);
+    }
+
+    /**
+     * @api
+     *
+     * @param $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteInactive($idProductConcrete)
+    {
+        $this->getFactory()->createProductConcreteManager()->touchProductInactive($idProductConcrete);
+    }
+
+    /**
+     * @api
+     *
+     * @param $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteDelete($idProductConcrete)
+    {
+        $this->getFactory()->createProductConcreteManager()->touchProductDeleted($idProductConcrete);
+    }
+
+    /**
+     * @api
+     *
      * @param string $sku
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -433,6 +469,40 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
         return $this->getFactory()->createProductManager()->createAndTouchProductUrlByIdProduct($idProductAbstract, $url, $locale);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function activateProductConcrete($idProductConcrete)
+    {
+         return $this->getFactory()->createProductConcreteActivator()->activateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function createAndTouchProductUrls($idProductAbstract)
+    {
+        $this->getFactory()->createProductUrlGenerator()->createAndTouchProductUrls($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
+     *
+     * @return bool
+     */
+    public function deActivateProductConcrete($idProductConcrete)
+    {
+        return $this->getFactory()->createProductConcreteActivator()->deActivateProductConcrete($idProductConcrete);
     }
 
 }

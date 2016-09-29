@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Library\Json;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\Business\Product\VariantGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,6 +28,9 @@ class VariantController extends AbstractController
     const PARAM_ATTRIBUTE_GROUP = 'attribute_group';
     const PARAM_ATTRIBUTE_VALUES = 'attribute_values';
     const PARAM_LOCALIZED_ATTRIBUTE_VALUES = 'localized_attribute_values';
+    const PARAM_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    const PARAM_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    const PARAM_ACTIVATE = 'activate';
 
     /**
      * Request data:
@@ -71,4 +75,43 @@ class VariantController extends AbstractController
         ]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function toggleEnableProductVariantAction(Request $request)
+    {
+        $idProductConcrete = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_ABSTRACT));
+
+        $enable = (bool)$request->query->get(self::PARAM_ACTIVATE);
+
+        if ($enable) {
+            $updateStatus = $this->getFactory()
+                ->getProductFacade()
+                ->activateProductConcrete($idProductConcrete);
+        } else {
+            $updateStatus = $this->getFactory()
+                ->getProductFacade()
+                ->deActivateProductConcrete($idProductConcrete);
+        }
+
+        $redirectUrl = Url::generate(
+            '/product-management/edit/variant',
+            [
+                EditController::PARAM_ID_PRODUCT => $idProductConcrete,
+                EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract
+
+            ]
+        )->build();
+
+        if ($updateStatus) {
+            $this->addSuccessMessage('Product variant successfully updated.');
+        } else {
+            $this->addErrorMessage('Failed to change product visibility.');
+        }
+
+        return $this->redirectResponse($redirectUrl);
+    }
 }

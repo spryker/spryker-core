@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferGenerator;
@@ -179,6 +180,37 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             $this->productQueryContainer->getConnection()->rollBack();
             throw $e;
         }
+    }
+
+    /**
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductActive($idProductConcrete)
+    {
+        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductConcrete)
+    {
+        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductConcrete)
+    {
+        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
     }
 
     /**

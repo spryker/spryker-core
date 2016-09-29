@@ -317,4 +317,58 @@ interface ProductFacadeInterface
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function activateProductConcrete($idProductConcrete);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function createAndTouchProductUrls($idProductAbstract);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
+     *
+     * @return bool
+     */
+    public function deActivateProductConcrete($idProductConcrete);
+
+    /**
+     * @api
+     *
+     * @param $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteActive($idProductConcrete);
+
+    /**
+     * @api
+     *
+     * @param $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteInactive($idProductConcrete);
+
+    /**
+     * @api
+     *
+     * @param $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteDelete($idProductConcrete);
+
 }

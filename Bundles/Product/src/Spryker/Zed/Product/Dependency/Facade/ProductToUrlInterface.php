@@ -40,4 +40,19 @@ interface ProductToUrlInterface
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    public function hasUrl($url);
+
+    /**
+     * @param int $idUrl
+     *
+     * @return void
+     */
+    public function touchUrlDeleted($idUrl);
+
+
 }

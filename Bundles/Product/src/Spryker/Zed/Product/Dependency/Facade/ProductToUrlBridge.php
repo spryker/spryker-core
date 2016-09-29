@@ -59,4 +59,23 @@ class ProductToUrlBridge implements ProductToUrlInterface
         return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
 
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    public function hasUrl($url)
+    {
+        return $this->urlFacade->hasUrl($url);
+    }
+
+    /**
+     * @param int $idUrl
+     *
+     * @return void
+     */
+    public function touchUrlDeleted($idUrl)
+    {
+        return $this->urlFacade->touchUrlDeleted($idUrl);
+    }
 }
