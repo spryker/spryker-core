@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -32,15 +32,23 @@ class Reader implements ReaderInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface
+     */
+    protected $transferMapper;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface $productFacade
+     * @param \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface $transferMapper
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,
-        StockToProductInterface $productFacade
+        StockToProductInterface $productFacade,
+        StockProductTransferMapperInterface $transferMapper
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
+        $this->transferMapper = $transferMapper;
     }
 
     /**
@@ -48,8 +56,11 @@ class Reader implements ReaderInterface
      */
     public function getStockTypes()
     {
+        $stockTypes = $this->queryContainer
+            ->queryAllStockTypes()
+            ->find();
+
         $types = [];
-        $stockTypes = $this->queryContainer->queryAllStockTypes()->find();
         foreach ($stockTypes as $stockType) {
             $types[] = $stockType->getName();
         }
@@ -65,9 +76,10 @@ class Reader implements ReaderInterface
     public function isNeverOutOfStock($sku)
     {
         $idProduct = $this->productFacade->getProductConcreteIdBySku($sku);
-        $stock = $this->queryContainer->queryStockByNeverOutOfStockAllTypes($idProduct)->findOne();
 
-        return ($stock !== null);
+        return $this->queryContainer
+            ->queryStockByNeverOutOfStockAllTypes($idProduct)
+            ->count() > 0;
     }
 
     /**
@@ -83,11 +95,12 @@ class Reader implements ReaderInterface
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
             ->find();
+
         if (count($stockEntities) < 1) {
             throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);
-        } else {
-            return $stockEntities;
         }
+
+        return $stockEntities;
     }
 
     /**
@@ -115,9 +128,9 @@ class Reader implements ReaderInterface
      */
     public function hasStockProduct($sku, $stockType)
     {
-        $entityCount = $this->queryContainer->queryStockProductBySkuAndType($sku, $stockType)->count();
-
-        return $entityCount > 0;
+        return $this->queryContainer
+            ->queryStockProductBySkuAndType($sku, $stockType)
+            ->count() > 0;
     }
 
     /**
@@ -132,6 +145,7 @@ class Reader implements ReaderInterface
     {
         $idStockType = $this->getStockTypeIdByName($stockType);
         $idProduct = $this->getProductConcreteIdBySku($sku);
+
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStockType, $idProduct)
             ->findOne();
@@ -159,7 +173,8 @@ class Reader implements ReaderInterface
      */
     public function checkStockDoesNotExist($idStockType, $idProduct)
     {
-        $stockProductQuery = $this->queryContainer->queryStockProductByStockAndProduct($idStockType, $idProduct);
+        $stockProductQuery = $this->queryContainer
+            ->queryStockProductByStockAndProduct($idStockType, $idProduct);
 
         if ($stockProductQuery->count() > 0) {
             throw new StockProductAlreadyExistsException(
@@ -199,6 +214,7 @@ class Reader implements ReaderInterface
     {
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByIdStockProduct($idStockProduct)
+            ->innerJoinStock()
             ->findOne();
 
         if ($stockProductEntity === null) {
@@ -215,9 +231,9 @@ class Reader implements ReaderInterface
      */
     protected function hasStockType($stockType)
     {
-        $stockTypeCount = $this->queryContainer->queryStockByName($stockType)->count();
-
-        return $stockTypeCount > 0;
+        return $this->queryContainer
+            ->queryStockByName($stockType)
+            ->count() > 0;
     }
 
     /**
@@ -227,21 +243,20 @@ class Reader implements ReaderInterface
      */
     public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $stockCollection = $this->queryContainer
+        $stockProductCollection = $this->queryContainer
             ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
             ->innerJoinStock()
             ->find();
 
-        if ($stockCollection === null) {
+        if ($stockProductCollection === null) {
             return $productConcreteTransfer;
         }
 
-        foreach ($stockCollection as $stockEntity) {
-            $stockTransfer = (new StockProductTransfer())
-                ->fromArray($stockEntity->toArray(), true)
-                ->setStockType($stockEntity->getStock()->getName());
+        foreach ($stockProductCollection as $stockProductEntity) {
+            $stockProductTransfer = $this->transferMapper->convertStockProduct($stockProductEntity);
+            $stockProductTransfer->setSku($productConcreteTransfer->getSku());
 
-            $productConcreteTransfer->addStock($stockTransfer);
+            $productConcreteTransfer->addStock($stockProductTransfer);
         }
 
         return $productConcreteTransfer;
