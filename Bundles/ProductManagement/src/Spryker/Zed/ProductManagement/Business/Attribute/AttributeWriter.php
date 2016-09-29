@@ -67,8 +67,6 @@ class AttributeWriter implements AttributeWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
-     * @throws \Exception
-     *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
@@ -90,8 +88,6 @@ class AttributeWriter implements AttributeWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
-     * @throws \Exception
-     *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
@@ -108,7 +104,7 @@ class AttributeWriter implements AttributeWriterInterface
 
         $this->productManagementQueryContainer->getConnection()->commit();
 
-       return $productManagementAttributeTransfer;
+        return $productManagementAttributeTransfer;
     }
 
     /**

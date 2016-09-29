@@ -17,6 +17,9 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
 {
 
     /**
+     * Specification:
+     * - Returns list of ALL product management attributes
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
@@ -24,7 +27,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
     public function getProductAttributeCollection()
     {
         return $this->getFactory()
-            ->createAttributeManager()
+            ->createAttributeReader()
             ->getProductAttributeCollection();
     }
 

@@ -11,7 +11,7 @@ use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
 use Propel\Runtime\Collection\ObjectCollection;
 
-interface ProductAttributeTransferGeneratorInterface
+interface ProductAttributeTransferMapperInterface
 {
 
     /**

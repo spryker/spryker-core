@@ -11,7 +11,7 @@ use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValue
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
-use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface;
+use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
@@ -30,23 +30,23 @@ class AttributeReader implements AttributeReaderInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface
+     * @var \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface
      */
-    protected $productAttributeTransferGenerator;
+    protected $productAttributeTransferMapper;
 
     /**
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferGeneratorInterface $productAttributeTransferGenerator
+     * @param \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface $productAttributeTransferGenerator
      */
     public function __construct(
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
-        ProductAttributeTransferGeneratorInterface $productAttributeTransferGenerator
+        ProductAttributeTransferMapperInterface $productAttributeTransferGenerator
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->productAttributeTransferGenerator = $productAttributeTransferGenerator;
+        $this->productAttributeTransferMapper = $productAttributeTransferGenerator;
     }
 
     /**
@@ -110,8 +110,7 @@ class AttributeReader implements AttributeReaderInterface
             return null;
         }
 
-        return $this->productAttributeTransferGenerator
-            ->convertProductAttribute($attributeEntity);
+        return $this->productAttributeTransferMapper->convertProductAttribute($attributeEntity);
     }
 
     /**
@@ -167,6 +166,19 @@ class AttributeReader implements AttributeReaderInterface
         }
 
         return $query->find();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection()
+    {
+        $collection = $this->productManagementQueryContainer
+            ->queryProductManagementAttribute()
+            ->innerJoinSpyProductAttributeKey()
+            ->find();
+
+        return $this->productAttributeTransferMapper->convertProductAttributeCollection($collection);
     }
 
 }

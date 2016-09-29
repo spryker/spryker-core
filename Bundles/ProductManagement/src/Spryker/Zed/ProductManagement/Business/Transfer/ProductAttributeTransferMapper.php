@@ -18,7 +18,7 @@ use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 
-class ProductAttributeTransferGenerator implements ProductAttributeTransferGeneratorInterface
+class ProductAttributeTransferMapper implements ProductAttributeTransferMapperInterface
 {
 
     /**
