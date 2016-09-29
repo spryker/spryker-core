@@ -28,18 +28,18 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated use getOrderByIdSalesOrder instead
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetailsAction(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        return $this->getFacade()->getCustomerOrder($orderTransfer);
     }
 
     /**
+     * @deprecated Security issue with missing customer id constraint, use getOrderDetailsAction() instead.
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
