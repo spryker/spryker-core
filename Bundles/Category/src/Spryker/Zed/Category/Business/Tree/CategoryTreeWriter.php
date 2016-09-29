@@ -15,7 +15,7 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 
-class CategoryTreeWriter
+class CategoryTreeWriter implements CategoryTreeWriterInterface
 {
 
     /**

@@ -10,10 +10,9 @@ namespace Spryker\Zed\Category\Communication\Form;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryType extends AbstractType
@@ -27,7 +26,7 @@ class CategoryType extends AbstractType
     const FIELD_IS_CLICKABLE = 'is_clickable';
     const FIELD_IS_MAIN = 'is_main';
 
-    const FIELD_PARENT_NODE = 'fk_parent_category_node';
+    const FIELD_PARENT_NODE = 'parent';
     const FIELD_EXTRA_PARENTS = 'extra_parents';
 
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
@@ -78,12 +77,11 @@ class CategoryType extends AbstractType
      */
     protected function addCategoryKeyField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_CATEGORY_KEY, 'text', [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
+        $builder->add(static::FIELD_CATEGORY_KEY, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
         return $this;
     }
@@ -95,11 +93,10 @@ class CategoryType extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_IS_ACTIVE, 'checkbox', [
-                'label' => 'Active',
-                'required' => false,
-            ]);
+        $builder->add(static::FIELD_IS_ACTIVE, 'checkbox', [
+            'label' => 'Active',
+            'required' => false,
+        ]);
 
         return $this;
     }
@@ -111,11 +108,10 @@ class CategoryType extends AbstractType
      */
     protected function addIsInMenuField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_IS_IN_MENU, 'checkbox', [
-                'label' => 'Show in Menu',
-                'required' => false,
-            ]);
+        $builder->add(static::FIELD_IS_IN_MENU, 'checkbox', [
+            'label' => 'Show in Menu',
+            'required' => false,
+        ]);
 
         return $this;
     }
@@ -127,11 +123,10 @@ class CategoryType extends AbstractType
      */
     protected function addIsClickableField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
-                'label' => 'Clickable',
-                'required' => false,
-            ]);
+        $builder->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
+            'label' => 'Clickable',
+            'required' => false,
+        ]);
 
         return $this;
     }
@@ -143,11 +138,10 @@ class CategoryType extends AbstractType
      */
     protected function addIsMainField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_IS_MAIN, 'checkbox', [
-                'label' => 'Is Main',
-                'required' => false,
-            ]);
+        $builder->add(static::FIELD_IS_MAIN, 'checkbox', [
+            'label' => 'Is Main',
+            'required' => false,
+        ]);
 
         return $this;
     }
@@ -160,14 +154,13 @@ class CategoryType extends AbstractType
      */
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
-
-        $builder->add(static::FIELD_PARENT_NODE, 'choice', [
+        $builder->add(static::FIELD_PARENT_NODE, new Select2ComboBoxType(), [
                 'data_class' => CategoryTransfer::class,
                 'label' => 'Parent',
                 'choices' => $choices,
                 'choices_as_values' => true,
                 'choice_label' => 'name',
-                'choice_value' => 'idCategory',
+                'choice_value' => 'idCategoryNode',
                 'group_by' => 'path',
                 'required' => false
             ]);
@@ -183,19 +176,25 @@ class CategoryType extends AbstractType
      */
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
-        $builder
-            ->add(self::FIELD_EXTRA_PARENTS, 'choice', [
-//                'data_class' => CategoryTransfer::class,
-                'label' => 'Additional Parents',
-                'choices' => $choices,
-                'choices_as_values' => true,
-                'choice_label' => 'name',
-                'choice_value' => 'idCategory',
-                'multiple' => true,
-                'group_by' => 'path',
-                'required' => false,
-                'mapped' => false
-            ]);
+        $builder->add(self::FIELD_EXTRA_PARENTS, new Select2ComboBoxType(), [
+            'label' => 'Additional Parents',
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_label' => 'name',
+            'choice_value' => 'idCategoryNode',
+            'multiple' => true,
+            'group_by' => 'path',
+            'required' => false,
+        ]);
+
+        $builder->get(static::FIELD_EXTRA_PARENTS)->addModelTransformer(new CallbackTransformer(
+            function ($extraParents) {
+                return (array)$extraParents;
+            },
+            function ($extraParents) {
+                return new \ArrayObject($extraParents);
+            }
+        ));
 
         return $this;
     }
@@ -207,10 +206,9 @@ class CategoryType extends AbstractType
      */
     protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_LOCALIZED_ATTRIBUTES, 'collection', [
-                'type' => new CategoryLocalizedAttributeType(),
-            ]);
+        $builder->add(static::FIELD_LOCALIZED_ATTRIBUTES, 'collection', [
+            'type' => new CategoryLocalizedAttributeType(),
+        ]);
 
         return $this;
     }

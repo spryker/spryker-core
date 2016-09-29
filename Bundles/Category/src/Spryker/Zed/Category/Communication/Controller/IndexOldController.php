@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  */
-class IndexController extends AbstractController
+class IndexOldController extends AbstractController
 {
 
     const PARAM_ID_CATEGORY_NODE = 'id-category-node';

@@ -9,7 +9,11 @@ namespace Spryker\Zed\Category\Business;
 
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
+use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
+use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
+use Spryker\Zed\Category\Business\Model\Category;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
@@ -92,6 +96,54 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryWriter(
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\Category
+     */
+    public function createCategory()
+    {
+        return new Category(
+            $this->createCategoryCategory(),
+            $this->createCategoryNode(),
+            $this->createCategoryAttribute(),
+            $this->createCategoryUrl(),
+            $this->getQueryContainer()->getConnection()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\Category\CategoryInterface
+     */
+    protected function createCategoryCategory()
+    {
+        return new Model\Category\Category();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface
+     */
+    protected function createCategoryNode()
+    {
+        return new CategoryNode(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface
+     */
+    protected function createCategoryAttribute()
+    {
+        return new CategoryAttribute();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface
+     */
+    protected function createCategoryUrl()
+    {
+        return new CategoryUrl($this->getQueryContainer(), $this->getUrlFacade(), $this->createUrlPathGenerator());
     }
 
     /**

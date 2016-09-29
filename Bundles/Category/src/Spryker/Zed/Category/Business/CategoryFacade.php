@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\Category\Business\Model\Category;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -139,15 +140,25 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createCategoryWriter()
             ->create($categoryTransfer, $localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function create(CategoryTransfer $categoryTransfer)
+    {
+        $this->getFactory()->createCategory()->create($categoryTransfer);
     }
 
     /**

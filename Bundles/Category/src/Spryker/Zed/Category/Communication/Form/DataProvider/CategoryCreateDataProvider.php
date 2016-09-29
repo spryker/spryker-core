@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryNodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
@@ -60,7 +61,7 @@ class CategoryCreateDataProvider
      */
     public function getOptions()
     {
-        $parentCategories = $this->getCategoriesWithPaths2();
+        $parentCategories = $this->getCategoriesWithPaths();
 
         return [
             static::DATA_CLASS => CategoryTransfer::class,
@@ -71,84 +72,28 @@ class CategoryCreateDataProvider
     /**
      * @return array
      */
-    protected function getCategoriesWithPaths2()
-    {
-        $idLocale = $this->getIdLocale();
-        $categoryEntityList = $this->queryContainer->queryCategory($idLocale)->find();
-
-        $categories = [];
-        $pathCache = [];
-
-        foreach ($categoryEntityList as $categoryEntity) {
-            foreach ($categoryEntity->getNodes() as $nodeEntity) {
-                if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
-                    $path = $this->buildPath($nodeEntity);
-                } else {
-                    $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
-                }
-
-                $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)
-                    ->getFirst()
-                    ->getName();
-
-                $categoryTransfer = new CategoryTransfer();
-                $categoryTransfer->setPath($path);
-                $categoryTransfer->setIdCategory($nodeEntity->getIdCategoryNode());
-                $categoryTransfer->setName($categoryName);
-
-                $categories[] = $categoryTransfer;
-            }
-        }
-
-//        $categories = $this->sortCategoriesWithPaths($categories);
-
-        return $categories;
-    }
-
-    /**
-     * @return array
-     */
     protected function getCategoriesWithPaths()
     {
         $idLocale = $this->getIdLocale();
         $categoryEntityList = $this->queryContainer->queryCategory($idLocale)->find();
 
-        $categories = [];
-        $pathCache = [];
+        $categoryNodes = [];
 
         foreach ($categoryEntityList as $categoryEntity) {
             foreach ($categoryEntity->getNodes() as $nodeEntity) {
-                if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
-                    $path = $this->buildPath($nodeEntity);
-                } else {
-                    $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
-                }
+                $path = $this->buildPath($nodeEntity);
+                $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
 
-                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity->getLocalisedAttributes($idLocale)
-                    ->getFirst()
-                    ->getName();
+                $categoryNodeTransfer = new CategoryNodeTransfer();
+                $categoryNodeTransfer->setPath($path);
+                $categoryNodeTransfer->setIdCategoryNode($nodeEntity->getIdCategoryNode());
+                $categoryNodeTransfer->setName($categoryName);
+
+                $categoryNodes[] = $categoryNodeTransfer;
             }
         }
 
-        $categories = $this->sortCategoriesWithPaths($categories);
-
-        return $categories;
-    }
-
-    /**
-     * @param array $categories
-     *
-     * @return array
-     */
-    protected function sortCategoriesWithPaths(array $categories)
-    {
-        ksort($categories);
-
-        foreach ($categories as $path => $categoryNames) {
-            asort($categories[$path], SORT_FLAG_CASE & SORT_STRING);
-        }
-
-        return $categories;
+        return $categoryNodes;
     }
 
     /**

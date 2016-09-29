@@ -15,11 +15,11 @@ interface CategoryWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return int
      */
-    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
+    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

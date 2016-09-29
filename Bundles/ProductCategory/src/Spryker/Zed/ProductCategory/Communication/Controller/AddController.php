@@ -46,7 +46,6 @@ class AddController extends AbstractController
         $localeTransfer = $this->getFactory()->getCurrentLocale();
 
         if ($form->isValid()) {
-
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
             $nodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
             $nodeTransfer->setIsMain(true);

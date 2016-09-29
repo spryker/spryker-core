@@ -7,58 +7,35 @@
         <property name="idCategory" type="int" />
         <property name="fkParentCategoryNode" type="int" />
         <property name="categoryKey" type="string" />
+        <property name="isMain" type="bool" />
         <property name="isActive" type="bool" />
         <property name="isInMenu" type="bool" />
         <property name="isClickable" type="bool" />
-        <property name="isMain" type="bool" />
+
         <property name="name" type="string" />
         <property name="url" type="string" />
-        <property name="path" type="string" />
         <property name="imageName" type="string" />
+        <property name="categoryImageName" type="string" />
         <property name="metaTitle" type="string" />
         <property name="metaDescription" type="string" />
         <property name="metaKeywords" type="string" />
-        <property name="categoryImageName" type="string" />
-        <property name="parent" type="Category" />
-        <property name="extraParents" singular="extraParent" type="Category[]" />
+
+        <property name="parent" type="CategoryNode" />
+        <property name="extraParents" singular="extraParent" type="CategoryNode[]" />
+        <property name="categoryNode" type="CategoryNode" />
         <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
     </transfer>
 
-    <transfer name="Node">
+    <transfer name="CategoryNode">
+        <property name="idCategoryNode" type="int" />
+        <property name="fkParentCategoryNode" type="int" />
+        <property name="fkCategory" type="int" />
         <property name="isRoot" type="bool" />
         <property name="isMain" type="bool" />
-        <property name="idCategoryNode" type="int" />
-        <property name="fkCategory" type="int" />
-        <property name="fkParentCategoryNode" type="int" />
         <property name="nodeOrder" type="int" />
-    </transfer>
-
-    <transfer name="CategoryLocalized">
-        <property name="locale" type="Locale" />
-        <property name="idCategory" type="int" />
-        <property name="categoryKey" type="string" />
-        <property name="isActive" type="bool" />
-        <property name="isInMenu" type="bool" />
-        <property name="isClickable" type="bool" />
         <property name="name" type="string" />
-        <property name="url" type="string" />
-        <property name="imageName" type="string" />
-        <property name="metaTitle" type="string" />
-        <property name="metaDescription" type="string" />
-        <property name="metaKeywords" type="string" />
-        <property name="categoryImageName" type="string" />
+        <property name="path" type="string" />
     </transfer>
-
-<!--
-    <transfer name="CategoryLocalized">
-        <property name="idCategory" type="int" />
-        <property name="categoryKey" type="string" />
-        <property name="isActive" type="bool" />
-        <property name="isInMenu" type="bool" />
-        <property name="isClickable" type="bool" />
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
-    </transfer>
--->
 
     <transfer name="CategoryLocalizedAttributes">
         <property name="locale" type="Locale" />
@@ -67,7 +44,23 @@
         <property name="metaTitle" type="string" />
         <property name="metaDescription" type="string" />
         <property name="metaKeywords" type="string" />
-        <property name="categoryImageName" type="string" />
+        <property name="image" type="Image" />
+    </transfer>
+
+    <transfer name="Image">
+        <property name="name" type="string" />
+        <property name="absolutePath" type="string" />
+        <property name="relativePath" type="string" />
+    </transfer>
+
+    <!-- @deprecated, please use CategoryNode instead -->
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int" />
+        <property name="fkCategory" type="int" />
+        <property name="fkParentCategoryNode" type="int" />
+        <property name="isRoot" type="bool" />
+        <property name="isMain" type="bool" />
+        <property name="nodeOrder" type="int" />
     </transfer>
 
 </transfers>

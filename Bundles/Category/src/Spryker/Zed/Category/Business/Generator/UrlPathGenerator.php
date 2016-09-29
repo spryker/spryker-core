@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\Category\Business\Generator;
 
-/**
- * Class UrlGenerator
- */
-
 class UrlPathGenerator implements UrlPathGeneratorInterface
 {
 

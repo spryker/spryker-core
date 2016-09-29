@@ -44,9 +44,27 @@ class CategoryWriter implements CategoryWriterInterface
         $idCategory = $categoryEntity->getPrimaryKey();
         $categoryTransfer->setIdCategory($idCategory);
 
-        $this->persistCategoryAttribute($categoryTransfer, $localeTransfer);
+//        $this->createLocalizedAttributes($categoryTransfer);
 
         return $idCategory;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function createLocalizedAttributes(CategoryTransfer $categoryTransfer)
+    {
+        $localizedCategoryAttributeTransferCollection = $categoryTransfer->getLocalizedAttributes();
+        foreach ($localizedCategoryAttributeTransferCollection as $localizedCategoryAttributesTransfer) {
+            $localizedCategoryAttributeEntity = new SpyCategoryAttribute();
+            $localizedCategoryAttributeEntity->fromArray($localizedCategoryAttributesTransfer->toArray());
+            $localizedCategoryAttributeEntity->setFkCategory($categoryTransfer->getIdCategory());
+            $localizedCategoryAttributeEntity->setFkLocale($localizedCategoryAttributesTransfer->getLocale()->getIdLocale());
+
+            $localizedCategoryAttributeEntity->save();
+        }
     }
 
     /**

@@ -22,7 +22,7 @@
             {{ form_row(categoryForm.is_in_menu) }}
             {{ form_row(categoryForm.is_clickable) }}
             {{ form_row(categoryForm.is_main) }}
-            {{ form_row(categoryForm.fk_parent_category_node) }}
+            {{ form_row(categoryForm.parent) }}
             {{ form_row(categoryForm.extra_parents) }}
 
             {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes', row_class: 'widget-class', row_id: 'widget-id' } %}
