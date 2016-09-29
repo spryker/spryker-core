@@ -44,6 +44,7 @@
     <transfer name="ProductAttributeKey">
         <property name="idProductAttributeKey" type="int" />
         <property name="key" type="string" />
+        <property name="isSuper" type="bool" />
     </transfer>
 
     <transfer name="Locale">
