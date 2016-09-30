@@ -5,22 +5,16 @@
  */
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductUrlGeneratorInterface
 {
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return mixed
-     */
-    public function createAndTouchProductUrls($idProductAbstract);
 
     /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributes
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function generateProductUrl(LocalizedAttributesTransfer $localizedAttributes, $idProductAbstract);
+    public function getProductUrl(ProductAbstractTransfer $productAbstract);
+
 }

@@ -6,7 +6,11 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedUrlTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductUrlTransfer;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 
 class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
@@ -17,47 +21,58 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $productManager;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductManagerInterface $productManager
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
-    public function __construct(ProductManagerInterface $productManager)
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\Product\Business\Product\ProductManagerInterface $productManager
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
+     */
+    public function __construct(ProductManagerInterface $productManager, ProductToLocaleInterface $localeFacade)
     {
         $this->productManager = $productManager;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createAndTouchProductUrls($idProductAbstract)
+    public function getProductUrl(ProductAbstractTransfer $productAbstract)
     {
-        $productAbstractTransfer = $this->productManager->getProductAbstractById($idProductAbstract);
+        $availableLocales = $this->localeFacade->getAvailableLocales();
 
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
-            $productAbstractUrl = $this->generateProductUrl(
-                $localizedAttributes,
-                $productAbstractTransfer->getIdProductAbstract()
-            );
+        $productUrlTransfer = new ProductUrlTransfer();
+        $productUrlTransfer->setAbstractSku($productAbstract->getSku());
 
-            $this->productManager->createAndTouchProductUrlByIdProduct(
-                $productAbstractTransfer->getIdProductAbstract(),
-                $productAbstractUrl,
-                $localizedAttributes->getLocale()
-            );
+        foreach ($availableLocales as $localeTransfer) {
+            $url = $this->generateUrlByLocale($productAbstract, $localeTransfer);
+
+            $localizedUrl = new LocalizedUrlTransfer();
+            $localizedUrl->setLocale($localeTransfer);
+            $localizedUrl->setUrl($url);
+
+            $productUrlTransfer->addUrl($localizedUrl);
         }
+
+        return $productUrlTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributes
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */
-    public function generateProductUrl(LocalizedAttributesTransfer $localizedAttributes, $idProductAbstract)
+    protected function generateUrlByLocale(ProductAbstractTransfer $productAbstract, LocaleTransfer $localeTransfer)
     {
-        $productName = $this->slugify($localizedAttributes->getName());
+        $productName = $this->slugify(
+            $this->productManager->getLocalizedProductAbstractName($productAbstract, $localeTransfer)
+        );
 
-        return '/' . mb_substr($localizedAttributes->getLocale()->getLocaleName(), 0, 2) . '/' . $productName . '-' . $idProductAbstract;
+        return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstract->getIdProductAbstract();
     }
 
     /**
@@ -77,4 +92,5 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
 
         return $value;
     }
+
 }
