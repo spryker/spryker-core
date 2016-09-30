@@ -8,6 +8,8 @@
 namespace Spryker\Zed\FactFinder\Business\Api;
 
 use FACTFinder\Loader as FF;
+use FACTFinder\Util\Parameters;
+use Generated\Shared\Transfer\FactFinderSearchRequestTransfer;
 use Spryker\Zed\FactFinder\FactFinderConfig;
 
 class FactFinderConnector
@@ -17,6 +19,11 @@ class FactFinderConnector
      * @var \FACTFinder\Util\Pimple
      */
     protected $dic;
+
+    /**
+     * @var \FACTFinder\Util\Parameters
+     */
+    protected $requestParameters = null;
 
     /**
      * @var \Spryker\Zed\FactFinder\FactFinderConfig
@@ -242,9 +249,65 @@ class FactFinderConnector
     }
 
     /**
+     * @return \FACTFinder\Util\Parameters
+     */
+    public function getRequestParameters()
+    {
+        return $this->requestParameters;
+    }
+
+    /**
+     * @param \FACTFinder\Util\Parameters $requestParameters
+     */
+    public function setRequestParameters($requestParameters)
+    {
+        $this->requestParameters = $requestParameters;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FactFinderSearchRequestTransfer $searchRequestTransfer
+     *
+     * @return \FACTFinder\Util\Parameters
+     */
+    public function createRequestParametersFromSearchRequestTransfer(FactFinderSearchRequestTransfer $searchRequestTransfer)
+    {
+        $config = $this->factFinderConfig->getFFConfiguration();
+        $parameters = [];
+        $parameters['channel'] = $config['channel'];
+        $parameters['query'] = $searchRequestTransfer->getQuery();
+        $parameters['page'] = $searchRequestTransfer->getPage();
+
+        return FF::getInstance(
+            'Util\Parameters',
+            $parameters
+        );
+    }
+
+    /**
+     * @return \FACTFinder\Util\Parameters
+     */
+    public function createRequestParametersFromRequestParser()
+    {
+        return $this->dic['requestParser']->getRequestParameters();
+    }
+
+    /**
+     * @param \FACTFinder\Util\Parameters $parameters
+     *
      * @return \FACTFinder\Data\SearchParameters
      */
-    public function getSearchParameters()
+    public function createSearchParameters(Parameters $parameters)
+    {
+        return FF::getInstance(
+            'Data\SearchParameters',
+            $parameters
+        );
+    }
+
+    /**
+     * @return \FACTFinder\Data\SearchParameters
+     */
+    public function createSearchParametersFromRequestParser()
     {
         return FF::getInstance(
             'Data\SearchParameters',
@@ -289,6 +352,8 @@ class FactFinderConnector
     {
         return FF::getClassName('Data\ArticleNumberSearchStatus');
     }
+
+
 
 //    /**
 //     * @return \FACTFinder\Util\Log4PhpLogger
@@ -343,7 +408,7 @@ class FactFinderConnector
                 'Core\Server\MultiCurlRequestFactory',
                 $c['loggerClass'],
                 $c['configuration'],
-                $c['requestParser']->getRequestParameters()
+                $this->getRequestParameters()
             );
         };
 
