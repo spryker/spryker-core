@@ -103,7 +103,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedPriceRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->getMoneyPlugin());
+        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->createMoneyPlugin());
     }
 
     /**
@@ -144,7 +144,7 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * @return \Spryker\Shared\Money\Plugin\MoneyPluginInterface
      */
-    protected function getMoneyPlugin()
+    protected function createMoneyPlugin()
     {
         return new MoneyPlugin();
     }

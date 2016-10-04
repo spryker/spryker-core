@@ -32,8 +32,7 @@ class AttributeTranslationForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this
-            ->addAttributeNameTranslationField($builder);
+        $this->addAttributeNameTranslationField($builder);
     }
 
     /**

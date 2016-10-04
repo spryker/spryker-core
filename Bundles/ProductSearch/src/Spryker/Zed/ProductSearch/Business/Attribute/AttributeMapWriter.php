@@ -51,18 +51,15 @@ class AttributeMapWriter implements AttributeMapWriterInterface
         $productSearchPreferencesTransfer->requireKey();
 
         $productAttributeKeyTransfer = $this->findOrCreateProductAttributeKey($productSearchPreferencesTransfer);
-        $productSearchPreferencesTransfer->setIdProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
+        $idProductAttributeKey = $productAttributeKeyTransfer->getIdProductAttributeKey();
+        $productSearchPreferencesTransfer->setIdProductAttributeKey($idProductAttributeKey);
 
         $this->productSearchQueryContainer
             ->getConnection()
             ->beginTransaction();
 
         try {
-            $this
-                ->addFullText($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey())
-                ->addFullTextBoosted($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey())
-                ->addSuggestionTerms($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey())
-                ->addCompletionTerms($productSearchPreferencesTransfer, $productAttributeKeyTransfer->getIdProductAttributeKey());
+            $this->buildProductSearchPreferencesTransfer($productSearchPreferencesTransfer, $idProductAttributeKey);
 
             $this->productSearchQueryContainer
                 ->getConnection()
@@ -96,11 +93,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
         try {
             $this->cleanProductSearchAttributeMap($idProductAttributeKey);
 
-            $this
-                ->addFullText($productSearchPreferencesTransfer, $idProductAttributeKey)
-                ->addFullTextBoosted($productSearchPreferencesTransfer, $idProductAttributeKey)
-                ->addSuggestionTerms($productSearchPreferencesTransfer, $idProductAttributeKey)
-                ->addCompletionTerms($productSearchPreferencesTransfer, $idProductAttributeKey);
+            $this->buildProductSearchPreferencesTransfer($productSearchPreferencesTransfer, $idProductAttributeKey);
 
             $this->productSearchQueryContainer
                 ->getConnection()
@@ -114,6 +107,21 @@ class AttributeMapWriter implements AttributeMapWriterInterface
         }
 
         return $productSearchPreferencesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
+     * @param int $idProductAttributeKey
+     *
+     * @return void
+     */
+    protected function buildProductSearchPreferencesTransfer(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
+    {
+        $this
+            ->addFullText($productSearchPreferencesTransfer, $idProductAttributeKey)
+            ->addFullTextBoosted($productSearchPreferencesTransfer, $idProductAttributeKey)
+            ->addSuggestionTerms($productSearchPreferencesTransfer, $idProductAttributeKey)
+            ->addCompletionTerms($productSearchPreferencesTransfer, $idProductAttributeKey);
     }
 
     /**

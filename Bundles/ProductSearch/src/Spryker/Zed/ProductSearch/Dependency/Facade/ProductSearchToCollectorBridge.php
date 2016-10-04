@@ -20,7 +20,7 @@ class ProductSearchToCollectorBridge implements ProductSearchToCollectorInterfac
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
+     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
     protected $collectorFacade;
 

@@ -20,7 +20,6 @@ class FilterPreferencesController extends AbstractController
 {
 
     const PARAM_ID = 'id';
-    const PARAM_SEARCH_TEXT = 'q';
     const PARAM_TERM = 'term';
 
     /**
@@ -75,7 +74,8 @@ class FilterPreferencesController extends AbstractController
             $this->getFacade()->touchProductSearchConfigExtension();
 
             return $this->redirectResponse(sprintf(
-                '/product-search/filter-preferences/view?id=%d',
+                '/product-search/filter-preferences/view?%s=%d',
+                static::PARAM_ID,
                 $productSearchAttributeTransfer->getIdProductSearchAttribute()
             ));
         }
@@ -116,7 +116,8 @@ class FilterPreferencesController extends AbstractController
             $this->getFacade()->touchProductSearchConfigExtension();
 
             return $this->redirectResponse(sprintf(
-                '/product-search/filter-preferences/view?id=%d',
+                '/product-search/filter-preferences/view?%s=%d',
+                static::PARAM_ID,
                 $productSearchAttributeTransfer->getIdProductSearchAttribute()
             ));
         }

@@ -63,7 +63,7 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      */
     protected function createPriceRangeExtractor(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new PriceRangeExtractor($facetConfigTransfer, $this->getMoneyPlugin());
+        return new PriceRangeExtractor($facetConfigTransfer, $this->createMoneyPlugin());
     }
 
     /**
@@ -89,7 +89,7 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @return \Spryker\Shared\Money\Plugin\MoneyPluginInterface
      */
-    protected function getMoneyPlugin()
+    protected function createMoneyPlugin()
     {
         return new MoneyPlugin();
     }
