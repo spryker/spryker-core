@@ -193,9 +193,4 @@ class SearchFactory extends AbstractFactory
         return $this->getProvidedDependency(SearchDependencyProvider::STORE);
     }
 
-    public function createCurrencyManager()
-    {
-        
-    }
-
 }
