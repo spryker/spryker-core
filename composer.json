@@ -337,12 +337,15 @@
       "Spryker\\Zed\\ProductCartConnector\\": "Bundles/ProductCartConnector/src",
       "Unit\\Spryker\\Zed\\ProductCartConnector\\": "Bundles/ProductCartConnector/tests",
       "Functional\\Spryker\\Zed\\ProductCartConnector\\": "Bundles/ProductCartConnector/tests",
+
       "Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/src",
       "Unit\\Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/src",
       "Unit\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
+      "Acceptance\\ProductCategory\\": "Bundles/ProductCategory/tests",
+
       "Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/src",
       "Unit\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
       "Functional\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
