@@ -145,6 +145,8 @@ class ProductUrlManager implements ProductUrlManagerInterface
      */
     public function deleteProductUrl(ProductAbstractTransfer $productAbstract)
     {
+        $this->touchProductUrlDeleted($productAbstract);
+
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstract->requireIdProductAbstract()->getIdProductAbstract(),
@@ -153,8 +155,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
 
             $this->urlFacade->deleteUrl($urlTransfer);
         }
-
-        $this->touchProductUrlDeleted($productAbstract);
     }
 
     /**
