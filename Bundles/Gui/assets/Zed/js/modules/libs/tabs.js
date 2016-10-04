@@ -2,19 +2,49 @@
 
 // TODO: add support for multi-tab navigation hash handling (e.g "/#tab1=tab-content-foo&tab2=tab-content-bar")
 
-function TabsNavigation(selector) {
+function Tabs(selector) {
     this.currentTabPosition = 0;
     this.currentUrlHash = window.location.hash;
     this.tabsContainer = $(selector);
     this.tabUrls = this.tabsContainer.find('li a');
 
+    this.checkErrors();
+    this.setNavigation();
+}
+
+Tabs.prototype.checkErrors = function() {
+    var self = this;
+
+    if (self.tabsContainer.data('autoErrors') !== true) {
+        return;
+    }
+
+    self.tabsContainer.find('.tab-content .tab-pane').each(function(i, tab) {
+        var hasError = $(tab).find('.has-error').length;
+        var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
+
+        if (hasError) {
+            tabHeader.addClass('error');
+        } else {
+            tabHeader.removeClass('error');
+        }
+    });
+};
+
+Tabs.prototype.setNavigation = function() {
+    var self = this;
+
+    if (self.tabsContainer.data('isNavigable') !== true) {
+        return;
+    }
+
     this.checkActivatedTab();
     this.changeTabsOnClick();
     this.showHideNavigationButtons();
     this.listenNavigationButtons();
-}
+};
 
-TabsNavigation.prototype.listenNavigationButtons = function() {
+Tabs.prototype.listenNavigationButtons = function() {
     var self = this;
     self.tabsContainer.find('.btn-tab-previous').on('click', function(event) {
         event.preventDefault();
@@ -42,7 +72,7 @@ TabsNavigation.prototype.listenNavigationButtons = function() {
     });
 };
 
-TabsNavigation.prototype.checkActivatedTab = function() {
+Tabs.prototype.checkActivatedTab = function() {
     var self = this;
     var position = 0;
     var positionChanged = false;
@@ -59,7 +89,7 @@ TabsNavigation.prototype.checkActivatedTab = function() {
     });
 };
 
-TabsNavigation.prototype.changeTabsOnClick = function() {
+Tabs.prototype.changeTabsOnClick = function() {
     var self = this;
     self.tabUrls.on('click', function(event) {
         event.preventDefault();
@@ -84,12 +114,12 @@ TabsNavigation.prototype.changeTabsOnClick = function() {
     });
 };
 
-TabsNavigation.prototype.activateTab = function(element, hash) {
+Tabs.prototype.activateTab = function(element, hash) {
     window.location.hash = hash;
     element.tab('show');
 };
 
-TabsNavigation.prototype.showHideNavigationButtons = function() {
+Tabs.prototype.showHideNavigationButtons = function() {
     var self = this;
 
     if (self.currentTabPosition === 0) {
@@ -104,7 +134,7 @@ TabsNavigation.prototype.showHideNavigationButtons = function() {
     }
 };
 
-TabsNavigation.prototype.navigateElement = function() {
+Tabs.prototype.navigateElement = function() {
     var self = this;
 
     var element = self.tabsContainer.find('li:eq(' + this.currentTabPosition + ') a');
@@ -113,9 +143,9 @@ TabsNavigation.prototype.navigateElement = function() {
     this.proceedChange(element, hash);
 };
 
-TabsNavigation.prototype.proceedChange = function(element, hash) {
+Tabs.prototype.proceedChange = function(element, hash) {
     this.activateTab(element, hash);
     this.checkActivatedTab();
 };
 
-module.exports = TabsNavigation;
+module.exports = Tabs;

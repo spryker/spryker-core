@@ -1,6 +1,12 @@
 {#
   Display collapsible ibox with flags for localized data.
 
+  Parameters:
+    * localeName: (required) A valid locale name (e.g. "en_US", "de_DE", etc.) that will be used as title and to set the region flag.
+    * collapsed: (optional) Set collapse state of the ibox. False by default, i.e. the ibox is expanded by default.
+    * hasError: (optional) Set to "true" to mark the ibox as invalid. False by default.
+    * autoErrors: (optional) Mark the ibox as invalid with javascript if there's any element inside it with "has-error" class. True by default.
+
   Example usage:
 
     {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': 'en_US', 'collapsed': true, 'hasError': true} %}

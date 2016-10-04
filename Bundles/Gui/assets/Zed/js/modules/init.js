@@ -7,8 +7,9 @@
 
 var SprykerAjax = require('./legacy/SprykerAjax');
 var editor = require('ZedGuiEditorConfiguration');
-var TabsNavigation = require('./libs/tabs-navigation');
+var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
+var Ibox = require('./libs/ibox');
 
 $(document).ready(function() {
     // editor
@@ -70,11 +71,14 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
     $('.spryker-form-select2combobox').select2();
 
-    /* Navigable tabs */
-    $('.tabs-container.tabs-navigable').each(function(index, item){
-        new TabsNavigation(item);
+    /* Init tabs */
+    $('.tabs-container').each(function(index, item){
+        new Tabs(item);
     });
 
     /* Init translation copy fields */
     new TranslationCopyFields();
+
+    /* Init iboxes */
+    new Ibox();
 });
