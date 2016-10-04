@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
-{% import _self as forms %}
-{% form_theme form _self %}
+
+{% form_theme form '@ProductManagement/_partials/no-label-checkbox-theme.twig' %}
 
 {% if widget_title is not defined %}
     {% set widget_title = 'Create a Product' | trans %}
@@ -14,72 +14,24 @@
     {% set idProduct = 0 %}
 {% endif %}
 
-{% block head_title -%}
-    {{ widget_title | trans }} {% if idProduct > 0 %} [{{ idProduct }}] {% endif %}
-{%- endblock %}
-
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
     {{ backActionButton('/product-management', 'List Products' | trans) }}
 {% endblock %}
 
-{% if variant_tpl is not defined %}
-    {% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-adding.twig' %}
-{% endif %}
-
-
 {% block content %}
 
     {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Specification' } %}
-
-        {% block widget_content %}
-
-            {{ form_errors(form) }}
-
-            <div class="tabs-container">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
-                    <li class=""><a href="#tab_price_and_stock" data-toggle="tab">Price & Tax</a></li>
-                    <li class=""><a href="#tab_abstract_attributes" data-toggle="tab">Attributes</a></li>
-                    <li class=""><a href="#tab_variants" data-toggle="tab">Variants</a></li>
-                    <li class=""><a href="#tab_seo" data-toggle="tab">SEO</a></li>
-                    <li class=""><a href="#tab_image" data-toggle="tab">Image</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab_general" class="tab-pane active">
-                        {% include '@ProductManagement/Product/_partials/general-tab.twig' %}
-                    </div>
-
-                    <div id="tab_abstract_attributes" class="tab-pane">
-                        {% include '@ProductManagement/Product/_partials/abstract-attribute-tab.twig' %}
-                    </div>
-
-                    <div id="tab_variants" class="tab-pane">
-                        {% include variant_tpl %}
-                    </div>
-
-                    <div id="tab_price_and_stock" class="tab-pane">
-                        {% include '@ProductManagement/Product/_partials/price-tab.twig' %}
-                    </div>
-
-                    <div id="tab_seo" class="tab-pane">
-                        {% include '@ProductManagement/Product/_partials/seo-tab.twig' %}
-                    </div>
-
-                    <div id="tab_image" class="tab-pane">
-                        {% include '@ProductManagement/Product/_partials/image-tab.twig' %}
-                    </div>
-                </div>
-            </div>
-
-        {% endblock %}
-
-    {% endembed %}
-
-    <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
+    {{ tabs(productFormAddTabs, {
+        'form': form,
+        'currentLocale': currentLocale,
+        'concreteProductCollection': concreteProductCollection,
+        'localeCollection': localeCollection,
+        'attributeLocaleCollection': attributeLocaleCollection,
+        'submit_title': submit_title
+    }) }}
 
     {{ form_end(form) }}
 

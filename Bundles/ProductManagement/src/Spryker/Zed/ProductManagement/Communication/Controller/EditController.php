@@ -103,6 +103,7 @@ class EditController extends AddController
             'variantTable' => $variantTable->render(),
             'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
+            'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
         ]);
     }
 
@@ -181,6 +182,7 @@ class EditController extends AddController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
+            'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
         ]);
     }
 

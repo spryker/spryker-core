@@ -67,7 +67,7 @@ class AttributeTranslationForm extends AbstractType
         $this
             ->addIdProductManagementAttributeField($builder)
             ->addAttributeKeyField($builder)
-            ->addAttributeNameTranslationField($builder)
+            ->addAttributeKeyTranslationField($builder)
             ->addTranslateValuesField($builder)
             ->addValueTranslationFields($builder);
     }
@@ -92,7 +92,7 @@ class AttributeTranslationForm extends AbstractType
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_KEY, 'text', [
-            'label' => 'Attribute name',
+            'label' => 'Attribute key',
             'read_only' => true,
             'disabled' => true,
         ]);
@@ -105,7 +105,7 @@ class AttributeTranslationForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeNameTranslationField(FormBuilderInterface $builder)
+    protected function addAttributeKeyTranslationField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_KEY_TRANSLATION, 'text', [
             'label' => 'Translation',

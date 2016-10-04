@@ -208,7 +208,6 @@ class AttributeAbstractForm extends AbstractSubForm
             $isDisabled = true;
         }
 
-        $config['attr']['style'] .= ' width: 250px';
         $config['attr']['data-value'] = null;
 
         if ($isDisabled) {
@@ -232,7 +231,6 @@ class AttributeAbstractForm extends AbstractSubForm
                 $input = new Select2ComboBoxType();
                 $config['multiple'] = false;
                 $config['placeholder'] = '-';
-                $config['attr']['style'] .= ' width: 250px';
                 $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
 
                 if ($allowInput) {

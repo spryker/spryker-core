@@ -1,24 +1,30 @@
-<div class="panel-body">
-    <h3>Add General Information</h3>
-    <p>Below the name and description for your product can be edited for different locales (in different languages).</p>
-
-    <p>
-        <i>Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.</i>
-    </p>
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Add General Information</h3>
+        <p>Below the name and description for your product can be edited for different locales (in different languages).</p>
+        <p><i>Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.</i></p>
+    {% endfilter %}
 </div>
 
-<div class="panel-body second">
-        {{ form_row(form.sku) }}
+{{ form_row(form.sku) }}
 
-        <div class="tabs-container">
-            <div class="tabs-top">
-                {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs.twig' with {
-                formPrefix: 'general',
-                localeCollection: localeCollection,
-                activeLocale: currentLocale,
-                form: form
-                } %}
-                {% endembed %}
-            </div>
-        </div>
-</div>
+{% for localeName in localeCollection %}
+    {% set formKey = 'general_' ~ localeName %}
+
+    {% if form[formKey] is defined %}
+
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first)} %}
+            {% block content %}
+                {% for input in form[formKey] %}
+                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                        {{ form_label(input) }}
+                        {{ form_widget(input, {'attr': {'class': 'name-translation', 'data-translation-key': input.vars.name}}) }}
+                        {{ form_errors(input) }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}
+
+

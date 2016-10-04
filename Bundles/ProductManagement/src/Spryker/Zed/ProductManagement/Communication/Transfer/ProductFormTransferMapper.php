@@ -142,6 +142,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($idProduct);
+        // TODO: fix broken/missing concrete attributes mapping
         $productConcreteTransfer->setAttributes([]);
         $productConcreteTransfer->setSku($sku);
         $productConcreteTransfer->setIsActive(false);

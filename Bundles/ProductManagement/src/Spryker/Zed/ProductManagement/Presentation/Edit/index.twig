@@ -9,6 +9,26 @@
     {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
 {% endblock %}
 
+{% block content %}
+
+    {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+
+        {{ tabs(productFormEditTabs, {
+            'form': form,
+            'currentLocale': currentLocale,
+            'concreteProductCollection': concreteProductCollection,
+            'localeCollection': localeCollection,
+            'attributeLocaleCollection': attributeLocaleCollection,
+            'submit_title': submit_title,
+            'currentProduct': currentProduct,
+            'variantTable': variantTable,
+            'idProduct': null,
+            'idProductAbstract': idProductAbstract,
+        }) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
