@@ -19,7 +19,7 @@ class Environment
 {
 
     /**
-     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead^^
+     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead.
      *
      * @var array
      */
@@ -193,7 +193,7 @@ class Environment
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
      *
-     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead
+     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead.
      *
      * @throws \ErrorException
      *
