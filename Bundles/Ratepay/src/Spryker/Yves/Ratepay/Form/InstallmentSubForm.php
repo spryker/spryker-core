@@ -94,7 +94,7 @@ class InstallmentSubForm extends SubFormAbstract
         $this
             ->addDebitPayType($builder, $options)
             ->addCalculationType($builder, $options)
-            ->addBankAccountHolder($builder)
+//            ->addBankAccountHolder($builder)
             ->addBankAccountBic($builder)
             ->addBankAccountIban($builder)
             ->addAllowedMonth($builder, $options)

@@ -84,10 +84,12 @@ class QuotePaymentRequestMapper extends BaseMapper
             $this->ratepayPaymentRequestTransfer
                 ->setShippingTaxRate($expenses[0]->getTaxRate());
         }
-        if (method_exists($this->paymentData, 'getBankAccountHolder')) {
-            $this->ratepayPaymentRequestTransfer
-                ->setBankAccountHolder($this->paymentData->getBankAccountHolder());
-        }
+//        if (method_exists($this->paymentData, 'getBankAccountHolder')) {
+//            $this->ratepayPaymentRequestTransfer
+//                ->setBankAccountHolder($this->paymentData->getBankAccountHolder());
+//        }
+        $this->ratepayPaymentRequestTransfer
+                ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName());
         if (method_exists($this->paymentData, 'getBankAccountBic')) {
             $this->ratepayPaymentRequestTransfer
                 ->setBankAccountBic($this->paymentData->getBankAccountBic());

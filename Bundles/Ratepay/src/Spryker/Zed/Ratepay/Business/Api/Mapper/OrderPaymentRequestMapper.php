@@ -60,6 +60,11 @@ class OrderPaymentRequestMapper extends BaseMapper
      */
     public function map()
     {
+        $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
+        $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
+        $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
+        $expenses = $this->orderTransfer->getExpenses();
+
         if (
             $this->orderEntity->getSpyPaymentRatepays() &&
             count($this->orderEntity->getSpyPaymentRatepays()->getData())
@@ -75,7 +80,8 @@ class OrderPaymentRequestMapper extends BaseMapper
                 ->setIpAddress($paymentRatepayEntity->getIpAddress())
                 ->setCustomerAllowCreditInquiry($paymentRatepayEntity->getCustomerAllowCreditInquiry())
 
-                ->setBankAccountHolder($paymentRatepayEntity->getBankAccountHolder())
+//                ->setBankAccountHolder($paymentRatepayEntity->getBankAccountHolder())
+                ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName())
                 ->setBankAccountBic($paymentRatepayEntity->getBankAccountBic())
                 ->setBankAccountIban($paymentRatepayEntity->getBankAccountIban())
 
@@ -89,10 +95,7 @@ class OrderPaymentRequestMapper extends BaseMapper
             ;
         }
 
-        $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
-        $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
-        $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
-        $expenses = $this->orderTransfer->getExpenses();
+
 
         $this->ratepayPaymentRequestTransfer
             ->setOrderId($this->orderEntity->getIdSalesOrder())
