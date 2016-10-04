@@ -19,6 +19,8 @@ class Environment
 {
 
     /**
+     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead^^
+     *
      * @var array
      */
     protected static $fatalErrors = [
@@ -191,7 +193,7 @@ class Environment
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
      *
-     * @deprecated Use ErrorHandlerEnvironment instead
+     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead
      *
      * @throws \ErrorException
      *
