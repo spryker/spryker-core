@@ -14,11 +14,9 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
-use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductManagerInterface;
+use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 
 /**
  * @group Unit
@@ -43,9 +41,9 @@ class ProductUrlGeneratorTest extends Test
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $productManager;
+    protected $productAbstractManager;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainer
@@ -53,12 +51,12 @@ class ProductUrlGeneratorTest extends Test
     protected $productQueryContainer;
 
     /**
-     * @var ProductAbstractTransfer
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected $productAbstractTransfer;
 
     /**
-     * @var LocaleTransfer[]
+     * @var \Generated\Shared\Transfer\LocaleTransfer[]
      */
     protected $locales;
 
@@ -75,25 +73,24 @@ class ProductUrlGeneratorTest extends Test
         $this->localeFacade = $this->getMock(ProductToLocaleBridge::class, [], [], '', false);
 
         $availableLocalesCollection = [
-            $this->locales['de_DE']->getIdLocale() => $this->locales['de_DE'],
-            $this->locales['en_US']->getIdLocale() => $this->locales['en_US'],
+            $this->locales['de_DE']->getLocaleName() => $this->locales['de_DE'],
+            $this->locales['en_US']->getLocaleName() => $this->locales['en_US'],
         ];
 
         $this->localeFacade
             ->expects($this->once())
-            ->method('getAvailableLocales')
+            ->method('getLocaleCollection')
             ->willReturn($availableLocalesCollection);
 
+        $this->productAbstractManager = $this->getMock(ProductAbstractManager::class, [], [], '', false);
 
-        $this->productManager = $this->getMock(ProductManager::class, [], [], '', false);
-
-        $this->productManager
+        $this->productAbstractManager
             ->expects($this->at(0))
             ->method('getLocalizedProductAbstractName')
             ->with($this->productAbstractTransfer, $this->locales['de_DE'])
             ->willReturn(self::PRODUCT_NAME['de_DE']);
 
-        $this->productManager
+        $this->productAbstractManager
             ->expects($this->at(1))
             ->method('getLocalizedProductAbstractName')
             ->with($this->productAbstractTransfer, $this->locales['en_US'])
@@ -159,8 +156,8 @@ class ProductUrlGeneratorTest extends Test
                 new ArrayObject([$expectedDEUrl, $expectedENUrl])
             );
 
-        $urlGenerator = new ProductUrlGenerator($this->productManager, $this->localeFacade);
-        $productUrl = $urlGenerator->getProductUrl($this->productAbstractTransfer);
+        $urlGenerator = new ProductUrlGenerator($this->productAbstractManager, $this->localeFacade);
+        $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
 
         $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
         $this->assertEquals($productUrlExpected, $productUrl);

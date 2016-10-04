@@ -15,6 +15,6 @@ interface ProductUrlGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function getProductUrl(ProductAbstractTransfer $productAbstract);
+    public function generateProductUrl(ProductAbstractTransfer $productAbstract);
 
 }

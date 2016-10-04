@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
@@ -39,13 +40,23 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param int $idUrl
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function touchUrlActive($idUrl)
+    public function saveUrl(UrlTransfer $urlTransfer)
     {
-        $this->urlFacade->touchUrlActive($idUrl);
+        return $this->urlFacade->saveUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->deleteUrl($urlTransfer);
     }
 
     /**
@@ -74,8 +85,18 @@ class ProductToUrlBridge implements ProductToUrlInterface
      *
      * @return void
      */
+    public function touchUrlActive($idUrl)
+    {
+        $this->urlFacade->touchUrlActive($idUrl);
+    }
+
+    /**
+     * @param int $idUrl
+     *
+     * @return void
+     */
     public function touchUrlDeleted($idUrl)
     {
-        return $this->urlFacade->touchUrlDeleted($idUrl);
+        $this->urlFacade->touchUrlDeleted($idUrl);
     }
 }

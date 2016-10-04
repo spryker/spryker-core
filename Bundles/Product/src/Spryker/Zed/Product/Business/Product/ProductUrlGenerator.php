@@ -16,9 +16,9 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
      */
-    protected $productManager;
+    protected $productAbstractManager;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
@@ -26,12 +26,12 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductManagerInterface $productManager
+     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      */
-    public function __construct(ProductManagerInterface $productManager, ProductToLocaleInterface $localeFacade)
+    public function __construct(ProductAbstractManagerInterface $productAbstractManager, ProductToLocaleInterface $localeFacade)
     {
-        $this->productManager = $productManager;
+        $this->productAbstractManager = $productAbstractManager;
         $this->localeFacade = $localeFacade;
     }
 
@@ -40,9 +40,9 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function getProductUrl(ProductAbstractTransfer $productAbstract)
+    public function generateProductUrl(ProductAbstractTransfer $productAbstract)
     {
-        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $availableLocales = $this->localeFacade->getLocaleCollection();
 
         $productUrlTransfer = new ProductUrlTransfer();
         $productUrlTransfer->setAbstractSku($productAbstract->getSku());
@@ -69,13 +69,15 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected function generateUrlByLocale(ProductAbstractTransfer $productAbstract, LocaleTransfer $localeTransfer)
     {
         $productName = $this->slugify(
-            $this->productManager->getLocalizedProductAbstractName($productAbstract, $localeTransfer)
+            $this->productAbstractManager->getLocalizedProductAbstractName($productAbstract, $localeTransfer)
         );
 
         return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstract->getIdProductAbstract();
     }
 
     /**
+     * TODO Extract into "Slugifier" class
+     *
      * @param string $value
      *
      * @return string

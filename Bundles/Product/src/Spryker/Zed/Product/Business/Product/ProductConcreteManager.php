@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Exception;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -336,6 +337,36 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->productQueryContainer
+            ->queryProduct()
+            ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
+            ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->attributeManager->getProductNameFromLocalizedAttributes(
+            (array)$productConcreteTransfer->getLocalizedAttributes(),
+            $localeTransfer,
+            $productConcreteTransfer->getSku()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
@@ -447,21 +478,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         }
 
         return $productTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
-     */
-    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->productQueryContainer
-            ->queryProduct()
-            ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
-            ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
-            ->findOne();
     }
 
     /**

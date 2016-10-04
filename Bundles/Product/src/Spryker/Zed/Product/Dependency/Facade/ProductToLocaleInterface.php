@@ -16,9 +16,9 @@ interface ProductToLocaleInterface
     public function getCurrentLocale();
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getAvailableLocales();
+    public function getLocaleCollection();
 
     /**
      * @param string $localeName

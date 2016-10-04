@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
@@ -83,10 +84,15 @@ interface ProductConcreteManagerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    public function findProductEntityByAbstract(
-        ProductAbstractTransfer $productAbstractTransfer,
-        ProductConcreteTransfer $productConcreteTransfer
-    );
+    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * @param int $idProductConcrete

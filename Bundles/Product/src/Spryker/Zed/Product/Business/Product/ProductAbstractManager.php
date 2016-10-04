@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -19,6 +21,9 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
+/**
+ * TODO revisit the url activation and handling
+ */
 class ProductAbstractManager implements ProductAbstractManagerInterface
 {
 
@@ -260,6 +265,69 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         }
 
         return $productConcrete->getSpyProductAbstract()->getSku();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->attributeManager->getProductNameFromLocalizedAttributes(
+            (array)$productAbstractTransfer->getLocalizedAttributes(),
+            $localeTransfer,
+            $productAbstractTransfer->getSku()
+        );
+    }
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributeProcessorByAbstractSku($abstractSku)
+    {
+        $idProductAbstract = (int)$this->getProductAbstractIdBySku($abstractSku);
+
+        return $this->getProductAttributeProcessor($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductActive($idProductAbstract)
+    {
+        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_URL, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductAbstract)
+    {
+        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_URL, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract)
+    {
+        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_URL, $idProductAbstract);
     }
 
     /**

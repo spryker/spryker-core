@@ -60,8 +60,6 @@
 
     <transfer name="ProductUrl">
         <property name="abstractSku" type="string" />
-        <property name="hostYves" type="string" />
-        <property name="hostZed" type="string" />
         <property name="urls" type="LocalizedUrl[]" singular="url" />
     </transfer>
 

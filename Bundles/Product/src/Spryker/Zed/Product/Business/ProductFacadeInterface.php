@@ -287,35 +287,38 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createProductUrl($sku, $url, LocaleTransfer $locale);
+    public function createProductUrl(ProductAbstractTransfer $productAbstract);
 
     /**
      * @api
      *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
+    public function updateProductUrl(ProductAbstractTransfer $productAbstract);
 
     /**
      * @api
      *
-     * @param int $idProductAbstract
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
+    public function getProductUrl(ProductAbstractTransfer $productAbstract);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function deleteProductUrl(ProductAbstractTransfer $productAbstract);
 
     /**
      * @api
@@ -329,13 +332,6 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function createAndTouchProductUrls($idProductAbstract);
-
-    /**
      * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
@@ -390,6 +386,5 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
-
 
 }

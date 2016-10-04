@@ -23,6 +23,8 @@ class UrlManager implements UrlManagerInterface
 
     const ITEM_TYPE_URL = 'url';
 
+    const PRODUCT_ABSTRACT = 'product_abstract';  //TODO get from product bundle
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -417,7 +419,12 @@ class UrlManager implements UrlManagerInterface
 
         $urlTransfer = new UrlTransfer();
         if ($urlEntity) {
-            $urlTransfer->fromArray($urlEntity->toArray(), true);
+            $urlTransfer = $this->convertUrlEntityToTransfer($urlEntity);
+        } else {
+            $urlTransfer->setFkProductAbstract($idProductAbstract);
+            $urlTransfer->setFkLocale($idLocale);
+            $urlTransfer->setResourceId($idProductAbstract);
+            $urlTransfer->setResourceType(self::PRODUCT_ABSTRACT);
         }
 
         return $urlTransfer;

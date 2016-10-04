@@ -197,6 +197,24 @@ class AttributeManager implements AttributeManagerInterface
     }
 
     /**
+     * @param array $localizedAttributeCollection
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $default
+     *
+     * @return string|null
+     */
+    public function getProductNameFromLocalizedAttributes(array $localizedAttributeCollection, LocaleTransfer $localeTransfer, $default = null)
+    {
+        foreach ($localizedAttributeCollection as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+                return $localizedAttribute->getName();
+            }
+        }
+
+        return $default;
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
