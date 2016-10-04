@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\SpyTouch;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
@@ -29,6 +32,7 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -53,6 +57,17 @@ class ProductUrlManagerTest extends Test
      */
     protected $locales;
 
+
+    /**
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     */
+    protected $productQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
+     */
+    protected $touchQueryContainer;
+
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -72,16 +87,10 @@ class ProductUrlManagerTest extends Test
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
-
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
     protected $priceFacade;
-
-    /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainer
-     */
-    protected $productQueryContainer;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface
@@ -107,6 +116,7 @@ class ProductUrlManagerTest extends Test
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
         $this->productQueryContainer = new ProductQueryContainer();
+        $this->touchQueryContainer = new TouchQueryContainer();
 
         $attributeManager = new AttributeManager(
             $this->productQueryContainer
@@ -261,6 +271,93 @@ class ProductUrlManagerTest extends Test
             );
 
             $this->assertNull($urlTransfer->getIdUrl());
+        }
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @expectedExceptionMessage Tried to create url /en/product-name-enus-1, but it already exists
+     *
+     * @return void
+     */
+    public function testCreateUrlShouldThrowExceptionWhenUrlExists()
+    {
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateUrlShouldNotThrowExceptionWhenUrlExistsForSameProduct()
+    {
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @expectedExceptionMessage Tried to create url /en/product-name-enus-1, but it already exists
+     *
+     * @return void
+     */
+    public function testProductUrlShouldBeUnique()
+    {
+        $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteProductUrlCanBeExecutedWhenUrlDoesNotExist()
+    {
+        $productUrl = $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
+    }
+
+    public function testTouchProductActiveShouldTouchLogic()
+    {
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->touchProductUrlActive($this->productAbstractTransfer);
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+                $this->productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
+                $localeTransfer->getIdLocale()
+            );
+
+            $touchEntity = $this->touchQueryContainer
+                ->queryTouchEntry('url', $urlTransfer->getResourceId())
+                ->findOne();
+
+            $this->assertNotNull($touchEntity);
+            $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $touchEntity->getItemId());
+            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $touchEntity->getItemEvent());
+            $this->assertEquals('url', $touchEntity->getItemType());
+        }
+    }
+
+    public function testTouchProductDeletedShouldTouchLogic()
+    {
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->touchProductUrlDeleted($this->productAbstractTransfer);
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+                $this->productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
+                $localeTransfer->getIdLocale()
+            );
+
+            /* @var SpyTouch $expectedTouchEntity */
+            $expectedTouchEntity = SpyTouchQuery::create()
+                ->filterByItemType('url')
+                ->filterByItemId($urlTransfer->getIdUrl())
+                ->findOne();
+
+            $this->assertNotNull($expectedTouchEntity);
+            $this->assertEquals($urlTransfer->getIdUrl(), $expectedTouchEntity->getItemId());
+            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $expectedTouchEntity->getItemEvent());
+            $this->assertEquals('url', $expectedTouchEntity->getItemType());
         }
     }
 

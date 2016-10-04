@@ -47,4 +47,11 @@ interface ProductUrlManagerInterface
      */
     public function touchProductUrlActive(ProductAbstractTransfer $productAbstract);
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return void
+     */
+    public function touchProductUrlDeleted(ProductAbstractTransfer $productAbstract);
+
 }
