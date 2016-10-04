@@ -17,13 +17,13 @@
 
     <h5>{{ 'form.ratepayElv.bank_account' | trans }}</h5>
 
-    <div class="small-12 columns">
-        <label>
-            {{ 'form.ratepayElv.bank_account.holder' | trans }}*
-            {{ form_widget(form.ratepayElv.bank_account_holder, { 'attr': {'placeholder': 'payment.ratepay.bank_account.holder' | trans } }) }}
-        </label>
-        {{ form_errors(form.ratepayElv.bank_account_holder) }}
-    </div>
+    {#<div class="small-12 columns">#}
+        {#<label>#}
+            {#{{ 'form.ratepayElv.bank_account.holder' | trans }}*#}
+            {#{{ form_widget(form.ratepayElv.bank_account_holder, { 'attr': {'placeholder': 'payment.ratepay.bank_account.holder' | trans } }) }}#}
+        {#</label>#}
+        {#{{ form_errors(form.ratepayElv.bank_account_holder) }}#}
+    {#</div>#}
 
     <div class="small-12 columns">
         <label>
