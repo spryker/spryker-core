@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -57,7 +56,6 @@ class ProductUrlManagerTest extends Test
      */
     protected $locales;
 
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -87,6 +85,7 @@ class ProductUrlManagerTest extends Test
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
+
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
@@ -229,8 +228,8 @@ class ProductUrlManagerTest extends Test
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
         $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
-        $this->assertUrlTransferEN($expectedENUrl);
-        $this->assertUrlTransferDE($expectedDEUrl);
+        $this->assertUrlTransfer($expectedENUrl, $this->locales['en_US']);
+        $this->assertUrlTransfer($expectedDEUrl, $this->locales['de_DE']);
     }
 
     /**
@@ -252,8 +251,8 @@ class ProductUrlManagerTest extends Test
         $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
 
         $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
-        $this->assertUrlTransferEN($expectedENUrl);
-        $this->assertUrlTransferDE($expectedDEUrl);
+        $this->assertUrlTransfer($expectedENUrl, $this->locales['en_US']);
+        $this->assertUrlTransfer($expectedDEUrl, $this->locales['de_DE']);
     }
 
     /**
@@ -326,14 +325,12 @@ class ProductUrlManagerTest extends Test
                 $localeTransfer->getIdLocale()
             );
 
-            $touchEntity = $this->touchQueryContainer
-                ->queryTouchEntry('url', $urlTransfer->getResourceId())
-                ->findOne();
+            $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
-            $this->assertNotNull($touchEntity);
-            $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $touchEntity->getItemId());
-            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $touchEntity->getItemEvent());
-            $this->assertEquals('url', $touchEntity->getItemType());
+            $this->assertNotNull($activeTouchEntity);
+            $this->assertEquals($urlTransfer->getIdUrl(), $activeTouchEntity->getItemId());
+            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $activeTouchEntity->getItemEvent());
+            $this->assertEquals('url', $activeTouchEntity->getItemType());
         }
     }
 
@@ -348,16 +345,12 @@ class ProductUrlManagerTest extends Test
                 $localeTransfer->getIdLocale()
             );
 
-            /* @var SpyTouch $expectedTouchEntity */
-            $expectedTouchEntity = SpyTouchQuery::create()
-                ->filterByItemType('url')
-                ->filterByItemId($urlTransfer->getIdUrl())
-                ->findOne();
+            $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
-            $this->assertNotNull($expectedTouchEntity);
-            $this->assertEquals($urlTransfer->getIdUrl(), $expectedTouchEntity->getItemId());
-            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $expectedTouchEntity->getItemEvent());
-            $this->assertEquals('url', $expectedTouchEntity->getItemType());
+            $this->assertNotNull($deletedTouchEntity);
+            $this->assertEquals($urlTransfer->getIdUrl(), $deletedTouchEntity->getItemId());
+            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $deletedTouchEntity->getItemEvent());
+            $this->assertEquals('url', $deletedTouchEntity->getItemType());
         }
     }
 
@@ -370,17 +363,18 @@ class ProductUrlManagerTest extends Test
      */
     protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedENUrl, LocalizedUrlTransfer $expectedDEUrl)
     {
+        $urlCollection = new ArrayObject([$expectedENUrl, $expectedDEUrl]);
+
         $productUrlExpected = (new ProductUrlTransfer())
             ->setAbstractSku(
                 $this->productAbstractTransfer->getSku()
             )
             ->setUrls(
-                new ArrayObject([$expectedENUrl, $expectedDEUrl])
+                $urlCollection
             );
 
         $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
-        $this->assertEquals($productUrlExpected->getUrls()[0], $expectedENUrl);
-        $this->assertEquals($productUrlExpected->getUrls()[1], $expectedDEUrl);
+        $this->assertEquals($urlCollection, $productUrlExpected->getUrls());
     }
 
     /**
@@ -388,39 +382,32 @@ class ProductUrlManagerTest extends Test
      *
      * @return void
      */
-    protected function assertUrlTransferEN(LocalizedUrlTransfer $expectedUrl)
+    protected function assertUrlTransfer(LocalizedUrlTransfer $expectedUrl, LocaleTransfer $expectedLocale)
     {
-        $urlENTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+        $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
             $this->productAbstractTransfer->getIdProductAbstract(),
-            $this->locales['en_US']->getIdLocale()
+            $expectedLocale->getIdLocale()
         );
 
-        $this->assertEquals($expectedUrl->getUrl(), $urlENTransfer->getUrl());
-        $this->assertEquals($expectedUrl->getLocale()->getIdLocale(), $urlENTransfer->getFkLocale());
+        $this->assertEquals($expectedUrl->getUrl(), $urlTransfer->getUrl());
+        $this->assertEquals($expectedUrl->getLocale()->getIdLocale(), $urlTransfer->getFkLocale());
 
-        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $urlENTransfer->getFkProductAbstract());
-        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $urlENTransfer->getResourceId());
-        $this->assertEquals(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $urlENTransfer->getResourceType());
+        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $urlTransfer->getFkProductAbstract());
+        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $urlTransfer->getResourceId());
+        $this->assertEquals(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $urlTransfer->getResourceType());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedUrl
+     * @param int $idUrl
      *
-     * @return void
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
-    protected function assertUrlTransferDE(LocalizedUrlTransfer $expectedUrl)
+    protected function getProductUrlTouchEntry($idUrl)
     {
-        $urlDETransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-            $this->productAbstractTransfer->getIdProductAbstract(),
-            $this->locales['de_DE']->getIdLocale()
-        );
-
-        $this->assertEquals($expectedUrl->getUrl(), $urlDETransfer->getUrl());
-        $this->assertEquals($expectedUrl->getLocale()->getIdLocale(), $urlDETransfer->getFkLocale());
-
-        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $urlDETransfer->getFkProductAbstract());
-        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $urlDETransfer->getResourceId());
-        $this->assertEquals(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $urlDETransfer->getResourceType());
+        return SpyTouchQuery::create()
+            ->filterByItemType('url')
+            ->filterByItemId($idUrl)
+            ->findOne();
     }
 
 }
