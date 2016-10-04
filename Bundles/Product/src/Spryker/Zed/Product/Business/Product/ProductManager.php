@@ -8,10 +8,6 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
@@ -23,16 +19,6 @@ class ProductManager implements ProductManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    protected $attributeManager;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
      */
     protected $productAbstractManager;
@@ -42,32 +28,14 @@ class ProductManager implements ProductManagerInterface
      */
     protected $productConcreteManager;
 
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
-     */
-    protected $touchManager;
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductUrlManager
-     */
-    protected $urlManager;
-
     public function __construct(
-        AttributeManagerInterface $attributeManager,
         ProductAbstractManagerInterface $productAbstractManager,
         ProductConcreteManagerInterface $productConcreteManager,
-        ProductQueryContainerInterface $productQueryContainer,
-        ProductToTouchInterface $touchFacade,
-        ProductToUrlInterface $urlFacade,
-        ProductToLocaleInterface $localeFacade
+        ProductQueryContainerInterface $productQueryContainer
     ) {
-        $this->attributeManager = $attributeManager;
         $this->productAbstractManager = $productAbstractManager;
         $this->productConcreteManager = $productConcreteManager;
-        $this->productQueryContainer = $productQueryContainer; //TODO replace it with just connection instance, or move the logic into separate class
-        $this->touchFacade = $touchFacade;
-        $this->urlFacade = $urlFacade;
-        $this->localeFacade = $localeFacade;
+        $this->productQueryContainer = $productQueryContainer;
     }
 
     /**
