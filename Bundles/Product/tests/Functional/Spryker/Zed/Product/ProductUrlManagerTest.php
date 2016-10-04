@@ -247,6 +247,24 @@ class ProductUrlManagerTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteProductUrlShouldDeleteUrlForProductAbstract()
+    {
+        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+                $this->productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
+                $localeTransfer->getIdLocale()
+            );
+
+            $this->assertNull($urlTransfer->getIdUrl());
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductUrlTransfer $productUrl
      * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedENUrl
      * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedDEUrl
