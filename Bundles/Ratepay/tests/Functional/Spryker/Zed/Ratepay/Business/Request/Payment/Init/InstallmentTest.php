@@ -56,7 +56,7 @@ class InstallmentTest extends InstallmentAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->initPayment($this->quoteTransfer);
+        return $facade->initPayment($this->mockRatepayPaymentInitTransfer());
     }
 
 }

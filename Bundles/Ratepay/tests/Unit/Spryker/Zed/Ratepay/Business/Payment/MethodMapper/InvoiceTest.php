@@ -60,7 +60,7 @@ class InvoiceTest extends AbstractMethodMapperTest
         $ratepayPaymentEntity
             ->setResultCode(503)
             ->setDateOfBirth('11.11.1991')
-            ->setCurrencyIso3('EUR')
+            ->setCurrencyIso3('iso3')
             ->setCustomerAllowCreditInquiry(true)
             ->setGender('M')
             ->setPhone('123456789')
@@ -78,7 +78,7 @@ class InvoiceTest extends AbstractMethodMapperTest
      */
     protected function testPaymentSpecificRequestData($request)
     {
-        $this->assertEquals('INVOICE', $this->requestTransfer->getPayment()->getMethod());
+        $this->assertEquals('invoice', $this->requestTransfer->getPayment()->getMethod());
 
         $this->assertNull($this->requestTransfer->getPayment()->getInstallmentDetails());
         $this->assertNull($this->requestTransfer->getPayment()->getDebitPayType());

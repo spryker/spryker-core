@@ -130,7 +130,7 @@ class QuotePaymentRequestMapper extends BaseMapper
                 ->setInstallmentPaymentFirstDay($this->paymentData->getInstallmentPaymentFirstDay());
         }
 
-        $basketItems = $this->quoteTransfer->requireItems()->getItems();
+        $basketItems = $this->quoteTransfer->getItems();
         $grouppedItems = [];
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
