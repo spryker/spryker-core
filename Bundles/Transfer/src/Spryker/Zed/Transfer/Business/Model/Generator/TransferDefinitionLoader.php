@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Zend\Config\Factory;
+use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -35,14 +36,9 @@ class TransferDefinitionLoader implements LoaderInterface
     private $transferDefinitions = [];
 
     /**
-     * @var \Zend\Filter\Word\UnderscoreToCamelCase
+     * @var \Zend\Filter\FilterChain
      */
-    private static $filterUnderscoreToCamelCase;
-
-    /**
-     * @var \Zend\Filter\Word\CamelCaseToUnderscore
-     */
-    private static $filterCamelCaseToUnderscore;
+    private static $filter;
 
     /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
@@ -148,25 +144,34 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         $name = $transfer['name'];
 
-        if (self::$filterCamelCaseToUnderscore === null) {
-            self::$filterCamelCaseToUnderscore = new CamelCaseToUnderscore();
-        }
-        if (self::$filterUnderscoreToCamelCase === null) {
-            self::$filterUnderscoreToCamelCase = new UnderscoreToCamelCase();
-        }
-        $filterCamelCaseToUnderscore = self::$filterCamelCaseToUnderscore;
-        $filterUnderscoreToCamelCase = self::$filterUnderscoreToCamelCase;
+        $filteredName = $this->getFilter()->filter($name);
 
-        $compareWith = $filterUnderscoreToCamelCase($filterCamelCaseToUnderscore($name));
-
-        if ($name !== $compareWith) {
+        if ($name !== $filteredName) {
             throw new \InvalidArgumentException(
-                sprintf('Transfer name `%s` does not match expected name `%s` for bundle `%s`',
-                $name,
-                $compareWith,
-                $bundle
-            ));
+                sprintf(
+                    'Transfer name `%s` does not match expected name `%s` for bundle `%s`',
+                    $name,
+                    $filteredName,
+                    $bundle
+                )
+            );
         }
+    }
+
+    /**
+     * @return \Zend\Filter\FilterChain
+     */
+    private function getFilter()
+    {
+        if (self::$filter === null) {
+            $filter = new FilterChain();
+            $filter->attach(new CamelCaseToUnderscore());
+            $filter->attach(new UnderscoreToCamelCase());
+
+            self::$filter = $filter;
+        }
+
+        return self::$filter;
     }
 
 }
