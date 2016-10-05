@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Zend\Config\Factory;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
@@ -34,8 +35,18 @@ class TransferDefinitionLoader implements LoaderInterface
     private $transferDefinitions = [];
 
     /**
+     * @var \Zend\Filter\Word\UnderscoreToCamelCase
+     */
+    private static $filterUnderscoreToCamelCase;
+
+    /**
+     * @var \Zend\Filter\Word\CamelCaseToUnderscore
+     */
+    private static $filterCamelCaseToUnderscore;
+
+    /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer $normalizer
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface $normalizer
      */
     public function __construct(FinderInterface $finder, DefinitionNormalizerInterface $normalizer)
     {
@@ -108,6 +119,8 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
+                $this->assertCasing($transfer);
+
                 $transfer[self::KEY_BUNDLE] = $bundle;
                 $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
 
@@ -115,9 +128,38 @@ class TransferDefinitionLoader implements LoaderInterface
             }
         } else {
             $transfer = $definition[self::KEY_TRANSFER];
+            $this->assertCasing($transfer);
+
             $transfer[self::KEY_BUNDLE] = $bundle;
             $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $this->transferDefinitions[] = $transfer;
+        }
+    }
+
+    /**
+     * @param array $transfer
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    private function assertCasing(array $transfer)
+    {
+        $name = $transfer['name'];
+
+        if (self::$filterCamelCaseToUnderscore === null) {
+            self::$filterCamelCaseToUnderscore = new CamelCaseToUnderscore();
+        }
+        if (self::$filterUnderscoreToCamelCase === null) {
+            self::$filterUnderscoreToCamelCase = new UnderscoreToCamelCase();
+        }
+        $filterCamelCaseToUnderscore = self::$filterCamelCaseToUnderscore;
+        $filterUnderscoreToCamelCase = self::$filterUnderscoreToCamelCase;
+
+        $compareWith = $filterUnderscoreToCamelCase($filterCamelCaseToUnderscore($name));
+
+        if ($name !== $compareWith) {
+            throw new \InvalidArgumentException(sprintf('Transfer name `%s` does not match expected name `%s`', $name, $compareWith));
         }
     }
 

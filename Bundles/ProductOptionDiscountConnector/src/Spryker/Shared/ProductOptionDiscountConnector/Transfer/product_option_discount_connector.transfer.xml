@@ -48,7 +48,7 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
-    <transfer name="calculatedDiscount">
+    <transfer name="CalculatedDiscount">
         <property name="voucherCode" type="string"/>
         <property name="unitGrossAmount" type="int" />
         <property name="sumGrossAmount" type="int" />
