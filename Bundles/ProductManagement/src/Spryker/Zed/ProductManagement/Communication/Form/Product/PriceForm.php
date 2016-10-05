@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,17 +21,19 @@ class PriceForm extends AbstractType
     const FIELD_PRICE = 'price';
     const FIELD_TAX_RATE = 'tax_rate';
 
-    /**
-     * @var array
-     */
-    protected $taxCollection;
+    const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
 
     /**
-     * @param array $taxCollection
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
      */
-    public function __construct(array $taxCollection)
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
+     */
+    public function __construct(ProductManagementToMoneyInterface $moneyFacade)
     {
-        $this->taxCollection = $taxCollection;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -48,6 +52,10 @@ class PriceForm extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired([
+            static::OPTION_TAX_RATE_CHOICES,
+        ]);
 
         $resolver->setDefaults([
             'required' => false,
@@ -80,6 +88,15 @@ class PriceForm extends AbstractType
             'required' => true,
         ]);
 
+        $builder->get(self::FIELD_PRICE)->addModelTransformer(new CallbackTransformer(
+            function ($originalPrice) {
+                return $this->moneyFacade->convertIntegerToDecimal((int)$originalPrice);
+            },
+            function ($submittedPrice) {
+                return $this->moneyFacade->convertDecimalToInteger((float)$submittedPrice);
+            }
+        ));
+
         return $this;
     }
 
@@ -93,7 +110,7 @@ class PriceForm extends AbstractType
         $builder->add(self::FIELD_TAX_RATE, new Select2ComboBoxType(), [
             'label' => 'Tax Set',
             'required' => true,
-            'choices' => $this->taxCollection,
+            'choices' => $options[static::OPTION_TAX_RATE_CHOICES],
             'placeholder' => '-',
             'constraints' => [
                 new NotBlank(),

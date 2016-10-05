@@ -19,6 +19,7 @@
     "spryker/library": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/messenger": "^2.0.0",
+    "spryker/money": "^1.0.0",
     "spryker/product": "^2.0.0",
     "spryker/product-category": "^2.0.0",
     "spryker/product-option": "^2.0.0",

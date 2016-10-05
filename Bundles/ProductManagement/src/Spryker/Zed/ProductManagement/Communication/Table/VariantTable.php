@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class VariantTable extends AbstractTable
+class VariantTable extends AbstractProductTable
 {
 
     const TABLE_IDENTIFIER = 'product-variant-table';
@@ -22,9 +24,8 @@ class VariantTable extends AbstractTable
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_ID_PRODUCT = 'id_product';
     const COL_SKU = 'sku';
-    const COL_STOCK = 'stock';
+    const COL_NAME = 'name';
     const COL_STATUS = 'status';
-
     const COL_ACTIONS = 'actions';
 
     /**
@@ -38,13 +39,20 @@ class VariantTable extends AbstractTable
     protected $idProductAbstract;
 
     /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    private $localeTransfer;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer, $idProductAbstract)
+    public function __construct(ProductQueryContainerInterface $productQueryContainer, $idProductAbstract, LocaleTransfer $localeTransfer)
     {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->idProductAbstract = $idProductAbstract;
+        $this->localeTransfer = $localeTransfer;
         $this->defaultUrl = sprintf('variantTable?%s=%d', EditController::PARAM_ID_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
@@ -59,7 +67,7 @@ class VariantTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PRODUCT => 'Product ID',
             static::COL_SKU => 'Sku',
-            static::COL_STOCK => 'Stock',
+            static::COL_NAME => 'Name',
             static::COL_STATUS => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
@@ -71,12 +79,13 @@ class VariantTable extends AbstractTable
 
         $config->setSearchable([
             SpyProductTableMap::COL_SKU,
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
         ]);
 
         $config->setSortable([
-            SpyProductTableMap::COL_ID_PRODUCT,
-            SpyProductTableMap::COL_SKU,
-            SpyProductTableMap::COL_IS_ACTIVE,
+            static::COL_ID_PRODUCT,
+            static::COL_SKU,
+            static::COL_NAME,
         ]);
 
         return $config;
@@ -93,57 +102,45 @@ class VariantTable extends AbstractTable
             ->productQueryQueryContainer
             ->queryProduct()
             ->innerJoinSpyProductAbstract()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale($this->localeTransfer->getIdLocale())
+            ->endUse()
             ->filterByFkProductAbstract($this->idProductAbstract)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-            ->withColumn(SpyProductTableMap::COL_SKU, static::COL_SKU)
-            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, static::COL_STATUS);
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_NAME);
 
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($query, $config, true);
 
         $productAbstractCollection = [];
-        foreach ($queryResults as $itemData) {
-            $productAbstractCollection[] = $this->generateItem($itemData);
+        foreach ($queryResults as $productEntity) {
+            $productAbstractCollection[] = $this->generateItem($productEntity);
         }
 
         return $productAbstractCollection;
     }
 
     /**
-     * @param array $item
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
      * @return array
      */
-    protected function generateItem(array $item)
+    protected function generateItem(SpyProduct $productEntity)
     {
         return [
-            static::COL_ID_PRODUCT => $item[SpyProductTableMap::COL_ID_PRODUCT],
-            static::COL_SKU => $item[static::COL_SKU],
-            static::COL_STOCK => 'Stock',
-            static::COL_STATUS => $this->getStatusLabel($item[SpyProductTableMap::COL_IS_ACTIVE]),
-            static::COL_ACTIONS => implode(' ', $this->createActionColumn($item)),
+            static::COL_ID_PRODUCT => $productEntity->getIdProduct(),
+            static::COL_SKU => $productEntity->getSku(),
+            static::COL_NAME => $productEntity->getVirtualColumn(static::COL_NAME),
+            static::COL_STATUS => $this->getStatusLabel($productEntity->getIsActive()),
+            static::COL_ACTIONS => implode(' ', $this->createActionColumn($productEntity)),
         ];
     }
 
     /**
-     * @param string $status
-     *
-     * @return string
-     */
-    protected function getStatusLabel($status)
-    {
-        if (!$status) {
-            return '<span class="label">Inactive</span>';
-        }
-
-        return '<span class="label-info">Active</span>';
-    }
-
-    /**
-     * @param array $item
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
      * @return array
      */
-    protected function createActionColumn(array $item)
+    protected function createActionColumn(SpyProduct $productEntity)
     {
         $urls = [];
 
@@ -151,20 +148,20 @@ class VariantTable extends AbstractTable
             sprintf(
                 '/product-management/view/variant?%s=%d&%s=%d',
                 EditController::PARAM_ID_PRODUCT,
-                $item[SpyProductTableMap::COL_ID_PRODUCT],
+                $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
-                $item[static::COL_ID_PRODUCT_ABSTRACT]
+                $productEntity->getFkProductAbstract()
             ),
             'View'
         );
 
-        $urls[] = $this->generateViewButton(
+        $urls[] = $this->generateEditButton(
             sprintf(
                 '/product-management/edit/variant?%s=%d&%s=%d',
                 EditController::PARAM_ID_PRODUCT,
-                $item[SpyProductTableMap::COL_ID_PRODUCT],
+                $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
-                $item[static::COL_ID_PRODUCT_ABSTRACT]
+                $productEntity->getFkProductAbstract()
             ),
             'Edit'
         );

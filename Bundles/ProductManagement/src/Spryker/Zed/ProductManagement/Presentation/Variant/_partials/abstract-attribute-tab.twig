@@ -1,6 +1,8 @@
 <div class="well">
-    <h3>Configurable Product Attributes</h3>
-    <p>Select attributes and corresponding values.</p>
+    {% filter trans|raw %}
+        <h3>Configurable Product Attributes</h3>
+        <p>Select attributes and corresponding values.</p>
+    {% endfilter %}
 </div>
 
 {% for localeName in attributeLocaleCollection %}

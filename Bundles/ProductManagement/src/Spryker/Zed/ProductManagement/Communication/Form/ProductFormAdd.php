@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -76,19 +77,27 @@ class ProductFormAdd extends AbstractType
     protected $productManagementQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      */
     public function __construct(
         LocaleProvider $localeProvider,
         ProductQueryContainerInterface $productQueryContainer,
-        ProductManagementQueryContainerInterface $productManagementQueryContainer
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
+        ProductManagementToMoneyInterface $moneyFacade
     ) {
 
         $this->localeProvider = $localeProvider;
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -157,7 +166,7 @@ class ProductFormAdd extends AbstractType
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
-            ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
+            ->addPriceForm($builder, $options)
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder);
     }
@@ -443,7 +452,7 @@ class ProductFormAdd extends AbstractType
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_PRICE_AND_TAX, new PriceForm($options), [
+            ->add(self::FORM_PRICE_AND_TAX, new PriceForm($this->moneyFacade), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -457,8 +466,9 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
-                ])]
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
+                ])],
+                PriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
             ]);
 
         return $this;
