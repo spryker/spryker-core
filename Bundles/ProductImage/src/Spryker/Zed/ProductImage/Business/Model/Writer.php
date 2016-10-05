@@ -216,7 +216,9 @@ class Writer implements WriterInterface
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
             $imageSetTransfer->setIdProductAbstract(
-                $productAbstractTransfer->getIdProductAbstract()
+                $productAbstractTransfer
+                    ->requireIdProductAbstract()
+                    ->getIdProductAbstract()
             );
 
             $this->createProductImageSet($imageSetTransfer);
@@ -262,7 +264,9 @@ class Writer implements WriterInterface
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
             $imageSetTransfer->setIdProduct(
-                $productConcreteTransfer->getIdProductConcrete()
+                $productConcreteTransfer
+                    ->requireIdProductConcrete()
+                    ->getIdProductConcrete()
             );
 
             $this->createProductImageSet($imageSetTransfer);
