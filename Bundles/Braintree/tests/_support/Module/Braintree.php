@@ -25,6 +25,14 @@ class Braintree extends Module
     /**
      * @return void
      */
+    public function _afterSuite()
+    {
+        $this->removeBraintreeFromConfig();
+    }
+
+    /**
+     * @return void
+     */
     protected function addBraintreeToConfig()
     {
         $configLocalTest = $this->getPathToConfigLocalTest();
@@ -43,17 +51,13 @@ class Braintree extends Module
     /**
      * @return void
      */
-    public function _afterSuite()
-    {
-        $this->removeBraintreeFromConfig();
-    }
-
-    /**
-     * @return void
-     */
     protected function removeBraintreeFromConfig()
     {
-        unlink($this->getPathToConfigLocalTest());
+        $configFile = $this->getPathToConfigLocalTest();
+
+        if (file_exists($configFile)) {
+            unlink($configFile);
+        }
     }
 
 }

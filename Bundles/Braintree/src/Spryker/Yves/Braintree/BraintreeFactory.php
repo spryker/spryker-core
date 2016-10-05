@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Braintree;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Braintree\Form\CreditCardSubForm;
 use Spryker\Yves\Braintree\Form\DataProvider\CreditCardDataProvider;
 use Spryker\Yves\Braintree\Form\DataProvider\PayPalDataProvider;
@@ -58,15 +57,15 @@ class BraintreeFactory extends AbstractFactory
      */
     public function createBraintreeHandler()
     {
-        return new BraintreeHandler($this->getClient(), $this->getCurrencyManager());
+        return new BraintreeHandler($this->getClient(), $this->getCurrencyPlugin());
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface
      */
-    protected function getCurrencyManager()
+    protected function getCurrencyPlugin()
     {
-        return CurrencyManager::getInstance();
+        return $this->getProvidedDependency(BraintreeDependencyProvider::PLUGIN_CURRENCY);
     }
 
 }

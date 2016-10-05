@@ -7,12 +7,12 @@
 
 namespace Functional\Spryker\Zed\Braintree\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Braintree\Result\Successful;
+use Braintree\Transaction;
+use Braintree\Transaction\StatusDetails;
+use DateTime;
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
-use Spryker\Zed\Braintree\Business\BraintreeFacade;
-use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
+use Spryker\Zed\Braintree\Business\Payment\Transaction\CaptureTransaction;
 
 /**
  * @group Functional
@@ -30,12 +30,13 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
      */
     public function testCapturePaymentWithSuccessResponse()
     {
-        $orderTransfer = $this->createOrderTransfer();
+        $factoryMock = $this->getFactoryMock(['createCaptureTransaction']);
+        $factoryMock->method('createCaptureTransaction')->willReturn(
+            $this->getCaptureTransactionMock()
+        );
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
+        $response = $braintreeFacade->capturePayment($this->getTransactionMetaTransfer());
 
-        $idPayment = $this->getPaymentEntity()->getIdPaymentBraintree();
-        $facade = $this->getFacadeMockCapture($orderTransfer);
-
-        $response = $facade->capturePayment($orderTransfer, $idPayment);
         $this->assertTrue($response->getIsSuccess());
     }
 
@@ -44,87 +45,67 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
      */
     public function testCapturePaymentWithFailureResponse()
     {
-        $orderTransfer = $this->createOrderTransfer();
+        $factoryMock = $this->getFactoryMock(['createCaptureTransaction']);
+        $factoryMock->method('createCaptureTransaction')->willReturn(
+            $this->getCaptureTransactionMock(false)
+        );
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
+        $response = $braintreeFacade->capturePayment($this->getTransactionMetaTransfer());
 
-        $idPayment = $this->getPaymentEntity()->getIdPaymentBraintree();
-        $facade = $this->getFacadeMockCaptureFail($orderTransfer);
-
-        $response = $facade->capturePayment($orderTransfer, $idPayment);
         $this->assertFalse($response->getIsSuccess());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param bool $success
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\Payment\Transaction\CaptureTransaction
      */
-    private function getFacadeMockCapture(OrderTransfer $orderTransfer)
+    protected function getCaptureTransactionMock($success = true)
     {
-        $facade = new BraintreeFacade();
+        $captureTransactionMock = $this
+            ->getMockBuilder(CaptureTransaction::class)
+            ->setMethods(['capture', 'initializeBraintree'])
+            ->setConstructorArgs(
+                [new BraintreeConfig()]
+            )
+            ->getMock();
 
-        $factoryMock = $this->getMock(BraintreeBusinessFactory::class, ['createPaymentTransactionHandler']);
+        if ($success) {
+            $captureTransactionMock->method('capture')->willReturn(
+                $this->getSuccessResponse()
+            );
+        } else {
+            $captureTransactionMock->method('capture')->willReturn(
+                $this->getErrorResponse()
+            );
+        }
 
-        $queryContainer = new BraintreeQueryContainer();
-        $config = new BraintreeConfig();
-        $transactionMock = $this->getMock(Transaction::class, ['capture'], [$queryContainer, $config]);
+        return $captureTransactionMock;
+    }
 
-        $factoryMock->expects($this->once())
-            ->method('createPaymentTransactionHandler')
-            ->willReturn($transactionMock);
-
-        $response = new \Braintree\Result\Successful();
-        $response->transaction = \Braintree\Transaction::factory([
+    /**
+     * @return \Braintree\Result\Successful
+     */
+    protected function getSuccessResponse()
+    {
+        $transaction = Transaction::factory([
+            'id' => 123,
             'processorResponseCode' => 1000,
             'processorResponseText' => 'Approved',
-            'createdAt' => new \DateTime(),
+            'createdAt' => new DateTime(),
             'status' => 'settling',
             'type' => 'sale',
-            'amount' => $orderTransfer->getTotals()->getGrandTotal() / 100,
+            'amount' => $this->createOrderTransfer()->getTotals()->getGrandTotal() / 100,
             'merchantAccountId' => 'abc',
-            'statusHistory' => new \Braintree\Transaction\StatusDetails([
-                'timestamp' => new \DateTime(),
+            'statusHistory' => new StatusDetails([
+                'timestamp' => new DateTime(),
                 'status' => 'settling'
             ])
         ]);
 
-        $transactionMock->expects($this->once())
-            ->method('capture')
-            ->willReturn($response);
+        $response = new Successful([$transaction]);
 
-        $facade->setFactory($factoryMock);
-
-        return $facade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
-     */
-    private function getFacadeMockCaptureFail(OrderTransfer $orderTransfer)
-    {
-        $facade = new BraintreeFacade();
-
-        $factoryMock = $this->getMock(BraintreeBusinessFactory::class, ['createPaymentTransactionHandler']);
-
-        $queryContainer = new BraintreeQueryContainer();
-        $config = new BraintreeConfig();
-        $transactionMock = $this->getMock(Transaction::class, ['capture'], [$queryContainer, $config]);
-
-        $factoryMock->expects($this->once())
-            ->method('createPaymentTransactionHandler')
-            ->willReturn($transactionMock);
-
-        $response = new \Braintree\Result\Error(['errors' => []]);
-        $response->message = 'Error';
-
-        $transactionMock->expects($this->once())
-            ->method('capture')
-            ->willReturn($response);
-
-        $facade->setFactory($factoryMock);
-
-        return $facade;
+        return $response;
     }
 
 }

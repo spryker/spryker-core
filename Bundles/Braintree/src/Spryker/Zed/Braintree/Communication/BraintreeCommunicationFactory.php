@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Braintree\Communication;
 
-use Spryker\Zed\Braintree\BraintreeDependencyProvider;
 use Spryker\Zed\Braintree\Communication\Table\Payments;
 use Spryker\Zed\Braintree\Communication\Table\RequestLog;
 use Spryker\Zed\Braintree\Communication\Table\StatusLog;
@@ -52,14 +51,6 @@ class BraintreeCommunicationFactory extends AbstractCommunicationFactory
         $statusLogQuery = $this->getQueryContainer()->queryTransactionStatusLogByPaymentId($idPayment);
 
         return new StatusLog($statusLogQuery, $idPayment);
-    }
-
-    /**
-     * @return \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToSalesAggregatorInterface
-     */
-    public function getSalesAggregator()
-    {
-        return $this->getProvidedDependency(BraintreeDependencyProvider::FACADE_SALES_AGGREGATOR);
     }
 
 }

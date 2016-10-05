@@ -40,7 +40,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
         $this->setUpAuthorizationTestData();
 
         $orderTransfer = $this->createOrderTransfer();
-        $facade = $this->getFacade();
+        $facade = $this->getBraintreeFacade();
         $response = $facade->isAuthorizationApproved($orderTransfer);
         $this->assertTrue($response);
     }
@@ -53,7 +53,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
         $this->setUpCaptureTestData();
 
         $orderTransfer = $this->createOrderTransfer();
-        $facade = $this->getFacade();
+        $facade = $this->getBraintreeFacade();
         $response = $facade->isCaptureApproved($orderTransfer);
         $this->assertTrue($response);
     }
@@ -66,7 +66,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
         $this->setUpReversalTestData();
 
         $orderTransfer = $this->createOrderTransfer();
-        $facade = $this->getFacade();
+        $facade = $this->getBraintreeFacade();
         $response = $facade->isReversalApproved($orderTransfer);
         $this->assertTrue($response);
     }
@@ -79,7 +79,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
         $this->setUpRefundTestData();
 
         $orderTransfer = $this->createOrderTransfer();
-        $facade = $this->getFacade();
+        $facade = $this->getBraintreeFacade();
         $response = $facade->isRefundApproved($orderTransfer);
         $this->assertTrue($response);
     }
@@ -87,7 +87,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
     /**
      * @return void
      */
-    private function setUpAuthorizationTestData()
+    protected function setUpAuthorizationTestData()
     {
         $this->transactionRequestLogEntity = (new SpyPaymentBraintreeTransactionRequestLog())
             ->setFkPaymentBraintree($this->paymentEntity->getIdPaymentBraintree())
@@ -111,7 +111,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
     /**
      * @return void
      */
-    private function setUpCaptureTestData()
+    protected function setUpCaptureTestData()
     {
         $this->transactionRequestLogEntity = (new SpyPaymentBraintreeTransactionRequestLog())
             ->setFkPaymentBraintree($this->paymentEntity->getIdPaymentBraintree())
@@ -135,7 +135,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
     /**
      * @return void
      */
-    private function setUpReversalTestData()
+    protected function setUpReversalTestData()
     {
         $this->transactionRequestLogEntity = (new SpyPaymentBraintreeTransactionRequestLog())
             ->setFkPaymentBraintree($this->paymentEntity->getIdPaymentBraintree())
@@ -159,7 +159,7 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
     /**
      * @return void
      */
-    private function setUpRefundTestData()
+    protected function setUpRefundTestData()
     {
         $this->transactionRequestLogEntity = (new SpyPaymentBraintreeTransactionRequestLog())
             ->setFkPaymentBraintree($this->paymentEntity->getIdPaymentBraintree())
