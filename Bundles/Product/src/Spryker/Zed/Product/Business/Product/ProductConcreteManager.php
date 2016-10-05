@@ -127,6 +127,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
         $sku = $productConcreteTransfer->getSku();
         $this->productConcreteAssertion->assertSkuUnique($sku);
 
