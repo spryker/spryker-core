@@ -333,7 +333,7 @@ class ProductManagerTest extends Test
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param int $idProductAbstracts
      *
      * @return void
      */
@@ -372,9 +372,9 @@ class ProductManagerTest extends Test
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductAbstracts
      *
-     * @return voidz
+     * @return void
      */
     protected function assertAddProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
