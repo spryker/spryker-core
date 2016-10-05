@@ -52,4 +52,14 @@ interface ErrorHandlerConstants
      */
     const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVEL_LOG_ONLY';
 
+    /**
+     * Specification:
+     * - Path to the project on local machine e.g. `/Users/foo/www/spryker/project`
+     * - This is used to replace the path from server (/data/shop/development/current) with the user path.
+     * - Enables file opening in PhpStorm.
+     *
+     * @api
+     */
+    const USER_BASE_PATH = 'USER_BASE_PATH';
+
 }

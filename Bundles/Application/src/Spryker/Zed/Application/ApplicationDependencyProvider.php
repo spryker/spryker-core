@@ -12,6 +12,8 @@ use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
+use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
+use Spryker\Shared\Library\Environment;
 use Spryker\Shared\Url\UrlBuilder;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
@@ -84,6 +86,10 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new SubRequestServiceProvider(),
             new HeadersSecurityServiceProvider(),
         ];
+
+        if (Environment::isDevelopment()) {
+            $providers[] = new WhoopsErrorHandlerServiceProvider();
+        }
 
         return $providers;
     }
