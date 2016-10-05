@@ -57,13 +57,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductManager()
     {
         return new ProductManager(
-            $this->createAttributeManager(),
             $this->createProductAbstractManager(),
             $this->createProductConcreteManager(),
-            $this->getQueryContainer(),
-            $this->getTouchFacade(),
-            $this->getUrlFacade(),
-            $this->getLocaleFacade()
+            $this->getQueryContainer()
         );
     }
 
