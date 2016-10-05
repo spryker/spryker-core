@@ -42,7 +42,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
-            ->addPriceForm($builder, $options[self::OPTION_TAX_RATES])
+            ->addPriceForm($builder, $options)
             ->addStockForm($builder)
             ->addImageLocalizedForms($builder);
     }
@@ -98,7 +98,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_PRICE_AND_TAX, new ConcretePriceForm($options), [
+            ->add(self::FORM_PRICE_AND_TAX, new ConcretePriceForm($this->moneyFacade), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -109,7 +109,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         },
                     ],
                     'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
-                ])]
+                ])],
+                ConcretePriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
             ]);
 
         return $this;

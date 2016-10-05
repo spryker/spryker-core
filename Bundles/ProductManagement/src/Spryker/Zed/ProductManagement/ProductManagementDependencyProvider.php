@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
@@ -33,12 +34,12 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     const FACADE_STOCK = 'FACADE_STOCK';
+    const FACADE_MONEY = 'FACADE_MONEY';
 
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -151,6 +152,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_STOCK] = function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
+        };
+
+        $container[self::FACADE_MONEY] = function (Container $container) {
+            return new ProductManagementToMoneyBridge($container->getLocator()->money()->facade());
         };
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {

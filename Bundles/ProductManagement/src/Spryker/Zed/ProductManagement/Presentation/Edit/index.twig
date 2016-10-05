@@ -1,8 +1,11 @@
 {% extends '@ProductManagement/Add/index.twig' %}
 {% set submit_title = 'Save' | trans %}
-{% set widget_title = 'Product Edit' | trans %}
-{% set widget_title = widget_title ~ ': ' ~ currentProduct.sku %}
+{% set widget_title = ('Edit Product Abstract' | trans) ~ ': ' ~ currentProduct.sku %}
 {% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-editing.twig' %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
 
 {% block action %}
     {{ parent() }}

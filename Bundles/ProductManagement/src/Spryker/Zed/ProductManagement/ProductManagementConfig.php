@@ -38,4 +38,12 @@ class ProductManagementConfig extends AbstractBundleConfig
         return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
     }
 
+    /**
+     * @return string
+     */
+    public function getHostYves()
+    {
+        return $this->get(ProductManagementConstants::PRODUCT_MANAGEMENT_URL_PREFIX);
+    }
+
 }

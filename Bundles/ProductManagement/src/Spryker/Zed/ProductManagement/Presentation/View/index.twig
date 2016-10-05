@@ -1,34 +1,33 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'View Product' | trans %}
+    {% set widget_title = ('View Product Abstract' | trans) ~ ': ' ~ currentProduct.sku %}
 {% endif %}
 
 {% if submit_title is not defined %}
     {% set submit_title = 'Save' | trans %}
 {% endif %}
 
-{% if idProduct is not defined %}
-    {% set idProduct = 0 %}
+{% if idProductAbstract is not defined %}
+    {% set idProductAbstract = 0 %}
 {% endif %}
 
 {% block head_title -%}
-    {{ widget_title | trans }} {% if idProduct > 0 %} [{{ idProduct }}] {% endif %}
+    {{ widget_title }}
 {%- endblock %}
 
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton('/product-management', 'List Products' | trans) }}
+    {{ backActionButton(url('/product-management'), 'List Products' | trans) }}
+    {{ editActionButton(url('/product-management/edit', {'id-product-abstract': idProductAbstract}), 'Edit' | trans) }}
 {% endblock %}
-
 
 {% block content %}
 
     {% include '@ProductManagement/View/_partials/info-general.twig' %}
     {% include '@ProductManagement/View/_partials/info-price-tax.twig' %}
     {% include '@ProductManagement/View/_partials/info-attribute.twig' %}
-    {% include '@ProductManagement/View/_partials/info-category.twig' %}
     {% include '@ProductManagement/View/_partials/info-seo.twig' %}
     {% include '@ProductManagement/View/_partials/info-image.twig' %}
     {% include '@ProductManagement/View/_partials/info-variant.twig' %}

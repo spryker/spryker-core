@@ -123,7 +123,7 @@ class ViewController extends AddController
             'currentProduct' => $productTransfer->toArray(),
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
-            'idProduct' => null,
+            'idProduct' => $productTransfer->getIdProductConcrete(),
             'idProductAbstract' => $idProductAbstract,
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,

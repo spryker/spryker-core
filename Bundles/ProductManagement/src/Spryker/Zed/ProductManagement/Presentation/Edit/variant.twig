@@ -3,21 +3,16 @@
 {% form_theme form '@ProductManagement/_partials/no-label-checkbox-theme.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Product Concrete Edit' | trans %}
+    {% set widget_title = ('Edit Product Concrete' | trans) ~ ': ' ~ currentProduct.sku %}
 {% endif %}
 
 {% if submit_title is not defined %}
     {% set submit_title = 'Save' | trans %}
 {% endif %}
 
-{% if idProduct is not defined %}
-    {% set idProduct = 0 %}
-{% endif %}
-
 {% block head_title -%}
-    {{ widget_title | trans }} {% if idProduct > 0 %} [{{ idProduct }}] {% endif %}
+    {{ widget_title | trans }}ó
 {%- endblock %}
-{% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
     {{ backActionButton('/product-management', 'List Products' | trans) }}

@@ -53,7 +53,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         $formType = new ProductFormAdd(
             $this->createLocaleProvider(),
             $this->getProductQueryContainer(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getMoneyFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -70,7 +71,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         $formType = new ProductFormEdit(
             $this->createLocaleProvider(),
             $this->getProductQueryContainer(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getMoneyFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -87,7 +89,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         $formType = new ProductConcreteFormEdit(
             $this->createLocaleProvider(),
             $this->getProductQueryContainer(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getMoneyFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -446,15 +449,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductTable()
     {
-        return new ProductTable($this->getProductQueryContainer());
+        return new ProductTable($this->getProductQueryContainer(), $this->getLocaleFacade()->getCurrentLocale());
     }
 
     /**
+     * @param int $idProductAbstract
+     *
      * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
      */
     public function createVariantTable($idProductAbstract)
     {
-        return new VariantTable($this->getProductQueryContainer(), $idProductAbstract);
+        return new VariantTable(
+            $this->getProductQueryContainer(),
+            $idProductAbstract,
+            $this->getLocaleFacade()->getCurrentLocale()
+        );
     }
 
     /**
@@ -487,6 +496,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductConcreteFormEditTabs()
     {
         return new ProductConcreteFormEditTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_MONEY);
     }
 
 }
