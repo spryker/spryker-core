@@ -14,6 +14,8 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * TODO check if this can be removed
+ *
  * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
