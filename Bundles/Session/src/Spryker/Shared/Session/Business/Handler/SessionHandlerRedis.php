@@ -110,7 +110,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
         $result = $this->connection->setex($key, $this->lifetime, json_encode($sessionData));
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
-        return $result ? true : true;
+        return true;
     }
 
     /**
