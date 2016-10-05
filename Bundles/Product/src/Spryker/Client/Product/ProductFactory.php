@@ -8,8 +8,12 @@
 namespace Spryker\Client\Product;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
-use Spryker\Client\Product\Storage\ProductStorage;
+use Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder;
+use Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder;
+use Spryker\Client\Product\KeyBuilder\ProductAbstractResourceKeyBuilder;
+use Spryker\Client\Product\Storage\AttributeMapStorage;
+use Spryker\Client\Product\Storage\ProductConcreteStorage;
+use Spryker\Client\Product\Storage\ProductAbstractStorage;
 
 class ProductFactory extends AbstractFactory
 {
@@ -17,15 +21,59 @@ class ProductFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return \Spryker\Client\Product\Storage\ProductStorageInterface
+     * @return \Spryker\Client\Product\Storage\ProductAbstractStorageInterface
      */
-    public function createProductStorage($locale)
+    public function createProductAbstractStorage($locale)
     {
-        return new ProductStorage(
+        return new ProductAbstractStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
             $locale
         );
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return \Spryker\Client\Product\Storage\AttributeMapStorage
+     */
+    public function createAttributeMapStorage($locale)
+    {
+        return new AttributeMapStorage(
+            $this->getStorage(),
+            $this->createAttributeMapKeyBuilder(),
+            $locale
+        );
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return \Spryker\Client\Product\Storage\ProductConcreteStorage
+     */
+    public function createProductConcreteStorage($locale)
+    {
+        return new ProductConcreteStorage(
+            $this->getStorage(),
+            $this->createProductConcreteKeyBuilder(),
+            $locale
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder
+     */
+    protected function createAttributeMapKeyBuilder()
+    {
+        return new AttributeMapResourceKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder
+     */
+    protected function createProductConcreteKeyBuilder()
+    {
+        return new ProductConcreteResourceKeyBuilder();
     }
 
     /**
@@ -41,7 +89,7 @@ class ProductFactory extends AbstractFactory
      */
     protected function createKeyBuilder()
     {
-        return new ProductResourceKeyBuilder();
+        return new ProductAbstractResourceKeyBuilder();
     }
 
     /**

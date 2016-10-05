@@ -10,7 +10,7 @@ namespace Spryker\Client\Product\KeyBuilder;
 use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 use Spryker\Shared\Product\ProductConstants;
 
-class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
+class ProductAbstractResourceKeyBuilder extends SharedResourceKeyBuilder
 {
 
     /**

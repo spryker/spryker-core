@@ -16,26 +16,14 @@ interface ProductAbstractInterface
     /**
      * @return array
      */
-    public function getAbstractAttributes();
+    public function getAttributes();
 
     /**
      * @param array $attributes
      *
      * @return void
      */
-    public function setAbstractAttributes(array $attributes);
-
-    /**
-     * @return array
-     */
-    public function getProductConcreteCollection();
-
-    /**
-     * @param array $products
-     *
-     * @return void
-     */
-    public function setProductConcreteCollection(array $products);
+    public function setAttributes(array $attributes);
 
     /**
      * @return bool
@@ -52,14 +40,14 @@ interface ProductAbstractInterface
     /**
      * @return string
      */
-    public function getAbstractSku();
+    public function getSku();
 
     /**
      * @param string $sku
      *
      * @return void
      */
-    public function setAbstractSku($sku);
+    public function setSku($sku);
 
     /**
      * @return string
@@ -72,5 +60,25 @@ interface ProductAbstractInterface
      * @return void
      */
     public function setName($name);
+
+    /**
+     * @return array
+     */
+    public function getId();
+
+    /**
+     * @param array $id
+     */
+    public function setId($id);
+
+    /**
+     * @return int
+     */
+    public function getPrice();
+
+    /**
+     * @param int $price
+     */
+    public function setPrice($price);
 
 }

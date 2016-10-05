@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,23 +6,22 @@
 
 namespace Spryker\Client\Product\Storage;
 
-class ProductStorage implements ProductStorageInterface
+class AttributeMapStorage implements AttributeMapStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storage;
+    protected $storage;
 
     /**
      * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @var string
      */
-    private $locale;
+    protected $locale;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
@@ -40,14 +38,13 @@ class ProductStorage implements ProductStorageInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return mixed
+     * @return array
      */
-    public function getProductAbstractFromStorageById($idProductAbstract)
+    public function getAttributeMapByIdProductAbstract($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
-        $product = $this->storage->get($key);
+        $attributes = $this->storage->get($key);
 
-        return $product;
+        return $attributes;
     }
-
 }
