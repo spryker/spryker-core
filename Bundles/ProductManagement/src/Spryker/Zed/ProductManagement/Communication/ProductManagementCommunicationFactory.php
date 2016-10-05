@@ -35,8 +35,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Product\Business\Product\VariantGenerator;
 
 /**
- * @TODO Move attribute and form methods into separate factories
- *
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()

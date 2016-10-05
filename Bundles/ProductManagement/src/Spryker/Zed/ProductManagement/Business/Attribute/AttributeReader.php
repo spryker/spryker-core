@@ -121,7 +121,6 @@ class AttributeReader implements AttributeReaderInterface
      */
     protected function updateQuerySearchTextConditions($searchText, SpyProductManagementAttributeValueQuery $query)
     {
-        //TODO double check for injections; if propel is binding values or just appending strings
         $searchText = trim($searchText);
         if ($searchText !== '') {
             $term = '%' . mb_strtoupper($searchText) . '%';

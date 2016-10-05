@@ -707,7 +707,6 @@ class AbstractProductFormDataProvider
         }
 
         $transfer = $this->attributeTransferCollection->get($keyToLocalize);
-        //TODO implement translations
         return $transfer->getKey();
     }
 
