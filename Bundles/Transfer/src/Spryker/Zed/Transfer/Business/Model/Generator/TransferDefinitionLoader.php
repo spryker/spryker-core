@@ -119,7 +119,7 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
-                $this->assertCasing($transfer);
+                $this->assertCasing($transfer, $bundle);
 
                 $transfer[self::KEY_BUNDLE] = $bundle;
                 $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
@@ -128,7 +128,7 @@ class TransferDefinitionLoader implements LoaderInterface
             }
         } else {
             $transfer = $definition[self::KEY_TRANSFER];
-            $this->assertCasing($transfer);
+            $this->assertCasing($transfer, $bundle);
 
             $transfer[self::KEY_BUNDLE] = $bundle;
             $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
@@ -138,12 +138,13 @@ class TransferDefinitionLoader implements LoaderInterface
 
     /**
      * @param array $transfer
+     * @param string $bundle
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    private function assertCasing(array $transfer)
+    private function assertCasing(array $transfer, $bundle)
     {
         $name = $transfer['name'];
 
@@ -159,7 +160,12 @@ class TransferDefinitionLoader implements LoaderInterface
         $compareWith = $filterUnderscoreToCamelCase($filterCamelCaseToUnderscore($name));
 
         if ($name !== $compareWith) {
-            throw new \InvalidArgumentException(sprintf('Transfer name `%s` does not match expected name `%s`', $name, $compareWith));
+            throw new \InvalidArgumentException(
+                sprintf('Transfer name `%s` does not match expected name `%s` for bundle `%s`',
+                $name,
+                $compareWith,
+                $bundle
+            ));
         }
     }
 
