@@ -18,6 +18,8 @@
     <transfer name="FactFinderSearchRequest">
         <property name="query" type="string"/>
         <property name="page" type="string"/>
+        <property name="sortName" type="string"/>
+        <property name="sortPrice" type="string"/>
     </transfer>
 
     <transfer name="FactFinderSearchResponse">

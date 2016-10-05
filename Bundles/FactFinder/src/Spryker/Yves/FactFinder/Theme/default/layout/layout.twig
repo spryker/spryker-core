@@ -30,7 +30,43 @@
     <div class="__page" tabindex="-1">
         <header>
             {% block headerMain %}
-                {% include "@FactFinder/layout/partials/header.twig" %}
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="callout">
+                            <div class="row align-middle align-justify">
+                                <div class="small-7 large-6 columns">
+                                    <a href="/">
+                                        <img src="/assets/default/img/logo.svg" />
+                                    </a>
+                                </div>
+
+                                <div class="large-6 columns show-for-large">
+                                    {% include '@FactFinder/layout/partials/search-form.twig' %}
+                                </div>
+
+                                <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
+                                    {% if app['cart.quantity'] > 0 %}
+                                        <span class="warning badge">{{ app['cart.quantity'] }}</span>
+                                    {% endif %}
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        {% include "@FactFinder/layout/partials/navigation.twig" %}
+
+                        <div class="callout">
+                            <nav role="navigation">
+                                <ul class="breadcrumbs __no-margin-bottom">
+                                    {% block breadcrumbItems %}{% endblock %}
+                                </ul>
+                            </nav>
+                        </div>
+
+                        {% include "@FactFinder/layout/partials/flash-messages.twig" %}
+                    </div>
+                </div>
+
             {% endblock %}
         </header>
 

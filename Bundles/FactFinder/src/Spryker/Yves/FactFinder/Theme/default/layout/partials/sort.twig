@@ -7,10 +7,12 @@
         <div class="small-8 large-5 xlarge-4 columns">
             <label>
                 <select name="sort" class="__no-margin-bottom">
-                    <option value=""></option>
                     {#{% for sortParamName in sort.sortParamNames %}#}
                         {#<option value="{{ sortParamName }}" {% if sortParamName == sort.currentSortParam %}selected{% endif %}>{{ ('catalog.sort.' ~ sortParamName) | trans }}</option>#}
                     {#{% endfor %}#}
+                    {% for sortingItem in searchResponse.sortingItems %}
+                        <option value="{{ sortingItem.url }}" {% if sortingItem.selected %}selected{% endif %}>{{ ('catalog.' ~ sortingItem.label) | trans }}</option>
+                    {% endfor %}
                 </select>
             </label>
         </div>
