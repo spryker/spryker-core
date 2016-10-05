@@ -11,6 +11,7 @@ namespace Spryker\Shared\Library\SystemUnderTest;
 // @todo this has to be refactored with the new test concept
 use Exception;
 use Propel\Runtime\Propel;
+use Pyz\Yves\Application\Plugin\Provider\SessionServiceProvider;
 use Pyz\Yves\Application\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
