@@ -1,24 +1,8 @@
 {
   "name": "spryker/money",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
-    "psr-4": {
-      "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
-      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module"
-    }
-  },
   "require": {
-    "mathiasverraes/money": "~3.0.0-beta2",
-    "spryker/currency": "^0.1.0",
+    "mathiasverraes/money": "~3.0.0-beta3",
+    "spryker/currency": "^0.1.0 || ^1.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/twig": "^2.1.0"
@@ -39,6 +23,22 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module"
+    }
   },
   "repositories": [
     {
