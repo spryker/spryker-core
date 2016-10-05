@@ -1,48 +1,28 @@
-<div class="panel-body">
+<div class="well">
     <h3>Configurable Product Attributes</h3>
     <p>Select attributes and corresponding values.</p>
 </div>
 
-<div class="panel-body second">
-        <div class="tabs-container">
-            <div class="tabs-top">
-                {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
-                formPrefix: 'attribute_abstract',
-                localeCollection: attributeLocaleCollection,
-                activeLocale: 'default',
-                form: form
-                } %}
-                {% endembed %}
+{% for localeName in attributeLocaleCollection %}
+    {% set formKey = 'attribute_abstract_' ~ localeName %}
 
-                {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
-                formPrefix: 'attribute_abstract',
-                localeCollection: attributeLocaleCollection,
-                activeLocale: 'default',
-                form: form
-                } %}
-                    {% block tabContentRow %}
-                        <div class="panel-body">
-                            {% for inputCollection in form[formKey] %}
-                                {% set form_group_errors_css = '' %}
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first)} %}
+            {% block title %}
+                {% if localeName == 'default' %}
+                    {{ 'Default' | trans }}
+                {% else %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
 
-                                {% if inputCollection.value.vars.errors|length %}
-                                    {% set form_group_errors_css = 'has-error' %}
-                                {% endif %}
-
-                                <div class='col-md-10 col-sm-12 col-lg-6'>
-                                    <div class='row vertical-align col-lg-12 attribute_metadata_row'>
-                                        <div class='form-group {{ form_group_errors_css }}'>
-                                            {{ form_label(inputCollection.name) }} {{ form_label(inputCollection.value) }}
-                                            {{ form_widget(inputCollection.name) }} {{ form_widget(inputCollection.value) }}
-                                            {{ form_errors(inputCollection.name) }} {{ form_errors(inputCollection.value) }}
-                                            {{ form_widget(inputCollection.value_hidden_id) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endblock  %}
-                {% endembed %}
-            </div>
-        </div>
-</div>
+            {% block content %}
+                <div class='row'>
+                    {% for inputGroup in form[formKey] %}
+                        {% include '@ProductManagement/Product/_partials/input-group.twig' %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

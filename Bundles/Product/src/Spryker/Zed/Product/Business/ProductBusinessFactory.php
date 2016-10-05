@@ -12,12 +12,12 @@ use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
+use Spryker\Zed\Product\Business\Product\ProductActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
-use Spryker\Zed\Product\Business\Product\ProductVariantBuilder;
+use Spryker\Zed\Product\Business\Product\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\VariantGenerator;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
@@ -57,6 +57,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductManager()
     {
         return new ProductManager(
+            $this->createAttributeManager(),
             $this->createProductAbstractManager(),
             $this->createProductConcreteManager(),
             $this->getQueryContainer(),
@@ -107,13 +108,26 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteActivator
+     * @return \Spryker\Zed\Product\Business\Product\ProductActivator
      */
     public function createProductConcreteActivator()
     {
-        return new ProductConcreteActivator(
-            $this->getQueryContainer(),
-            $this->createProductManager(),
+        return new ProductActivator(
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager(),
+            $this->createProductUrlManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface
+     */
+    public function createProductUrlManager()
+    {
+        return new ProductUrlManager(
+            $this->getUrlFacade(),
+            $this->getTouchFacade(),
+            $this->getLocaleFacade(),
             $this->createProductUrlGenerator()
         );
     }
@@ -123,17 +137,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductUrlGenerator()
     {
-        return new ProductUrlGenerator($this->createProductManager());
-    }
-
-    /**
-     * TODO Remove when ZedProductConcreteTransfer is removed
-     *
-     * @return \Spryker\Zed\Product\Business\Product\ProductVariantBuilder
-     */
-    public function createProductVariantBuilder()
-    {
-         return new ProductVariantBuilder($this->getQueryContainer());
+        return new ProductUrlGenerator(
+            $this->createProductAbstractManager(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**

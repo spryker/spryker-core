@@ -104,7 +104,9 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        $priceTransfer = (new PriceProductTransfer())
+        $priceTransfer = (new PriceProductTransfer());
+        $priceTransfer
+            ->fromArray($priceEntity->toArray(), true)
             ->setIdProductAbstract($idAbstractProduct)
             ->setPrice($priceEntity->getPrice())
             ->setPriceTypeName($priceTypeName);
@@ -134,6 +136,7 @@ class Reader implements ReaderInterface
         }
 
         $priceTransfer = (new PriceProductTransfer())
+            ->fromArray($priceEntity->toArray(), true)
             ->setIdProduct($idProduct)
             ->setPrice($priceEntity->getPrice())
             ->setPriceTypeName($priceTypeName);
@@ -311,7 +314,7 @@ class Reader implements ReaderInterface
     /**
      * @param string|null $priceType
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return string
      */
     public function handleDefaultPriceType($priceType = null)
     {

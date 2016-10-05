@@ -80,7 +80,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productManager = $this->getFactory()->createProductManager();
+        $productManager = $this->getFactory()->createProductAbstractManager();
 
         return $productManager->createProductAbstract($productAbstractTransfer);
     }
@@ -94,7 +94,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function hasProductAbstract($sku)
     {
-        $productManager = $this->getFactory()->createProductManager();
+        $productManager = $this->getFactory()->createProductAbstractManager();
 
         return $productManager->hasProductAbstract($sku);
     }
@@ -109,7 +109,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAbstractIdBySku($sku)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductAbstractManager()
             ->getProductAbstractIdBySku($sku);
     }
 
@@ -129,22 +129,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAbstractById($idProductAbstract)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductAbstractManager()
             ->getProductAbstractById($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function getProductAbstractIdByConcreteSku($sku)
-    {
-        return $this->getFactory()
-            ->createProductManager()
-            ->getProductAbstractIdByConcreteSku($sku);
     }
 
     /**
@@ -157,7 +143,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getAbstractSkuFromProductConcrete($sku)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductAbstractManager()
             ->getAbstractSkuFromProductConcrete($sku);
     }
 
@@ -171,8 +157,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAttributeProcessor($idProductAbstract)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductAbstractManager()
             ->getProductAttributeProcessor($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteSku($sku)
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductAbstractIdByConcreteSku($sku);
     }
 
     /**
@@ -184,9 +184,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        return $productManager->createProductConcrete($productConcreteTransfer);
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->createProductConcrete($productConcreteTransfer);
     }
 
     /**
@@ -198,9 +198,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function hasProductConcrete($sku)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        return $productManager->hasProductConcrete($sku);
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->hasProductConcrete($sku);
     }
 
     /**
@@ -213,7 +213,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductConcreteIdBySku($sku)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductConcreteManager()
             ->getProductConcreteIdBySku($sku);
     }
 
@@ -233,7 +233,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductConcreteById($idProduct)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductConcreteManager()
             ->getProductConcreteById($idProduct);
     }
 
@@ -247,7 +247,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductConcrete($concreteSku)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductConcreteManager()
             ->getProductConcrete($concreteSku);
     }
 
@@ -261,7 +261,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAttributeProcessorByAbstractSku($abstractSku)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductAbstractManager()
             ->getProductAttributeProcessorByAbstractSku($abstractSku);
     }
 
@@ -281,7 +281,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductConcreteManager()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
     }
 
@@ -366,9 +366,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function touchProductActive($idProductAbstract)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        $productManager->touchProductActive($idProductAbstract);
+        $this->getFactory()
+            ->createProductAbstractManager()
+            ->touchProductActive($idProductAbstract);
     }
 
     /**
@@ -382,9 +382,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function touchProductInactive($idProductAbstract)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        $productManager->touchProductInactive($idProductAbstract);
+        $this->getFactory()
+            ->createProductAbstractManager()
+            ->touchProductInactive($idProductAbstract);
     }
 
     /**
@@ -398,9 +398,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function touchProductDeleted($idProductAbstract)
     {
-        $productManager = $this->getFactory()->createProductManager();
-
-        $productManager->touchProductDeleted($idProductAbstract);
+        $this->getFactory()
+            ->createProductAbstractManager()
+            ->touchProductInactive($idProductAbstract);
     }
 
     /**
@@ -412,7 +412,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function touchProductConcreteActive($idProductConcrete)
     {
-        $this->getFactory()->createProductConcreteManager()->touchProductActive($idProductConcrete);
+        $this->getFactory()
+            ->createProductConcreteManager()
+            ->touchProductActive($idProductConcrete);
     }
 
     /**
@@ -424,7 +426,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function touchProductConcreteInactive($idProductConcrete)
     {
-        $this->getFactory()->createProductConcreteManager()->touchProductInactive($idProductConcrete);
+        $this->getFactory()
+            ->createProductConcreteManager()
+            ->touchProductInactive($idProductConcrete);
     }
 
     /**
@@ -436,55 +440,63 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function touchProductConcreteDelete($idProductConcrete)
     {
-        $this->getFactory()->createProductConcreteManager()->touchProductDeleted($idProductConcrete);
+        $this->getFactory()
+            ->createProductConcreteManager()
+            ->touchProductDeleted($idProductConcrete);
     }
 
     /**
      * @api
      *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createProductUrl($sku, $url, LocaleTransfer $locale)
+    public function createProductUrl(ProductAbstractTransfer $productAbstract)
     {
         return $this->getFactory()
-            ->createProductManager()
-            ->createProductUrl($sku, $url, $locale);
+            ->createProductUrlManager()
+            ->createProductUrl($productAbstract);
     }
 
     /**
      * @api
      *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
+    public function updateProductUrl(ProductAbstractTransfer $productAbstract)
     {
         return $this->getFactory()
-            ->createProductManager()
-            ->createAndTouchProductUrl($sku, $url, $locale);
+            ->createProductUrlManager()
+            ->updateProductUrl($productAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function getProductUrl(ProductAbstractTransfer $productAbstract)
+    {
+        return $this->getFactory()
+            ->createProductUrlManager()
+            ->getProductUrl($productAbstract);
     }
 
     /**
      * @api
      *
-     * @param int $idProductAbstract
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
+    public function deleteProductUrl(ProductAbstractTransfer $productAbstract)
     {
         return $this->getFactory()
-            ->createProductManager()
-            ->createAndTouchProductUrlByIdProduct($idProductAbstract, $url, $locale);
+            ->createProductUrlManager()
+            ->deleteProductUrl($productAbstract);
     }
 
     /**
@@ -498,7 +510,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductAbstractManager()
             ->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer);
     }
 
@@ -513,7 +525,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
     {
         return $this->getFactory()
-            ->createProductManager()
+            ->createProductConcreteManager()
             ->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
 
@@ -526,29 +538,23 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function activateProductConcrete($idProductConcrete)
     {
-         return $this->getFactory()->createProductConcreteActivator()->activateProductConcrete($idProductConcrete);
+         return $this->getFactory()
+             ->createProductActivator()
+             ->activateProductConcrete($idProductConcrete);
     }
 
     /**
-     * @param int $idProductAbstract
+     * @api
      *
-     * @return void
-     */
-    public function createAndTouchProductUrls($idProductAbstract)
-    {
-        $this->getFactory()->createProductUrlGenerator()->createAndTouchProductUrls($idProductAbstract);
-    }
-
-    /**
      * @param int $idProductConcrete
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
      * @return bool
      */
     public function deActivateProductConcrete($idProductConcrete)
     {
-        return $this->getFactory()->createProductConcreteActivator()->deActivateProductConcrete($idProductConcrete);
+        return $this->getFactory()
+            ->createProductActivator()
+            ->deActivateProductConcrete($idProductConcrete);
     }
 
 }

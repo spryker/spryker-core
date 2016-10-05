@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductManagement\Business\Product\VariantGenerator;
+use Spryker\Zed\Product\Business\Product\VariantGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -76,42 +76,57 @@ class VariantController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function toggleEnableProductVariantAction(Request $request)
+    public function activateProductVariantAction(Request $request)
     {
         $idProductConcrete = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_CONCRETE));
         $idProductAbstract = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_ABSTRACT));
 
-        $enable = (bool)$request->query->get(self::PARAM_ACTIVATE);
+        $this->getFactory()
+            ->getProductFacade()
+            ->activateProductConcrete($idProductConcrete);
 
-        if ($enable) {
-            $updateStatus = $this->getFactory()
-                ->getProductFacade()
-                ->activateProductConcrete($idProductConcrete);
-        } else {
-            $updateStatus = $this->getFactory()
-                ->getProductFacade()
-                ->deActivateProductConcrete($idProductConcrete);
-        }
-
-        $redirectUrl = Url::generate(
-            '/product-management/edit/variant',
-            [
-                EditController::PARAM_ID_PRODUCT => $idProductConcrete,
-                EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract
-
-            ]
-        )->build();
-
-        if ($updateStatus) {
-            $this->addSuccessMessage('Product variant successfully updated.');
-        } else {
-            $this->addErrorMessage('Failed to change product visibility.');
-        }
+        $this->addSuccessMessage('Product was activated.');
+        $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductAbstract);
 
         return $this->redirectResponse($redirectUrl);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deactivateProductVariantAction(Request $request)
+    {
+        $idProductConcrete = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_ABSTRACT));
+
+        $this->getFactory()
+            ->getProductFacade()
+            ->deActivateProductConcrete($idProductConcrete);
+
+        $this->addSuccessMessage('Product was deactivated.');
+        $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductAbstract);
+
+        return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idProductConcrete
+     *
+     * @return string
+     */
+    protected function generateRedirectUrl($idProductAbstract, $idProductConcrete)
+    {
+        return Url::generate('/product-management/edit/variant', [
+            EditController::PARAM_ID_PRODUCT => $idProductConcrete,
+            EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract
+        ])->build();
+    }
+
 }

@@ -61,7 +61,11 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $attributeTransfer = (new ProductManagementAttributeTransfer())
             ->fromArray($productAttributeEntity->toArray(), true);
 
-        $attributeTransfer->setKey($productAttributeEntity->getSpyProductAttributeKey()->getKey());
+        $productAttributeKeyEntity = $productAttributeEntity->getSpyProductAttributeKey();
+
+        $attributeTransfer
+            ->setKey($productAttributeKeyEntity->getKey())
+            ->setIsSuper($productAttributeKeyEntity->getIsSuper());
 
         $attributeTransfer = $this->setLocalizedAttributeKeys($attributeTransfer);
         $attributeTransfer = $this->setAttributeValues($attributeTransfer, $productAttributeEntity);

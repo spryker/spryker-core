@@ -101,7 +101,7 @@ interface ReaderInterface
     /**
      * @param string|null $priceType
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return string
      */
     public function handleDefaultPriceType($priceType = null);
 

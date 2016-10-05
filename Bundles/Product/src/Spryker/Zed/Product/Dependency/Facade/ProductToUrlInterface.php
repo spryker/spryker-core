@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 interface ProductToUrlInterface
 {
@@ -24,6 +25,20 @@ interface ProductToUrlInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function saveUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
      * @param int $idUrl

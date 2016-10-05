@@ -1,59 +1,36 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General Information' } %}
     {% block widget_content %}
 
-            <div class="row">
-                <div class="col-xs-2"><b>Sku</b></div>
-                <div class="col-xs-10">{{ currentProduct.sku }}</div>
-            </div>
-            <div class="hr-line-dashed"></div>
+        <div class="row">
+            <div class="col-xs-2"><b>Sku</b></div>
+            <div class="col-xs-10">{{ currentProduct.sku }}</div>
+        </div>
 
-            <div class="tabs-container">
-                <div class="tabs-top">
-                    <ul class="nav nav-tabs">
-                        {% for localeCode in localeCollection %}
-                            {% set activeCss = '' %}
+        <div class="m-t">
+            {% for localeName in localeCollection %}
+                {% for localizedData in currentProduct.localized_attributes %}
+                    {% if (localizedData.locale.locale_name == localeName ) %}
 
-                            {% if currentLocale == localeCode %}
-                                {% set activeCss =  'active' %}
-                            {% endif %}
-
-                            <li class="{{ activeCss }}"><a href="#info_general_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
-                        {% endfor %}
-                    </ul>
-
-                    <div class="tab-content">
-                        {% for localeCode in localeCollection %}
-                            {% set activeCss = '' %}
-
-                            {% if currentLocale == localeCode %}
-                                {% set activeCss =  'active' %}
-                            {% endif %}
-
-                            {% for localizedData in currentProduct.localized_attributes %}
-                                {% if (localizedData.locale.locale_name == localeCode ) %}
-                                    <div id="info_general_{{ localeCode }}" class="tab-pane {{ activeCss }}">
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-xs-2"><b>Name</b></div>
-                                                <div class="col-xs-10">{{ localizedData.name }}</div>
-                                            </div>
-                                            <div class="hr-line-dashed"></div>
-                                            <div class="row">
-                                                <div class="col-xs-2"><b>Description</b></div>
-                                                <div class="col-xs-10">
-                                                    {{ localizedData.description }}
-                                                </div>
-                                            </div>
-                                        </div>
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.parent.loop.first)} %}
+                            {% block content %}
+                                <div class="row">
+                                    <div class="col-xs-2"><b>Name</b></div>
+                                    <div class="col-xs-10">{{ localizedData.name }}</div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-2"><b>Description</b></div>
+                                    <div class="col-xs-10">
+                                        {{ localizedData.description }}
                                     </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
 
-                </div>
-            </div>
-
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
 
     {% endblock %}
 {% endembed %}

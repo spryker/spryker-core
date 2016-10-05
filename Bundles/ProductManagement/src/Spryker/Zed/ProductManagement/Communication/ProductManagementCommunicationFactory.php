@@ -25,6 +25,9 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
+use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
+use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
+use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
@@ -32,8 +35,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Product\Business\Product\VariantGenerator;
 
 /**
- * @TODO Move attribute and form methods into separate factories
- *
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -462,6 +463,30 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function createAttributeGlossaryKeyBuilder()
     {
         return new AttributeGlossaryKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createProductFormAddTabs()
+    {
+        return new ProductFormAddTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createProductFormEditTabs()
+    {
+        return new ProductFormEditTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createProductConcreteFormEditTabs()
+    {
+        return new ProductConcreteFormEditTabs();
     }
 
 }

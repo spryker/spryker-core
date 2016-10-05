@@ -1,9 +1,14 @@
 {#
   Display collapsible ibox.
 
+  Parameters:
+    * collapsed: (optional) Set collapse state of the ibox. False by default, i.e. the ibox is expanded by default.
+    * hasError: (optional) Set to "true" to mark the ibox as invalid. False by default.
+    * autoErrors: (optional) Mark the ibox as invalid with javascript if there's any element inside it with "has-error" class. True by default.
+
   Example usage:
 
-    {% embed '@Gui/Partials/ibox.twig' with {'collapsed': true, 'hasError': true} %}
+    {% embed '@Gui/Partials/ibox.twig' with {'collapsed': true} %}
         {% block title %}
             Ibox title
         {% endblock %}
@@ -12,7 +17,8 @@
         {% endblock %}
     {% endembed %}
 #}
-<div class="ibox nested {% if collapsed is defined and collapsed == true %}collapsed{% endif %} {% if hasError is defined and hasError %}error{% endif %}">
+<div class="ibox nested {% if collapsed is defined and collapsed == true %}collapsed{% endif %} {% if hasError is defined and hasError %}error{% endif %}"
+    data-auto-errors="{{ autoErrors is not defined or autoErrors ? 'true' : 'false' }}">
     <div class="ibox-title">
         <a class="collapse-link">
             <h5>

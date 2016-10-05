@@ -1,54 +1,38 @@
-<div class="panel-body">
-    <h3>Product Attributes</h3>
-    <p>Select attributes, add corresponding values and translate them if needed for every locale (language). The attributes are then inherited by the product variants, but can be changed there on an individual level.</p>
-
-    <p>
-        <i>Note: If you only add a translation for one language, but not for the other, that attribute-value pair will not be displayed in the language where the translation is missing.</i>
-    </p>
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Product Attributes</h3>
+        <p>Select attributes, add corresponding values and translate them if needed for every locale (language). The attributes are then inherited by the product variants, but can be changed there on an individual level.</p>
+        <p><i>Note: If you only add a translation for one language, but not for the other, that attribute-value pair will not be displayed in the language where the translation is missing.</i></p>
+    {% endfilter %}
 </div>
 
-<div class="panel-body second">
-    <div class="tabs-container">
-        <div class="tabs-top">
-            {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
-            formPrefix: 'attribute_abstract',
-            localeCollection: attributeLocaleCollection,
-            activeLocale: 'default',
-            form: form
-            } %}
-            {% endembed %}
+{% set formKey = 'attribute_abstract_default' %}
+{% embed '@Gui/Partials/ibox.twig' with {'collapsed': false} %}
+    {% block title %}
+        {{ 'Default' | trans }}
+    {% endblock %}
 
-            {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
-            formPrefix: 'attribute_abstract',
-            localeCollection: attributeLocaleCollection,
-            activeLocale: 'default',
-            form: form
-            } %}
-                {% block tabContentRow %}
-                    <div class="panel-body">
-                            <div class="row">
-                                {% for inputCollection in form[formKey] %}
-                                    {% set form_group_errors_css = '' %}
-
-                                    {% if inputCollection.value.vars.errors|length %}
-                                        {% set form_group_errors_css = 'has-error' %}
-                                    {% endif %}
-
-                                    <div class='col-md-10 col-sm-12 col-lg-6'>
-                                        <div class='row vertical-align col-lg-12 attribute_metadata_row'>
-                                            <div class='form-group {{ form_group_errors_css }}'>
-                                                {{ form_label(inputCollection.name) }} {{ form_label(inputCollection.value) }}
-                                                {{ form_widget(inputCollection.name) }} {{ form_widget(inputCollection.value, { 'attr': {'locale_code': localeCode }}) }}
-                                                {{ form_errors(inputCollection.name) }} {{ form_errors(inputCollection.value) }}
-                                                {{ form_widget(inputCollection.value_hidden_id) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                    </div>
-                {% endblock  %}
-            {% endembed %}
+    {% block content %}
+        <div class='row'>
+            {% for inputGroup in form[formKey] %}
+                {% include '@ProductManagement/Product/_partials/input-group.twig' with {'localeName': 'default'} %}
+            {% endfor %}
         </div>
-    </div>
-</div>
+    {% endblock %}
+{% endembed %}
+
+{% for localeName in localeCollection %}
+    {% set formKey = 'attribute_abstract_' ~ localeName %}
+
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true} %}
+            {% block content %}
+                <div class='row'>
+                    {% for inputGroup in form[formKey] %}
+                        {% include '@ProductManagement/Product/_partials/input-group.twig' %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

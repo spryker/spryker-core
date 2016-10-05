@@ -281,7 +281,7 @@ class Writer implements WriterInterface
         $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
 
         foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
+            $imageSetTransfer->setIdProduct(
                 $productConcreteTransfer
                     ->requireIdProductConcrete()
                     ->getIdProductConcrete()
@@ -302,7 +302,7 @@ class Writer implements WriterInterface
      */
     protected function assertProductIsAssigned(ProductImageSetTransfer $productImageSetTransfer)
     {
-        if ((int)$productImageSetTransfer->getIdProductAbstract() === 0 && (int)$productImageSetTransfer->getIdProduct()) {
+        if ((int)$productImageSetTransfer->getIdProductAbstract() === 0 && (int)$productImageSetTransfer->getIdProduct() === 0) {
             throw new \Exception('ImageSet has no product assigned');
         }
     }

@@ -1,47 +1,31 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
     {% block widget_content %}
 
-        <div class="tabs-container">
-            <div class="tabs-top">
-                <ul class="nav nav-tabs">
-                    {% for localeCode,attributes in productAttributes %}
-                        {% set activeCss = '' %}
+        {% for localeName,attributes in productAttributes %}
+            {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first)} %}
+                {% block title %}
+                    {% if localeName == 'default' %}
+                        {{ 'Default' | trans }}
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
 
-                        {% if localeCode == 'default' %}
-                            {% set activeCss =  'active' %}
-                        {% endif %}
+                {% block content %}
 
-                        <li class="{{ activeCss }}"><a href="#info_attributes_{{ localeCode }}" data-toggle="tab">{{ localeCode }}</a></li>
-                    {% endfor %}
-                </ul>
-
-                <div class="tab-content">
-                    {% for localeCode,attributes in productAttributes %}
-                        {% set activeCss = '' %}
-
-                        {% if localeCode == 'default' %}
-                            {% set activeCss =  'active' %}
-                        {% endif %}
-
-                        <div id="info_attributes_{{ localeCode }}" class="tab-pane {{ activeCss }}">
-                            <div class="panel-body">
-                                {% for name,value in attributes %}
-                                    <div class="row">
-                                        <div class="col-xs-4"><b>{{ name }}</b></div>
-                                        <div class="col-xs-8">{{ value }}</div>
-                                    </div>
-                                    {% if not loop.last %}
-                                        <div class="hr-line-dashed"></div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+                    {% for name,value in attributes %}
+                        <div class="row">
+                            <div class="col-xs-4"><b>{{ name }}</b></div>
+                            <div class="col-xs-8">{{ value }}</div>
                         </div>
-
+                        {% if not loop.last %}
+                            <div class="hr-line-dashed"></div>
+                        {% endif %}
                     {% endfor %}
-                </div>
 
-            </div>
-        </div>
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
 
     {% endblock %}
 {% endembed %}

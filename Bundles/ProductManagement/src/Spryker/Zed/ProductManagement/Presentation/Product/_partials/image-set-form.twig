@@ -11,22 +11,18 @@
             {% endif %}
 
             <div class='form-group {{ form_group_errors_css }}'>
-                <div class="col-lg-12">
-                    {{ form_row(productImageSet.id_product_image_set) }}
-                    {{ form_row(productImageSet.fk_locale) }}
-                    {{ form_row(productImageSet.fk_product) }}
-                    {{ form_row(productImageSet.fk_product_abstract) }}
+                {{ form_row(productImageSet.id_product_image_set) }}
+                {{ form_row(productImageSet.fk_locale) }}
+                {{ form_row(productImageSet.fk_product) }}
+                {{ form_row(productImageSet.fk_product_abstract) }}
 
-                    {{ form_row(productImageSet.name) }}
-                </div>
+                {{ form_row(productImageSet.name) }}
             </div>
 
             {% include '@ProductManagement/Product/_partials/image-collection-form.twig' %}
-        {% endfor %}
-    </div>
 
-    <div class="col-lg-12">
-        <a href="#" class="btn btn-primary add-another-image">Add Image</a>
+            <a href="#" class="btn btn-primary add-another-image">Add Image</a>
+        {% endfor %}
     </div>
 
 </div>

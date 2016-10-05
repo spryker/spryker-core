@@ -1,47 +1,30 @@
-<div class="panel-body">
-    <h3>Product Image(s)</h3>
-    <p>
-        For each image to be displayed in the shop one image set must be created. An image set has a name for identification and may contain a small and a large version of the image. The order of your image sets can be changed via drag and drop. The product variants inherit these product image sets, but can be changed there on an individual level.
-    </p>
-
-    <p>
-        <i>Note: The first image will be the image displayed in the catalog. The full image set will be displayed on the product detail page before the customer has configured what variant he wants.</i>
-    </p>
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Product Image(s)</h3>
+        <p>For each image to be displayed in the shop one image set must be created. An image set has a name for identification and may contain a small and a large version of the image. The order of your image sets can be changed via drag and drop. The product variants inherit these product image sets, but can be changed there on an individual level.</p>
+        <p><i>Note: The first image will be the image displayed in the catalog. The full image set will be displayed on the product detail page before the customer has configured what variant he wants.</i></p>
+    {% endfilter %}
 </div>
 
-{#<div id="playerFields" data-prototype="{% filter escape %}{% include 'AcmeTeamBundle:Team:prototypePlayer.html.twig' with {'form': form.players.vars.prototype} %}{% endfilter %}">
-</div>#}
+{% set formKey = 'image_set_default' %}
+{% embed '@Gui/Partials/ibox.twig' with {'collapsed': false} %}
+    {% block title %}
+        {{ 'Default' | trans }}
+    {% endblock %}
 
-<div class="panel-body second">
-    <div class="tabs-container">
-        <div class="tabs-top">
-            {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-nav.twig' with {
-            formPrefix: 'image_set',
-            localeCollection: attributeLocaleCollection,
-            activeLocale: 'default',
-            form: form
-            } %}
-            {% endembed %}
+    {% block content %}
+        {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
+    {% endblock %}
+{% endembed %}
 
-            {% embed '@Gui/Partials/LocalizedTabForms/localized-tabs-content.twig' with {
-            formPrefix: 'image_set',
-            localeCollection: attributeLocaleCollection,
-            activeLocale: 'default',
-            form: form
-            } %}
-                {% block tabContentRow %}
-                    <div class="panel-body">
-                        {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
-                    </div>
+{% for localeName in localeCollection %}
+    {% set formKey = 'image_set_' ~ localeName %}
 
-{#                    <div class="panel-body">
-                        <div class="form-group">
-                            <a href="#" class="btn btn-primary add-another-image-set">Add Image Set</a>
-                        </div>
-                    </div>#}
-
-                {% endblock  %}
-            {% endembed %}
-        </div>
-    </div>
-</div>
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true} %}
+            {% block content %}
+                {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

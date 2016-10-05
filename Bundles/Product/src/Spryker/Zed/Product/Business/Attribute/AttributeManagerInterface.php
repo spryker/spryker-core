@@ -57,9 +57,15 @@ interface AttributeManagerInterface
      *
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
      */
-    public function buildAttributeProcessor(
-        ProductAbstractTransfer $productAbstractTransfer,
-        array $concreteProductCollection = []
-    );
+    public function buildAttributeProcessor(ProductAbstractTransfer $productAbstractTransfer, array $concreteProductCollection = []);
+
+    /**
+     * @param array $localizedAttributeCollection
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $default
+     *
+     * @return string|null
+     */
+    public function getProductNameFromLocalizedAttributes(array $localizedAttributeCollection, LocaleTransfer $localeTransfer, $default = null);
 
 }

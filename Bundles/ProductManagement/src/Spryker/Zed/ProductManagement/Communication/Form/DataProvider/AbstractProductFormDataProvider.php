@@ -218,13 +218,16 @@ class AbstractProductFormDataProvider
      */
     protected function getProductImageSetCollection($imageSetTransferCollection)
     {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $result = $this->getImagesDefaultFields();
 
-        $result = [];
+        if (!$imageSetTransferCollection) {
+            return $result;
+        }
+
         $defaults = [];
+        $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeCode) {
             $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
-
             $data = [];
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
@@ -348,22 +351,7 @@ class AbstractProductFormDataProvider
     protected function getImagesDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
-        $data = [
-            ImageSetForm::FIELD_SET_ID => null,
-            ImageSetForm::FIELD_SET_NAME => null,
-            ImageSetForm::PRODUCT_IMAGES => [[
-                ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
-                ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
-                ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL => null,
-                ImageCollectionForm::FIELD_FK_IMAGE_SET_ID => null,
-                ImageCollectionForm::FIELD_IMAGE_SMALL => null,
-                ImageCollectionForm::FIELD_IMAGE_LARGE => null,
-                ImageCollectionForm::FIELD_SORT_ORDER => null,
-                ImageSetForm::FIELD_SET_FK_LOCALE => null,
-                ImageSetForm::FIELD_SET_FK_PRODUCT => null,
-                ImageSetForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
-            ]]
-        ];
+        $data = $this->getImageFields();
 
         $result = [];
         foreach ($availableLocales as $id => $localeCode) {
@@ -380,7 +368,7 @@ class AbstractProductFormDataProvider
     /**
      * @return array
      */
-    public static function getImageFields()
+    protected function getImageFields()
     {
         return [
             ImageSetForm::FIELD_SET_ID => null,
@@ -719,7 +707,6 @@ class AbstractProductFormDataProvider
         }
 
         $transfer = $this->attributeTransferCollection->get($keyToLocalize);
-        //TODO implement translations
         return $transfer->getKey();
     }
 

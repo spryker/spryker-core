@@ -35,7 +35,6 @@ class AttributeSuperForm extends AttributeAbstractForm
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
         $config = $this->getValueFieldConfig($name, $attributes);
 
-        $config['attr']['style'] .= ' width: 250px';
         $config['attr']['data-value'] = null;
 
         $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
@@ -53,7 +52,6 @@ class AttributeSuperForm extends AttributeAbstractForm
         $input = new Select2ComboBoxType();
         $config['multiple'] = true;
         $config['placeholder'] = '-';
-        $config['attr']['style'] .= ' width: 250px';
         $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
         $config['attr']['tags'] = false;
 

@@ -1,9 +1,7 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Variants' } %}
     {% block widget_content %}
 
-        <div class="col-lg-12">
-            {{ variantTable | raw }}
-        </div>
+        {{ variantTable | raw }}
 
     {% endblock %}
 {% endembed %}
