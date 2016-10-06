@@ -83,7 +83,8 @@ class RootNodeTable extends AbstractTable
     {
         $query = $this->categoryQueryContainer->queryRootNodes()
             ->orderBy(SpyCategoryAttributeTableMap::COL_NAME)
-            ->setModelAlias('spy_locale');
+            ->setModelAlias('spy_locale')
+            ->filterByFkLocale($this->idLocale);
 
         $queryResults = $this->runQuery($query, $config);
 
