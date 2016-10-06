@@ -293,6 +293,7 @@ class ProductManagerTest extends Test
             [$newProductConcrete]
         );
 
+        $newProductAbstract->setIdProductAbstract($idProductAbstract);
         $newProductConcrete->setFkProductAbstract($idProductAbstract);
 
         $this->assertTrue($idProductAbstract > 0);
@@ -376,10 +377,9 @@ class ProductManagerTest extends Test
      */
     protected function assertAddProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $createdProductEntity = $this->productQueryContainer
-            ->queryProduct()
-            ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->findOne();
+        $createdProductEntity = $this->getProductConcreteEntityByAbstractId(
+            $productConcreteTransfer->getFkProductAbstract()
+        );
 
         $this->assertNotNull($createdProductEntity);
         $this->assertEquals($productConcreteTransfer->getSku(), $createdProductEntity->getSku());
@@ -392,12 +392,12 @@ class ProductManagerTest extends Test
      */
     protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $updatedProductEntity = $this->productQueryContainer
-            ->queryProduct()
-            ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->findOne();
+        $updatedProductEntity = $this->getProductConcreteEntityByAbstractId(
+            $productConcreteTransfer->getFkProductAbstract()
+        );
 
         $this->assertNotNull($updatedProductEntity);
+        $this->assertEquals($this->productConcreteTransfer->getIdProductConcrete(), $updatedProductEntity->getPrimaryKey());
         $this->assertEquals($this->productConcreteTransfer->getSku(), $updatedProductEntity->getSku());
 
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
@@ -410,6 +410,32 @@ class ProductManagerTest extends Test
 
             $this->assertEquals($expectedProductName, $localizedAttribute->getName());
         }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    protected function getProductAbstractEntityById($idProductAbstract)
+    {
+        return $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    protected function getProductConcreteEntityByAbstractId($idProductAbstract)
+    {
+        return $this->productQueryContainer
+            ->queryProduct()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->findOne();
     }
 
 }

@@ -335,12 +335,14 @@ class ProductUrlManagerTest extends Test
         $productUrl = $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
     }
 
-    public function testTouchProductActiveAndInactiveShouldTouchLogic()
+    /**
+     * @return void
+     */
+    public function testTouchProductUrlActiveShouldTouchLogic()
     {
         $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
-        //ACTIVATE
         $this->productUrlManager->touchProductUrlActive($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
@@ -356,8 +358,14 @@ class ProductUrlManagerTest extends Test
             $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $activeTouchEntity->getItemEvent());
             $this->assertEquals('url', $activeTouchEntity->getItemType());
         }
+    }
 
-        //DEACTIVATE
+    /**
+     * @return void
+     */
+    public function testTouchProductUrlDeletedShouldTouchLogic()
+    {
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $this->productUrlManager->touchProductUrlDeleted($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
