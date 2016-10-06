@@ -373,7 +373,7 @@ class ProductManagerTest extends Test
     }
 
     /**
-     * @param int $idProductAbstracts
+     * @param ProductConcreteTransfer $idProductAbstracts
      *
      * @return void
      */
