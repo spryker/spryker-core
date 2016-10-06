@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\NodeTransfer;
 interface CategoryTreeWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param bool $createUrlPath
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true);
+    public function createCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer, $createUrlPath = true);
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer

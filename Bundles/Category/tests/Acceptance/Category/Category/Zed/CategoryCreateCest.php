@@ -15,7 +15,7 @@ use Acceptance\Category\Category\Zed\Tester\CategoryListTester;
  * @group Category
  * @group Category
  * @group Zed
- * @group CategoryListCest
+ * @group CategoryCreateCest
  */
 class CategoryCreateCest
 {
@@ -29,16 +29,17 @@ class CategoryCreateCest
     {
         $i->amOnPage(CategoryCreatePage::URL);
 
-
-        $category = CategoryCreatePage::CATEGORIES[CategoryCreatePage::CATEGORY_A];
-
+        $category = CategoryCreatePage::getCategorySelectorsWithValues(CategoryCreatePage::CATEGORY_A);
         $i->fillField(CategoryCreatePage::FORM_FIELD_CATEGORY_KEY, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_KEY]);
         $i->selectOption(CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT]);
 
         $localizedAttributes = $category['attributes'];
 
-        foreach ($localizedAttributes as $attributes) {
-            $i->click($attributes['locale']);
+        foreach ($localizedAttributes as $locale => $attributes) {
+            $i->click($locale);
+            foreach ($attributes as $selector => $value) {
+                $i->fillField(['name' => $selector], $value);
+            }
         }
 
         $i->click(CategoryCreatePage::FORM_SUBMIT_BUTTON);

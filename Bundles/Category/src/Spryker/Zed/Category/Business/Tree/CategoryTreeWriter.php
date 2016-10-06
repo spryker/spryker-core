@@ -73,28 +73,30 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $createUrlPath
      *
      * @return int
      */
     public function createCategoryNode(
-        NodeTransfer $categoryNode,
-        LocaleTransfer $locale,
+        NodeTransfer $categoryNodeTransfer,
+        LocaleTransfer $localeTransfer = null,
         $createUrlPath = true
     ) {
         $this->connection->beginTransaction();
 
-        $idNode = $this->nodeWriter->create($categoryNode);
-        $this->closureTableWriter->create($categoryNode);
+        $idNode = $this->nodeWriter->create($categoryNodeTransfer);
+        $this->closureTableWriter->create($categoryNodeTransfer);
 
         $this->touchNavigationActive();
 
-        $this->touchCategoryActiveRecursive($categoryNode);
+        $this->touchCategoryActiveRecursive($categoryNodeTransfer);
 
         if ($createUrlPath) {
-            $this->nodeUrlManager->createUrl($categoryNode, $locale);
+            foreach ($categoryNodeTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
+                $this->nodeUrlManager->createUrl($categoryNodeTransfer, $localizedAttributeTransfer->getLocale());
+            }
         }
 
         $this->connection->commit();

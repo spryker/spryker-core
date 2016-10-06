@@ -39,6 +39,10 @@ class CategoryWriter implements CategoryWriterInterface
     {
         $categoryEntity = new SpyCategory();
         $categoryEntity->fromArray($categoryTransfer->toArray());
+
+        /// HACK!!!
+        $categoryEntity->setCategoryKey(rand() . 'iuztfiuztf' . rand());
+
         $categoryEntity->save();
 
         $idCategory = $categoryEntity->getPrimaryKey();

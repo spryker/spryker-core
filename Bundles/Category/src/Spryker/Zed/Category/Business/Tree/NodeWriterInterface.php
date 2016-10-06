@@ -13,11 +13,11 @@ interface NodeWriterInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return int $nodeId
      */
-    public function create(NodeTransfer $categoryNode);
+    public function create(NodeTransfer $categoryNodeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode

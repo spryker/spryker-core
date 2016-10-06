@@ -32,19 +32,19 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function create(NodeTransfer $categoryNode)
+    public function create(NodeTransfer $categoryNodeTransfer)
     {
-        $nodeId = $categoryNode->getIdCategoryNode();
-        $parentId = $categoryNode->getFkParentCategoryNode();
+        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNode();
+        $parentId = $categoryNodeTransfer->getFkParentCategoryNode();
 
         if ($parentId === null) {
-            $this->createRootNode($categoryNode);
+            $this->createRootNode($categoryNodeTransfer);
         } else {
-            $this->persistNode($nodeId, $parentId);
+            $this->persistNode($idCategoryNode, $parentId);
         }
     }
 

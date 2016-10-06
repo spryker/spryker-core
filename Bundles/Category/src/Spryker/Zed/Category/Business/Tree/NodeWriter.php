@@ -33,20 +33,20 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return int
      */
-    public function create(NodeTransfer $categoryNode)
+    public function create(NodeTransfer $categoryNodeTransfer)
     {
-        $nodeEntity = new SpyCategoryNode();
-        $nodeEntity->fromArray($categoryNode->toArray());
-        $nodeEntity->save();
+        $categoryNodeEntity = new SpyCategoryNode();
+        $categoryNodeEntity->fromArray($categoryNodeTransfer->toArray());
+        $categoryNodeEntity->save();
 
-        $nodeId = $nodeEntity->getIdCategoryNode();
-        $categoryNode->setIdCategoryNode($nodeId);
+        $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
+        $categoryNodeTransfer->setIdCategoryNode($idCategoryNode);
 
-        return $nodeId;
+        return $idCategoryNode;
     }
 
     /**

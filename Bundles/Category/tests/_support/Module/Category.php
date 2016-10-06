@@ -11,9 +11,23 @@ use Codeception\Module;
 use Codeception\Step;
 use Codeception\TestCase;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Silex\Application;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class Category extends Module
 {
+
+    /**
+     * @param null $config
+     */
+    public function __construct($config = null)
+    {
+        parent::__construct($config);
+
+        $propelServiceProvider = new PropelServiceProvider();
+        $propelServiceProvider->boot(new Application());
+    }
+
 
     /**
      * @param \Codeception\Step $step
@@ -45,9 +59,8 @@ class Category extends Module
      */
     private function cleanUpDatabase()
     {
-        foreach (CategoryCreatePage::CATEGORIES as $categoryKey) {
-            $this->removeCategory($categoryKey);
-        }
+        $this->removeCategory(CategoryCreatePage::CATEGORY_A);
+        $this->removeCategory(CategoryCreatePage::CATEGORY_B);
     }
 
     /**
@@ -59,7 +72,13 @@ class Category extends Module
     {
         $categoryQuery = new SpyCategoryQuery();
         $categoryEntity = $categoryQuery->findOneByCategoryKey($categoryKey);
-        $categoryEntity->getAttributes()->delete();
+        if (!$categoryEntity) {
+            return;
+        }
+        $attributes = $categoryEntity->getAttributes();
+        if ($attributes) {
+            $attributes->delete();
+        }
         $categoryEntity->getNodes()->delete();
         $categoryEntity->delete();
     }

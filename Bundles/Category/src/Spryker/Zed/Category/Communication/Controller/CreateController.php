@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
+use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\Form\FormInterface;
@@ -34,11 +35,18 @@ class CreateController extends AbstractController
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
             try {
                 $this->getFacade()->createCategory($categoryTransfer);
-                $this->getFacade()->createCategoryNode($categoryTransfer->getCategoryNode());
+
+                $categoryNodeTransfer = new NodeTransfer();
+                $categoryNodeTransfer->fromArray($categoryTransfer->toArray(), true);
+                $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
+                $categoryNodeTransfer->setFkParentCategoryNode($categoryTransfer->getParent()->getIdCategoryNode());
+                $categoryNodeTransfer->setLocalizedAttributes($categoryTransfer->getLocalizedAttributes());
+                $this->getFacade()->createCategoryNode($categoryNodeTransfer);
 
                 $this->addSuccessMessage('The category was added successfully.');
 
-                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
+                return $this->redirectResponse('/category/root');
+//                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }

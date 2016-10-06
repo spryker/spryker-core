@@ -35,6 +35,7 @@
         <property name="nodeOrder" type="int" />
         <property name="name" type="string" />
         <property name="path" type="string" />
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
