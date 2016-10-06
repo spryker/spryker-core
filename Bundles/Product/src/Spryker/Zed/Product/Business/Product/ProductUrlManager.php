@@ -24,6 +24,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     protected $urlFacade;
+
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */

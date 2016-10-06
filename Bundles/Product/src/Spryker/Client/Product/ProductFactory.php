@@ -9,11 +9,11 @@ namespace Spryker\Client\Product;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder;
-use Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder;
 use Spryker\Client\Product\KeyBuilder\ProductAbstractResourceKeyBuilder;
+use Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder;
 use Spryker\Client\Product\Storage\AttributeMapStorage;
-use Spryker\Client\Product\Storage\ProductConcreteStorage;
 use Spryker\Client\Product\Storage\ProductAbstractStorage;
+use Spryker\Client\Product\Storage\ProductConcreteStorage;
 
 class ProductFactory extends AbstractFactory
 {

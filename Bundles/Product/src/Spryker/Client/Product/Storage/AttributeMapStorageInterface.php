@@ -7,10 +7,12 @@ namespace Spryker\Client\Product\Storage;
 
 interface AttributeMapStorageInterface
 {
+
     /**
      * @param int $idProductAbstract
      *
      * @return array
      */
     public function getAttributeMapByIdProductAbstract($idProductAbstract);
+
 }

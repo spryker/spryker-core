@@ -8,6 +8,7 @@ namespace Spryker\Client\Product\Storage;
 
 class AttributeMapStorage implements AttributeMapStorageInterface
 {
+
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -47,4 +48,5 @@ class AttributeMapStorage implements AttributeMapStorageInterface
 
         return $attributes;
     }
+
 }

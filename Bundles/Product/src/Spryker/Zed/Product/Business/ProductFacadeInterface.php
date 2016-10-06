@@ -343,7 +343,7 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */
@@ -352,7 +352,7 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */
@@ -361,7 +361,7 @@ interface ProductFacadeInterface
     /**
      * @api
      *
-     * @param $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */

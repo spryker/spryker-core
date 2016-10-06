@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -121,8 +120,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @throws \Exception
-     *
      * @return int
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
@@ -151,8 +148,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @throws \Exception
      *
      * @return int
      */
@@ -194,7 +189,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     *
      * @param int $idProductConcrete
      *
      * @return void
@@ -396,7 +390,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->setSku($sku)
             ->setFkProductAbstract($fkProductAbstract)
             ->setAttributes($encodedAttributes)
-            ->setIsActive((bool) $productConcreteTransfer->getIsActive());
+            ->setIsActive((bool)$productConcreteTransfer->getIsActive());
 
         $productConcreteEntity->save();
 

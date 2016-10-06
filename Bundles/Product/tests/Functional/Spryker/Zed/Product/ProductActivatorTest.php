@@ -10,18 +10,15 @@ namespace Functional\Spryker\Zed\Product;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\Product\ProductActivator;
-use Spryker\Zed\Product\Business\Product\ProductActivatorInterface;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
+use Spryker\Zed\Product\Business\Product\ProductActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
@@ -135,7 +132,7 @@ class ProductActivatorTest extends Test
     protected $productConcreteTransfer;
 
     /**
-     * @var ProductActivatorInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductActivatorInterface
      */
     protected $productActivator;
 
@@ -332,7 +329,7 @@ class ProductActivatorTest extends Test
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
@@ -355,7 +352,7 @@ class ProductActivatorTest extends Test
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
@@ -410,6 +407,5 @@ class ProductActivatorTest extends Test
 
         return $this->productManager->addProduct($newProductAbstract, [$newProductConcrete]);
     }
-
 
 }

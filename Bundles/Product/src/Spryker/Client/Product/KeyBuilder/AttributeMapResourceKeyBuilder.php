@@ -19,4 +19,5 @@ class AttributeMapResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP;
     }
+
 }

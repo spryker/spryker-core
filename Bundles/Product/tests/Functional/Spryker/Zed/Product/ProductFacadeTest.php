@@ -8,19 +8,6 @@
 namespace Functional\Spryker\Zed\Product;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * @group Functional
@@ -31,6 +18,4 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class ProductFacadeTest extends Test
 {
-
-
 }
