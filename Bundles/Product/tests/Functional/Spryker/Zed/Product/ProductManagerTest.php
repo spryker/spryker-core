@@ -334,7 +334,7 @@ class ProductManagerTest extends Test
     }
 
     /**
-     * @param int $idProductAbstracts
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
@@ -373,7 +373,7 @@ class ProductManagerTest extends Test
     }
 
     /**
-     * @param ProductConcreteTransfer $idProductAbstracts
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
@@ -390,7 +390,7 @@ class ProductManagerTest extends Test
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
@@ -416,6 +416,5 @@ class ProductManagerTest extends Test
             $this->assertEquals($expectedProductName, $localizedAttribute->getName());
         }
     }
-
 
 }
