@@ -19,9 +19,11 @@ class Environment
 {
 
     /**
+     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead.
+     *
      * @var array
      */
-    private static $fatalErrors = [
+    protected static $fatalErrors = [
         E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR,
     ];
 
@@ -191,7 +193,7 @@ class Environment
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
      *
-     * @deprecated Use ErrorHandlerEnvironment instead
+     * @deprecated Use \Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment instead.
      *
      * @throws \ErrorException
      *

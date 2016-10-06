@@ -7,6 +7,7 @@
 
 namespace Acceptance\Braintree\Checkout\Yves;
 
+use Acceptance\Braintree\Checkout\Yves\PageObject\ProductDetailPage;
 use Acceptance\Braintree\Checkout\Yves\Tester\CheckoutTester;
 
 /**
@@ -27,7 +28,7 @@ class CreditCardGuestCheckoutCest
     public function creditCardCheckoutAsGuest(CheckoutTester $i)
     {
         $i->wantToTest('That i can go through credit card checkout as guest');
-        $i->addToCart('/en/samsung-gear-s2-79');
+        $i->addToCart(ProductDetailPage::URL);
         $i->checkoutWithCreditCardAsGuest();
     }
 

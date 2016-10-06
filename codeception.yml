@@ -17,9 +17,5 @@ settings:
     memory_limit: 1024M
     log: true
 
-extensions:
-    enabled:
-        - Codeception\Extension\RunFailed
-
 coverage:
     enabled: true

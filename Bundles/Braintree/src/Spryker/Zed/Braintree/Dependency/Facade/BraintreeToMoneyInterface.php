@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Braintree\Dependency\Facade;
 
-interface BraintreeToSalesAggregatorInterface
+interface BraintreeToMoneyInterface
 {
 
     /**
-     * @param int $idSalesOrder
+     * @param int $value
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return float
      */
-    public function getOrderTotalsByIdSalesOrder($idSalesOrder);
+    public function convertIntegerToDecimal($value);
 
 }

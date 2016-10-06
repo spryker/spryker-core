@@ -7,6 +7,8 @@
 
 namespace Acceptance\Braintree\Checkout\Yves\Tester;
 
+use Acceptance\Braintree\Checkout\Yves\PageObject\CheckoutPage;
+use Acceptance\Braintree\Checkout\Yves\PageObject\ProductDetailPage;
 use Braintree\YvesAcceptanceTester;
 
 class CheckoutTester extends YvesAcceptanceTester
@@ -19,6 +21,7 @@ class CheckoutTester extends YvesAcceptanceTester
     {
         $i = $this;
 
+        $i->startCheckout();
         $i->submitGuestCustomerForm();
         $i->submitAddressForm();
         $i->selectShipmentMethod();
@@ -34,6 +37,7 @@ class CheckoutTester extends YvesAcceptanceTester
     {
         $i = $this;
 
+        $i->startCheckout();
         $i->submitGuestCustomerForm();
         $i->submitAddressForm();
         $i->selectShipmentMethod();
@@ -44,16 +48,24 @@ class CheckoutTester extends YvesAcceptanceTester
 
     /**
      * @param string $productIdentifier Url to product e.g. /en/samsung-123
-     * @param int $quantity
      *
      * @return void
      */
-    public function addToCart($productIdentifier, $quantity = 1)
+    public function addToCart($productIdentifier)
     {
         $i = $this;
         $i->amOnPage($productIdentifier);
-        $i->fillField('input[name=quantity]', $quantity);
-        $i->click('Add to Cart');
+        $i->click(ProductDetailPage::BUTTON_ADD_TO_CART);
+        $i->wait(5);
+    }
+
+    /**
+     * @return void
+     */
+    public function startCheckout()
+    {
+        $i = $this;
+        $i->click(CheckoutPage::BUTTON_CHECKOUT);
         $i->wait(5);
     }
 
@@ -63,9 +75,9 @@ class CheckoutTester extends YvesAcceptanceTester
     public function submitGuestCustomerForm()
     {
         $i = $this;
-        $i->amOnPage('/checkout/customer');
-        $i->waitForElement('#guest');
-        $i->checkOption('#guest');
+        $i->amOnPage(CheckoutPage::URL_CUSTOMER);
+        $i->waitForElement(['id' => 'guest'], 20);
+        $i->checkOption(['id' => 'guest']);
         $i->submitForm('form[name=guestForm]', [
             'guestForm[customer][salutation]' => 'Mr',
             'guestForm[customer][first_name]' => 'Tester',
@@ -73,7 +85,8 @@ class CheckoutTester extends YvesAcceptanceTester
             'guestForm[customer][email]' => 'tester@spryker.com',
             'guestForm[customer][accept_terms]' => true,
         ]);
-        $i->canSeeCurrentUrlEquals('/checkout/address');
+        $i->wait(5);
+        $i->canSeeCurrentUrlEquals(CheckoutPage::URL_ADDRESS);
     }
 
     /**
@@ -82,7 +95,7 @@ class CheckoutTester extends YvesAcceptanceTester
     public function submitAddressForm()
     {
         $i = $this;
-        $i->amOnPage('/checkout/address');
+        $i->amOnPage(CheckoutPage::URL_ADDRESS);
         $i->submitForm('form[name=addressesForm]', [
             'addressesForm[shippingAddress][salutation]' => 'Mr',
             'addressesForm[shippingAddress][first_name]' => 'Tester',
@@ -93,7 +106,7 @@ class CheckoutTester extends YvesAcceptanceTester
             'addressesForm[shippingAddress][city]' => 'Berlin',
             'addressesForm[billingSameAsShipping]' => true,
         ]);
-        $i->canSeeCurrentUrlEquals('/checkout/shipment');
+        $i->canSeeCurrentUrlEquals(CheckoutPage::URL_SHIPMENT);
     }
 
     /**
@@ -102,12 +115,13 @@ class CheckoutTester extends YvesAcceptanceTester
     public function selectShipmentMethod()
     {
         $i = $this;
-        $i->amOnPage('/checkout/shipment');
+
+        $i->amOnPage(CheckoutPage::URL_SHIPMENT);
         $i->submitForm('form[name=shipmentForm]', [
-            'shipmentForm[shipmentSelection]' => 'dummy_shipment',
-            'shipmentForm[dummy_shipment][idShipmentMethod]' => '2',
+            'shipmentForm[idShipmentMethod]' => '1',
         ]);
-        $i->canSeeCurrentUrlEquals('/checkout/payment');
+        $i->wait(5);
+        $i->canSeeCurrentUrlEquals(CheckoutPage::URL_PAYMENT);
     }
 
     /**
@@ -116,7 +130,7 @@ class CheckoutTester extends YvesAcceptanceTester
     public function seeBraintreePaymentMethods()
     {
         $i = $this;
-        $i->amOnPage('/checkout/payment');
+        $i->amOnPage(CheckoutPage::URL_PAYMENT);
         $i->see('BraintreeCreditCard');
         $i->see('BraintreePayPal');
     }
@@ -127,9 +141,12 @@ class CheckoutTester extends YvesAcceptanceTester
     public function submitCreditCardForm()
     {
         $i = $this;
-        $i->amOnPage('/checkout/payment');
+        $i->amOnPage(CheckoutPage::URL_PAYMENT);
+
+        $i->click(['id' => 'paymentForm_paymentSelection_0']);
 
         $i->switchToIFrame('braintree-hosted-field-number');
+
         $i->fillField('#credit-card-number', '4111111111111111');
         $i->switchToIFrame();
 
@@ -140,11 +157,12 @@ class CheckoutTester extends YvesAcceptanceTester
         $expirationYear = date('y') + 2;
         $i->switchToIFrame('braintree-hosted-field-expirationDate');
         $i->fillField('#expiration', '10/' . $expirationYear);
+        $i->fillField('#expiration', '10/' . $expirationYear);
         $i->switchToIFrame();
 
         $i->click('Go to Summary');
         $i->wait(5);
-        $i->canSeeCurrentUrlEquals('/checkout/summary');
+        $i->canSeeCurrentUrlEquals(CheckoutPage::URL_SUMMARY);
     }
 
     /**
@@ -159,17 +177,16 @@ class CheckoutTester extends YvesAcceptanceTester
     public function submitPayPalForm()
     {
         $i = $this;
-        $i->amOnPage('/checkout/payment');
-        $i->click('#paymentForm_paymentSelection_1');
-        $i->see('Braintree PayPal');
-        $i->click('#braintree-paypal-button');
+        $i->amOnPage(CheckoutPage::URL_PAYMENT);
+        $i->click(['id' => 'paymentForm_paymentSelection_1']);
+        $i->click(['id' => 'braintree-paypal-button']);
 
         $this->fillOutPayPalForm();
 
-        $i->seeElement('#braintree-paypal-loggedin');
+        $i->seeElement(['id' => 'braintree-paypal-loggedin']);
         $i->click('Go to Summary');
         $i->wait(5);
-        $i->canSeeCurrentUrlEquals('/checkout/summary');
+        $i->canSeeCurrentUrlEquals(CheckoutPage::URL_SUMMARY);
     }
 
     /**
@@ -181,12 +198,12 @@ class CheckoutTester extends YvesAcceptanceTester
         $i->switchToWindow('PPFrameRedirect');
         $i->wait(10);
         $i->switchToIFrame('injectedUl');
-        $i->fillField('#email', 'payment.test-123@spryker.com');
-        $i->fillField('#password', 'spryker123');
-        $i->click('#btnLogin');
+        $i->fillField(['id' => 'email'], 'payment.test-123@spryker.com');
+        $i->fillField(['id' => 'password'], 'spryker123');
+        $i->click(['id' => 'btnLogin']);
         $i->wait(10);
-        $i->seeElement('#confirmButtonTop');
-        $i->click('#confirmButtonTop');
+        $i->waitForElement(['id' => 'confirmButtonTop'], 30);
+        $i->click(['id' => 'confirmButtonTop']);
         $i->switchToWindow();
         $i->wait(10);
     }
@@ -197,10 +214,10 @@ class CheckoutTester extends YvesAcceptanceTester
     public function submitOrder()
     {
         $i = $this;
-        $i->amOnPage('/checkout/summary');
+        $i->amOnPage(CheckoutPage::URL_SUMMARY);
         $i->click('Submit your order');
 
-        $i->canSeeCurrentUrlEquals('/checkout/success');
+        $i->canSeeCurrentUrlEquals(CheckoutPage::URL_SUCCESS);
     }
 
 }
