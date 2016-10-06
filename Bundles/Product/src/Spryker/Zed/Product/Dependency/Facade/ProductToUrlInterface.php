@@ -69,5 +69,4 @@ interface ProductToUrlInterface
      */
     public function touchUrlDeleted($idUrl);
 
-
 }

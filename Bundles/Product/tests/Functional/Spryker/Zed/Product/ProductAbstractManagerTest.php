@@ -10,11 +10,8 @@ namespace Functional\Spryker\Zed\Product;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductImageSetTransfer;
-use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
@@ -38,7 +35,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Spryker
  * @group Zed
  * @group Product
- * @group ProductManagerTest
+ * @group ProductAbstractManagerTest
  */
 class ProductAbstractManagerTest extends Test
 {
@@ -193,6 +190,7 @@ class ProductAbstractManagerTest extends Test
             new ProductToUrlBridge($this->urlFacade),
             new ProductToTouchBridge($this->touchFacade),
             new ProductToLocaleBridge($this->localeFacade),
+            $this->productQueryContainer,
             $urlGenerator
         );
     }
@@ -300,7 +298,7 @@ class ProductAbstractManagerTest extends Test
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */

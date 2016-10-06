@@ -406,7 +406,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */
@@ -420,7 +420,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */
@@ -434,7 +434,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * @api
      *
-     * @param $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */
@@ -474,6 +474,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer

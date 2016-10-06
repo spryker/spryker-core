@@ -6,7 +6,7 @@
     }
   },
   "require": {
-    "spryker/discount": "^3.0.0",
+    "spryker/discount": "^3.2.1",
     "spryker/kernel": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",

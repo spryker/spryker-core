@@ -39,6 +39,8 @@ interface ProductClientInterface
     public function getAttributeMapByIdProductAbstractForCurrectLocale($idProductAbstract);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param string $locale
      *
@@ -47,6 +49,8 @@ interface ProductClientInterface
     public function getAttributeMapByIdAndLocale($idProductAbstract, $locale);
 
     /**
+     * @api
+     *
      * @param int $idProductConcrete
      *
      * @return array
@@ -54,6 +58,8 @@ interface ProductClientInterface
     public function getProductConcreteByIdForCurrentLocale($idProductConcrete);
 
     /**
+     * @api
+     *
      * @param int $idProductConcrete
      * @param string $locale
      *

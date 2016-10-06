@@ -124,6 +124,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getUrlFacade(),
             $this->getTouchFacade(),
             $this->getLocaleFacade(),
+            $this->getQueryContainer(),
             $this->createProductUrlGenerator()
         );
     }

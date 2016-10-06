@@ -102,6 +102,16 @@ class ProductUrlManagerTest extends Test
     protected $productAbstractTransfer;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
+     */
+    protected $productAbstractManager;
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
+     */
+    protected $productConcreteManager;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -129,7 +139,7 @@ class ProductUrlManagerTest extends Test
             $this->productQueryContainer
         );
 
-        $productConcreteManager = new ProductConcreteManager(
+        $this->productConcreteManager = new ProductConcreteManager(
             $attributeManager,
             $this->productQueryContainer,
             new ProductToTouchBridge($this->touchFacade),
@@ -143,14 +153,14 @@ class ProductUrlManagerTest extends Test
             []
         );
 
-        $productAbstractManager = new ProductAbstractManager(
+        $this->productAbstractManager = new ProductAbstractManager(
             $attributeManager,
             $this->productQueryContainer,
             new ProductToTouchBridge($this->touchFacade),
             new ProductToUrlBridge($this->urlFacade),
             new ProductToLocaleBridge($this->localeFacade),
             new ProductToPriceBridge($this->priceFacade),
-            $productConcreteManager,
+            $this->productConcreteManager,
             $productAbstractAssertion,
             [],
             [],
@@ -158,7 +168,7 @@ class ProductUrlManagerTest extends Test
         );
 
         $urlGenerator = new ProductUrlGenerator(
-            $productAbstractManager,
+            $this->productAbstractManager,
             new ProductToLocaleBridge($this->localeFacade)
         );
 
@@ -166,6 +176,7 @@ class ProductUrlManagerTest extends Test
             new ProductToUrlBridge($this->urlFacade),
             new ProductToTouchBridge($this->touchFacade),
             new ProductToLocaleBridge($this->localeFacade),
+            $this->productQueryContainer,
             $urlGenerator
         );
     }
@@ -195,8 +206,7 @@ class ProductUrlManagerTest extends Test
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
-            ->setSku('foo')
-            ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+            ->setSku('foo');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -225,6 +235,7 @@ class ProductUrlManagerTest extends Test
             ->setLocale($this->locales['de_DE'])
             ->setUrl('/de/product-name-dede-1');
 
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
         $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
@@ -244,6 +255,8 @@ class ProductUrlManagerTest extends Test
             ->setLocale($this->locales['de_DE'])
             ->setUrl('/de/new-product-name-dede-1');
 
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName('New ' . $localizedAttribute->getName());
         }
@@ -260,6 +273,8 @@ class ProductUrlManagerTest extends Test
      */
     public function testDeleteProductUrlShouldDeleteUrlForProductAbstract()
     {
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
         $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
 
@@ -281,6 +296,7 @@ class ProductUrlManagerTest extends Test
      */
     public function testCreateUrlShouldThrowExceptionWhenUrlExists()
     {
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
     }
@@ -290,6 +306,9 @@ class ProductUrlManagerTest extends Test
      */
     public function testUpdateUrlShouldNotThrowExceptionWhenUrlExistsForSameProduct()
     {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
         $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
     }
@@ -302,6 +321,7 @@ class ProductUrlManagerTest extends Test
      */
     public function testProductUrlShouldBeUnique()
     {
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
     }
@@ -311,12 +331,18 @@ class ProductUrlManagerTest extends Test
      */
     public function testDeleteProductUrlCanBeExecutedWhenUrlDoesNotExist()
     {
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $productUrl = $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
     }
 
-    public function testTouchProductActiveShouldTouchLogic()
+    /**
+     * @return void
+     */
+    public function testTouchProductUrlActiveShouldTouchLogic()
     {
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+
         $this->productUrlManager->touchProductUrlActive($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
@@ -334,9 +360,12 @@ class ProductUrlManagerTest extends Test
         }
     }
 
-    public function testTouchProductDeletedShouldTouchLogic()
+    /**
+     * @return void
+     */
+    public function testTouchProductUrlDeletedShouldTouchLogic()
     {
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
         $this->productUrlManager->touchProductUrlDeleted($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {

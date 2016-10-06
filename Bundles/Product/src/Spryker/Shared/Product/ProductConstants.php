@@ -9,6 +9,7 @@ namespace Spryker\Shared\Product;
 
 interface ProductConstants
 {
+
     const HOST_YVES = 'HOST_YVES';
 
     const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product_abstract';

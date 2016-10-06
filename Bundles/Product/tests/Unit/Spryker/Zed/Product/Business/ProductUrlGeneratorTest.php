@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Product;
+namespace Unit\Spryker\Zed\Product\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
@@ -23,6 +23,7 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
  * @group Spryker
  * @group Zed
  * @group Product
+ * @group Business
  * @group ProductUrlGeneratorTest
  */
 class ProductUrlGeneratorTest extends Test

@@ -8,6 +8,7 @@ namespace Spryker\Client\Product\Storage;
 
 class ProductConcreteStorage
 {
+
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -47,4 +48,5 @@ class ProductConcreteStorage
 
         return $product;
     }
+
 }

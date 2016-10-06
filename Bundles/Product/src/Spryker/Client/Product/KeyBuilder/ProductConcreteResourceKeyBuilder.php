@@ -19,4 +19,5 @@ class ProductConcreteResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE;
     }
+
 }

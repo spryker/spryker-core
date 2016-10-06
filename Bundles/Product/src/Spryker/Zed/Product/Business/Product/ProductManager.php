@@ -53,7 +53,8 @@ class ProductManager implements ProductManagerInterface
 
         foreach ($productConcreteCollection as $productConcrete) {
             $productConcrete->setFkProductAbstract($idProductAbstract);
-            $this->productConcreteManager->createProductConcrete($productConcrete);
+            $idProductConcrete = $this->productConcreteManager->createProductConcrete($productConcrete);
+            $productConcrete->setIdProductConcrete($idProductConcrete);
         }
 
         $this->productQueryContainer->getConnection()->commit();
@@ -73,25 +74,45 @@ class ProductManager implements ProductManagerInterface
 
         $idProductAbstract = $this->productAbstractManager->saveProductAbstract($productAbstractTransfer);
 
-        foreach ($productConcreteCollection as $productConcreteTransfer) {
-            $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        foreach ($productConcreteCollection as $productConcrete) {
+            $productConcrete->setFkProductAbstract($idProductAbstract);
 
             $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstract(
                 $productAbstractTransfer,
-                $productConcreteTransfer
+                $productConcrete
             );
 
             if ($productConcreteEntity) {
-                $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
-                $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
+                $this->productConcreteManager->saveProductConcrete($productConcrete);
             } else {
-                $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
+                $idProductConcrete = $this->productConcreteManager->createProductConcrete($productConcrete);
+                $productConcrete->setIdProductConcrete($idProductConcrete);
             }
         }
 
         $this->productQueryContainer->getConnection()->commit();
 
         return $idProductAbstract;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract)
+    {
+        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
+            $idProductAbstract
+        );
+
+        foreach ($productConcreteCollection as $productConcreteTransfer) {
+            if ($productConcreteTransfer->getIsActive()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

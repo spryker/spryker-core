@@ -99,4 +99,5 @@ class ProductToUrlBridge implements ProductToUrlInterface
     {
         $this->urlFacade->touchUrlDeleted($idUrl);
     }
+
 }
