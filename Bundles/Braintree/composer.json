@@ -29,7 +29,6 @@
     "spryker/currency": "^0.1.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
     "spryker/money": "^0.1.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/payment": "^2.0.0",
@@ -42,6 +41,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "^2.0.0",
+    "spryker/sales": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "Braintree bundle",
