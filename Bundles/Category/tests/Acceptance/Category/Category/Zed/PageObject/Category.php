@@ -7,13 +7,19 @@
 
 namespace Acceptance\Category\Category\Zed\PageObject;
 
-class CategoryCreatePage extends Category
+class Category
 {
 
-    const URL = '/category/create';
+    const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
+    const FORM_FIELD_CATEGORY_PARENT = 'category[parent]';
 
-    const FORM_SUBMIT_BUTTON = 'Create';
-    const SUCCESS_MESSAGE = 'The category was added successfully.';
+    const FORM_FIELD_CATEGORY_NAME_PATTERN = 'category[localized_attributes][%d][name]';
+    const FORM_FIELD_CATEGORY_TITLE_PATTERN = 'category[localized_attributes][%d][meta_title]';
+    const FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN = 'category[localized_attributes][%d][meta_description]';
+    const FORM_FIELD_CATEGORY_KEYWORDS_PATTERN = 'category[localized_attributes][%d][meta_keywords]';
+
+    const CATEGORY_A = 'category-a';
+    const CATEGORY_B = 'category-b';
 
     /**
      * @param $categoryName

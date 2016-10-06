@@ -37,7 +37,7 @@ class CategoryListCest
      *
      * @return void
      */
-    public function testICanGoToCreateCategory(CategoryListTester $i)
+    public function testICanGoToCreateCategoryPage(CategoryListTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->click(CategoryListPage::BUTTON_CREATE_CATEGORY);

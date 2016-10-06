@@ -7,10 +7,19 @@
 
 namespace Acceptance\Category\Category\Zed\PageObject;
 
-class CategoryEditPage
+class CategoryEditPage extends Category
 {
 
-    const URL = '/product-category/edit';
+    const URL = '/category/edit?id-category=';
 
+    /**
+     * @param int $idCategory
+     *
+     * @return string
+     */
+    public function getUrl($idCategory)
+    {
+        return self::URL . $idCategory;
+    }
 
 }

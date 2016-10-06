@@ -35,7 +35,6 @@ class CreateController extends AbstractController
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
             try {
                 $this->getFacade()->createCategory($categoryTransfer);
-
                 $categoryNodeTransfer = new NodeTransfer();
                 $categoryNodeTransfer->fromArray($categoryTransfer->toArray(), true);
                 $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());

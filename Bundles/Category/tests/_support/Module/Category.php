@@ -28,7 +28,6 @@ class Category extends Module
         $propelServiceProvider->boot(new Application());
     }
 
-
     /**
      * @param \Codeception\Step $step
      *
@@ -75,13 +74,34 @@ class Category extends Module
         if (!$categoryEntity) {
             return;
         }
-        $attributes = $categoryEntity->getAttributes();
-        if ($attributes) {
-            $attributes->delete();
+        $attributeEntityCollection = $categoryEntity->getAttributes();
+        if ($attributeEntityCollection) {
+            $attributeEntityCollection->delete();
         }
-        $categoryEntity->getNodes()->delete();
+
+        $nodeEntityCollection = $categoryEntity->getNodes();
+        if ($nodeEntityCollection) {
+            foreach ($nodeEntityCollection as $nodeEntity) {
+                $closureTableEntries = $nodeEntity->getClosureTables();
+                if ($closureTableEntries) {
+                    $closureTableEntries->delete();
+                }
+            }
+            $nodeEntityCollection->delete();
+        }
+
         $categoryEntity->delete();
     }
 
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     */
+    public function loadCategoryByCategoryKey($categoryKey)
+    {
+        $categoryQuery = new SpyCategoryQuery();
 
+        return $categoryQuery->findOneByCategoryKey($categoryKey);
+    }
 }

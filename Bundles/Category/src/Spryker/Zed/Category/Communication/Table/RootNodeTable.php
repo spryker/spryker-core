@@ -24,7 +24,7 @@ class RootNodeTable extends AbstractTable
     const COL_REORDER = 'Reorder';
     const URL_CATEGORY_NODE_VIEW = '/category/node/view';
     const PARAM_ID_NODE = 'id-node';
-    const URL_PRODUCT_CATEGORY_ADD = '/product-category/add';
+    const URL_PRODUCT_CATEGORY_ADD = '/category/create';
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
@@ -83,8 +83,7 @@ class RootNodeTable extends AbstractTable
     {
         $query = $this->categoryQueryContainer->queryRootNodes()
             ->orderBy(SpyCategoryAttributeTableMap::COL_NAME)
-            ->setModelAlias('spy_locale')
-            ->filterByFkLocale($this->idLocale);
+            ->setModelAlias('spy_locale');
 
         $queryResults = $this->runQuery($query, $config);
 
