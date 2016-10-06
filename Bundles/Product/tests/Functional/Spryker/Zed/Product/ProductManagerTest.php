@@ -296,7 +296,6 @@ class ProductManagerTest extends Test
         $newProductConcrete->setFkProductAbstract($idProductAbstract);
 
         $this->assertTrue($idProductAbstract > 0);
-
         $this->assertAddProductAbstract($newProductAbstract);
         $this->assertAddProductConcrete($newProductConcrete);
     }
@@ -328,7 +327,6 @@ class ProductManagerTest extends Test
         $updateProductAbstract->setIdProductAbstract($idProductAbstract);
 
         $this->assertEquals($updateProductAbstract->getIdProductAbstract(), $idProductAbstract);
-
         $this->assertSaveProductAbstract($updateProductAbstract);
         $this->assertSaveProductConcrete($updateProductConcrete);
     }
@@ -346,7 +344,6 @@ class ProductManagerTest extends Test
             ->findOne();
 
         $this->assertNotNull($createdProductEntity);
-
         $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
@@ -385,7 +382,6 @@ class ProductManagerTest extends Test
             ->findOne();
 
         $this->assertNotNull($createdProductEntity);
-
         $this->assertEquals($productConcreteTransfer->getSku(), $createdProductEntity->getSku());
     }
 
@@ -405,8 +401,7 @@ class ProductManagerTest extends Test
         $this->assertEquals($this->productConcreteTransfer->getSku(), $updatedProductEntity->getSku());
 
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
-            $productConcreteTransfer
-                ->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract()
         );
 
         $productConcreteTransferExpected = $productConcreteCollection[0];
