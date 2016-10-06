@@ -396,7 +396,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->setSku($sku)
             ->setFkProductAbstract($fkProductAbstract)
             ->setAttributes($encodedAttributes)
-            ->setIsActive($productConcreteTransfer->getIsActive());
+            ->setIsActive((bool) $productConcreteTransfer->getIsActive());
 
         $productConcreteEntity->save();
 
