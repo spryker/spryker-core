@@ -34,6 +34,7 @@
     "spryker/payment": "^2.0.0",
     "spryker/propel": "^2.3.1",
     "spryker/refund": "^3.0.0",
+    "spryker/sales": "^2.0.0",
     "spryker/step-engine": "^1.0.1",
     "spryker/symfony": "^2.0.0",
     "spryker/transfer": "^2.0.0",
@@ -42,7 +43,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/customer": "^2.0.0",
-    "spryker/sales": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "Braintree bundle",
