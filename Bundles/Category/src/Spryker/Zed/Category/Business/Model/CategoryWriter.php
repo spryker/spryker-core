@@ -44,7 +44,7 @@ class CategoryWriter implements CategoryWriterInterface
         $idCategory = $categoryEntity->getPrimaryKey();
         $categoryTransfer->setIdCategory($idCategory);
 
-//        $this->createLocalizedAttributes($categoryTransfer);
+        $this->createLocalizedAttributes($categoryTransfer);
 
         return $idCategory;
     }

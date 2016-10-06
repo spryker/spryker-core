@@ -209,12 +209,12 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $createUrlPath
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer, $createUrlPath = true)
+    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true)
     {
         return $this->getFactory()
             ->createCategoryTreeWriter()
