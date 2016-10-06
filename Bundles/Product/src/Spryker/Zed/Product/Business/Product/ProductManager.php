@@ -94,4 +94,24 @@ class ProductManager implements ProductManagerInterface
         return $idProductAbstract;
     }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract)
+    {
+        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
+            $idProductAbstract
+        );
+
+        foreach ($productConcreteCollection as $productConcreteTransfer) {
+            if ($productConcreteTransfer->getIsActive()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

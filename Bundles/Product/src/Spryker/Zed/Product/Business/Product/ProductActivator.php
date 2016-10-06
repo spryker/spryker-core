@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 
-class ProductActivator
+class ProductActivator implements ProductActivatorInterface
 {
 
     /**
@@ -45,8 +47,6 @@ class ProductActivator
     /**
      * @param int $idProductConcrete
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
-     *
      * @return void
      */
     public function activateProductConcrete($idProductConcrete)
@@ -63,8 +63,6 @@ class ProductActivator
         $this->productConcreteManager->touchProductActive($productConcrete->getFkProductAbstract());
 
         $productUrl = $this->productUrlManager->updateProductUrl($productAbstract);
-
-        $this->productUrlManager->touchProductUrlActive($productAbstract);
     }
 
     /**
@@ -85,33 +83,19 @@ class ProductActivator
         $this->productConcreteManager->saveProductConcrete($productConcrete);
         $this->productConcreteManager->touchProductInactive($productConcrete->getFkProductAbstract());
 
-        $this->productUrlManager->updateProductUrl($productAbstract);
-        $this->productUrlManager->touchProductUrlInactive($productAbstract);
+        $this->productUrlManager->deleteProductUrl($productAbstract);
     }
 
     /**
-     * TODO move to ProductManager
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
+     * @param int $idProductConcrete
      *
-     * @param int $idProductAbstract
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
-     * @return bool
+     * @return void
      */
-    protected function isProductActive($idProductAbstract)
-    {
-        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
-            $idProductAbstract
-        );
-
-        foreach ($productConcreteCollection as $productConcreteTransfer) {
-            if ($productConcreteTransfer->getIsActive()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected function assertProducts($productAbstract, $productConcrete, $idProductConcrete)
+    protected function assertProducts(ProductAbstractTransfer $productAbstract, ProductConcreteTransfer $productConcrete, $idProductConcrete)
     {
         if (!$productConcrete || !$productAbstract) {
             throw new ProductConcreteNotFoundException(sprintf(

@@ -196,6 +196,7 @@ class ProductManagerTest extends Test
             new ProductToUrlBridge($this->urlFacade),
             new ProductToTouchBridge($this->touchFacade),
             new ProductToLocaleBridge($this->localeFacade),
+            $this->productQueryContainer,
             $urlGenerator
         );
 
