@@ -37,6 +37,7 @@ class EditController extends AbstractController
                 $this->getFacade()->updateCategory($categoryTransfer);
                 $categoryNodeTransfer = new NodeTransfer();
                 $categoryNodeTransfer->fromArray($categoryTransfer->toArray(), true);
+                $categoryNodeTransfer->setIdCategoryNode($categoryTransfer->getParent()->getIdCategoryNode());
                 $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
                 $categoryNodeTransfer->setFkParentCategoryNode($categoryTransfer->getParent()->getIdCategoryNode());
                 $categoryNodeTransfer->setLocalizedAttributes($categoryTransfer->getLocalizedAttributes());

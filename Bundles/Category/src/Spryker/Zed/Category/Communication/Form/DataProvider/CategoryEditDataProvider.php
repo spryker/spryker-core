@@ -80,11 +80,7 @@ class CategoryEditDataProvider
     protected function addParentTransfer(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
     {
         $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->setIdCategoryNode($categoryEntity->getVirtualColumn('id_category_node'));
-        $categoryNodeTransfer->setFkCategory($categoryEntity->getIdCategory());
-        $categoryNodeTransfer->setFkParentCategoryNode($categoryEntity->getVirtualColumn('fk_parent_category_node'));
-        $categoryNodeTransfer->setIsMain($categoryEntity->getVirtualColumn('is_main'));
-
+        $categoryNodeTransfer->setIdCategoryNode($categoryEntity->getVirtualColumn('fk_parent_category_node'));
         $categoryTransfer->setParent($categoryNodeTransfer);
 
         return $categoryTransfer;
