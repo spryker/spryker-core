@@ -6,8 +6,11 @@
 'use strict';
 
 var tree = require('./root/tree.js');
+var progressBar = require('./shared/progress-bar');
 
 $(document).ready(function() {
+    progressBar.setSelector('#category-tree-progress-bar');
+
     var rootNodeDataTable = jQuery('.gui-table-data-category').DataTable({
         bFiltered: false,
         select: {
@@ -26,7 +29,7 @@ $(document).ready(function() {
 
     rootNodeDataTable.on('select', function(event, api, type, indexes) {
         var data = rootNodeDataTable.row(indexes[0]).data();
-        tree.load(data[0], jQuery('#category-tree'));
+        tree.load(data[0], jQuery('#category-tree'), progressBar);
     });
 
     rootNodeDataTable.on('deselect', function(event, api, type, indexes) {

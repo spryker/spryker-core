@@ -16,13 +16,13 @@ var domElements = {
 var selector = '#progress-bar';
 
 /**
- * @param {string} selector
+ * @param {string} progressBarSelector
  *
  * @return {void}
  */
-function setSelector(selector)
+function setSelector(progressBarSelector)
 {
-    selector = selector;
+    selector = progressBarSelector;
 }
 
 /**
