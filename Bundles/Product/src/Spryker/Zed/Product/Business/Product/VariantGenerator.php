@@ -236,7 +236,7 @@ class VariantGenerator implements VariantGeneratorInterface
 
                 $newVariants[] = array_splice($newAttributes, $index++, 1);
 
-                $recurseResult = $this->buildAttributePermutations($newAttributes, $idProductConcrete, $newVariants);
+                $recurseResult = $this->generateAttributePermutations($newAttributes, $idProductConcrete, $newVariants);
                 if (is_array($recurseResult)) {
                     $recurseResult = array_merge($result, $recurseResult);
                 }
