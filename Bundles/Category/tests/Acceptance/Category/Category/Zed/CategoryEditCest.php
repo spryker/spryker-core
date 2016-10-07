@@ -25,12 +25,37 @@ class CategoryEditCest
      *
      * @return void
      */
-    public function testICanEditCategory(CategoryEditTester $i)
+    public function testICanOpenEditCategoryPage(CategoryEditTester $i)
     {
         $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
         $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));
         $i->canSee(CategoryEditPage::TITLE, 'h2');
+        $i->seeInField(CategoryEditPage::FORM_FIELD_CATEGORY_KEY, CategoryEditPage::CATEGORY_A);
+    }
 
+    /**
+     * @param \Acceptance\Category\Category\Zed\Tester\CategoryEditTester $i
+     *
+     * @return void
+     */
+    public function testICanEditCategoryCheckboxes(CategoryEditTester $i)
+    {
+        $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
+        $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));
+
+        $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_ACTIVE);
+//        $i->uncheckOption(CategoryEditPage::FORM_FIELD_CATEGORY_IS_ACTIVE);
+
+        $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_IN_MENU);
+//        $i->uncheckOption(CategoryEditPage::FORM_FIELD_CATEGORY_IS_IN_MENU);
+
+        $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_MAIN);
+//        $i->uncheckOption(CategoryEditPage::FORM_FIELD_CATEGORY_IS_MAIN);
+
+        $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_CLICKABLE);
+//        $i->uncheckOption(CategoryEditPage::FORM_FIELD_CATEGORY_IS_CLICKABLE);
+
+        $i->click(CategoryEditPage::SUBMIT_BUTTON);
     }
 
 }

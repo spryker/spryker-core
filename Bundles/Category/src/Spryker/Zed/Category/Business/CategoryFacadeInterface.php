@@ -98,7 +98,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
+    public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
      * @api
@@ -123,22 +123,22 @@ interface CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $createUrlPath
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer, $createUrlPath = true);
+    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true);
 
     /**
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer);
+    public function updateCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
      * @api

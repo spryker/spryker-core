@@ -20,11 +20,11 @@ interface ClosureTableWriterInterface
     public function create(NodeTransfer $categoryNodeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function moveNode(NodeTransfer $categoryNode);
+    public function moveNode(NodeTransfer $categoryNodeTransfer);
 
     /**
      * @param int $nodeId

@@ -61,14 +61,14 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function moveNode(NodeTransfer $categoryNode)
+    public function moveNode(NodeTransfer $categoryNodeTransfer)
     {
         $obsoleteEntities = $this->queryContainer
-            ->queryClosureTableParentEntries($categoryNode->getIdCategoryNode())
+            ->queryClosureTableParentEntries($categoryNodeTransfer->getIdCategoryNode())
             ->find();
 
         foreach ($obsoleteEntities as $obsoleteEntity) {
@@ -76,11 +76,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         }
 
         $nodeEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
+            ->queryClosureTableFilterByIdNode($categoryNodeTransfer->getIdCategoryNode())
             ->find();
 
         $parentEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNodeDescendant($categoryNode->getFkParentCategoryNode())
+            ->queryClosureTableFilterByIdNodeDescendant($categoryNodeTransfer->getFkParentCategoryNode())
             ->find();
 
         foreach ($nodeEntities as $nodeEntity) {

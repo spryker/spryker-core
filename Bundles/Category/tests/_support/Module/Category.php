@@ -8,7 +8,6 @@ namespace Category\Module;
 
 use Acceptance\Category\Category\Zed\PageObject\CategoryCreatePage;
 use Codeception\Module;
-use Codeception\Step;
 use Codeception\TestCase;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -34,13 +33,23 @@ class Category extends Module
     }
 
     /**
-     * @param \Codeception\Step $step
+     * @param \Codeception\TestCase $test
      *
      * @return void
      */
-    public function _afterStep(Step $step)
+    public function _before(TestCase $test)
     {
-        parent::_afterStep($step);
+        parent::_before($test);
+
+        $this->cleanUpDatabase();
+    }
+
+    /**
+     * @return void
+     */
+    public function _afterSuite()
+    {
+        parent::_afterSuite();
 
         $this->cleanUpDatabase();
     }
@@ -74,6 +83,7 @@ class Category extends Module
      */
     protected function removeCategory($categoryKey)
     {
+        return;
         $categoryQuery = new SpyCategoryQuery();
         $categoryEntity = $categoryQuery->findOneByCategoryKey($categoryKey);
         if (!$categoryEntity) {

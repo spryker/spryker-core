@@ -34,13 +34,13 @@ class EditController extends AbstractController
         if ($form->isValid()) {
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
             try {
-                $this->getFacade()->createCategory($categoryTransfer);
+                $this->getFacade()->updateCategory($categoryTransfer);
                 $categoryNodeTransfer = new NodeTransfer();
                 $categoryNodeTransfer->fromArray($categoryTransfer->toArray(), true);
                 $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
                 $categoryNodeTransfer->setFkParentCategoryNode($categoryTransfer->getParent()->getIdCategoryNode());
                 $categoryNodeTransfer->setLocalizedAttributes($categoryTransfer->getLocalizedAttributes());
-                $this->getFacade()->createCategoryNode($categoryNodeTransfer);
+                $this->getFacade()->updateCategoryNode($categoryNodeTransfer);
 
                 $this->addSuccessMessage('The category was updated successfully.');
 

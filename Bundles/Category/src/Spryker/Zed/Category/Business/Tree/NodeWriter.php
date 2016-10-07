@@ -50,35 +50,34 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param int $nodeId
+     * @param int $idCategoryNode
      *
      * @return void
      */
-    public function delete($nodeId)
+    public function delete($idCategoryNode)
     {
         $nodeEntity = $this->queryContainer
-            ->queryNodeById($nodeId)
+            ->queryNodeById($idCategoryNode)
             ->findOne();
-        if (!$nodeEntity) {
-            return;
-            //throw new NodeNotFoundException();
+
+        if ($nodeEntity) {
+            $nodeEntity->delete();
         }
-        $categoryId = $nodeEntity->getFkCategory();
-        $nodeEntity->delete();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function update(NodeTransfer $categoryNode)
+    public function update(NodeTransfer $categoryNodeTransfer)
     {
         $nodeEntity = $this->queryContainer
-            ->queryNodeById($categoryNode->getIdCategoryNode())
+            ->queryNodeById($categoryNodeTransfer->getIdCategoryNode())
             ->findOne();
+
         if ($nodeEntity) {
-            $nodeEntity->fromArray($categoryNode->toArray());
+            $nodeEntity->fromArray($categoryNodeTransfer->toArray());
             $nodeEntity->save();
         }
     }

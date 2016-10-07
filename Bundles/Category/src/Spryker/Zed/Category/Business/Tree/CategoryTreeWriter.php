@@ -106,17 +106,20 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
     {
         $this->connection->beginTransaction();
 
         $this->nodeWriter->update($categoryNodeTransfer);
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
-        $this->nodeUrlManager->updateUrl($categoryNodeTransfer, $localeTransfer);
+
+        foreach ($categoryNodeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $this->nodeUrlManager->updateUrl($categoryNodeTransfer, $localizedAttribute->getLocale());
+        }
 
         $this->touchCategoryActiveRecursive($categoryNodeTransfer);
         $this->touchNavigationActive();

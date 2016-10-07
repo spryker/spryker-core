@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\Category\Business\Model\CategoryUrl;
 
-use Generated\Shared\Transfer\CategoryNodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;

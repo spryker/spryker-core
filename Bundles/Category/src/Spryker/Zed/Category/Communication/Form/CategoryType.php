@@ -111,6 +111,7 @@ class CategoryType extends AbstractType
     {
         $builder->add(static::FIELD_IS_IN_MENU, 'checkbox', [
             'label' => 'Show in Menu',
+            'data' => true,
             'required' => false,
         ]);
 
@@ -126,6 +127,7 @@ class CategoryType extends AbstractType
     {
         $builder->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
             'label' => 'Clickable',
+            'data' => true,
             'required' => false,
         ]);
 
@@ -156,7 +158,6 @@ class CategoryType extends AbstractType
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_PARENT_NODE, new Select2ComboBoxType(), [
-            'data_class' => NodeTransfer::class,
             'property_path' => 'parent',
             'label' => 'Parent',
             'choices' => $choices,

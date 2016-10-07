@@ -20,17 +20,17 @@ interface NodeWriterInterface
     public function create(NodeTransfer $categoryNodeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function update(NodeTransfer $categoryNode);
+    public function update(NodeTransfer $categoryNodeTransfer);
 
     /**
-     * @param int $nodeId
+     * @param int $idCategoryNode
      *
      * @return int
      */
-    public function delete($nodeId);
+    public function delete($idCategoryNode);
 
 }

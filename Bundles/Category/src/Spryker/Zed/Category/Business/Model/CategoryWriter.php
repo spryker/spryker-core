@@ -69,13 +69,20 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    public function update(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $this->persistCategoryAttribute($categoryTransfer, $localeTransfer);
+        foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($categoryTransfer->getIdCategory())
+                ->filterByFkLocale($localizedAttributes->getLocale()->getIdLocale())
+                ->findOneOrCreate();
+
+            $categoryAttributeEntity->fromArray($localizedAttributes->toArray());
+            $categoryAttributeEntity->save();
+        }
 
         $this->saveCategory($categoryTransfer);
     }
