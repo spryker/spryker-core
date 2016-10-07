@@ -203,7 +203,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAttributeProcessor($idProductAbstract)
     {
         return $this->getFactory()
-            ->createProductAbstractManager()
+            ->createProductManager()
             ->getProductAttributeProcessor($idProductAbstract);
     }
 
@@ -350,7 +350,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAttributeProcessorByAbstractSku($abstractSku)
     {
         return $this->getFactory()
-            ->createProductAbstractManager()
+            ->createProductManager()
             ->getProductAttributeProcessorByAbstractSku($abstractSku);
     }
 

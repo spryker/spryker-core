@@ -32,4 +32,18 @@ interface ProductManagerInterface
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributeProcessor($idProductAbstract);
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     */
+    public function getProductAttributeProcessorByAbstractSku($abstractSku);
+
 }

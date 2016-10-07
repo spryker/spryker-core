@@ -53,13 +53,6 @@ interface ProductAbstractManagerInterface
     public function getProductAbstractById($idProductAbstract);
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessor($idProductAbstract);
-
-    /**
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -75,13 +68,6 @@ interface ProductAbstractManagerInterface
      * @return string
      */
     public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer);
-
-    /**
-     * @param string $abstractSku
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku);
 
     /**
      * @param int $idProductAbstract
