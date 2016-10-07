@@ -39,6 +39,7 @@
         <property name="isVariant" type="bool" />
         <property name="superAttributes" type="array" singular="superAttribute"/>
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
     </transfer>
 
     <transfer name="StorageAttributeMap">
