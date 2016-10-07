@@ -24,16 +24,32 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $userPath = $this->getUserPath();
+
         $whoops = new Run();
         $handler = new PrettyPageHandler();
-        $handler->setEditor(function ($file, $line) {
-            $userPath = Config::get(ErrorHandlerConstants::USER_BASE_PATH, '');
+        $handler->setEditor(function ($file, $line) use ($userPath) {
             $serverPath = '/data/shop/development/current';
 
             return sprintf('phpstorm://open?file=%s&line=%s', str_replace($serverPath, $userPath, $file), $line);
         });
         $whoops->pushHandler($handler);
         $whoops->register();
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    protected function getUserPath()
+    {
+        $userPath = Config::get(ErrorHandlerConstants::USER_BASE_PATH, '');
+        if (!$userPath) {
+            throw new \Exception('Could not find user path for replacement in config. You need to add "ErrorHandlerConstants::USER_BASE_PATH" with a path to the files on your machine.');
+        }
+
+        return $userPath;
     }
 
     /**
