@@ -60,7 +60,8 @@ class ProductActivator implements ProductActivatorInterface
         $productConcrete->setIsActive(true);
 
         $this->productConcreteManager->saveProductConcrete($productConcrete);
-        $this->productConcreteManager->touchProductActive($productConcrete->getFkProductAbstract());
+        $this->productConcreteManager->touchProductActive($productConcrete->getIdProductConcrete());
+        $this->productAbstractManager->touchProductActive($productConcrete->getFkProductAbstract());
 
         $productUrl = $this->productUrlManager->updateProductUrl($productAbstract);
     }
@@ -81,7 +82,8 @@ class ProductActivator implements ProductActivatorInterface
         $productConcrete->setIsActive(false);
 
         $this->productConcreteManager->saveProductConcrete($productConcrete);
-        $this->productConcreteManager->touchProductInactive($productConcrete->getFkProductAbstract());
+        $this->productConcreteManager->touchProductInactive($productConcrete->getIdProductConcrete());
+        $this->productAbstractManager->touchProductInactive($productConcrete->getFkProductAbstract());
 
         $this->productUrlManager->deleteProductUrl($productAbstract);
     }
