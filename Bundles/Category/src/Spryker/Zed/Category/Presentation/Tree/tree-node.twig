@@ -19,7 +19,7 @@
         {% endif %}
 
         {% if node.children is defined and node.children|length > 0 %}
-            <a href="/category/node/view?id-node={{ node.id }}" id="node-{{ node.id }}" class="btn btn-xs btn-success">
+            <a href="/category/re-sort?id-node={{ node.id }}" id="node-{{ node.id }}" class="btn btn-xs btn-success">
                 <i class="fa fa-sitemap"></i>
             </a>
         {% endif %}

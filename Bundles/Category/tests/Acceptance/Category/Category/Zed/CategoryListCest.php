@@ -44,4 +44,15 @@ class CategoryListCest
         $i->amOnPage(CategoryCreatePage::URL);
     }
 
+    /**
+     * @param \Acceptance\Category\Category\Zed\Tester\CategoryListTester $i
+     *
+     * @return void
+     */
+    public function testThatICanSeeCategoryTreeForFirstRootNode(CategoryListTester $i)
+    {
+        $i->amOnPage(CategoryListPage::URL);
+        $i->waitForElement(CategoryListPage::SELECTOR_TREE_LIST);
+    }
+
 }

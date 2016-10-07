@@ -17,5 +17,6 @@ class CategoryListPage
 
     const BUTTON_CREATE_CATEGORY = 'Create Category';
 
+    const SELECTOR_TREE_LIST = '#category-tree > div.dd > ol.dd-list';
 
 }

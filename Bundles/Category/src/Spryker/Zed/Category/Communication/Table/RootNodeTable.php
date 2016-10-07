@@ -22,7 +22,7 @@ class RootNodeTable extends AbstractTable
     const ID_CATEGORY_NODE = 'id_category_node';
     const LOCALE_NAME = 'locale_name';
     const COL_REORDER = 'Reorder';
-    const URL_CATEGORY_NODE_VIEW = '/category/node/view';
+    const URL_CATEGORY_RE_SORT= '/category/re-sort';
     const PARAM_ID_NODE = 'id-node';
     const URL_PRODUCT_CATEGORY_ADD = '/category/create';
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
@@ -123,7 +123,7 @@ class RootNodeTable extends AbstractTable
         );
 
         $urls[] = $this->generateViewButton(
-            Url::generate(self::URL_CATEGORY_NODE_VIEW, [
+            Url::generate(self::URL_CATEGORY_RE_SORT, [
                 self::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
             ]),
             '<i class="fa fa-sitemap"></i>',
