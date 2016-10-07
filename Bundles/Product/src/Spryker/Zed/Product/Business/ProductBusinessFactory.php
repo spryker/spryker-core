@@ -104,9 +104,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductActivator
+     * @return \Spryker\Zed\Product\Business\Product\ProductActivatorInterface
      */
-    public function createProductConcreteActivator()
+    public function createProductActivator()
     {
         return new ProductActivator(
             $this->createProductAbstractManager(),

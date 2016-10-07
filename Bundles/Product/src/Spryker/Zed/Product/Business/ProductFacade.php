@@ -21,15 +21,17 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Add product abstract with its concrete variants
-     * - Add product abstract attributes information
-     * - Add product abstract meta information
-     * - Add product abstract images information
-     * - Add concrete product stock information
-     * - Add product abstract price information
-     * - Add product abstract tax information
-     * - Generates concrete products based on variant attributes
+     * - Adds product abstract with its concrete variants
+     * - Adds product abstract with attributes
+     * - Adds product abstract with meta information
+     * - Adds product abstract with price
+     * - Adds product abstract with tax
+     * - Adds product concrete with tax
+     * - Adds product concrete with price
+     * - Adds product concrete with stock
+     * - Throws exception if product concrete with same SKU exists
      * - Throws exception if abstract product with same SKU exists
+     * - Trigger before and after CREATE plugins
      * - Abstract and concrete products are created but not activated or touched
      *
      * @api
@@ -48,14 +50,18 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Save product abstract with its concrete variants
-     * - Save product abstract attributes information
-     * - Save product abstract meta information
-     * - Save product abstract images information
-     * - Save concrete product stock information
-     * - Save product abstract price information
-     * - Save product abstract tax information
-     * - Throws exception if product with same SKU exists
+     * - Saves product abstract with its concrete variants
+     * - Saves product abstract attributes
+     * - Saves product abstract meta
+     * - Saves product abstract price
+     * - Saves product abstract tax
+     * - Saves product concrete tax
+     * - Saves product concrete price
+     * - Saves product concrete stock
+     * - Triggers before and after UPDATE plugins
+     * - Throws exception if product concrete with same SKU exists
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract and concrete products are updated but not activated or touched
      *
      * @api
      *
@@ -72,6 +78,16 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Adds product abstract attributes
+     * - Adds product abstract localized attributes
+     * - Adds product abstract meta
+     * - Adds product abstract price
+     * - Adds product abstract tax
+     * - Triggers before and after CREATE plugins
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract product is created but not activated or touched
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -80,9 +96,33 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productManager = $this->getFactory()->createProductAbstractManager();
+        return $this->getFactory()
+            ->createProductAbstractManager()
+            ->createProductAbstract($productAbstractTransfer);
+    }
 
-        return $productManager->createProductAbstract($productAbstractTransfer);
+    /**
+     * Specification:
+     * - Saves product abstract attributes
+     * - Saves product abstract localized attributes
+     * - Saves product abstract meta
+     * - Saves product abstract price
+     * - Saves product abstract tax
+     * - Triggers before and after CREATE plugins
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract product is created but not activated or touched
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductAbstractManager()
+            ->saveProductAbstract($productAbstractTransfer);
     }
 
     /**
@@ -94,9 +134,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function hasProductAbstract($sku)
     {
-        $productManager = $this->getFactory()->createProductAbstractManager();
-
-        return $productManager->hasProductAbstract($sku);
+        return $this->getFactory()
+            ->createProductAbstractManager()
+            ->hasProductAbstract($sku);
     }
 
     /**
@@ -115,10 +155,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns abstract product transfer with loaded attributes
-     * - Returns abstract product transfer with loaded price
-     * - Returns abstract product transfer with loaded tax
-     * - Returns abstract product transfer with loaded images
+     * - Returns abstract product with attributes
+     * - Returns abstract product with localized attributes
+     * - Returns abstract product with price
+     * - Returns abstract product with tax
+     * - Triggers LOAD plugins
      *
      * @api
      *
@@ -148,6 +189,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns class used for product attributes processing
+     * - Attributes are taken from product abstract and all product concretes
+     *   and merged together according to https://academy.spryker.com/display/PRODUCT/RD+-+Product+Attribute+Management
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -176,6 +222,12 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Adds concrete product with attributes
+     * - Adds concrete product with localized attributes
+     * - Adds concrete product with price
+     * - Triggers before and after CREATE plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -190,6 +242,29 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Saves concrete product with attributes
+     * - Saves concrete product with localized attributes
+     * - Saves concrete product with price
+     * - Triggers before and after UPDATE plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int
+     */
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->saveProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Checks if product concrete exists
+     *
      * @api
      *
      * @param string $sku
@@ -204,6 +279,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns id of concrete product
+     *
      * @api
      *
      * @param string $sku
@@ -219,10 +297,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product transfer with loaded attributes
-     * - Returns concrete product transfer with loaded price
-     * - Returns concrete product transfer with loaded stock
-     * - Returns concrete product transfer with loaded images
+     * - Returns concrete product with attributes
+     * - Returns concrete product with localized attributes
+     * - Returns concrete product with price
+     * - Triggers LOAD plugins
      *
      * @api
      *
@@ -238,6 +316,12 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns concrete product with attributes
+     * - Returns concrete product with localized attributes
+     * - Returns concrete product with price
+     * - Triggers LOAD plugins
+     *
      * @api
      *
      * @param string $concreteSku
@@ -252,6 +336,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns class used for product attributes processing
+     * - Attributes are taken from product abstract and all product concretes
+     *   and merged together according to https://academy.spryker.com/display/PRODUCT/RD+-+Product+Attribute+Management
+     *
      * @api
      *
      * @param string $abstractSku
@@ -267,10 +356,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product transfer collection with loaded attributes
-     * - Returns concrete product transfer collection with loaded price
-     * - Returns concrete product transfer collection with loaded stock
-     * - Returns concrete product transfer collection with loaded images
+     * - Returns concrete product collection with loaded attributes
+     * - Returns concrete product collection with loaded price
+     * - Returns concrete product collection with loaded stock
+     * - Returns concrete product collection with loaded images
      *
      * @api
      *
@@ -287,7 +376,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Checks if the product attribute key exists in database or not
+     * - Checks if the product attribute key exists
      *
      * @api
      *
@@ -304,7 +393,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns a product attribute key if exists, null otherwise
+     * - Returns product attribute key if exists, null otherwise
      *
      * @api
      *
@@ -321,8 +410,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Creates a new product attribute key entity
-     * - Returns the newly created product attribute key
+     * - Creates new product attribute key
+     * - Returns created product attribute key
      *
      * @api
      *
@@ -339,7 +428,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Updates an existing product attribute key entity
+     * - Updates an existing product attribute key
      * - Returns the updated product attribute key
      *
      * @api
@@ -356,7 +445,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * TODO: check / implement product activation / deactivation workflow
+     * Specification:
+     * - Touches as active: product abstract, product attribute map, and product url
      *
      * @api
      *
@@ -372,7 +462,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * TODO: check / implement product activation / deactivation workflow
+     * Specification:
+     * - Touches as in-active: product abstract, product attribute map, and product url
      *
      * @api
      *
@@ -388,7 +479,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * TODO: check / implement product deletion workflow*
+     * Specification:
+     * - Touches as deleted: product abstract, product attribute map, and product url
      *
      * @api
      *
@@ -404,6 +496,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Touches as active: product concrete
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -418,6 +513,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Touches as in-active: product concrete
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -432,6 +530,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Touches as deleted: product concrete
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -446,6 +547,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Creates localized product urls based on product abstract localized attributes name
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
@@ -460,6 +564,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Updates localized product urls based on product abstract localized attributes name
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
@@ -474,6 +581,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns localized product urls based on product abstract localized attributes name
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
@@ -488,6 +598,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Deletes all urls belonging to given abstract product
+     * - Touches urls as deleted
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
@@ -502,6 +616,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns localized product abstract name based on localized attributes
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -517,6 +634,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns localized product concrete name based on localized attributes
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -532,29 +652,41 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Activates product concrete
+     * - Generates and saves product abstract url
+     * - Touches as active product
+     * - Touches as active product url
+     *
      * @api
      *
      * @param int $idProductConcrete
      *
-     * @return bool
+     * @return void
      */
     public function activateProductConcrete($idProductConcrete)
     {
-         return $this->getFactory()
+         $this->getFactory()
              ->createProductActivator()
              ->activateProductConcrete($idProductConcrete);
     }
 
     /**
+     * Specification:
+     * - Deactivates product concrete
+     * - Removes product url
+     * - Touches as in-active product
+     * - Touches as in-active product url
+     *
      * @api
      *
      * @param int $idProductConcrete
      *
-     * @return bool
+     * @return void
      */
     public function deActivateProductConcrete($idProductConcrete)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createProductActivator()
             ->deActivateProductConcrete($idProductConcrete);
     }
