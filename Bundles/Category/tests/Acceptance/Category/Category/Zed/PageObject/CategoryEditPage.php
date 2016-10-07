@@ -11,13 +11,16 @@ class CategoryEditPage extends Category
 {
 
     const URL = '/category/edit?id-category=';
+    const TITLE = 'Category Edit';
+    const SUCCESS_MESSAGE = 'The category was updated successfully.';
+    const SUBMIT_BUTTON = 'Save';
 
     /**
      * @param int $idCategory
      *
      * @return string
      */
-    public function getUrl($idCategory)
+    public static function getUrl($idCategory)
     {
         return self::URL . $idCategory;
     }

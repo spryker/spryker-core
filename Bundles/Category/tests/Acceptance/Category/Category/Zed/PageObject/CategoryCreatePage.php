@@ -16,18 +16,18 @@ class CategoryCreatePage extends Category
     const SUCCESS_MESSAGE = 'The category was added successfully.';
 
     /**
-     * @param $categoryName
+     * @param $categoryKey
      *
      * @return array
      */
-    public static function getCategorySelectorsWithValues($categoryName)
+    public static function getCategorySelectorsWithValues($categoryKey)
     {
         return [
-            self::FORM_FIELD_CATEGORY_KEY => $categoryName,
+            self::FORM_FIELD_CATEGORY_KEY => $categoryKey,
             self::FORM_FIELD_CATEGORY_PARENT => 1,
             'attributes' => [
-                'en_US' => self::getAttributesSelector($categoryName, 'en_US', 0),
-                'de_DE' => self::getAttributesSelector($categoryName, 'de_DE', 1),
+                'en_US' => self::getAttributesSelector($categoryKey, 'en_US', 0),
+                'de_DE' => self::getAttributesSelector($categoryKey, 'de_DE', 1),
             ]
         ];
     }

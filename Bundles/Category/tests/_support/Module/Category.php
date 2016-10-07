@@ -10,8 +10,13 @@ use Acceptance\Category\Category\Zed\PageObject\CategoryCreatePage;
 use Codeception\Module;
 use Codeception\Step;
 use Codeception\TestCase;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Pyz\Zed\Category\Business\CategoryFacade;
 use Silex\Application;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class Category extends Module
@@ -82,7 +87,7 @@ class Category extends Module
         $nodeEntityCollection = $categoryEntity->getNodes();
         if ($nodeEntityCollection) {
             foreach ($nodeEntityCollection as $nodeEntity) {
-                $closureTableEntries = $nodeEntity->getClosureTables();
+                $closureTableEntries = $nodeEntity->getDescendants();
                 if ($closureTableEntries) {
                     $closureTableEntries->delete();
                 }
@@ -96,6 +101,64 @@ class Category extends Module
     /**
      * @param string $categoryKey
      *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function createCategory($categoryKey)
+    {
+        $categoryTransfer = new CategoryTransfer();
+        $categoryTransfer->setCategoryKey($categoryKey);
+        $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
+
+        $categoryFacade = new CategoryFacade();
+        $categoryFacade->createCategory($categoryTransfer);
+
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
+
+        $categoryFacade->createCategoryNode($categoryNodeTransfer);
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function addLocalizedAttributesToCategoryTransfer(CategoryTransfer $categoryTransfer)
+    {
+        $localeTransferCollection = $this->getLocaleTransferCollection();
+
+        foreach ($localeTransferCollection as $localeTransfer) {
+            $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
+            $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
+            $categoryLocalizedAttributesTransfer->setName(
+                $categoryTransfer->getCategoryKey() . ' name ' . $localeTransfer->getLocaleName()
+            );
+            $categoryLocalizedAttributesTransfer->setMetaTitle(
+                $categoryTransfer->getCategoryKey() . ' title ' . $localeTransfer->getLocaleName()
+            );
+            $categoryLocalizedAttributesTransfer->setMetaDescription(
+                $categoryTransfer->getCategoryKey() . ' description ' . $localeTransfer->getLocaleName()
+            );
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+        }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected function getLocaleTransferCollection()
+    {
+        $localeFacade = new LocaleFacade();
+        $localeTransferCollection = $localeFacade->getLocaleCollection();
+
+        return $localeTransferCollection;
+    }
+
+    /**
+     * @param string $categoryKey
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     public function loadCategoryByCategoryKey($categoryKey)
@@ -104,4 +167,5 @@ class Category extends Module
 
         return $categoryQuery->findOneByCategoryKey($categoryKey);
     }
+
 }

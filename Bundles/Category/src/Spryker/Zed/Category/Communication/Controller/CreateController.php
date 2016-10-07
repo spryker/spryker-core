@@ -44,8 +44,7 @@ class CreateController extends AbstractController
 
                 $this->addSuccessMessage('The category was added successfully.');
 
-                return $this->redirectResponse('/category/root');
-//                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
+                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }

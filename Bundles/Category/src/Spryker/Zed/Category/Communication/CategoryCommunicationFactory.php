@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Communication;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
+use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
@@ -89,6 +90,33 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     protected function createCategoryCreateFormDataProvider()
     {
         return new CategoryCreateDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryEditForm()
+    {
+        $categoryCreateForm = new CategoryType();
+        $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create(
+            $categoryCreateForm,
+            $categoryCreateDataFormProvider->getData(),
+            $categoryCreateDataFormProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider
+     */
+    protected function createCategoryEditFormDataProvider()
+    {
+        return new CategoryEditDataProvider(
             $this->getQueryContainer(),
             $this->getLocaleFacade()
         );

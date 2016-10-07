@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -155,15 +156,16 @@ class CategoryType extends AbstractType
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_PARENT_NODE, new Select2ComboBoxType(), [
-                'data_class' => CategoryTransfer::class,
-                'label' => 'Parent',
-                'choices' => $choices,
-                'choices_as_values' => true,
-                'choice_label' => 'name',
-                'choice_value' => 'idCategoryNode',
-                'group_by' => 'path',
-                'required' => false
-            ]);
+            'data_class' => NodeTransfer::class,
+            'property_path' => 'parent',
+            'label' => 'Parent',
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_label' => 'name',
+            'choice_value' => 'idCategoryNode',
+            'group_by' => 'path',
+            'required' => false
+        ]);
 
         return $this;
     }

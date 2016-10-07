@@ -8,7 +8,6 @@
 namespace Acceptance\Category\Category\Zed;
 
 use Acceptance\Category\Category\Zed\PageObject\CategoryEditPage;
-use Acceptance\Category\Category\Zed\Tester\CategoryCreateTester;
 use Acceptance\Category\Category\Zed\Tester\CategoryEditTester;
 
 /**
@@ -28,15 +27,10 @@ class CategoryEditCest
      */
     public function testICanEditCategory(CategoryEditTester $i)
     {
-        $categoryCreateTester = $i->haveFriend('categoryCreateTester', CategoryCreateTester::class);
-        $categoryCreateTester->does(function (CategoryCreateTester $i) {
-            $i->amZed();
-            $i->amLoggedInUser();
-            $i->createCategory(CategoryEditPage::CATEGORY_A);
-        });
+        $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
+        $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));
+        $i->canSee(CategoryEditPage::TITLE, 'h2');
 
-        $categoryEntity = $i->loadCategoryByCategoryKey(CategoryEditPage::CATEGORY_A);
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($categoryEntity) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
     }
 
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\CategoryNodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;

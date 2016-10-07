@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
+use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
@@ -16,4 +20,49 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
  */
 class EditController extends AbstractController
 {
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function indexAction(Request $request)
+    {
+        $form = $this->getFactory()->createCategoryEditForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $categoryTransfer = $this->getCategoryTransferFromForm($form);
+            try {
+                $this->getFacade()->createCategory($categoryTransfer);
+                $categoryNodeTransfer = new NodeTransfer();
+                $categoryNodeTransfer->fromArray($categoryTransfer->toArray(), true);
+                $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
+                $categoryNodeTransfer->setFkParentCategoryNode($categoryTransfer->getParent()->getIdCategoryNode());
+                $categoryNodeTransfer->setLocalizedAttributes($categoryTransfer->getLocalizedAttributes());
+                $this->getFacade()->createCategoryNode($categoryNodeTransfer);
+
+                $this->addSuccessMessage('The category was updated successfully.');
+
+                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
+            } catch (CategoryUrlExistsException $e) {
+                $this->addErrorMessage($e->getMessage());
+            }
+        }
+
+        return $this->viewResponse([
+            'categoryForm' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function getCategoryTransferFromForm(FormInterface $form)
+    {
+        return $form->getData();
+    }
 }
