@@ -34,12 +34,10 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
      */
     public function hasAttributeKey($key)
     {
-        $count = $this->productQueryContainer
+        return $this->productQueryContainer
             ->queryProductAttributeKey()
             ->filterByKey($key)
-            ->count();
-
-        return $count > 0;
+            ->count() > 0;
     }
 
     /**

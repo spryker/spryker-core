@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
@@ -201,6 +202,7 @@ class ProductManagerTest extends Test
         );
 
         $this->productManager = new ProductManager(
+            $attributeManager,
             $this->productAbstractManager,
             $this->productConcreteManager,
             $this->productQueryContainer
@@ -333,16 +335,24 @@ class ProductManagerTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductAttributeProcessor()
+    {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $attributeProcessor = $this->productManager->getProductAttributeProcessor($idProductAbstract);
+
+        $this->assertInstanceOf(AttributeProcessor::class, $attributeProcessor);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
     protected function assertAddProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $createdProductEntity = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
-            ->findOne();
+        $createdProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($createdProductEntity);
         $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
@@ -355,10 +365,7 @@ class ProductManagerTest extends Test
      */
     protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $updatedProductEntity = $this->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
-            ->findOne();
+        $updatedProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($updatedProductEntity);
         $this->assertEquals($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());

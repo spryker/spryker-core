@@ -223,26 +223,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessor($idProductAbstract)
-    {
-        $attributeProcessor = new AttributeProcessor(); //TODO inject
-        $productAbstractTransfer = $this->getProductAbstractById($idProductAbstract);
-
-        if (!$productAbstractTransfer) {
-            return $attributeProcessor;
-        }
-
-        $concreteProductCollection = $this->productConcreteManager
-            ->getConcreteProductsByAbstractProductId($idProductAbstract);
-
-        return $this->attributeManager->buildAttributeProcessor($productAbstractTransfer, $concreteProductCollection);
-    }
-
-    /**
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -280,18 +260,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             $localeTransfer,
             $productAbstractTransfer->getSku()
         );
-    }
-
-    /**
-     * @param string $abstractSku
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku)
-    {
-        $idProductAbstract = (int)$this->getProductAbstractIdBySku($abstractSku);
-
-        return $this->getProductAttributeProcessor($idProductAbstract);
     }
 
     /**

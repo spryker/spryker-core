@@ -12,18 +12,16 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
-use Spryker\Zed\Product\Business\Product\ProductUrlManager;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
@@ -38,9 +36,9 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Spryker
  * @group Zed
  * @group Product
- * @group ProductActivatorTest
+ * @group ProductConcreteManagerTest
  */
-class ProductActivatorTest extends Test
+class ProductConcreteManagerTest extends Test
 {
 
     const PRODUCT_ABSTRACT_NAME = [
@@ -107,11 +105,6 @@ class ProductActivatorTest extends Test
     protected $priceFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface
-     */
-    protected $productManager;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
      */
     protected $productAbstractManager;
@@ -132,16 +125,6 @@ class ProductActivatorTest extends Test
     protected $productConcreteTransfer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductActivatorInterface
-     */
-    protected $productActivator;
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface
-     */
-    protected $productUrlManager;
-
-    /**
      * @return void
      */
     protected function setUp()
@@ -152,8 +135,8 @@ class ProductActivatorTest extends Test
         $this->setupProductAbstract();
         $this->setupProductConcrete();
 
-        $this->touchFacade = new TouchFacade();
         $this->localeFacade = new LocaleFacade();
+        $this->touchFacade = new TouchFacade();
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
         $this->priceFacade = new PriceFacade();
@@ -199,32 +182,6 @@ class ProductActivatorTest extends Test
             $pluginsReadCollection = [],
             $pluginsUpdateCollection = []
         );
-
-        $urlGenerator = new ProductUrlGenerator(
-            $this->productAbstractManager,
-            new ProductToLocaleBridge($this->localeFacade)
-        );
-
-        $this->productUrlManager = new ProductUrlManager(
-            new ProductToUrlBridge($this->urlFacade),
-            new ProductToTouchBridge($this->touchFacade),
-            new ProductToLocaleBridge($this->localeFacade),
-            $this->productQueryContainer,
-            $urlGenerator
-        );
-
-        $this->productManager = new ProductManager(
-            $attributeManager,
-            $this->productAbstractManager,
-            $this->productConcreteManager,
-            $this->productQueryContainer
-        );
-
-        $this->productActivator = new ProductActivator(
-            $this->productAbstractManager,
-            $this->productConcreteManager,
-            $this->productUrlManager
-        );
     }
 
     /**
@@ -252,8 +209,7 @@ class ProductActivatorTest extends Test
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
-            ->setSku('foo')
-            ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+            ->setSku('foo');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -277,8 +233,7 @@ class ProductActivatorTest extends Test
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
-            ->setSku('foo-concrete')
-            ->setIdProductConcrete(self::ID_PRODUCT_CONCRETE);
+            ->setSku('foo-concrete');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -298,35 +253,114 @@ class ProductActivatorTest extends Test
     /**
      * @return void
      */
-    public function testProductActivationShouldGenerateUrlAndTouch()
+    public function testCreateProductConcreteShouldCreateProductConcrete()
     {
-        $idProductAbstract = $this->createNewProduct();
-        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $this->productConcreteTransfer->setFkProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
+        $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-        foreach ($productConcreteCollection as $productConcreteTransfer) {
-            $this->assertNotTrue($productConcreteTransfer->getIsActive());
-
-            $this->productActivator->activateProductConcrete($productConcreteTransfer->getIdProductConcrete());
-
-            $this->assertProductWasActivated($productConcreteTransfer);
-        }
+        $this->assertTrue($idProductConcrete > 0);
+        $this->assertCreateProductConcrete($this->productConcreteTransfer);
     }
 
     /**
      * @return void
      */
-    public function testProductDeactivationShouldGenerateUrlAndTouch()
+    public function testSaveProductAbstractShouldUpdateProductAbstract()
     {
-        $idProductAbstract = $this->createNewActiveProduct();
-        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $this->productConcreteTransfer->setFkProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $this->productConcreteTransfer->setIdProductConcrete(self::ID_PRODUCT_CONCRETE);
 
-        foreach ($productConcreteCollection as $productConcreteTransfer) {
-            $this->assertTrue($productConcreteTransfer->getIsActive());
-
-            $this->productActivator->deActivateProductConcrete($productConcreteTransfer->getIdProductConcrete());
-
-            $this->assertProductWasDeactivated($productConcreteTransfer);
+        foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $localizedAttribute->setName(
+                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+            );
         }
+
+        $idProductConcrete = $this->productConcreteManager->saveProductConcrete($this->productConcreteTransfer);
+
+        $this->assertEquals(self::ID_PRODUCT_CONCRETE, $idProductConcrete);
+        $this->assertSaveProductConcrete($this->productConcreteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTouchProductActiveShouldTouchActiveLogic()
+    {
+        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productConcreteManager->touchProductActive($idProductAbstract);
+
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTouchProductInactiveShouldTouchInactiveLogic()
+    {
+        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productConcreteManager->touchProductActive($idProductAbstract);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+
+        $this->productConcreteManager->touchProductInactive($idProductAbstract);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTouchProductDeletedShouldTouchDeletedLogic()
+    {
+        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productConcreteManager->touchProductDeleted($idProductAbstract);
+
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+    }
+
+    /**
+     * @return int
+     */
+    protected function createNewProductAndAssertNoTouchExists()
+    {
+        $this->productConcreteTransfer->setFkProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $idProductConcrete = $this->productConcreteManager->createProductConcrete(
+            $this->productConcreteTransfer
+        );
+        $this->assertNoTouchEntry($idProductConcrete, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE);
+
+        return $idProductConcrete;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $touchType
+     *
+     * @return void
+     */
+    protected function assertNoTouchEntry($idProductAbstract, $touchType)
+    {
+        $touchEntity = $this->getProductTouchEntity($touchType, $idProductAbstract);
+
+        $this->assertNull($touchEntity);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $touchType
+     *
+     * @return void
+     */
+    protected function assertTouchEntry($idProductAbstract, $touchType, $status)
+    {
+        $touchEntity = $this->getProductTouchEntity($touchType, $idProductAbstract);
+
+        $this->assertEquals($touchType, $touchEntity->getItemType());
+        $this->assertEquals($idProductAbstract, $touchEntity->getItemId());
+        $this->assertEquals($status, $touchEntity->getItemEvent());
     }
 
     /**
@@ -334,22 +368,12 @@ class ProductActivatorTest extends Test
      *
      * @return void
      */
-    protected function assertProductWasActivated(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertCreateProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcrete = $this->productConcreteManager->getProductConcreteById(
-            $productConcreteTransfer->getIdProductConcrete()
-        );
+        $createdProductEntity = $this->getProductConcreteEntityById($productConcreteTransfer->getIdProductConcrete());
 
-        $this->assertTrue($productConcrete->getIsActive());
-
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $productConcrete->getFkProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
-
-            $this->assertNotNull($urlTransfer->getIdUrl());
-        }
+        $this->assertNotNull($createdProductEntity);
+        $this->assertEquals($productConcreteTransfer->getSku(), $createdProductEntity->getSku());
     }
 
     /**
@@ -357,56 +381,44 @@ class ProductActivatorTest extends Test
      *
      * @return void
      */
-    protected function assertProductWasDeactivated(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcrete = $this->productConcreteManager->getProductConcreteById(
-            $productConcreteTransfer->getIdProductConcrete()
-        );
+        $updatedProductEntity = $this->getProductConcreteEntityById($productConcreteTransfer->getIdProductConcrete());
 
-        $this->assertFalse($productConcrete->getIsActive());
+        $this->assertNotNull($updatedProductEntity);
+        $this->assertEquals($this->productConcreteTransfer->getSku(), $updatedProductEntity->getSku());
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $productConcrete->getFkProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $expectedProductName = self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
-            $this->assertNull($urlTransfer->getIdUrl());
+            $this->assertEquals($expectedProductName, $localizedAttribute->getName());
         }
     }
 
     /**
-     * @return int
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    protected function createNewProduct()
+    protected function getProductConcreteEntityById($idProductConcrete)
     {
-        $newProductAbstract = clone $this->productAbstractTransfer;
-        $newProductAbstract->setIdProductAbstract(null);
-        $newProductAbstract->setSku('new-sku');
-
-        $newProductConcrete = clone $this->productConcreteTransfer;
-        $newProductConcrete->setIdProductConcrete(null);
-        $newProductConcrete->setSku('new-sku-concrete');
-
-        return $this->productManager->addProduct($newProductAbstract, [$newProductConcrete]);
+        return $this->productQueryContainer
+            ->queryProduct()
+            ->filterByIdProduct($idProductConcrete)
+            ->findOne();
     }
 
     /**
-     * @return int
+     * @param string $touchType
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
-    protected function createNewActiveProduct()
+    protected function getProductTouchEntity($touchType, $idProductAbstract)
     {
-        $newProductAbstract = clone $this->productAbstractTransfer;
-        $newProductAbstract->setIdProductAbstract(null);
-        $newProductAbstract->setSku('new-sku');
-        $newProductAbstract->setIsActive(true);
-
-        $newProductConcrete = clone $this->productConcreteTransfer;
-        $newProductConcrete->setIdProductConcrete(null);
-        $newProductConcrete->setSku('new-sku-concrete');
-        $newProductConcrete->setIsActive(true);
-
-        return $this->productManager->addProduct($newProductAbstract, [$newProductConcrete]);
+        return $this->touchQueryContainer
+            ->queryTouchEntriesByItemTypeAndItemIds($touchType, [$idProductAbstract])
+            ->findOne();
     }
 
 }
