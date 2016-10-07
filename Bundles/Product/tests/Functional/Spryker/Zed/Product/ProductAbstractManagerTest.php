@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
@@ -20,13 +22,12 @@ use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
-use Spryker\Zed\Product\Business\Product\ProductUrlManager;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
@@ -135,6 +136,7 @@ class ProductAbstractManagerTest extends Test
         $this->setupProductConcrete();
 
         $this->localeFacade = new LocaleFacade();
+        $this->touchFacade = new TouchFacade();
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
         $this->priceFacade = new PriceFacade();
@@ -179,19 +181,6 @@ class ProductAbstractManagerTest extends Test
             $pluginsCreateCollection = [],
             $pluginsReadCollection = [],
             $pluginsUpdateCollection = []
-        );
-
-        $urlGenerator = new ProductUrlGenerator(
-            $this->productAbstractManager,
-            new ProductToLocaleBridge($this->localeFacade)
-        );
-
-        $productUrlManager = new ProductUrlManager(
-            new ProductToUrlBridge($this->urlFacade),
-            new ProductToTouchBridge($this->touchFacade),
-            new ProductToLocaleBridge($this->localeFacade),
-            $this->productQueryContainer,
-            $urlGenerator
         );
     }
 
@@ -298,6 +287,100 @@ class ProductAbstractManagerTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testTouchProductActiveShouldTouchActiveLogic()
+    {
+        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productAbstractManager->touchProductActive($idProductAbstract);
+
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_URL, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTouchProductInactiveShouldTouchInactiveLogic()
+    {
+        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productAbstractManager->touchProductActive($idProductAbstract);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_URL, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+
+        $this->productAbstractManager->touchProductInactive($idProductAbstract);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_URL, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTouchProductDeletedShouldTouchDeletedLogic()
+    {
+        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productAbstractManager->touchProductDeleted($idProductAbstract);
+
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_URL, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+    }
+
+    /**
+     * @return int
+     */
+    protected function createNewProductAndAssertNoTouchExists()
+    {
+        $newProductAbstract = clone $this->productAbstractTransfer;
+        $newProductAbstract->setIdProductAbstract(null);
+
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($newProductAbstract);
+        $this->assertNoTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+        $this->assertNoTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_URL);
+        $this->assertNoTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP);
+
+        return $idProductAbstract;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $touchType
+     *
+     * @return void
+     */
+    protected function assertNoTouchEntry($idProductAbstract, $touchType)
+    {
+        $touchEntity = $this->touchQueryContainer
+            ->queryTouchEntriesByItemTypeAndItemIds($touchType, [$idProductAbstract])
+            ->findOne();
+
+        $this->assertNull($touchEntity);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $touchType
+     *
+     * @return void
+     */
+    protected function assertTouchEntry($idProductAbstract, $touchType, $status)
+    {
+        $touchEntity = $this->touchQueryContainer
+            ->queryTouchEntriesByItemTypeAndItemIds($touchType, [$idProductAbstract])
+            ->findOne();
+
+        $this->assertEquals($touchType, $touchEntity->getItemType());
+        $this->assertEquals($idProductAbstract, $touchEntity->getItemId());
+        $this->assertEquals($status, $touchEntity->getItemEvent());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
@@ -310,7 +393,6 @@ class ProductAbstractManagerTest extends Test
             ->findOne();
 
         $this->assertNotNull($createdProductEntity);
-
         $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
