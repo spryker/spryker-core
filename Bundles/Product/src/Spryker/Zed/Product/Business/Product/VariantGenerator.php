@@ -9,6 +9,8 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StorageProductTransfer;
+use Spryker\Shared\Product\ProductConstants;
 
 class VariantGenerator implements VariantGeneratorInterface
 {
@@ -208,6 +210,40 @@ class VariantGenerator implements VariantGeneratorInterface
             $result[] = $this->createProductConcreteTransfer($productAbstractTransfer, $sku, $attributeTokens);
         }
 
+        return $result;
+    }
+
+    /**
+     * @param array $superAttributes
+     * @param int $idProductConcrete
+     * @param array $variants
+     *
+     * @return array
+     */
+    public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = [])
+    {
+        if (empty($superAttributes)) {
+            $result = [
+                StorageProductTransfer::ID => $idProductConcrete //set leaf node to id of concrete product
+            ];
+        }  else {
+            $result = [];
+
+            $index = 0;
+            foreach ($superAttributes as $key => $value) {
+                $newAttributes = $superAttributes;
+                $newVariants = $variants;
+
+                $newVariants[] = array_splice($newAttributes, $index++, 1);
+
+                $recurseResult = $this->buildAttributePermutations($newAttributes, $idProductConcrete, $newVariants);
+                if (is_array($recurseResult)) {
+                    $recurseResult = array_merge($result, $recurseResult);
+                }
+
+                $result[$key . ProductConstants::ATTRIBUTE_MAP_PATH_DELIMITER . $value] = $recurseResult;
+            }
+        }
         return $result;
     }
 

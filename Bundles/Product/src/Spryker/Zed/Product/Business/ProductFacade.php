@@ -689,6 +689,24 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         $this->getFactory()
             ->createProductActivator()
             ->deActivateProductConcrete($idProductConcrete);
+
+    }
+
+    /**
+     *
+     * @api
+     *
+     * @param array $superAttributes
+     * @param int $idProductConcrete
+     * @param array $variants
+     *
+     * @return array
+     */
+    public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = [])
+    {
+        return $this->getFactory()
+            ->createProductVariantGenerator()
+            ->generateAttributePermutations($superAttributes, $idProductConcrete, $variants);
     }
 
 }

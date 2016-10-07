@@ -510,4 +510,13 @@ interface ProductFacadeInterface
      */
     public function deActivateProductConcrete($idProductConcrete);
 
+    /**
+     * @param array $superAttributes
+     * @param int $idProductConcrete
+     * @param array $variants
+     *
+     * @return array
+     */
+    public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = []);
+
 }
