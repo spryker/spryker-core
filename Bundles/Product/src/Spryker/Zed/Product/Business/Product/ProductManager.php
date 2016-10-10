@@ -131,7 +131,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributeProcessorByAbstractSku($abstractSku)
     {
-        $idProductAbstract = (int)$this->productAbstractManager->getProductAbstractIdBySku($abstractSku);
+        $idProductAbstract = (int)$this->productAbstractManagergetProductAbstractIdBySku($abstractSku);
 
         return $this->getProductAttributeProcessor($idProductAbstract);
     }

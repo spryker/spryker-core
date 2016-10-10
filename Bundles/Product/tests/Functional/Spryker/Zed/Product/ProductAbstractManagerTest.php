@@ -10,12 +10,14 @@ namespace Functional\Spryker\Zed\Product;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -68,6 +70,8 @@ class ProductAbstractManagerTest extends Test
     const ABSTRACT_SKU = 'foo';
     const CONCRETE_SKU = 'foo-concrete';
 
+    const PRICE = 1234;
+
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
      */
@@ -82,6 +86,11 @@ class ProductAbstractManagerTest extends Test
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
+     */
+    protected $priceProductQueryContainer;
 
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
@@ -146,6 +155,7 @@ class ProductAbstractManagerTest extends Test
         $this->priceFacade = new PriceFacade();
         $this->productQueryContainer = new ProductQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
+        $this->priceProductQueryContainer = new PriceQueryContainer();
 
         $attributeManager = new AttributeManager(
             $this->productQueryContainer
@@ -357,6 +367,18 @@ class ProductAbstractManagerTest extends Test
     /**
      * @return void
      */
+    public function testGetProductAbstractByIdShouldReturnFullyLoadedTransferObject()
+    {
+        $productAbstract = $this->productAbstractManager->getProductAbstractById(self::ID_PRODUCT_ABSTRACT);
+
+        $this->assertInstanceOf(ProductAbstractTransfer::class, $productAbstract);
+        $this->assertInstanceOf(PriceProductTransfer::class, $productAbstract->getPrice());
+        $this->assertNotNull($productAbstract->getTaxSetId());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetAbstractSkuFromProductConcrete()
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
@@ -443,6 +465,49 @@ class ProductAbstractManagerTest extends Test
         $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
         $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_URL, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
         $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistProductShouldPersistPriceWhenCreatingProduct()
+    {
+        $price = (new PriceProductTransfer())
+            ->setPrice(self::PRICE);
+
+        $this->productAbstractTransfer->setPrice($price);
+
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+
+        $priceEntity = $this->priceProductQueryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->findOne();
+
+        $this->assertNotNull($priceEntity);
+        $this->assertEquals(self::PRICE, $priceEntity->getPrice());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistProductShouldPersistPriceWhenUpdatingProduct()
+    {
+        $price = (new PriceProductTransfer())
+            ->setPrice(self::PRICE);
+
+        $this->productAbstractTransfer->setPrice($price);
+        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+
+        $idProductAbstract = $this->productAbstractManager->saveProductAbstract($this->productAbstractTransfer);
+
+        $priceEntity = $this->priceProductQueryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->findOne();
+
+        $this->assertNotNull($priceEntity);
+        $this->assertEquals(self::PRICE, $priceEntity->getPrice());
     }
 
     /**

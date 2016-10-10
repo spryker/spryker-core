@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 
+//TODO need business decisions here
 class ProductActivator implements ProductActivatorInterface
 {
 
