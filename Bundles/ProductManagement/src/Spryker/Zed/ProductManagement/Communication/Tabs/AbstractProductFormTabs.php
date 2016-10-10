@@ -113,8 +113,7 @@ abstract class AbstractProductFormTabs extends AbstractTabs
     {
         $tabsViewTransfer
             ->setFooterTemplate('@ProductManagement/Product/_partials/tabs-footer.twig')
-            ->setIsNavigable(true)
-        ->setAutoErrors(false);
+            ->setIsNavigable(true);
 
         return $this;
     }

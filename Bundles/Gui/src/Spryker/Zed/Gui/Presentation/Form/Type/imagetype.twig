@@ -40,11 +40,14 @@
         {% set value = form.vars.value|first %}
     {% endif %}
 
-    <div class='form-group {{ form_group_errors_css }}'>
+    {{ form_label(form) }}
+    {% if value != "" %}
         <a href="{{ img_url }}" data-lightbox="{{ img_gallery }}">
             <img src="{{ value }}" {{ img_width|raw }} {{ img_height|raw }} class="{{ css|raw }}" {{ img_title|raw }} />
         </a>
-        {{ form_label(form) }}
-        {{ form_errors(form) }}
-    </div>
+    {% else %}
+        <i class="fa fa-file-image-o"></i> {{ 'No preview available!' | trans }}
+    {% endif %}
+    {{ form_errors(form) }}
+
 {% endblock image_widget %}

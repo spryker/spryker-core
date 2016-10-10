@@ -10,31 +10,10 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AbstractSubForm extends AbstractType
+abstract class AbstractSubForm extends AbstractType
 {
 
     public static $errorFieldsDisplayed = [];
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @param string $name
-     */
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver

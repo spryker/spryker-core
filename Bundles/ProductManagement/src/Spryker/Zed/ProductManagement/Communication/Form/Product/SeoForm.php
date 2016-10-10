@@ -17,6 +17,13 @@ class SeoForm extends AbstractSubForm
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_META_DESCRIPTION = 'meta_description';
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'product_seo';
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

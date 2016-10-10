@@ -53,21 +53,26 @@ class AttributeAbstractForm extends AbstractSubForm
     protected $localeProvider;
 
     /**
-     * @param string $name
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      */
     public function __construct(
-        $name,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         LocaleProvider $localeProvider,
         LocaleTransfer $localeTransfer = null
     ) {
-        parent::__construct($name);
-
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeProvider = $localeProvider;
         $this->localeTransfer = $localeTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'product_attribute_abstract';
     }
 
     /**

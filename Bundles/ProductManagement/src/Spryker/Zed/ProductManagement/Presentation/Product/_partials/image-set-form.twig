@@ -1,28 +1,11 @@
-<div class="image_set_block"
-     data-valuecount="{{ form[formKey]|length }}"
-     data-prototype="<div class='panel-body'>{{ form_widget(form[formKey].vars.prototype)|e }}</div>"
+<div class="image-set-container" data-image-collection-prototype="{{ form_widget(form[formKey].vars.prototype.children.product_images.vars.prototype) | e }}"
+    data-image-set-prototype="{{ form_widget(form[formKey].vars.prototype) | e }}"
 >
-    <div class="img_collection">
-        {% for productImageSet in form[formKey] %}
-            {% set form_group_errors_css = '' %}
+    {% for productImageSet in form[formKey] %}
+        {{ form_widget(productImageSet) }}
+    {% endfor %}
 
-            {% if productImageSet.name.vars.errors|length %}
-                {% set form_group_errors_css = 'has-error' %}
-            {% endif %}
-
-            <div class='form-group {{ form_group_errors_css }}'>
-                {{ form_row(productImageSet.id_product_image_set) }}
-                {{ form_row(productImageSet.fk_locale) }}
-                {{ form_row(productImageSet.fk_product) }}
-                {{ form_row(productImageSet.fk_product_abstract) }}
-
-                {{ form_row(productImageSet.name) }}
-            </div>
-
-            {% include '@ProductManagement/Product/_partials/image-collection-form.twig' %}
-
-            <a href="#" class="btn btn-primary add-another-image">Add Image</a>
-        {% endfor %}
-    </div>
-
+    <a href="#" class="btn btn-outline btn-primary add-another-image-set m-t-md">
+        <i class="fa fa-files-o"></i> {{ 'Add image set' | trans }}
+    </a>
 </div>

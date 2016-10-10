@@ -10,6 +10,11 @@ require('../../sass/main.scss');
 
 $(document).ready(function() {
 
+    /**
+     * @param data
+     * @param params
+     * @returns {{results: *, pagination: {more: (boolean|number)}}}
+     */
     function processAjaxResult(data, params) {
         //{"id_attribute":1,"values":[{"id_product_management_attribute_value":1,"fk_locale":66,"value":"intel-atom-quad-core","translation":"Intel Atom Z3560 Quad-Core US"}]}
         // parse the results into the format expected by Select2
@@ -26,6 +31,10 @@ $(document).ready(function() {
         };
     }
 
+    /**
+     * @param $select
+     * @param term
+     */
     function select2_search ($select, term) {
         $select.select2('open');
 
@@ -37,6 +46,93 @@ $(document).ready(function() {
         $search.val(term);
         $search.trigger('keyup');
     }
+
+    /**
+     * @param event
+     */
+    function addAnotherImageCollection(event) {
+        event.preventDefault();
+
+        var prototypeTemplate = $(event.target).closest('[data-image-collection-prototype]');
+
+        var imageSet = $(event.target).closest('.image-set');
+        var imageSetIndex = imageSet.data('imageSetIndex');
+        var imageCollectionIndex = imageSet.find('.image-collection').length;
+
+        var newOptionFormHTML = prototypeTemplate
+            .data('imageCollectionPrototype')
+            .replace(/__image_set_name__/g, imageSetIndex)
+            .replace(/__name__/g, imageCollectionIndex);
+
+        $(event.target).parent().find('.image-collection-container').append($(newOptionFormHTML));
+    }
+
+    /**
+     * @param event
+     */
+    function addAnotherImageSet(event) {
+        event.preventDefault();
+
+        var prototypeTemplate = $(event.target).closest('[data-image-set-prototype][data-image-collection-prototype]');
+        var imageSetIndex = prototypeTemplate.data('currentImageSetIndex') + 1;
+        prototypeTemplate.data('currentImageSetIndex', imageSetIndex);
+
+        var imageSetPrototype = prototypeTemplate
+            .data('imageSetPrototype')
+            .replace(/__image_set_name__/g, imageSetIndex);
+
+        var imageSet = $(imageSetPrototype);
+        imageSet.data('imageSetIndex', imageSetIndex);
+        $(event.target).before(imageSet);
+
+        var imageCollectionPrototype = prototypeTemplate
+            .data('imageCollectionPrototype')
+            .replace(/__image_set_name__/g, imageSetIndex)
+            .replace(/__name__/g, 0);
+
+        imageSet.find('.image-collection-container').append($(imageCollectionPrototype));
+    }
+
+    /**
+     * @param event
+     */
+    function deleteImageSet(event) {
+        event.preventDefault();
+
+        $(this).closest('.image-set').remove();
+    }
+
+    /**
+     * @param event
+     */
+    function deleteImageCollection(event) {
+        event.preventDefault();
+
+        $(this).closest('.image-collection').remove();
+    }
+
+    /**
+     * Init image set index
+     */
+    $('.image-set').each(function(i, imageSet) {
+        var imageSetIndex = $(imageSet).closest('[data-image-set-prototype]').find('.image-set').index(imageSet);
+
+        $(imageSet).data('imageSetIndex', imageSetIndex);
+    });
+    $('.image-set-container').each(function(i, imageSetContainer) {
+        var currentImageSetIndex = $(imageSetContainer).find('.image-set').length - 1;
+
+        $(imageSetContainer).data('currentImageSetIndex', currentImageSetIndex);
+    });
+
+    /**
+     * Register global event listeners
+     */
+    $('body')
+        .on('click', '.add-another-image-set', addAnotherImageSet)
+        .on('click', '.add-another-image-collection', addAnotherImageCollection)
+        .on('click', '.remove-image-set', deleteImageSet)
+        .on('click', '.remove-image-collection', deleteImageCollection);
 
     $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
 
@@ -184,52 +280,6 @@ $(document).ready(function() {
             var name = hidden.attr('name');
                 hidden.val(inputValue);
         });
-    });
-
-    $('.add-another-image').click(function(event) {
-        event.preventDefault();
-
-        var $target = $(event.target);
-        var $parent1 = $target.parent();
-        var $parent2 = $parent1.parent();
-        var prototypeTemplate = $parent2.find('div.image_set_list');
-
-        var valueCount = prototypeTemplate.data('valuecount');
-        var newOptionFormHTML = prototypeTemplate.data('prototype');
-            newOptionFormHTML = newOptionFormHTML.replace(/__name__/g, valueCount);
-        var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
-        newOptionForm.attr('class', 'sep_down');
-
-        prototypeTemplate.parent(prototypeTemplate).append(newOptionForm);
-
-        valueCount++;
-        prototypeTemplate.data('valuecount', valueCount);
-    });
-
-    $('.add-another-image-set').click(function(event) {
-        event.preventDefault();
-
-        var $target = $(event.target);
-        var $parent1 = $target.parent();
-        var $parent2 = $parent1.parent();
-        var $parent3 = $parent2.parent();
-
-
-        var prototypeTemplate = $parent3.find('div.image_set_block');
-        var valueCount = prototypeTemplate.data('valuecount');
-        var newOptionFormHTML = prototypeTemplate.data('prototype');
-        newOptionFormHTML = newOptionFormHTML.replace(/__image_set_name__/g, valueCount);
-        var newOptionForm = $(jQuery.parseHTML(newOptionFormHTML)[0]);
-        valueCount++;
-        prototypeTemplate.data('valuecount', valueCount);
-
-
-        var prototypeList = prototypeTemplate.find('div.image_set_list');
-
-        console.log('prototypeList', prototypeList);
-
-
-        $parent3.append(newOptionForm);
     });
 
     $('.slick_demo_1').slick({

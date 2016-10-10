@@ -20,6 +20,14 @@ class GeneralForm extends AbstractSubForm
     const FIELD_DESCRIPTION = 'description';
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'product_general';
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *

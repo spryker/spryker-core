@@ -18,6 +18,14 @@ class AttributeSuperForm extends AttributeAbstractForm
 {
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'product_attribute_super';
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this

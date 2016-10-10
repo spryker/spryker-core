@@ -1,6 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% form_theme form '@ProductManagement/_partials/no-label-checkbox-theme.twig' %}
+{% form_theme form with [
+    '@ProductManagement/_partials/no-label-checkbox-theme.twig',
+    '@ProductManagement/_partials/product-image-set-theme.twig',
+    '@ProductManagement/_partials/product-image-collection-theme.twig',
+]%}
 
 {% if widget_title is not defined %}
     {% set widget_title = 'Create a Product' | trans %}

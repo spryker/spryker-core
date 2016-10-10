@@ -29,6 +29,14 @@ class ImageSetForm extends AbstractSubForm
     const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'product_image_set';
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
@@ -153,7 +161,6 @@ class ImageSetForm extends AbstractSubForm
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
-                //'data' => [AbstractProductFormDataProvider::getImageFields()],
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($images, ExecutionContextInterface $context) {

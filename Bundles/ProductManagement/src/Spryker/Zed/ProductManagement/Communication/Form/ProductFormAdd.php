@@ -330,7 +330,7 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new GeneralForm($name), [
+            ->add($name, new GeneralForm(), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -362,7 +362,6 @@ class ProductFormAdd extends AbstractType
         $builder
             ->add($name, 'collection', [
                 'type' => new AttributeAbstractForm(
-                    $name,
                     $this->productManagementQueryContainer,
                     $this->localeProvider,
                     $localeTransfer
@@ -402,7 +401,6 @@ class ProductFormAdd extends AbstractType
         $builder
             ->add(self::FORM_ATTRIBUTE_SUPER, 'collection', [
                 'type' => new AttributeSuperForm(
-                    self::FORM_ATTRIBUTE_SUPER,
                     $this->productManagementQueryContainer,
                     $this->localeProvider
                 ),
@@ -485,12 +483,13 @@ class ProductFormAdd extends AbstractType
     {
         $builder
             ->add($name, 'collection', [
-                'type' => new ImageSetForm($name),
+                'type' => new ImageSetForm(),
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'prototype_name' => '__image_set_name__',
+                // TODO: move this under ImageSetForm's itself
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($imageSetCollection, ExecutionContextInterface $context) {
