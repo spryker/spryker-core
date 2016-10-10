@@ -246,4 +246,13 @@ interface UrlFacadeInterface
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
+    /**
+     * @api
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function slugify($value);
+
 }

@@ -150,4 +150,11 @@ interface UrlManagerInterface
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function slugify($value);
+
 }
