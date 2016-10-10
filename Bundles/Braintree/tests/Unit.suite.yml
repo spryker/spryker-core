@@ -2,4 +2,9 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
+        - \Propel\Module\PropelInstall
+        - \Propel\Module\Database
+        - \Transfer\Module\TransferGenerate
         - \Braintree\Module\Unit

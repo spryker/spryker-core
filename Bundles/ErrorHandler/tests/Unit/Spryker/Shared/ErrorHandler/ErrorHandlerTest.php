@@ -39,7 +39,6 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $errorHandlerMock = $this->getErrorHandlerMock($errorLoggerMock, $errorRendererMock);
         $errorHandlerMock->expects($this->once())->method('send500Header')->willThrowException($exception);
 
-        $errorHandlerMock->expects($this->never())->method('doDatabaseRollback');
         $errorHandlerMock->expects($this->never())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->once())->method('sendExitCode');
 
@@ -61,7 +60,6 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $errorHandlerMock = $this->getErrorHandlerMock($errorLoggerMock, $errorRendererMock);
         $errorHandlerMock->expects($this->once())->method('send500Header')->willThrowException($exception);
 
-        $errorHandlerMock->expects($this->never())->method('doDatabaseRollback');
         $errorHandlerMock->expects($this->never())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->never())->method('sendExitCode');
 
@@ -81,7 +79,6 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
         $errorHandlerMock = $this->getErrorHandlerMock($errorLoggerMock, $errorRendererMock);
 
-        $errorHandlerMock->expects($this->once())->method('doDatabaseRollback');
         $errorHandlerMock->expects($this->once())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->once())->method('sendExitCode');
 
@@ -101,7 +98,6 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
         $errorHandlerMock = $this->getErrorHandlerMock($errorLoggerMock, $errorRendererMock);
 
-        $errorHandlerMock->expects($this->once())->method('doDatabaseRollback');
         $errorHandlerMock->expects($this->once())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->never())->method('sendExitCode');
 
@@ -154,7 +150,6 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'cleanOutputBuffer',
             'sendExitCode',
             'send500Header',
-            'doDatabaseRollback',
         ];
 
         $methods = array_merge($mockMethods, $methods);

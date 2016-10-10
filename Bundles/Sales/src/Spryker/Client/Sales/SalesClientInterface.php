@@ -27,7 +27,7 @@ interface SalesClientInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer);
 

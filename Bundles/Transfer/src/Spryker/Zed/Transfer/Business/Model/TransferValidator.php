@@ -37,7 +37,7 @@ class TransferValidator implements TransferValidatorInterface
         'boolean' => 'bool',
         'string' => 'string',
         'float' => 'float',
-        'array' => 'array'
+        'array' => 'array',
     ];
 
     /**

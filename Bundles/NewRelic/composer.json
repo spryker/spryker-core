@@ -1,10 +1,5 @@
 {
   "name": "spryker/new-relic",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "spryker/config": "^2.0.0",
     "spryker/console": "^2.0.0",
@@ -30,9 +25,23 @@
   "config": {
     "sort-packages": true
   },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-0": {
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

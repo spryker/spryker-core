@@ -10,6 +10,8 @@ namespace Spryker\Zed\Braintree\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TransactionMetaTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -50,12 +52,10 @@ class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
      */
     public function preCheckPayment(QuoteTransfer $quoteTransfer)
     {
-        $braintreeResponseTransfer = $this
+        return $this
             ->getFactory()
-            ->createPaymentTransactionHandler()
-            ->preCheckPayment($quoteTransfer);
-
-        return $braintreeResponseTransfer;
+            ->createPreCheckTransactionHandler()
+            ->preCheck($quoteTransfer);
     }
 
     /**
@@ -64,36 +64,16 @@ class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\TransactionMetaTransfer $transactionMetaTransfer
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
-    public function authorizePayment(OrderTransfer $orderTransfer, $idPayment)
+    public function authorizePayment(TransactionMetaTransfer $transactionMetaTransfer)
     {
         return $this
             ->getFactory()
-            ->createPaymentTransactionHandler()
-            ->authorizePayment($orderTransfer, $idPayment);
-    }
-
-    /**
-     * Specification:
-     * - Processes cancel payment request to Braintree gateway.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idPayment
-     *
-     * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
-     */
-    public function revertPayment(OrderTransfer $orderTransfer, $idPayment)
-    {
-        return $this
-            ->getFactory()
-            ->createPaymentTransactionHandler()
-            ->revertPayment($orderTransfer, $idPayment);
+            ->createAuthorizeTransactionHandler()
+            ->authorize($transactionMetaTransfer);
     }
 
     /**
@@ -102,36 +82,54 @@ class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\TransactionMetaTransfer $transactionMetaTransfer
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
-    public function capturePayment(OrderTransfer $orderTransfer, $idPayment)
+    public function capturePayment(TransactionMetaTransfer $transactionMetaTransfer)
     {
         return $this
             ->getFactory()
-            ->createPaymentTransactionHandler()
-            ->capturePayment($orderTransfer, $idPayment);
+            ->createCaptureTransactionHandler()
+            ->capture($transactionMetaTransfer);
     }
 
     /**
      * Specification:
-     * - Processes refund payment request to Braintree gateway.
+     * - Processes cancel payment request to Braintree gateway.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idPayment
+     * @param \Generated\Shared\Transfer\TransactionMetaTransfer $transactionMetaTransfer
      *
      * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
      */
-    public function refundPayment(OrderTransfer $orderTransfer, $idPayment)
+    public function revertPayment(TransactionMetaTransfer $transactionMetaTransfer)
     {
         return $this
             ->getFactory()
-            ->createPaymentTransactionHandler()
-            ->refundPayment($orderTransfer, $idPayment);
+            ->createRevertTransactionHandler()
+            ->revert($transactionMetaTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Calculate RefundTransfer for given $salesOrderItems and $salesOrderEntity.
+     * - Processes refund request to Braintree gateway by calculated RefundTransfer.
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer
+     */
+    public function refundPayment(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
+    {
+        return $this
+            ->getFactory()
+            ->createRefundTransactionHandler()
+            ->refund($salesOrderItems, $salesOrderEntity);
     }
 
     /**
