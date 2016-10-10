@@ -202,7 +202,8 @@ class ProductActivatorTest extends Test
 
         $urlGenerator = new ProductUrlGenerator(
             $this->productAbstractManager,
-            new ProductToLocaleBridge($this->localeFacade)
+            new ProductToLocaleBridge($this->localeFacade),
+            new ProductToUrlBridge($this->urlFacade)
         );
 
         $this->productUrlManager = new ProductUrlManager(

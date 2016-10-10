@@ -190,7 +190,8 @@ class ProductManagerTest extends Test
 
         $urlGenerator = new ProductUrlGenerator(
             $this->productAbstractManager,
-            new ProductToLocaleBridge($this->localeFacade)
+            new ProductToLocaleBridge($this->localeFacade),
+            new ProductToUrlBridge($this->urlFacade)
         );
 
         $productUrlManager = new ProductUrlManager(

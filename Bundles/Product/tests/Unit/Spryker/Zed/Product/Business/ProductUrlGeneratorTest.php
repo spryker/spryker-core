@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 
 /**
  * @group Unit
@@ -40,6 +41,11 @@ class ProductUrlGeneratorTest extends Test
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
+     */
+    protected $urlFacade;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -72,6 +78,7 @@ class ProductUrlGeneratorTest extends Test
         $this->setupProductAbstract();
 
         $this->localeFacade = $this->getMock(ProductToLocaleBridge::class, [], [], '', false);
+        $this->urlFacade = $this->getMock(ProductToUrlBridge::class, [], [], '', false);
 
         $availableLocalesCollection = [
             $this->locales['de_DE']->getLocaleName() => $this->locales['de_DE'],
@@ -157,7 +164,19 @@ class ProductUrlGeneratorTest extends Test
                 new ArrayObject([$expectedDEUrl, $expectedENUrl])
             );
 
-        $urlGenerator = new ProductUrlGenerator($this->productAbstractManager, $this->localeFacade);
+        $this->urlFacade
+            ->expects($this->at(0))
+            ->method('slugify')
+            ->with(self::PRODUCT_NAME['de_DE'])
+            ->willReturn('product-name-dede');
+
+        $this->urlFacade
+            ->expects($this->at(1))
+            ->method('slugify')
+            ->with(self::PRODUCT_NAME['en_US'])
+            ->willReturn('product-name-enus');
+
+        $urlGenerator = new ProductUrlGenerator($this->productAbstractManager, $this->localeFacade, $this->urlFacade);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
 
         $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
