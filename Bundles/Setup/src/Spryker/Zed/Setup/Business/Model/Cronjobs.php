@@ -191,39 +191,39 @@ class Cronjobs
      */
     protected function updateOrDelete(array $jobsByName)
     {
-        $console_output = '';
-        $existing_jobs = $this->getExistingJobs();
+        $output = '';
+        $existingJobs = $this->getExistingJobs();
 
-        if (!empty($existing_jobs)) {
-            foreach ($existing_jobs as $v) {
-                $name = basename(dirname($v));
+        if (empty($existingJobs)) {
+            return $output;
+        }
 
-                if (in_array($name, array_keys($jobsByName)) === false) {
-                    // Job does not exist anymore - we have to delete it.
-                    $url = 'job/' . $name . '/doDelete';
-                    $code = $this->callJenkins($url);
-                    $console_output .= "DELETE  jenkins job: $url (http_response: $code)" . PHP_EOL;
-                } else {
-                    // Job exists - let's update config.xml and remove it from array of jobs
-                    $xml = $this->prepareJobXml($jobsByName[$name]);
-                    $url = 'job/' . $name . '/config.xml';
-                    $code = $this->callJenkins($url, $xml);
-                    unset($jobsByName[$name]);
+        foreach ($existingJobs as $existingJob) {
+            $name = basename(dirname($existingJob));
 
-                    if ($code !== '200') {
-                        $console_output .= "UPDATE jenkins job: $url (http_response: $code)" . PHP_EOL;
-                    }
+            if (!in_array($name, array_keys($jobsByName))) {
+                // Job does not exist anymore - we have to delete it.
+                $url = 'job/' . $name . '/doDelete';
+                $code = $this->callJenkins($url);
+                $output .= "DELETE  jenkins job: $url (http_response: $code)" . PHP_EOL;
+            } else {
+                // Job exists - let's update config.xml and remove it from array of jobs
+                $xml = $this->prepareJobXml($jobsByName[$name]);
+                $url = 'job/' . $name . '/config.xml';
+                $code = $this->callJenkins($url, $xml);
+                unset($jobsByName[$name]);
+
+                if ($code !== 200) {
+                    $output .= "UPDATE jenkins job: $url (http_response: $code)" . PHP_EOL;
                 }
             }
         }
 
-        return $console_output;
+        return $output;
     }
 
     /**
      * Create Jenkins jobs for provided list of jobs
-     *
-     * @todo Skip existing jobs
      *
      * @param array $jobsByName
      *
@@ -231,21 +231,33 @@ class Cronjobs
      */
     protected function createJobDefinitions(array $jobsByName)
     {
-        $console_output = '';
-        $existing_jobs = $this->getExistingJobs();
-
-        foreach ($jobsByName as $k => $v) {
-            // skip if job is in existingjobs
-            $xml = $this->prepareJobXml($v);
-            $url = 'createItem?name=' . $v['name'];
-            $code = $this->callJenkins($url, $xml);
-            if ($code === '400') {
-                $code = '400: already exists';
-            }
-            $console_output .= "CREATE  jenkins job: $url (http_response: $code)" . PHP_EOL;
+        $output = '';
+        $existingJobs = $this->getExistingJobs();
+        $map = [];
+        foreach ($existingJobs as $existingJob) {
+            $name = basename(dirname($existingJob));
+            $map[] = $name;
         }
 
-        return $console_output;
+        foreach ($jobsByName as $k => $v) {
+            $url = 'createItem?name=' . $v['name'];
+
+            // skip if job is in existingjobs
+            if (in_array($k, $map)) {
+                $output .= "SKIPPED jenkins job: $url (already exists)" . PHP_EOL;
+                continue;
+            }
+
+            $xml = $this->prepareJobXml($v);
+            $code = $this->callJenkins($url, $xml);
+
+            if ($code === 400) {
+                $code = '400: already exists';
+            }
+            $output .= "CREATE jenkins job: $url (http_response: $code)" . PHP_EOL;
+        }
+
+        return $output;
     }
 
     /**
@@ -254,9 +266,9 @@ class Cronjobs
      *
      * @throws \ErrorException
      *
-     * @return mixed
+     * @return int
      */
-    private function callJenkins($url, $body = '')
+    protected function callJenkins($url, $body = '')
     {
         $postUrl = $this->getJenkinsUrl($url);
 
@@ -272,14 +284,12 @@ class Cronjobs
 
         if ($curl_response === false) {
             throw new \ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
-        } else {
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $return_value = $httpCode;
         }
 
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        return $return_value;
+        return (int)$httpCode;
     }
 
     /**
@@ -291,7 +301,7 @@ class Cronjobs
      *
      * @return string
      */
-    private function prepareJobXml(array $job)
+    protected function prepareJobXml(array $job)
     {
         $disabled = ($job['enable'] === true) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
@@ -342,19 +352,19 @@ class Cronjobs
     */
     protected function getPublisherString(array $job)
     {
-        if (array_key_exists('notifications', $job) && is_array($job['notifications']) && !empty($job['notifications'])) {
-            $recipients = implode(' ', $job['notifications']);
-
-            return "<publishers>
-                        <hudson.tasks.Mailer>
-                          <recipients>$recipients</recipients>
-                          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-                          <sendToIndividuals>false</sendToIndividuals>
-                        </hudson.tasks.Mailer>
-                    </publishers>";
-        } else {
+        if (empty($job['notifications']) || !is_array($job['notifications'])) {
             return '<publishers/>';
         }
+
+        $recipients = implode(' ', $job['notifications']);
+
+        return "<publishers>
+    <hudson.tasks.Mailer>
+      <recipients>$recipients</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+</publishers>";
     }
 
     /**
@@ -378,9 +388,9 @@ class Cronjobs
         if (Environment::isNotProduction()) {
             // Non-production - don't run automatically via Jenkins
             return '';
-        } else {
-            return $schedule;
         }
+
+        return $schedule;
     }
 
     /**
@@ -394,9 +404,9 @@ class Cronjobs
     {
         if (array_key_exists('logrotate_days', $job) && is_int($job['logrotate_days'])) {
             return $job['logrotate_days'];
-        } else {
-            return self::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
         }
+
+        return self::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
     }
 
     /**
@@ -418,14 +428,14 @@ export APPLICATION_STORE=$store
 cd \$destination_release_dir
 . ./config/Zed/cronjobs/cron.conf
 $command</command>";
-        } else {
-            return "<command>
+        }
+
+        return "<command>
 export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
 cd /data/shop/development/current
 . ./config/Zed/cronjobs/cron.conf
 $command</command>";
-        }
     }
 
     /**
