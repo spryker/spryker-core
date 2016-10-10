@@ -38,7 +38,7 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity = new SpyCategoryNode();
         $categoryNodeEntity->fromArray($categoryTransfer->toArray());
         $categoryNodeEntity->setFkCategory($categoryTransfer->getIdCategory());
-        $categoryNodeEntity->setFkParentCategoryNode($categoryTransfer->getParent()->getFkParentCategoryNode());
+        $categoryNodeEntity->setFkParentCategoryNode($categoryTransfer->getParentCategoryNode()->getIdCategoryNode());
         $categoryNodeEntity->save();
 
         $categoryNodeTransfer = new NodeTransfer();

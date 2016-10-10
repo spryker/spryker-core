@@ -122,14 +122,15 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function persistNode($nodeId, $parentId)
     {
-        $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($parentId);
+        $categoryClosureQuery= new SpyCategoryClosureTableQuery();
+        $categoryClosureEntityCollection = $categoryClosureQuery->findByFkCategoryNodeDescendant($parentId);
 
-        foreach ($nodes as $node) {
+        foreach ($categoryClosureEntityCollection as $categoryClosureEntity) {
             $entity = new SpyCategoryClosureTable();
-            $entity->setFkCategoryNode($node->getFkCategoryNode());
+            $entity->setFkCategoryNode($categoryClosureEntity->getFkCategoryNode());
             $entity->setFkCategoryNodeDescendant($nodeId);
-            $entity->setDepth($node->getDepth() + 1);
+
+            $entity->setDepth($categoryClosureEntity->getDepth() + 1);
             $entity->save();
         }
 

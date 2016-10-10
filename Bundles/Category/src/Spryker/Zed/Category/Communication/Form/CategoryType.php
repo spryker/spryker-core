@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Category\Communication\Form;
 
-use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -27,7 +25,7 @@ class CategoryType extends AbstractType
     const FIELD_IS_CLICKABLE = 'is_clickable';
     const FIELD_IS_MAIN = 'is_main';
 
-    const FIELD_PARENT_NODE = 'parent';
+    const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
     const FIELD_EXTRA_PARENTS = 'extra_parents';
 
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
@@ -111,7 +109,6 @@ class CategoryType extends AbstractType
     {
         $builder->add(static::FIELD_IS_IN_MENU, 'checkbox', [
             'label' => 'Show in Menu',
-            'data' => true,
             'required' => false,
         ]);
 
@@ -127,7 +124,6 @@ class CategoryType extends AbstractType
     {
         $builder->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
             'label' => 'Clickable',
-            'data' => true,
             'required' => false,
         ]);
 
@@ -144,6 +140,7 @@ class CategoryType extends AbstractType
         $builder->add(static::FIELD_IS_MAIN, 'checkbox', [
             'label' => 'Is Main',
             'required' => false,
+            'property_path' => 'categoryNode.isMain'
         ]);
 
         return $this;
@@ -157,8 +154,8 @@ class CategoryType extends AbstractType
      */
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_PARENT_NODE, new Select2ComboBoxType(), [
-            'property_path' => 'parent',
+        $builder->add(static::FIELD_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
+            'property_path' => 'parentCategoryNode',
             'label' => 'Parent',
             'choices' => $choices,
             'choices_as_values' => true,

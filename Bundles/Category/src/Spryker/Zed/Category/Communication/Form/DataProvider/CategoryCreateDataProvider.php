@@ -46,6 +46,13 @@ class CategoryCreateDataProvider
     public function getData()
     {
         $categoryTransfer = new CategoryTransfer();
+        $categoryTransfer->setIsActive(false);
+        $categoryTransfer->setIsInMenu(true);
+        $categoryTransfer->setIsClickable(true);
+
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->setIsMain(false);
+        $categoryTransfer->setCategoryNode(new NodeTransfer());
 
         foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
             $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();

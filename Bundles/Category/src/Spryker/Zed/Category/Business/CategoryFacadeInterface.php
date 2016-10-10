@@ -133,12 +133,12 @@ interface CategoryFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null);
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null);
 
     /**
      * @api

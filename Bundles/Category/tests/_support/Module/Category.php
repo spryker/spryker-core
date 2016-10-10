@@ -83,7 +83,6 @@ class Category extends Module
      */
     protected function removeCategory($categoryKey)
     {
-        return;
         $categoryQuery = new SpyCategoryQuery();
         $categoryEntity = $categoryQuery->findOneByCategoryKey($categoryKey);
         if (!$categoryEntity) {
@@ -119,13 +118,16 @@ class Category extends Module
         $categoryTransfer->setCategoryKey($categoryKey);
         $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
 
-        $categoryFacade = new CategoryFacade();
-        $categoryFacade->createCategory($categoryTransfer);
-
         $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
+        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
-        $categoryFacade->createCategoryNode($categoryNodeTransfer);
+        $parentCategoryNodeTransfer = new NodeTransfer();
+        $parentCategoryNodeTransfer->setIdCategoryNode(1);
+        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
+
+        $categoryFacade = new CategoryFacade();
+        $categoryFacade->create($categoryTransfer);
 
         return $categoryTransfer;
     }

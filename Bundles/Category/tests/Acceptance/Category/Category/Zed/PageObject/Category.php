@@ -11,7 +11,7 @@ class Category
 {
 
     const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
-    const FORM_FIELD_CATEGORY_PARENT = 'category[parent]';
+    const FORM_FIELD_CATEGORY_PARENT = 'category[parent_category_node]';
     const FORM_FIELD_CATEGORY_IS_ACTIVE = 'category[is_active]';
     const FORM_FIELD_CATEGORY_IS_IN_MENU = 'category[is_in_menu]';
     const FORM_FIELD_CATEGORY_IS_MAIN = 'category[is_main]';

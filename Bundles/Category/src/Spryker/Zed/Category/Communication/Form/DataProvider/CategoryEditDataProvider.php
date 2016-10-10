@@ -64,7 +64,8 @@ class CategoryEditDataProvider
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->fromArray($categoryEntity->toArray(), true);
-        $categoryTransfer = $this->addParentTransfer($categoryEntity, $categoryTransfer);
+        $categoryTransfer = $this->addCategoryNodeTransfer($categoryEntity, $categoryTransfer);
+        $categoryTransfer = $this->addParentCategoryNodeTransfer($categoryEntity, $categoryTransfer);
         $categoryTransfer = $this->addLocalizedAttributesTransferCollection($categoryEntity, $categoryTransfer);
         $categoryTransfer = $this->addExtraParentTransferCollection($categoryTransfer);
 
@@ -77,11 +78,30 @@ class CategoryEditDataProvider
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function addParentTransfer(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
+    protected function addCategoryNodeTransfer(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
+    {
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->setIdCategoryNode($categoryEntity->getVirtualColumn('id_category_node'));
+        $categoryNodeTransfer->setIsMain($categoryEntity->getVirtualColumn('is_main'));
+        $categoryNodeTransfer->setIsRoot($categoryEntity->getVirtualColumn('is_root'));
+        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function addParentCategoryNodeTransfer(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
     {
         $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setIdCategoryNode($categoryEntity->getVirtualColumn('fk_parent_category_node'));
-        $categoryTransfer->setParent($categoryNodeTransfer);
+        $categoryNodeTransfer->setIsMain($categoryEntity->getVirtualColumn('is_main'));
+        $categoryNodeTransfer->setIsRoot($categoryEntity->getVirtualColumn('is_root'));
+        $categoryTransfer->setParentCategoryNode($categoryNodeTransfer);
 
         return $categoryTransfer;
     }
@@ -116,11 +136,11 @@ class CategoryEditDataProvider
      */
     protected function addExtraParentTransferCollection(CategoryTransfer $categoryTransfer)
     {
-        $categoryNodeTransfer = $categoryTransfer->getParent();
+        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
         $nodeEntityList = $this->queryContainer->queryNotMainNodesByCategoryId($categoryTransfer->getIdCategory())
             ->where(
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
-                $categoryNodeTransfer->getIdCategoryNode() // $categoryEntity[CategoryFormEdit::FIELD_PK_CATEGORY_NODE]
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' != ?',
+                $categoryNodeTransfer->getIdCategoryNode()
             )
             ->find();
 
@@ -209,6 +229,7 @@ class CategoryEditDataProvider
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, 'fk_parent_category_node')
             ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, 'is_main')
+            ->withColumn(SpyCategoryNodeTableMap::COL_IS_ROOT, 'is_root')
             ->findOne();
 
         return $categoryEntity;
