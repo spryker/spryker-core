@@ -552,6 +552,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Creates localized product urls based on product abstract localized attributes name
+     * - Executes touch logic for product url activation
      *
      * @api
      *
@@ -569,6 +570,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Updates localized product urls based on product abstract localized attributes name
+     * - Executes touch logic for product url update
      *
      * @api
      *
@@ -603,7 +605,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Deletes all urls belonging to given abstract product
-     * - Touches urls as deleted
+     * - Executes touch logic for product url deletion
      *
      * @api
      *
@@ -692,11 +694,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         $this->getFactory()
             ->createProductActivator()
             ->deActivateProductConcrete($idProductConcrete);
-
     }
 
     /**
-     *
      * @api
      *
      * @param array $superAttributes
@@ -710,6 +710,43 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductVariantGenerator()
             ->generateAttributePermutations($superAttributes, $idProductConcrete, $variants);
+    }
+
+    /**
+     * Specification:
+     * - Generates product variants based on attributes
+     *
+     * $attributeCollection = Array
+     *  (
+     *     [color] => Array
+     *      (
+     *          [red] => Red
+     *          [blue] => Blue
+     *      )
+     *     [flavour] => Array
+     *      (
+     *          [sweet] => Cakes
+     *      )
+     *     [size] => Array
+     *      (
+     *          [40] => 40
+     *          [41] => 41
+     *          [42] => 42
+     *          )
+     *      )
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributeCollection
+     *
+     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
+    {
+        return $this->getFactory()
+            ->createProductVariantGenerator()
+            ->generate($productAbstractTransfer, $attributeCollection);
     }
 
 }

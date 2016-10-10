@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Shared\Product\ProductConstants;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 
 class VariantGenerator implements VariantGeneratorInterface
 {
@@ -21,6 +22,19 @@ class VariantGenerator implements VariantGeneratorInterface
     const SKU_ABSTRACT_SEPARATOR = '-';
     const SKU_TYPE_SEPARATOR = '-';
     const SKU_VALUE_SEPARATOR = '_';
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
+     */
+    protected $urlFacade;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     */
+    public function __construct(ProductToUrlInterface $urlFacade)
+    {
+        $this->urlFacade = $urlFacade;
+    }
 
     /**
      * @param array $orderedTokenCollection
@@ -47,7 +61,7 @@ class VariantGenerator implements VariantGeneratorInterface
      */
     protected function formatConcreteSku($abstractSku, $concreteSku)
     {
-        return self::slugify(sprintf(
+        return $this->urlFacade->slugify(sprintf(
             '%s%s%s',
             $abstractSku,
             self::SKU_ABSTRACT_SEPARATOR,
@@ -266,26 +280,6 @@ class VariantGenerator implements VariantGeneratorInterface
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setAttributes($attributeTokens)
             ->setIsActive(false);
-    }
-
-    /**
-     * TODO: DRY
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function slugify($value)
-    {
-        if (function_exists('iconv')) {
-            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
-        }
-
-        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
-        $value = mb_strtolower($value);
-        $value = str_replace(' ', '-', $value);
-
-        return $value;
     }
 
 }

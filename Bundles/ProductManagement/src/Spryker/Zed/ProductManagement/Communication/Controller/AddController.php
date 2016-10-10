@@ -54,8 +54,8 @@ class AddController extends AbstractController
                     ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
 
                 $concreteProductCollection = $this->getFactory()
-                    ->createProductVariantGenerator()
-                    ->generate($productAbstractTransfer, $attributeValues);
+                    ->getProductFacade()
+                    ->generateVariants($productAbstractTransfer, $attributeValues);
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductFacade()

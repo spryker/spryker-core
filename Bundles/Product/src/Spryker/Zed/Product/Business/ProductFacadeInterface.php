@@ -466,7 +466,8 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductAbstractName(
-        ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer
+        ProductAbstractTransfer $productAbstractTransfer,
+        LocaleTransfer $localeTransfer
     );
 
     /**
@@ -481,7 +482,8 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(
-        ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
     );
 
     /**
@@ -515,7 +517,6 @@ interface ProductFacadeInterface
     public function deActivateProductConcrete($idProductConcrete);
 
     /**
-     *
      * @api
      *
      * @param array $superAttributes
@@ -525,5 +526,37 @@ interface ProductFacadeInterface
      * @return array
      */
     public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = []);
+
+    /**
+     * Specification:
+     * - Generates product variants based on attributes
+     *
+     * $attributeCollection = Array
+     *  (
+     *     [color] => Array
+     *      (
+     *          [red] => Red
+     *          [blue] => Blue
+     *      )
+     *     [flavour] => Array
+     *      (
+     *          [sweet] => Cakes
+     *      )
+     *     [size] => Array
+     *      (
+     *          [40] => 40
+     *          [41] => 41
+     *          [42] => 42
+     *          )
+     *      )
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributeCollection
+     *
+     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
 
 }

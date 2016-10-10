@@ -100,4 +100,14 @@ class ProductToUrlBridge implements ProductToUrlInterface
         $this->urlFacade->touchUrlDeleted($idUrl);
     }
 
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function slugify($value)
+    {
+        return $this->urlFacade->slugify($value);
+    }
+
 }

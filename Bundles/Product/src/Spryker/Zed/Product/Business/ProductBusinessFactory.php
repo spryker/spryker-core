@@ -137,7 +137,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductUrlGenerator(
             $this->createProductAbstractManager(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getUrlFacade()
         );
     }
 
@@ -146,7 +147,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductVariantGenerator()
     {
-        return new VariantGenerator();
+        return new VariantGenerator(
+            $this->getUrlFacade()
+        );
     }
 
     /**

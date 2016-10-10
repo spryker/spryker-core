@@ -151,11 +151,11 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     /**
      * @param int $idProductConcrete
      *
-     * @return bool
+     * @return void
      */
     public function activateProductConcrete($idProductConcrete)
     {
-        return $this->productFacade->activateProductConcrete($idProductConcrete);
+        $this->productFacade->activateProductConcrete($idProductConcrete);
     }
 
     /**
@@ -163,11 +163,22 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
-     * @return bool
+     * @return void
      */
     public function deActivateProductConcrete($idProductConcrete)
     {
-        return $this->productFacade->deActivateProductConcrete($idProductConcrete);
+        $this->productFacade->deActivateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributeCollection
+     *
+     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
+    {
+        return $this->productFacade->generateVariants($productAbstractTransfer, $attributeCollection);
     }
 
 }

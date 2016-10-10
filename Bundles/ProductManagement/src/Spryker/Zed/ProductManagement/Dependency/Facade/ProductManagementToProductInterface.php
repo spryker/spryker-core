@@ -119,4 +119,12 @@ interface ProductManagementToProductInterface
      */
     public function deActivateProductConcrete($idProductConcrete);
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributeCollection
+     *
+     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
+
 }

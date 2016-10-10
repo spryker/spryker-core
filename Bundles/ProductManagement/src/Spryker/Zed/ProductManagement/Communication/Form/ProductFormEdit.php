@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Form\Validator\Constraints\SkuRegex;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -63,7 +62,7 @@ class ProductFormEdit extends ProductFormAdd
                             function ($sku, ExecutionContextInterface $context) {
                                 $form = $context->getRoot();
                                 $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                                $sku = AbstractProductFormDataProvider::slugify($sku);
+                                $sku = $this->urlFacade->slugify($sku);
 
                                 $skuCount = $this->productQueryContainer
                                     ->queryProduct()

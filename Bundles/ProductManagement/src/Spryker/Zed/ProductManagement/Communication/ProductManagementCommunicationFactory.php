@@ -54,7 +54,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createLocaleProvider(),
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
+            $this->getUrlFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -72,7 +73,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createLocaleProvider(),
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
+            $this->getUrlFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -90,7 +92,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createLocaleProvider(),
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
+            $this->getUrlFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -203,6 +206,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
+     */
+    public function getUrlFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_URL);
     }
 
     /**
@@ -422,6 +433,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormTransferMapper(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
+            $this->getUrlFacade(),
             $this->createLocaleProvider()
         );
     }
@@ -434,14 +446,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new LocaleProvider(
             $this->getLocaleFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\VariantGeneratorInterface
-     */
-    public function createProductVariantGenerator()
-    {
-        return new VariantGenerator();
     }
 
     /**
