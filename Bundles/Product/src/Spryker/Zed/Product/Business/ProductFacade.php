@@ -26,9 +26,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Adds product abstract with meta information
      * - Adds product abstract with price
      * - Adds product abstract with tax
-     * - Adds product concrete with tax
      * - Adds product concrete with price
-     * - Adds product concrete with stock
      * - Throws exception if product concrete with same SKU exists
      * - Throws exception if abstract product with same SKU exists
      * - Trigger before and after CREATE plugins
@@ -55,9 +53,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Saves product abstract meta
      * - Saves product abstract price
      * - Saves product abstract tax
-     * - Saves product concrete tax
      * - Saves product concrete price
-     * - Saves product concrete stock
      * - Triggers before and after UPDATE plugins
      * - Throws exception if product concrete with same SKU exists
      * - Throws exception if abstract product with same SKU exists
@@ -140,6 +136,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns abstract product with attributes
+     * - Returns abstract product with localized attributes
+     * - Returns abstract product with price
+     * - Returns abstract product with tax
+     * - Triggers LOAD plugins
+     *
      * @api
      *
      * @param string $sku
