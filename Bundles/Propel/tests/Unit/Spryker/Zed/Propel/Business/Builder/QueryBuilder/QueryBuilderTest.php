@@ -66,7 +66,7 @@ class QueryBuilderTest extends Test
 
     /**
      * @return void
-     */    
+     */
     protected function _after()
     {
         foreach (array_keys($this->getFilesToGenerate()) as $fileName) {
