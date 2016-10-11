@@ -94,7 +94,6 @@ class IdFilterInsertTest extends Test
     {
         $countAboveChunkSize = 500;
 
-        $this->assertTrue(IdFilterInsert::CHUNK_SIZE < $countAboveChunkSize);
         $ids = range(1, $countAboveChunkSize);
         $itemIdChunks = array_chunk($ids, IdFilterInsert::CHUNK_SIZE);
 

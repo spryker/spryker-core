@@ -82,4 +82,20 @@ class IdFilterUpdateTest extends Test
         $this->assertCount($countAboveChunkSize, $result);
     }
 
+    /**
+     * @return void
+     */
+    public function testFilterChunkedNoneInDatabase()
+    {
+        $countAboveChunkSize = 500;
+        $ids = range(1, $countAboveChunkSize);
+
+        $this->idFilterUpdate->expects($this->atLeastOnce())
+            ->method('getIdCollection')
+            ->willReturn([]);
+
+        $result = $this->idFilterUpdate->filter($ids, 'foo');
+        $this->assertSame([], $result);
+    }
+
 }
