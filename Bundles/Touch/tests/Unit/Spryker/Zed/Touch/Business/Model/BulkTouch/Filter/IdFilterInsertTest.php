@@ -9,7 +9,6 @@ namespace Unit\Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 /**
  * @group Unit
