@@ -25,17 +25,29 @@ class IdFilterUpdate extends AbstractIdFilter
         $filteredIds = [];
         $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
-            $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
-            $idCollection = $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
+            $idCollection = $this->getIdCollection($itemType, $itemIdChunk);
 
             if (count($itemIdChunk) === count($idCollection)) {
-                $filteredIds += $itemIdChunk;
+                $filteredIds = array_merge($filteredIds, $itemIdChunk);
             } else {
-                $filteredIds += array_intersect($idCollection, $itemIdChunk);
+                $filteredIds = array_merge($filteredIds, array_intersect($idCollection, $itemIdChunk));
             }
         }
 
         return $filteredIds;
+    }
+
+    /**
+     * @param string $itemType
+     * @param array $itemIdChunk
+     *
+     * @return array
+     */
+    protected function getIdCollection($itemType, array $itemIdChunk)
+    {
+        $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
+
+        return $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
     }
 
 }
