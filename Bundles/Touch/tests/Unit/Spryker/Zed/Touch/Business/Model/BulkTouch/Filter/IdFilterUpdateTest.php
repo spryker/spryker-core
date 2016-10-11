@@ -26,11 +26,6 @@ class IdFilterUpdateTest extends Test
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $touchQueryContainer;
-
-    /**
      * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $idFilterUpdate;
@@ -46,7 +41,7 @@ class IdFilterUpdateTest extends Test
 
         $this->idFilterUpdate = $this->getMockBuilder(IdFilterUpdate::class)
             ->setMethods(['getIdCollection'])
-            ->setConstructorArgs([$this->touchQueryContainer])
+            ->disableOriginalConstructor()
             ->getMock();
     }
 
