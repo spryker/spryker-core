@@ -33,6 +33,9 @@ use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
 class QueryBuilderTest extends Test
 {
 
+    /**
+     * @return array
+     */
     protected function getFilesToGenerate()
     {
         return [
@@ -42,6 +45,9 @@ class QueryBuilderTest extends Test
         ];
     }
 
+    /**
+     * @return void
+     */
     protected function _before()
     {
         $config = new QuickGeneratorConfig();
@@ -58,6 +64,9 @@ class QueryBuilderTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */    
     protected function _after()
     {
         foreach (array_keys($this->getFilesToGenerate()) as $fileName) {
@@ -65,6 +74,9 @@ class QueryBuilderTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testGeneratedFilterFunctionDoesNotThrowExceptionOnNotIn()
     {
         $testQuery = new FooQuery();
