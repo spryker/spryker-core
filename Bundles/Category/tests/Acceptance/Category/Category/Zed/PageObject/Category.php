@@ -26,7 +26,7 @@ class Category
     const CATEGORY_B = 'category-b';
 
     /**
-     * @param $categoryKey
+     * @param string $categoryKey
      *
      * @return array
      */
@@ -60,7 +60,7 @@ class Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */
@@ -70,7 +70,7 @@ class Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */
@@ -80,7 +80,7 @@ class Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */
@@ -90,7 +90,7 @@ class Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */

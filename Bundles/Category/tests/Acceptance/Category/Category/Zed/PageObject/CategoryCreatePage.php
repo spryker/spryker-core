@@ -16,7 +16,7 @@ class CategoryCreatePage extends Category
     const SUCCESS_MESSAGE = 'The category was added successfully.';
 
     /**
-     * @param $categoryKey
+     * @param string $categoryKey
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class CategoryCreatePage extends Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */
@@ -60,7 +60,7 @@ class CategoryCreatePage extends Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */
@@ -70,7 +70,7 @@ class CategoryCreatePage extends Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */
@@ -80,7 +80,7 @@ class CategoryCreatePage extends Category
     }
 
     /**
-     * @param $position
+     * @param int $position
      *
      * @return string
      */

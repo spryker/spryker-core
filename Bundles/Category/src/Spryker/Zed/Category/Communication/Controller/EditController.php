@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
-use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\Form\FormInterface;
@@ -64,4 +63,5 @@ class EditController extends AbstractController
     {
         return $form->getData();
     }
+
 }

@@ -116,10 +116,12 @@ class Category extends Module
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setCategoryKey($categoryKey);
+        $categoryTransfer->setIsActive(false);
         $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
 
         $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
+        $categoryNodeTransfer->setIsMain(false);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $parentCategoryNodeTransfer = new NodeTransfer();
