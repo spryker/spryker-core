@@ -105,7 +105,7 @@ abstract class AbstractProductFormTabs extends AbstractTabs
     }
 
     /**
-     * @param TabsViewTransfer $tabsViewTransfer
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return $this
      */

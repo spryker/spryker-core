@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
@@ -82,6 +81,19 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      */
     protected $pluginsReadCollection;
 
+    /**
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface $priceFacade
+     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
+     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
+     * @param array $pluginsCreateCollection
+     * @param array $pluginsReadCollection
+     * @param array $pluginsUpdateCollection
+     */
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
@@ -141,7 +153,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
         $this->persistPrice($productAbstractTransfer);
 
-        $productAbstractTransfer = $this->triggerAfterCreatePlugins($productAbstractTransfer);
+        $this->triggerAfterCreatePlugins($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -170,7 +182,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
         $this->persistPrice($productAbstractTransfer);
 
-        $productAbstractTransfer = $this->triggerAfterUpdatePlugins($productAbstractTransfer);
+        $this->triggerAfterUpdatePlugins($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 

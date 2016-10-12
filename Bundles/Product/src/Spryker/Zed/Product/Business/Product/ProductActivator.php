@@ -64,7 +64,7 @@ class ProductActivator implements ProductActivatorInterface
         $this->productConcreteManager->touchProductActive($productConcrete->getIdProductConcrete());
         $this->productAbstractManager->touchProductActive($productConcrete->getFkProductAbstract());
 
-        $productUrl = $this->productUrlManager->updateProductUrl($productAbstract);
+        $this->productUrlManager->updateProductUrl($productAbstract);
     }
 
     /**

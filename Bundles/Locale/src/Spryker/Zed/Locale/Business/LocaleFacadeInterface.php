@@ -44,6 +44,8 @@ interface LocaleFacadeInterface
     public function getLocaleByCode($localeCode);
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException

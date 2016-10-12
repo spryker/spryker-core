@@ -161,8 +161,6 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     /**
      * @param int $idProductConcrete
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
-     *
      * @return void
      */
     public function deActivateProductConcrete($idProductConcrete)

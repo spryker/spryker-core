@@ -50,6 +50,7 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
     }
 
     /**
+     * @param int $idProductAbstract
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException

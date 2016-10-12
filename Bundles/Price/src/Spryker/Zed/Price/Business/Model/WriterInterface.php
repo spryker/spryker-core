@@ -37,7 +37,7 @@ interface WriterInterface
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
-     * @param PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
      * @throws \Exception
@@ -47,7 +47,7 @@ interface WriterInterface
     public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null);
 
     /**
-     * @param PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
      * @throws \Exception

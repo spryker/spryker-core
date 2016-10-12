@@ -118,8 +118,6 @@ class Reader implements ReaderInterface
      * @param int $idProduct
      * @param string|null $priceTypeName
      *
-     * @throws \Exception
-     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function getProductConcretePrice($idProduct, $priceTypeName = null)

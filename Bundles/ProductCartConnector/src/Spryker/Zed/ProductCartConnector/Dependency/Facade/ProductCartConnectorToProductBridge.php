@@ -46,4 +46,5 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     {
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
+
 }

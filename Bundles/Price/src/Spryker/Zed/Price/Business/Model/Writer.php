@@ -282,8 +282,6 @@ class Writer implements WriterInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
      *
-     * @throws \Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException
-     *
      * @return int
      */
     public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
@@ -308,8 +306,6 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      * @param null $priceTypeName
-     *
-     * @throws \Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException
      *
      * @return int
      */

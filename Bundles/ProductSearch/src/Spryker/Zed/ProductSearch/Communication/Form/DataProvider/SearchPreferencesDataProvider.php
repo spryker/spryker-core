@@ -44,7 +44,7 @@ class SearchPreferencesDataProvider
             SearchPreferencesForm::FIELD_FULL_TEXT => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT),
             SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED),
             SearchPreferencesForm::FIELD_SUGGESTION_TERMS => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_SUGGESTION_TERMS),
-            SearchPreferencesForm::FIELD_COMPLETION_TERMS=> $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_COMPLETION_TERMS),
+            SearchPreferencesForm::FIELD_COMPLETION_TERMS => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_COMPLETION_TERMS),
         ];
     }
 

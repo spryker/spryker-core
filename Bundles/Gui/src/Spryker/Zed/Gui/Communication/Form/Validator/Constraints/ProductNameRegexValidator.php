@@ -11,5 +11,4 @@ use Symfony\Component\Validator\Constraints\RegexValidator;
 
 class ProductNameRegexValidator extends RegexValidator
 {
-    
 }

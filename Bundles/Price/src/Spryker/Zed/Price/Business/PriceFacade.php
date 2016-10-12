@@ -173,4 +173,5 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     {
         return $this->getFactory()->createWriterModel()->persistConcreteProductPrice($priceTransfer, $priceType);
     }
+
 }

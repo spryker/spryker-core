@@ -734,6 +734,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *          [42] => 42
      *          )
      *      )
+     * )
      *
      * @api
      *

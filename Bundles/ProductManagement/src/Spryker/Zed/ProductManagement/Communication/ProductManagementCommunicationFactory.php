@@ -32,7 +32,6 @@ use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMa
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
-use Spryker\Zed\Product\Business\Product\VariantGenerator;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()

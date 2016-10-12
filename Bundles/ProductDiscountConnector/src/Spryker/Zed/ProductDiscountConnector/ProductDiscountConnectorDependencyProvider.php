@@ -40,7 +40,6 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
             return new ProductDiscountConnectorToProductBridge($container->getLocator()->product()->facade());
         };
 
-
         return $container;
     }
 

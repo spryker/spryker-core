@@ -28,6 +28,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
+     * @param \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface $transferMapper
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,

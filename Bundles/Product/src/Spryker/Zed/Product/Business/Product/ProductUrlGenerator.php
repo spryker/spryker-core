@@ -86,5 +86,4 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
         return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstract->getIdProductAbstract();
     }
 
-
 }

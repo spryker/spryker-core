@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Tabs;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
-use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ProductConcreteFormEditTabs extends ProductFormEditTabs
 {

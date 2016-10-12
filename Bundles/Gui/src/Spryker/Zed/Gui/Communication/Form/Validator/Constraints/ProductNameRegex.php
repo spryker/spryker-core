@@ -23,4 +23,5 @@ class ProductNameRegex extends Regex
 
         parent::__construct($options);
     }
+
 }
