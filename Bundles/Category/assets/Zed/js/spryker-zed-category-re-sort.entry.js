@@ -5,6 +5,4 @@
 
 'use strict';
 
-require('ZedGui');
 require('./modules/re-sort');
-require('../sass/main.scss');

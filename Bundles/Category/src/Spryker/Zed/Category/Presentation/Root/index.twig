@@ -1,5 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-category-root.css">
+{% endblock %}
+
 {% set widget_title = 'Category' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
@@ -29,6 +34,7 @@
     {% endembed %}
 
 {% endblock %}
+
 {% block footer_js %}
     {{ parent() }}
     <script src="/assets/js/spryker-zed-category-root.js"></script>

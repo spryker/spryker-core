@@ -5,6 +5,4 @@
 
 'use strict';
 
-require('ZedGui');
 require('./modules/root');
-require('../sass/main.scss');

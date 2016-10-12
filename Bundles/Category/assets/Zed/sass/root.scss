@@ -1,0 +1,31 @@
+@import '../../../../Gui/assets/Zed/sass/action-buttons';
+
+#root-node-table {
+    tbody {
+        tr {
+            &.selected {
+                background-color: rgba(#0088cc, .2);
+                color: inherit;
+
+                a.btn-view {
+                    @include coloredButton(#1c84c6, #ffffff);
+                }
+
+                a.btn-create {
+                    @include coloredButton(#108548, #ffffff);
+                }
+            }
+
+            td:last-child {
+                text-align: right;
+            }
+        }
+    }
+}
+
+#category-tree {
+    .dd-handle:hover {
+        cursor: inherit;
+        font-weight: inherit;
+    }
+}

@@ -5,12 +5,8 @@
 
 'use strict';
 
-
-require('ZedGui');
-require('./re-sort/bootstrap');
-
-var writer = require('./re-sort/writer');
-var progressBar = require('./shared/progress-bar');
+var writer = require('./writer');
+var progressBar = require('../shared/progress-bar');
 
 jQuery(document).ready(function() {
     progressBar.setSelector('#progress-bar');

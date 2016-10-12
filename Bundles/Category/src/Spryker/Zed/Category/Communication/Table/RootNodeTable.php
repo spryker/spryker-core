@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -23,9 +24,7 @@ class RootNodeTable extends AbstractTable
     const LOCALE_NAME = 'locale_name';
     const COL_REORDER = 'Reorder';
     const URL_CATEGORY_RE_SORT= '/category/re-sort';
-    const PARAM_ID_NODE = 'id-node';
     const URL_PRODUCT_CATEGORY_ADD = '/category/create';
-    const PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -113,9 +112,9 @@ class RootNodeTable extends AbstractTable
 
         $urls[] = $this->generateViewButton(
             Url::generate(self::URL_CATEGORY_RE_SORT, [
-                self::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
+                CategoryConstants::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
             ]),
-            '<i class="fa fa-arrows-v"></i>',
+            '<i class="fa fa-fw fa-arrows-v"></i>',
             [
                 self::BUTTON_ICON => null,
                 'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE]),
@@ -125,9 +124,9 @@ class RootNodeTable extends AbstractTable
 
         $urls[] = $this->generateCreateButton(
             Url::generate(self::URL_PRODUCT_CATEGORY_ADD, [
-                self::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
+                CategoryConstants::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
             ]),
-            '<i class="fa fa-plus"></i>',
+            '<i class="fa fa-fw fa-plus"></i>',
             [
                 self::BUTTON_ICON => null,
                 'title' => 'Add Category to this Node'
