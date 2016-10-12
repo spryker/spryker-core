@@ -22,25 +22,24 @@ function OptionValueFormHandler() {
     this.valuesToBeRemovedField = $('#product_option_general_product_option_values_to_be_removed');
     this.translationCopyButton = new TranslationCopyFields();
 
-    if (!this.haveEmptyOptionForm() && !$("#product_option_general_idProductOptionGroup").val()) {
-        this.addProductOptionValueForm();
-    }
+    this.addProductOptionValueForm();
 
-    if (this.optionValueCount > 0) {
+    if (!this.isOptionValueFormAlreadyAdded()) {
+        $('#add-another-option').trigger('click');
+    } else {
         this.initialiseExistingProductValueForms();
     }
 }
 
-OptionValueFormHandler.prototype.haveEmptyOptionForm = function() {
+OptionValueFormHandler.prototype.isOptionValueFormAlreadyAdded = function() {
 
-    var haveEmptyOptionValueForm = false;
+    var isOptionValueFormAlreadyAdded = false;
     $('#option-value-list').find("input[id$='value']").each(function(index, element) {
-        if (!$(element).val()) {
-            haveEmptyOptionValueForm = true;
-        }
+        isOptionValueFormAlreadyAdded = true;
+        return;
     });
 
-    return haveEmptyOptionValueForm;
+    return isOptionValueFormAlreadyAdded;
 }
 
 OptionValueFormHandler.prototype.initialiseExistingProductValueForms = function() {

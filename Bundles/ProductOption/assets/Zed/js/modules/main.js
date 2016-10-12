@@ -20,8 +20,6 @@ $(document).ready(function() {
         $('#product_option_general').submit();
     });
 
-    $('#add-another-option').trigger('click');
-
     $('.ibox-content').each(function(index, content) {
         var hasErrors = $(content).find('.has-error, .alert-danger');
         if (hasErrors.length == 0) {

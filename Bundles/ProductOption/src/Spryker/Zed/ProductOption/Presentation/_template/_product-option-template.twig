@@ -21,7 +21,7 @@
             {{ form_label(productOptionForm.price) }}
             <div class="input-group">
                 {{ form_widget(productOptionForm.price) }}
-                <div class="input-group-addon">&euro;</div>
+                <div class="input-group-addon">{{ currencySymbol() }}</div>
             </div>
             {{ form_errors(productOptionForm.price) }}
     </div>
