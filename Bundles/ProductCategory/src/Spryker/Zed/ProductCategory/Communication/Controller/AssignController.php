@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategory\Communication\Controller;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

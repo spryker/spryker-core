@@ -19,18 +19,42 @@
         {% endif %}
 
         {% if node.children is defined and node.children|length > 0 %}
-            <a href="/category/re-sort?id-node={{ node.id }}" id="node-{{ node.id }}" class="btn btn-xs btn-success">
-                <i class="fa fa-sitemap"></i>
+            <a
+                href="/category/re-sort?id-node={{ node.id }}"
+                id="node-{{ node.id }}"
+                class="btn btn-xs btn-outline btn-view"
+                title="Re-sort Child Categories"
+            >
+                <i class="fa fa-arrows-v"></i>
             </a>
         {% endif %}
 
-        <a href="/category/create?id-parent-node={{ node.id }}" class="btn btn-xs btn-success">
+        <a
+            href="/product-category/assign?id-category={{ node.id_category }}"
+            class="btn btn-xs btn-outline btn-view"
+            title="Assign Products to this Category"
+        >
+            <i class="fa fa-chain"></i>
+        </a>
+        <a
+            href="/category/create?id-parent-node={{ node.id }}"
+            class="btn btn-xs btn-outline btn-view"
+            title="Add Category to this Node"
+        >
             <i class="fa fa-plus"></i>
         </a>
-        <a href="/category/edit?id-category={{ node.id_category }}" class="btn btn-xs btn-primary">
+        <a
+            href="/category/edit?id-category={{ node.id_category }}"
+            class="btn btn-xs btn-outline btn-edit"
+            title="Edit Category"
+        >
             <i class="fa fa-pencil"></i>
         </a>
-        <a href="/category/delete?id-category={{ node.id_category }}" class="btn btn-xs btn-warning">
+        <a
+            href="/category/delete?id-category={{ node.id_category }}"
+            class="btn btn-xs btn-outline btn-danger"
+            title="Delete Category"
+        >
             <i class="fa fa-trash"></i>
         </a>
     </div>

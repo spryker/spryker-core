@@ -111,6 +111,18 @@ class RootNodeTable extends AbstractTable
     {
         $urls = [];
 
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::URL_CATEGORY_RE_SORT, [
+                self::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
+            ]),
+            '<i class="fa fa-arrows-v"></i>',
+            [
+                self::BUTTON_ICON => null,
+                'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE]),
+                'title' => 'Re-sort Child-Categories'
+            ]
+        );
+
         $urls[] = $this->generateCreateButton(
             Url::generate(self::URL_PRODUCT_CATEGORY_ADD, [
                 self::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
@@ -118,19 +130,7 @@ class RootNodeTable extends AbstractTable
             '<i class="fa fa-plus"></i>',
             [
                 self::BUTTON_ICON => null,
-                'title' => 'Add Category to this node'
-            ]
-        );
-
-        $urls[] = $this->generateViewButton(
-            Url::generate(self::URL_CATEGORY_RE_SORT, [
-                self::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
-            ]),
-            '<i class="fa fa-sitemap"></i>',
-            [
-                self::BUTTON_ICON => null,
-                'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE]),
-                'title' => 'Reorder assigned Categories'
+                'title' => 'Add Category to this Node'
             ]
         );
 
