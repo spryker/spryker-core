@@ -18,17 +18,22 @@ use Twig_SimpleFunction;
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+    const NO_SYMBOL_FOUND = '-';
+    const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
+
     /**
      * Registers services on the given app.
      *
      * This method should only be used to configure services and parameters.
      * It should not get services.
+     *
+     * @param \Silex\Application $app
      */
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
-                $twig->addFunction($this->getFunction());
+                $twig->addFunction($this->getCurrencySymbolFunction());
 
                 return $twig;
             })
@@ -41,6 +46,10 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
      * This method is called after all services are registered
      * and should be used for "dynamic" configuration (whenever
      * a service must be requested).
+     *
+     * @param \Silex\Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
@@ -49,27 +58,41 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
     /**
      * @return \Twig_SimpleFunction
      */
-    protected function getFunction()
+    protected function getCurrencySymbolFunction()
     {
-        $function = new Twig_SimpleFunction('currencySymbol', function ($isoCode = null) {
-
-             if ($isoCode) {
-                 $currencyTransfer = $this->getFacade()->fromIsoCode($isoCode);
-             } else {
-                 $currencyTransfer = $this->getFacade()->getCurrent();
-             }
-
-             if ($currencyTransfer) {
-                 $currencySymbol = $currencyTransfer->getSymbol();
-             }
-
-             if (!$currencySymbol) {
-                 $currencySymbol = '-';
-             }
-
-             return $currencySymbol;
+        return new Twig_SimpleFunction(static::CURRENCY_SYMBOL_FUNCTION_NAME, function ($isoCode = null) {
+            return $this->getCurrencySymbol($isoCode);
         });
-
-        return $function;
     }
+
+    /**
+     * @param string|null $isoCode
+     *
+     * @return string
+     */
+    protected function getCurrencySymbol($isoCode = null)
+    {
+        $currencySymbol = static::NO_SYMBOL_FOUND;
+        $currencyTransfer = $this->getCurrencyTransfer($isoCode);
+        if ($currencyTransfer && $currencyTransfer->getSymbol() !== null) {
+            $currencySymbol = $currencyTransfer->getSymbol();
+        }
+
+        return $currencySymbol;
+    }
+
+    /**
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer($isoCode = null)
+    {
+        if ($isoCode !== null) {
+            return $this->getFacade()->fromIsoCode($isoCode);
+        }
+
+        return $this->getFacade()->getCurrent();
+    }
+
 }
