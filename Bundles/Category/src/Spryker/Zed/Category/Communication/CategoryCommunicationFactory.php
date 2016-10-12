@@ -69,9 +69,11 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param int|null $idParentNode
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCategoryCreateForm()
+    public function createCategoryCreateForm($idParentNode)
     {
         $categoryCreateForm = new CategoryType();
         $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
@@ -79,7 +81,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
 
         return $formFactory->create(
             $categoryCreateForm,
-            $categoryCreateDataFormProvider->getData(),
+            $categoryCreateDataFormProvider->getData($idParentNode),
             $categoryCreateDataFormProvider->getOptions()
         );
     }

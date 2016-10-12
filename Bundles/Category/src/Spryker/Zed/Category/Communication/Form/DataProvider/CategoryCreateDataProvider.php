@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
+use Elastica\Node;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -41,9 +42,11 @@ class CategoryCreateDataProvider
     }
 
     /**
+     * @param int|null $idParentNode
+     *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function getData()
+    public function getData($idParentNode)
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setIsActive(false);
@@ -52,7 +55,13 @@ class CategoryCreateDataProvider
 
         $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setIsMain(false);
-        $categoryTransfer->setCategoryNode(new NodeTransfer());
+        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+
+        if ($idParentNode) {
+            $parentCategoryNodeTransfer = new NodeTransfer();
+            $parentCategoryNodeTransfer->setIdCategoryNode($idParentNode);
+            $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
+        }
 
         foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
             $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();

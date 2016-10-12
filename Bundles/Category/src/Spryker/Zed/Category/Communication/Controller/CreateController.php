@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\Form\FormInterface;
@@ -27,7 +28,8 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getFactory()->createCategoryCreateForm();
+        $idParentNode = $this->getParentNodeId($request);
+        $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -46,6 +48,22 @@ class CreateController extends AbstractController
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return int|null
+     */
+    protected function getParentNodeId(Request $request)
+    {
+        $parentNodeId = $request->query->get(CategoryConstants::PARAM_ID_PARENT_NODE);
+
+        if (!$parentNodeId) {
+            return null;
+        }
+
+        return $this->castId($parentNodeId);
     }
 
     /**

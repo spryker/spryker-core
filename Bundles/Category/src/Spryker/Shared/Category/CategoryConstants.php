@@ -14,5 +14,6 @@ interface CategoryConstants
     const RESOURCE_TYPE_NAVIGATION = 'navigation';
 
     const PARAM_ID_NODE = 'id-node';
+    const PARAM_ID_PARENT_NODE = 'id-parent-node';
 
 }
