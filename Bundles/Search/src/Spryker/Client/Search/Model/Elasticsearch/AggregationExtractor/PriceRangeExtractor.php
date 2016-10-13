@@ -54,8 +54,8 @@ class PriceRangeExtractor extends RangeExtractor
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
-        $activeMin = (isset($requestParameters[$parameterName]['min']) ? $requestParameters[$parameterName]['min'] : null);
-        $activeMax = (isset($requestParameters[$parameterName]['max']) ? $requestParameters[$parameterName]['max'] : null);
+        $activeMin = (isset($requestParameters[$parameterName]['min']) ? (float)$requestParameters[$parameterName]['min'] : null);
+        $activeMax = (isset($requestParameters[$parameterName]['max']) ? (float)$requestParameters[$parameterName]['max'] : null);
 
         return [
             $activeMin !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMin) : $min,

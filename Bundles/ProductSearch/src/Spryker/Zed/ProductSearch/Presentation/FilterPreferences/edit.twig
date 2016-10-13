@@ -19,9 +19,6 @@
             <div class="form-group {% if form.key.vars.errors|length %}has-error{% endif %}">
                 {{ form_label(form.key) }}
                 {{ form_widget(form.key) }}
-                {% if not form.key.vars.disabled %}
-                    <span class="help-block">{{ 'Type first three letters of an attribute key for suggestions.' | trans }}</span>
-                {% endif %}
                 {{ form_errors(form.key) }}
             </div>
 

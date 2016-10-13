@@ -81,6 +81,9 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
             'url' => '/product-search/filter-preferences/keys',
             'constraints' => $this->createAttributeKeyFieldConstraints(),
             'disabled' => $options[self::OPTION_IS_UPDATE],
+            'attr' => [
+                'placeholder' => 'Type first three letters of an existing attribute key for suggestions.'
+            ],
         ]);
 
         return $this;

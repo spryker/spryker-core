@@ -166,7 +166,7 @@ class PageMapBuilder implements PageMapBuilderInterface
     {
         $integerFacetMapTransfer = (new IntegerFacetMapTransfer())
             ->setName($name)
-            ->setValue($value);
+            ->setValue((int)$value);
 
         $pageMapTransfer->addIntegerFacet($integerFacetMapTransfer);
 
@@ -202,7 +202,7 @@ class PageMapBuilder implements PageMapBuilderInterface
     {
         $integerSortMapTransfer = (new IntegerSortMapTransfer())
             ->setName($name)
-            ->setValue($value);
+            ->setValue((int)$value);
 
         $pageMapTransfer->addIntegerSort($integerSortMapTransfer);
 
