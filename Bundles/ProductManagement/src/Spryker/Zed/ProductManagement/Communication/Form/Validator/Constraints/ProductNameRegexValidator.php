@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Form\Validator\Constraints;
+namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraints\RegexValidator;
 
-class SkuRegexValidator extends RegexValidator
+class ProductNameRegexValidator extends RegexValidator
 {
-
+    
 }

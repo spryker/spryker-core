@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Gui\Communication\Form\Validator\Constraints\SkuRegex;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
