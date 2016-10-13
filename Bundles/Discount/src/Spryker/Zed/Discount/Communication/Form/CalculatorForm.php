@@ -96,7 +96,7 @@ class CalculatorForm extends AbstractType
     protected function normalizeAmount(FormEvent $event)
     {
         $data = $event->getData();
-        $data[self::FIELD_AMOUNT] = str_replace(',' , '.', $data[self::FIELD_AMOUNT]);
+        $data[self::FIELD_AMOUNT] = str_replace(',', '.', $data[self::FIELD_AMOUNT]);
         $event->setData($data);
     }
 
