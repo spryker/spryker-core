@@ -124,10 +124,6 @@ SCRIPT;
         return [
             'Criteria::IN',
             'Criteria::NOT_IN',
-            'Criteria::CONTAINS_ALL',
-            'Criteria::CONTAINS_NONE',
-            'Criteria::CONTAINS_SOME',
-            'Criteria::ALL',
         ];
     }
 
