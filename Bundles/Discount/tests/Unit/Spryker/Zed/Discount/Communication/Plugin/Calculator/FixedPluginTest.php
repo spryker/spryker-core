@@ -31,12 +31,6 @@ class FixedPluginTest extends Test
 
         $result = $plugin->transformForPersistence(11.129);
         $this->assertSame(1113, $result);
-
-        $result = $plugin->transformForPersistence("11.129");
-        $this->assertSame(1113, $result);
-
-        $result = $plugin->transformForPersistence("11,129");
-        $this->assertSame(1113, $result);
     }
 
     /**

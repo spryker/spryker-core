@@ -19,7 +19,7 @@ interface DiscountCalculatorPluginInterface
     public function calculate(array $discountableItems, $percentage);
 
     /**
-     * @param string|float $value
+     * @param float $value
      *
      * @return int
      */

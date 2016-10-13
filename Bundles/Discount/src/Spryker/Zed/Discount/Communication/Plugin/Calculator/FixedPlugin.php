@@ -39,14 +39,12 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
-     * @param string|float $value
+     * @param float $value
      *
      * @return int
      */
     public function transformForPersistence($value)
     {
-        $value = str_replace(',', '.', $value);
-
         return (int)round($this->getCurrencyManager()->convertDecimalToCent($value));
     }
 
