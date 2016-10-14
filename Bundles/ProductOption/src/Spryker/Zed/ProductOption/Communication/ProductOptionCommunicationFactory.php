@@ -44,7 +44,8 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
             $productOptionValueForm,
             $createProductOptionTranslationForm,
             $this->createArrayToArrayObjectTransformer(),
-            $this->createStringToArrayTransformer()
+            $this->createStringToArrayTransformer(),
+            $this->getQueryContainer()
         );
 
         return $this->getFormFactory()->create(

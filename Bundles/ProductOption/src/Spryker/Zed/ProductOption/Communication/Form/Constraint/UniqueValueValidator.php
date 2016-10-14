@@ -7,80 +7,76 @@
 namespace Spryker\Zed\ProductOption\Communication\Form\Constraint;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UniqueOptionValueSkuValidator extends ConstraintValidator
+class UniqueValueValidator extends ConstraintValidator
 {
 
     /**
      * @var array
      */
-    protected $validatedSkus = [];
+    protected $validatedValues = [];
 
     /**
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
+     * @param Constraint $constraint The constraint for the validation
      *
-     * @api
-     *
-     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     *
-     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
-        if (in_array($value, $this->validatedSkus)) {
-            $this->buildViolation('Product option with this sku is already used.')
+        if (in_array($value, $this->validatedValues)) {
+            $this->buildViolation('Product option with this value is already used.')
                 ->addViolation();
         }
 
-        if (!$constraint instanceof UniqueOptionValueSku) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueOptionValueSku');
+        if (!$constraint instanceof UniqueValue) {
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueValue');
         }
 
-        if (!$this->isSkuChanged($value, $constraint)) {
+        if (!$this->isValueChanged($value, $constraint)) {
             return;
         }
 
-        if (!$this->isUniqueSku($value, $constraint)) {
+        if (!$this->isUniqueValue($value, $constraint)) {
             $this->buildViolation('Product option with this sku is already used.')
                 ->addViolation();
         }
 
-        $this->validatedSkus[] = $value;
+        $this->validatedValues[] = $value;
     }
 
     /**
-     * @param string $sku
-     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku $constraint
+     * @param string $value
+     * @param UniqueValue $constraint
      *
      * @return bool
      */
-    protected function isUniqueSku($sku, UniqueOptionValueSku $constraint)
+    protected function isUniqueValue($value, UniqueValue $constraint)
     {
         $numberOfDiscounts = $constraint->getProductOptionQueryContainer()
-            ->queryProductOptionValueBySku($sku)
+            ->queryProductOptionValue(ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $value)
             ->count();
 
         return $numberOfDiscounts === 0;
     }
 
     /**
-     * @param string $submittedSku
-     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku $constraint
+     * @param string $submitedValue
+     * @param UniqueValue $constraint
      *
      * @return bool
      */
-    protected function isSkuChanged($submittedSku, UniqueOptionValueSku $constraint)
+    protected function isValueChanged($submitedValue, UniqueValue $constraint)
     {
         /* @var $root Form */
         $root = $this->context->getRoot();
 
-        $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submittedSku);
+        $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submitedValue);
         if (!$idProductOptionValue) {
             return true;
         }
@@ -89,7 +85,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
             ->queryProductOptionByValueId($idProductOptionValue)
             ->findOne();
 
-        if ($productOptionValueEntity->getSku() !== $submittedSku) {
+        if ($productOptionValueEntity->getValue() !== $submitedValue) {
             return true;
         }
 
@@ -98,17 +94,16 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param string $submittedSku
+     * @param string $submittedValue
      *
      * @return int
      */
-    protected function findProductOptionValueId(ProductOptionGroupTransfer $productOptionGroupTransfer, $submittedSku)
+    protected function findProductOptionValueId(ProductOptionGroupTransfer $productOptionGroupTransfer, $submittedValue)
     {
         foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
-            if ($productOptionValueTransfer->getSku() === $submittedSku) {
+            if ($productOptionValueTransfer->getValue() === $submittedValue) {
                 return $productOptionValueTransfer->getIdProductOptionValue();
             }
         }
     }
-
 }

@@ -28,6 +28,8 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
      * It should not get services.
      *
      * @param \Silex\Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {

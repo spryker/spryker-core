@@ -44,6 +44,15 @@ interface ProductOptionQueryContainerInterface
     /**
      * @api
      *
+     * @param string $groupName
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupByName($groupName);
+
+    /**
+     * @api
+     *
      * @param int[] $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
@@ -86,5 +95,14 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
     public function queryProductOptionGroupWithValues();
+
+    /**
+     * @api
+     *
+     * @param string $value
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionValue($value);
 
 }

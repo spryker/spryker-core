@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
+use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -94,6 +95,9 @@ class ProductOptionValueForm extends AbstractType
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".'
                 ]),
+                new UniqueValue([
+                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer
+                ])
             ],
         ]);
 

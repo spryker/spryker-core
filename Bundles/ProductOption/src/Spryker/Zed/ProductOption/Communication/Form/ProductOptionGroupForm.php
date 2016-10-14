@@ -8,12 +8,15 @@ namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 
 class ProductOptionGroupForm extends AbstractType
 {
@@ -54,21 +57,29 @@ class ProductOptionGroupForm extends AbstractType
     protected $stringToArrayTransformer;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Communication\Form\ProductOptionQueryContainerInterface
+     */
+    protected $productOptionQueryContainer;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm $productOptionForm
      * @param \Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm $productOptionTranslationForm
      * @param \Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer $arrayToArrayObjectTransformer
      * @param \Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer $stringToArrayTransformer
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      */
     public function __construct(
         ProductOptionValueForm $productOptionForm,
         ProductOptionTranslationForm $productOptionTranslationForm,
         ArrayToArrayObjectTransformer $arrayToArrayObjectTransformer,
-        StringToArrayTransformer $stringToArrayTransformer
+        StringToArrayTransformer $stringToArrayTransformer,
+        ProductOptionQueryContainerInterface $productOptionQueryContainer
     ) {
         $this->productOptionForm = $productOptionForm;
         $this->productOptionTranslationForm = $productOptionTranslationForm;
         $this->arrayToArrayObjectTransformer = $arrayToArrayObjectTransformer;
         $this->stringToArrayTransformer = $stringToArrayTransformer;
+        $this->productOptionQueryContainer = $productOptionQueryContainer;
     }
 
     /**
@@ -108,9 +119,13 @@ class ProductOptionGroupForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_NAME, 'text', [
-            'label' => 'Group name translation key',
+            'label' => 'Group name translation key*',
             'required' => false,
             'constraints' => [
+                new NotBlank(),
+                new UniqueGroupName([
+                    UniqueGroupName::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer
+                ]),
                 new Regex([
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".'
