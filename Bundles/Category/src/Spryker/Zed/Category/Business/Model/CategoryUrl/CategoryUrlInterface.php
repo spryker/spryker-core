@@ -19,4 +19,11 @@ interface CategoryUrlInterface
      */
     public function create(CategoryTransfer $categoryTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function update(CategoryTransfer $categoryTransfer);
+
 }

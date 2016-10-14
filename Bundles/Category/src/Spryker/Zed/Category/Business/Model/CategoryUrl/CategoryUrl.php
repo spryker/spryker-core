@@ -40,8 +40,11 @@ class CategoryUrl implements CategoryUrlInterface
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer, CategoryToUrlInterface $urlFacade, UrlPathGeneratorInterface $urlPathGenerator)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryToUrlInterface $urlFacade,
+        UrlPathGeneratorInterface $urlPathGenerator
+    ) {
         $this->queryContainer = $queryContainer;
         $this->urlFacade = $urlFacade;
         $this->urlPathGenerator = $urlPathGenerator;
@@ -82,7 +85,7 @@ class CategoryUrl implements CategoryUrlInterface
     }
 
     /**
-     * @param $categoryNodeUrl
+     * @param string $categoryNodeUrl
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
@@ -93,11 +96,26 @@ class CategoryUrl implements CategoryUrlInterface
     protected function createUrl($categoryNodeUrl, LocaleTransfer $localeTransfer, NodeTransfer $categoryNodeTransfer)
     {
         try {
-            $urlTransfer = $this->urlFacade->createUrl($categoryNodeUrl, $localeTransfer, CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $categoryNodeTransfer->getIdCategoryNode());
+            $urlTransfer = $this->urlFacade->createUrl(
+                $categoryNodeUrl,
+                $localeTransfer,
+                CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE,
+                $categoryNodeTransfer->getIdCategoryNode()
+            );
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         } catch (UrlExistsException $e) {
             throw new CategoryUrlExistsException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function update(CategoryTransfer $categoryTransfer)
+    {
+        // Updating URLs not yet supported
     }
 
 }

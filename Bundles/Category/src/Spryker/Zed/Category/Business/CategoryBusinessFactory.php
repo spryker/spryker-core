@@ -9,11 +9,12 @@ namespace Spryker\Zed\Category\Business;
 
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
+use Spryker\Zed\Category\Business\Model\Category;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
+use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
-use Spryker\Zed\Category\Business\Model\Category;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
@@ -108,6 +109,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryNode(),
             $this->createCategoryAttribute(),
             $this->createCategoryUrl(),
+            $this->createCategoryExtraParents(),
             $this->getQueryContainer()->getConnection()
         );
     }
@@ -117,7 +119,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryCategory()
     {
-        return new Model\Category\Category();
+        $queryContainer = $this->getQueryContainer();
+
+        return new Model\Category\Category($queryContainer);
     }
 
     /**
@@ -125,9 +129,10 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryNode()
     {
-        return new CategoryNode(
-            $this->createClosureTableWriter()
-        );
+        $closureTableWriter = $this->createClosureTableWriter();
+        $queryContainer = $this->getQueryContainer();
+
+        return new CategoryNode($closureTableWriter, $queryContainer);
     }
 
     /**
@@ -135,7 +140,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryAttribute()
     {
-        return new CategoryAttribute();
+        $queryContainer = $this->getQueryContainer();
+
+        return new CategoryAttribute($queryContainer);
     }
 
     /**
@@ -144,6 +151,17 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     protected function createCategoryUrl()
     {
         return new CategoryUrl($this->getQueryContainer(), $this->getUrlFacade(), $this->createUrlPathGenerator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface
+     */
+    protected function createCategoryExtraParents()
+    {
+        $queryContainer = $this->getQueryContainer();
+        $closureTableWriter = $this->createClosureTableWriter();
+
+        return new CategoryExtraParents($queryContainer, $closureTableWriter);
     }
 
     /**

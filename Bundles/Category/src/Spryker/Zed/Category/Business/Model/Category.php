@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business\Model;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
+use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
@@ -23,7 +24,7 @@ class Category
     protected $category;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
+     * @var \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface
      */
     protected $categoryNode;
 
@@ -33,7 +34,7 @@ class Category
     protected $categoryAttribute;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl
+     * @var \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface
      */
     protected $categoryUrl;
 
@@ -47,6 +48,7 @@ class Category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
+     * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
@@ -54,12 +56,14 @@ class Category
         CategoryNodeInterface $categoryNode,
         CategoryAttributeInterface $categoryAttribute,
         CategoryUrlInterface $categoryUrl,
+        CategoryExtraParentsInterface $categoryExtraParents,
         ConnectionInterface $connection
     ) {
         $this->category = $category;
         $this->categoryNode = $categoryNode;
         $this->categoryAttribute = $categoryAttribute;
         $this->categoryUrl = $categoryUrl;
+        $this->categoryExtraParents = $categoryExtraParents;
         $this->connection = $connection;
     }
 
@@ -76,6 +80,25 @@ class Category
         $this->categoryNode->create($categoryTransfer);
         $this->categoryAttribute->create($categoryTransfer);
         $this->categoryUrl->create($categoryTransfer);
+        $this->categoryExtraParents->create($categoryTransfer);
+
+        $this->connection->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function update(CategoryTransfer $categoryTransfer)
+    {
+        $this->connection->beginTransaction();
+
+        $this->category->update($categoryTransfer);
+        $this->categoryNode->update($categoryTransfer);
+        $this->categoryAttribute->update($categoryTransfer);
+        $this->categoryUrl->update($categoryTransfer);
+        $this->categoryExtraParents->update($categoryTransfer);
 
         $this->connection->commit();
     }

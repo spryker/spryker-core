@@ -94,11 +94,29 @@ interface CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function create(CategoryTransfer $categoryTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
     public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return mixed
+     */
+    public function update(CategoryTransfer $categoryTransfer);
 
     /**
      * @api

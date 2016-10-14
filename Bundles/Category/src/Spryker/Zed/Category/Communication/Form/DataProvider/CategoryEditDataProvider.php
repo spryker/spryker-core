@@ -17,6 +17,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\HttpFoundation\Request;
 
 class CategoryEditDataProvider
@@ -146,7 +147,7 @@ class CategoryEditDataProvider
 
         foreach ($nodeEntityList as $nodeEntity) {
             $categoryNodeTransfer = new NodeTransfer();
-            $categoryNodeTransfer->fromArray($nodeEntity->toArray(), true);
+            $categoryNodeTransfer->fromArray($nodeEntity->getParentCategoryNode()->toArray(), true);
             $categoryTransfer->addExtraParent($categoryNodeTransfer);
         }
 
@@ -172,7 +173,13 @@ class CategoryEditDataProvider
     protected function getCategoriesWithPaths()
     {
         $idLocale = $this->getIdLocale();
-        $categoryEntityList = $this->queryContainer->queryCategory($idLocale)->find();
+        $categoryEntityList = $this
+            ->queryContainer
+            ->queryCategory($idLocale)
+            ->useNodeQuery()
+                ->orderByNodeOrder(Criteria::DESC)
+            ->endUse()
+            ->find();
 
         $categoryNodes = [];
 
@@ -225,6 +232,9 @@ class CategoryEditDataProvider
         $categoryEntity = $this->queryContainer
             ->queryCategoryById($this->getIdCategory())
             ->innerJoinNode()
+            ->useNodeQuery()
+                ->filterByIsMain(true)
+            ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, 'fk_parent_category_node')
