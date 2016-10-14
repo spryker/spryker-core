@@ -103,7 +103,7 @@ class ImageCollectionForm extends AbstractSubForm
             ->add(self::FIELD_IMAGE_PREVIEW, new ImageType(), [
                 'required' => false,
                 'label' => false,
-                'img_width' => 150,
+                ImageType::OPTION_IMAGE_WIDTH => 150,
             ]);
 
         return $this;

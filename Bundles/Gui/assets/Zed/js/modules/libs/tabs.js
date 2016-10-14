@@ -2,11 +2,12 @@
 
 // TODO: add support for multi-tab navigation hash handling (e.g "/#tab1=tab-content-foo&tab2=tab-content-bar")
 
-function Tabs(selector) {
+function Tabs(selector, onTabChange) {
     this.currentTabPosition = 0;
     this.currentUrlHash = window.location.hash;
     this.tabsContainer = $(selector);
     this.tabUrls = this.tabsContainer.find('li a');
+    this.onTabChange = onTabChange || function(){};
 
     this.checkErrors();
     this.setNavigation();
@@ -54,7 +55,6 @@ Tabs.prototype.listenNavigationButtons = function() {
         self.currentTabPosition = Math.max(0, self.currentTabPosition - 1);
         self.currentUrlHash = hash;
 
-        self.activateTab(element, hash);
         self.navigateElement();
         self.showHideNavigationButtons();
     });
@@ -66,7 +66,6 @@ Tabs.prototype.listenNavigationButtons = function() {
         self.currentTabPosition = Math.min(self.tabUrls.length, self.currentTabPosition + 1);
         self.currentUrlHash = hash;
 
-        self.activateTab(element, hash);
         self.navigateElement();
         self.showHideNavigationButtons();
     });
@@ -117,6 +116,8 @@ Tabs.prototype.changeTabsOnClick = function() {
 Tabs.prototype.activateTab = function(element, hash) {
     window.location.hash = hash;
     element.tab('show');
+
+    this.onTabChange(element.attr('href'));
 };
 
 Tabs.prototype.showHideNavigationButtons = function() {
