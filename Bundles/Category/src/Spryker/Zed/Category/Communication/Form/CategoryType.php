@@ -63,7 +63,6 @@ class CategoryType extends AbstractType
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
             ->addIsClickableField($builder)
-            ->addIsMainField($builder)
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addLocalizedAttributesForm($builder);
@@ -125,22 +124,6 @@ class CategoryType extends AbstractType
         $builder->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
             'label' => 'Clickable',
             'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsMainField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_IS_MAIN, 'checkbox', [
-            'label' => 'Is Main',
-            'required' => false,
-            'property_path' => 'categoryNode.isMain'
         ]);
 
         return $this;
