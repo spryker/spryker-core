@@ -61,45 +61,41 @@
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Translations' } %}
         {% block widget_content %}
-            <div class="tabPane">
-                <div class="tabs-container translation-tabs">
-                    <div class="tabs-left">
-                        <ul class="nav nav-tabs">
-                            {% for locale in availableLocales %}
-                                <li {{ loop.first ? 'class="active"'  : '' }}>
-                                    <a data-toggle="tab" class="tab-item" href="#tab-{{ locale.localeName }}">{{ locale.localeName }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <div class="tab-content">
-                            {% for locale in availableLocales %}
-                                <div id="tab-{{ locale.localeName }}" class="tab-pane {{ loop.first ? 'active'  : '' }}">
-                                    <div class="panel-body">
 
-                                        {% for groupNameTranslation in productOptionGroup.groupNameTranslations %}
-                                            {% if groupNameTranslation.localeCode == locale.localeName  %}
-                                                <p>
-                                                    <strong>{{ 'Group name' | trans  }} ({{ groupNameTranslation.key }})</strong> : {{ groupNameTranslation.name }}
-                                                </p>
-                                            {% endif %}
-                                        {% endfor %}
+            <div class="form-group" id="option-value-translations">
 
+                {% for locale in availableLocales %}
+                    {% set isCollapsed = not loop.first %}
 
-                                        {% for valueTranslation in productOptionGroup.productOptionValueTranslations %}
+                    <div data-locale-code="{{ locale.localeName }}">
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': isCollapsed , 'hasError': false} %}
+                            {% block content %}
+
+                                {% for groupNameTranslation in productOptionGroup.groupNameTranslations %}
+                                    {% if groupNameTranslation.localeCode == locale.localeName  %}
+                                        <p>
+                                            <strong>{{ 'Group name' | trans  }} ({{ groupNameTranslation.key }})</strong> : {{ groupNameTranslation.name }}
+                                        </p>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% for valueTranslation in productOptionGroup.productOptionValueTranslations %}
+                                    {% if valueTranslation.localeCode == locale.localeName  %}
                                             {% if valueTranslation.localeCode == locale.localeName  %}
                                                 <p>
                                                     <strong>{{ 'Name' | trans  }} ({{ valueTranslation.key }})</strong> : {{ valueTranslation.name }}
                                                 </p>
                                             {% endif %}
-                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
 
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
+                            {% endblock %}
+
+                        {% endembed %}
                     </div>
-                </div>
+                {% endfor %}
             </div>
+
         {% endblock %}
     {% endembed %}
 
