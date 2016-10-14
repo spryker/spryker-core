@@ -310,8 +310,8 @@ SCRIPT;
             }
             \$$variableName = array_search(\$$variableName, \$valueSet);
         } elseif (is_array(\$$variableName)) {
-            if (\$comparison != Criteria::IN) {
-                throw new AmbiguousComparisonException('array requires explicit Criteria::IN as comparison criteria.');
+            if (!in_array(\$comparison, [$implodedArrayComparisons])) {
+                throw new AmbiguousComparisonException('array requires one of [$implodedArrayComparisons] as comparison criteria.');
             }
             \$convertedValues = array();
             foreach (\$$variableName as \$value) {
