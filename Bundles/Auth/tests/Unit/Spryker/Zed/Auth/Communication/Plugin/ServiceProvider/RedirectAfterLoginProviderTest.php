@@ -168,7 +168,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRedirectAfterLoginProvider(array $methods = [])
     {
-        if (empty($methods)) {
+        if (!$methods) {
             return new RedirectAfterLoginProvider();
         }
 
