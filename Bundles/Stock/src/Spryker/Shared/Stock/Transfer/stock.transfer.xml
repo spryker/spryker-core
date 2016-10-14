@@ -18,9 +18,8 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="stock" type="StockProduct[]" />
+        <property name="stocks" type="StockProduct[]" singular="stock" />
     </transfer>
-
 
 </transfers>
 

@@ -96,6 +96,6 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
 
 }

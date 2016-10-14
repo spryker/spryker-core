@@ -175,7 +175,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productConcreteTransfer->setPrice($priceTransfer);
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
-        $productConcreteTransfer->setStock(new ArrayObject($stockCollection));
+        $productConcreteTransfer->setStocks(new ArrayObject($stockCollection));
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productConcreteTransfer->setImageSets(

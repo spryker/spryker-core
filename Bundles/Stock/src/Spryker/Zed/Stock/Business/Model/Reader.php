@@ -241,10 +241,10 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer)
     {
         $stockProductCollection = $this->queryContainer
-            ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
+            ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
             ->innerJoinStock()
             ->find();
 

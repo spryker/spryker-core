@@ -65,13 +65,6 @@ interface WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer);
 
 }

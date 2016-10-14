@@ -25,7 +25,7 @@ class ProductConcreteUpdatePlugin extends AbstractPlugin implements ProductConcr
      */
     public function run(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->runProductConcreteUpdatePlugin($productConcreteTransfer);
+        return $this->getFacade()->persistStockProductCollection($productConcreteTransfer);
     }
 
 }
