@@ -25,7 +25,6 @@
     "symfony/translation": "~2.6.13",
     "symfony/twig-bridge": "~2.6.13",
     "symfony/validator": "~2.6.13",
-    "symfony/var-dumper": "~2.6.13",
     "symfony/yaml": "~2.6.13"
   },
   "require-dev": {
