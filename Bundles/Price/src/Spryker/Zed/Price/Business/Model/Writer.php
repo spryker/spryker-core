@@ -280,53 +280,45 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
-     * @param null $priceTypeName
      *
      * @return int
      */
-    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
+    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTypeName);
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
 
-        $priceEntity = $this->queryContainer
+        $priceProductEntity = $this->queryContainer
             ->queryPriceProduct()
             ->filterByFkProductAbstract($priceTransfer->requireIdProductAbstract()->getIdProductAbstract())
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->findOneOrCreate();
 
-        $priceEntity->setFkProductAbstract($priceTransfer->getIdProductAbstract());
-        $priceEntity->setFkPriceType($priceTypeEntity->getIdPriceType());
-        $priceEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->save();
 
-        $priceEntity->save();
-
-        return $priceEntity->getIdPriceProduct();
+        return $priceProductEntity->getIdPriceProduct();
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
-     * @param null $priceTypeName
      *
      * @return int
      */
-    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null)
+    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTypeName);
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
 
-        $priceEntity = $this->queryContainer
+        $priceProductEntity = $this->queryContainer
             ->queryPriceProduct()
             ->filterByFkProduct($priceTransfer->requireIdProduct()->getIdProduct())
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->filterByFkProductAbstract(null, Criteria::ISNULL)
             ->findOneOrCreate();
 
-        $priceEntity->setFkProduct($priceTransfer->getIdProduct());
-        $priceEntity->setFkPriceType($priceTypeEntity->getIdPriceType());
-        $priceEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->save();
 
-        $priceEntity->save();
-
-        return $priceEntity->getIdPriceProduct();
+        return $priceProductEntity->getIdPriceProduct();
     }
 
 }

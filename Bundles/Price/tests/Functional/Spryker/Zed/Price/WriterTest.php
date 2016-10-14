@@ -272,7 +272,7 @@ class WriterTest extends Test
     /**
      * @return void
      */
-    public function SKIP_testPersistAbstractPriceShouldCreateNewPrice()
+    public function testPersistAbstractPriceShouldCreateNewPrice()
     {
         $productAbstract = SpyProductAbstractQuery::create()->filterBySku(self::SKU_PRODUCT_ABSTRACT)->findOne();
         if ($productAbstract === null) {
@@ -293,7 +293,7 @@ class WriterTest extends Test
 
         $transferPriceProduct->setIdProductAbstract($productAbstract->getIdProductAbstract());
 
-        $this->priceFacade->persistAbstractProductPrice($transferPriceProduct);
+        $this->priceFacade->persistProductAbstractPrice($transferPriceProduct);
 
         $priceEntity = SpyPriceProductQuery::create()
             ->filterByFkProductAbstract($productAbstract->getIdProductAbstract())
@@ -307,7 +307,7 @@ class WriterTest extends Test
     /**
      * @return void
      */
-    public function SKIP_testPersistAbstractPriceShouldUpdatePrice()
+    public function testPersistAbstractPriceShouldUpdatePrice()
     {
         $productAbstract = SpyProductAbstractQuery::create()->filterBySku(self::SKU_PRODUCT_ABSTRACT)->findOne();
         if ($productAbstract === null) {
@@ -324,43 +324,33 @@ class WriterTest extends Test
         $existingPrice->setPriceType($priceType1);
         $existingPrice->save();
 
-        $existingPrice = SpyPriceProductQuery::create()
-            ->filterByFkProductAbstract($productAbstract->getIdProductAbstract())
-            ->findOne();
-
         $this->assertNotNull($existingPrice);
         $this->assertNotNull($existingPrice->getIdPriceProduct());
         $this->assertEquals($existingPrice->getPrice(), self::PRICE_VALUE_1);
 
-        //THIS CODE WILL RETURN EXISTING ENTITY, AS EXPECTED, BUT SAME CODE EXECUTED IN persistAbstractProductPrice() return new entity
-        $priceEntity = SpyPriceProductQuery::create()
-            ->filterByFkProductAbstract($productAbstract->getIdProductAbstract())
-            ->filterByFkPriceType($priceType1->getIdPriceType())
-            ->findOneOrCreate();
-
         $transferPriceProduct = new PriceProductTransfer();
         $transferPriceProduct
             ->setPrice(self::PRICE_VALUE_2)
-            ->setPriceTypeName(self::PRICE_TYPE_1)
+            ->setPriceTypeName($existingPrice->getPriceType()->getName())
             ->setIdProductAbstract($productAbstract->getIdProductAbstract());
 
-        $idPriceProduct = $this->priceFacade->persistAbstractProductPrice($transferPriceProduct);
+        $idPriceProduct = $this->priceFacade->persistProductAbstractPrice($transferPriceProduct);
 
         $priceEntity = SpyPriceProductQuery::create()
             ->filterByFkProductAbstract($productAbstract->getIdProductAbstract())
             ->filterByFkPriceType($priceType1->getIdPriceType())
             ->findOne();
 
-        $this->assertEquals($idPriceProduct, $existingPrice->getIdPriceProduct());
-        $this->assertEquals(self::PRICE_VALUE_2, $priceEntity->getPrice());
-        $this->assertEquals($productAbstract->getIdProductAbstract(), $priceEntity->getFkProductAbstract());
-        $this->assertNull($priceEntity->getFkProduct());
+        $this->assertEquals($idPriceProduct, $existingPrice->getIdPriceProduct(), 'Product price ID mismatch!');
+        $this->assertEquals(self::PRICE_VALUE_2, $priceEntity->getPrice(), 'Price value mismatch!');
+        $this->assertEquals($productAbstract->getIdProductAbstract(), $priceEntity->getFkProductAbstract(), 'Abstract product ID mismatch!');
+        $this->assertNull($priceEntity->getFkProduct(), 'Missing product ID!');
     }
 
     /**
      * @return void
      */
-    public function SKIP_testPersistConcretePriceShouldCreateNewPrice()
+    public function testPersistConcretePriceShouldCreateNewPrice()
     {
         $productConcrete = SpyProductQuery::create()->filterBySku(self::SKU_PRODUCT_CONCRETE)->findOne();
         if ($productConcrete === null) {
@@ -380,7 +370,7 @@ class WriterTest extends Test
             ->setPriceTypeName(self::PRICE_TYPE_1)
             ->setIdProduct($productConcrete->getIdProduct());
 
-        $this->priceFacade->persistConcreteProductPrice($transferPriceProduct);
+        $this->priceFacade->persistProductConcretePrice($transferPriceProduct);
 
         $priceEntity = SpyPriceProductQuery::create()
             ->filterByFkProduct($productConcrete->getIdProduct())

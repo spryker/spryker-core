@@ -33,16 +33,13 @@ interface ProductToPriceInterface
      *
      * @return int
      */
-    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null);
+    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
-     * @param null $priceTypeName
-     *
-     * @throws \Exception
      *
      * @return int
      */
-    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceTypeName = null);
+    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer);
 
 }

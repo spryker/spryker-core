@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
@@ -344,14 +343,16 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected function persistPrice(ProductAbstractTransfer $productAbstractTransfer)
     {
         $priceTransfer = $productAbstractTransfer->getPrice();
-        if ($priceTransfer instanceof PriceProductTransfer) {
-            $priceTransfer->setIdProductAbstract(
-                $productAbstractTransfer
-                    ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
-            );
-            $this->priceFacade->persistAbstractProductPrice($priceTransfer);
+        if (!$priceTransfer) {
+            return;
         }
+
+        $priceTransfer->setIdProductAbstract(
+            $productAbstractTransfer
+                ->requireIdProductAbstract()
+                ->getIdProductAbstract()
+        );
+        $this->priceFacade->persistProductAbstractPrice($priceTransfer);
     }
 
     /**

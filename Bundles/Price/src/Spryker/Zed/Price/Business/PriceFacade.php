@@ -151,27 +151,37 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Create a new product price entity if it doesn't exists by abstract product id and price type.
+     * - Updates the price of a product price entity if it exists by abstract product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null)
+    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer)
     {
-        return $this->getFactory()->createWriterModel()->persistAbstractProductPrice($priceTransfer, $priceType);
+        return $this->getFactory()->createWriterModel()->persistProductAbstractPrice($priceTransfer);
     }
 
     /**
+     * Specification:
+     * - Create a new product price entity if it doesn't exists by concrete product id and price type.
+     * - Updates the price of a product price entity if it exists by concrete product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceType = null)
+    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer)
     {
-        return $this->getFactory()->createWriterModel()->persistConcreteProductPrice($priceTransfer, $priceType);
+        return $this->getFactory()->createWriterModel()->persistProductConcretePrice($priceTransfer);
     }
 
 }

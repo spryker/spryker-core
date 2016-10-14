@@ -71,6 +71,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->urlFacade = $urlFacade;
         $this->localeProvider = $localeProvider;
     }
 
