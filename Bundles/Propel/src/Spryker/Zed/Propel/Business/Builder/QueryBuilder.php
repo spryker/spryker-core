@@ -328,8 +328,8 @@ SCRIPT;
             \$$variableName = str_replace('*', '%', \$$variableName);
         }
 
-        if (\$comparison !== Criteria::IN && is_array(\$$variableName)) {
-            throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+        if (is_array(\$$variableName) && !in_array(\$comparison, [$implodedArrayComparisons])) {
+            throw new AmbiguousComparisonException('\$$variableName of type array requires one of [$implodedArrayComparisons] as comparison criteria.');
         }";
         } elseif ($col->isBooleanType()) {
             $script .= "
