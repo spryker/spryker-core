@@ -28,16 +28,17 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 {
 
     const REQUEST_URI = 'REQUEST_URI';
-    const VALID_REDIRECT_URL = '/valid-redirect-url?query=string';
+    const REDIRECT_URL_VALID = '/valid-redirect-url?query=string';
+    const REDIRECT_URL_INVALID = 'http://foo/redirect-url?query=string';
 
     /**
      * @return void
      */
     public function testOnKernelResponseShouldSetRefererWhenRedirectingToLogin()
     {
-        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
+        $kernel = $this->getHttpKernel();
         $request = new Request();
-        $request->server->set(static::REQUEST_URI, static::VALID_REDIRECT_URL);
+        $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
@@ -53,17 +54,40 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testOnKernelResponseShouldNotSetInvalidRefererWhenRedirectingToLogin()
+    {
+        $kernel = $this->getHttpKernel();
+        $request = new Request();
+        $request->setMethod('POST');
+        $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
+        $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
+
+        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+
+        $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
+        $redirectAfterLoginProvider->expects($this->never())
+            ->method('isAuthenticated');
+        $redirectAfterLoginProvider->onKernelResponse($event);
+
+        $this->assertSame('/auth/login', $event->getResponse()->headers->get('location'));
+    }
+
+    /**
+     * @return void
+     */
     public function testOnKernelResponseShouldNotChangeResponseIfRedirectUriNotSetInReferer()
     {
-        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
+        $kernel = $this->getHttpKernel();
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
-        $redirectAfterLoginProvider->expects($this->never())
-            ->method('isAuthenticated');
+        $redirectAfterLoginProvider->expects($this->once())
+            ->method('isAuthenticated')
+            ->willReturn(true);
+
         $redirectAfterLoginProvider->onKernelResponse($event);
 
         $this->assertSame($response, $event->getResponse());
@@ -72,12 +96,34 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testOnKernelResponseMustNotSetRedirectUriInSessionIfRedirectUriSetInSessionAndUserIsNotAuthenticated()
+    public function testOnKernelResponseShouldNotUseInvalidReferer()
     {
-        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
+        $kernel = $this->getHttpKernel();
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
-        $request->query->set(RedirectAfterLoginProvider::REFERER, static::VALID_REDIRECT_URL);
+        $request->query->set(RedirectAfterLoginProvider::REFERER, static::REDIRECT_URL_INVALID);
+        $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
+        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+
+        $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
+        $redirectAfterLoginProvider->expects($this->once())
+            ->method('isAuthenticated')
+            ->willReturn(true);
+
+        $redirectAfterLoginProvider->onKernelResponse($event);
+
+        $this->assertSame('/', $event->getResponse()->headers->get('location'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testOnKernelResponseMustNotSetRedirectUriIfRedirectUriSetAndUserIsNotAuthenticated()
+    {
+        $kernel = $this->getHttpKernel();
+        $request = new Request();
+        $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
+        $request->query->set(RedirectAfterLoginProvider::REFERER, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
@@ -96,10 +142,10 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnKernelResponseMustSetRedirectResponseIfRedirectUriSetInRefererAndUserIsAuthenticated()
     {
-        $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
+        $kernel = $this->getHttpKernel();
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
-        $request->query->set(RedirectAfterLoginProvider::REFERER, static::VALID_REDIRECT_URL);
+        $request->query->set(RedirectAfterLoginProvider::REFERER, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
         $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
@@ -112,7 +158,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(RedirectResponse::class, $event->getResponse());
 
-        $this->assertSame(static::VALID_REDIRECT_URL, $event->getResponse()->headers->get('location'));
+        $this->assertSame(static::REDIRECT_URL_VALID, $event->getResponse()->headers->get('location'));
     }
 
     /**
@@ -120,7 +166,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider
      */
-    private function getRedirectAfterLoginProvider(array $methods = [])
+    protected function getRedirectAfterLoginProvider(array $methods = [])
     {
         if (empty($methods)) {
             return new RedirectAfterLoginProvider();
@@ -129,6 +175,14 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder(RedirectAfterLoginProvider::class)
             ->setMethods($methods)
             ->getMock();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getHttpKernel()
+    {
+        return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
     }
 
 }
