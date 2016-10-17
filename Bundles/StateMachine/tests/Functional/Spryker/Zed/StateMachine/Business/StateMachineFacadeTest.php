@@ -130,7 +130,7 @@ class StateMachineFacadeTest extends Test
 
         $this->assertCount(1, $processList);
 
-        /* @var $process StateMachineProcessTransfer  */
+        /* @var StateMachineProcessTransfer $process */
         $process = array_pop($processList);
         $this->assertEquals($processName, $process->getProcessName());
     }
@@ -248,6 +248,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
+        /* @var StateMachineItemTransfer[] $stateMachineItems */
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -258,7 +259,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /* @var $updatedStateMachineItems StateMachineItemTransfer[]  */
+        /* @var StateMachineItemTransfer[] $updatedStateMachineItems */
         $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $updatedStateMachineItems);
