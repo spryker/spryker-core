@@ -62,37 +62,38 @@ interface WriterInterface
     /**
      * @param int $idProductImageSet
      * @param int $idProductImage
+     * @param int|null $sortOrder
      *
      * @return int
      */
-    public function persistProductImageRelation($idProductImageSet, $idProductImage);
+    public function persistProductImageRelation($idProductImageSet, $idProductImage, $sortOrder = null);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer);
+    public function createProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer);
+    public function updateProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer);
+    public function createProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer);
 
 }

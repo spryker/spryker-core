@@ -52,57 +52,75 @@ interface ProductImageFacadeInterface
     public function getProductImagesSetCollectionByProductId($idProduct);
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given abstract product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractCreatePlugin(ProductAbstractTransfer $productAbstractTransfer);
+    public function createProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given abstract product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer);
+    public function updateProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * Specification:
+     * - Expands the ProductAbstractTransfer with the product's image sets from database.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer);
+    public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given concrete product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function createProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given concrete product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
+     * Specification:
+     * - Expands the ProductConcreteTransfer with the product's image sets from database.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
 
 }

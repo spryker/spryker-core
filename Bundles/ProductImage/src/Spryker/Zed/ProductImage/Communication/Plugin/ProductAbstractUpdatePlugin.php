@@ -25,7 +25,7 @@ class ProductAbstractUpdatePlugin extends AbstractPlugin implements ProductAbstr
      */
     public function run(ProductAbstractTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->runProductAbstractUpdatePlugin($productConcreteTransfer);
+        return $this->getFacade()->updateProductAbstractImageSetCollection($productConcreteTransfer);
     }
 
 }

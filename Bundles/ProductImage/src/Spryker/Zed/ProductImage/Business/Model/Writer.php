@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\ProductImage\Business\Model;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
-use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Spryker\Zed\ProductImage\Business\Exception\InvalidProductImageSetException;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -59,16 +58,12 @@ class Writer implements WriterInterface
      */
     public function persistProductImage(ProductImageTransfer $productImageTransfer)
     {
-        $query = $this->productImageContainer
+        $productImageEntity = $this->productImageContainer
             ->queryProductImage()
-            ->filterByIdProductImage($productImageTransfer->getIdProductImage());
+            ->filterByIdProductImage($productImageTransfer->getIdProductImage())
+            ->findOneOrCreate();
 
-        $productImageEntity = $query->findOne();
-        if (!$productImageEntity) {
-            $productImageEntity = new SpyProductImage();
-        }
-
-        $productImageEntity->fromArray($productImageTransfer->toArray());
+        $productImageEntity->fromArray($productImageTransfer->modifiedToArray());
         $productImageEntity->save();
 
         $productImageTransfer->setIdProductImage($productImageEntity->getIdProductImage());
@@ -103,20 +98,16 @@ class Writer implements WriterInterface
      */
     public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        $this->productImageContainer->getConnection()->beginTransaction();
-
         $this->assertProductIsAssigned($productImageSetTransfer);
 
-        $query = $this->productImageContainer
+        $this->productImageContainer->getConnection()->beginTransaction();
+
+        $productImageSetEntity = $this->productImageContainer
             ->queryProductImageSet()
-            ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet());
+            ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet())
+            ->findOneOrCreate();
 
-        $productImageSetEntity = $query->findOne();
-        if (!$productImageSetEntity) {
-            $productImageSetEntity = new SpyProductImageSet();
-        }
-
-        $productImageSetEntity = $this->hydrateProductImageSet($productImageSetEntity, $productImageSetTransfer);
+        $productImageSetEntity = $this->mapProductImageSet($productImageSetEntity, $productImageSetTransfer);
         $productImageSetEntity->save();
 
         $productImageSetTransfer->setIdProductImageSet(
@@ -136,13 +127,13 @@ class Writer implements WriterInterface
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSet
      */
-    protected function hydrateProductImageSet(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
+    protected function mapProductImageSet(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
     {
-        $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
+        $productImageSetEntity->fromArray($productImageSetTransfer->modifiedToArray());
         $productImageSetEntity->setFkProductAbstract($productImageSetTransfer->getIdProductAbstract());
         $productImageSetEntity->setFkProduct($productImageSetTransfer->getIdProduct());
 
-        if ($productImageSetTransfer->getLocale() instanceof LocaleTransfer) {
+        if ($productImageSetTransfer->getLocale()) {
             $productImageSetEntity->setFkLocale($productImageSetTransfer->getLocale()->getIdLocale());
         }
 
@@ -156,7 +147,6 @@ class Writer implements WriterInterface
      */
     protected function persistProductImageSetCollection(ProductImageSetTransfer $productImageSetTransfer)
     {
-        $updatedImageCollection = [];
         foreach ($productImageSetTransfer->getProductImages() as $imageTransfer) {
             $imageTransfer = $this->persistProductImage($imageTransfer);
 
@@ -165,13 +155,7 @@ class Writer implements WriterInterface
                 $imageTransfer->getIdProductImage(),
                 $imageTransfer->getSortOrder()
             );
-
-            $updatedImageCollection[] = $imageTransfer;
         }
-
-        $productImageSetTransfer->setProductImages(
-            new \ArrayObject($updatedImageCollection)
-        );
 
         return $productImageSetTransfer;
     }
@@ -179,11 +163,11 @@ class Writer implements WriterInterface
     /**
      * @param int $idProductImageSet
      * @param int $idProductImage
-     * @param int|null $sort_order
+     * @param int|null $sortOrder
      *
      * @return int
      */
-    public function persistProductImageRelation($idProductImageSet, $idProductImage, $sort_order = null)
+    public function persistProductImageRelation($idProductImageSet, $idProductImage, $sortOrder = null)
     {
         $query = $this->productImageContainer
             ->queryProductImageSetToProductImage()
@@ -191,12 +175,8 @@ class Writer implements WriterInterface
             ->filterByFkProductImage($idProductImage);
 
         $productImageRelationEntity = $query->findOneOrCreate();
-        $productImageRelationEntity->setSortOrder((int)$sort_order);
+        $productImageRelationEntity->setSortOrder((int)$sortOrder);
         $productImageRelationEntity->save();
-
-        $productImageRelationEntity->setIdProductImageSetToProductImage(
-            $productImageRelationEntity->getIdProductImageSetToProductImage()
-        );
 
         return $productImageRelationEntity->getIdProductImageSetToProductImage();
     }
@@ -206,20 +186,12 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractCreatePluginRun(ProductAbstractTransfer $productAbstractTransfer)
+    public function createProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
-        if (!$productAbstractTransfer->getIdProductAbstract()) {
-            return $productAbstractTransfer;
-        }
+        $productAbstractTransfer->requireIdProductAbstract();
 
-        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
-
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
-                $productAbstractTransfer
-                    ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
-            );
+        foreach ($productAbstractTransfer->getImageSets() as $imageSetTransfer) {
+            $imageSetTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
             $this->createProductImageSet($imageSetTransfer);
         }
@@ -232,16 +204,12 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
+    public function updateProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $imageSetTransferCollection = $productAbstractTransfer->getImageSets();
+        $productAbstractTransfer->requireIdProductAbstract();
 
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract(
-                $productAbstractTransfer
-                    ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
-            );
+        foreach ($productAbstractTransfer->getImageSets() as $imageSetTransfer) {
+            $imageSetTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
             $this->updateProductImageSet($imageSetTransfer);
         }
@@ -254,20 +222,12 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePluginRun(ProductConcreteTransfer $productConcreteTransfer)
+    public function createProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
-        if (!$productConcreteTransfer->getIdProductConcrete()) {
-            return $productConcreteTransfer;
-        }
+        $productConcreteTransfer->requireIdProductConcrete();
 
-        $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
-
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProduct(
-                $productConcreteTransfer
-                    ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
-            );
+        foreach ($productConcreteTransfer->getImageSets() as $imageSetTransfer) {
+            $imageSetTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
             $this->createProductImageSet($imageSetTransfer);
         }
@@ -280,16 +240,12 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $imageSetTransferCollection = $productConcreteTransfer->getImageSets();
+        $productConcreteTransfer->requireIdProductConcrete();
 
-        foreach ($imageSetTransferCollection as $imageSetTransfer) {
-            $imageSetTransfer->setIdProduct(
-                $productConcreteTransfer
-                    ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
-            );
+        foreach ($productConcreteTransfer->getImageSets() as $imageSetTransfer) {
+            $imageSetTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
             $this->updateProductImageSet($imageSetTransfer);
         }
@@ -300,14 +256,14 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\ProductImage\Business\Exception\InvalidProductImageSetException
      *
      * @return void
      */
     protected function assertProductIsAssigned(ProductImageSetTransfer $productImageSetTransfer)
     {
         if ((int)$productImageSetTransfer->getIdProductAbstract() === 0 && (int)$productImageSetTransfer->getIdProduct() === 0) {
-            throw new \Exception('ImageSet has no product assigned');
+            throw new InvalidProductImageSetException('ImageSet has no product assigned.');
         }
     }
 
