@@ -19,7 +19,8 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\ProductUrlManager;
-use Spryker\Zed\Product\Business\Product\VariantGenerator;
+use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
+use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -142,13 +143,21 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\VariantGeneratorInterface
+     * @return \Spryker\Zed\Product\Business\Product\Variant\VariantGenerator
      */
     public function createProductVariantGenerator()
     {
         return new VariantGenerator(
             $this->getUrlFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator
+     */
+    public function createAttributePermutationGenerator()
+    {
+        return new AttributePermutationGenerator();
     }
 
     /**

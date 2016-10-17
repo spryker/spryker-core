@@ -697,19 +697,36 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     * - Generatate all possible permutations for given attributes.
+     *
+     * Leaf node of a tree is concrete id.
+     * (
+     *   [color:red] => array (
+     *       [brand:nike] => array(
+     *          [id] => 1
+     *       )
+     *   ),
+     *   [brand:nike] => array(
+     *       [color:red] => array(
+     *          [id] => 1
+     *       )
+     *   )
+     * )
+     *
      * @api
      *
      * @param array $superAttributes
      * @param int $idProductConcrete
-     * @param array $variants
      *
      * @return array
      */
-    public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = [])
+    public function generateAttributePermutations(array $superAttributes, $idProductConcrete)
     {
         return $this->getFactory()
-            ->createProductVariantGenerator()
-            ->generateAttributePermutations($superAttributes, $idProductConcrete, $variants);
+            ->createAttributePermutationGenerator()
+            ->generateAttributePermutations($superAttributes, $idProductConcrete);
     }
 
     /**

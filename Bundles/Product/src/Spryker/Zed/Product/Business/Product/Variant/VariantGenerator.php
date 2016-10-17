@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\Product\Business\Product\Variant;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -224,40 +224,6 @@ class VariantGenerator implements VariantGeneratorInterface
             $result[] = $this->createProductConcreteTransfer($productAbstractTransfer, $sku, $attributeTokens);
         }
 
-        return $result;
-    }
-
-    /**
-     * @param array $superAttributes
-     * @param int $idProductConcrete
-     * @param array $variants
-     *
-     * @return array
-     */
-    public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = [])
-    {
-        if (empty($superAttributes)) {
-            $result = [
-                ProductConstants::VARIANT_LEAF_NODE_ID => $idProductConcrete //set leaf node to id of concrete product
-            ];
-        }  else {
-            $result = [];
-
-            $index = 0;
-            foreach ($superAttributes as $key => $value) {
-                $newAttributes = $superAttributes;
-                $newVariants = $variants;
-
-                $newVariants[] = array_splice($newAttributes, $index++, 1);
-
-                $recurseResult = $this->generateAttributePermutations($newAttributes, $idProductConcrete, $newVariants);
-                if (is_array($recurseResult)) {
-                    $recurseResult = array_merge($result, $recurseResult);
-                }
-
-                $result[$key . ProductConstants::ATTRIBUTE_MAP_PATH_DELIMITER . $value] = $recurseResult;
-            }
-        }
         return $result;
     }
 
