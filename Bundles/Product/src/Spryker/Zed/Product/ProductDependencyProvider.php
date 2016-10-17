@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTaxBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
@@ -109,22 +108,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new ProductToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[self::FACADE_PRODUCT_OPTION] = function (Container $container) {
-            return new ProductToProductOptionBridge($container->getLocator()->productOption()->facade());
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new ProductToUrlBridge($container->getLocator()->url()->facade());
-        };
-
-        $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
-            return $container->getLocator()->productCategory()->queryContainer();
-        };
-
         return $container;
     }
 
@@ -135,9 +118,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductAbstractCreatePlugins(Container $container)
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -147,9 +128,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductAbstractReadPlugins(Container $container)
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -159,9 +138,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductAbstractUpdatePlugins(Container $container)
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -182,8 +159,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductConcreteAfterCreatePlugins(Container $container)
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -193,8 +169,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductConcreteReadPlugins(Container $container)
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -215,8 +190,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductConcreteAfterUpdatePlugins(Container $container)
     {
-        return [
-        ];
+        return [];
     }
 
 }
