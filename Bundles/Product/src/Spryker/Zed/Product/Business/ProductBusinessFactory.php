@@ -36,14 +36,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected $productManager;
 
     /**
-     * @return string
-     */
-    public function getYvesUrl()
-    {
-        return $this->getConfig()->getHostYves();
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function createAttributeManager()
