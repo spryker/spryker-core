@@ -49,7 +49,7 @@ class Reader implements ReaderInterface
             ->queryImageSetByProductAbstractId($idProductAbstract)
             ->find();
 
-        return $this->transferMapper->convertProductImageSetCollection($imageCollection);
+        return $this->transferMapper->mapProductImageSetCollection($imageCollection);
     }
 
     /**
@@ -63,7 +63,7 @@ class Reader implements ReaderInterface
             ->queryImageSetByProductId($idProduct)
             ->find();
 
-        return $this->transferMapper->convertProductImageSetCollection($imageCollection);
+        return $this->transferMapper->mapProductImageSetCollection($imageCollection);
     }
 
     /**
@@ -71,19 +71,17 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
+    public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductAbstractId(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract()
         );
 
         if ($imageSetCollection === null) {
             return $productAbstractTransfer;
         }
 
-        $productAbstractTransfer->setImageSets(
-            new ArrayObject($imageSetCollection)
-        );
+        $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
 
         return $productAbstractTransfer;
     }
@@ -93,19 +91,17 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
         $imageSetCollection = $this->getProductImagesSetCollectionByProductId(
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete()
         );
 
         if ($imageSetCollection === null) {
             return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer->setImageSets(
-            new ArrayObject($imageSetCollection)
-        );
+        $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
 
         return $productConcreteTransfer;
     }

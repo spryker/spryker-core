@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Business\Transfer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
@@ -33,33 +34,15 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function convertProductImage(SpyProductImage $productImageEntity)
-    {
-        $productImageTransfer = (new ProductImageTransfer())
-            ->fromArray($productImageEntity->toArray(), true);
-
-        return $productImageTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[]
-     */
-    public function convertProductImageCollection(ObjectCollection $productImageEntityCollection)
+    public function mapProductImageSetCollection(ObjectCollection $productImageSetEntityCollection)
     {
         $transferList = [];
-        foreach ($productImageEntityCollection as $productImageEntity) {
-            $productImageTransfer = $this->convertProductImage($productImageEntity);
-            $productImageTransfer->setSortOrder(
-                (int)$productImageEntity->getSpyProductImageSetToProductImages()->getFirst()->getSortOrder()
-            ); //getFirst since it's many to many while from this side it should be one to many
-
-            $transferList[] = $productImageTransfer;
+        foreach ($productImageSetEntityCollection as $productImageSetEntity) {
+            $transferList[] = $this->mapProductImageSet($productImageSetEntity);
         }
 
         return $transferList;
@@ -70,20 +53,95 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function convertProductImageSet(SpyProductImageSet $productImageSetEntity)
+    public function mapProductImageSet(SpyProductImageSet $productImageSetEntity)
     {
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->fromArray($productImageSetEntity->toArray(), true);
+            ->fromArray($productImageSetEntity->toArray(), true)
+            ->setIdProduct($productImageSetEntity->getFkProduct())
+            ->setIdProductAbstract($productImageSetEntity->getFkProductAbstract());
 
+        $this->setProductImageSetLocale($productImageSetEntity, $productImageSetTransfer);
+        $this->setProductImages($productImageSetEntity, $productImageSetTransfer);
+
+        return $productImageSetTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageEntityCollection
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[]
+     */
+    public function mapProductImageCollection(ObjectCollection $productImageEntityCollection, SpyProductImageSet $productImageSetEntity)
+    {
+        $transferList = [];
+        foreach ($productImageEntityCollection as $productImageEntity) {
+            $productImageTransfer = $this->mapProductImage($productImageEntity);
+
+            $productImageSetToProductImageEntity = $this->getProductImageSetToProductImageEntity($productImageSetEntity, $productImageEntity);
+
+            $productImageTransfer->setSortOrder((int)$productImageSetToProductImageEntity->getSortOrder());
+
+            $transferList[] = $productImageTransfer;
+        }
+
+        return $transferList;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function mapProductImage(SpyProductImage $productImageEntity)
+    {
+        $productImageTransfer = (new ProductImageTransfer())
+            ->fromArray($productImageEntity->toArray(), true);
+
+        return $productImageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage
+     */
+    protected function getProductImageSetToProductImageEntity(SpyProductImageSet $productImageSetEntity, SpyProductImage $productImageEntity)
+    {
+        $criteria = new Criteria();
+        $criteria->add(SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET, $productImageSetEntity->getIdProductImageSet());
+
+        $productImageSetToProductImageEntity = $productImageEntity
+            ->getSpyProductImageSetToProductImages($criteria)
+            ->getFirst();
+
+        return $productImageSetToProductImageEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return void
+     */
+    protected function setProductImageSetLocale(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
+    {
         $fkLocale = (int)$productImageSetEntity->getFkLocale();
         if ($fkLocale > 0) {
             $localeTransfer = $this->localeFacade->getLocaleById($fkLocale);
             $productImageSetTransfer->setLocale($localeTransfer);
         }
+    }
 
-        $productImageSetTransfer->setIdProductAbstract($productImageSetEntity->getFkProductAbstract());
-        $productImageSetTransfer->setIdProduct($productImageSetEntity->getFkProduct());
-
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return void
+     */
+    protected function setProductImages(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
+    {
         $criteria = new Criteria();
         $criteria->addDescendingOrderByColumn(SpyProductImageSetToProductImageTableMap::COL_SORT_ORDER);
 
@@ -92,26 +150,8 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
             $imageEntityCollection[] = $entity->getSpyProductImage();
         }
 
-        $objectCollection = new ObjectCollection($imageEntityCollection);
-        $imageTransferCollection = $this->convertProductImageCollection($objectCollection);
-        $productImageSetTransfer->setProductImages(new \ArrayObject($imageTransferCollection));
-
-        return $productImageSetTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function convertProductImageSetCollection(ObjectCollection $productImageSetEntityCollection)
-    {
-        $transferList = [];
-        foreach ($productImageSetEntityCollection as $productImageSetEntity) {
-            $transferList[] = $this->convertProductImageSet($productImageSetEntity);
-        }
-
-        return $transferList;
+        $imageTransferCollection = $this->mapProductImageCollection(new ObjectCollection($imageEntityCollection), $productImageSetEntity);
+        $productImageSetTransfer->setProductImages(new ArrayObject($imageTransferCollection));
     }
 
 }

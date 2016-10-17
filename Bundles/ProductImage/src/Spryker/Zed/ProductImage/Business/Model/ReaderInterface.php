@@ -32,13 +32,13 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer);
+    public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer);
+    public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
 
 }

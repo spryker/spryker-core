@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Product\ProductConstants;
@@ -139,7 +138,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
         $this->persistPrice($productConcreteTransfer);
 
-        $productConcreteTransfer = $this->triggerAfterCreatePlugins($productConcreteTransfer);
+        $this->triggerAfterCreatePlugins($productConcreteTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -181,7 +180,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
         $this->persistPrice($productConcreteTransfer);
 
-        $productConcreteTransfer = $this->triggerAfterUpdatePlugins($productConcreteTransfer);
+        $this->triggerAfterUpdatePlugins($productConcreteTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -405,14 +404,16 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected function persistPrice(ProductConcreteTransfer $productConcreteTransfer)
     {
         $priceTransfer = $productConcreteTransfer->getPrice();
-        if ($priceTransfer instanceof PriceProductTransfer) {
-            $priceTransfer->setIdProduct(
-                $productConcreteTransfer
-                    ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
-            );
-            $this->priceFacade->persistConcreteProductPrice($priceTransfer);
+        if (!$priceTransfer) {
+            return;
         }
+
+        $priceTransfer->setIdProduct(
+            $productConcreteTransfer
+                ->requireIdProductConcrete()
+                ->getIdProductConcrete()
+        );
+        $this->priceFacade->persistProductConcretePrice($priceTransfer);
     }
 
     /**

@@ -15,31 +15,32 @@ interface ProductImageTransferMapperInterface
 {
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function convertProductImage(SpyProductImage $productImageEntity);
-
-    /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[]
-     */
-    public function convertProductImageCollection(ObjectCollection $productImageEntityCollection);
+    public function mapProductImageSetCollection(ObjectCollection $productImageSetEntityCollection);
 
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function convertProductImageSet(SpyProductImageSet $productImageSetEntity);
+    public function mapProductImageSet(SpyProductImageSet $productImageSetEntity);
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntityCollection
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageEntityCollection
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[]
      */
-    public function convertProductImageSetCollection(ObjectCollection $productImageSetEntityCollection);
+    public function mapProductImageCollection(ObjectCollection $productImageEntityCollection, SpyProductImageSet $productImageSetEntity);
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function mapProductImage(SpyProductImage $productImageEntity);
 
 }

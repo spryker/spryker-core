@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * TODO add delete
- *
  * @method \Spryker\Zed\ProductImage\Business\ProductImageBusinessFactory getFactory()
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
@@ -106,87 +104,105 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given abstract product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractCreatePlugin(ProductAbstractTransfer $productAbstractTransfer)
+    public function createProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductImageWriter()
-            ->runProductAbstractCreatePluginRun($productAbstractTransfer);
+            ->createProductAbstractImageSetCollection($productAbstractTransfer);
     }
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given abstract product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractUpdatePlugin(ProductAbstractTransfer $productAbstractTransfer)
+    public function updateProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductImageWriter()
-            ->runProductAbstractUpdatePlugin($productAbstractTransfer);
+            ->updateProductAbstractImageSetCollection($productAbstractTransfer);
     }
 
     /**
+     * Specification:
+     * - Expands the ProductAbstractTransfer with the product's image sets from database.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function runProductAbstractReadPlugin(ProductAbstractTransfer $productAbstractTransfer)
+    public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductImageReader()
-            ->runProductAbstractReadPlugin($productAbstractTransfer);
+            ->expandProductAbstractWithImageSets($productAbstractTransfer);
     }
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given concrete product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function createProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
             ->createProductImageWriter()
-            ->runProductConcreteCreatePluginRun($productConcreteTransfer);
+            ->createProductConcreteImageSetCollection($productConcreteTransfer);
     }
 
     /**
+     * Specification:
+     * - Persists all provided image sets to database for the given concrete product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
             ->createProductImageWriter()
-            ->runProductConcreteUpdatePlugin($productConcreteTransfer);
+            ->updateProductConcreteImageSetCollection($productConcreteTransfer);
     }
 
     /**
+     * Specification:
+     * - Expands the ProductConcreteTransfer with the product's image sets from database.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
             ->createProductImageReader()
-            ->runProductConcreteReadPlugin($productConcreteTransfer);
+            ->expandProductConcreteWithImageSets($productConcreteTransfer);
     }
 
 }

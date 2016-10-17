@@ -114,21 +114,31 @@ interface PriceFacadeInterface
     public function getIdPriceProduct($sku, $priceType);
 
     /**
+     * Specification:
+     * - Create a new product price entity if it doesn't exists by abstract product id and price type.
+     * - Updates the price of a product price entity if it exists by abstract product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null);
+    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer);
 
     /**
+     * Specification:
+     * - Create a new product price entity if it doesn't exists by concrete product id and price type.
+     * - Updates the price of a product price entity if it exists by concrete product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
      *
      * @return int
      */
-    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceType = null);
+    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer);
 
 }

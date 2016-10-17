@@ -164,8 +164,6 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * TODO missing validation of dates
-     *
      * @param string $sku
      * @param string|null $priceTypeName
      *

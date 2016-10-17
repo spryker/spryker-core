@@ -13,10 +13,10 @@ interface ProductManagerInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change);
+    public function expandItems(CartChangeTransfer $cartChangeTransfer);
 
 }

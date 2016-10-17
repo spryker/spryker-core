@@ -112,7 +112,7 @@ class Writer implements WriterInterface
         $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
-        $idStockProduct = $this->createStockProductEntity($transferStockProduct, $idStockType, $idProduct);
+        $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
 
         $this->queryContainer->getConnection()->commit();
 
@@ -225,7 +225,7 @@ class Writer implements WriterInterface
      *
      * @return int
      */
-    protected function createStockProductEntity(StockProductTransfer $transferStockProduct, $idStockType, $idProduct)
+    protected function saveStockProduct(StockProductTransfer $transferStockProduct, $idStockType, $idProduct)
     {
         $stockProduct = new SpyStockProduct();
         $stockProduct->setFkProduct($idProduct)
@@ -244,39 +244,17 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->persistStockProductCollection((array)$productConcreteTransfer->getStock());
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $this->persistStockProductCollection((array)$productConcreteTransfer->getStock());
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param array $stockCollection|\Generated\Shared\Transfer\StockProductTransfer[]
-     *
-     * @return void
-     */
-    protected function persistStockProductCollection(array $stockCollection)
-    {
-        foreach ($stockCollection as $stockTransfer) {
+        foreach ($productConcreteTransfer->getStocks() as $stockTransfer) {
             if (!$this->reader->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
                 $this->createStockProduct($stockTransfer);
             } else {
                 $this->updateStockProduct($stockTransfer);
             }
         }
+
+        return $productConcreteTransfer;
     }
 
 }

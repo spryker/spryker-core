@@ -145,45 +145,39 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Processes all provided stocks of the concrete product transfer
+     * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
+     * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteCreatePlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
             ->createWriterModel()
-            ->runProductConcreteCreatePlugin($productConcreteTransfer);
+            ->persistStockProductCollection($productConcreteTransfer);
     }
 
     /**
+     * Specification:
+     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function runProductConcreteUpdatePlugin(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->getFactory()
-            ->createWriterModel()
-            ->runProductConcreteUpdatePlugin($productConcreteTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function runProductConcreteReadPlugin(ProductConcreteTransfer $productConcreteTransfer)
+    public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
             ->createReaderModel()
-            ->runProductConcreteReadPlugin($productConcreteTransfer);
+            ->expandProductConcreteWithStocks($productConcreteTransfer);
     }
 
 }

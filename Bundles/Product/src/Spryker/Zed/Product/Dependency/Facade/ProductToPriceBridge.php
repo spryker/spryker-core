@@ -52,9 +52,9 @@ class ProductToPriceBridge implements ProductToPriceInterface
      *
      * @return int
      */
-    public function persistAbstractProductPrice(PriceProductTransfer $priceTransfer, $priceType = null)
+    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer)
     {
-        return $this->priceFacade->persistAbstractProductPrice($priceTransfer, $priceType);
+        return $this->priceFacade->persistProductAbstractPrice($priceTransfer);
     }
 
     /**
@@ -62,9 +62,9 @@ class ProductToPriceBridge implements ProductToPriceInterface
      *
      * @return int
      */
-    public function persistConcreteProductPrice(PriceProductTransfer $priceTransfer, $priceType = null)
+    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer)
     {
-        return $this->priceFacade->persistConcreteProductPrice($priceTransfer, $priceType);
+        return $this->priceFacade->persistProductConcretePrice($priceTransfer);
     }
 
 }
