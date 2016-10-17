@@ -17,6 +17,7 @@ use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
@@ -173,6 +174,14 @@ class ProductConcreteManagerTest extends Test
             $productConcretePluginManager
         );
 
+        $abstractPluginManager = new PluginAbstractManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productAbstractManager = new ProductAbstractManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -182,9 +191,7 @@ class ProductConcreteManagerTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $this->productConcreteManager,
             $productAbstractAssertion,
-            $pluginsCreateCollection = [],
-            $pluginsReadCollection = [],
-            $pluginsUpdateCollection = []
+            $abstractPluginManager
         );
     }
 
@@ -260,8 +267,8 @@ class ProductConcreteManagerTest extends Test
     public function testCreateProductConcreteShouldCreateProductConcrete()
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-
         $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+
         $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
         $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 

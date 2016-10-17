@@ -29,15 +29,17 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
 
-    const PRODUCT_ABSTRACT_PLUGINS_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_CREATE';
-    const PRODUCT_ABSTRACT_PLUGINS_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_UPDATE';
+    const PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE';
+    const PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE';
     const PRODUCT_ABSTRACT_PLUGINS_READ = 'PRODUCT_ABSTRACT_PLUGINS_READ';
+    const PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE';
+    const PRODUCT_ABSTRACT_PLUGINS_AFTER_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_AFTER_UPDATE';
 
     const PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE';
     const PRODUCT_CONCRETE_PLUGINS_BEFORE_UPDATE = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_UPDATE';
+    const PRODUCT_CONCRETE_PLUGINS_READ = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_READ';
     const PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE';
     const PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE';
-    const PRODUCT_CONCRETE_PLUGINS_READ = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_READ';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -66,16 +68,24 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductToPriceBridge($container->getLocator()->price()->facade());
         };
 
-        $container[self::PRODUCT_ABSTRACT_PLUGINS_CREATE] = function (Container $container) {
-            return $this->getProductAbstractCreatePlugins($container);
+        $container[self::PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE] = function (Container $container) {
+            return $this->getProductAbstractBeforeCreatePlugins($container);
+        };
+
+        $container[self::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE] = function (Container $container) {
+            return $this->getProductAbstractAfterCreatePlugins($container);
         };
 
         $container[self::PRODUCT_ABSTRACT_PLUGINS_READ] = function (Container $container) {
             return $this->getProductAbstractReadPlugins($container);
         };
 
-        $container[self::PRODUCT_ABSTRACT_PLUGINS_UPDATE] = function (Container $container) {
-            return $this->getProductAbstractUpdatePlugins($container);
+        $container[self::PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE] = function (Container $container) {
+            return $this->getProductAbstractBeforeUpdatePlugins($container);
+        };
+
+        $container[self::PRODUCT_ABSTRACT_PLUGINS_AFTER_UPDATE] = function (Container $container) {
+            return $this->getProductAbstractAfterUpdatePlugins($container);
         };
 
         $container[self::PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE] = function (Container $container) {
@@ -133,7 +143,19 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
      */
-    protected function getProductAbstractCreatePlugins(Container $container)
+    protected function getProductAbstractBeforeCreatePlugins(Container $container)
+    {
+        return [
+
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected function getProductAbstractAfterCreatePlugins(Container $container)
     {
         return [
 
@@ -157,7 +179,19 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
      */
-    protected function getProductAbstractUpdatePlugins(Container $container)
+    protected function getProductAbstractBeforeUpdatePlugins(Container $container)
+    {
+        return [
+
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     */
+    protected function getProductAbstractAfterUpdatePlugins(Container $container)
     {
         return [
 

@@ -63,7 +63,7 @@ class Writer implements WriterInterface
             ->filterByIdProductImage($productImageTransfer->getIdProductImage())
             ->findOneOrCreate();
 
-        $productImageEntity->fromArray($productImageTransfer->modifiedToArray(), true);
+        $productImageEntity->fromArray($productImageTransfer->toArray());
         $productImageEntity->save();
 
         $productImageTransfer->setIdProductImage($productImageEntity->getIdProductImage());
@@ -129,7 +129,7 @@ class Writer implements WriterInterface
      */
     protected function mapProductImageSetEntity(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
     {
-        $productImageSetEntity->fromArray($productImageSetTransfer->modifiedToArray(), true);
+        $productImageSetEntity->fromArray($productImageSetTransfer->toArray());
         $productImageSetEntity->setFkProductAbstract($productImageSetTransfer->getIdProductAbstract());
         $productImageSetEntity->setFkProduct($productImageSetTransfer->getIdProduct());
 
