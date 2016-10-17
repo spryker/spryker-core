@@ -69,7 +69,7 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
      */
     public function createAttributeKey(ProductAttributeKeyTransfer $attributeKeyTransfer)
     {
-        $this->assertAttributeHasKey($attributeKeyTransfer);
+        $attributeKeyTransfer->requireKey();
 
         $productAttributeKeyEntity = new SpyProductAttributeKey();
         $productAttributeKeyEntity->fromArray($attributeKeyTransfer->toArray());
@@ -88,7 +88,7 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
      */
     public function updateAttributeKey(ProductAttributeKeyTransfer $attributeKeyTransfer)
     {
-        $this->assertAttributeHasId($attributeKeyTransfer);
+        $attributeKeyTransfer->requireIdProductAttributeKey();
 
         $productAttributeKeyEntity = $this->productQueryContainer
             ->queryProductAttributeKey()
@@ -102,26 +102,6 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
         $attributeKeyTransfer->fromArray($productAttributeKeyEntity->toArray(), true);
 
         return $attributeKeyTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $attributeKeyTransfer
-     *
-     * @return void
-     */
-    protected function assertAttributeHasId(ProductAttributeKeyTransfer $attributeKeyTransfer)
-    {
-        $attributeKeyTransfer->requireIdProductAttributeKey();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $attributeKeyTransfer
-     *
-     * @return void
-     */
-    protected function assertAttributeHasKey(ProductAttributeKeyTransfer $attributeKeyTransfer)
-    {
-        $attributeKeyTransfer->requireKey();
     }
 
 }

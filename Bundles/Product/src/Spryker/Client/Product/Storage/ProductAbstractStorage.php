@@ -7,34 +7,37 @@
 
 namespace Spryker\Client\Product\Storage;
 
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+
 class ProductAbstractStorage implements ProductAbstractStorageInterface
 {
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storage;
+    protected $storage;
 
     /**
      * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @var string
      */
-    private $locale;
+    protected $localeName;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct($storage, $keyBuilder, $localeName)
+    public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
+        $this->localeName = $localeName;
     }
 
     /**
@@ -44,7 +47,7 @@ class ProductAbstractStorage implements ProductAbstractStorageInterface
      */
     public function getProductAbstractFromStorageById($idProductAbstract)
     {
-        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
+        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->localeName);
         $product = $this->storage->get($key);
 
         return $product;

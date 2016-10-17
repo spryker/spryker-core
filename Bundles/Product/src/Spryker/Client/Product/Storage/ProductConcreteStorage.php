@@ -6,7 +6,10 @@
 
 namespace Spryker\Client\Product\Storage;
 
-class ProductConcreteStorage
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+
+class ProductConcreteStorage implements ProductConcreteStorageInterface
 {
 
     /**
@@ -22,28 +25,28 @@ class ProductConcreteStorage
     /**
      * @var string
      */
-    protected $locale;
+    protected $localeName;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct($storage, $keyBuilder, $localeName)
+    public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
+        $this->localeName = $localeName;
     }
 
     /**
      * @param int $idProductConcrete
      *
-     * @return array
+     * @return mixed
      */
     public function getProductConcreteById($idProductConcrete)
     {
-        $key = $this->keyBuilder->generateKey($idProductConcrete, $this->locale);
+        $key = $this->keyBuilder->generateKey($idProductConcrete, $this->localeName);
         $product = $this->storage->get($key);
 
         return $product;

@@ -238,7 +238,7 @@ class VariantGenerator implements VariantGeneratorInterface
     {
         if (empty($superAttributes)) {
             $result = [
-                StorageProductTransfer::ID => $idProductConcrete //set leaf node to id of concrete product
+                ProductConstants::VARIANT_LEAF_NODE_ID => $idProductConcrete //set leaf node to id of concrete product
             ];
         }  else {
             $result = [];

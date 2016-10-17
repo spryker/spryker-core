@@ -19,4 +19,6 @@ interface ProductConstants
 
     const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
 
+    const VARIANT_LEAF_NODE_ID = 'id_product_concrete';
+
 }

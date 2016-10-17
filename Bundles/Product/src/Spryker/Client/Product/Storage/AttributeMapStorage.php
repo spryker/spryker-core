@@ -6,6 +6,9 @@
 
 namespace Spryker\Client\Product\Storage;
 
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+
 class AttributeMapStorage implements AttributeMapStorageInterface
 {
 
@@ -22,18 +25,18 @@ class AttributeMapStorage implements AttributeMapStorageInterface
     /**
      * @var string
      */
-    protected $locale;
+    protected $localeName;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct($storage, $keyBuilder, $localeName)
+    public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
+        $this->localeName = $localeName;
     }
 
     /**
@@ -43,7 +46,7 @@ class AttributeMapStorage implements AttributeMapStorageInterface
      */
     public function getAttributeMapByIdProductAbstract($idProductAbstract)
     {
-        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
+        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->localeName);
         $attributes = $this->storage->get($key);
 
         return $attributes;
