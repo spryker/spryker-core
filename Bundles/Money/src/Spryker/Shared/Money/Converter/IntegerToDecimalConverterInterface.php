@@ -13,7 +13,7 @@ interface IntegerToDecimalConverterInterface
     /**
      * @param int $value
      *
-     * @return string
+     * @return float
      */
     public function convert($value);
 
