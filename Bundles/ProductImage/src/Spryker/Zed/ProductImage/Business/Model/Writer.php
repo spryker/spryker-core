@@ -63,7 +63,7 @@ class Writer implements WriterInterface
             ->filterByIdProductImage($productImageTransfer->getIdProductImage())
             ->findOneOrCreate();
 
-        $productImageEntity->fromArray($productImageTransfer->modifiedToArray());
+        $productImageEntity->fromArray($productImageTransfer->modifiedToArray(), true);
         $productImageEntity->save();
 
         $productImageTransfer->setIdProductImage($productImageEntity->getIdProductImage());
@@ -107,7 +107,7 @@ class Writer implements WriterInterface
             ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet())
             ->findOneOrCreate();
 
-        $productImageSetEntity = $this->mapProductImageSet($productImageSetEntity, $productImageSetTransfer);
+        $productImageSetEntity = $this->mapProductImageSetEntity($productImageSetEntity, $productImageSetTransfer);
         $productImageSetEntity->save();
 
         $productImageSetTransfer->setIdProductImageSet(
@@ -127,9 +127,9 @@ class Writer implements WriterInterface
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSet
      */
-    protected function mapProductImageSet(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
+    protected function mapProductImageSetEntity(SpyProductImageSet $productImageSetEntity, ProductImageSetTransfer $productImageSetTransfer)
     {
-        $productImageSetEntity->fromArray($productImageSetTransfer->modifiedToArray());
+        $productImageSetEntity->fromArray($productImageSetTransfer->modifiedToArray(), true);
         $productImageSetEntity->setFkProductAbstract($productImageSetTransfer->getIdProductAbstract());
         $productImageSetEntity->setFkProduct($productImageSetTransfer->getIdProduct());
 
@@ -169,12 +169,12 @@ class Writer implements WriterInterface
      */
     public function persistProductImageRelation($idProductImageSet, $idProductImage, $sortOrder = null)
     {
-        $query = $this->productImageContainer
+        $productImageRelationEntity = $this->productImageContainer
             ->queryProductImageSetToProductImage()
             ->filterByFkProductImageSet($idProductImageSet)
-            ->filterByFkProductImage($idProductImage);
+            ->filterByFkProductImage($idProductImage)
+            ->findOneOrCreate();
 
-        $productImageRelationEntity = $query->findOneOrCreate();
         $productImageRelationEntity->setSortOrder((int)$sortOrder);
         $productImageRelationEntity->save();
 
@@ -188,10 +188,12 @@ class Writer implements WriterInterface
      */
     public function createProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productAbstractTransfer->requireIdProductAbstract();
-
         foreach ($productAbstractTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+            $imageSetTransfer->setIdProductAbstract(
+                $productAbstractTransfer
+                    ->requireIdProductAbstract()
+                    ->getIdProductAbstract()
+            );
 
             $this->createProductImageSet($imageSetTransfer);
         }
@@ -206,10 +208,12 @@ class Writer implements WriterInterface
      */
     public function updateProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productAbstractTransfer->requireIdProductAbstract();
-
         foreach ($productAbstractTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+            $imageSetTransfer->setIdProductAbstract(
+                $productAbstractTransfer
+                    ->requireIdProductAbstract()
+                    ->getIdProductAbstract()
+            );
 
             $this->updateProductImageSet($imageSetTransfer);
         }
@@ -224,10 +228,12 @@ class Writer implements WriterInterface
      */
     public function createProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcreteTransfer->requireIdProductConcrete();
-
         foreach ($productConcreteTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+            $imageSetTransfer->setIdProduct(
+                $productConcreteTransfer
+                    ->requireIdProductConcrete()
+                    ->getIdProductConcrete()
+            );
 
             $this->createProductImageSet($imageSetTransfer);
         }
@@ -242,10 +248,12 @@ class Writer implements WriterInterface
      */
     public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcreteTransfer->requireIdProductConcrete();
-
         foreach ($productConcreteTransfer->getImageSets() as $imageSetTransfer) {
-            $imageSetTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+            $imageSetTransfer->setIdProduct(
+                $productConcreteTransfer
+                    ->requireIdProductConcrete()
+                    ->getIdProductConcrete()
+            );
 
             $this->updateProductImageSet($imageSetTransfer);
         }
