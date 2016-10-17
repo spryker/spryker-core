@@ -16,6 +16,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
+use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
@@ -61,9 +62,6 @@ class ProductManagerTest extends Test
         'en_US' => 'Updated Product concrete name en_US',
         'de_DE' => 'Updated Product concrete name de_DE',
     ];
-
-    const ID_PRODUCT_ABSTRACT = 1;
-    const ID_PRODUCT_CONCRETE = 1;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
@@ -160,6 +158,14 @@ class ProductManagerTest extends Test
             $this->productQueryContainer
         );
 
+        $productConcretePluginManager = new PluginConcreteManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productConcreteManager = new ProductConcreteManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -169,9 +175,7 @@ class ProductManagerTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $productAbstractAssertion,
             $productConcreteAssertion,
-            $pluginsCreateCollection = [],
-            $pluginsReadCollection = [],
-            $pluginsUpdateCollection = []
+            $productConcretePluginManager
         );
 
         $this->productAbstractManager = new ProductAbstractManager(
@@ -235,8 +239,7 @@ class ProductManagerTest extends Test
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
-            ->setSku('foo')
-            ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+            ->setSku('foo');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -260,8 +263,7 @@ class ProductManagerTest extends Test
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
-            ->setSku('foo-concrete')
-            ->setIdProductConcrete(self::ID_PRODUCT_CONCRETE);
+            ->setSku('foo-concrete');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -283,25 +285,20 @@ class ProductManagerTest extends Test
      */
     public function testAddProductShouldCreateProductAbstractAndConcrete()
     {
-        $newProductAbstract = clone $this->productAbstractTransfer;
-        $newProductAbstract->setIdProductAbstract(null);
-        $newProductAbstract->setSku('new-sku');
-
-        $newProductConcrete = clone $this->productConcreteTransfer;
-        $newProductConcrete->setIdProductConcrete(null);
-        $newProductConcrete->setSku('new-concrete-sku');
+        $this->productAbstractTransfer->setSku('new-sku');
+        $this->productConcreteTransfer->setSku('new-concrete-sku');
 
         $idProductAbstract = $this->productManager->addProduct(
-            $newProductAbstract,
-            [$newProductConcrete]
+            $this->productAbstractTransfer,
+            [$this->productConcreteTransfer]
         );
 
-        $newProductAbstract->setIdProductAbstract($idProductAbstract);
-        $newProductConcrete->setFkProductAbstract($idProductAbstract);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
 
         $this->assertTrue($idProductAbstract > 0);
-        $this->assertAddProductAbstract($newProductAbstract);
-        $this->assertAddProductConcrete($newProductConcrete);
+        $this->assertAddProductAbstract($this->productAbstractTransfer);
+        $this->assertAddProductConcrete($this->productConcreteTransfer);
     }
 
     /**
@@ -309,30 +306,28 @@ class ProductManagerTest extends Test
      */
     public function testSaveProductShouldUpdateProductAbstractAndConcrete()
     {
-        $updateProductAbstract = clone $this->productAbstractTransfer;
-        foreach ($updateProductAbstract->getLocalizedAttributes() as $localizedAttribute) {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
+        foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
                 self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
             );
         }
 
-        $updateProductConcrete = clone $this->productConcreteTransfer;
-        foreach ($updateProductConcrete->getLocalizedAttributes() as $localizedAttribute) {
+        foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
                 self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()]
             );
         }
 
         $idProductAbstract = $this->productManager->saveProduct(
-            $updateProductAbstract,
-            [$updateProductConcrete]
+            $this->productAbstractTransfer,
+            [$this->productConcreteTransfer]
         );
 
-        $updateProductAbstract->setIdProductAbstract($idProductAbstract);
-
-        $this->assertEquals($updateProductAbstract->getIdProductAbstract(), $idProductAbstract);
-        $this->assertSaveProductAbstract($updateProductAbstract);
-        $this->assertSaveProductConcrete($updateProductConcrete);
+        $this->assertSaveProductAbstract($this->productAbstractTransfer);
+        $this->assertSaveProductConcrete($this->productConcreteTransfer);
     }
 
     /**

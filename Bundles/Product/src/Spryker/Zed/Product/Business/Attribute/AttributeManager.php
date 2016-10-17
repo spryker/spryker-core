@@ -42,6 +42,8 @@ class AttributeManager implements AttributeManagerInterface
             ->requireIdProductAbstract()
             ->getIdProductAbstract();
 
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
             $jsonAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
@@ -62,6 +64,8 @@ class AttributeManager implements AttributeManagerInterface
 
             $localizedProductAttributesEntity->save();
         }
+
+        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -74,6 +78,8 @@ class AttributeManager implements AttributeManagerInterface
         $idProductConcrete = $productConcreteTransfer
             ->requireIdProductConcrete()
             ->getIdProductConcrete();
+
+        $this->productQueryContainer->getConnection()->beginTransaction();
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -92,6 +98,8 @@ class AttributeManager implements AttributeManagerInterface
 
             $localizedProductAttributesEntity->save();
         }
+
+        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductActivator;
@@ -98,9 +99,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
-            $this->getProductConcreteCreatePlugins(),
-            $this->getProductConcreteReadPlugins(),
-            $this->getProductConcreteUpdatePlugins()
+            $this->createPluginConcreteManager()
         );
     }
 
@@ -221,6 +220,20 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Product\Business\Product\PluginConcreteManagerInterface
+     */
+    protected function createPluginConcreteManager()
+    {
+        return new PluginConcreteManager(
+            $this->getProductConcreteBeforeCreatePlugins(),
+            $this->getProductConcreteAfterCreatePlugins(),
+            $this->getProductConcreteReadPlugins(),
+            $this->getProductConcreteBeforeUpdatePlugins(),
+            $this->getProductConcreteAfterUpdatePlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
      */
     protected function getProductAbstractCreatePlugins()
@@ -247,9 +260,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
      */
-    protected function getProductConcreteCreatePlugins()
+    protected function getProductConcreteBeforeCreatePlugins()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_CREATE);
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected function getProductConcreteAfterCreatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE);
     }
 
     /**
@@ -263,9 +284,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
      */
-    protected function getProductConcreteUpdatePlugins()
+    protected function getProductConcreteBeforeUpdatePlugins()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_UPDATE);
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_BEFORE_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     */
+    protected function getProductConcreteAfterUpdatePlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE);
     }
 
 }

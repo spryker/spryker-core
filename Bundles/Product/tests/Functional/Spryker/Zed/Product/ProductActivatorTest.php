@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
@@ -62,9 +63,6 @@ class ProductActivatorTest extends Test
         'en_US' => 'Updated Product concrete name en_US',
         'de_DE' => 'Updated Product concrete name de_DE',
     ];
-
-    const ID_PRODUCT_ABSTRACT = 1;
-    const ID_PRODUCT_CONCRETE = 1;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
@@ -172,6 +170,14 @@ class ProductActivatorTest extends Test
             $this->productQueryContainer
         );
 
+        $productConcretePluginManager = new PluginConcreteManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productConcreteManager = new ProductConcreteManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -181,9 +187,7 @@ class ProductActivatorTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $productAbstractAssertion,
             $productConcreteAssertion,
-            $pluginsCreateCollection = [],
-            $pluginsReadCollection = [],
-            $pluginsUpdateCollection = []
+            $productConcretePluginManager
         );
 
         $this->productAbstractManager = new ProductAbstractManager(
@@ -253,8 +257,7 @@ class ProductActivatorTest extends Test
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
-            ->setSku('foo')
-            ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+            ->setSku('foo');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -278,8 +281,7 @@ class ProductActivatorTest extends Test
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
-            ->setSku('foo-concrete')
-            ->setIdProductConcrete(self::ID_PRODUCT_CONCRETE);
+            ->setSku('foo-concrete');
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
@@ -381,15 +383,10 @@ class ProductActivatorTest extends Test
      */
     protected function createNewProduct()
     {
-        $newProductAbstract = clone $this->productAbstractTransfer;
-        $newProductAbstract->setIdProductAbstract(null);
-        $newProductAbstract->setSku('new-sku');
+        $this->productAbstractTransfer->setSku('new-sku');
+        $this->productConcreteTransfer->setSku('new-sku-concrete');
 
-        $newProductConcrete = clone $this->productConcreteTransfer;
-        $newProductConcrete->setIdProductConcrete(null);
-        $newProductConcrete->setSku('new-sku-concrete');
-
-        return $this->productManager->addProduct($newProductAbstract, [$newProductConcrete]);
+        return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
 
     /**
@@ -397,17 +394,13 @@ class ProductActivatorTest extends Test
      */
     protected function createNewActiveProduct()
     {
-        $newProductAbstract = clone $this->productAbstractTransfer;
-        $newProductAbstract->setIdProductAbstract(null);
-        $newProductAbstract->setSku('new-sku');
-        $newProductAbstract->setIsActive(true);
+        $this->productAbstractTransfer->setSku('new-sku');
+        $this->productAbstractTransfer->setIsActive(true);
 
-        $newProductConcrete = clone $this->productConcreteTransfer;
-        $newProductConcrete->setIdProductConcrete(null);
-        $newProductConcrete->setSku('new-sku-concrete');
-        $newProductConcrete->setIsActive(true);
+        $this->productConcreteTransfer->setSku('new-sku-concrete');
+        $this->productConcreteTransfer->setIsActive(true);
 
-        return $this->productManager->addProduct($newProductAbstract, [$newProductConcrete]);
+        return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
 
 }

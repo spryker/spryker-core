@@ -19,6 +19,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
@@ -62,9 +63,6 @@ class ProductAbstractManagerTest extends Test
         'en_US' => 'Updated Product concrete name en_US',
         'de_DE' => 'Updated Product concrete name de_DE',
     ];
-
-    const ID_PRODUCT_ABSTRACT = 1;
-    const ID_PRODUCT_CONCRETE = 1;
 
     const ABSTRACT_SKU = 'foo';
     const CONCRETE_SKU = 'foo-concrete';
@@ -168,6 +166,14 @@ class ProductAbstractManagerTest extends Test
             $this->productQueryContainer
         );
 
+        $productConcretePluginManager = new PluginConcreteManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productConcreteManager = new ProductConcreteManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -177,9 +183,7 @@ class ProductAbstractManagerTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $productAbstractAssertion,
             $productConcreteAssertion,
-            $pluginsCreateCollection = [],
-            $pluginsReadCollection = [],
-            $pluginsUpdateCollection = []
+            $productConcretePluginManager
         );
 
         $this->productAbstractManager = new ProductAbstractManager(
@@ -280,7 +284,9 @@ class ProductAbstractManagerTest extends Test
      */
     public function testSaveProductAbstractShouldUpdateProductAbstract()
     {
-        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
@@ -291,7 +297,6 @@ class ProductAbstractManagerTest extends Test
         $idProductAbstract = $this->productAbstractManager->saveProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->assertEquals(self::ID_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->assertSaveProductAbstract($this->productAbstractTransfer);
     }
 
@@ -361,18 +366,6 @@ class ProductAbstractManagerTest extends Test
         $productAbstract = $this->productAbstractManager->getProductAbstractById(1010001);
 
         $this->assertNull($productAbstract);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductAbstractByIdShouldReturnFullyLoadedTransferObject()
-    {
-        $productAbstract = $this->productAbstractManager->getProductAbstractById(self::ID_PRODUCT_ABSTRACT);
-
-        $this->assertInstanceOf(ProductAbstractTransfer::class, $productAbstract);
-        $this->assertInstanceOf(PriceProductTransfer::class, $productAbstract->getPrice());
-        $this->assertNotNull($productAbstract->getTaxSetId());
     }
 
     /**
@@ -492,11 +485,13 @@ class ProductAbstractManagerTest extends Test
      */
     public function testPersistProductShouldPersistPriceWhenUpdatingProduct()
     {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+
         $price = (new PriceProductTransfer())
             ->setPrice(self::PRICE);
 
         $this->productAbstractTransfer->setPrice($price);
-        $this->productAbstractTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
         $idProductAbstract = $this->productAbstractManager->saveProductAbstract($this->productAbstractTransfer);
 
