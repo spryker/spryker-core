@@ -71,7 +71,6 @@ class FilterPreferencesController extends AbstractController
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
-            $this->getFacade()->touchProductSearchConfigExtension();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
@@ -113,7 +112,6 @@ class FilterPreferencesController extends AbstractController
                 ->createTransfer($form);
 
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
-            $this->getFacade()->touchProductSearchConfigExtension();
 
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
@@ -162,7 +160,6 @@ class FilterPreferencesController extends AbstractController
         $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
 
         $this->getFacade()->deleteProductSearchAttribute($productSearchAttributeTransfer);
-        $this->getFacade()->touchProductSearchConfigExtension();
 
         $this->addSuccessMessage('Filter successfully deleted.');
 
@@ -189,6 +186,7 @@ class FilterPreferencesController extends AbstractController
     public function syncAction()
     {
         $this->getFacade()->touchProductAbstractByAsynchronousAttributes();
+        $this->getFacade()->touchProductSearchConfigExtension();
 
         $this->addSuccessMessage('Filter preferences synchronization was successful.');
 
