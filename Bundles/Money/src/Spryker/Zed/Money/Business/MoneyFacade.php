@@ -129,7 +129,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
      *
      * @param int $value
      *
-     * @return float
+     * @return string
      */
     public function convertIntegerToDecimal($value)
     {

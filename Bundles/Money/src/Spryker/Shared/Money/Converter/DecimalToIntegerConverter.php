@@ -30,7 +30,7 @@ class DecimalToIntegerConverter implements DecimalToIntegerConverterInterface
             ));
         }
 
-        return (int)($value * static::PRICE_PRECISION);
+        return (int)bcmul($value, static::PRICE_PRECISION, 0);
     }
 
 }

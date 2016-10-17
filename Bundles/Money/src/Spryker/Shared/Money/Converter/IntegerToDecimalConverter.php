@@ -19,7 +19,7 @@ class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
      *
      * @throws \Spryker\Shared\Money\Exception\InvalidConverterArgumentException
      *
-     * @return float
+     * @return string
      */
     public function convert($value)
     {
@@ -30,7 +30,7 @@ class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
             ));
         }
 
-        return (float)($value / static::PRICE_PRECISION);
+        return bcdiv($value, static::PRICE_PRECISION, 2);
     }
 
 }

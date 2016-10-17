@@ -74,7 +74,7 @@ interface MoneyPluginInterface
     /**
      * @param int $value
      *
-     * @return float
+     * @return string
      */
     public function convertIntegerToDecimal($value);
 

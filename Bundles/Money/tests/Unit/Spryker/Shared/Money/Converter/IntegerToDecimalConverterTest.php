@@ -43,13 +43,13 @@ class IntegerToDecimalConverterTest extends PHPUnit_Framework_TestCase
     public function convertValues()
     {
         return [
-            [1100, 11.00],
-            [1010, 10.10],
-            [1001, 10.01],
-            [1000, 10.00],
-            [100, 1.00],
-            [10, 0.10],
-            [1, 0.01]
+            [1100, "11.00"],
+            [1010, "10.10"],
+            [1001, "10.01"],
+            [1000, "10.00"],
+            [100, "1.00"],
+            [10, "0.10"],
+            [1, "0.01"]
         ];
     }
 

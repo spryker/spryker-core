@@ -159,12 +159,12 @@ class MoneyPluginTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testConvertIntegerToDecimalShouldReturnFloat()
+    public function testConvertIntegerToDecimalShouldReturnString()
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertIntegerToDecimal(1000);
-        $this->assertInternalType('float', $converted);
-        $this->assertSame(10.00, $converted);
+        $this->assertInternalType('string', $converted);
+        $this->assertSame("10.00", $converted);
     }
 
     /**
