@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Propel\Runtime\Propel;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
@@ -269,7 +268,7 @@ class ProductUrlManagerTest extends Test
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
         $expectedENUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['en_US'])
@@ -297,7 +296,7 @@ class ProductUrlManagerTest extends Test
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
         $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
@@ -321,8 +320,8 @@ class ProductUrlManagerTest extends Test
             $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
             $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-            $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-            $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+            $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+            $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
         } catch (\Exception $e) {
             $message = sprintf(
                 'Tried to create url /en/product-name-enus-%d, but it already exists',
@@ -345,8 +344,8 @@ class ProductUrlManagerTest extends Test
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-        $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
     }
 
     /**
@@ -361,8 +360,8 @@ class ProductUrlManagerTest extends Test
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
     }
 
     /**
@@ -373,7 +372,27 @@ class ProductUrlManagerTest extends Test
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $productUrl = $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrl()
+    {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+
+        $expectedENUrl = (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en/product-name-enus-' . $idProductAbstract);
+        $expectedDEUrl = (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de/product-name-dede-' . $idProductAbstract);
+
+        $productUrl = $this->productUrlManager->getProductUrl($this->productAbstractTransfer);
+
+        $this->assertInstanceOf(ProductUrlTransfer::class, $productUrl);
+        $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
     }
 
     /**
@@ -384,7 +403,7 @@ class ProductUrlManagerTest extends Test
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
         $this->productUrlManager->touchProductAbstractUrlActive($this->productAbstractTransfer);
 
@@ -410,7 +429,7 @@ class ProductUrlManagerTest extends Test
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
         $this->productUrlManager->touchProductAbstractUrlDeleted($this->productAbstractTransfer);
 

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
@@ -339,6 +340,17 @@ class ProductActivatorTest extends Test
 
             $this->assertProductWasDeactivated($productConcreteTransfer);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductActivationShouldThrowException()
+    {
+        $this->expectException(ProductConcreteNotFoundException::class);
+        $this->expectExceptionMessage('Could not activate product concrete [12324]');
+
+        $this->productActivator->activateProductConcrete(12324);
     }
 
     /**
