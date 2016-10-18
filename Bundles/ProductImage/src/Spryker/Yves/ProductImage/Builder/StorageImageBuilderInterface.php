@@ -7,14 +7,16 @@
 
 namespace Spryker\Yves\ProductImage\Builder;
 
+use Generated\Shared\Transfer\StorageProductTransfer;
+
 interface StorageImageBuilderInterface
 {
 
     /**
-     * @param array $persistedProductData
+     * @param StorageProductTransfer $storageProductTransfer
      *
-     * @return array
+     * @return StorageProductTransfer $storageProductTransfer
      */
-    public function getDisplayImagesForSelectedProduct(array $persistedProductData);
+    public function setSelectedProductDisplayImages(StorageProductTransfer $storageProductTransfer);
 
 }

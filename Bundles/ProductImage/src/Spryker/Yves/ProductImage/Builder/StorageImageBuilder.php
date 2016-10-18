@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\ProductImage\Builder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Shared\ProductImage\ProductImageConstants;
@@ -15,39 +16,41 @@ class StorageImageBuilder implements StorageImageBuilderInterface
 {
 
     /**
-     * @param array $persistedProductData
+     * @param StorageProductTransfer $storageProductTransfer
      *
-     * @return array
+     * @return StorageProductTransfer $storageProductTransfer
      */
-    public function getDisplayImagesForSelectedProduct(array $persistedProductData)
+    public function setSelectedProductDisplayImages(StorageProductTransfer $storageProductTransfer)
     {
-        if (!isset($persistedProductData[StorageProductTransfer::IMAGE_SETS])) {
-             return [];
+        if (count($storageProductTransfer->getImageSets()) === 0) {
+            return $storageProductTransfer;
         }
 
-        if (count($persistedProductData[StorageProductTransfer::IMAGE_SETS]) === 0) {
-            return [];
-        }
-
-        $imageSets = $persistedProductData[StorageProductTransfer::IMAGE_SETS];
+        $imageSets = $storageProductTransfer->getImageSets();
         if (isset($imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME])) {
-            return $this->mapStorageProductImageCollection($imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME]);
-        } else {
-            return $this->mapStorageProductImageCollection(array_shift($imageSets));
+            $storageProductTransfer->setImages(
+                $this->mapStorageProductImageCollection($imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME])
+            );
         }
+
+        $storageProductTransfer->setImages(
+            $this->mapStorageProductImageCollection(array_shift($imageSets))
+        );
+
+        return $storageProductTransfer;
+
     }
 
     /**
      * @param array $images
      *
-     * @return array
+     * @return ArrayObject
      */
     protected function mapStorageProductImageCollection(array $images)
     {
-        $mappedImageCollection = [];
-
+        $mappedImageCollection = new ArrayObject();
         foreach ($images as $image) {
-            $mappedImageCollection[] = $this->mapStorageProductImageCollection($image);
+            $mappedImageCollection->append($this->mapStorageProductImageTransfer($image));
         }
 
         return $mappedImageCollection;
