@@ -35,13 +35,36 @@ class ProductConcreteAssertion implements ProductConcreteAssertionInterface
      *
      * @return void
      */
-    public function assertSkuUnique($sku)
+    public function assertSkuIsUnique($sku)
     {
         $productExists = $this->productQueryContainer
             ->queryProductConcreteBySku($sku)
             ->count() > 0;
 
         if ($productExists) {
+            throw new ProductConcreteExistsException(sprintf(
+                'Product concrete with sku %s already exists',
+                $sku
+            ));
+        }
+    }
+
+    /**
+     * @param int $idProduct
+     * @param string $sku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     *
+     * @return void
+     */
+    public function assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku)
+    {
+        $isUnique = $this->productQueryContainer
+                ->queryProductConcreteBySku($sku)
+                ->filterByIdProduct($idProduct, Criteria::NOT_EQUAL)
+                ->count() <= 0;
+
+        if (!$isUnique) {
             throw new ProductConcreteExistsException(sprintf(
                 'Product concrete with sku %s already exists',
                 $sku
@@ -67,29 +90,6 @@ class ProductConcreteAssertion implements ProductConcreteAssertionInterface
             throw new MissingProductException(sprintf(
                 'Product concrete with id "%s" does not exist.',
                 $idProduct
-            ));
-        }
-    }
-
-    /**
-     * @param int $idProduct
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
-     *
-     * @return void
-     */
-    public function assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku)
-    {
-        $isUnique = $this->productQueryContainer
-            ->queryProductConcreteBySku($sku)
-            ->filterByIdProduct($idProduct, Criteria::NOT_EQUAL)
-            ->count() <= 0;
-
-        if (!$isUnique) {
-            throw new ProductConcreteExistsException(sprintf(
-                'Product concrete with sku %s already exists',
-                $sku
             ));
         }
     }
