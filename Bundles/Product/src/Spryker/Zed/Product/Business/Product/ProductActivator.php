@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 
-//TODO need business decisions here
 class ProductActivator implements ProductActivatorInterface
 {
 
@@ -53,10 +52,12 @@ class ProductActivator implements ProductActivatorInterface
     public function activateProductConcrete($idProductConcrete)
     {
         $productConcrete = $this->productConcreteManager->getProductConcreteById($idProductConcrete);
+        $this->assertProductConcrete($idProductConcrete, $productConcrete);
+
         $productAbstract = $this->productAbstractManager->getProductAbstractById(
             $productConcrete->getFkProductAbstract()
         );
-        $this->assertProducts($productAbstract, $productConcrete, $idProductConcrete);
+        $this->assertProductAbstract($idProductConcrete, $productAbstract);
 
         $productConcrete->setIsActive(true);
 
@@ -75,10 +76,12 @@ class ProductActivator implements ProductActivatorInterface
     public function deActivateProductConcrete($idProductConcrete)
     {
         $productConcrete = $this->productConcreteManager->getProductConcreteById($idProductConcrete);
+        $this->assertProductConcrete($idProductConcrete, $productConcrete);
+
         $productAbstract = $this->productAbstractManager->getProductAbstractById(
             $productConcrete->getFkProductAbstract()
         );
-        $this->assertProducts($productAbstract, $productConcrete, $idProductConcrete);
+        $this->assertProductAbstract($idProductConcrete, $productAbstract);
 
         $productConcrete->setIsActive(false);
 
@@ -90,17 +93,34 @@ class ProductActivator implements ProductActivatorInterface
     }
 
     /**
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
-     * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
      * @return void
      */
-    protected function assertProducts(ProductAbstractTransfer $productAbstract, ProductConcreteTransfer $productConcrete, $idProductConcrete)
+    protected function assertProductAbstract($idProductAbstract, ProductAbstractTransfer $productAbstract = null)
     {
-        if (!$productConcrete || !$productAbstract) {
+        if (!$productAbstract) {
+            throw new ProductConcreteNotFoundException(sprintf(
+                'Product abstract [%s] does not exist',
+                $idProductAbstract
+            ));
+        }
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
+     *
+     * @return void
+     */
+    protected function assertProductConcrete($idProductConcrete, ProductConcreteTransfer $productConcrete = null)
+    {
+        if (!$productConcrete) {
             throw new ProductConcreteNotFoundException(sprintf(
                 'Could not activate product concrete [%s]',
                 $idProductConcrete
