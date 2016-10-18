@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class ProductDiscountConnectorToLocaleBridge implements ProductDiscountConnectorToLocaleInterface
 {
 
@@ -20,11 +18,10 @@ class ProductDiscountConnectorToLocaleBridge implements ProductDiscountConnector
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }
-
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]

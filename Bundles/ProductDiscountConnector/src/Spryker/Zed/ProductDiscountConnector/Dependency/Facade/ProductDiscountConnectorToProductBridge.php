@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
-
 class ProductDiscountConnectorToProductBridge implements ProductDiscountConnectorToProductInterface
 {
 
@@ -20,7 +18,7 @@ class ProductDiscountConnectorToProductBridge implements ProductDiscountConnecto
     /**
      * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      */
-    public function __construct(ProductFacadeInterface $productFacade)
+    public function __construct($productFacade)
     {
         $this->productFacade = $productFacade;
     }
