@@ -318,7 +318,7 @@ class ProductManagerTest extends Test
     /**
      * @return void
      */
-    public function testSaveProductShouldUpdateProductAbstractAndConcrete()
+    public function testSaveProductShouldUpdateProductAbstractAndCreateProductConcrete()
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -343,6 +343,32 @@ class ProductManagerTest extends Test
         $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
         $this->assertSaveProductAbstract($this->productAbstractTransfer);
         $this->assertSaveProductConcrete($this->productConcreteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductShouldUpdateProductAbstractAndSaveProductConcrete()
+    {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $localizedAttribute->setName(
+                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+            );
+        }
+
+        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
+
+        $idProductAbstract = $this->productManager->saveProduct(
+            $this->productAbstractTransfer,
+            [$this->productConcreteTransfer]
+        );
+
+        $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
+        $this->assertSaveProductAbstract($this->productAbstractTransfer);
+        //$this->assertSaveProductConcrete($this->productConcreteTransfer);
     }
 
     /**
