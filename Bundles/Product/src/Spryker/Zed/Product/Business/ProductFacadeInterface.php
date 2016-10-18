@@ -450,7 +450,7 @@ interface ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     * @return void
      */
     public function deleteProductUrl(ProductAbstractTransfer $productAbstract);
 

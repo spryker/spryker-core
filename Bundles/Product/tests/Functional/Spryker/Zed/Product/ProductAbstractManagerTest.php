@@ -384,7 +384,7 @@ class ProductAbstractManagerTest extends Test
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
         $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
-        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
+        $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
 
         $abstractSku = $this->productAbstractManager->getAbstractSkuFromProductConcrete(self::CONCRETE_SKU);
 
