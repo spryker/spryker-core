@@ -85,10 +85,8 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 ->setResourceId($productAbstract->requireIdProductAbstract()->getIdProductAbstract())
                 ->setResourceType(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT);
 
-            $this->urlFacade->saveUrl($urlTransfer);
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
-
-        $this->touchProductUrlActive($productAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -107,7 +105,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         $productUrl = $this->urlGenerator->generateProductUrl($productAbstract);
 
         foreach ($productUrl->getUrls() as $url) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstract->requireIdProductAbstract()->getIdProductAbstract(),
                 $url->getLocale()->getIdLocale()
             );
@@ -118,10 +116,8 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 ->setResourceId($productAbstract->getIdProductAbstract())
                 ->setResourceType(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT);
 
-            $this->urlFacade->saveUrl($urlTransfer);
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
-
-        $this->touchProductUrlActive($productAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -139,7 +135,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         $productUrl->setAbstractSku($productAbstract->getSku());
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstract->requireIdProductAbstract()->getIdProductAbstract(),
                 $localeTransfer->getIdLocale()
             );
@@ -164,16 +160,14 @@ class ProductUrlManager implements ProductUrlManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $this->touchProductUrlDeleted($productAbstract); //TODO Url facade does that in deleteUrl(), but not in other methods
-
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
+            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstract->requireIdProductAbstract()->getIdProductAbstract(),
                 $localeTransfer->getIdLocale()
             );
 
             if ($urlTransfer->getIdUrl()) {
-                $this->urlFacade->deleteUrl($urlTransfer);
+                $this->urlFacade->deleteUrlAndTouch($urlTransfer);
             }
         }
 
@@ -181,17 +175,17 @@ class ProductUrlManager implements ProductUrlManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function touchProductUrlActive(ProductAbstractTransfer $productAbstract)
+    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer)
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $productAbstract->requireIdProductAbstract()->getIdProductAbstract(),
+            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
+                $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
                 $localeTransfer->getIdLocale()
             );
 
@@ -204,17 +198,17 @@ class ProductUrlManager implements ProductUrlManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function touchProductUrlDeleted(ProductAbstractTransfer $productAbstract)
+    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer)
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $productAbstract->requireIdProductAbstract()->getIdProductAbstract(),
+            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
+                $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
                 $localeTransfer->getIdLocale()
             );
 
@@ -228,6 +222,24 @@ class ProductUrlManager implements ProductUrlManagerInterface
         }
 
         $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
+    {
+        $urlEntity = $this->productQueryContainer
+            ->queryUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
+            ->findOneOrCreate();
+
+        $urlTransfer = (new UrlTransfer())
+            ->fromArray($urlEntity->toArray(), true);
+
+        return $urlTransfer;
     }
 
 }

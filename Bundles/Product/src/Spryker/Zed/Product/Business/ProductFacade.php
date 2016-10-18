@@ -622,6 +622,40 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
+     * - Touches the url of the product as active for all available locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $this->getFactory()
+            ->createProductUrlManager()
+            ->touchProductAbstractUrlActive($productAbstractTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Touches the url of the product as deleted for all available locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $this->getFactory()
+            ->createProductUrlManager()
+            ->touchProductAbstractUrlDeleted($productAbstractTransfer);
+    }
+
+    /**
+     * Specification:
      * - Returns localized product abstract name based on localized attributes
      *
      * @api

@@ -41,17 +41,17 @@ interface ProductUrlManagerInterface
     public function deleteProductUrl(ProductAbstractTransfer $productAbstract);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function touchProductUrlActive(ProductAbstractTransfer $productAbstract);
+    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function touchProductUrlDeleted(ProductAbstractTransfer $productAbstract);
+    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer);
 
 }
