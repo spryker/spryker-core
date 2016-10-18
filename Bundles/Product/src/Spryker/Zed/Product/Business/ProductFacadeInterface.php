@@ -456,6 +456,30 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Touches the url of the product as active for all available locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
+     * - Touches the url of the product as deleted for all available locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
      * - Returns localized product abstract name based on localized attributes
      *
      * @api

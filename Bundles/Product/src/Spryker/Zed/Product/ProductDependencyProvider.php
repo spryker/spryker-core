@@ -26,7 +26,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_URL = 'FACADE_URL';
     const FACADE_TOUCH = 'FACADE_TOUCH';
 
-    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+    const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
 
     const PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE';
     const PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE';
@@ -117,6 +117,20 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
+            return $container->getLocator()->url()->queryContainer();
+        };
+
         return $container;
     }
 
