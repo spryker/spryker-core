@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductNameRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductNameRegex;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 

@@ -9,19 +9,11 @@ namespace Spryker\Zed\Product\Business\Product\Variant;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StorageProductTransfer;
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 
 class VariantGenerator implements VariantGeneratorInterface
 {
-
-    const TOKENS = 'tokens';
-    const SKU = 'sku';
-
-    const SKU_ABSTRACT_SEPARATOR = '-';
-    const SKU_TYPE_SEPARATOR = '-';
-    const SKU_VALUE_SEPARATOR = '_';
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
@@ -29,44 +21,20 @@ class VariantGenerator implements VariantGeneratorInterface
     protected $urlFacade;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
+     */
+    protected $skuGenerator;
+
+    /**
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
      */
-    public function __construct(ProductToUrlInterface $urlFacade)
-    {
+    public function __construct(
+        ProductToUrlInterface $urlFacade,
+        SkuGeneratorInterface $skuGenerator
+    ) {
         $this->urlFacade = $urlFacade;
-    }
-
-    /**
-     * @param array $orderedTokenCollection
-     *
-     * @return string
-     */
-    protected function generateSkuFromTokens(array $orderedTokenCollection)
-    {
-        $sku = '';
-        for ($a = 0; $a < count($orderedTokenCollection); $a++) {
-            foreach ($orderedTokenCollection[$a] as $type => $value) {
-                $sku .= $type . self::SKU_TYPE_SEPARATOR . $value . self::SKU_VALUE_SEPARATOR;
-            }
-        }
-
-        return rtrim($sku, self::SKU_VALUE_SEPARATOR);
-    }
-
-    /**
-     * @param string $abstractSku
-     * @param string $concreteSku
-     *
-     * @return string
-     */
-    protected function formatConcreteSku($abstractSku, $concreteSku)
-    {
-        return $this->urlFacade->slugify(sprintf(
-            '%s%s%s',
-            $abstractSku,
-            self::SKU_ABSTRACT_SEPARATOR,
-            $concreteSku
-        ));
+        $this->skuGenerator = $skuGenerator;
     }
 
     /**
@@ -84,13 +52,7 @@ class VariantGenerator implements VariantGeneratorInterface
             $tokens[$type] = $value;
         }
 
-        $orderedTokens = $this->sortTokens($tokens);
-        $sku = $this->generateSkuFromTokens($orderedTokens);
-
-        return [
-            self::TOKENS => $orderedTokens,
-            self::SKU => $sku
-        ];
+        return $this->sortTokens($tokens);
     }
 
     /**
@@ -215,13 +177,18 @@ class VariantGenerator implements VariantGeneratorInterface
 
         $result = [];
         foreach ($tokenCollection as $token) {
-            $sku = $this->formatConcreteSku(
-                $productAbstractTransfer->requireSku()->getSku(),
-                $token[self::SKU]
-            );
-            $attributeTokens = $this->convertTokensIntoAttributes($token[self::TOKENS]);
 
-            $result[] = $this->createProductConcreteTransfer($productAbstractTransfer, $sku, $attributeTokens);
+            $attributeTokens = $this->convertTokensIntoAttributes($token);
+
+            $productConcreteTransfer = $this->createProductConcreteTransfer($productAbstractTransfer, $attributeTokens);
+
+            $productConcreteTransfer->setSku(
+                $this->skuGenerator->generateProductConcreteSku(
+                    $productAbstractTransfer,
+                    $productConcreteTransfer
+                )
+            );
+            $result[] = $productConcreteTransfer;
         }
 
         return $result;
@@ -229,19 +196,16 @@ class VariantGenerator implements VariantGeneratorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param string $concreteSku
      * @param array $attributeTokens
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function createProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
-        $concreteSku,
         array $attributeTokens
     ) {
         return (new ProductConcreteTransfer())
             ->fromArray($productAbstractTransfer->toArray(), true)
-            ->setSku($concreteSku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setAttributes($attributeTokens)

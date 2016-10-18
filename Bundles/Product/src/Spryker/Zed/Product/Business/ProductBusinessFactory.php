@@ -19,6 +19,7 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
 use Spryker\Zed\Product\ProductDependencyProvider;
@@ -72,6 +73,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->createProductConcreteManager(),
             $this->createProductAbstractAssertion(),
+            $this->createSkuGenerator(),
             $this->getProductAbstractCreatePlugins(),
             $this->getProductAbstractReadPlugins(),
             $this->getProductAbstractUpdatePlugins()
@@ -140,8 +142,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductVariantGenerator()
     {
         return new VariantGenerator(
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->createSkuGenerator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGenerator
+     */
+    protected function createSkuGenerator()
+    {
+        return new SkuGenerator($this->getUrlFacade());
     }
 
     /**
