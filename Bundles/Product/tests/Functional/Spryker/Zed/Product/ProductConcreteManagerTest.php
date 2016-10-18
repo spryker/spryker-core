@@ -10,13 +10,18 @@ namespace Functional\Spryker\Zed\Product;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Orm\Zed\Product\Persistence\Base\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
@@ -261,6 +266,26 @@ class ProductConcreteManagerTest extends Test
             ->setLocale($this->locales['en_US']);
 
         $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
+
+        $stock = (new StockProductTransfer())
+            ->setQuantity(10);
+
+        $this->productConcreteTransfer->setStocks(new \ArrayObject($stock));
+
+        $priceProduct = (new PriceProductTransfer())
+            ->setPrice(1234);
+
+        $this->productConcreteTransfer->setPrice($priceProduct);
+
+    }
+
+    protected function setupDefaultProducts()
+    {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+
+        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
+        $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
     }
 
     /**
@@ -268,13 +293,9 @@ class ProductConcreteManagerTest extends Test
      */
     public function testCreateProductConcreteShouldCreateProductConcrete()
     {
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        $this->setupDefaultProducts();
 
-        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
-        $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
-
-        $this->assertTrue($idProductConcrete > 0);
+        $this->assertTrue($this->productConcreteTransfer->getIdProductConcrete() > 0);
         $this->assertCreateProductConcrete($this->productConcreteTransfer);
     }
 
@@ -283,11 +304,7 @@ class ProductConcreteManagerTest extends Test
      */
     public function testSaveProductAbstractShouldUpdateProductAbstract()
     {
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
-
-        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
-        $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+        $this->setupDefaultProducts();
 
         foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
@@ -297,7 +314,28 @@ class ProductConcreteManagerTest extends Test
 
         $idProductConcrete = $this->productConcreteManager->saveProductConcrete($this->productConcreteTransfer);
 
+        $this->assertEquals($this->productConcreteTransfer->getIdProductConcrete(), $idProductConcrete);
         $this->assertSaveProductConcrete($this->productConcreteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasProductConcreteShouldReturnTrue()
+    {
+        $this->setupDefaultProducts();
+
+        $exists = $this->productConcreteManager->hasProductConcrete($this->productConcreteTransfer->getSku());
+        $this->assertTrue($exists);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasProductConcreteShouldReturnFalse()
+    {
+        $exists = $this->productConcreteManager->hasProductConcrete('INVALIDSKU');
+        $this->assertFalse($exists);
     }
 
     /**
@@ -305,11 +343,14 @@ class ProductConcreteManagerTest extends Test
      */
     public function testTouchProductActiveShouldTouchActiveLogic()
     {
-        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+        $this->createNewProductAndAssertNoTouchExists();
 
-        $this->productConcreteManager->touchProductActive($idProductAbstract);
+        $this->productConcreteManager->touchProductActive($this->productAbstractTransfer->getIdProductAbstract());
 
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+            ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+        );
     }
 
     /**
@@ -317,13 +358,21 @@ class ProductConcreteManagerTest extends Test
      */
     public function testTouchProductInactiveShouldTouchInactiveLogic()
     {
-        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+        $this->createNewProductAndAssertNoTouchExists();
 
-        $this->productConcreteManager->touchProductActive($idProductAbstract);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->productConcreteManager->touchProductActive($this->productAbstractTransfer->getIdProductAbstract());
+        $this->assertTouchEntry(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+            ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE,
+            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+        );
 
-        $this->productConcreteManager->touchProductInactive($idProductAbstract);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+        $this->productConcreteManager->touchProductInactive($this->productAbstractTransfer->getIdProductAbstract());
+        $this->assertTouchEntry(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+            ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE,
+            SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE
+        );
     }
 
     /**
@@ -331,27 +380,201 @@ class ProductConcreteManagerTest extends Test
      */
     public function testTouchProductDeletedShouldTouchDeletedLogic()
     {
-        $idProductAbstract = $this->createNewProductAndAssertNoTouchExists();
+        $this->createNewProductAndAssertNoTouchExists();
 
-        $this->productConcreteManager->touchProductDeleted($idProductAbstract);
+        $this->productConcreteManager->touchProductDeleted($this->productAbstractTransfer->getIdProductAbstract());
 
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+        $this->assertTouchEntry(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+            ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE,
+            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+        );
     }
 
     /**
-     * @return int
+     * @return void
+     */
+    public function testGetProductConcreteByIdShouldReturnConcreteTransfer()
+    {
+        $this->setupDefaultProducts();
+
+        $productConcreteTransfer = $this->productConcreteManager->getProductConcreteById(
+            $this->productConcreteTransfer->getIdProductConcrete()
+        );
+
+        $this->assertCreateProductConcrete($productConcreteTransfer);
+        $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteByIdShouldReturnNull()
+    {
+        $productConcreteTransfer = $this->productConcreteManager->getProductConcreteById(101001);
+
+        $this->assertNull($productConcreteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdBySkuShouldReturnId()
+    {
+        $this->setupDefaultProducts();
+
+        $id = $this->productConcreteManager->getProductConcreteIdBySku($this->productConcreteTransfer->getSku());
+
+        $this->assertEquals($this->productConcreteTransfer->getIdProductConcrete(), $id);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdBySkuShouldReturnNull()
+    {
+        $id = $this->productConcreteManager->getProductConcreteIdBySku('INVALIDSKU');
+
+        $this->assertNull($id);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteShouldReturnConcreteTransfer()
+    {
+        $this->setupDefaultProducts();
+
+        $productConcrete = $this->productConcreteManager->getProductConcrete($this->productConcreteTransfer->getSku());
+
+        $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcrete);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteShouldThrowException()
+    {
+        $this->expectException(MissingProductException::class);
+
+        $productConcrete = $this->productConcreteManager->getProductConcrete('INVALIDSKU');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductsByAbstractProductIdShouldReturnConcreteCollection()
+    {
+        $this->setupDefaultProducts();
+
+        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
+            $this->productAbstractTransfer->getIdProductAbstract()
+        );
+
+        foreach ($productConcreteCollection as $productConcrete) {
+            $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcrete);
+            $this->assertEquals($this->productConcreteTransfer->getSku(), $productConcrete->getSku());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractIdByConcreteSku()
+    {
+        $this->setupDefaultProducts();
+
+        $idProductAbstract = $this->productConcreteManager->getProductAbstractIdByConcreteSku($this->productConcreteTransfer->getSku());
+
+        $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractIdByConcreteSkuShouldThrowException()
+    {
+        $this->expectException(MissingProductException::class);
+
+        $this->setupDefaultProducts();
+
+        $this->productConcreteManager->getProductAbstractIdByConcreteSku('INVALIDSKU');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductsByAbstractProductIdShouldReturnEmptyArray()
+    {
+        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
+            121231
+        );
+
+        $this->assertEmpty($productConcreteCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductEntityByAbstractAndConcreteShouldReturnEntity()
+    {
+        $this->setupDefaultProducts();
+
+        $productEntity = $this->productConcreteManager->findProductEntityByAbstractAndConcrete(
+            $this->productAbstractTransfer,
+            $this->productConcreteTransfer
+        );
+
+        $this->assertInstanceOf(SpyProduct::class, $productEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductEntityByAbstractAndConcreteShouldReturnNull()
+    {
+        $this->setupDefaultProducts();
+
+        $this->productAbstractTransfer->setIdProductAbstract(122313);
+        $this->productConcreteTransfer->setIdProductConcrete(122313);
+
+        $productEntity = $this->productConcreteManager->findProductEntityByAbstractAndConcrete(
+            $this->productAbstractTransfer,
+            $this->productConcreteTransfer
+        );
+
+        $this->assertNull($productEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetLocalizedProductConcreteName()
+    {
+        $this->setupDefaultProducts();
+
+        $productNameEN = $this->productConcreteManager->getLocalizedProductConcreteName(
+            $this->productConcreteTransfer,
+            $this->locales['en_US']
+        );
+
+        $productNameDE = $this->productConcreteManager->getLocalizedProductConcreteName(
+            $this->productConcreteTransfer,
+            $this->locales['de_DE']
+        );
+
+        $this->assertEquals(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);
+        $this->assertEquals(self::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
+    }
+
+    /**
+     * @return void
      */
     protected function createNewProductAndAssertNoTouchExists()
     {
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        $this->setupDefaultProducts();
 
-        $idProductConcrete = $this->productConcreteManager->createProductConcrete(
-            $this->productConcreteTransfer
-        );
-        $this->assertNoTouchEntry($idProductConcrete, ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE);
-
-        return $idProductConcrete;
+        $this->assertNoTouchEntry($this->productConcreteTransfer->getIdProductConcrete(), ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE);
     }
 
     /**
