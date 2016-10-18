@@ -24,6 +24,10 @@ class ImageSetBuilder implements ImageSetBuilderInterface
              return [];
         }
 
+        if (count($persistedProductData[StorageProductTransfer::IMAGES]) === 0) {
+            return [];
+        }
+
         $imageSets = $persistedProductData[StorageProductTransfer::IMAGES];
         if (isset($imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME])) {
             return $imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME];
