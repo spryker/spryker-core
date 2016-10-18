@@ -350,13 +350,15 @@ class ProductUrlManagerTest extends Test
     /**
      * TODO test database is not rolled back when exception is throw
      *
-     * @expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @expectedExceptionMessage Tried to create url /en/product-name-enus-1, but it already exists
+     * @22expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @22expectedExceptionMessage Tried to create url /en/product-name-enus-1, but it already exists
      *
      * @return void
      */
     public function SKIP_testProductUrlShouldBeUnique()
     {
+        $this->expectException(UrlExistsException::class);
+
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
