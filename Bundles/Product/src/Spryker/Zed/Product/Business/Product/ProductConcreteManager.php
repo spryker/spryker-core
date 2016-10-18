@@ -338,7 +338,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    public function findProductEntityByAbstract(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
+    public function findProductEntityByAbstractAndConcrete(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->productQueryContainer
             ->queryProduct()

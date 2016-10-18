@@ -86,7 +86,7 @@ class ProductManager implements ProductManagerInterface
         foreach ($productConcreteCollection as $productConcrete) {
             $productConcrete->setFkProductAbstract($idProductAbstract);
 
-            $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstract(
+            $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstractAndConcrete(
                 $productAbstractTransfer,
                 $productConcrete
             );
@@ -131,7 +131,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAttributeProcessorByAbstractSku($abstractSku)
     {
-        $idProductAbstract = (int)$this->productAbstractManagergetProductAbstractIdBySku($abstractSku);
+        $idProductAbstract = (int)$this->productAbstractManager->getProductAbstractIdBySku($abstractSku);
 
         return $this->getProductAttributeProcessor($idProductAbstract);
     }
