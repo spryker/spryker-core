@@ -324,6 +324,7 @@
       "Unit\\Spryker\\Shared\\Product\\": "Bundles/Product/tests",
       "Functional\\Spryker\\Shared\\Product\\": "Bundles/Product/tests",
       "Spryker\\Zed\\Product\\": "Bundles/Product/src",
+      "Spryker\\Yves\\Product\\": "Bundles/Product/src",
       "Unit\\Spryker\\Zed\\Product\\": "Bundles/Product/tests",
       "Functional\\Spryker\\Zed\\Product\\": "Bundles/Product/tests",
       "Spryker\\Shared\\ProductCartConnector\\": "Bundles/ProductCartConnector/src",
