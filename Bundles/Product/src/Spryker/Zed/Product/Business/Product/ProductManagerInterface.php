@@ -46,4 +46,11 @@ interface ProductManagerInterface
      */
     public function getProductAttributeProcessorByAbstractSku($abstractSku);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract);
+
 }

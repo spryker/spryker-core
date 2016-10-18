@@ -289,6 +289,11 @@ class ProductManagerTest extends Test
         $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
     }
 
+    protected function setupDefaultProducts()
+    {
+        $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
+    }
+
     /**
      * @return void
      */
@@ -335,6 +340,7 @@ class ProductManagerTest extends Test
             [$this->productConcreteTransfer]
         );
 
+        $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
         $this->assertSaveProductAbstract($this->productAbstractTransfer);
         $this->assertSaveProductConcrete($this->productConcreteTransfer);
     }
@@ -348,6 +354,32 @@ class ProductManagerTest extends Test
         $attributeProcessor = $this->productManager->getProductAttributeProcessor($idProductAbstract);
 
         $this->assertInstanceOf(AttributeProcessor::class, $attributeProcessor);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductActiveShouldReturnTrue()
+    {
+        $this->productConcreteTransfer->setIsActive(true);
+        $this->setupDefaultProducts();
+
+        $isActive = $this->productManager->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
+
+        $this->assertTrue($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductActiveShouldReturnFalse()
+    {
+        $this->productConcreteTransfer->setIsActive(false);
+        $this->setupDefaultProducts();
+
+        $isActive = $this->productManager->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
+
+        $this->assertFalse($isActive);
     }
 
     /**
