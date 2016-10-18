@@ -62,10 +62,10 @@ class CodeStyleSniffer
     {
         $path = $this->resolvePath($bundle, $options['path']);
 
-        if (!is_dir($path)) {
+        if (!is_file($path) && !is_dir($path)) {
             $message = 'This path does not exist';
-            if (!empty($bundle)) {
-                $message = 'This bundle does not exist';
+            if ($bundle) {
+                $message .= ' in bundle ' . $bundle;
             }
 
             throw new \ErrorException($message . ': ' . $path);
@@ -106,7 +106,7 @@ class CodeStyleSniffer
 
             $bundle = $this->normalizeBundleName($bundle);
 
-            return $this->getPathToBundle($bundle);
+            return $this->getPathToBundle($bundle) . $path;
         }
 
         $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
