@@ -5,11 +5,11 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\Product\Builder;
+namespace Spryker\Yves\Product\Mapper;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 
-interface AttributeVariantBuilderInterface
+interface AttributeVariantMapperInterface
 {
 
     /**

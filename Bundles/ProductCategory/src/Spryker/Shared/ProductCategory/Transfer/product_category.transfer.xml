@@ -10,4 +10,14 @@
         <property name="productOrder" type="int" />
     </transfer>
 
+    <transfer name="StorageProduct">
+        <property name="categories" type="StorageProductCategory[]" singular="category" />
+    </transfer>
+
+    <transfer name="StorageProductCategory">
+        <property name="nodeId" type="int" />
+        <property name="name" type="string" />
+        <property name="url" type="string" />
+    </transfer>
+
 </transfers>

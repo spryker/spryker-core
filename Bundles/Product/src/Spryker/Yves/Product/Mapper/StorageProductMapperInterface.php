@@ -5,12 +5,12 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\Product\Builder;
+namespace Spryker\Yves\Product\Mapper;
 
 /**
  * Interface FrontendProductBuilderInterface
  */
-interface StorageProductBuilderInterface
+interface StorageProductMapperInterface
 {
 
     /**
@@ -19,6 +19,6 @@ interface StorageProductBuilderInterface
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    public function buildProduct(array $productData, array $selectedAttributes);
+    public function mapStorageProduct(array $productData, array $selectedAttributes);
 
 }

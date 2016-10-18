@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Product;
 
-use Spryker\Yves\Product\Builder\AttributeVariantBuilder;
-use Spryker\Yves\Product\Builder\StorageProductBuilder;
+use Spryker\Yves\Product\Mapper\AttributeVariantMapper;
+use Spryker\Yves\Product\Mapper\StorageProductMapper;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
@@ -18,19 +18,19 @@ class ProductFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Yves\Product\Builder\StorageProductBuilder
+     * @return \Spryker\Yves\Product\Mapper\StorageProductMapper
      */
-    protected function createStorageProductBuilder()
+    protected function createStorageProductMapper()
     {
-        return new StorageProductBuilder($this->createAttributeVariantBuilder());
+        return new StorageProductMapper($this->createAttributeVariantMapper());
     }
 
     /**
-     * @return \Spryker\Yves\Product\Builder\AttributeVariantBuilder
+     * @return \Spryker\Yves\Product\Mapper\AttributeVariantMapper
      */
-    protected function createAttributeVariantBuilder()
+    protected function createAttributeVariantMapper()
     {
-        return new AttributeVariantBuilder($this->getClient());
+        return new AttributeVariantMapper($this->getClient());
     }
 
 }

@@ -4,12 +4,11 @@
  * This file is part of the Spryker Demoshop.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
-
-namespace Spryker\Yves\ProductImage\Builder;
+namespace Spryker\Yves\ProductImage\Mapper;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 
-interface StorageImageBuilderInterface
+interface StorageImageMapperInterface
 {
 
     /**
@@ -17,6 +16,6 @@ interface StorageImageBuilderInterface
      *
      * @return StorageProductTransfer $storageProductTransfer
      */
-    public function setSelectedProductDisplayImages(StorageProductTransfer $storageProductTransfer);
+    public function mapProductImages(StorageProductTransfer $storageProductTransfer);
 
 }

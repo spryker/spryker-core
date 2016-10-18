@@ -8,16 +8,16 @@
 namespace Spryker\Yves\ProductImage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\ProductImage\Builder\StorageImageBuilder;
+use Spryker\Yves\ProductImage\Mapper\StorageImageMapper;
 
 class ProductImageFactory extends AbstractFactory
 {
 
     /***
-     * @return \Spryker\Yves\ProductImage\Builder\StorageImageBuilder
+     * @return \Spryker\Yves\ProductImage\Mapper\StorageImageMapper
      */
-    protected function createStorageImageBuilder()
+    protected function createStorageImageMapper()
     {
-        return new StorageImageBuilder();
+        return new StorageImageMapper();
     }
 }

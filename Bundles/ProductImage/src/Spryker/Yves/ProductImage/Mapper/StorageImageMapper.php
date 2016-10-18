@@ -5,14 +5,14 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\ProductImage\Builder;
+namespace Spryker\Yves\ProductImage\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Shared\ProductImage\ProductImageConstants;
 
-class StorageImageBuilder implements StorageImageBuilderInterface
+class StorageImageMapper implements StorageImageMapperInterface
 {
 
     /**
@@ -20,14 +20,14 @@ class StorageImageBuilder implements StorageImageBuilderInterface
      *
      * @return StorageProductTransfer $storageProductTransfer
      */
-    public function setSelectedProductDisplayImages(StorageProductTransfer $storageProductTransfer)
+    public function mapProductImages(StorageProductTransfer $storageProductTransfer)
     {
         if (count($storageProductTransfer->getImageSets()) === 0) {
             return $storageProductTransfer;
         }
 
         $imageSets = $storageProductTransfer->getImageSets();
-        if (isset($imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME])) {
+        if (array_key_exists(ProductImageConstants::DEFAULT_IMAGE_SET_NAME, $imageSets) !== false) {
             $storageProductTransfer->setImages(
                 $this->mapStorageProductImageCollection($imageSets[ProductImageConstants::DEFAULT_IMAGE_SET_NAME])
             );

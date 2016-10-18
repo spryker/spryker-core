@@ -337,6 +337,7 @@
       "Unit\\Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/src",
+      "Spryker\\Yves\\ProductCategory\\": "Bundles/ProductCategory/src",
       "Unit\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/src",

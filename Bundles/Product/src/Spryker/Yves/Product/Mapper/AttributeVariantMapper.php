@@ -5,14 +5,14 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\Product\Builder;
+namespace Spryker\Yves\Product\Mapper;
 
 use Generated\Shared\Transfer\StorageAttributeMapTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Shared\Product\ProductConstants;
 
-class AttributeVariantBuilder implements AttributeVariantBuilderInterface
+class AttributeVariantMapper implements AttributeVariantMapperInterface
 {
 
     /**
@@ -197,7 +197,7 @@ class AttributeVariantBuilder implements AttributeVariantBuilderInterface
 
         $selectedKey = array_shift($selectedAttributes);
         foreach ($attributeMap as $variantKey => $variant) {
-            if ($variantKey != $selectedKey) {
+            if ($variantKey !== $selectedKey) {
                 continue;
             }
 

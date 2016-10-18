@@ -5,24 +5,24 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\Product\Builder;
+namespace Spryker\Yves\Product\Mapper;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 
-class StorageProductBuilder implements StorageProductBuilderInterface
+class StorageProductMapper implements StorageProductMapperInterface
 {
 
     /**
-     * @var \Spryker\Yves\Product\Builder\AttributeVariantBuilderInterface
+     * @var \Spryker\Yves\Product\Mapper\AttributeVariantMapperInterface
      */
-    protected $attributeVariantBuilder;
+    protected $attributeVariantMapper;
 
     /**
-     * @param \Spryker\Yves\Product\Builder\AttributeVariantBuilderInterface $attributeVariantBuilder
+     * @param \Spryker\Yves\Product\Mapper\AttributeVariantMapperInterface $attributeVariantMapper
      */
-    public function __construct(AttributeVariantBuilderInterface $attributeVariantBuilder)
+    public function __construct(AttributeVariantMapperInterface $attributeVariantMapper)
     {
-        $this->attributeVariantBuilder = $attributeVariantBuilder;
+        $this->attributeVariantMapper = $attributeVariantMapper;
     }
 
     /**
@@ -31,14 +31,14 @@ class StorageProductBuilder implements StorageProductBuilderInterface
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    public function buildProduct(array $productData, array $selectedAttributes = [])
+    public function mapStorageProduct(array $productData, array $selectedAttributes = [])
     {
         $storageProductTransfer = $this->mapAbstractStorageProduct($productData);
         $storageProductTransfer->setSelectedAttributes($selectedAttributes);
 
-        $storageProductTransfer = $this->attributeVariantBuilder->setSuperAttributes($storageProductTransfer);
+        $storageProductTransfer = $this->attributeVariantMapper->setSuperAttributes($storageProductTransfer);
         if (count($selectedAttributes) > 0) {
-            $storageProductTransfer = $this->attributeVariantBuilder->setSelectedVariants(
+            $storageProductTransfer = $this->attributeVariantMapper->setSelectedVariants(
                 $selectedAttributes,
                 $storageProductTransfer
             );
