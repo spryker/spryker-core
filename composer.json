@@ -349,6 +349,7 @@
       "Spryker\\Zed\\ProductImage\\": "Bundles/ProductImage/src",
       "Unit\\Spryker\\Shared\\ProductImage\\": "Bundles/ProductImage/tests",
       "Functional\\Spryker\\Shared\\ProductImage\\": "Bundles/ProductImage/tests",
+      "Spryker\\Yves\\ProductImage\\": "Bundles/ProductImage/src",
       "Spryker\\Shared\\ProductOptionCartConnector\\": "Bundles/ProductOptionCartConnector/src",
       "Unit\\Spryker\\Shared\\ProductOptionCartConnector\\": "Bundles/ProductOptionCartConnector/tests",
       "Functional\\Spryker\\Shared\\ProductOptionCartConnector\\": "Bundles/ProductOptionCartConnector/tests",

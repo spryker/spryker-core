@@ -18,18 +18,11 @@ class StorageProductBuilder implements StorageProductBuilderInterface
     protected $attributeVariantBuilder;
 
     /**
-     * @var \Spryker\Yves\Product\Builder\ImageSetBuilderInterface
-     */
-    protected $imageSetBuilder;
-
-    /**
      * @param \Spryker\Yves\Product\Builder\AttributeVariantBuilderInterface $attributeVariantBuilder
-     * @param \Spryker\Yves\Product\Builder\ImageSetBuilderInterface $imageSetBuilder
      */
-    public function __construct(AttributeVariantBuilderInterface $attributeVariantBuilder, ImageSetBuilderInterface $imageSetBuilder)
+    public function __construct(AttributeVariantBuilderInterface $attributeVariantBuilder)
     {
         $this->attributeVariantBuilder = $attributeVariantBuilder;
-        $this->imageSetBuilder = $imageSetBuilder;
     }
 
     /**
@@ -63,9 +56,6 @@ class StorageProductBuilder implements StorageProductBuilderInterface
     {
         $storageProductTransfer = new StorageProductTransfer();
         $storageProductTransfer->fromArray($productData, true);
-        $storageProductTransfer->setImages(
-            $this->imageSetBuilder->getDisplayImagesFromPersistedProduct($productData)
-        );
 
         return $storageProductTransfer;
     }

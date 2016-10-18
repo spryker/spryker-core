@@ -27,4 +27,17 @@
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
     </transfer>
 
+    <transfer name="StorageProduct">
+        <property name="imageSets" type="array" singular="imageSet" />
+        <property name="images" type="StorageProductImage[]" singular="image" />
+    </transfer>
+
+    <transfer name="StorageProductImage">
+        <property name="idProductImage" type="int" />
+        <property name="externalUrlSmall" type="string" />
+        <property name="externalUrlLarge" type="string" />
+        <property name="createdAt" type="string" />
+        <property name="updatedAt" type="string" />
+    </transfer>>
+
 </transfers>
