@@ -36,8 +36,6 @@
         <property name="idProductImage" type="int" />
         <property name="externalUrlSmall" type="string" />
         <property name="externalUrlLarge" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
     </transfer>>
 
 </transfers>
