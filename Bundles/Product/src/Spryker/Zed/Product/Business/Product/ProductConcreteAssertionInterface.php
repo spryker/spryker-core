@@ -17,16 +17,7 @@ interface ProductConcreteAssertionInterface
      *
      * @return void
      */
-    public function assertSkuUnique($sku);
-
-    /**
-     * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return void
-     */
-    public function assertProductExists($idProduct);
+    public function assertSkuIsUnique($sku);
 
     /**
      * @param int $idProduct
@@ -37,5 +28,14 @@ interface ProductConcreteAssertionInterface
      * @return void
      */
     public function assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
+
+    /**
+     * @param int $idProduct
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return void
+     */
+    public function assertProductExists($idProduct);
 
 }
