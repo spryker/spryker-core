@@ -240,13 +240,17 @@ class Reader implements ReaderInterface
             return $this->getPriceEntityForProductConcrete($sku, $priceType);
         }
 
+        if ($this->hasPriceForProductAbstract($sku, $priceType)) {
+            return $this->getPriceEntityForProductAbstract($sku, $priceType);
+        }
+
         $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
             return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
         }
 
         throw new MissingPriceException(sprintf(
-            'Price not found for concrete product "%s"!',
+            'Price not found for product with SKU: %s!',
             $sku
         ));
     }
