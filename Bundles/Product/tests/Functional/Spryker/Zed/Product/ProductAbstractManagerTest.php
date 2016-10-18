@@ -390,17 +390,21 @@ class ProductAbstractManagerTest extends Test
     }
 
     /**
-     * TODO exception won't rollback DB
-     *
-     * @expectedException \Spryker\Zed\Product\Business\Exception\MissingProductException
-     * @expectedExceptionMessage Tried to retrieve a product concrete with sku INVALIDSKU, but it does not exist.
-     *
      * @return void
      */
-    public function SKIP_testGetAbstractSkuFromProductConcreteShouldThrowException()
+    public function testGetAbstractSkuFromProductConcreteShouldThrowException()
     {
-        $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
-        $abstractSku = $this->productAbstractManager->getAbstractSkuFromProductConcrete('INVALIDSKU');
+        try {
+            $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
+            $abstractSku = $this->productAbstractManager->getAbstractSkuFromProductConcrete('INVALIDSKU');
+
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('Spryker\Zed\Product\Business\Exception\MissingProductException', $e);
+            $this->assertEquals(
+                'Tried to retrieve a product concrete with sku INVALIDSKU, but it does not exist.',
+                $e->getMessage()
+            );
+        }
     }
 
     /**
