@@ -16,11 +16,13 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
@@ -33,6 +35,7 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -158,6 +161,14 @@ class ProductUrlManagerTest extends Test
             $productConcretePluginManager
         );
 
+        $abstractPluginManager = new PluginAbstractManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productAbstractManager = new ProductAbstractManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -167,9 +178,7 @@ class ProductUrlManagerTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $this->productConcreteManager,
             $productAbstractAssertion,
-            [],
-            [],
-            []
+            $abstractPluginManager
         );
 
         $urlGenerator = new ProductUrlGenerator(
@@ -300,26 +309,30 @@ class ProductUrlManagerTest extends Test
     }
 
     /**
-     * TODO test database is not rolled back when exception is throw
-     *
-     * @expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return void
      */
-    public function SKIP_testCreateUrlShouldThrowExceptionWhenUrlExists()
+    public function testCreateUrlShouldThrowExceptionWhenUrlExists()
     {
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        try {
+            $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+            $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $message = sprintf(
-            'Tried to create url /en/product-name-enus-%d, but it already exists',
-            $idProductAbstract
-        );
+            $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+            $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        } catch (\Exception $e) {
+            Propel::getWriteConnection('zed')->rollBack(); //TODO no db rollback on error
 
-        $this->expectExceptionMessage($message);
+            $message = sprintf(
+                'Tried to create url /en/product-name-enus-%d, but it already exists',
+                $idProductAbstract
+            );
 
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+            $this->assertInstanceOf(UrlExistsException::class, $e);
+            $this->assertEquals(
+                $message,
+                $e->getMessage()
+            );
+        }
     }
 
     /**
@@ -337,13 +350,15 @@ class ProductUrlManagerTest extends Test
     /**
      * TODO test database is not rolled back when exception is throw
      *
-     * @expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @expectedExceptionMessage Tried to create url /en/product-name-enus-1, but it already exists
+     * @22expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @22expectedExceptionMessage Tried to create url /en/product-name-enus-1, but it already exists
      *
      * @return void
      */
     public function SKIP_testProductUrlShouldBeUnique()
     {
+        $this->expectException(UrlExistsException::class);
+
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 

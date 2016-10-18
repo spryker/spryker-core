@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImage\Communication\Plugin;
+namespace Spryker\Zed\Stock\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
- * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
+ * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
  */
-class ProductConcreteUpdatePlugin extends AbstractPlugin implements ProductConcretePluginInterface
+class ProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginInterface
 {
 
     /**
@@ -25,7 +25,7 @@ class ProductConcreteUpdatePlugin extends AbstractPlugin implements ProductConcr
      */
     public function run(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->updateProductConcreteImageSetCollection($productConcreteTransfer);
+        return $this->getFacade()->persistStockProductCollection($productConcreteTransfer);
     }
 
 }

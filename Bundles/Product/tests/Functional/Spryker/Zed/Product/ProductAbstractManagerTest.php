@@ -19,8 +19,9 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
@@ -186,6 +187,14 @@ class ProductAbstractManagerTest extends Test
             $productConcretePluginManager
         );
 
+        $abstractPluginManager = new PluginAbstractManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productAbstractManager = new ProductAbstractManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -195,9 +204,7 @@ class ProductAbstractManagerTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $this->productConcreteManager,
             $productAbstractAssertion,
-            $pluginsCreateCollection = [],
-            $pluginsReadCollection = [],
-            $pluginsUpdateCollection = []
+            $abstractPluginManager
         );
     }
 
@@ -383,15 +390,21 @@ class ProductAbstractManagerTest extends Test
     }
 
     /**
-     * @expectedException \Spryker\Zed\Product\Business\Exception\MissingProductException
-     * @expectedExceptionMessage Tried to retrieve a product concrete with sku INVALIDSKU, but it does not exist.
-     *
      * @return void
      */
     public function testGetAbstractSkuFromProductConcreteShouldThrowException()
     {
-        $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
-        $abstractSku = $this->productAbstractManager->getAbstractSkuFromProductConcrete('INVALIDSKU');
+        try {
+            $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
+            $abstractSku = $this->productAbstractManager->getAbstractSkuFromProductConcrete('INVALIDSKU');
+
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('Spryker\Zed\Product\Business\Exception\MissingProductException', $e);
+            $this->assertEquals(
+                'Tried to retrieve a product concrete with sku INVALIDSKU, but it does not exist.',
+                $e->getMessage()
+            );
+        }
     }
 
     /**

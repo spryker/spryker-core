@@ -15,7 +15,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  */
-class ProductAbstractUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginInterface
+class ProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginInterface
 {
 
     /**

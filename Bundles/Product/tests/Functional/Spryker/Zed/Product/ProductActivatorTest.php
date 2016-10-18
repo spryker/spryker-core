@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductActivator;
@@ -190,6 +190,14 @@ class ProductActivatorTest extends Test
             $productConcretePluginManager
         );
 
+        $abstractPluginManager = new PluginAbstractManager(
+            $beforeCreatePlugins = [],
+            $afterCreatePlugins = [],
+            $readPlugins = [],
+            $beforeUpdatePlugins = [],
+            $afterUpdatePlugins = []
+        );
+
         $this->productAbstractManager = new ProductAbstractManager(
             $attributeManager,
             $this->productQueryContainer,
@@ -199,9 +207,7 @@ class ProductActivatorTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $this->productConcreteManager,
             $productAbstractAssertion,
-            $pluginsCreateCollection = [],
-            $pluginsReadCollection = [],
-            $pluginsUpdateCollection = []
+            $abstractPluginManager
         );
 
         $urlGenerator = new ProductUrlGenerator(

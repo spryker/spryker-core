@@ -67,19 +67,9 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $productConcreteManager;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @var \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface
      */
-    protected $pluginsCreateCollection;
-
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
-     */
-    protected $pluginsUpdateCollection;
-
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
-     */
-    protected $pluginsReadCollection;
+    protected $pluginAbstractManager;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
@@ -95,10 +85,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface $priceFacade
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
+     * @param \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface $pluginAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
-     * @param array $pluginsCreateCollection
-     * @param array $pluginsReadCollection
-     * @param array $pluginsUpdateCollection
      */
     public function __construct(
         AttributeManagerInterface $attributeManager,
@@ -109,10 +97,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductToPriceInterface $priceFacade,
         ProductConcreteManagerInterface $productConcreteManager,
         ProductAbstractAssertionInterface $productAbstractAssertion,
-        SkuGeneratorInterface $skuGenerator,
-        array $pluginsCreateCollection,
-        array $pluginsReadCollection,
-        array $pluginsUpdateCollection
+        PluginAbstractManagerInterface $pluginAbstractManager,
+        SkuGeneratorInterface $skuGenerator
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -122,9 +108,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->priceFacade = $priceFacade;
         $this->productConcreteManager = $productConcreteManager;
         $this->productAbstractAssertion = $productAbstractAssertion;
-        $this->pluginsCreateCollection = $pluginsCreateCollection;
-        $this->pluginsReadCollection = $pluginsReadCollection;
-        $this->pluginsUpdateCollection = $pluginsUpdateCollection;
+        $this->pluginAbstractManager = $pluginAbstractManager;
         $this->skuGenerator = $skuGenerator;
     }
 
@@ -155,7 +139,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
 
-        $productAbstractTransfer = $this->triggerBeforeCreatePlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->pluginAbstractManager->triggerBeforeCreatePlugins($productAbstractTransfer);
 
         $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
 
@@ -165,7 +149,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
         $this->persistPrice($productAbstractTransfer);
 
-        $this->triggerAfterCreatePlugins($productAbstractTransfer);
+        $this->pluginAbstractManager->triggerAfterCreatePlugins($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -188,13 +172,13 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->productAbstractAssertion->assertProductExists($idProductAbstract);
         $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
 
-        $productAbstractTransfer = $this->triggerBeforeUpdatePlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->pluginAbstractManager->triggerBeforeUpdatePlugins($productAbstractTransfer);
 
         $this->persistEntity($productAbstractTransfer);
         $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
         $this->persistPrice($productAbstractTransfer);
 
-        $this->triggerAfterUpdatePlugins($productAbstractTransfer);
+        $this->pluginAbstractManager->triggerAfterUpdatePlugins($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
@@ -241,7 +225,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $productAbstractTransfer = $this->loadTaxSetId($productAbstractTransfer);
         $productAbstractTransfer = $this->loadPrice($productAbstractTransfer);
 
-        $this->triggerLoadPlugins($productAbstractTransfer);
+        $this->pluginAbstractManager->triggerReadPlugins($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
@@ -365,6 +349,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
                 ->requireIdProductAbstract()
                 ->getIdProductAbstract()
         );
+
         $this->priceFacade->persistProductAbstractPrice($priceTransfer);
     }
 
@@ -430,76 +415,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         }
 
         $productAbstractTransfer->setPrice($priceTransfer);
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function triggerBeforeCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        foreach ($this->pluginsCreateCollection as $plugin) {
-            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function triggerAfterCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        foreach ($this->pluginsCreateCollection as $plugin) {
-            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function triggerBeforeUpdatePlugins(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        foreach ($this->pluginsUpdateCollection as $plugin) {
-            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function triggerAfterUpdatePlugins(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        foreach ($this->pluginsUpdateCollection as $plugin) {
-            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
-        }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function triggerLoadPlugins(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        foreach ($this->pluginsReadCollection as $plugin) {
-            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
-        }
 
         return $productAbstractTransfer;
     }
