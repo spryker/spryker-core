@@ -175,8 +175,12 @@ class Reader implements ReaderInterface
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
         $priceType = $this->getPriceTypeByName($priceTypeName);
 
-        if ($this->hasPriceForProductConcrete($sku, $priceType)
-            || $this->hasPriceForProductAbstract($sku, $priceType)) {
+        if ($this->hasPriceForProductConcrete($sku, $priceType) || $this->hasPriceForProductAbstract($sku, $priceType)) {
+            return true;
+        }
+
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
             return true;
         }
 
@@ -207,6 +211,8 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string $priceTypeName
      *
+     * @throws \Spryker\Zed\Price\Business\Exception\MissingPriceException
+     *
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName)
@@ -218,6 +224,10 @@ class Reader implements ReaderInterface
                 ->queryPriceEntityForProductConcrete($sku, $priceType)
                 ->findOne()
                 ->getIdPriceProduct();
+        }
+
+        if (!$this->hasPriceForProductAbstract($sku, $priceType)) {
+            $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
         return $this->queryContainer

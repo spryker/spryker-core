@@ -10,7 +10,7 @@ namespace Spryker\Zed\Product\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactoryInterface getFactory()
+ * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactory getFactory()
  */
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
@@ -29,7 +29,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
         $query->filterBySku($concreteSku)
             ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale($idLocale)
+            ->filterByFkLocale($idLocale)
             ->endUse()
             ->useSpyProductAbstractQuery()
             ->endUse();
@@ -48,7 +48,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     {
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($idProductAbstract)
+            ->filterByIdProductAbstract($idProductAbstract)
             ->endUse();
     }
 
@@ -172,6 +172,23 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     public function queryProductAttributeKey()
     {
         return $this->getFactory()->createProductAttributeKeyQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
+    {
+        return $this->getFactory()
+            ->getUrlQueryContainer()
+            ->queryUrls()
+            ->filterByFkResourceProductAbstract($idProductAbstract)
+            ->filterByFkLocale($idLocale);
     }
 
 }

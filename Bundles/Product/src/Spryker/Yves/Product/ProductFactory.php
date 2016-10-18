@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Product;
 
 use Spryker\Yves\Product\Builder\AttributeVariantBuilder;
-use Spryker\Yves\Product\Builder\ImageSetBuilder;
 use Spryker\Yves\Product\Builder\StorageProductBuilder;
 use Spryker\Yves\Kernel\AbstractFactory;
 
@@ -23,10 +22,7 @@ class ProductFactory extends AbstractFactory
      */
     protected function createStorageProductBuilder()
     {
-        return new StorageProductBuilder(
-            $this->createAttributeVariantBuilder(),
-            $this->createImageSetBuilder()
-        );
+        return new StorageProductBuilder($this->createAttributeVariantBuilder());
     }
 
     /**
@@ -34,18 +30,7 @@ class ProductFactory extends AbstractFactory
      */
     protected function createAttributeVariantBuilder()
     {
-        return new AttributeVariantBuilder(
-            $this->getClient(),
-            $this->createImageSetBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Yves\Product\Builder\ImageSetBuilder
-     */
-    protected function createImageSetBuilder()
-    {
-        return new ImageSetBuilder();
+        return new AttributeVariantBuilder($this->getClient());
     }
 
 }

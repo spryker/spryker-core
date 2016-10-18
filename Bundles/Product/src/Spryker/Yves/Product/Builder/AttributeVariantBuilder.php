@@ -26,18 +26,11 @@ class AttributeVariantBuilder implements AttributeVariantBuilderInterface
     protected $attributeMap = [];
 
     /**
-     * @var \Spryker\Yves\Product\Builder\ImageSetBuilderInterface
-     */
-    protected $imageSetBuilder;
-
-    /**
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
-     * @param \Spryker\Yves\Product\Builder\ImageSetBuilderInterface $imageSetBuilder
      */
-    public function __construct(ProductClientInterface $productClient, ImageSetBuilderInterface $imageSetBuilder)
+    public function __construct(ProductClientInterface $productClient)
     {
         $this->productClient = $productClient;
-        $this->imageSetBuilder = $imageSetBuilder;
     }
 
     /**
@@ -274,9 +267,6 @@ class AttributeVariantBuilder implements AttributeVariantBuilderInterface
     protected function mapVariantStorageProductTransfer(StorageProductTransfer $storageProductTransfer, array $productConcrete)
     {
         $storageProductTransfer->fromArray($productConcrete, true);
-        $storageProductTransfer->setImages(
-            $this->imageSetBuilder->getDisplayImagesFromPersistedProduct($productConcrete)
-        );
         $storageProductTransfer->setIsVariant(true);
 
         return $storageProductTransfer;

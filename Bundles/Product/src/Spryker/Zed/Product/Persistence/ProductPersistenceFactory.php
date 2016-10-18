@@ -14,12 +14,13 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainer getQueryContainer()
  */
-class ProductPersistenceFactory extends AbstractPersistenceFactory implements ProductPersistenceFactoryInterface
+class ProductPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
@@ -68,6 +69,14 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory implements Pr
     public function createProductAttributeKeyQuery()
     {
         return SpyProductAttributeKeyQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
+     */
+    public function getUrlQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_URL);
     }
 
 }

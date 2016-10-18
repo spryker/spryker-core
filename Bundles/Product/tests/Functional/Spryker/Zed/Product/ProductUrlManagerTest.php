@@ -405,7 +405,7 @@ class ProductUrlManagerTest extends Test
 
         $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
-        $this->productUrlManager->touchProductUrlActive($this->productAbstractTransfer);
+        $this->productUrlManager->touchProductAbstractUrlActive($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
@@ -431,7 +431,7 @@ class ProductUrlManagerTest extends Test
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
-        $this->productUrlManager->touchProductUrlDeleted($this->productAbstractTransfer);
+        $this->productUrlManager->touchProductAbstractUrlDeleted($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(

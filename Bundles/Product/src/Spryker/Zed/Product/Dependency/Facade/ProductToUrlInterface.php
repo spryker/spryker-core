@@ -14,31 +14,18 @@ interface ProductToUrlInterface
 {
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId);
-
-    /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrl(UrlTransfer $urlTransfer);
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function deleteUrl(UrlTransfer $urlTransfer);
+    public function deleteUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
      * @param int $idUrl
@@ -46,14 +33,6 @@ interface ProductToUrlInterface
      * @return void
      */
     public function touchUrlActive($idUrl);
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
     /**
      * @param string $url

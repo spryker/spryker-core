@@ -343,6 +343,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @deprecated This method will be removed with next major release because of invalid dependency direction. Product
+     * bundle can internally read the necessary urls through the UrlQueryContainer.
+     *
      * @api
      *
      * @param int $idProductAbstract

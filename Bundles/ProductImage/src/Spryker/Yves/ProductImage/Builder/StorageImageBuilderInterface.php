@@ -5,9 +5,9 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Yves\Product\Builder;
+namespace Spryker\Yves\ProductImage\Builder;
 
-interface ImageSetBuilderInterface
+interface StorageImageBuilderInterface
 {
 
     /**
@@ -15,6 +15,6 @@ interface ImageSetBuilderInterface
      *
      * @return array
      */
-    public function getDisplayImagesFromPersistedProduct(array $persistedProductData);
+    public function getDisplayImagesForSelectedProduct(array $persistedProductData);
 
 }

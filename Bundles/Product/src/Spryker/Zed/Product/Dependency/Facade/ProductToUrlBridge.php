@@ -27,16 +27,13 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->createUrl($url, $locale, $resourceType, $resourceId);
+        return $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }
 
     /**
@@ -44,30 +41,9 @@ class ProductToUrlBridge implements ProductToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveUrl(UrlTransfer $urlTransfer)
-    {
-        return $this->urlFacade->saveUrl($urlTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function deleteUrl(UrlTransfer $urlTransfer)
+    public function deleteUrlAndTouch(UrlTransfer $urlTransfer)
     {
         return $this->urlFacade->deleteUrl($urlTransfer);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
-    {
-        return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
 
     /**
