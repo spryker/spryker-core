@@ -18,6 +18,7 @@ use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
@@ -196,7 +197,8 @@ class ProductManagerTest extends Test
             new ProductToPriceBridge($this->priceFacade),
             $this->productConcreteManager,
             $productAbstractAssertion,
-            $abstractPluginManager
+            $abstractPluginManager,
+            new SkuGenerator(new ProductToUrlBridge($this->urlFacade))
         );
 
         $urlGenerator = new ProductUrlGenerator(

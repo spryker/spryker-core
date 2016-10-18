@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
@@ -71,6 +72,11 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $pluginAbstractManager;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
+     */
+    protected $skuGenerator;
+
+    /**
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
@@ -80,6 +86,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
      * @param \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface $pluginAbstractManager
+     * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
      */
     public function __construct(
         AttributeManagerInterface $attributeManager,
@@ -90,7 +97,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductToPriceInterface $priceFacade,
         ProductConcreteManagerInterface $productConcreteManager,
         ProductAbstractAssertionInterface $productAbstractAssertion,
-        PluginAbstractManagerInterface $pluginAbstractManager
+        PluginAbstractManagerInterface $pluginAbstractManager,
+        SkuGeneratorInterface $skuGenerator
     ) {
         $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -101,6 +109,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->productConcreteManager = $productConcreteManager;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->pluginAbstractManager = $pluginAbstractManager;
+        $this->skuGenerator = $skuGenerator;
     }
 
     /**
@@ -123,6 +132,10 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
+
+        $productAbstractTransfer->setSku(
+            $this->skuGenerator->generateProductAbstractSku($productAbstractTransfer)
+        );
 
         $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
 

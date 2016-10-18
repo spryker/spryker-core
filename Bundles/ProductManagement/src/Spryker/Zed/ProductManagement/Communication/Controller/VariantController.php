@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Product\Business\Product\VariantGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -61,8 +60,7 @@ class VariantController extends AbstractController
         $productAbstractTransfer->setAttributes([]);
         $productAbstractTransfer->setLocalizedAttributes(new \ArrayObject($localizedAttributes));
 
-        $matrixGenerator = new VariantGenerator();
-        $matrix = $matrixGenerator->generate($productAbstractTransfer, $attributes);
+        $matrix = $this->getFactory()->getProductFacade()->generateVariants($productAbstractTransfer, $attributes);
 
         $a = [];
         foreach ($matrix as $p) {

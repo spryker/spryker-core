@@ -124,7 +124,7 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param array $pluginCollection
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

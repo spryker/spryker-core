@@ -107,7 +107,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getProductConcreteAfterUpdatePlugins($container);
         };
 
-
         return $container;
     }
 
