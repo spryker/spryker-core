@@ -611,11 +611,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     * @return void
      */
     public function deleteProductUrl(ProductAbstractTransfer $productAbstract)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createProductUrlManager()
             ->deleteProductUrl($productAbstract);
     }
