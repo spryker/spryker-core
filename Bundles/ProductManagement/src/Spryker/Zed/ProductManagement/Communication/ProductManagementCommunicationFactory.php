@@ -54,7 +54,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->getUtilFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -73,7 +74,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->getUtilFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -92,7 +94,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->getUtilFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -213,6 +216,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getUrlFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface
+     */
+    public function getUtilFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_UTIL);
     }
 
     /**
@@ -432,7 +443,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormTransferMapper(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getUrlFacade(),
+            $this->getUtilFacade(),
             $this->createLocaleProvider()
         );
     }

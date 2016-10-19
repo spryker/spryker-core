@@ -129,7 +129,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductUrlGenerator(
             $this->createProductAbstractManager(),
             $this->getLocaleFacade(),
-            $this->getUrlFacade()
+            $this->getUtilFacade()
         );
     }
 
@@ -149,7 +149,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSkuGenerator()
     {
-        return new SkuGenerator($this->getUrlFacade());
+        return new SkuGenerator($this->getUtilFacade());
     }
 
     /**
@@ -190,6 +190,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getUrlFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface
+     */
+    protected function getUtilFacade()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL);
     }
 
     /**

@@ -59,14 +59,4 @@ class ProductManagementToUrlBridge implements ProductManagementToUrlInterface
         return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public function slugify($value)
-    {
-        return $this->urlFacade->slugify($value);
-    }
-
 }

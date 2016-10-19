@@ -67,19 +67,4 @@ class UrlManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testSlugify()
-    {
-        $expected = 'foo-bar';
-
-        $value = $this->urlManager->slugify(self::SLUG_VALUE);
-
-        $this->assertEquals(
-            $expected,
-            $value
-        );
-    }
-
 }

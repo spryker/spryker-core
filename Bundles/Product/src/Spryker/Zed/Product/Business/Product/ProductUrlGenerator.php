@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface;
 
 class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
@@ -27,23 +27,23 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface
      */
-    protected $urlFacade;
+    protected $utilFacade;
 
     /**
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface $utilFacade
      */
     public function __construct(
         ProductAbstractManagerInterface $productAbstractManager,
         ProductToLocaleInterface $localeFacade,
-        ProductToUrlInterface $urlFacade
+        ProductToUtilInterface $utilFacade
     ) {
         $this->productAbstractManager = $productAbstractManager;
         $this->localeFacade = $localeFacade;
-        $this->urlFacade = $urlFacade;
+        $this->utilFacade = $utilFacade;
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
      */
     protected function generateUrlByLocale(ProductAbstractTransfer $productAbstract, LocaleTransfer $localeTransfer)
     {
-        $productName = $this->urlFacade->slugify(
+        $productName = $this->utilFacade->generateSlug(
             $this->productAbstractManager->getLocalizedProductAbstractName($productAbstract, $localeTransfer)
         );
 

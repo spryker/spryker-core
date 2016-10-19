@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilBridge;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -30,6 +31,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_URL = 'FACADE_URL';
+    const FACADE_UTIL = 'FACADE_UTIL';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
@@ -66,6 +68,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_URL] = function (Container $container) {
             return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
+        };
+
+        $container[self::FACADE_UTIL] = function (Container $container) {
+            return new ProductManagementToUtilBridge($container->getLocator()->util()->facade());
         };
 
         $container[self::FACADE_TAX] = function (Container $container) {

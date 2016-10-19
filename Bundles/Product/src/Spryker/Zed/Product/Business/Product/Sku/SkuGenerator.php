@@ -8,7 +8,7 @@ namespace Spryker\Zed\Product\Business\Product\Sku;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface;
 
 class SkuGenerator implements SkuGeneratorInterface
 {
@@ -18,16 +18,16 @@ class SkuGenerator implements SkuGeneratorInterface
     const SKU_VALUE_SEPARATOR = '_';
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface
      */
-    protected $urlFacade;
+    protected $utilFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface $utilFacade
      */
-    public function __construct(ProductToUrlInterface $urlFacade)
+    public function __construct(ProductToUtilInterface $utilFacade)
     {
-        $this->urlFacade = $urlFacade;
+        $this->utilFacade = $utilFacade;
     }
 
     /**
@@ -64,7 +64,7 @@ class SkuGenerator implements SkuGeneratorInterface
      */
     protected function formatConcreteSku($abstractSku, $concreteSku)
     {
-        return $this->urlFacade->slugify(sprintf(
+        return $this->utilFacade->generateSlug(sprintf(
             '%s%s%s',
             $abstractSku,
             static::SKU_ABSTRACT_SEPARATOR,

@@ -12,8 +12,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
@@ -28,10 +32,13 @@ use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilBridge;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Util\Business\UtilFacade;
 
 /**
  * @group Functional
@@ -97,6 +104,11 @@ class FacadeTestAbstract extends Test
     protected $urlFacade;
 
     /**
+     * @var \Spryker\Zed\Util\Business\UtilFacadeInterface
+     */
+    protected $utilFacade;
+
+    /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
@@ -142,16 +154,32 @@ class FacadeTestAbstract extends Test
         $this->setupProductAbstract();
         $this->setupProductConcrete();
 
+
+        $container = new Container();
+        $dependencyProvider = new ProductDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+        $dependencyProvider->providePersistenceLayerDependencies($container);
+
+        $productBusinessFactory = new ProductBusinessFactory();
+        $productBusinessFactory->setContainer($container);
+
         $this->localeFacade = new LocaleFacade();
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
+        $this->priceFacade = new PriceFacade();
         $this->touchFacade = new TouchFacade();
+        $this->utilFacade = new UtilFacade();
         $this->productQueryContainer = new ProductQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
+        $this->priceQueryContainer = new PriceQueryContainer();
+
+        $this->productFacade->setFactory($productBusinessFactory);
 
         $urlBridge = new ProductToUrlBridge($this->urlFacade);
         $touchBridge = new ProductToTouchBridge($this->touchFacade);
         $localeBridge = new ProductToLocaleBridge($this->localeFacade);
+        $utilBridge = new ProductToUtilBridge($this->utilFacade);
 
         $attributeManager = new AttributeManager(
             $this->productQueryContainer
@@ -201,13 +229,13 @@ class FacadeTestAbstract extends Test
             $this->productConcreteManager,
             $productAbstractAssertion,
             $abstractPluginManager,
-            new SkuGenerator($urlBridge)
+            new SkuGenerator($utilBridge)
         );
 
         $urlGenerator = new ProductUrlGenerator(
             $this->productAbstractManager,
             $localeBridge,
-            $urlBridge
+            $utilBridge
         );
 
         $this->productUrlManager = new ProductUrlManager(

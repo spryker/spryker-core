@@ -433,23 +433,4 @@ class UrlManager implements UrlManagerInterface
         return $urlTransfer;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public function slugify($value)
-    {
-        if (function_exists('iconv')) {
-            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
-        }
-
-        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
-        $value = mb_strtolower($value);
-        $value = str_replace(' ', '-', $value);
-        $value = preg_replace('/(\-)\1+/', '$1', $value);
-
-        return $value;
-    }
-
 }

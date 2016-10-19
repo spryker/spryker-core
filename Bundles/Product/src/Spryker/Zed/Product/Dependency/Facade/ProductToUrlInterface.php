@@ -47,11 +47,4 @@ interface ProductToUrlInterface
      */
     public function touchUrlDeleted($idUrl);
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public function slugify($value);
-
 }

@@ -360,18 +360,4 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         return $urlManager->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
 
-    /**
-     * @api
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function slugify($value)
-    {
-        return $this->getFactory()
-            ->createUrlManager()
-            ->slugify($value);
-    }
-
 }
