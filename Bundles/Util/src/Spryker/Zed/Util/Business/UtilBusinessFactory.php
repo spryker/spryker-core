@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Util\Business;
 
+use Spryker\Shared\Util\Text\Slug;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -15,5 +16,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class UtilBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @return \Spryker\Shared\Util\Text\SlugInterface
+     */
+    public function createTextSlug()
+    {
+        return new Slug();
+    }
 
 }

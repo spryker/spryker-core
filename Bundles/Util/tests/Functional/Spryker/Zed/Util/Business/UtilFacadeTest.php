@@ -7,7 +7,6 @@
 
 namespace Functional\Spryker\Zed\Util\Business;
 
-use ArrayObject;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Util\Business\UtilFacade;
 use Spryker\Zed\Util\Persistence\UtilQueryContainer;
@@ -18,7 +17,7 @@ use Spryker\Zed\Util\Persistence\UtilQueryContainer;
  * @group Zed
  * @group Util
  * @group Business
- * @group UtilFacadeAttributeTest
+ * @group UtilFacadeTest
  */
 class UtilFacadeTest extends Test
 {
@@ -33,8 +32,6 @@ class UtilFacadeTest extends Test
      */
     protected $utilQueryContainer;
 
-    const SLUG_VALUE = 'A #value#, [to] Slugify it 8 times.';
-
     /**
      * @return void
      */
@@ -46,15 +43,16 @@ class UtilFacadeTest extends Test
         $this->utilQueryContainer = new UtilQueryContainer();
     }
 
-
-    public function testSlugify()
+    /**
+     * @return void
+     */
+    public function testGenerateSlug()
     {
-        $slug = $this->utilFacade->slugify(self::SLUG_VALUE);
+        $slug = $this->utilFacade->generateSlug('A #value#, [to] Slug 8 times.');
 
-        $expectedSlug = 'a-value-to-slugify-it-8-times';
+        $expectedSlug = 'a-value-to-slug-8-times';
 
         $this->assertEquals($expectedSlug, $slug);
     }
-
 
 }

@@ -15,9 +15,21 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class UtilFacade extends AbstractFacade implements UtilFacadeInterface
 {
 
-    public function slugify($value)
+    /**
+     * Specification:
+     * - Create slug based on value
+     *
+     * @api
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function generateSlug($value)
     {
-        return $value;
+        return $this->getFactory()
+            ->createTextSlug()
+            ->generate($value);
     }
 
 }

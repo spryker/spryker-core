@@ -13,5 +13,16 @@ namespace Spryker\Zed\Util\Business;
 interface UtilFacadeInterface
 {
 
+    /**
+     * Specification:
+     * - Create slug based on value
+     *
+     * @api
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function generateSlug($value);
 
 }

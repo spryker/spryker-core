@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UtilQueryContainer extends AbstractQueryContainer implements UtilQueryContainerInterface
 {
-
 }

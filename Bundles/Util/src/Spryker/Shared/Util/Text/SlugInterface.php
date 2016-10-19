@@ -5,10 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Util\Persistence;
+namespace Spryker\Shared\Util\Text;
 
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-
-interface UtilQueryContainerInterface extends QueryContainerInterface
+interface SlugInterface
 {
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function generate($value);
+
 }
