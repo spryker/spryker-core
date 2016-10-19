@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business\Model\CategoryUrl;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
@@ -116,6 +117,31 @@ class CategoryUrl implements CategoryUrlInterface
     public function update(CategoryTransfer $categoryTransfer)
     {
         // Updating URLs not yet supported
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $categoryNodeCollection = $this
+            ->queryContainer
+            ->queryAllNodesByCategoryId($idCategory)
+            ->find();
+
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $urlCollection = $this
+                ->queryContainer
+                ->queryUrlByIdCategoryNode($categoryNodeEntity->getIdCategoryNode())
+                ->find();
+
+            foreach ($urlCollection as $urlEntity) {
+                $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+                $this->urlFacade->deleteUrl($urlTransfer);
+            }
+        }
     }
 
 }

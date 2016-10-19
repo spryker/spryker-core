@@ -26,4 +26,11 @@ interface CategoryUrlInterface
      */
     public function update(CategoryTransfer $categoryTransfer);
 
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory);
+
 }

@@ -57,4 +57,17 @@ class Category implements CategoryInterface
         $categoryEntity->save();
     }
 
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $this
+            ->queryContainer
+            ->queryCategoryById($idCategory)
+            ->delete();
+    }
+
 }

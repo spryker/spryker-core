@@ -114,7 +114,7 @@ interface CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return mixed
+     * @return void
      */
     public function update(CategoryTransfer $categoryTransfer);
 
@@ -136,6 +136,15 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function deleteCategory($idCategory);
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory);
 
     /**
      * @api

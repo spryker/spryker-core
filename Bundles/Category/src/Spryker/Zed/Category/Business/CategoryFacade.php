@@ -221,6 +221,18 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $this->getFactory()->createCategory()->delete($idCategory);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $createUrlPath

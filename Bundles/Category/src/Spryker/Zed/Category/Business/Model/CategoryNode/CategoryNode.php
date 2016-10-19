@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -27,15 +28,23 @@ class CategoryNode implements CategoryNodeInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Category\Business\TransferGeneratorInterface
+     */
+    protected $transferGenerator;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
      */
     public function __construct(
         ClosureTableWriterInterface $closureTableWriter,
-        CategoryQueryContainerInterface $queryContainer
+        CategoryQueryContainerInterface $queryContainer,
+        TransferGeneratorInterface $transferGenerator
     ) {
         $this->closureTableWriter = $closureTableWriter;
         $this->queryContainer = $queryContainer;
+        $this->transferGenerator = $transferGenerator;
     }
 
     /**
@@ -49,7 +58,7 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity = $this->setUpCategoryNodeEntity($categoryTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();
 
-        $categoryNodeTransfer = $this->getCategoryNodeTransferFromEntity($categoryNodeEntity);
+        $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
 
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
@@ -70,7 +79,7 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity = $this->setUpCategoryNodeEntity($categoryTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();
 
-        $categoryNodeTransfer = $this->getCategoryNodeTransferFromEntity($categoryNodeEntity);
+        $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
 
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
@@ -97,16 +106,44 @@ class CategoryNode implements CategoryNodeInterface
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer
+     * @return void
      */
-    private function getCategoryNodeTransferFromEntity(SpyCategoryNode $categoryNodeEntity)
+    public function delete($idCategory)
     {
-        $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
+        $categoryNodeCollection = $this
+            ->queryContainer
+            ->queryMainNodesByCategoryId($idCategory)
+            ->find();
 
-        return $categoryNodeTransfer;
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $this->moveSubTreeToParent($categoryNodeEntity);
+            $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
+            $categoryNodeEntity->delete();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $sourceNodeEntity
+     *
+     * @return void
+     */
+    protected function moveSubTreeToParent(SpyCategoryNode $sourceNodeEntity)
+    {
+        $idDestinationParentNode = $sourceNodeEntity->getFkParentCategoryNode();
+        $firstLevelChildNodeCollection = $this
+            ->queryContainer
+            ->queryFirstLevelChildren($sourceNodeEntity->getIdCategoryNode())
+            ->find();
+
+        foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
+            $childNodeEntity->setFkParentCategoryNode($idDestinationParentNode);
+            $childNodeEntity->save();
+
+            $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($childNodeEntity);
+            $this->closureTableWriter->moveNode($categoryNodeTransfer);
+        }
     }
 
 }

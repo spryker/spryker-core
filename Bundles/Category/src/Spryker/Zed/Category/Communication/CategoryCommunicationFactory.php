@@ -10,7 +10,9 @@ namespace Spryker\Zed\Category\Communication;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
+use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider;
+use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
@@ -119,6 +121,35 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     protected function createCategoryEditFormDataProvider()
     {
         return new CategoryEditDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryDeleteForm($idCategory)
+    {
+        $categoryDeleteForm = new DeleteType();
+        $categoryDeleteFormDataProvider = $this->createCategoryDeleteFormDataProvider();
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create(
+            $categoryDeleteForm,
+            $categoryDeleteFormDataProvider->getData($idCategory),
+            $categoryDeleteFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider
+     */
+    protected function createCategoryDeleteFormDataProvider()
+    {
+        return new CategoryDeleteDataProvider(
             $this->getQueryContainer(),
             $this->getLocaleFacade()
         );

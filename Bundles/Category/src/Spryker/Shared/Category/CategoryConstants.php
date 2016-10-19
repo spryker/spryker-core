@@ -15,5 +15,6 @@ interface CategoryConstants
 
     const PARAM_ID_NODE = 'id-node';
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
+    const PARAM_ID_CATEGORY = 'id-category';
 
 }

@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class Category
 {
@@ -39,9 +39,9 @@ class Category
     protected $categoryUrl;
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
-    protected $connection;
+    protected $queryContainer;
 
     /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
@@ -49,7 +49,7 @@ class Category
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
-     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      */
     public function __construct(
         CategoryInterface $category,
@@ -57,14 +57,14 @@ class Category
         CategoryAttributeInterface $categoryAttribute,
         CategoryUrlInterface $categoryUrl,
         CategoryExtraParentsInterface $categoryExtraParents,
-        ConnectionInterface $connection
+        CategoryQueryContainerInterface $queryContainer
     ) {
         $this->category = $category;
         $this->categoryNode = $categoryNode;
         $this->categoryAttribute = $categoryAttribute;
         $this->categoryUrl = $categoryUrl;
         $this->categoryExtraParents = $categoryExtraParents;
-        $this->connection = $connection;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -74,7 +74,7 @@ class Category
      */
     public function create(CategoryTransfer $categoryTransfer)
     {
-        $this->connection->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
 
         $this->category->create($categoryTransfer);
         $this->categoryNode->create($categoryTransfer);
@@ -82,7 +82,7 @@ class Category
         $this->categoryUrl->create($categoryTransfer);
         $this->categoryExtraParents->create($categoryTransfer);
 
-        $this->connection->commit();
+        $this->queryContainer->getConnection()->commit();
     }
 
     /**
@@ -92,7 +92,7 @@ class Category
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $this->connection->beginTransaction();
+        $this->queryContainer->getConnection()->beginTransaction();
 
         $this->category->update($categoryTransfer);
         $this->categoryNode->update($categoryTransfer);
@@ -100,7 +100,25 @@ class Category
         $this->categoryUrl->update($categoryTransfer);
         $this->categoryExtraParents->update($categoryTransfer);
 
-        $this->connection->commit();
+        $this->queryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $this->queryContainer->getConnection()->beginTransaction();
+
+        $this->categoryAttribute->delete($idCategory);
+        $this->categoryUrl->delete($idCategory);
+        $this->categoryNode->delete($idCategory);
+        $this->categoryExtraParents->delete($idCategory);
+        $this->category->delete($idCategory);
+
+        $this->queryContainer->getConnection()->commit();
     }
 
 }

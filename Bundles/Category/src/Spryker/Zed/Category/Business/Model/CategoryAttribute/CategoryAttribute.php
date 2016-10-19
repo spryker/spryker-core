@@ -72,4 +72,17 @@ class CategoryAttribute implements CategoryAttributeInterface
         }
     }
 
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $this
+            ->queryContainer
+            ->queryAttributeByCategoryId($idCategory)
+            ->delete();
+    }
+
 }

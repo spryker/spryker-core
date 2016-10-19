@@ -183,4 +183,45 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
         $categoryNodeEntity->delete();
     }
 
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $assignmentNodeCollection = $this
+            ->queryContainer
+            ->queryNotMainNodesByCategoryId($idCategory)
+            ->find();
+
+        foreach ($assignmentNodeCollection as $assignmentNodeEntity) {
+            $this->moveSubTreeToParent($assignmentNodeEntity);
+            $this->closureTableWriter->delete($assignmentNodeEntity->getIdCategoryNode());
+            $assignmentNodeEntity->delete();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $sourceNodeEntity
+     *
+     * @return void
+     */
+    protected function moveSubTreeToParent(SpyCategoryNode $sourceNodeEntity)
+    {
+        $idDestinationParentNode = $sourceNodeEntity->getFkParentCategoryNode();
+        $firstLevelChildNodeCollection = $this
+            ->queryContainer
+            ->queryFirstLevelChildren($sourceNodeEntity->getIdCategoryNode())
+            ->find();
+
+        foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
+            $childNodeEntity->setFkParentCategoryNode($idDestinationParentNode);
+            $childNodeEntity->save();
+
+            $categoryNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray());
+            $this->closureTableWriter->moveNode($categoryNodeTransfer);
+        }
+    }
+
 }

@@ -110,7 +110,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryAttribute(),
             $this->createCategoryUrl(),
             $this->createCategoryExtraParents(),
-            $this->getQueryContainer()->getConnection()
+            $this->getQueryContainer()
         );
     }
 
@@ -131,8 +131,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         $closureTableWriter = $this->createClosureTableWriter();
         $queryContainer = $this->getQueryContainer();
+        $transferGenerator = $this->createCategoryTransferGenerator();
 
-        return new CategoryNode($closureTableWriter, $queryContainer);
+        return new CategoryNode($closureTableWriter, $queryContainer, $transferGenerator);
     }
 
     /**

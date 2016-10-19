@@ -21,8 +21,15 @@ interface CategoryInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return mixed
+     * @return void
      */
     public function update(CategoryTransfer $categoryTransfer);
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function delete($idCategory);
 
 }
