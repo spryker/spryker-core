@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlankValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFieldNotBlankValidator extends NotBlankValidator
 {
 

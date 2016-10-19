@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormDeleteDataProvider extends CategoryFormEditDataProvider
 {
 

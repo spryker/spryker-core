@@ -11,6 +11,9 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormEdit extends CategoryFormAdd
 {
 

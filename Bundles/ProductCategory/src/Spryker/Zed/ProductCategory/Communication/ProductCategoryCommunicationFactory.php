@@ -37,6 +37,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
      */
     public function getLocaleFacade()
@@ -45,6 +47,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     public function getProductFacade()
@@ -53,6 +57,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     public function getCategoryFacade()
@@ -61,6 +67,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     public function getCmsFacade()
@@ -77,6 +85,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     public function getProductQueryContainer()
@@ -85,6 +95,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -98,6 +110,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormAddDataProvider
      */
     public function createCategoryFormAddDataProvider()
@@ -109,6 +123,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -122,6 +138,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider
      */
     public function createCategoryFormEditDataProvider()
@@ -133,6 +151,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -146,6 +166,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDeleteDataProvider
      */
     public function createCategoryFormDeleteDataProvider()

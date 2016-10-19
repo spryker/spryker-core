@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormEditDataProvider extends AbstractCategoryFormDataProvider
 {
 

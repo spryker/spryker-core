@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductCategory\Communication\Form\Constraints;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFieldNotBlank extends NotBlank
 {
 

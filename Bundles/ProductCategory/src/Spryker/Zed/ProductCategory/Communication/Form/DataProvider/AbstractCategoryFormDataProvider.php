@@ -15,6 +15,9 @@ use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class AbstractCategoryFormDataProvider
 {
 
