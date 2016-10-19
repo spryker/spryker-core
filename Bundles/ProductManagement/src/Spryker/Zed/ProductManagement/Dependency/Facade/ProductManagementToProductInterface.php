@@ -117,7 +117,7 @@ interface ProductManagementToProductInterface
      *
      * @return bool
      */
-    public function deActivateProductConcrete($idProductConcrete);
+    public function deactivateProductConcrete($idProductConcrete);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

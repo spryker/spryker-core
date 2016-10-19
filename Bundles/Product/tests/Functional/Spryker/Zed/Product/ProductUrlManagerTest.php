@@ -316,24 +316,13 @@ class ProductUrlManagerTest extends Test
      */
     public function SKIP_testCreateUrlShouldThrowExceptionWhenUrlExists()
     {
-        try {
-            $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-            $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->expectException(UrlExistsException::class);
 
-            $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-            $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-        } catch (\Exception $e) {
-            $message = sprintf(
-                'Tried to create url /en/product-name-enus-%d, but it already exists',
-                $idProductAbstract
-            );
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-            $this->assertInstanceOf(UrlExistsException::class, $e);
-            $this->assertEquals(
-                $message,
-                $e->getMessage()
-            );
-        }
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
     }
 
     /**

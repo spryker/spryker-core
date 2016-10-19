@@ -666,4 +666,80 @@ class ProductFacadeTest extends Test
         $this->productFacade->touchProductAbstractUrlDeleted($this->productAbstractTransfer);
     }
 
+    /**
+     * @return void
+     */
+    public function testGetLocalizedProductAbstractName()
+    {
+        $this->setupDefaultProducts();
+
+        $productNameEN = $this->productFacade->getLocalizedProductAbstractName(
+            $this->productAbstractTransfer, $this->locales['en_US']
+        );
+
+        $productNameDE = $this->productFacade->getLocalizedProductAbstractName(
+            $this->productAbstractTransfer, $this->locales['de_DE']
+        );
+
+        $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['en_US'], $productNameEN);
+        $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['de_DE'], $productNameDE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetLocalizedProductConcreteName()
+    {
+        $this->setupDefaultProducts();
+
+        $productNameEN = $this->productFacade->getLocalizedProductConcreteName(
+            $this->productConcreteTransfer, $this->locales['en_US']
+        );
+
+        $productNameDE = $this->productFacade->getLocalizedProductConcreteName(
+            $this->productConcreteTransfer, $this->locales['de_DE']
+        );
+
+        $this->assertEquals(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);
+        $this->assertEquals(self::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateProductConcrete()
+    {
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        $idProductConcrete = $this->productFacade->createProductConcrete($this->productConcreteTransfer);
+
+        $this->productFacade->activateProductConcrete($idProductConcrete);
+
+        $active = $this->productQueryContainer->queryProduct()
+            ->filterByIdProduct($idProductConcrete)
+            ->filterByIsActive(true)
+            ->count() > 0;
+
+        $this->assertTrue($active);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeactivateProductConcrete()
+    {
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        $idProductConcrete = $this->productFacade->createProductConcrete($this->productConcreteTransfer);
+
+        $this->productFacade->deactivateProductConcrete($idProductConcrete);
+
+        $active = $this->productQueryContainer->queryProduct()
+                ->filterByIdProduct($idProductConcrete)
+                ->filterByIsActive(false)
+                ->count() > 0;
+
+        $this->assertTrue($active);
+    }
+
 }

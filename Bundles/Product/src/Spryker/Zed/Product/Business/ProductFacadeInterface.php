@@ -538,7 +538,7 @@ interface ProductFacadeInterface
      *
      * @return void
      */
-    public function deActivateProductConcrete($idProductConcrete);
+    public function deactivateProductConcrete($idProductConcrete);
 
     /**
      * @api

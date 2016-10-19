@@ -105,7 +105,7 @@ class VariantController extends AbstractController
 
         $this->getFactory()
             ->getProductFacade()
-            ->deActivateProductConcrete($idProductConcrete);
+            ->deactivateProductConcrete($idProductConcrete);
 
         $this->addSuccessMessage('Product was deactivated.');
         $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductAbstract);
