@@ -25,7 +25,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Adds product abstract with attributes
      * - Adds product abstract with meta information
      * - Adds product abstract with price
-     * - Adds product abstract with tax
      * - Adds product concrete with price
      * - Throws exception if product concrete with same SKU exists
      * - Throws exception if abstract product with same SKU exists
@@ -52,7 +51,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Saves product abstract attributes
      * - Saves product abstract meta
      * - Saves product abstract price
-     * - Saves product abstract tax
      * - Saves product concrete price
      * - Triggers before and after UPDATE plugins
      * - Throws exception if product concrete with same SKU exists
@@ -79,7 +77,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Adds product abstract localized attributes
      * - Adds product abstract meta
      * - Adds product abstract price
-     * - Adds product abstract tax
      * - Triggers before and after CREATE plugins
      * - Throws exception if abstract product with same SKU exists
      * - Abstract product is created but not activated or touched
@@ -103,7 +100,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Saves product abstract localized attributes
      * - Saves product abstract meta
      * - Saves product abstract price
-     * - Saves product abstract tax
      * - Triggers before and after CREATE plugins
      * - Throws exception if abstract product with same SKU exists
      * - Abstract product is created but not activated or touched
@@ -140,7 +136,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
      * - Returns abstract product with price
-     * - Returns abstract product with tax
      * - Triggers LOAD plugins
      *
      * @api
@@ -161,7 +156,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
      * - Returns abstract product with price
-     * - Returns abstract product with tax
      * - Triggers LOAD plugins
      *
      * @api

@@ -53,7 +53,6 @@ class ProductAbstractAssertionTest extends Test
             ->method('count')
             ->willReturn(0);
 
-
         $this->productQueryContainer
             ->expects($this->once())
             ->method('queryProductAbstractBySku')

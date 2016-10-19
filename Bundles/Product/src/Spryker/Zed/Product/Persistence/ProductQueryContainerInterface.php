@@ -25,15 +25,6 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function queryTaxSetForProductAbstract($idProductAbstract);
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstract();

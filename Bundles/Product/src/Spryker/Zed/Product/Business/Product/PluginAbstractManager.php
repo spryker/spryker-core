@@ -124,7 +124,7 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $pluginCollection
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

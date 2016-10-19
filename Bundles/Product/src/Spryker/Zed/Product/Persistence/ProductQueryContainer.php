@@ -40,21 +40,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function queryTaxSetForProductAbstract($idProductAbstract)
-    {
-        return $this->getFactory()->createTaxSetQuery()
-            ->useSpyProductAbstractQuery()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->endUse();
-    }
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstract()

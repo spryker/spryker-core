@@ -9,6 +9,8 @@ namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
+use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper;
+use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
@@ -35,6 +37,22 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter
+     */
+    public function createProductAbstractTaxWriter()
+    {
+        return new ProductAbstractTaxWriter($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper
+     */
+    public function createProductAbstractTaxSetMapper()
+    {
+        return new ProductAbstractTaxSetMapper($this->getQueryContainer());
     }
 
 }

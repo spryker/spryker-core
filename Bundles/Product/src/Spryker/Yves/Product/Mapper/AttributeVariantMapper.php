@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Product\Mapper;
@@ -262,7 +262,7 @@ class AttributeVariantMapper implements AttributeVariantMapperInterface
      * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
      * @param array $productConcrete
      *
-     * @return StorageProductTransfer;
+     * @return \Generated\Shared\Transfer\StorageProductTransfer;
      */
     protected function mapVariantStorageProductTransfer(StorageProductTransfer $storageProductTransfer, array $productConcrete)
     {
@@ -299,7 +299,7 @@ class AttributeVariantMapper implements AttributeVariantMapperInterface
         $idProductConcrete = array_shift($productConcreteIds);
         $productConcrete = $this->getProductConcreteFromStorage($idProductConcrete);
 
-        if (count($productConcrete) === 0){
+        if (count($productConcrete) === 0) {
             return $storageProductTransfer;
         }
 

@@ -100,7 +100,8 @@ class VariantGenerator implements VariantGeneratorInterface
     protected function convertTokensIntoAttributes(array $tokenCollection)
     {
         $attributes = [];
-        for ($a = 0; $a < count($tokenCollection); $a++) {
+        $numberOfTokens = count($tokenCollection);
+        for ($a = 0; $a < $numberOfTokens; $a++) {
             foreach ($tokenCollection[$a] as $attributeType => $attributeValue) {
                 $attributes[$attributeType] = $attributeValue;
             }

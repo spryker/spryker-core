@@ -12,7 +12,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
@@ -53,14 +52,6 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createProductLocalizedAttributesQuery()
     {
         return SpyProductLocalizedAttributesQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function createTaxSetQuery()
-    {
-        return SpyTaxSetQuery::create();
     }
 
     /**

@@ -222,7 +222,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $transferGenerator = new ProductTransferMapper(); //TODO inject
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
-        $productAbstractTransfer = $this->loadTaxSetId($productAbstractTransfer);
         $productAbstractTransfer = $this->loadPrice($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerReadPlugins($productAbstractTransfer);
@@ -333,8 +332,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $productAbstractEntity
             ->setAttributes($jsonAttributes)
-            ->setSku($productAbstractTransfer->getSku())
-            ->setFkTaxSet($productAbstractTransfer->getTaxSetId());
+            ->setSku($productAbstractTransfer->getSku());
 
         $productAbstractEntity->save();
 
@@ -360,26 +358,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         );
 
         $this->priceFacade->persistProductAbstractPrice($priceTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function loadTaxSetId(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForProductAbstract($productAbstractTransfer->getIdProductAbstract())
-            ->findOne();
-
-        if ($taxSetEntity === null) {
-            return $productAbstractTransfer;
-        }
-
-        $productAbstractTransfer->setTaxSetId($taxSetEntity->getIdTaxSet());
-
-        return $productAbstractTransfer;
     }
 
     /**

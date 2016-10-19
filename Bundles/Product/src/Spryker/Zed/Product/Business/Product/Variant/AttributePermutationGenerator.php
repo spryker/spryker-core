@@ -39,7 +39,7 @@ class AttributePermutationGenerator implements AttributePermutationGeneratorInte
             $result = [
                 ProductConstants::VARIANT_LEAF_NODE_ID => $idProductConcrete //set leaf node to id of concrete product
             ];
-        }  else {
+        } else {
             $result = [];
 
             $index = 0;

@@ -19,13 +19,13 @@ class ProductAbstractAfterUpdatePlugin extends AbstractPlugin implements Product
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productConcreteTransfer)
+    public function run(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->getFacade()->updateProductAbstractImageSetCollection($productConcreteTransfer);
+        return $this->getFacade()->updateProductAbstractImageSetCollection($productAbstractTransfer);
     }
 
 }
