@@ -22,6 +22,6 @@ interface ProductActivatorInterface
      *
      * @return void
      */
-    public function deActivateProductConcrete($idProductConcrete);
+    public function deactivateProductConcrete($idProductConcrete);
 
 }

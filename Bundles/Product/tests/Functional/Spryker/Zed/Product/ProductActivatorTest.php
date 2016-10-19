@@ -336,7 +336,7 @@ class ProductActivatorTest extends Test
         foreach ($productConcreteCollection as $productConcreteTransfer) {
             $this->assertTrue($productConcreteTransfer->getIsActive());
 
-            $this->productActivator->deActivateProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            $this->productActivator->deactivateProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
             $this->assertProductWasDeactivated($productConcreteTransfer);
         }

@@ -163,9 +163,9 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return void
      */
-    public function deActivateProductConcrete($idProductConcrete)
+    public function deactivateProductConcrete($idProductConcrete)
     {
-        $this->productFacade->deActivateProductConcrete($idProductConcrete);
+        $this->productFacade->deactivateProductConcrete($idProductConcrete);
     }
 
     /**

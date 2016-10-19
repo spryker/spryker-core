@@ -73,7 +73,7 @@ class ProductActivator implements ProductActivatorInterface
      *
      * @return void
      */
-    public function deActivateProductConcrete($idProductConcrete)
+    public function deactivateProductConcrete($idProductConcrete)
     {
         $productConcrete = $this->productConcreteManager->getProductConcreteById($idProductConcrete);
         $this->assertProductConcrete($idProductConcrete, $productConcrete);

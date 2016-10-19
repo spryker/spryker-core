@@ -723,11 +723,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return void
      */
-    public function deActivateProductConcrete($idProductConcrete)
+    public function deactivateProductConcrete($idProductConcrete)
     {
         $this->getFactory()
             ->createProductActivator()
-            ->deActivateProductConcrete($idProductConcrete);
+            ->deactivateProductConcrete($idProductConcrete);
     }
 
     /**
