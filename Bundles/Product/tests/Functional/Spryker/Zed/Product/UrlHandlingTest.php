@@ -21,9 +21,9 @@ use Spryker\Zed\Url\Business\Exception\UrlExistsException;
  * @group Spryker
  * @group Zed
  * @group Product
- * @group ProductUrlManagerTest
+ * @group UrlHandlingTest
  */
-class ProductUrlManagerTest extends ProductTestAbstract
+class UrlHandlingTest extends FacadeTestAbstract
 {
 
     /**
@@ -41,7 +41,7 @@ class ProductUrlManagerTest extends ProductTestAbstract
             ->setLocale($this->locales['de_DE'])
             ->setUrl('/de/product-name-dede-' . $idProductAbstract);
 
-        $productUrl = $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $productUrl = $this->productFacade->createProductUrl($this->productAbstractTransfer);
 
         $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
         $this->assertUrlTransfer($expectedENUrl, $this->locales['en_US']);
@@ -55,7 +55,7 @@ class ProductUrlManagerTest extends ProductTestAbstract
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
 
         $expectedENUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['en_US'])
@@ -68,7 +68,7 @@ class ProductUrlManagerTest extends ProductTestAbstract
             $localizedAttribute->setName('New ' . $localizedAttribute->getName());
         }
 
-        $productUrl = $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
+        $productUrl = $this->productFacade->updateProductUrl($this->productAbstractTransfer);
 
         $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
         $this->assertUrlTransfer($expectedENUrl, $this->locales['en_US']);
@@ -83,8 +83,8 @@ class ProductUrlManagerTest extends ProductTestAbstract
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-        $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->deleteProductUrl($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
@@ -108,8 +108,8 @@ class ProductUrlManagerTest extends ProductTestAbstract
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
     }
 
     /**
@@ -120,8 +120,8 @@ class ProductUrlManagerTest extends ProductTestAbstract
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
-        $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
     }
 
     /**
@@ -136,8 +136,8 @@ class ProductUrlManagerTest extends ProductTestAbstract
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->productUrlManager->updateProductUrl($this->productAbstractTransfer);
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
     }
 
     /**
@@ -148,7 +148,7 @@ class ProductUrlManagerTest extends ProductTestAbstract
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->productUrlManager->deleteProductUrl($this->productAbstractTransfer);
+        $this->productFacade->deleteProductUrl($this->productAbstractTransfer);
     }
 
     /**
@@ -165,7 +165,7 @@ class ProductUrlManagerTest extends ProductTestAbstract
             ->setLocale($this->locales['de_DE'])
             ->setUrl('/de/product-name-dede-' . $idProductAbstract);
 
-        $productUrl = $this->productUrlManager->getProductUrl($this->productAbstractTransfer);
+        $productUrl = $this->productFacade->getProductUrl($this->productAbstractTransfer);
 
         $this->assertInstanceOf(ProductUrlTransfer::class, $productUrl);
         $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
@@ -178,10 +178,9 @@ class ProductUrlManagerTest extends ProductTestAbstract
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
         $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
 
-        $this->productUrlManager->touchProductAbstractUrlActive($this->productAbstractTransfer);
+        $this->productFacade->touchProductAbstractUrlActive($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
@@ -205,9 +204,9 @@ class ProductUrlManagerTest extends ProductTestAbstract
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $this->productUrlManager->createProductUrl($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
 
-        $this->productUrlManager->touchProductAbstractUrlDeleted($this->productAbstractTransfer);
+        $this->productFacade->touchProductAbstractUrlDeleted($this->productAbstractTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(

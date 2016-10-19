@@ -268,7 +268,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
-        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_URL, $idProductAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
     }
@@ -284,7 +283,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
-        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_URL, $idProductAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
     }
@@ -300,7 +298,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
-        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_URL, $idProductAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
     }

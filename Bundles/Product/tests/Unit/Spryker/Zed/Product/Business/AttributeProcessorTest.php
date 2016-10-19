@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ProductImage\Business\Model;
+namespace Unit\Spryker\Zed\Product\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -15,7 +15,7 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group ProductImage
+ * @group Product
  * @group Business
  * @group Model
  * @group AttributeProcessorTest

@@ -88,6 +88,9 @@ interface ProductFacadeInterface
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * Specification:
+     * - Checks if product abstract exists
+     *
      * @api
      *
      * @param string $sku
@@ -100,7 +103,7 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -114,7 +117,7 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -148,13 +151,16 @@ interface ProductFacadeInterface
     public function getProductAttributeProcessor($idProductAbstract);
 
     /**
+     * Specification:
+     * - Finds product abstract based on product concrete SKU and returns product abstract ID
+     *
      * @api
      *
-     * @param string $sku
+     * @param string $concreteSku
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteSku($sku);
+    public function getProductAbstractIdByConcreteSku($concreteSku);
 
     /**
      * Specification:
@@ -212,7 +218,7 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns concrete product with attributes
      * - Returns concrete product with localized attributes
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -226,7 +232,7 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns concrete product with attributes
      * - Returns concrete product with localized attributes
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -252,9 +258,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product collection with loaded attributes
-     * - Returns concrete product collection with loaded stock
-     * - Returns concrete product collection with loaded images
+     * - Returns concrete product collection
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -316,7 +321,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product abstract, product attribute map, and product url
+     * - Touches as active: product abstract and product attribute map
      *
      * @api
      *
@@ -328,7 +333,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: product abstract, product attribute map, and product url
+     * - Touches as in-active: product abstract and product attribute map
      *
      * @api
      *
@@ -340,7 +345,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: product abstract, product attribute map, and product url
+     * - Touches as deleted: product abstract and product attribute map
      *
      * @api
      *
@@ -389,6 +394,7 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Creates localized product urls based on product abstract localized attributes name
+     * - Executes touch logic for product url activation
      *
      * @api
      *
@@ -401,6 +407,7 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Updates localized product urls based on product abstract localized attributes name
+     * - Executes touch logic for product url update
      *
      * @api
      *
@@ -425,7 +432,7 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Deletes all urls belonging to given abstract product
-     * - Touches urls as deleted
+     * - Executes touch logic for product url deletion
      *
      * @api
      *
@@ -471,8 +478,7 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductAbstractName(
-        ProductAbstractTransfer $productAbstractTransfer,
-        LocaleTransfer $localeTransfer
+        ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer
     );
 
     /**
@@ -487,8 +493,7 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(
-        ProductConcreteTransfer $productConcreteTransfer,
-        LocaleTransfer $localeTransfer
+        ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer
     );
 
     /**
@@ -522,6 +527,23 @@ interface ProductFacadeInterface
     public function deactivateProductConcrete($idProductConcrete);
 
     /**
+     * Specification:
+     * - Generatate all possible permutations for given attributes.
+     *
+     * Leaf node of a tree is concrete id.
+     * (
+     *   [color:red] => array (
+     *       [brand:nike] => array(
+     *          [id] => 1
+     *       )
+     *   ),
+     *   [brand:nike] => array(
+     *       [color:red] => array(
+     *          [id] => 1
+     *       )
+     *   )
+     * )
+     *
      * @api
      *
      * @param array $superAttributes
@@ -553,6 +575,7 @@ interface ProductFacadeInterface
      *          [42] => 42
      *          )
      *      )
+     * )
      *
      * @api
      *
@@ -562,5 +585,17 @@ interface ProductFacadeInterface
      * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
+
+    /**
+     * Specification:
+     * - Returns true if any of the concrete products of abstract products are active
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract);
 
 }
