@@ -15,7 +15,7 @@ interface UtilFacadeInterface
 
     /**
      * Specification:
-     * - Create slug based on value
+     * - Generate slug based on value
      *
      * @api
      *
