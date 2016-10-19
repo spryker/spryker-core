@@ -13,11 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * @deprecated This class has been replaced by \Spryker\Zed\Category\Communication\Controller\RootController
+ *
  * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  */
-class IndexOldController extends AbstractController
+class IndexController extends AbstractController
 {
 
     const PARAM_ID_CATEGORY_NODE = 'id-category-node';

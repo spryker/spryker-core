@@ -15,6 +15,8 @@ use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated This controller has been replaced by \Spryker\Zed\Category\Communication\Controller\CreateController
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
