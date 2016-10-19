@@ -19,13 +19,13 @@ class ProductAbstractAfterCreatePlugin extends AbstractPlugin implements Product
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productConcreteTransfer)
+    public function run(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->getFacade()->createProductAbstractImageSetCollection($productConcreteTransfer);
+        return $this->getFacade()->createProductAbstractImageSetCollection($productAbstractTransfer);
     }
 
 }

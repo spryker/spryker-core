@@ -1,21 +1,19 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImage\Communication\Plugin;
+namespace Spryker\Zed\TaxProductConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
- * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade getFacade()
  */
-class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginInterface
+class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginInterface
 {
 
     /**
@@ -25,7 +23,7 @@ class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstrac
      */
     public function run(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->getFacade()->expandProductAbstractWithImageSets($productAbstractTransfer);
+        return $this->getFacade()->saveTaxSetToProductAbstract($productAbstractTransfer);
     }
 
 }

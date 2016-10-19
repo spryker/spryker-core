@@ -300,7 +300,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $transferGenerator = new ProductTransferMapper(); //TODO inject
         $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
 
-        for ($a = 0; $a < count($transferCollection); $a++) {
+        $numberOfProducts = count($transferCollection);
+        for ($a = 0; $a < $numberOfProducts; $a++) {
             $transferCollection[$a] = $this->loadProductData($transferCollection[$a]);
         }
 

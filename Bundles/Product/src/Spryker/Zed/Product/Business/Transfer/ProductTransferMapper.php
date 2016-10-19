@@ -29,7 +29,6 @@ class ProductTransferMapper implements ProductTransferMapperInterface
 
         $attributes = $this->decodeAttributes($productAbstractEntity->getAttributes());
         $productAbstractTransfer->setAttributes($attributes);
-        $productAbstractTransfer->setTaxSetId($productAbstractEntity->getFkTaxSet());
 
         return $productAbstractTransfer;
     }

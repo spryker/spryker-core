@@ -200,7 +200,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
                 $this->urlFacade->slugify($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
-            ->setTaxSetId($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
+            ->setIdTaxSet($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }

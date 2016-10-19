@@ -94,7 +94,7 @@ class ProductActivator implements ProductActivatorInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
@@ -112,7 +112,7 @@ class ProductActivator implements ProductActivatorInterface
 
     /**
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *

@@ -10,7 +10,6 @@ namespace Functional\Spryker\Zed\Product;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
@@ -18,10 +17,9 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
-use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
@@ -29,6 +27,7 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
@@ -527,7 +526,7 @@ class ProductFacadeTest extends Test
 
         $productConcreteCollection = $this->productFacade->getConcreteProductsByAbstractProductId($this->productAbstractTransfer->getIdProductAbstract());
 
-        $this->assertNotEmpty((array) $productConcreteCollection);
+        $this->assertNotEmpty((array)$productConcreteCollection);
 
         foreach ($productConcreteCollection as $productConcrete) {
             $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcrete);
@@ -674,11 +673,13 @@ class ProductFacadeTest extends Test
         $this->setupDefaultProducts();
 
         $productNameEN = $this->productFacade->getLocalizedProductAbstractName(
-            $this->productAbstractTransfer, $this->locales['en_US']
+            $this->productAbstractTransfer,
+            $this->locales['en_US']
         );
 
         $productNameDE = $this->productFacade->getLocalizedProductAbstractName(
-            $this->productAbstractTransfer, $this->locales['de_DE']
+            $this->productAbstractTransfer,
+            $this->locales['de_DE']
         );
 
         $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['en_US'], $productNameEN);
@@ -693,11 +694,13 @@ class ProductFacadeTest extends Test
         $this->setupDefaultProducts();
 
         $productNameEN = $this->productFacade->getLocalizedProductConcreteName(
-            $this->productConcreteTransfer, $this->locales['en_US']
+            $this->productConcreteTransfer,
+            $this->locales['en_US']
         );
 
         $productNameDE = $this->productFacade->getLocalizedProductConcreteName(
-            $this->productConcreteTransfer, $this->locales['de_DE']
+            $this->productConcreteTransfer,
+            $this->locales['de_DE']
         );
 
         $this->assertEquals(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);

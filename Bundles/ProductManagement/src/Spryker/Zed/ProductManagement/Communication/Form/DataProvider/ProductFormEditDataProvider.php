@@ -83,7 +83,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendPriceAndTax(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getTaxSetId();
+        $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
 
         $priceTransfer = $this->priceFacade->getProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
         if ($priceTransfer) {

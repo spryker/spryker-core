@@ -5,10 +5,6 @@
         <column name="id_product_abstract" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
-        <column name="fk_tax_set" type="INTEGER" required="false"/>
-        <foreign-key name="spy_product_abstract-fk_tax_set" foreignTable="spy_tax_set">
-            <reference local="fk_tax_set" foreign="id_tax_set"/>
-        </foreign-key>
         <unique name="spy_product_abstract-sku">
             <unique-column name="sku"/>
         </unique>

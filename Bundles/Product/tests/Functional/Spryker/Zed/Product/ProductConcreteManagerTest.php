@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Shared\Product\ProductConstants;
@@ -22,14 +21,14 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
-use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
@@ -276,7 +275,6 @@ class ProductConcreteManagerTest extends Test
             ->setPrice(1234);
 
         $this->productConcreteTransfer->setPrice($priceProduct);
-
     }
 
     protected function setupDefaultProducts()
@@ -349,7 +347,8 @@ class ProductConcreteManagerTest extends Test
 
         $this->assertTouchEntry(
             $this->productAbstractTransfer->getIdProductAbstract(),
-            ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+            ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE,
+            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
         );
     }
 
