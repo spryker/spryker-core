@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Price\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -158,13 +160,13 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return int
      */
-    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer)
+    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->getFactory()->createWriterModel()->persistProductAbstractPrice($priceTransfer);
+        return $this->getFactory()->createWriterModel()->persistProductAbstractPrice($productAbstractTransfer);
     }
 
     /**
@@ -175,13 +177,13 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
      */
-    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer)
+    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFactory()->createWriterModel()->persistProductConcretePrice($priceTransfer);
+        return $this->getFactory()->createWriterModel()->persistProductConcretePrice($productConcreteTransfer);
     }
 
 }

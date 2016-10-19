@@ -28,5 +28,13 @@
         <property name="priceTypeName" type="string" />
     </transfer>
 
+    <transfer name="ProductAbstract">
+        <property name="price" type="PriceProduct" />
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="price" type="PriceProduct" />
+    </transfer>
+
 </transfers>
 

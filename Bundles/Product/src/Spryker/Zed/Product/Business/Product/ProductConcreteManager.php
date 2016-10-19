@@ -15,7 +15,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -49,11 +48,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface
-     */
-    protected $priceFacade;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
      */
     protected $productAbstractAssertion;
@@ -64,32 +58,26 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $productConcreteAssertion;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
-     */
-    protected $pluginsCreateCollection;
-
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
-     */
-    protected $pluginsUpdateCollection;
-
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
-     */
-    protected $pluginsReadCollection;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Product\PluginConcreteManagerInterface
      */
     protected $pluginConcreteManager;
 
+    /**
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
+     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteAssertionInterface $productConcreteAssertion
+     * @param \Spryker\Zed\Product\Business\Product\PluginConcreteManagerInterface $pluginConcreteManager
+     */
     public function __construct(
         AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
         ProductToTouchInterface $touchFacade,
         ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade,
-        ProductToPriceInterface $priceFacade,
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion,
         PluginConcreteManagerInterface $pluginConcreteManager
@@ -99,7 +87,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
-        $this->priceFacade = $priceFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->productConcreteAssertion = $productConcreteAssertion;
         $this->pluginConcreteManager = $pluginConcreteManager;
@@ -137,7 +124,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
         $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-        $this->persistPrice($productConcreteTransfer);
 
         $this->pluginConcreteManager->triggerAfterCreatePlugins($productConcreteTransfer);
 
@@ -179,7 +165,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
         $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-        $this->persistPrice($productConcreteTransfer);
 
         $this->pluginConcreteManager->triggerAfterUpdatePlugins($productConcreteTransfer);
 
@@ -399,26 +384,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function persistPrice(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $priceTransfer = $productConcreteTransfer->getPrice();
-        if (!$priceTransfer) {
-            return;
-        }
-
-        $priceTransfer->setIdProduct(
-            $productConcreteTransfer
-                ->requireIdProductConcrete()
-                ->getIdProductConcrete()
-        );
-        $this->priceFacade->persistProductConcretePrice($priceTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -426,31 +391,10 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected function loadProductData(ProductConcreteTransfer $productTransfer)
     {
         $this->loadLocalizedAttributes($productTransfer);
-        $this->loadPrice($productTransfer);
 
         $this->pluginConcreteManager->triggerReadPlugins($productTransfer);
 
         return $productTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function loadPrice(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $priceTransfer = $this->priceFacade->getProductConcretePrice(
-            $productConcreteTransfer->getIdProductConcrete()
-        );
-
-        if ($priceTransfer === null) {
-            return $productConcreteTransfer;
-        }
-
-        $productConcreteTransfer->setPrice($priceTransfer);
-
-        return $productConcreteTransfer;
     }
 
     /**

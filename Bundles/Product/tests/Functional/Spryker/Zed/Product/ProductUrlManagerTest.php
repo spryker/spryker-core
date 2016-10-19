@@ -8,35 +8,13 @@
 namespace Functional\Spryker\Zed\Product;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Shared\Product\ProductConstants;
-use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
-use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
-use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
-use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
-use Spryker\Zed\Product\Business\Product\ProductUrlManager;
-use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * @group Functional

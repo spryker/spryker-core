@@ -10,7 +10,6 @@ namespace Spryker\Zed\Product;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 
@@ -18,7 +17,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
     const FACADE_URL = 'FACADE_URL';
@@ -55,10 +53,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_PRICE] = function (Container $container) {
-            return new ProductToPriceBridge($container->getLocator()->price()->facade());
         };
 
         $container[self::PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE] = function (Container $container) {

@@ -20,8 +20,6 @@ interface ProductFacadeInterface
      * - Adds product abstract with its concrete variants
      * - Adds product abstract with attributes
      * - Adds product abstract with meta information
-     * - Adds product abstract with price
-     * - Adds product concrete with price
      * - Throws exception if product concrete with same SKU exists
      * - Throws exception if abstract product with same SKU exists
      * - Trigger before and after CREATE plugins
@@ -41,8 +39,6 @@ interface ProductFacadeInterface
      * - Saves product abstract with its concrete variants
      * - Saves product abstract attributes
      * - Saves product abstract meta
-     * - Saves product abstract price
-     * - Saves product concrete price
      * - Triggers before and after UPDATE plugins
      * - Throws exception if product concrete with same SKU exists
      * - Throws exception if abstract product with same SKU exists
@@ -62,7 +58,6 @@ interface ProductFacadeInterface
      * - Adds product abstract attributes
      * - Adds product abstract localized attributes
      * - Adds product abstract meta
-     * - Adds product abstract price
      * - Triggers before and after CREATE plugins
      * - Throws exception if abstract product with same SKU exists
      * - Abstract product is created but not activated or touched
@@ -80,7 +75,6 @@ interface ProductFacadeInterface
      * - Saves product abstract attributes
      * - Saves product abstract localized attributes
      * - Saves product abstract meta
-     * - Saves product abstract price
      * - Triggers before and after CREATE plugins
      * - Throws exception if abstract product with same SKU exists
      * - Abstract product is created but not activated or touched
@@ -106,7 +100,6 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
-     * - Returns abstract product with price
      * - Triggers LOAD plugins
      *
      * @api
@@ -121,7 +114,6 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
-     * - Returns abstract product with price
      * - Triggers LOAD plugins
      *
      * @api
@@ -168,7 +160,6 @@ interface ProductFacadeInterface
      * Specification:
      * - Adds concrete product with attributes
      * - Adds concrete product with localized attributes
-     * - Adds concrete product with price
      * - Triggers before and after CREATE plugins
      *
      * @api
@@ -183,7 +174,6 @@ interface ProductFacadeInterface
      * Specification:
      * - Saves concrete product with attributes
      * - Saves concrete product with localized attributes
-     * - Saves concrete product with price
      * - Triggers before and after UPDATE plugins
      *
      * @api
@@ -222,7 +212,6 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns concrete product with attributes
      * - Returns concrete product with localized attributes
-     * - Returns concrete product with price
      * - Triggers LOAD plugins
      *
      * @api
@@ -237,7 +226,6 @@ interface ProductFacadeInterface
      * Specification:
      * - Returns concrete product with attributes
      * - Returns concrete product with localized attributes
-     * - Returns concrete product with price
      * - Triggers LOAD plugins
      *
      * @api
@@ -265,7 +253,6 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Returns concrete product collection with loaded attributes
-     * - Returns concrete product collection with loaded price
      * - Returns concrete product collection with loaded stock
      * - Returns concrete product collection with loaded images
      *

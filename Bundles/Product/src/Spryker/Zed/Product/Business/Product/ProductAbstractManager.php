@@ -15,7 +15,6 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -52,11 +51,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface
-     */
-    protected $priceFacade;
-
-    /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
      */
     protected $productAbstractAssertion;
@@ -82,7 +76,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface $priceFacade
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
      * @param \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface $pluginAbstractManager
@@ -94,7 +87,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductToTouchInterface $touchFacade,
         ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade,
-        ProductToPriceInterface $priceFacade,
         ProductConcreteManagerInterface $productConcreteManager,
         ProductAbstractAssertionInterface $productAbstractAssertion,
         PluginAbstractManagerInterface $pluginAbstractManager,
@@ -105,7 +97,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
-        $this->priceFacade = $priceFacade;
         $this->productConcreteManager = $productConcreteManager;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->pluginAbstractManager = $pluginAbstractManager;
@@ -147,7 +138,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
         $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-        $this->persistPrice($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerAfterCreatePlugins($productAbstractTransfer);
 
@@ -176,7 +166,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
         $this->persistEntity($productAbstractTransfer);
         $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-        $this->persistPrice($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerAfterUpdatePlugins($productAbstractTransfer);
 
@@ -222,7 +211,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $transferGenerator = new ProductTransferMapper(); //TODO inject
         $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
-        $productAbstractTransfer = $this->loadPrice($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerReadPlugins($productAbstractTransfer);
 
@@ -345,27 +333,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
-     */
-    protected function persistPrice(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        $priceTransfer = $productAbstractTransfer->getPrice();
-        if (!$priceTransfer) {
-            return;
-        }
-
-        $priceTransfer->setIdProductAbstract(
-            $productAbstractTransfer
-                ->requireIdProductAbstract()
-                ->getIdProductAbstract()
-        );
-
-        $this->priceFacade->persistProductAbstractPrice($priceTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected function loadLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
@@ -385,26 +352,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
 
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function loadPrice(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        $priceTransfer = $this->priceFacade->getProductAbstractPrice(
-            $productAbstractTransfer->getIdProductAbstract()
-        );
-
-        if ($priceTransfer === null) {
-            return $productAbstractTransfer;
-        }
-
-        $productAbstractTransfer->setPrice($priceTransfer);
 
         return $productAbstractTransfer;
     }

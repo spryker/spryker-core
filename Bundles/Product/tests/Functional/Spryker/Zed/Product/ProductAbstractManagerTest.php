@@ -7,7 +7,6 @@
 
 namespace Functional\Spryker\Zed\Product;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Shared\Product\ProductConstants;
@@ -209,51 +208,6 @@ class ProductAbstractManagerTest extends ProductTestAbstract
 
         $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
         $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistProductShouldPersistPriceWhenCreatingProduct()
-    {
-        $price = (new PriceProductTransfer())
-            ->setPrice(self::PRICE);
-
-        $this->productAbstractTransfer->setPrice($price);
-
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-
-        $priceEntity = $this->priceQueryContainer
-            ->queryPriceProduct()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->findOne();
-
-        $this->assertNotNull($priceEntity);
-        $this->assertEquals(self::PRICE, $priceEntity->getPrice());
-    }
-
-    /**
-     * @return void
-     */
-    public function testPersistProductShouldPersistPriceWhenUpdatingProduct()
-    {
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-
-        $price = (new PriceProductTransfer())
-            ->setPrice(self::PRICE);
-
-        $this->productAbstractTransfer->setPrice($price);
-        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
-        $idProductAbstract = $this->productAbstractManager->saveProductAbstract($this->productAbstractTransfer);
-
-        $priceEntity = $this->priceQueryContainer
-            ->queryPriceProduct()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->findOne();
-
-        $this->assertNotNull($priceEntity);
-        $this->assertEquals(self::PRICE, $priceEntity->getPrice());
     }
 
     /**

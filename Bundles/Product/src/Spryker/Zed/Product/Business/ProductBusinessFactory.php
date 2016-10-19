@@ -71,7 +71,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getUrlFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade(),
             $this->createProductConcreteManager(),
             $this->createProductAbstractAssertion(),
             $this->createPluginAbstractManager(),
@@ -90,7 +89,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getUrlFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade(),
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createPluginConcreteManager()
@@ -200,14 +198,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToPriceInterface
-     */
-    protected function getPriceFacade()
-    {
-        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_PRICE);
     }
 
     /**

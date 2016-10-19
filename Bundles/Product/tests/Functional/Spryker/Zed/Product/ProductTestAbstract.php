@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
@@ -28,7 +26,6 @@ use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToPriceBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
@@ -69,8 +66,6 @@ class ProductTestAbstract extends Test
     const ABSTRACT_SKU = 'foo';
     const CONCRETE_SKU = 'foo-concrete';
 
-    const PRICE = 1234;
-
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
      */
@@ -85,11 +80,6 @@ class ProductTestAbstract extends Test
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
-     */
-    protected $priceQueryContainer;
 
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
@@ -110,11 +100,6 @@ class ProductTestAbstract extends Test
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
-
-    /**
-     * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
-     */
-    protected $priceFacade;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface
@@ -160,16 +145,13 @@ class ProductTestAbstract extends Test
         $this->localeFacade = new LocaleFacade();
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
-        $this->priceFacade = new PriceFacade();
         $this->touchFacade = new TouchFacade();
         $this->productQueryContainer = new ProductQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
-        $this->priceQueryContainer = new PriceQueryContainer();
 
         $urlBridge = new ProductToUrlBridge($this->urlFacade);
         $touchBridge = new ProductToTouchBridge($this->touchFacade);
         $localeBridge = new ProductToLocaleBridge($this->localeFacade);
-        $priceBridge = new ProductToPriceBridge($this->priceFacade);
 
         $attributeManager = new AttributeManager(
             $this->productQueryContainer
@@ -197,7 +179,6 @@ class ProductTestAbstract extends Test
             $touchBridge,
             $urlBridge,
             $localeBridge,
-            $priceBridge,
             $productAbstractAssertion,
             $productConcreteAssertion,
             $productConcretePluginManager
@@ -217,7 +198,6 @@ class ProductTestAbstract extends Test
             $touchBridge,
             $urlBridge,
             $localeBridge,
-            $priceBridge,
             $this->productConcreteManager,
             $productAbstractAssertion,
             $abstractPluginManager,

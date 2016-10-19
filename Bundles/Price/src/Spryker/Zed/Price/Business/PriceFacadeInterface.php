@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Price\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface PriceFacadeInterface
@@ -121,11 +123,11 @@ interface PriceFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return int
      */
-    public function persistProductAbstractPrice(PriceProductTransfer $priceTransfer);
+    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * Specification:
@@ -135,10 +137,10 @@ interface PriceFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return int
      */
-    public function persistProductConcretePrice(PriceProductTransfer $priceTransfer);
+    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
 
 }
