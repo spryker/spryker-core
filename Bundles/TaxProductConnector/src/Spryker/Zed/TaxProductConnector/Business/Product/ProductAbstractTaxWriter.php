@@ -36,8 +36,7 @@ class ProductAbstractTaxWriter
      */
     public function saveTaxSetToProductAbstract(ProductAbstractTransfer $productConcreteTransfer)
     {
-        $productConcreteTransfer->requireIdProductAbstract()
-            ->requireIdTaxSet();
+        $productConcreteTransfer->requireIdProductAbstract();
 
         $productAbstractEntity = $this->queryContainer
             ->queryProductAbstractById($productConcreteTransfer->getIdProductAbstract())
