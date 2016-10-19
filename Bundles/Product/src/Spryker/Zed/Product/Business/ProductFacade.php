@@ -118,6 +118,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Checks if product abstract exists
+     *
      * @api
      *
      * @param string $sku
@@ -136,7 +139,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
      * - Returns abstract product with price
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -156,7 +159,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Returns abstract product with attributes
      * - Returns abstract product with localized attributes
      * - Returns abstract product with price
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -205,17 +208,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Finds product abstract based on product concrete SKU and returns product abstract ID
+     *
      * @api
      *
-     * @param string $sku
+     * @param string $concreteSku
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteSku($sku)
+    public function getProductAbstractIdByConcreteSku($concreteSku)
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getProductAbstractIdByConcreteSku($sku);
+            ->getProductAbstractIdByConcreteSku($concreteSku);
     }
 
     /**
@@ -297,7 +303,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Returns concrete product with attributes
      * - Returns concrete product with localized attributes
      * - Returns concrete product with price
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -317,7 +323,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * - Returns concrete product with attributes
      * - Returns concrete product with localized attributes
      * - Returns concrete product with price
-     * - Triggers LOAD plugins
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -353,10 +359,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product collection with loaded attributes
-     * - Returns concrete product collection with loaded price
-     * - Returns concrete product collection with loaded stock
-     * - Returns concrete product collection with loaded images
+     * - Returns concrete product collection
+     * - Triggers READ plugins
      *
      * @api
      *
@@ -443,7 +447,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product abstract, product attribute map, and product url
+     * - Touches as active: product abstract and product attribute map
      *
      * @api
      *
@@ -460,7 +464,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: product abstract, product attribute map, and product url
+     * - Touches as in-active: product abstract and product attribute map
      *
      * @api
      *
@@ -477,7 +481,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: product abstract, product attribute map, and product url
+     * - Touches as deleted: product abstract and product attribute map
      *
      * @api
      *
@@ -725,7 +729,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     *
      * Specification:
      * - Generatate all possible permutations for given attributes.
      *
