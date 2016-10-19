@@ -16,29 +16,10 @@ use Spryker\Zed\Product\Business\Product\ProductActivator;
  * @group Spryker
  * @group Zed
  * @group Product
- * @group ProductActivatorTest
+ * @group ActivationTest
  */
-class ProductActivatorTest extends ProductTestAbstract
+class ActivationTest extends FacadeTestAbstract
 {
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductActivatorInterface
-     */
-    protected $productActivator;
-
-    /**
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->productActivator = new ProductActivator(
-            $this->productAbstractManager,
-            $this->productConcreteManager,
-            $this->productUrlManager
-        );
-    }
 
     /**
      * @return void
@@ -47,11 +28,12 @@ class ProductActivatorTest extends ProductTestAbstract
     {
         $idProductAbstract = $this->createNewProduct();
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $this->assertNotEmpty($productConcreteCollection);
 
         foreach ($productConcreteCollection as $productConcreteTransfer) {
             $this->assertNotTrue($productConcreteTransfer->getIsActive());
 
-            $this->productActivator->activateProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            $this->productFacade->activateProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
             $this->assertProductWasActivated($productConcreteTransfer);
         }
@@ -64,11 +46,12 @@ class ProductActivatorTest extends ProductTestAbstract
     {
         $idProductAbstract = $this->createNewActiveProduct();
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $this->assertNotEmpty($productConcreteCollection);
 
         foreach ($productConcreteCollection as $productConcreteTransfer) {
             $this->assertTrue($productConcreteTransfer->getIsActive());
 
-            $this->productActivator->deactivateProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            $this->productFacade->deactivateProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
             $this->assertProductWasDeactivated($productConcreteTransfer);
         }
@@ -82,7 +65,7 @@ class ProductActivatorTest extends ProductTestAbstract
         $this->expectException(ProductConcreteNotFoundException::class);
         $this->expectExceptionMessage('Could not activate product concrete [12324]');
 
-        $this->productActivator->activateProductConcrete(12324);
+        $this->productFacade->activateProductConcrete(12324);
     }
 
     /**
@@ -136,9 +119,6 @@ class ProductActivatorTest extends ProductTestAbstract
      */
     protected function createNewProduct()
     {
-        $this->productAbstractTransfer->setSku('new-sku');
-        $this->productConcreteTransfer->setSku('new-sku-concrete');
-
         return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
 
@@ -147,10 +127,7 @@ class ProductActivatorTest extends ProductTestAbstract
      */
     protected function createNewActiveProduct()
     {
-        $this->productAbstractTransfer->setSku('new-sku');
         $this->productAbstractTransfer->setIsActive(true);
-
-        $this->productConcreteTransfer->setSku('new-sku-concrete');
         $this->productConcreteTransfer->setIsActive(true);
 
         return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);

@@ -495,7 +495,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         $this->getFactory()
             ->createProductAbstractManager()
-            ->touchProductInactive($idProductAbstract);
+            ->touchProductDeleted($idProductAbstract);
     }
 
     /**
@@ -799,6 +799,23 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductVariantGenerator()
             ->generate($productAbstractTransfer, $attributeCollection);
+    }
+
+    /**
+     * Specification:
+     * - Returns true if any of the concrete products of abstract products are active
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductManager()
+            ->isProductActive($idProductAbstract);
     }
 
 }

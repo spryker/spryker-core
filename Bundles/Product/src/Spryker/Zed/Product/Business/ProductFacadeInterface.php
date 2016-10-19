@@ -582,4 +582,16 @@ interface ProductFacadeInterface
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
 
+    /**
+     * Specification:
+     * - Returns true if any of the concrete products of abstract products are active
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract);
+
 }

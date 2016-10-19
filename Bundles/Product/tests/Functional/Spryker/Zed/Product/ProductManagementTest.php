@@ -7,7 +7,6 @@
 
 namespace Functional\Spryker\Zed\Product;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
@@ -17,42 +16,11 @@ use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
  * @group Spryker
  * @group Zed
  * @group Product
- * @group ProductManagerTest
+ * @group Facade
+ * @group ProductManagementTest
  */
-class ProductManagerTest extends ProductTestAbstract
+class ProductManagementTest extends FacadeTestAbstract
 {
-
-    /**
-     * @return void
-     */
-    protected function setupProductConcrete()
-    {
-        $this->productConcreteTransfer = new ProductConcreteTransfer();
-        $this->productConcreteTransfer
-            ->setSku('foo-concrete');
-
-        $localizedAttribute = new LocalizedAttributesTransfer();
-        $localizedAttribute
-            ->setName(self::PRODUCT_CONCRETE_NAME['de_DE'])
-            ->setLocale($this->locales['de_DE']);
-
-        $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
-
-        $localizedAttribute = new LocalizedAttributesTransfer();
-        $localizedAttribute
-            ->setName(self::PRODUCT_CONCRETE_NAME['en_US'])
-            ->setLocale($this->locales['en_US']);
-
-        $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupDefaultProducts()
-    {
-        $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
-    }
 
     /**
      * @return void
@@ -62,7 +30,7 @@ class ProductManagerTest extends ProductTestAbstract
         $this->productAbstractTransfer->setSku('new-sku');
         $this->productConcreteTransfer->setSku('new-concrete-sku');
 
-        $idProductAbstract = $this->productManager->addProduct(
+        $idProductAbstract = $this->productFacade->addProduct(
             $this->productAbstractTransfer,
             [$this->productConcreteTransfer]
         );
@@ -95,7 +63,7 @@ class ProductManagerTest extends ProductTestAbstract
             );
         }
 
-        $idProductAbstract = $this->productManager->saveProduct(
+        $idProductAbstract = $this->productFacade->saveProduct(
             $this->productAbstractTransfer,
             [$this->productConcreteTransfer]
         );
@@ -121,25 +89,14 @@ class ProductManagerTest extends ProductTestAbstract
         $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
         $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
 
-        $idProductAbstract = $this->productManager->saveProduct(
+        $idProductAbstract = $this->productFacade->saveProduct(
             $this->productAbstractTransfer,
             [$this->productConcreteTransfer]
         );
 
         $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
         $this->assertSaveProductAbstract($this->productAbstractTransfer);
-        //$this->assertSaveProductConcrete($this->productConcreteTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductAttributeProcessor()
-    {
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
-        $attributeProcessor = $this->productManager->getProductAttributeProcessor($idProductAbstract);
-
-        $this->assertInstanceOf(AttributeProcessor::class, $attributeProcessor);
+        $this->assertAddProductConcrete($this->productConcreteTransfer);
     }
 
     /**
@@ -150,7 +107,7 @@ class ProductManagerTest extends ProductTestAbstract
         $this->productConcreteTransfer->setIsActive(true);
         $this->setupDefaultProducts();
 
-        $isActive = $this->productManager->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
+        $isActive = $this->productFacade->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
 
         $this->assertTrue($isActive);
     }
@@ -163,7 +120,7 @@ class ProductManagerTest extends ProductTestAbstract
         $this->productConcreteTransfer->setIsActive(false);
         $this->setupDefaultProducts();
 
-        $isActive = $this->productManager->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
+        $isActive = $this->productFacade->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
 
         $this->assertFalse($isActive);
     }

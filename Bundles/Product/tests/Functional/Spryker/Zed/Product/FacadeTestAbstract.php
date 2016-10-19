@@ -43,7 +43,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Product
  * @group ProductManagerTest
  */
-class ProductTestAbstract extends Test
+class FacadeTestAbstract extends Test
 {
 
     const PRODUCT_ABSTRACT_NAME = [
