@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUtilBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextBridge;
 
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,7 +22,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_TOUCH = 'FACADE_TOUCH';
-    const FACADE_UTIL = 'FACADE_UTIL';
+    const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
 
     const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
 
@@ -57,12 +57,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductToTouchBridge($container->getLocator()->touch()->facade());
         };
 
-        $container[self::FACADE_UTIL] = function (Container $container) {
-            return new ProductToUtilBridge($container->getLocator()->util()->facade());
-        };
-
-        $container[self::FACADE_UTIL] = function (Container $container) {
-            return new ProductToUtilBridge($container->getLocator()->util()->facade());
+        $container[self::FACADE_UTIL_TEXT] = function (Container $container) {
+            return new ProductToUtilTextBridge($container->getLocator()->utilText()->facade());
         };
 
         $container[self::PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE] = function (Container $container) {
