@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\Product\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeProcessor;
+use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 
 /**
  * @group Unit

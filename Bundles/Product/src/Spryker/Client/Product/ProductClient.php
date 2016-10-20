@@ -16,6 +16,9 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 {
 
     /**
+     * Specification:
+     * - Read abstract product data from yves storage, based on current shop selected locale
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -32,6 +35,9 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
+     * Specification:
+     * - Read abstract product data from yves storage, based on provided
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -48,6 +54,9 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
+     * Specification:
+     * - Read concrete product data from yves storage, based on current shop selected locale
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -64,6 +73,9 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
+     * Specification:
+     * - Read concrete product data from yves storage, based on provided locale
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -80,6 +92,9 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
+     * Specification:
+     * - Read attribute map from storage, based on current shop selected locale
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -96,6 +111,9 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
+     * Specification:
+     * - Read attribute map from storage, based on provided
+     *
      * @api
      *
      * @param int $idProductAbstract

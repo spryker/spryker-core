@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -166,12 +164,10 @@ class FacadeTestAbstract extends Test
         $this->localeFacade = new LocaleFacade();
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
-        $this->priceFacade = new PriceFacade();
         $this->touchFacade = new TouchFacade();
         $this->utilFacade = new UtilFacade();
         $this->productQueryContainer = new ProductQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
-        $this->priceQueryContainer = new PriceQueryContainer();
 
         $this->productFacade->setFactory($productBusinessFactory);
 

@@ -12,6 +12,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
+ * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */
 class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginInterface
 {
@@ -25,4 +26,5 @@ class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements Pr
     {
         return $this->getFacade()->persistProductAbstractPrice($productAbstractTransfer);
     }
+
 }

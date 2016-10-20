@@ -67,7 +67,6 @@
         <property name="sku" type="string" />
         <property name="url" type="string" />
         <property name="available" type="bool" />
-        <property name="price" type="int" />
         <property name="description" type="string" />
         <property name="quantity" type="int" />
         <property name="isVariant" type="bool" />

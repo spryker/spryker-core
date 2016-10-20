@@ -211,8 +211,6 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string $priceTypeName
      *
-     * @throws \Spryker\Zed\Price\Business\Exception\MissingPriceException
-     *
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName)

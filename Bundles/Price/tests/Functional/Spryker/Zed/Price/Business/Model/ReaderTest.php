@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Price;
+namespace Functional\Spryker\Zed\Price\Business\Model;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
@@ -22,6 +22,8 @@ use Spryker\Zed\Price\Business\PriceFacade;
  * @group Spryker
  * @group Zed
  * @group Price
+ * @group Business
+ * @group Model
  * @group ReaderTest
  */
 class ReaderTest extends Test
@@ -60,11 +62,11 @@ class ReaderTest extends Test
      */
     public function testGetAllTypesValues()
     {
-        $priceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
-        $priceType->setName(self::DUMMY_PRICE_TYPE_2)->save();
+        $priceTypeEntity1 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
+        $priceTypeEntity1->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
-        $priceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();
-        $priceType->setName(self::DUMMY_PRICE_TYPE_1)->save();
+        $priceTypeEntity2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();
+        $priceTypeEntity2->setName(self::DUMMY_PRICE_TYPE_1)->save();
 
         $priceTypes = $this->priceFacade->getPriceTypeValues();
 
@@ -159,52 +161,52 @@ class ReaderTest extends Test
      */
     protected function setTestData()
     {
-        $priceType1 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();
-        $priceType1->setName(self::DUMMY_PRICE_TYPE_1)->save();
+        $priceTypeEntity1 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();
+        $priceTypeEntity1->setName(self::DUMMY_PRICE_TYPE_1)->save();
 
-        $priceType2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
-        $priceType2->setName(self::DUMMY_PRICE_TYPE_2)->save();
+        $priceTypeEntity2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
+        $priceTypeEntity2->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
-        $productAbstract = SpyProductAbstractQuery::create()
+        $productAbstractEntity = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->findOne();
 
-        if ($productAbstract === null) {
-            $productAbstract = new SpyProductAbstract();
+        if ($productAbstractEntity === null) {
+            $productAbstractEntity = new SpyProductAbstract();
         }
 
-        $productAbstract->setSku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
+        $productAbstractEntity->setSku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->setAttributes('{}')
             ->save();
 
-        $productConcrete = SpyProductQuery::create()
+        $productConcreteEntity = SpyProductQuery::create()
             ->filterBySku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->findOne();
 
-        if ($productConcrete === null) {
-            $productConcrete = new SpyProduct();
+        if ($productConcreteEntity === null) {
+            $productConcreteEntity = new SpyProduct();
         }
-        $productConcrete->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
-            ->setSpyProductAbstract($productAbstract)
+        $productConcreteEntity->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
+            ->setSpyProductAbstract($productAbstractEntity)
             ->setAttributes('{}')
             ->save();
 
-        $this->deletePriceEntitiesConcrete($productConcrete);
-        $productConcrete->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
-            ->setSpyProductAbstract($productAbstract)
+        $this->deletePriceEntitiesConcrete($productConcreteEntity);
+        $productConcreteEntity->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
+            ->setSpyProductAbstract($productAbstractEntity)
             ->setAttributes('{}')
             ->save();
 
-        $this->deletePriceEntitiesAbstract($productAbstract);
+        $this->deletePriceEntitiesAbstract($productAbstractEntity);
         (new SpyPriceProduct())
-            ->setSpyProductAbstract($productAbstract)
-            ->setPriceType($priceType1)
+            ->setSpyProductAbstract($productAbstractEntity)
+            ->setPriceType($priceTypeEntity1)
             ->setPrice(100)
             ->save();
 
         (new SpyPriceProduct())
-            ->setProduct($productConcrete)
-            ->setPriceType($priceType2)
+            ->setProduct($productConcreteEntity)
+            ->setPriceType($priceTypeEntity2)
             ->setPrice(999)
 
             ->save();
