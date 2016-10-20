@@ -17,15 +17,15 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
-use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
+use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManager;
+use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManager;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
-use Spryker\Zed\Product\Business\Product\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
@@ -127,7 +127,7 @@ class FacadeTestAbstract extends Test
     protected $productConcreteManager;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface
      */
     protected $productUrlManager;
 

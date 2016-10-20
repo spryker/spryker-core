@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\Product\Business\Product\Assertion;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;

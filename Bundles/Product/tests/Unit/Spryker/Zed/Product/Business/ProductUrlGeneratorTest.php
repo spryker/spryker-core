@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUtilBridge;
 
@@ -176,7 +176,12 @@ class ProductUrlGeneratorTest extends Test
             ->with(self::PRODUCT_NAME['en_US'])
             ->willReturn('product-name-enus');
 
-        $urlGenerator = new ProductUrlGenerator($this->productAbstractManager, $this->localeFacade, $this->utilFacade);
+        $urlGenerator = new ProductUrlGenerator(
+            $this->productAbstractManager,
+            $this->localeFacade,
+            $this->utilFacade
+        );
+
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
 
         $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());

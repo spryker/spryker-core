@@ -10,16 +10,16 @@ namespace Spryker\Zed\Product\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
-use Spryker\Zed\Product\Business\Product\PluginAbstractManager;
-use Spryker\Zed\Product\Business\Product\PluginConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
+use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManager;
+use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManager;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductActivator;
-use Spryker\Zed\Product\Business\Product\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
-use Spryker\Zed\Product\Business\Product\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
@@ -108,7 +108,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface
+     * @return \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface
      */
     public function createProductUrlManager()
     {
@@ -122,7 +122,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductUrlGenerator
+     * @return \Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator
      */
     public function createProductUrlGenerator()
     {
@@ -209,7 +209,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
+     * @return \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface
      */
     protected function createProductAbstractAssertion()
     {
@@ -219,7 +219,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteAssertionInterface
+     * @return \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface
      */
     protected function createProductConcreteAssertion()
     {
@@ -229,7 +229,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface
+     * @return \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface
      */
     protected function createPluginAbstractManager()
     {
@@ -243,7 +243,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\PluginConcreteManagerInterface
+     * @return \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface
      */
     protected function createPluginConcreteManager()
     {

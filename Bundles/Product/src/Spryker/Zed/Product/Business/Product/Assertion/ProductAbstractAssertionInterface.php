@@ -5,37 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\Product\Business\Product\Assertion;
 
-interface ProductConcreteAssertionInterface
+interface ProductAbstractAssertionInterface
 {
 
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
      * @return void
      */
     public function assertSkuIsUnique($sku);
 
     /**
-     * @param int $idProduct
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
      * @return void
      */
-    public function assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
+    public function assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $sku);
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return void
      */
-    public function assertProductExists($idProduct);
+    public function assertProductExists($idProductAbstract);
 
 }

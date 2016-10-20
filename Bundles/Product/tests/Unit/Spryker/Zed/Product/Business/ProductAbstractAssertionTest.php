@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
-use Spryker\Zed\Product\Business\Product\ProductAbstractAssertion;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**

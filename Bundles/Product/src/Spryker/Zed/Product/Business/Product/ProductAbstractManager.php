@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
+use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
@@ -51,7 +53,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
+     * @var \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface
      */
     protected $productAbstractAssertion;
 
@@ -61,7 +63,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $productConcreteManager;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface
      */
     protected $pluginAbstractManager;
 
@@ -77,8 +79,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
-     * @param \Spryker\Zed\Product\Business\Product\PluginAbstractManagerInterface $pluginAbstractManager
+     * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface $productAbstractAssertion
+     * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface $pluginAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
      */
     public function __construct(
