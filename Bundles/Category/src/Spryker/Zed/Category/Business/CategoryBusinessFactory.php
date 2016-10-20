@@ -13,6 +13,7 @@ use Spryker\Zed\Category\Business\Model\Category;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryToucher;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
@@ -132,8 +133,20 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         $closureTableWriter = $this->createClosureTableWriter();
         $queryContainer = $this->getQueryContainer();
         $transferGenerator = $this->createCategoryTransferGenerator();
+        $categoryToucher = $this->createCategoryToucher();
 
-        return new CategoryNode($closureTableWriter, $queryContainer, $transferGenerator);
+        return new CategoryNode($closureTableWriter, $queryContainer, $transferGenerator, $categoryToucher);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
+     */
+    protected function createCategoryToucher()
+    {
+        $touchFacade = $this->getTouchFacade();
+        $queryContainer = $this->getQueryContainer();
+
+        return new CategoryToucher($touchFacade, $queryContainer);
     }
 
     /**
@@ -161,8 +174,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         $queryContainer = $this->getQueryContainer();
         $closureTableWriter = $this->createClosureTableWriter();
+        $categoryToucher = $this->createCategoryToucher();
 
-        return new CategoryExtraParents($queryContainer, $closureTableWriter);
+        return new CategoryExtraParents($queryContainer, $closureTableWriter, $categoryToucher);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Model\CategoryExtraParents;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -26,15 +27,23 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     protected $closureTableWriter;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
+     */
+    protected $categoryToucher;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
+     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
-        ClosureTableWriterInterface $closureTableWriter
+        ClosureTableWriterInterface $closureTableWriter,
+        CategoryToucherInterface $categoryToucher
     ) {
         $this->queryContainer = $queryContainer;
         $this->closureTableWriter = $closureTableWriter;
+        $this->categoryToucher = $categoryToucher;
     }
 
 
@@ -90,6 +99,8 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
         $assignmentNodeEntity->save();
 
         $this->updateClosureTable($assignmentNodeEntity, $isNewNode);
+
+        $this->categoryToucher->touchCategoryNodeActiveRecursively($assignmentNodeEntity->getIdCategoryNode());
     }
 
 
@@ -181,6 +192,8 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     {
         $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
         $categoryNodeEntity->delete();
+
+        $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**
@@ -197,8 +210,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
 
         foreach ($assignmentNodeCollection as $assignmentNodeEntity) {
             $this->moveSubTreeToParent($assignmentNodeEntity);
-            $this->closureTableWriter->delete($assignmentNodeEntity->getIdCategoryNode());
-            $assignmentNodeEntity->delete();
+            $this->removeAssignmentNode($assignmentNodeEntity);
         }
     }
 
@@ -221,6 +233,8 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
 
             $categoryNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray());
             $this->closureTableWriter->moveNode($categoryNodeTransfer);
+
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($childNodeEntity->getIdCategoryNode());
         }
     }
 

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -33,18 +33,26 @@ class CategoryNode implements CategoryNodeInterface
     protected $transferGenerator;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
+     */
+    protected $categoryToucher;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
+     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      */
     public function __construct(
         ClosureTableWriterInterface $closureTableWriter,
         CategoryQueryContainerInterface $queryContainer,
-        TransferGeneratorInterface $transferGenerator
+        TransferGeneratorInterface $transferGenerator,
+        CategoryToucherInterface $categoryToucher
     ) {
         $this->closureTableWriter = $closureTableWriter;
         $this->queryContainer = $queryContainer;
         $this->transferGenerator = $transferGenerator;
+        $this->categoryToucher = $categoryToucher;
     }
 
     /**
@@ -59,10 +67,10 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity->save();
 
         $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
-
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $this->closureTableWriter->create($categoryNodeTransfer);
+        $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**
@@ -80,10 +88,11 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity->save();
 
         $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
-
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
+
+        $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity);
     }
 
     /**
@@ -121,6 +130,8 @@ class CategoryNode implements CategoryNodeInterface
             $this->moveSubTreeToParent($categoryNodeEntity);
             $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
             $categoryNodeEntity->delete();
+
+            $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
         }
     }
 
@@ -143,6 +154,8 @@ class CategoryNode implements CategoryNodeInterface
 
             $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($childNodeEntity);
             $this->closureTableWriter->moveNode($categoryNodeTransfer);
+
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($childNodeEntity->getIdCategoryNode());
         }
     }
 
