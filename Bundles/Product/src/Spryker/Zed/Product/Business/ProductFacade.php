@@ -184,7 +184,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * Specification:
      * - Returns class used for product attributes processing
      * - Attributes are taken from product abstract and all product concretes
-     *   and merged together according to https://academy.spryker.com/display/PRODUCT/RD+-+Product+Attribute+Management
+     *   and merged.
      *
      * @api
      *
@@ -330,7 +330,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * Specification:
      * - Returns class used for product attributes processing
      * - Attributes are taken from product abstract and all product concretes
-     *   and merged together according to https://academy.spryker.com/display/PRODUCT/RD+-+Product+Attribute+Management
+     *   and merged together.
      *
      * @api
      *

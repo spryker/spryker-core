@@ -62,6 +62,9 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Read persisted locale by given locale id
+     *
      * @api
      *
      * @param int $idLocale
@@ -70,9 +73,9 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      */
     public function getLocaleById($idLocale)
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
-
-        return $localeManager->getLocaleById($idLocale);
+        return $this->getFactory()
+            ->createLocaleManager()
+            ->getLocaleById($idLocale);
     }
 
     /**
