@@ -1,8 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if submit_title is not defined %}
-    {% set widget_title = 'Category Delete' | trans %}
-    {#{% set widget_title = widget_title ~ ': ' ~ currentCategory.name %}#}
+    {% set widget_title = 'Delete Category' | trans %}
+    {% set widget_title = widget_title ~ ': ' ~ category.name %}
 {% endif %}
 
 {% if idCategory is not defined %}
@@ -43,8 +43,44 @@
                 {{ 'Yes, I am sure' | trans }}
             </label>
             <br/><br/>
-{#
+
             <div class="row">
+                {% macro tree(nodes) %}
+                    <ol class="dd-list">
+                        {% for node in nodes %}
+                            <li class="dd-item">
+                                <span class="dd-handle">
+                                    {{ node.text }}
+                                </span>
+
+                                {% if node.children is defined and node.children|length > 0 %}
+                                    {{ _self.tree(node.children) }}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                {% endmacro %}
+
+                {% import _self as tree %}
+
+                <div class="col-md-4">
+                    <b>Sub-Trees to me moved</b>
+                    <br />
+                    {% for subTree in subTrees %}
+                        <br />
+                        <p>
+                            {% if subTree.isMain %} Main {% else %} Extra parent {% endif %}
+                            category will be moved to <em>{{ subTree.parentCategory.name }}</em>
+                        </p>
+                        <ol class="dd-list">
+                            <li class="dd-item">
+                                <span class="dd-handle">{{ subTree.text }}</span>
+                                {{ tree.tree(subTree.tree) }}
+                            </li>
+                        </ol>
+                    {% endfor %}
+                </div>
+{#
                 <div class="col-md-4"><b>Urls to be deleted</b>
                     {% if paths|length > 0 %}
                         <ul class="nodes">
@@ -92,8 +128,9 @@
                         </ul>
                     {% endif %}
                 </div>
-            </div>
 #}
+            </div>
+
             {{ form_end(form) }}
 
         {% endblock %}

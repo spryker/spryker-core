@@ -457,4 +457,25 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->treeFormatter->getCategoryTree();
     }
 
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        $categoryNodeEntity = $this->getNodeById($idCategoryNode);
+
+        if (!$categoryNodeEntity) {
+            $categories = $this->getTreeNodesRecursively($localeTransfer, null, true);
+        } else {
+            $categories = $this->getTreeNodesRecursively($localeTransfer, $categoryNodeEntity, true);
+        }
+
+        $this->treeFormatter->setupCategories($categories);
+
+        return $this->treeFormatter->getCategoryTree();
+    }
+
 }

@@ -369,6 +369,22 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        return $this
+            ->getFactory()
+            ->createCategoryTreeReader()
+            ->getSubTree($idCategoryNode, $localeTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @return void
      */
     public function rebuildClosureTable()
