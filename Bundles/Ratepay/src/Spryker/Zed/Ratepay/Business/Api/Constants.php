@@ -40,6 +40,7 @@ class Constants
         self::REQUEST_MODEL_CALCULATION_REQUEST => 502,
         self::REQUEST_MODEL_PROFILE => 500,
         self::REQUEST_MODEL_PAYMENT_REFUND => 403,
+        self::REQUEST_MODEL_PAYMENT_CANCEL => 403,
     ];
 
 }

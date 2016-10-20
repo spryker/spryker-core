@@ -57,10 +57,11 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
      * @param string $method
      * @param int|null $entityId
+     * @param array $orderItems
      *
      * @return void
      */
-    protected function logInfo($request, $response, $method, $entityId = null)
+    protected function logInfo($request, $response, $method, $entityId = null, $orderItems = [])
     {
         $headData = $request->getHead()->buildData();
 
@@ -83,6 +84,8 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
             'response_status_code' => $response->getStatusCode(),
             'response_status_text' => $response->getStatusText(),
             'response_customer_message' => $response->getCustomerMessage(),
+
+            'items_number' => count($orderItems),
         ];
 
         $this->getLogger()->info(static::TRANSACTION_TYPE, $context);

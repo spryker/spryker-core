@@ -176,7 +176,7 @@ class MapperFactory extends AbstractBusinessFactory
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
-     * @param bool $shippingAlreadySent
+     * @param bool $needToSendShipping
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PartialBasketMapper
      */
@@ -184,13 +184,13 @@ class MapperFactory extends AbstractBusinessFactory
         $quoteTransfer,
         $ratepayPaymentTransfer,
         array $orderItems,
-        $shippingAlreadySent=false
+        $needToSendShipping=false
     ) {
         return new PartialBasketMapper(
             $quoteTransfer,
             $ratepayPaymentTransfer,
             $orderItems,
-            $shippingAlreadySent,
+            $needToSendShipping,
             $this->requestTransfer
         );
     }
