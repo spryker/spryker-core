@@ -9,13 +9,13 @@ namespace Spryker\Zed\Price\Communication\Plugin\ProductConcrete;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
  * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */
-class PriceProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginInterface
+class PriceProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class PriceProductConcreteAfterCreatePlugin extends AbstractPlugin implements Pr
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function run(ProductConcreteTransfer $productConcreteTransfer)
+    public function create(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFacade()->persistProductConcretePrice($productConcreteTransfer);
     }

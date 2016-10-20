@@ -9,7 +9,7 @@ namespace Spryker\Zed\Product\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
-interface ProductAbstractPluginInterface
+interface ProductAbstractPluginReadInterface
 {
 
     /**
@@ -17,6 +17,6 @@ interface ProductAbstractPluginInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productAbstractTransfer);
+    public function read(ProductAbstractTransfer $productAbstractTransfer);
 
 }

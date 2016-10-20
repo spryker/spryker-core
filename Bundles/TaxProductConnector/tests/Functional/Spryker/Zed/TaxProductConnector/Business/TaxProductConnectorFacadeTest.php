@@ -91,10 +91,9 @@ class TaxProductConnectorFacadeTest extends Test
 
         $productAbstractTransfer->setIdTaxSet(null);
 
-        $productAbstractTransfer = $taxProductConnectorFacade->addTaxSet($productAbstractTransfer);
+        $productAbstractTransfer = $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
 
         $this->assertEquals($productAbstractTransfer->getIdTaxSet(), $taxSetTransfer->getIdTaxSet());
-
     }
 
     /**
@@ -108,7 +107,7 @@ class TaxProductConnectorFacadeTest extends Test
         $productAbstractTransfer->setIdProductAbstract(-1);
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
-        $taxProductConnectorFacade->addTaxSet($productAbstractTransfer);
+        $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
 
     }
 
@@ -120,7 +119,7 @@ class TaxProductConnectorFacadeTest extends Test
         $this->expectException(RequiredTransferPropertyException::class);
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
-        $taxProductConnectorFacade->addTaxSet(new ProductAbstractTransfer());
+        $taxProductConnectorFacade->mapTaxSet(new ProductAbstractTransfer());
 
     }
 

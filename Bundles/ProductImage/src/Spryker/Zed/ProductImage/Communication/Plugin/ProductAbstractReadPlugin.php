@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductImage\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  */
-class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginInterface
+class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstrac
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productAbstractTransfer)
+    public function read(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFacade()->expandProductAbstractWithImageSets($productAbstractTransfer);
     }

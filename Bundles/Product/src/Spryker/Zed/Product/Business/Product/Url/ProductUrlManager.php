@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\Product\Business\Product\Url;
 
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -41,7 +41,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductUrlGeneratorInterface
+     * @var \Spryker\Zed\Product\Business\Product\\UrlProductUrlGeneratorInterface
      */
     protected $urlGenerator;
 
@@ -50,7 +50,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Business\Product\ProductUrlGeneratorInterface $urlGenerator
+     * @param \Spryker\Zed\Product\Business\Product\\UrlProductUrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         ProductToUrlInterface $urlFacade,

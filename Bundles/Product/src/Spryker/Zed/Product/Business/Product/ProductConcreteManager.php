@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
+use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface;
+use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -48,17 +51,17 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface
+     * @var \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface
      */
     protected $productAbstractAssertion;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteAssertionInterface
+     * @var \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface
      */
     protected $productConcreteAssertion;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\PluginConcreteManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface
      */
     protected $pluginConcreteManager;
 
@@ -68,9 +71,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractAssertionInterface $productAbstractAssertion
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteAssertionInterface $productConcreteAssertion
-     * @param \Spryker\Zed\Product\Business\Product\PluginConcreteManagerInterface $pluginConcreteManager
+     * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface $productAbstractAssertion
+     * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
+     * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface $pluginConcreteManager
      */
     public function __construct(
         AttributeManagerInterface $attributeManager,

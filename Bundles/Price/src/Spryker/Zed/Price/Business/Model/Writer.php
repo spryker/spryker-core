@@ -291,11 +291,9 @@ class Writer implements WriterInterface
             return $productAbstractTransfer;
         }
 
-        $productAbstractTransfer->requirePrice();
+        $productAbstractTransfer->requireIdProductAbstract();
 
         $priceTransfer = $productAbstractTransfer->getPrice();
-        $priceTransfer->requireIdProductAbstract()->requirePriceTypeName();
-
         $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
 
         $priceProductEntity = $this->queryContainer
@@ -304,6 +302,7 @@ class Writer implements WriterInterface
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->findOneOrCreate();
 
+        $priceProductEntity->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
         $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
 
@@ -323,11 +322,8 @@ class Writer implements WriterInterface
             return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer->requirePrice();
-
+        $productConcreteTransfer->requireIdProductConcrete();
         $priceTransfer = $productConcreteTransfer->getPrice();
-        $priceTransfer->requireIdProduct()->requirePriceTypeName();
-
         $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
 
         $priceProductEntity = $this->queryContainer
@@ -337,6 +333,7 @@ class Writer implements WriterInterface
             ->filterByFkProductAbstract(null, Criteria::ISNULL)
             ->findOneOrCreate();
 
+        $priceProductEntity->setFkProduct($productConcreteTransfer->getIdProductConcrete());
         $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
 

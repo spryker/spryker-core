@@ -14,7 +14,7 @@ class ProductAbstractTaxSetMapper
 {
 
     /**
-     * @var \Spryker\Zed\TaxProductConnector\Business\Product\TaxProductConnectorQueryContainerInterface
+     * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -33,7 +33,7 @@ class ProductAbstractTaxSetMapper
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function addTaxSet(ProductAbstractTransfer $productAbstractTransfer)
+    public function mapTaxSet(ProductAbstractTransfer $productAbstractTransfer)
     {
         $productAbstractTransfer->requireIdProductAbstract();
 

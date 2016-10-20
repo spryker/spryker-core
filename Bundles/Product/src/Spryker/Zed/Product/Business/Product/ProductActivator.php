@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
+use Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface;
 
 class ProductActivator implements ProductActivatorInterface
 {
@@ -25,14 +26,14 @@ class ProductActivator implements ProductActivatorInterface
     protected $productConcreteManager;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface
+     * @var \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface
      */
     protected $productUrlManager;
 
     /**
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     * @param \Spryker\Zed\Product\Business\Product\ProductUrlManagerInterface $productUrlManager
+     * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface $productUrlManager
      */
     public function __construct(
         ProductAbstractManagerInterface $productAbstractManager,

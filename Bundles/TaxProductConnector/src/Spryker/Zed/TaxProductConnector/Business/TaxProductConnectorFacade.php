@@ -45,7 +45,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
 
     /**
      * Specification:
-     * - Read tax set from product abstract table and store into transfer
+     * - Read tax set from database and sets PriceProductTransfer on ProductAbstractTransfer
      *
      * @api
      *
@@ -53,11 +53,11 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function addTaxSet(ProductAbstractTransfer $productAbstractTransfer)
+    public function mapTaxSet(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductAbstractTaxSetMapper()
-            ->addTaxSet($productAbstractTransfer);
+            ->mapTaxSet($productAbstractTransfer);
     }
 
 }

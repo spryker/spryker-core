@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductImage\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  */
-class ProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginInterface
+class ProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class ProductConcreteAfterCreatePlugin extends AbstractPlugin implements Product
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function run(ProductConcreteTransfer $productConcreteTransfer)
+    public function create(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFacade()->createProductConcreteImageSetCollection($productConcreteTransfer);
     }
