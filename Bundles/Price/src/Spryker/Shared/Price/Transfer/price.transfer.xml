@@ -36,5 +36,9 @@
         <property name="price" type="PriceProduct" />
     </transfer>
 
+    <transfer name="StorageProduct">
+        <property name="price" type="int" />
+    </transfer>
+
 </transfers>
 
