@@ -21,9 +21,6 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-/**
- * TODO revisit the url activation and handling
- */
 class ProductAbstractManager implements ProductAbstractManagerInterface
 {
 
