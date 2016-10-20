@@ -127,7 +127,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $result = $statement->fetch();
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result['value'], true) : null;
+        return $result ? json_decode($result['value'], true) : '';
     }
 
     /**
@@ -140,7 +140,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     {
         $key = $this->keyPrefix . $sessionId;
 
-        if (empty($sessionData)) {
+        if (strlen($sessionData) < 1) {
             return false;
         }
 
@@ -175,7 +175,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $result = $this->connection->delete($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
-        return $result ? true : false;
+        return true;
     }
 
     /**

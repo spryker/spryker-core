@@ -83,14 +83,14 @@ class SessionHandlerFile implements \SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
         $sessionFile = $this->savePath . DIRECTORY_SEPARATOR . $key;
         if (!file_exists($sessionFile)) {
-            return null;
+            return '';
         }
 
         $content = file_get_contents($sessionFile);
 
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $content;
+        return ($content === false) ? '' : $content;
     }
 
     /**
@@ -103,7 +103,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
     {
         $key = $this->keyPrefix . $sessionId;
 
-        if (empty($sessionData)) {
+        if (strlen($sessionData) < 1) {
             return false;
         }
 

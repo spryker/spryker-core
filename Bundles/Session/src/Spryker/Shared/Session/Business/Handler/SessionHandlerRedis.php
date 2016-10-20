@@ -89,7 +89,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
         $result = $this->connection->get($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result, true) : null;
+        return $result ? json_decode($result, true) : '';
     }
 
     /**
@@ -102,7 +102,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     {
         $key = $this->keyPrefix . $sessionId;
 
-        if (empty($sessionData)) {
+        if (strlen($sessionData) < 1) {
             return true;
         }
 
@@ -110,7 +110,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
         $result = $this->connection->setex($key, $this->lifetime, json_encode($sessionData));
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
-        return true;
+        return $result ? true : false;
     }
 
     /**

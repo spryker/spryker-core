@@ -118,6 +118,18 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testWriteMustAllowZeroValue()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $result = $sessionHandlerFile->write(self::SESSION_ID, '0');
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
     public function testCallReadMustReturnContentOfSessionForGivenSessionId()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
