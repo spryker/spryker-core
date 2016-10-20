@@ -15,7 +15,8 @@
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0",
-    "spryker/url": "^2.0.0"
+    "spryker/url": "^2.0.0",
+    "spryker/util": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
