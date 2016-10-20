@@ -154,7 +154,6 @@ class FacadeTestAbstract extends Test
         $this->setupProductAbstract();
         $this->setupProductConcrete();
 
-
         $container = new Container();
         $dependencyProvider = new ProductDependencyProvider();
         $dependencyProvider->provideBusinessLayerDependencies($container);
