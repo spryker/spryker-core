@@ -250,6 +250,11 @@ class Writer implements WriterInterface
             if (!$this->reader->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
                 $this->createStockProduct($stockTransfer);
             } else {
+                $idStockProduct = $stockTransfer->getIdStockProduct();
+                if (!$idStockProduct) {
+                    $idStockProduct = $this->reader->getIdStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType());
+                    $stockTransfer->setIdStockProduct($idStockProduct);
+                }
                 $this->updateStockProduct($stockTransfer);
             }
         }

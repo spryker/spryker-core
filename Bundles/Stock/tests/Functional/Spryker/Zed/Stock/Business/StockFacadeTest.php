@@ -1,0 +1,394 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Functional\Spryker\Zed\Stock\Business;
+
+use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\TypeTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Stock\Persistence\SpyStock;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Stock\Business\StockFacade;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Stock
+ * @group Business
+ * @group StockFacadeTest
+ */
+class StockFacadeTest extends Test
+{
+
+    /**
+     * @var \Spryker\Zed\Stock\Business\StockFacade
+     */
+    protected $stockFacade;
+
+    /**
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
+     */
+    protected $stockQueryContainer;
+
+    /**
+     * @var SpyStock
+     */
+    protected $stockEntity1;
+
+    /**
+     * @var SpyStock
+     */
+    protected $stockEntity2;
+
+    /**
+     * @var SpyStockProduct
+     */
+    protected $productStockEntity1;
+
+    /**
+     * @var SpyStockProduct
+     */
+    protected $productStockEntity2;
+
+    /**
+     * @var SpyProductAbstract
+     */
+    protected $productAbstractEntity;
+
+    /**
+     * @var SpyProduct
+     */
+    protected $productConcreteEntity;
+
+    const ABSTRACT_SKU = 'abstract-sku';
+    const CONCRETE_SKU = 'concrete-sku';
+    const STOCK_QUANTITY_1 = 92;
+    const STOCK_QUANTITY_2 = 8;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->stockFacade = new StockFacade();
+        $this->stockQueryContainer = new StockQueryContainer();
+
+        $this->setupData();
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsNeverOutOfStockShouldReturnFalse()
+    {
+        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(self::CONCRETE_SKU);
+
+        $this->assertFalse($isNeverOutOfStock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsNeverOutOfStockShouldReturnTrue()
+    {
+        $this->productStockEntity1->setIsNeverOutOfStock(true);
+        $this->productStockEntity1->setQuantity(null);
+        $this->productStockEntity1->save();
+
+        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(self::CONCRETE_SKU);
+
+        $this->assertTrue($isNeverOutOfStock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateStockForProductShouldCheckAllStocks()
+    {
+        $productStock = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
+
+        $this->assertEquals(100, $productStock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateStockType()
+    {
+        $stockTypeTransfer = (new TypeTransfer())
+            ->setName('Test');
+
+        $idStock = $this->stockFacade->createStockType($stockTypeTransfer);
+
+        $exists = SpyStockQuery::create()
+            ->filterByIdStock($idStock)
+            ->count() > 0;
+
+        $this->assertTrue($exists);
+    }
+
+    /**
+     * TODO: Impossible to update stock type, the only field we can change it the name, and it's used in the query to locate the entity
+     *
+     * @return void
+     */
+    public function SKIP_testUpdateStockType()
+    {
+        $stockTypeTransfer = (new TypeTransfer())
+            ->setIdStock($this->stockEntity1->getIdStock())
+            ->setName('Foo');
+
+        $idStock = $this->stockFacade->updateStockType($stockTypeTransfer);
+
+        $stockEntity = SpyStockQuery::create()
+                ->filterByIdStock($idStock)
+                ->findOne();
+
+        $this->assertEquals('Foo', $stockEntity->getName());
+    }
+
+    /**
+     * TODO broken, as it will create StockType as well :o
+     *
+     * @return void
+     */
+    public function SKIP_testCreateStockProduct()
+    {
+        $stockProductTransfer = (new StockProductTransfer())
+            ->setStockType($this->stockEntity1->getName())
+            ->setQuantity(self::STOCK_QUANTITY_1)
+            ->setSku(self::CONCRETE_SKU);
+
+        $idStockProduct = $this->stockFacade->createStockProduct($stockProductTransfer);
+
+        $stockProductEntity = SpyStockProductQuery::create()
+            ->filterByIdStockProduct($idStockProduct)
+            ->findOne();
+
+        $this->assertEquals(self::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockProduct()
+    {
+        $stockProductTransfer = (new StockProductTransfer())
+            ->setIdStockProduct($this->productStockEntity1->getIdStockProduct())
+            ->setStockType($this->stockEntity1->getName())
+            ->setQuantity(555)
+            ->setSku(self::CONCRETE_SKU);
+
+        $idStockProduct = $this->stockFacade->updateStockProduct($stockProductTransfer);
+
+        $stockProductEntity = SpyStockProductQuery::create()
+            ->filterByIdStockProduct($idStockProduct)
+            ->findOne();
+
+        $this->assertEquals(555, $stockProductEntity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecrementStockShouldReduceStockSize()
+    {
+        $this->stockFacade->decrementStockProduct(
+            self::CONCRETE_SKU,
+            $this->stockEntity1->getName(),
+            10
+        );
+
+        $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
+
+        $this->assertEquals(90, $stockSize);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIncrementStockShouldIncreaseStockSize()
+    {
+        $this->stockFacade->incrementStockProduct(
+            self::CONCRETE_SKU,
+            $this->stockEntity1->getName(),
+            10
+        );
+
+        $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
+
+        $this->assertEquals(110, $stockSize);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasStockProductShouldReturnTrue()
+    {
+        $exists = $this->stockFacade->hasStockProduct(
+            self::CONCRETE_SKU,
+            $this->stockEntity1->getName()
+        );
+
+        $this->assertTrue($exists);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasStockProductShouldReturnFalse()
+    {
+        $exists = $this->stockFacade->hasStockProduct(
+            'INVALIDSKU',
+            'INVALIDTYPE'
+        );
+
+        $this->assertFalse($exists);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetIdStockProduct()
+    {
+        $idStockProduct = $this->stockFacade->getIdStockProduct(
+            self::CONCRETE_SKU,
+            $this->stockEntity1->getName()
+        );
+
+        $this->assertEquals(
+            $this->productStockEntity1->getIdStockProduct(),
+            $idStockProduct
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetIdStockProductShouldThrowException()
+    {
+        $this->expectException(StockProductNotFoundException::class);
+
+        $idStockProduct = $this->stockFacade->getIdStockProduct(
+            'INVALIDSKU',
+            $this->stockEntity1->getName()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistStockProductCollection()
+    {
+        $increment = 20;
+
+        $stockTransfer1 = (new StockProductTransfer())
+            ->setSku(self::CONCRETE_SKU)
+            ->setQuantity(self::STOCK_QUANTITY_1 + $increment)
+            ->setIsNeverOutOfStock(false)
+            ->setStockType($this->stockEntity1->getName());
+
+        $stockTransfer2 = (new StockProductTransfer())
+            ->setSku(self::CONCRETE_SKU)
+            ->setQuantity(self::STOCK_QUANTITY_1 + $increment)
+            ->setIsNeverOutOfStock(false)
+            ->setStockType($this->stockEntity2->getName());
+
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setStocks(new \ArrayObject([
+                $stockTransfer1, $stockTransfer2
+            ]));
+
+        $this->stockFacade->persistStockProductCollection($productConcreteTransfer);
+
+        $stockProductEntityCollection = SpyStockProductQuery::create()
+            ->joinStock()
+            ->filterByFkProduct($this->productConcreteEntity->getIdProduct())
+            ->find();
+
+        $this->assertNotEmpty($stockProductEntityCollection);
+
+        foreach ($stockProductEntityCollection as $stockProductEntity) {
+            $this->assertEquals(self::STOCK_QUANTITY_1 + $increment, $stockProductEntity->getQuantity());
+            $this->assertEquals($this->productConcreteEntity->getIdProduct(), $stockProductEntity->getFkProduct());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcreteWithStocks()
+    {
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
+            ->setSku(self::CONCRETE_SKU);
+
+        $productConcreteTransfer = $this->stockFacade->expandProductConcreteWithStocks($productConcreteTransfer);
+
+        $this->assertNotEmpty($productConcreteTransfer->getStocks());
+        foreach ($productConcreteTransfer->getStocks() as $stock) {
+            $this->assertTrue($stock->getQuantity() > 0);
+            $this->assertEquals($stock->getSku(), self::CONCRETE_SKU);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupData()
+    {
+        $this->productAbstractEntity = new SpyProductAbstract();
+        $this->productAbstractEntity
+            ->setSku(self::ABSTRACT_SKU)
+            ->setAttributes('{}')
+            ->save();
+
+        $this->productConcreteEntity = new SpyProduct();
+        $this->productConcreteEntity
+            ->setSku(self::CONCRETE_SKU)
+            ->setAttributes('{}')
+            ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->save();
+
+        $this->stockEntity1 = new SpyStock();
+        $this->stockEntity1
+            ->setName('TEST')
+            ->save();
+
+        $this->productStockEntity1 = new SpyStockProduct();
+        $this->productStockEntity1
+            ->setFkStock($this->stockEntity1->getIdStock())
+            ->setQuantity(self::STOCK_QUANTITY_1)
+            ->setIsNeverOutOfStock(false)
+            ->setFkProduct($this->productConcreteEntity->getIdProduct())
+            ->save();
+
+        $this->stockEntity2 = new SpyStock();
+        $this->stockEntity2
+            ->setName('TEST2')
+            ->save();
+
+        $this->productStockEntity2 = new SpyStockProduct();
+        $this->productStockEntity2
+            ->setFkStock($this->stockEntity2->getIdStock())
+            ->setQuantity(self::STOCK_QUANTITY_2)
+            ->setIsNeverOutOfStock(false)
+            ->setFkProduct($this->productConcreteEntity->getIdProduct())
+            ->save();
+    }
+
+}
