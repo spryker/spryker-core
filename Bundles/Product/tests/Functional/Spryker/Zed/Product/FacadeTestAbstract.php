@@ -30,13 +30,13 @@ use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUtilBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextBridge;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
-use Spryker\Zed\Util\Business\UtilFacade;
+use Spryker\Zed\UtilText\Business\UtilTextFacade;
 
 /**
  * @group Functional
@@ -104,7 +104,7 @@ class FacadeTestAbstract extends Test
     /**
      * @var \Spryker\Zed\Util\Business\UtilFacadeInterface
      */
-    protected $utilFacade;
+    protected $utilTextFacade;
 
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
@@ -166,7 +166,7 @@ class FacadeTestAbstract extends Test
         $this->productFacade = new ProductFacade();
         $this->urlFacade = new UrlFacade();
         $this->touchFacade = new TouchFacade();
-        $this->utilFacade = new UtilFacade();
+        $this->utilTextFacade = new UtilTextFacade();
         $this->productQueryContainer = new ProductQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
 
@@ -175,7 +175,7 @@ class FacadeTestAbstract extends Test
         $urlBridge = new ProductToUrlBridge($this->urlFacade);
         $touchBridge = new ProductToTouchBridge($this->touchFacade);
         $localeBridge = new ProductToLocaleBridge($this->localeFacade);
-        $utilBridge = new ProductToUtilBridge($this->utilFacade);
+        $utilBridge = new ProductToUtilTextBridge($this->utilTextFacade);
 
         $attributeManager = new AttributeManager(
             $this->productQueryContainer

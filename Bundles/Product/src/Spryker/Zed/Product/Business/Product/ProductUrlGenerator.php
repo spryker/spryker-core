@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface;
 
 class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
@@ -27,23 +27,23 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface
      */
-    protected $utilFacade;
+    protected $utilTextFacade;
 
     /**
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface $utilFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface $utilTextFacade
      */
     public function __construct(
         ProductAbstractManagerInterface $productAbstractManager,
         ProductToLocaleInterface $localeFacade,
-        ProductToUtilInterface $utilFacade
+        ProductToUtilTextInterface $utilTextFacade
     ) {
         $this->productAbstractManager = $productAbstractManager;
         $this->localeFacade = $localeFacade;
-        $this->utilFacade = $utilFacade;
+        $this->utilTextFacade = $utilTextFacade;
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
      */
     protected function generateUrlByLocale(ProductAbstractTransfer $productAbstract, LocaleTransfer $localeTransfer)
     {
-        $productName = $this->utilFacade->generateSlug(
+        $productName = $this->utilTextFacade->generateSlug(
             $this->productAbstractManager->getLocalizedProductAbstractName($productAbstract, $localeTransfer)
         );
 

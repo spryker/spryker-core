@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductUrlGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUtilBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextBridge;
 
 /**
  * @group Unit
@@ -43,9 +43,9 @@ class ProductUrlGeneratorTest extends Test
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $utilFacade;
+    protected $utilTextFacade;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -78,7 +78,7 @@ class ProductUrlGeneratorTest extends Test
         $this->setupProductAbstract();
 
         $this->localeFacade = $this->getMock(ProductToLocaleBridge::class, [], [], '', false);
-        $this->utilFacade = $this->getMock(ProductToUtilBridge::class, [], [], '', false);
+        $this->utilTextFacade = $this->getMock(ProductToUtilTextBridge::class, [], [], '', false);
 
         $availableLocalesCollection = [
             $this->locales['de_DE']->getLocaleName() => $this->locales['de_DE'],
@@ -164,19 +164,19 @@ class ProductUrlGeneratorTest extends Test
                 new ArrayObject([$expectedDEUrl, $expectedENUrl])
             );
 
-        $this->utilFacade
+        $this->utilTextFacade
             ->expects($this->at(0))
             ->method('generateSlug')
             ->with(self::PRODUCT_NAME['de_DE'])
             ->willReturn('product-name-dede');
 
-        $this->utilFacade
+        $this->utilTextFacade
             ->expects($this->at(1))
             ->method('generateSlug')
             ->with(self::PRODUCT_NAME['en_US'])
             ->willReturn('product-name-enus');
 
-        $urlGenerator = new ProductUrlGenerator($this->productAbstractManager, $this->localeFacade, $this->utilFacade);
+        $urlGenerator = new ProductUrlGenerator($this->productAbstractManager, $this->localeFacade, $this->utilTextFacade);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
 
         $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());

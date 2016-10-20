@@ -533,10 +533,10 @@
       "Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/src",
       "Unit\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
       "Functional\\Spryker\\Zed\\ProductManagement\\": "Bundles/ProductManagement/tests",
-      "Spryker\\Shared\\Util\\": "Bundles/Util/src",
-      "Spryker\\Zed\\Util\\": "Bundles/Util/src",
-      "Unit\\Spryker\\Zed\\Util\\": "Bundles/Util/tests",
-      "Functional\\Spryker\\Zed\\Util\\": "Bundles/Util/tests"
+      "Spryker\\Shared\\UtilText\\": "Bundles/UtilText/src",
+      "Spryker\\Zed\\UtilText\\": "Bundles/UtilText/src",
+      "Unit\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests",
+      "Functional\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",
