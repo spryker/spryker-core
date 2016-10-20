@@ -30,7 +30,7 @@ class PartialBasketMapper extends BaseMapper
     /**
      * @var bool
      */
-    protected $shippingAlreadySent;
+    protected $needToSendShipping;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -41,21 +41,21 @@ class PartialBasketMapper extends BaseMapper
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
-     * @param bool $shippingAlreadySent
+     * @param bool $needToSendShipping
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
         $quoteTransfer,
         $ratepayPaymentTransfer,
         array $basketItems,
-        $shippingAlreadySent,
+        $needToSendShipping,
         RatepayRequestTransfer $requestTransfer
     ) {
 
         $this->quoteTransfer = $quoteTransfer;
         $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
         $this->basketItems = $basketItems;
-        $this->shippingAlreadySent = $shippingAlreadySent;
+        $this->needToSendShipping = $needToSendShipping;
         $this->requestTransfer = $requestTransfer;
     }
 
@@ -76,7 +76,7 @@ class PartialBasketMapper extends BaseMapper
             ->setDiscountUnitPrice(BasketMapper::DEFAULT_DISCOUNT_UNIT_PRICE * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate(BasketMapper::DEFAULT_DISCOUNT_TAX_RATE);
 
-        if (!$this->shippingAlreadySent) {
+        if ($this->needToSendShipping) {
             $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
             $shippingUnitPrice = $totalsTransfer->requireExpenseTotal()->getExpenseTotal();
             $grandTotal += $shippingUnitPrice;

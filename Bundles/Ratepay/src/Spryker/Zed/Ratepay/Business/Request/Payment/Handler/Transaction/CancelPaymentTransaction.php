@@ -28,7 +28,7 @@ class CancelPaymentTransaction extends BaseTransaction implements OrderTransacti
             ->paymentCancel($orderTransfer, $orderItems);
 
         $response = $this->sendRequest((string)$request);
-        $this->logInfo($request, $response, $paymentMethod->getPaymentType(), $paymentMethod->getFkSalesOrder());
+        $this->logInfo($request, $response, $paymentMethod->getPaymentType(), $paymentMethod->getFkSalesOrder(), $orderItems);
 
         if ($response->isSuccessful()) {
             $paymentMethod->setResultCode($response->getResultCode())->save();

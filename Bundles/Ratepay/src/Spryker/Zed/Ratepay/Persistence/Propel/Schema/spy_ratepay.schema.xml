@@ -72,6 +72,7 @@
         <column name="response_status_code" type="INTEGER"/>
         <column name="response_status_text" type="VARCHAR"/>
         <column name="response_customer_message" type="LONGVARCHAR"/>
+        <column name="items_number" type="INTEGER"/>
 
         <foreign-key name="spy_payment_ratepay_log-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>

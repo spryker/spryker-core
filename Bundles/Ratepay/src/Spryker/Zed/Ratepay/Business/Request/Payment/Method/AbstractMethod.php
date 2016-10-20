@@ -144,15 +144,17 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     public function paymentCancel(OrderTransfer $orderTransfer, array $orderItems)
     {
         $payment = $this->loadOrderPayment($orderTransfer);
+        $allOrderItems = $payment->getSpySalesOrder()->getItems();
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_CANCEL);
         $paymentData = $this->getTransferObjectFromPayment($payment);
-        $shippingAlreadySent = false;
+        $canceledItemsCount = count($orderItems);
         /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
         foreach ($paymentLogs as $paymentLog) {
             if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_CANCEL] == $paymentLog->getResponseResultCode()) {
-                $shippingAlreadySent = true;
+                $canceledItemsCount += $paymentLog->getItemsNumber();
             }
         }
+        $needToSendShipping = (count($allOrderItems) == $canceledItemsCount);
 
         /**
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
@@ -160,7 +162,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_CANCEL);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $shippingAlreadySent);
+        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
 
         return $request;
     }
@@ -174,15 +176,17 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     public function paymentRefund(OrderTransfer $orderTransfer, array $orderItems)
     {
         $payment = $this->loadOrderPayment($orderTransfer);
+        $allOrderItems = $payment->getSpySalesOrder()->getItems();
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_REFUND);
         $paymentData = $this->getTransferObjectFromPayment($payment);
-        $shippingAlreadySent = false;
+        $refundedItemsCount = count($orderItems);
         /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
         foreach ($paymentLogs as $paymentLog) {
             if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_REFUND] == $paymentLog->getResponseResultCode()) {
-                $shippingAlreadySent = true;
+                $refundedItemsCount += $paymentLog->getItemsNumber();
             }
         }
+        $needToSendShipping = (count($allOrderItems) == $refundedItemsCount);
 
         /**
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
@@ -190,7 +194,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REFUND);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $shippingAlreadySent);
+        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
 
         return $request;
     }
@@ -283,14 +287,14 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
-     * @param bool $shippingAlreadySent
+     * @param bool $needToSendShipping
      *
      * @return void
      */
-    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $shippingAlreadySent=false)
+    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $needToSendShipping=false)
     {
         $this->mapperFactory
-            ->getPartialBasketMapper($dataTransfer, $paymentData, $orderItems, $shippingAlreadySent)
+            ->getPartialBasketMapper($dataTransfer, $paymentData, $orderItems, $needToSendShipping)
             ->map();
 
         $grouppedItems = [];
