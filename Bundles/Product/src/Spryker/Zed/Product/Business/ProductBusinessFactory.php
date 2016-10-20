@@ -257,7 +257,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected function getProductAbstractBeforeCreatePlugins()
     {
@@ -265,7 +265,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected function getProductAbstractAfterCreatePlugins()
     {
@@ -273,7 +273,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
      */
     protected function getProductAbstractReadPlugins()
     {
@@ -281,7 +281,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
      */
     protected function getProductAbstractBeforeUpdatePlugins()
     {
@@ -289,7 +289,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
      */
     protected function getProductAbstractAfterUpdatePlugins()
     {
@@ -297,7 +297,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
      */
     protected function getProductConcreteBeforeCreatePlugins()
     {
@@ -305,7 +305,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
      */
     protected function getProductConcreteAfterCreatePlugins()
     {
@@ -313,7 +313,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[]
      */
     protected function getProductConcreteReadPlugins()
     {
@@ -321,7 +321,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected function getProductConcreteBeforeUpdatePlugins()
     {
@@ -329,7 +329,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected function getProductConcreteAfterUpdatePlugins()
     {

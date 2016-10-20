@@ -8,13 +8,13 @@ namespace Spryker\Zed\Price\Communication\Plugin\ProductAbstract;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
  * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */
-class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginInterface
+class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
 {
 
     /**
@@ -22,7 +22,7 @@ class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements Pr
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productAbstractTransfer)
+    public function create(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFacade()->persistProductAbstractPrice($productAbstractTransfer);
     }

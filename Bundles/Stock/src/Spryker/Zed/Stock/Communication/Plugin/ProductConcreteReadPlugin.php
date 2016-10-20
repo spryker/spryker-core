@@ -9,13 +9,13 @@ namespace Spryker\Zed\Stock\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
  * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
  * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
  */
-class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginInterface
+class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcret
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function run(ProductConcreteTransfer $productConcreteTransfer)
+    public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFacade()->expandProductConcreteWithStocks($productConcreteTransfer);
     }

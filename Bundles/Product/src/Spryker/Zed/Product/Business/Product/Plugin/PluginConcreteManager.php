@@ -13,36 +13,36 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
      */
     protected $beforeCreateCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
      */
     protected $afterCreateCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[]
      */
     protected $readCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected $beforeUpdateCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected $afterUpdateCollection;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[] $beforeCreateCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[] $afterCreateCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[] $readCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[] $beforeUpdateCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface[] $afterUpdateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[] $beforeCreateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[] $afterCreateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[] $readCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[] $beforeUpdateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[] $afterUpdateCollection
      */
     public function __construct(
         array $beforeCreateCollection,
@@ -65,10 +65,11 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
      */
     public function triggerBeforeCreatePlugins(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->trigger(
-            $productConcreteTransfer,
-            $this->beforeCreateCollection
-        );
+        foreach ($this->beforeCreateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->create($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -78,10 +79,11 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
      */
     public function triggerAfterCreatePlugins(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->trigger(
-            $productConcreteTransfer,
-            $this->afterCreateCollection
-        );
+        foreach ($this->afterCreateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->create($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -91,10 +93,11 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
      */
     public function triggerBeforeUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->trigger(
-            $productConcreteTransfer,
-            $this->beforeUpdateCollection
-        );
+        foreach ($this->afterUpdateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->update($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -104,10 +107,11 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
      */
     public function triggerAfterUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->trigger(
-            $productConcreteTransfer,
-            $this->afterUpdateCollection
-        );
+        foreach ($this->afterUpdateCollection as $plugin) {
+            $productConcreteTransfer = $plugin->update($productConcreteTransfer);
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -117,22 +121,8 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
      */
     public function triggerReadPlugins(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->trigger(
-            $productConcreteTransfer,
-            $this->readCollection
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $pluginCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function trigger(ProductConcreteTransfer $productConcreteTransfer, array $pluginCollection)
-    {
-        foreach ($pluginCollection as $plugin) {
-            $productConcreteTransfer = $plugin->run($productConcreteTransfer);
+        foreach ($this->readCollection as $plugin) {
+            $productConcreteTransfer = $plugin->read($productConcreteTransfer);
         }
 
         return $productConcreteTransfer;

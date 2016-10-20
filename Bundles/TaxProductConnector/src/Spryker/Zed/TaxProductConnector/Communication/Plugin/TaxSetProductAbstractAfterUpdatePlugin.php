@@ -8,12 +8,12 @@ namespace Spryker\Zed\TaxProductConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade getFacade()
  */
-class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginInterface
+class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginUpdateInterface
 {
 
     /**
@@ -21,7 +21,7 @@ class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements P
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productAbstractTransfer)
+    public function update(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFacade()->saveTaxSetToProductAbstract($productAbstractTransfer);
     }

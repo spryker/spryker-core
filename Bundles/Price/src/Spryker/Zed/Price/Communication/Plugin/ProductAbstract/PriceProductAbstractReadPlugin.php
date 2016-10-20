@@ -9,13 +9,13 @@ namespace Spryker\Zed\Price\Communication\Plugin\ProductAbstract;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
  * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */
-class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginInterface
+class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function run(ProductAbstractTransfer $productAbstractTransfer)
+    public function read(ProductAbstractTransfer $productAbstractTransfer)
     {
         $productAbstractTransfer->requireIdProductAbstract();
 

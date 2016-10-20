@@ -13,36 +13,36 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected $beforeCreateCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected $afterCreateCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
      */
     protected $readCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
      */
     protected $beforeUpdateCollection;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[]
+     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
      */
     protected $afterUpdateCollection;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[] $beforeCreateCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[] $afterCreateCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[] $readCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[] $beforeUpdateCollection
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginInterface[] $afterUpdateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[] $beforeCreateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[] $afterCreateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[] $readCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[] $beforeUpdateCollection
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[] $afterUpdateCollection
      */
     public function __construct(
         array $beforeCreateCollection,
@@ -65,10 +65,11 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
      */
     public function triggerBeforeCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->trigger(
-            $productAbstractTransfer,
-            $this->beforeCreateCollection
-        );
+        foreach ($this->beforeCreateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->create($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -78,10 +79,11 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
      */
     public function triggerAfterCreatePlugins(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->trigger(
-            $productAbstractTransfer,
-            $this->afterCreateCollection
-        );
+        foreach ($this->afterCreateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->create($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -91,10 +93,11 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
      */
     public function triggerBeforeUpdatePlugins(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->trigger(
-            $productAbstractTransfer,
-            $this->beforeUpdateCollection
-        );
+        foreach ($this->beforeUpdateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->update($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -104,10 +107,11 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
      */
     public function triggerAfterUpdatePlugins(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->trigger(
-            $productAbstractTransfer,
-            $this->afterUpdateCollection
-        );
+        foreach ($this->afterUpdateCollection as $plugin) {
+            $productAbstractTransfer = $plugin->update($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -117,22 +121,8 @@ class PluginAbstractManager implements PluginAbstractManagerInterface
      */
     public function triggerReadPlugins(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $this->trigger(
-            $productAbstractTransfer,
-            $this->readCollection
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $pluginCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function trigger(ProductAbstractTransfer $productAbstractTransfer, array $pluginCollection)
-    {
-        foreach ($pluginCollection as $plugin) {
-            $productAbstractTransfer = $plugin->run($productAbstractTransfer);
+        foreach ($this->readCollection as $plugin) {
+            $productAbstractTransfer = $plugin->read($productAbstractTransfer);
         }
 
         return $productAbstractTransfer;
