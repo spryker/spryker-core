@@ -41,14 +41,14 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return ProductAbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
 

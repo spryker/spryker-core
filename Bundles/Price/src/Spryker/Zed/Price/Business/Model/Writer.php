@@ -283,7 +283,7 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return ProductAbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -307,13 +307,15 @@ class Writer implements WriterInterface
         $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
 
+        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+
         return $productAbstractTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -337,6 +339,8 @@ class Writer implements WriterInterface
 
         $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
+
+        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
         return $productConcreteTransfer;
     }

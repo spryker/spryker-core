@@ -125,7 +125,7 @@ interface PriceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer);
 
@@ -139,7 +139,7 @@ interface PriceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
 

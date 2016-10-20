@@ -12,6 +12,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginInterface;
 
 /**
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
+ * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */
 class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginInterface
 {
@@ -30,4 +31,5 @@ class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductCo
 
         return $productConcreteTransfer;
     }
+
 }
