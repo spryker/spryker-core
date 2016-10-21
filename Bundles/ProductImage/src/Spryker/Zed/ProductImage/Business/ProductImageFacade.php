@@ -26,34 +26,6 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function createProductImage(ProductImageTransfer $productImageTransfer)
-    {
-        return $this->getFactory()
-            ->createProductImageWriter()
-            ->createProductImage($productImageTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer
-     */
-    public function updateProductImage(ProductImageTransfer $productImageTransfer)
-    {
-        return $this->getFactory()
-            ->createProductImageWriter()
-            ->updateProductImage($productImageTransfer);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer
-     */
     public function persistProductImage(ProductImageTransfer $productImageTransfer)
     {
         return $this->getFactory()
