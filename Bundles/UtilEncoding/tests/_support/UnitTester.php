@@ -1,5 +1,5 @@
 <?php
-namespace UtilText;
+namespace UtilEncoding;
 
 /**
  * Inherited Methods
@@ -16,10 +16,10 @@ namespace UtilText;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends \Codeception\Actor
+class UnitTester extends \Codeception\Actor
 {
 
-    use _generated\FunctionalTesterActions;
+    use _generated\UnitTesterActions;
 
    /**
     * Define custom actions here

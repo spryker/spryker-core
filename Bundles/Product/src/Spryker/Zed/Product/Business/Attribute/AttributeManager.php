@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\Library\Json;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AttributeManager implements AttributeManagerInterface
@@ -24,11 +24,20 @@ class AttributeManager implements AttributeManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
-    {
+    protected $utilEncodingFacade;
+
+    /**
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface $utilEncodingFacade
+     */
+    public function __construct(
+        ProductQueryContainerInterface $productQueryContainer,
+        ProductToUtilEncodingInterface $utilEncodingFacade
+    ) {
         $this->productQueryContainer = $productQueryContainer;
+        $this->utilEncodingFacade = $utilEncodingFacade;
     }
 
     /**
@@ -128,7 +137,7 @@ class AttributeManager implements AttributeManagerInterface
      */
     public function encodeAttributes(array $attributes)
     {
-        return Json::encode($attributes);
+        return $this->utilEncodingFacade->encodeJson($attributes);
     }
 
     /**
@@ -138,7 +147,7 @@ class AttributeManager implements AttributeManagerInterface
      */
     public function decodeAttributes($json)
     {
-        $value = Json::decode($json, true);
+        $value = $this->utilEncodingFacade->decodeJson($json, true);
 
         if (!is_array($value)) {
             $value = [];

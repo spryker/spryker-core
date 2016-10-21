@@ -298,6 +298,7 @@ class WriterTest extends Test
         $productPriceTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
 
         $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
         $productAbstractTransfer->setPrice($productPriceTransfer);
 
         $this->priceFacade->persistProductAbstractPrice($productAbstractTransfer);
@@ -342,6 +343,7 @@ class WriterTest extends Test
             ->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
 
         $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
         $productAbstractTransfer->setPrice($productPriceTransfer);
 
         $productAbstractTransfer = $this->priceFacade->persistProductAbstractPrice($productAbstractTransfer);
@@ -381,6 +383,7 @@ class WriterTest extends Test
             ->setIdProduct($productConcreteEntity->getIdProduct());
 
         $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
         $productConcreteTransfer->setPrice($productPriceTransfer);
 
         $this->priceFacade->persistProductConcretePrice($productConcreteTransfer);

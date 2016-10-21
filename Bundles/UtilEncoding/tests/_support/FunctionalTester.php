@@ -1,5 +1,5 @@
 <?php
-namespace UtilText;
+namespace UtilEncoding;
 
 /**
  * Inherited Methods

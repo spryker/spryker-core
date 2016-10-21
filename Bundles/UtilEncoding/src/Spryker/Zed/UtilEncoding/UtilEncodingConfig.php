@@ -5,8 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\UtilText;
+namespace Spryker\Zed\UtilEncoding;
 
-interface UtilTextConstants
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+
+class UtilEncodingConfig extends AbstractBundleConfig
 {
+
 }

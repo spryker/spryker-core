@@ -1,5 +1,5 @@
 <?php
-namespace Util;
+namespace UtilText;
 
 /**
  * Inherited Methods

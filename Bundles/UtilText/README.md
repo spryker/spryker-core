@@ -1,11 +1,11 @@
-# Util Bundle
+# UtilText Bundle
 
 ## Installation
 
 ```
-composer require spryker/product
+composer require spryker/util-text
 ```
 
 ## Documentation
 
-[Util Documentation](http://spryker.github.io/core/bundles/util)
+[UtilText Documentation](http://spryker.github.io/core/bundles/util)

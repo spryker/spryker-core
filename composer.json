@@ -536,7 +536,11 @@
       "Spryker\\Shared\\UtilText\\": "Bundles/UtilText/src",
       "Spryker\\Zed\\UtilText\\": "Bundles/UtilText/src",
       "Unit\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests",
-      "Functional\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests"
+      "Functional\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests",
+      "Spryker\\Shared\\UtilEncoding\\": "Bundles/UtilEncoding/src",
+      "Spryker\\Zed\\UtilEncoding\\": "Bundles/UtilEncoding/src",
+      "Unit\\Spryker\\Zed\\UtilEncoding\\": "Bundles/UtilEncoding/tests",
+      "Functional\\Spryker\\Zed\\UtilEncoding\\": "Bundles/UtilEncoding/tests"
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",

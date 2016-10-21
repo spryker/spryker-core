@@ -43,7 +43,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createAttributeManager()
     {
         return new AttributeManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getUtilEncodingFacade()
         );
     }
 
@@ -198,6 +199,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getUtilTextFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface
+     */
+    protected function getUtilEncodingFacade()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_ENCODING);
     }
 
     /**
