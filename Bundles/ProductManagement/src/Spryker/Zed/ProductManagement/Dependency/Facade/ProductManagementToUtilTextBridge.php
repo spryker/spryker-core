@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-class ProductManagementToUtilBridge implements ProductManagementToUtilInterface
+class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextInterface
 {
 
     /**
@@ -16,7 +16,7 @@ class ProductManagementToUtilBridge implements ProductManagementToUtilInterface
     protected $utilFacade;
 
     /**
-     * @param \Spryker\Zed\Util\Business\UtilFacadeInterface $utilFacade
+     * @param \Spryker\Zed\UtilText\Business\UtilTextFacadeInterface $utilFacade
      */
     public function __construct($utilFacade)
     {

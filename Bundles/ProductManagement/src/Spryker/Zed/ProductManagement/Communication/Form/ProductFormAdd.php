@@ -21,7 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -88,9 +88,9 @@ class ProductFormAdd extends AbstractType
     protected $urlFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface
      */
-    protected $utilFacade;
+    protected $utilTextFacade;
 
     /**
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
@@ -98,7 +98,7 @@ class ProductFormAdd extends AbstractType
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface $urlFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface $utilFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface $utilTextFacade
      */
     public function __construct(
         LocaleProvider $localeProvider,
@@ -106,7 +106,7 @@ class ProductFormAdd extends AbstractType
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToMoneyInterface $moneyFacade,
         ProductManagementToUrlInterface $urlFacade,
-        ProductManagementToUtilInterface $utilFacade
+        ProductManagementToUtilTextInterface $utilTextFacade
     ) {
 
         $this->localeProvider = $localeProvider;
@@ -114,7 +114,7 @@ class ProductFormAdd extends AbstractType
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->moneyFacade = $moneyFacade;
         $this->urlFacade = $urlFacade;
-        $this->utilFacade = $utilFacade;
+        $this->utilTextFacade = $utilTextFacade;
     }
 
     /**
@@ -297,7 +297,7 @@ class ProductFormAdd extends AbstractType
                             function ($sku, ExecutionContextInterface $context) {
                                 $form = $context->getRoot();
                                 $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                                $sku = $this->utilFacade->generateSlug($sku);
+                                $sku = $this->utilTextFacade->generateSlug($sku);
 
                                 $skuCount = $this->productQueryContainer
                                     ->queryProduct()

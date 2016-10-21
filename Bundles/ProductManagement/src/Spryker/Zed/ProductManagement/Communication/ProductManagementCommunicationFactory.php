@@ -55,7 +55,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUrlFacade(),
-            $this->getUtilFacade()
+            $this->getUtilTextFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -75,7 +75,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUrlFacade(),
-            $this->getUtilFacade()
+            $this->getUtilTextFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -95,7 +95,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUrlFacade(),
-            $this->getUtilFacade()
+            $this->getUtilTextFacade()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -219,11 +219,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface
      */
-    public function getUtilFacade()
+    public function getUtilTextFacade()
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_UTIL);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_UTIL_TEXT);
     }
 
     /**
@@ -443,7 +443,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormTransferMapper(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getUtilFacade(),
+            $this->getUtilTextFacade(),
             $this->createLocaleProvider()
         );
     }
