@@ -19,7 +19,7 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createPayolutionSession()
     {
-        return new PayolutionSession($this->createSessionClient());
+        return new PayolutionSession($this->getSessionClient());
     }
 
     /**
@@ -27,7 +27,7 @@ class PayolutionFactory extends AbstractFactory
      */
     public function createPayolutionStub()
     {
-        return new PayolutionStub($this->createZedRequestClient());
+        return new PayolutionStub($this->getZedRequestClient());
     }
 
 }
