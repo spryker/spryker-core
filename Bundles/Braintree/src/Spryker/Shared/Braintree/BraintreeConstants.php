@@ -10,6 +10,8 @@ namespace Spryker\Shared\Braintree;
 interface BraintreeConstants
 {
 
+    const BUNDLE_VERSION = '0.3.0';
+
     const PROVIDER_NAME = 'Braintree';
 
     const PAYMENT_METHOD_PAY_PAL = 'braintreePayPal';
