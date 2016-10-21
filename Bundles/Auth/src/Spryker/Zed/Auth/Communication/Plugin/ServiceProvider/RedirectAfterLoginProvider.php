@@ -80,14 +80,35 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
             return;
         }
 
-        $redirectTo = $event->getRequest()->getRequestUri();
-
+        $redirectTo = $this->getUrlToRedirectBackTo($event);
         if ($redirectTo === AuthConfig::DEFAULT_URL_REDIRECT) {
             return;
         }
 
-        $url = Url::generate($targetUrl, [static::REFERER => $redirectTo]);
+        $query = [];
+        if ($redirectTo) {
+            $query[static::REFERER] = $redirectTo;
+        }
+
+        $url = Url::generate($targetUrl, $query);
         $event->setResponse(new RedirectResponse($url->build()));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     *
+     * @return string|null
+     */
+    protected function getUrlToRedirectBackTo(FilterResponseEvent $event)
+    {
+        $urlToRedirectBackTo = $event->getRequest()->getRequestUri();
+
+        $isGetRequest = $event->getRequest()->isMethod('GET');
+        if (!$isGetRequest) {
+            return null;
+        }
+
+        return $urlToRedirectBackTo;
     }
 
     /**
@@ -102,13 +123,36 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
         if ($request->getPathInfo() !== AuthConfig::DEFAULT_URL_LOGIN) {
             return;
         }
+        if (!$this->isAuthenticated($request)) {
+            return;
+        }
 
-        $referer = $request->query->get(static::REFERER);
-        if (!$referer || !$this->isAuthenticated($request)) {
+        $referer = $this->filterReferer($request->query->get(static::REFERER));
+        if (!$referer) {
             return;
         }
 
         $event->setResponse(new RedirectResponse($referer));
+    }
+
+    /**
+     * Asserts that no external URL can be injected into the redirect URL.
+     *
+     * @param string|null $url
+     *
+     * @return string|null
+     */
+    protected function filterReferer($url)
+    {
+        if (!$url) {
+            return null;
+        }
+
+        if (substr($url, 0, 1) !== '/' || substr($url, 0, 2) === '//') {
+            return null;
+        }
+
+        return $url;
     }
 
     /**

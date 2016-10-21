@@ -67,7 +67,7 @@ SCRIPT;
      *    'min' => 3, 'max' => 5
      * ]
      *
-     * 'min' and 'max' are optional, when neither is specified, thwows \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
+     * 'min' and 'max' are optional, when neither is specified, throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
      *
      * @return \$this|$queryClassName The current query, for fluid interface
      */
@@ -116,6 +116,16 @@ SCRIPT;
         return $script;
     }
 
+    /**
+     * @return array
+     */
+    protected function getAllowedArrayFilters()
+    {
+        return [
+            'Criteria::IN',
+            'Criteria::NOT_IN',
+        ];
+    }
 
     /**
      * Adds the filterByCol method for this object.
@@ -127,6 +137,9 @@ SCRIPT;
      */
     protected function addFilterByCol(&$script, Column $col)
     {
+        $allowedArrayFilters = $this->getAllowedArrayFilters();
+        $implodedArrayComparisons = implode(', ', $allowedArrayFilters);
+
         $this->declareClass('Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException');
         $this->declareClass('Spryker\\Zed\\Propel\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
 
@@ -241,8 +254,8 @@ SCRIPT;
                 return \$this;
             }
 
-            if (\$comparison != Criteria::IN) {
-                throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+            if (!in_array(\$comparison, [$implodedArrayComparisons])) {
+                throw new AmbiguousComparisonException('\$$variableName of type array requires one of [$implodedArrayComparisons] as comparison criteria.');
             }
         }";
         } elseif ($col->getType() == PropelTypes::OBJECT) {
@@ -297,8 +310,8 @@ SCRIPT;
             }
             \$$variableName = array_search(\$$variableName, \$valueSet);
         } elseif (is_array(\$$variableName)) {
-            if (\$comparison != Criteria::IN) {
-                throw new AmbiguousComparisonException('array requires explicit Criteria::IN as comparison criteria.');
+            if (!in_array(\$comparison, [$implodedArrayComparisons])) {
+                throw new AmbiguousComparisonException('array requires one of [$implodedArrayComparisons] as comparison criteria.');
             }
             \$convertedValues = array();
             foreach (\$$variableName as \$value) {
@@ -315,8 +328,8 @@ SCRIPT;
             \$$variableName = str_replace('*', '%', \$$variableName);
         }
 
-        if (\$comparison !== Criteria::IN && is_array(\$$variableName)) {
-            throw new AmbiguousComparisonException('\$$variableName of type array requires explicit Criteria::IN as comparison criteria.');
+        if (is_array(\$$variableName) && !in_array(\$comparison, [$implodedArrayComparisons])) {
+            throw new AmbiguousComparisonException('\$$variableName of type array requires one of [$implodedArrayComparisons] as comparison criteria.');
         }";
         } elseif ($col->isBooleanType()) {
             $script .= "
