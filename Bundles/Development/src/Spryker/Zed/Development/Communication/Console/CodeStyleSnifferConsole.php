@@ -66,10 +66,6 @@ class CodeStyleSnifferConsole extends Console
         $this->info($message);
 
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
-        if ($bundle && $path) {
-            $this->error('Path is only valid for project level');
-            return self::CODE_ERROR;
-        }
 
         return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
     }

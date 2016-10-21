@@ -153,7 +153,7 @@ class Builder implements BuilderInterface
             return;
         }
 
-        /** @var \SimpleXMLElement $xmlElement */
+        /* @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
@@ -270,7 +270,7 @@ class Builder implements BuilderInterface
         $xmlProcesses = $this->rootElement->children();
         $processMap = [];
 
-        /** @var \SimpleXMLElement $xmlProcess */
+        /* @var \SimpleXMLElement $xmlProcess */
         foreach ($xmlProcesses as $xmlProcess) {
             $process = clone $this->process;
             $processName = $this->getAttributeString($xmlProcess, self::STATE_NAME_ATTRIBUTE);
@@ -335,7 +335,7 @@ class Builder implements BuilderInterface
 
             $xmlStates = $xmlProcess->states->children();
 
-            /** @var \SimpleXMLElement $xmlState */
+            /* @var \SimpleXMLElement $xmlState */
             foreach ($xmlStates as $xmlState) {
                 $state = $this->createState($xmlState, $process);
 

@@ -150,7 +150,7 @@ class CurrencyManager implements CurrencyManagerInterface
      * @param int|float $value
      * @param bool $includeSymbol
      *
-     * @return int
+     * @return string
      */
     public function format($value, $includeSymbol = true)
     {
