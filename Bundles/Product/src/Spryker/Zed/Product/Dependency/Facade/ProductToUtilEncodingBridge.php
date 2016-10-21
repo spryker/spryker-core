@@ -8,6 +8,7 @@ namespace Spryker\Zed\Product\Dependency\Facade;
 
 class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
 {
+
     /**
      * @var \Spryker\Zed\UtilEncoding\Business\UtilEncodingFacadeInterface
      */
@@ -23,8 +24,8 @@ class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
 
     /**
      * @param array $value
-     * @param int $options
-     * @param int $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @return string
      */
@@ -45,4 +46,5 @@ class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
     {
         return $this->utilEncodingFacade->decodeJson($jsonString, $assoc, $depth, $options);
     }
+
 }

@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Tax\Business\TaxFacade;
 use Spryker\Zed\TaxProductConnector\Business\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\Exception\TaxSetNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
+use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * @group Functional
@@ -45,7 +45,6 @@ class TaxProductConnectorFacadeTest extends Test
             ->getProductAbstractById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertEquals($taxSetTransfer->getIdTaxSet(), $productAbstractTransfer->getIdTaxSet());
-
     }
 
     /**
@@ -60,7 +59,6 @@ class TaxProductConnectorFacadeTest extends Test
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
         $taxProductConnectorFacade->saveTaxSetToProductAbstract($productAbstractTransfer);
-
     }
 
     /**
@@ -72,7 +70,6 @@ class TaxProductConnectorFacadeTest extends Test
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
         $taxProductConnectorFacade->saveTaxSetToProductAbstract(new ProductAbstractTransfer());
-
     }
 
     /**
@@ -108,7 +105,6 @@ class TaxProductConnectorFacadeTest extends Test
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
         $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
-
     }
 
     /**
@@ -120,7 +116,6 @@ class TaxProductConnectorFacadeTest extends Test
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
         $taxProductConnectorFacade->mapTaxSet(new ProductAbstractTransfer());
-
     }
 
     /**

@@ -14,12 +14,13 @@ use Spryker\Zed\UtilEncoding\Business\UtilEncodingFacade;
  * @group Functional
  * @group Spryker
  * @group Zed
- * @group Util
+ * @group UtilEncoding
  * @group Business
  * @group UtilEncodingFacadeTest
  */
 class UtilEncodingFacadeTest extends Test
 {
+
     const JSON_ENCODED_VALUE = '{"1":"one","2":"two"}';
 
     /**

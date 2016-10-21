@@ -7,10 +7,11 @@ namespace Spryker\Zed\Product\Dependency\Facade;
 
 interface ProductToUtilEncodingInterface
 {
+
     /**
      * @param string $value
-     * @param int $options
-     * @param int $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @return string
      */
@@ -25,4 +26,5 @@ interface ProductToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null);
+
 }

@@ -9,14 +9,12 @@ namespace Functional\Spryker\Zed\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 
 /**
  * @group Functional
  * @group Spryker
  * @group Zed
  * @group Product
- * @group Facade
  * @group ProductManagementTest
  */
 class ProductManagementTest extends FacadeTestAbstract

@@ -14,9 +14,9 @@ use Spryker\Zed\UtilText\Business\UtilTextFacade;
  * @group Functional
  * @group Spryker
  * @group Zed
- * @group Util
+ * @group UtilText
  * @group Business
- * @group UtilFacadeTest
+ * @group UtilTextFacadeTest
  */
 class UtilTextFacadeTest extends Test
 {

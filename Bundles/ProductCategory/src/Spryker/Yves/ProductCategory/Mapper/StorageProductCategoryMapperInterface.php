@@ -17,4 +17,5 @@ interface StorageProductCategoryMapperInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
     public function mapProductCategories(StorageProductTransfer $storageProductTransfer, array $persistedProduct);
+
 }

@@ -43,32 +43,32 @@ class StockFacadeTest extends Test
     protected $stockQueryContainer;
 
     /**
-     * @var SpyStock
+     * @var \Orm\Zed\Stock\Persistence\SpyStock
      */
     protected $stockEntity1;
 
     /**
-     * @var SpyStock
+     * @var \Orm\Zed\Stock\Persistence\SpyStock
      */
     protected $stockEntity2;
 
     /**
-     * @var SpyStockProduct
+     * @var \Orm\Zed\Stock\Persistence\SpyStockProduct
      */
     protected $productStockEntity1;
 
     /**
-     * @var SpyStockProduct
+     * @var \Orm\Zed\Stock\Persistence\SpyStockProduct
      */
     protected $productStockEntity2;
 
     /**
-     * @var SpyProductAbstract
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected $productAbstractEntity;
 
     /**
-     * @var SpyProduct
+     * @var \Orm\Zed\Product\Persistence\SpyProduct
      */
     protected $productConcreteEntity;
 

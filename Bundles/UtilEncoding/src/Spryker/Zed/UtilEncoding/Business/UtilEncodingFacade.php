@@ -53,4 +53,5 @@ class UtilEncodingFacade extends AbstractFacade implements UtilEncodingFacadeInt
             ->createJsonEncoder()
             ->decode($jsonValue, $assoc, $depth, $options);
     }
+
 }

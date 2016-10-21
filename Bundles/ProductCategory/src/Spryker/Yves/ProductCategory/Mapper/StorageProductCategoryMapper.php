@@ -38,4 +38,5 @@ class StorageProductCategoryMapper implements StorageProductCategoryMapperInterf
 
         return $storageProductTransfer;
     }
+
 }

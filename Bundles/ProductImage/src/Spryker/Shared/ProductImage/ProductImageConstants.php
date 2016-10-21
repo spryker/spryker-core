@@ -9,5 +9,7 @@ namespace Spryker\Shared\ProductImage;
 
 class ProductImageConstants
 {
+
     const DEFAULT_IMAGE_SET_NAME = 'Default';
+
 }

@@ -20,8 +20,8 @@ interface UtilEncodingFacadeInterface
      * @api
      *
      * @param string $jsonValue
-     * @param int $options
-     * @param int $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @return string
      */

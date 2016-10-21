@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
  * @group Zed
  * @group Product
  * @group Business
- * @group Model
  * @group AttributeProcessorTest
  */
 class AttributeProcessorTest extends Test

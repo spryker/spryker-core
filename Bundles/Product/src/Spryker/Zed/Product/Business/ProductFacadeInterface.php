@@ -478,7 +478,8 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductAbstractName(
-        ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer
+        ProductAbstractTransfer $productAbstractTransfer,
+        LocaleTransfer $localeTransfer
     );
 
     /**
@@ -493,7 +494,8 @@ interface ProductFacadeInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(
-        ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
     );
 
     /**

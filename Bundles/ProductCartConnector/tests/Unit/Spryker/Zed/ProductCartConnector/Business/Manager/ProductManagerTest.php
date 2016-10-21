@@ -46,7 +46,6 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
         $productConcreteTransfer->setFkProductAbstract(1);
 
-
         $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
@@ -134,14 +133,15 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductCartConnectorToProductInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockProductFacade()
     {
         return $this->getMock(ProductCartConnectorToProductInterface::class, ['getProductConcrete', 'getLocalizedProductConcreteName'], [], '', false);
     }
+
     /**
-     * @return ProductCartConnectorToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockLocaleFacade()
     {

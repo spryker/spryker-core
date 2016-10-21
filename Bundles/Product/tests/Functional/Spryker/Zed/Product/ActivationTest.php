@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Product;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
-use Spryker\Zed\Product\Business\Product\ProductActivator;
 
 /**
  * @group Functional

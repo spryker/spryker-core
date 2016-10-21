@@ -20,4 +20,5 @@ class ProductImageFactory extends AbstractFactory
     {
         return new StorageImageMapper();
     }
+
 }
