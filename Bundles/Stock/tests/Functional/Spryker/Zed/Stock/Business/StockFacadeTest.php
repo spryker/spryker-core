@@ -17,6 +17,7 @@ use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
@@ -162,12 +163,47 @@ class StockFacadeTest extends Test
     }
 
     /**
-     * TODO broken, as it will create StockType as well :o
+     * @return void
+     */
+    public function testCreateStockProduct()
+    {
+        $productAbstractEntity = new SpyProductAbstract();
+        $productAbstractEntity
+            ->setSku('foo')
+            ->setAttributes('{}')
+            ->save();
+
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity
+            ->setSku('foo')
+            ->setAttributes('{}')
+            ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
+            ->save();
+
+        $stockProductTransfer = (new StockProductTransfer())
+            ->setStockType($this->stockEntity1->getName())
+            ->setQuantity(self::STOCK_QUANTITY_1)
+            ->setSku('foo');
+
+        $idStockProduct = $this->stockFacade->createStockProduct($stockProductTransfer);
+
+        $stockProductEntity = SpyStockProductQuery::create()
+            ->filterByIdStockProduct($idStockProduct)
+            ->findOne();
+
+        $this->assertEquals(self::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+    }
+
+    /**
+     * TODO no rollback on error
      *
      * @return void
      */
-    public function SKIP_testCreateStockProduct()
+    public function SKIP_testCreateStockProductShouldThrowException()
     {
+        $this->expectException(StockProductAlreadyExistsException::class);
+        $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
+
         $stockProductTransfer = (new StockProductTransfer())
             ->setStockType($this->stockEntity1->getName())
             ->setQuantity(self::STOCK_QUANTITY_1)
