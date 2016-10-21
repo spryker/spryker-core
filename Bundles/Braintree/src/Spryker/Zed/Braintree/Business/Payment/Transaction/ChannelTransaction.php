@@ -16,7 +16,7 @@ final class ChannelTransaction
     /**
      * @return string
      */
-    final public static function getChannel()
+    public static function getChannel()
     {
         return ApiConstants::CHANNEL . BraintreeConstants::BUNDLE_VERSION;
     }
