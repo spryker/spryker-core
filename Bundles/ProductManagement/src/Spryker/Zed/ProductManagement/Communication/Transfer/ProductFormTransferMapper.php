@@ -30,7 +30,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -55,23 +55,23 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlInterface
      */
-    protected $utilFacade;
+    protected $utilTextFacade;
 
     /**
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilInterface $utilFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface $utilTextFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      */
     public function __construct(
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
-        ProductManagementToUtilInterface $utilFacade,
+        ProductManagementToUtilTextInterface $utilTextFacade,
         LocaleProvider $localeProvider
     ) {
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->utilFacade = $utilFacade;
+        $this->utilTextFacade = $utilTextFacade;
         $this->localeProvider = $localeProvider;
     }
 
@@ -197,7 +197,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku(
-                $this->utilFacade->generateSlug($data[ProductFormAdd::FIELD_SKU])
+                $this->utilTextFacade->generateSlug($data[ProductFormAdd::FIELD_SKU])
             )
             ->setAttributes($attributes)
             ->setIdTaxSet($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);

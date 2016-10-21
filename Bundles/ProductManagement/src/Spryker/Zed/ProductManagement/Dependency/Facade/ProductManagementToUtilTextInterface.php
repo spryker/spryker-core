@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-interface ProductManagementToUtilInterface
+interface ProductManagementToUtilTextInterface
 {
 
     /**
