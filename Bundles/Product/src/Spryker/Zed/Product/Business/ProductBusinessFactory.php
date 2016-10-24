@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Product\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Product\Business\Attribute\AttributeEncoder;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
-use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
+use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManager;
@@ -33,28 +35,11 @@ class ProductBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductManager
-     */
-    protected $productManager;
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    public function createAttributeManager()
-    {
-        return new AttributeManager(
-            $this->getQueryContainer(),
-            $this->getUtilEncodingFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Business\Product\ProductManagerInterface
      */
     public function createProductManager()
     {
         return new ProductManager(
-            $this->createAttributeManager(),
             $this->createProductAbstractManager(),
             $this->createProductConcreteManager(),
             $this->getQueryContainer()
@@ -67,15 +52,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractManager()
     {
         return new ProductAbstractManager(
-            $this->createAttributeManager(),
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->getUrlFacade(),
             $this->getLocaleFacade(),
-            $this->createProductConcreteManager(),
             $this->createProductAbstractAssertion(),
             $this->createPluginAbstractManager(),
-            $this->createSkuGenerator()
+            $this->createSkuGenerator(),
+            $this->createAttributeEncoder()
         );
     }
 
@@ -85,14 +68,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteManager()
     {
         return new ProductConcreteManager(
-            $this->createAttributeManager(),
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->getUrlFacade(),
             $this->getLocaleFacade(),
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
-            $this->createPluginConcreteManager()
+            $this->createPluginConcreteManager(),
+            $this->createAttributeEncoder()
         );
     }
 
@@ -167,6 +149,34 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createAttributeKeyManager()
     {
         return new AttributeKeyManager($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
+     */
+    public function createAttributeEncoder()
+    {
+        return new AttributeEncoder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeMergerInterface
+     */
+    public function createAttributeMerger()
+    {
+        return new AttributeMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeLoaderInterface
+     */
+    public function createAttributeLoader()
+    {
+        return new AttributeLoader(
+            $this->getQueryContainer(),
+            $this->createAttributeMerger(),
+            $this->createAttributeEncoder()
+        );
     }
 
     /**

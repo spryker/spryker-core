@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 
@@ -29,18 +30,21 @@ class LocaleProvider
     /**
      * @param bool $includeDefault
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     *
+     * TODO: Check usages and fix to transfers
      */
     public function getLocaleCollection($includeDefault = false)
     {
         $result = [];
 
         if ($includeDefault) {
-            $result[] = ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE;
+            $result[] = (new LocaleTransfer())
+                ->setLocaleName(ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         }
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeCode => $localeTransfer) {
-            $result[] = $localeCode;
+            $result[] = $localeTransfer;
         }
 
         return $result;

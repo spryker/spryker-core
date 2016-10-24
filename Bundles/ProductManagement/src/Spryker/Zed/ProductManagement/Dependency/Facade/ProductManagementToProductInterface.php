@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductManagementToProductInterface
 {
@@ -92,13 +94,6 @@ interface ProductManagementToProductInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessor($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
@@ -126,5 +121,21 @@ interface ProductManagementToProductInterface
      * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null);
 
 }

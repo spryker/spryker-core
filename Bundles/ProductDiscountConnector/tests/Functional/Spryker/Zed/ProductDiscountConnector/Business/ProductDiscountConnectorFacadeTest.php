@@ -209,9 +209,12 @@ class ProductDiscountConnectorFacadeTest extends Test
     protected function createQuoteTransfer(SpyProductAbstract $abstractProductEntity)
     {
         $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku($abstractProductEntity->getSku());
-        $quoteTransfer->addItem($itemTransfer);
+
+        foreach ($abstractProductEntity->getSpyProducts() as $productEntity) {
+            $itemTransfer = new ItemTransfer();
+            $itemTransfer->setId($productEntity->getIdProduct());
+            $quoteTransfer->addItem($itemTransfer);
+        }
 
         return $quoteTransfer;
     }

@@ -8,10 +8,11 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Product\ProductConstants;
-use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
+use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface;
@@ -19,16 +20,10 @@ use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductConcreteManager implements ProductConcreteManagerInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    protected $attributeManager;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -39,11 +34,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
     protected $touchFacade;
-
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
-     */
-    protected $urlFacade;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
@@ -66,33 +56,35 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     protected $pluginConcreteManager;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
+     * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
+     */
+    private $attributeEncoder;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface $productAbstractAssertion
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
      * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface $pluginConcreteManager
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      */
     public function __construct(
-        AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
         ProductToTouchInterface $touchFacade,
-        ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade,
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion,
-        PluginConcreteManagerInterface $pluginConcreteManager
+        PluginConcreteManagerInterface $pluginConcreteManager,
+        AttributeEncoderInterface $attributeEncoder
     ) {
-        $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
-        $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->productConcreteAssertion = $productConcreteAssertion;
         $this->pluginConcreteManager = $pluginConcreteManager;
+        $this->attributeEncoder = $attributeEncoder;
     }
 
     /**
@@ -126,7 +118,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $idProductConcrete = $productConcreteEntity->getPrimaryKey();
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-        $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+        $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
 
         $this->pluginConcreteManager->triggerAfterCreatePlugins($productConcreteTransfer);
 
@@ -167,7 +159,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $idProductConcrete = $productConcreteEntity->getPrimaryKey();
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
-        $this->attributeManager->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+        $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
 
         $this->pluginConcreteManager->triggerAfterUpdatePlugins($productConcreteTransfer);
 
@@ -344,11 +336,13 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
     {
-        return $this->attributeManager->getProductNameFromLocalizedAttributes(
-            (array)$productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer,
-            $productConcreteTransfer->getSku()
-        );
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+                return $localizedAttribute->getName();
+            }
+        }
+
+        return $productConcreteTransfer->getSku();
     }
 
     /**
@@ -366,7 +360,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->requireFkProductAbstract()
             ->getFkProductAbstract();
 
-        $encodedAttributes = $this->attributeManager->encodeAttributes(
+        $encodedAttributes = $this->attributeEncoder->encodeAttributes(
             $productConcreteTransfer->getAttributes()
         );
 
@@ -414,16 +408,49 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         foreach ($productAttributeCollection as $attributeEntity) {
             $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
-            $localizedAttributesTransfer = $this->attributeManager->createLocalizedAttributesTransfer(
-                $attributeEntity->toArray(),
-                $attributeEntity->getAttributes(),
-                $localeTransfer
-            );
+            $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+                ->fromArray($attributeEntity->toArray(), true)
+                ->setAttributes($this->attributeEncoder->decodeAttributes($attributeEntity->getAttributes()))
+                ->setLocale($localeTransfer);
 
             $productTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
         return $productTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function persistProductConcreteLocalizedAttributes(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
+
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $locale = $localizedAttributes->getLocale();
+            $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());
+
+            $localizedProductAttributesEntity = $this->productQueryContainer
+                ->queryProductConcreteAttributeCollection($idProductConcrete, $locale->getIdLocale())
+                ->findOneOrCreate();
+
+            $localizedProductAttributesEntity
+                ->setFkProduct($idProductConcrete)
+                ->setFkLocale($locale->requireIdLocale()->getIdLocale())
+                ->setName($localizedAttributes->requireName()->getName())
+                ->setAttributes($jsonAttributes)
+                ->setDescription($localizedAttributes->getDescription());
+
+            $localizedProductAttributesEntity->save();
+        }
+
+        $this->productQueryContainer->getConnection()->commit();
     }
 
 }

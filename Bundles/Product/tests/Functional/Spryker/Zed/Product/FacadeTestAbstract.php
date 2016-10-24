@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
@@ -185,11 +184,6 @@ class FacadeTestAbstract extends Test
         $utilTextBridge = new ProductToUtilTextBridge($this->utilTextFacade);
         $utilEncodingBridge = new ProductToUtilEncodingBridge($this->utilEncodingFacade);
 
-        $attributeManager = new AttributeManager(
-            $this->productQueryContainer,
-            $utilEncodingBridge
-        );
-
         $productAbstractAssertion = new ProductAbstractAssertion(
             $this->productQueryContainer
         );
@@ -207,14 +201,13 @@ class FacadeTestAbstract extends Test
         );
 
         $this->productConcreteManager = new ProductConcreteManager(
-            $attributeManager,
             $this->productQueryContainer,
             $touchBridge,
-            $urlBridge,
             $localeBridge,
             $productAbstractAssertion,
             $productConcreteAssertion,
-            $productConcretePluginManager
+            $productConcretePluginManager,
+            $productBusinessFactory->createAttributeEncoder()
         );
 
         $abstractPluginManager = new PluginAbstractManager(
@@ -226,15 +219,13 @@ class FacadeTestAbstract extends Test
         );
 
         $this->productAbstractManager = new ProductAbstractManager(
-            $attributeManager,
             $this->productQueryContainer,
             $touchBridge,
-            $urlBridge,
             $localeBridge,
-            $this->productConcreteManager,
             $productAbstractAssertion,
             $abstractPluginManager,
-            new SkuGenerator($utilTextBridge)
+            new SkuGenerator($utilTextBridge),
+            $productBusinessFactory->createAttributeEncoder()
         );
 
         $urlGenerator = new ProductUrlGenerator(
@@ -252,7 +243,6 @@ class FacadeTestAbstract extends Test
         );
 
         $this->productManager = new ProductManager(
-            $attributeManager,
             $this->productAbstractManager,
             $this->productConcreteManager,
             $this->productQueryContainer

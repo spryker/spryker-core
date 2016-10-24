@@ -22,13 +22,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 {
 
     /**
-     * @param int|null $idProductAbstract
-     *
      * @return array
      */
-    protected function getDefaultFormFields($idProductAbstract = null)
+    protected function getDefaultFormFields()
     {
-        $formData = parent::getDefaultFormFields($idProductAbstract);
+        $formData = parent::getDefaultFormFields();
 
         unset($formData[ProductFormAdd::FORM_PRICE_AND_TAX]);
         $formData[ProductFormAdd::FORM_PRICE_AND_TAX] = [
@@ -104,8 +102,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $generalFormName = ProductFormAdd::getGeneralFormName($localeCode);
             $seoFormName = ProductFormAdd::getSeoFormName($localeCode);
 
-            //load only data for defined stores/locales
-            if (!in_array($localeCode, $localeCollection)) {
+            if (!$this->hasLocale($localeCode, $localeCollection)) {
                 continue;
             }
 
@@ -169,8 +166,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();
             $formName = ProductFormAdd::getAbstractAttributeFormName($localeCode);
 
-            //load only data for defined stores/locales
-            if (!in_array($localeCode, $localeCollection)) {
+            if (!$this->hasLocale($localeCode, $localeCollection)) {
                 continue;
             }
 
@@ -208,6 +204,23 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData,
             $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete())
         );
+    }
+
+    /**
+     * @param string $localeCode
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     *
+     * @return bool
+     */
+    protected function hasLocale($localeCode, array $localeCollection)
+    {
+        foreach ($localeCollection as $localeTransfer) {
+            if ($localeTransfer->getLocaleName() === $localeCode) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

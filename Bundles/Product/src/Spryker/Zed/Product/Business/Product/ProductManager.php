@@ -8,17 +8,10 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    protected $attributeManager;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -35,13 +28,16 @@ class ProductManager implements ProductManagerInterface
      */
     protected $productConcreteManager;
 
+    /**
+     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
+     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     */
     public function __construct(
-        AttributeManagerInterface $attributeManager,
         ProductAbstractManagerInterface $productAbstractManager,
         ProductConcreteManagerInterface $productConcreteManager,
         ProductQueryContainerInterface $productQueryContainer
     ) {
-        $this->attributeManager = $attributeManager;
         $this->productAbstractManager = $productAbstractManager;
         $this->productConcreteManager = $productConcreteManager;
         $this->productQueryContainer = $productQueryContainer;
@@ -102,38 +98,6 @@ class ProductManager implements ProductManagerInterface
         $this->productQueryContainer->getConnection()->commit();
 
         return $idProductAbstract;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessor($idProductAbstract)
-    {
-        $attributeProcessor = new AttributeProcessor(); //TODO inject
-        $productAbstractTransfer = $this->productAbstractManager->getProductAbstractById($idProductAbstract);
-
-        if (!$productAbstractTransfer) {
-            return $attributeProcessor;
-        }
-
-        $concreteProductCollection = $this->productConcreteManager
-            ->getConcreteProductsByAbstractProductId($idProductAbstract);
-
-        return $this->attributeManager->buildAttributeProcessor($productAbstractTransfer, $concreteProductCollection);
-    }
-
-    /**
-     * @param string $abstractSku
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku)
-    {
-        $idProductAbstract = (int)$this->productAbstractManager->getProductAbstractIdBySku($abstractSku);
-
-        return $this->getProductAttributeProcessor($idProductAbstract);
     }
 
     /**

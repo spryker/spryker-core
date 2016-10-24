@@ -35,20 +35,6 @@ interface ProductManagerInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessor($idProductAbstract);
-
-    /**
-     * @param string $abstractSku
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku);
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return bool
      */
     public function isProductActive($idProductAbstract);

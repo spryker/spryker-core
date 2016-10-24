@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
 {
@@ -138,20 +139,6 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns class used for product attributes processing
-     * - Attributes are taken from product abstract and all product concretes
-     *   and merged together
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessor($idProductAbstract);
-
-    /**
-     * Specification:
      * - Finds product abstract based on product concrete SKU and returns product abstract ID
      *
      * @api
@@ -241,20 +228,6 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
-
-    /**
-     * Specification:
-     * - Returns class used for product attributes processing
-     * - Attributes are taken from product abstract and all product concretes
-     *   and merged together
-     *
-     * @api
-     *
-     * @param string $abstractSku
-     *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
-     */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku);
 
     /**
      * Specification:
@@ -599,5 +572,72 @@ interface ProductFacadeInterface
      * @return bool
      */
     public function isProductActive($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Returns an associative array of attribute key - attribute value pairs of a persisted product.
+     * - The result is a combination of the abstract product's attributes and all it's existing concretes' attributes.
+     * - If $localeTransfer is provided then localized abstract and concrete attributes are also part of the result.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Returns an associative array with attribute key - attribute value pairs of a persisted concrete product.
+     * - The result is a combination of the concrete's attributes and it's abstract's attributes.
+     * - If $localeTransfer is provided then localized concrete and abstract attributes are also part of the result.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Returns an associative array of attribute key - attribute value pairs.
+     * - The result is the correct inheritance combination of the provided raw product attribute data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RawProductAttributesTransfer $rawProductAttributesTransfer
+     *
+     * @return array
+     */
+    public function combineRawProductAttributes(RawProductAttributesTransfer $rawProductAttributesTransfer);
+
+    /**
+     * Specification:
+     * - Encodes an array of product attribute key - attribute value pairs to Json string.
+     *
+     * @api
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function encodeProductAttributes(array $attributes);
+
+    /**
+     * Specification:
+     * - Decodes product attributes Json string to an array of attribute key - attribute value pairs.
+     *
+     * @api
+     *
+     * @param string $attributes
+     *
+     * @return array
+     */
+    public function decodeProductAttributes($attributes);
 
 }

@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Product\ProductConstants;
-use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
+use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface;
@@ -18,16 +19,10 @@ use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractManager implements ProductAbstractManagerInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
-     */
-    protected $attributeManager;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -40,11 +35,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected $localeFacade;
@@ -53,11 +43,6 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @var \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface
      */
     protected $productAbstractAssertion;
-
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
-     */
-    protected $productConcreteManager;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface
@@ -70,36 +55,35 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     protected $skuGenerator;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
+     * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
+     */
+    private $attributeEncoder;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface $productAbstractAssertion
      * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface $pluginAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      */
     public function __construct(
-        AttributeManagerInterface $attributeManager,
         ProductQueryContainerInterface $productQueryContainer,
         ProductToTouchInterface $touchFacade,
-        ProductToUrlInterface $urlFacade,
         ProductToLocaleInterface $localeFacade,
-        ProductConcreteManagerInterface $productConcreteManager,
         ProductAbstractAssertionInterface $productAbstractAssertion,
         PluginAbstractManagerInterface $pluginAbstractManager,
-        SkuGeneratorInterface $skuGenerator
+        SkuGeneratorInterface $skuGenerator,
+        AttributeEncoderInterface $attributeEncoder
     ) {
-        $this->attributeManager = $attributeManager;
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
-        $this->urlFacade = $urlFacade;
         $this->localeFacade = $localeFacade;
-        $this->productConcreteManager = $productConcreteManager;
         $this->productAbstractAssertion = $productAbstractAssertion;
         $this->pluginAbstractManager = $pluginAbstractManager;
         $this->skuGenerator = $skuGenerator;
+        $this->attributeEncoder = $attributeEncoder;
     }
 
     /**
@@ -136,7 +120,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $idProductAbstract = $productAbstractEntity->getPrimaryKey();
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
-        $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerAfterCreatePlugins($productAbstractTransfer);
 
@@ -164,7 +148,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $productAbstractTransfer = $this->pluginAbstractManager->triggerBeforeUpdatePlugins($productAbstractTransfer);
 
         $this->persistEntity($productAbstractTransfer);
-        $this->attributeManager->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerAfterUpdatePlugins($productAbstractTransfer);
 
@@ -249,11 +233,13 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      */
     public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
     {
-        return $this->attributeManager->getProductNameFromLocalizedAttributes(
-            (array)$productAbstractTransfer->getLocalizedAttributes(),
-            $localeTransfer,
-            $productAbstractTransfer->getSku()
-        );
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+                return $localizedAttribute->getName();
+            }
+        }
+
+        return $productAbstractTransfer->getSku();
     }
 
     /**
@@ -308,7 +294,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      */
     protected function persistEntity(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $jsonAttributes = $this->attributeManager->encodeAttributes(
+        $jsonAttributes = $this->attributeEncoder->encodeAttributes(
             $productAbstractTransfer->getAttributes()
         );
 
@@ -340,16 +326,52 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         foreach ($productAttributeCollection as $attributeEntity) {
             $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
-            $localizedAttributesTransfer = $this->attributeManager->createLocalizedAttributesTransfer(
-                $attributeEntity->toArray(),
-                $attributeEntity->getAttributes(),
-                $localeTransfer
-            );
+            $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
+                ->fromArray($attributeEntity->toArray(), true)
+                ->setAttributes($this->attributeEncoder->decodeAttributes($attributeEntity->getAttributes()))
+                ->setLocale($localeTransfer);
 
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
+
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            $locale = $localizedAttributes->getLocale();
+            $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());
+
+            $localizedProductAttributesEntity = $this->productQueryContainer
+                ->queryProductAbstractAttributeCollection($idProductAbstract, $locale->getIdLocale())
+                ->findOneOrCreate();
+
+            $localizedProductAttributesEntity
+                ->setFkProductAbstract($idProductAbstract)
+                ->setFkLocale($locale->getIdLocale())
+                ->setName($localizedAttributes->getName())
+                ->setAttributes($jsonAttributes)
+                ->setDescription($localizedAttributes->getDescription())
+                ->setMetaTitle($localizedAttributes->getMetaTitle())
+                ->setMetaKeywords($localizedAttributes->getMetaKeywords())
+                ->setMetaDescription($localizedAttributes->getMetaDescription());
+
+            $localizedProductAttributesEntity->save();
+        }
+
+        $this->productQueryContainer->getConnection()->commit();
     }
 
 }

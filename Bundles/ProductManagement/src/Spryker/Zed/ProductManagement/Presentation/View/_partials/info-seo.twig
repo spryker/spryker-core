@@ -1,10 +1,10 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO (Meta Information)' } %}
     {% block widget_content %}
 
-        {% for localeName in localeCollection %}
+        {% for localeTransfer in localeCollection %}
             {% for localizedData in currentProduct.localized_attributes %}
-                {% if (localizedData.locale.locale_name == localeName ) %}
-                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.parent.loop.first)} %}
+                {% if (localizedData.locale.locale_name == localeTransfer.localeName ) %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.parent.loop.first), 'localeName': localeTransfer.localeName} %}
                         {% block content %}
                             <div class="row">
                                 <div class="col-xs-2"><b>Meta Title</b></div>

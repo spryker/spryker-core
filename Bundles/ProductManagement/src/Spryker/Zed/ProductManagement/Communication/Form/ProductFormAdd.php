@@ -196,8 +196,8 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
-        foreach ($localeCollection as $localeCode) {
-            $name = self::getGeneralFormName($localeCode);
+        foreach ($localeCollection as $localeTransfer) {
+            $name = self::getGeneralFormName($localeTransfer->getLocaleName());
             $this->addGeneralForm($builder, $name);
         }
 
@@ -213,8 +213,8 @@ class ProductFormAdd extends AbstractType
     protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
-        foreach ($localeCollection as $localeCode) {
-            $name = self::getSeoFormName($localeCode);
+        foreach ($localeCollection as $localeTransfer) {
+            $name = self::getSeoFormName($localeTransfer->getLocaleName());
             $this->addSeoForm($builder, $name, $options);
         }
 
@@ -230,10 +230,10 @@ class ProductFormAdd extends AbstractType
     protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
-        foreach ($localeCollection as $localeCode) {
-            $name = self::getAbstractAttributeFormName($localeCode);
-            $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
-            $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeCode]);
+        foreach ($localeCollection as $localeTransfer) {
+            $name = self::getAbstractAttributeFormName($localeTransfer->getLocaleName());
+            $localeTransfer = $this->localeProvider->getLocaleTransfer($localeTransfer->getLocaleName());
+            $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeTransfer->getLocaleName()]);
         }
 
         $defaultName = ProductFormAdd::getLocalizedPrefixName(
@@ -259,8 +259,8 @@ class ProductFormAdd extends AbstractType
     protected function addImageLocalizedForms(FormBuilderInterface $builder)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
-        foreach ($localeCollection as $localeCode) {
-            $name = self::getImagesFormName($localeCode);
+        foreach ($localeCollection as $localeTransfer) {
+            $name = self::getImagesFormName($localeTransfer->getLocaleName());
             $this->addImageSetForm($builder, $name);
         }
 

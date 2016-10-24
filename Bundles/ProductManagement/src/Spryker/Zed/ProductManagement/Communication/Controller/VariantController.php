@@ -27,8 +27,8 @@ class VariantController extends AbstractController
     const PARAM_ATTRIBUTE_GROUP = 'attribute_group';
     const PARAM_ATTRIBUTE_VALUES = 'attribute_values';
     const PARAM_LOCALIZED_ATTRIBUTE_VALUES = 'localized_attribute_values';
-    const PARAM_ID_PRODUCT_CONCRETE = 'id_product_concrete';
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    const PARAM_ID_PRODUCT_CONCRETE = 'id-product';
+    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ACTIVATE = 'activate';
 
     /**
@@ -88,7 +88,7 @@ class VariantController extends AbstractController
             ->activateProductConcrete($idProductConcrete);
 
         $this->addSuccessMessage('Product was activated.');
-        $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductAbstract);
+        $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductConcrete);
 
         return $this->redirectResponse($redirectUrl);
     }
@@ -108,7 +108,7 @@ class VariantController extends AbstractController
             ->deactivateProductConcrete($idProductConcrete);
 
         $this->addSuccessMessage('Product was deactivated.');
-        $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductAbstract);
+        $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductConcrete);
 
         return $this->redirectResponse($redirectUrl);
     }

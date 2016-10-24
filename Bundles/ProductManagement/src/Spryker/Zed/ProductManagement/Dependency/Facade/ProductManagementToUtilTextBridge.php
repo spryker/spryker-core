@@ -13,14 +13,14 @@ class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextIn
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
-    protected $utilFacade;
+    protected $utilTextFacade;
 
     /**
-     * @param \Spryker\Zed\UtilText\Business\UtilTextFacadeInterface $utilFacade
+     * @param \Spryker\Zed\UtilText\Business\UtilTextFacadeInterface $utilTextFacade
      */
-    public function __construct($utilFacade)
+    public function __construct($utilTextFacade)
     {
-        $this->utilFacade = $utilFacade;
+        $this->utilTextFacade = $utilTextFacade;
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextIn
      */
     public function generateSlug($value)
     {
-        return $this->utilFacade->generateSlug($value);
+        return $this->utilTextFacade->generateSlug($value);
     }
 
 }

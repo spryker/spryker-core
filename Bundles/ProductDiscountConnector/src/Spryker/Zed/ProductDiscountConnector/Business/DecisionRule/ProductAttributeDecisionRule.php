@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductDiscountConnector\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface;
@@ -59,12 +60,10 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-        $attributeProcessor = $this->productFacade->getProductAttributeProcessorByAbstractSku(
-            $currentItemTransfer->getAbstractSku()
-        );
+        $productConcreteTransfer = $this->createProductConcreteTransfer($currentItemTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $attributes = $attributeProcessor->mergeAttributes($localeTransfer->getLocaleName());
+            $attributes = $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
             foreach ($attributes as $attribute => $value) {
                 if ($clauseTransfer->getAttribute() !== $attribute) {
                     continue;
@@ -77,6 +76,19 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function createProductConcreteTransfer(ItemTransfer $currentItemTransfer)
+    {
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete($currentItemTransfer->requireId()->getId());
+
+        return $productConcreteTransfer;
     }
 
 }

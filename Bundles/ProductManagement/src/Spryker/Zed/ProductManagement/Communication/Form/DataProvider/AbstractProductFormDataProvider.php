@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -23,8 +24,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInte
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessor;
-use Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -144,19 +143,18 @@ class AbstractProductFormDataProvider
      */
     public function getOptions($idProductAbstract = null)
     {
-        $isNew = $idProductAbstract === null;
-        $attributeProcessor = $this->productFacade->getProductAttributeProcessor($idProductAbstract);
-
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
-        $localizedAttributeOptions = [];
-        foreach ($localeCollection as $localeCode) {
-            $localizedAttributeOptions[$localeCode] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, $localeCode, $isNew);
-        }
-        $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($attributeProcessor, null, $isNew);
+        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
 
+        $localizedAttributeOptions = [];
+        foreach ($localeCollection as $localeTransfer) {
+            $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);
+        }
+        $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, null);
+
+        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_SUPER] = $this->convertVariantAttributesToFormOptions($productAbstractTransfer);
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
-        $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_SUPER] = $this->convertVariantAttributesToFormOptions($attributeProcessor, $isNew);
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
@@ -165,11 +163,9 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param int|null $idProductAbstract
-     *
      * @return array
      */
-    protected function getDefaultFormFields($idProductAbstract = null)
+    protected function getDefaultFormFields()
     {
         $data = [
             ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
@@ -226,8 +222,7 @@ class AbstractProductFormDataProvider
 
         $defaults = [];
         $localeCollection = $this->localeProvider->getLocaleCollection();
-        foreach ($localeCollection as $localeCode) {
-            $localeTransfer = $this->localeProvider->getLocaleTransfer($localeCode);
+        foreach ($localeCollection as $localeTransfer) {
             $data = [];
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
@@ -243,7 +238,7 @@ class AbstractProductFormDataProvider
                 $data[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
             }
 
-            $formName = ProductFormAdd::getImagesFormName($localeCode);
+            $formName = ProductFormAdd::getImagesFormName($localeTransfer->getLocaleName());
             $result[$formName] = array_values($data);
         }
 
@@ -284,8 +279,8 @@ class AbstractProductFormDataProvider
         $availableLocales = $this->localeProvider->getLocaleCollection();
 
         $result = [];
-        foreach ($availableLocales as $id => $localeCode) {
-            $key = ProductFormAdd::getGeneralFormName($localeCode);
+        foreach ($availableLocales as $localeTransfer) {
+            $key = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
             $result[$key] = [
                 GeneralForm::FIELD_NAME => null,
                 GeneralForm::FIELD_DESCRIPTION => null,
@@ -303,8 +298,8 @@ class AbstractProductFormDataProvider
         $availableLocales = $this->localeProvider->getLocaleCollection();
 
         $result = [];
-        foreach ($availableLocales as $id => $localeCode) {
-            $key = ProductFormAdd::getSeoFormName($localeCode);
+        foreach ($availableLocales as $localeTransfer) {
+            $key = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());
             $result[$key] = [
                 SeoForm::FIELD_META_TITLE => null,
                 SeoForm::FIELD_META_KEYWORDS => null,
@@ -320,8 +315,7 @@ class AbstractProductFormDataProvider
      */
     protected function getAttributeVariantDefaultFields()
     {
-        $attributeProcessor = new AttributeProcessor();
-        return $this->convertVariantAttributesToFormValues($attributeProcessor, true);
+        return $this->convertVariantAttributesToFormValues(true);
     }
 
     /**
@@ -330,17 +324,15 @@ class AbstractProductFormDataProvider
     protected function getAttributeAbstractDefaultFields()
     {
         $availableLocales = $this->localeProvider->getLocaleCollection();
-        $attributeProcessor = $this->productFacade->getProductAttributeProcessor(null);
 
         $result = [];
-        foreach ($availableLocales as $id => $localeCode) {
-            $key = ProductFormAdd::getAbstractAttributeFormName($localeCode);
-            $data = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, $localeCode, true);
-            $result[$key] = $data;
+        foreach ($availableLocales as $localeTransfer) {
+            $key = ProductFormAdd::getAbstractAttributeFormName($localeTransfer->getLocaleName());
+            $result[$key] = $this->convertAbstractLocalizedAttributesToFormValues(true);
         }
 
         $defaultKey = ProductFormAdd::getLocalizedPrefixName(ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT, ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
-        $result[$defaultKey] = $this->convertAbstractLocalizedAttributesToFormValues($attributeProcessor, null, true);
+        $result[$defaultKey] = $this->convertAbstractLocalizedAttributesToFormValues(true);
 
         return $result;
     }
@@ -354,8 +346,8 @@ class AbstractProductFormDataProvider
         $data = $this->getImageFields();
 
         $result = [];
-        foreach ($availableLocales as $id => $localeCode) {
-            $key = ProductFormAdd::getImagesFormName($localeCode);
+        foreach ($availableLocales as $localeTransfer) {
+            $key = ProductFormAdd::getImagesFormName($localeTransfer->getLocaleName());
             $result[$key] = [$data];
         }
 
@@ -417,20 +409,12 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     * @param string|null $localeCode
      * @param bool|false $isNew
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
+    protected function convertAbstractLocalizedAttributesToFormValues($isNew = false)
     {
-        if ($localeCode === null) {
-            $attributes = $attributeProcessor->mergeAttributes($localeCode);
-        } else {
-            $attributes = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
-        }
-
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $attributeValue = isset($attributes[$type]) ? $attributes[$type] : null;
@@ -446,19 +430,16 @@ class AbstractProductFormDataProvider
             ];
         }
 
-        $productValues = $this->getProductAttributesFormValues($attributes);
-
-        return array_merge($productValues, $values);
+        return $values;
     }
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     * @param string|null $localeCode
-     * @param bool|false $isNew
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $localeCode = null, $isNew = false)
+    protected function convertAbstractLocalizedAttributesToFormOptions(ProductAbstractTransfer $productAbstractTransfer = null, LocaleTransfer $localeTransfer = null)
     {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -485,14 +466,23 @@ class AbstractProductFormDataProvider
             ];
         }
 
-        $productAttributeKeys = $attributeProcessor->getAllKeys();
-        if ($localeCode === null) { //default tab
-            $productAttributeValues = $attributeProcessor->getAbstractAttributes();
-        } else {
-            $productAttributeValues = $attributeProcessor->getAbstractLocalizedAttributesByLocaleCode($localeCode);
+        $productAttributeValues = [];
+        $productAttributeKeys = [];
+        if ($productAbstractTransfer) {
+            if ($localeTransfer) {
+                foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
+                    if ($localizedAttributeTransfer->getLocale()->getLocaleName() === $localeTransfer->getLocaleName()) {
+                        $productAttributeValues = $localizedAttributeTransfer->getAttributes();
+                    }
+                }
+            } else {
+                $productAttributeValues = $productAbstractTransfer->getAttributes();
+            }
+
+            $productAttributeKeys = $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
         }
 
-        foreach ($productAttributeKeys as $type => $tmp) {
+        foreach ($productAttributeKeys as $type) {
             $isDefined = $this->attributeTransferCollection->has($type);
 
             $isProductSpecificAttribute = true;
@@ -531,12 +521,11 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
      * @param bool|false $isNew
      *
      * @return array
      */
-    protected function convertVariantAttributesToFormValues(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    protected function convertVariantAttributesToFormValues($isNew = false)
     {
         $productAttributes = [];
 
@@ -565,18 +554,26 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface $attributeProcessor
-     * @param bool|false $isNew
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstractTransfer
      *
      * @return array
      */
-    protected function convertVariantAttributesToFormOptions(AttributeProcessorInterface $attributeProcessor, $isNew = false)
+    protected function convertVariantAttributesToFormOptions(ProductAbstractTransfer $productAbstractTransfer = null)
     {
-        $productAttributeKeys = $attributeProcessor->getAllKeys();
+        $productAttributeKeys = [];
+        if ($productAbstractTransfer) {
+            foreach ($this->localeProvider->getLocaleCollection() as $localeTransfer) {
+                $productAttributeKeys = array_unique(array_merge(
+                    $productAttributeKeys,
+                    $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer)
+                ));
+            }
+        }
+
         $productAttributeValues = [];
 
         $values = [];
-        foreach ($productAttributeKeys as $type => $tmp) {
+        foreach ($productAttributeKeys as $type) {
             $isDefined = $this->attributeTransferCollection->has($type);
 
             $isProductSpecificAttribute = true;

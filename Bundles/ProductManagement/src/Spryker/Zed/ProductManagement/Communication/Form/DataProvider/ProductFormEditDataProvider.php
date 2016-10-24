@@ -59,8 +59,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $generalFormName = ProductFormAdd::getGeneralFormName($localeCode);
             $seoFormName = ProductFormAdd::getSeoFormName($localeCode);
 
-            //load only data for defined stores/locales
-            if (!in_array($localeCode, $localeCollection)) {
+            if (!$this->hasLocale($localeCode, $localeCollection)) {
                 continue;
             }
 
@@ -108,8 +107,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();
             $formName = ProductFormAdd::getAbstractAttributeFormName($localeCode);
 
-            //load only data for defined stores/locales
-            if (!in_array($localeCode, $localeCollection)) {
+            if (!$this->hasLocale($localeCode, $localeCollection)) {
                 continue;
             }
 
@@ -165,6 +163,23 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $localeCode
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     *
+     * @return bool
+     */
+    protected function hasLocale($localeCode, array $localeCollection)
+    {
+        foreach ($localeCollection as $localeTransfer) {
+            if ($localeTransfer->getLocaleName() === $localeCode) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

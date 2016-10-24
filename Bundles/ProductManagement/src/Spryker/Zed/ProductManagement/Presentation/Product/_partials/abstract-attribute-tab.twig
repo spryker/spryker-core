@@ -21,11 +21,11 @@
     {% endblock %}
 {% endembed %}
 
-{% for localeName in localeCollection %}
-    {% set formKey = 'attribute_abstract_' ~ localeName %}
+{% for localeTransfer in localeCollection %}
+    {% set formKey = 'attribute_abstract_' ~ localeTransfer.localeName %}
 
     {% if form[formKey] is defined %}
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': localeTransfer.localeName} %}
             {% block content %}
                 <div class='row'>
                     {% for inputGroup in form[formKey] %}

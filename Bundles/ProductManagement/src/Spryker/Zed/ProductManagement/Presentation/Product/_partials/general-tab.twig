@@ -8,12 +8,12 @@
 
 {{ form_row(form.sku) }}
 
-{% for localeName in localeCollection %}
-    {% set formKey = 'general_' ~ localeName %}
+{% for localeTransfer in localeCollection %}
+    {% set formKey = 'general_' ~ localeTransfer.localeName %}
 
     {% if form[formKey] is defined %}
 
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first)} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
             {% block content %}
                 {% for input in form[formKey] %}
                     <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">

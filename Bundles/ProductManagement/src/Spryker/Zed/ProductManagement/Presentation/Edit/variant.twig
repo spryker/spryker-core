@@ -1,6 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% form_theme form '@ProductManagement/_partials/no-label-checkbox-theme.twig' %}
+{% form_theme form with [
+    '@ProductManagement/_partials/no-label-checkbox-theme.twig',
+    '@ProductManagement/_partials/product-image-set-theme.twig',
+    '@ProductManagement/_partials/product-image-collection-theme.twig',
+]%}
 
 {% if widget_title is not defined %}
     {% set widget_title = ('Edit Product Concrete' | trans) ~ ': ' ~ currentProduct.sku %}
@@ -20,13 +24,13 @@
     {% if currentProduct.is_active == 0 %}
         {{ viewActionButton(
              url('/product-management/variant/activate-product-variant', {
-                    'id_product_concrete': idProduct,
-                    'id_product_abstract': idProductAbstract}), 'Activate' | trans) }}
+                    'id-product': idProduct,
+                    'id-product-abstract': idProductAbstract}), 'Activate' | trans) }}
     {% else %}
         {{ removeActionButton(
             url('/product-management/variant/deactivate-product-variant', {
-                'id_product_concrete': idProduct,
-                'id_product_abstract': idProductAbstract}), 'Deactivate' | trans) }}
+                'id-product': idProduct,
+                'id-product-abstract': idProductAbstract}), 'Deactivate' | trans) }}
      {% endif %}
 
     {{ backActionButton('/product-management/edit?id-product-abstract=' ~ idProductAbstract, 'Edit Product Abstract' | trans) }}

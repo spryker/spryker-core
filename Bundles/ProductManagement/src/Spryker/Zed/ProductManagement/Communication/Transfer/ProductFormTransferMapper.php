@@ -117,7 +117,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param array $localeCollection
+     * @param LocaleTransfer[] $localeCollection
      * @param array $formData
      *
      * @return array
@@ -125,14 +125,14 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected function generateLocalizedData(array $localeCollection, array $formData)
     {
         $localizedData = [];
-        foreach ($localeCollection as $code) {
-            $formName = ProductFormAdd::getGeneralFormName($code);
-            $localizedData[$code] = $formData[$formName];
-        }
+        foreach ($localeCollection as $localeTransfer) {
+            $generalFormName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
+            $seoFormName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());
 
-        foreach ($localeCollection as $code) {
-            $formName = ProductFormAdd::getSeoFormName($code);
-            $localizedData[$code] = array_merge($localizedData[$code], $formData[$formName]);
+            $localizedData[$localeTransfer->getLocaleName()] = array_merge(
+                $formData[$generalFormName],
+                $formData[$seoFormName]
+            );
         }
 
         return $localizedData;
@@ -158,9 +158,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
         $localeCollection = $this->localeProvider->getLocaleCollection();
-        foreach ($localeCollection as $localeCode) {
-            $formName = ProductFormAdd::getGeneralFormName($localeCode);
-            $localeTransfer = $this->localeFacade->getLocale($localeCode);
+        foreach ($localeCollection as $localeTransfer) {
+            $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
 
             $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer(
                 $form->get($formName),
@@ -265,10 +264,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $attributes = [];
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
 
-        foreach ($localeCollection as $code) {
-            $formName = ProductFormAdd::getAbstractAttributeFormName($code);
+        foreach ($localeCollection as $localeTransfer) {
+            $formName = ProductFormAdd::getAbstractAttributeFormName($localeTransfer->getLocaleName());
             foreach ($data[$formName] as $type => $values) {
-                $attributes[$code][$type] = $values['value'];
+                $attributes[$localeTransfer->getLocaleName()][$type] = $values['value'];
             }
         }
 
@@ -343,16 +342,15 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $transferCollection = [];
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
 
-        foreach ($localeCollection as $localeCode) {
-            $formName = ProductFormAdd::getImagesFormName($localeCode);
+        foreach ($localeCollection as $localeTransfer) {
+            $formName = ProductFormAdd::getImagesFormName($localeTransfer->getLocaleName());
 
             $imageSetCollection = $form->get($formName);
             foreach ($imageSetCollection as $imageSet) {
                 $imageSetTransfer = (new ProductImageSetTransfer())
                     ->fromArray($imageSet->getData(), true);
 
-                if ($this->localeFacade->hasLocale($localeCode)) {
-                    $localeTransfer = $this->localeFacade->getLocale($localeCode);
+                if ($this->localeFacade->hasLocale($localeTransfer->getLocaleName())) {
                     $imageSetTransfer->setLocale($localeTransfer);
                 }
 

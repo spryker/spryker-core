@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 class ProductDiscountConnectorToProductBridge implements ProductDiscountConnectorToProductInterface
 {
 
@@ -24,13 +27,14 @@ class ProductDiscountConnectorToProductBridge implements ProductDiscountConnecto
     }
 
     /**
-     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return \Spryker\Zed\Product\Business\Attribute\AttributeProcessorInterface
+     * @return array
      */
-    public function getProductAttributeProcessorByAbstractSku($abstractSku)
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null)
     {
-        return $this->productFacade->getProductAttributeProcessorByAbstractSku($abstractSku);
+        return $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
     }
 
 }

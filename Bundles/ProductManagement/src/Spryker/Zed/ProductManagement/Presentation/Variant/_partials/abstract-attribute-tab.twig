@@ -5,11 +5,11 @@
     {% endfilter %}
 </div>
 
-{% for localeName in attributeLocaleCollection %}
-    {% set formKey = 'attribute_abstract_' ~ localeName %}
+{% for localeTransfer in attributeLocaleCollection %}
+    {% set formKey = 'attribute_abstract_' ~ localeTransfer.localeName %}
 
     {% if form[formKey] is defined %}
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first)} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
             {% block title %}
                 {% if localeName == 'default' %}
                     {{ 'Default' | trans }}
