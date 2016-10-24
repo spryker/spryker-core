@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Braintree;
 
 use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class BraintreeConfig extends AbstractBundleConfig
