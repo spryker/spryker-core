@@ -14,15 +14,12 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class ClassDefinition implements ClassDefinitionInterface
 {
 
+    const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+
     /**
      * @var string
      */
     private $name;
-
-    /**
-     * @var array
-     */
-    private $uses = [];
 
     /**
      * @var array
@@ -92,14 +89,6 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return array
-     */
-    public function getUses()
-    {
-        return $this->uses;
-    }
-
-    /**
      * @param array $properties
      *
      * @return void
@@ -154,23 +143,6 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
-        $this->addUseForType($property);
-    }
-
-    /**
-     * @param array $property
-     *
-     * @return void
-     */
-    private function addUseForType(array $property)
-    {
-        if ($this->isCollection($property) && !$this->isArray($property)) {
-            $transferName = ucfirst(str_replace('[]', '', $property['type']));
-            if ($transferName !== $this->getName()) {
-                $use = 'Generated\\Shared\\Transfer\\' . $transferName;
-                $this->uses[$use] = $use;
-            }
-        }
     }
 
     /**
@@ -186,7 +158,7 @@ class ClassDefinition implements ClassDefinitionInterface
         foreach ($properties as $property) {
             $this->assertProperty($property);
 
-            $property['type_fully_qualified'] = $property['type'];
+            $property[self::TYPE_FULLY_QUALIFIED] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
             $property['propertyConst'] = $this->getPropertyConstantName($property);
@@ -194,14 +166,14 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
                 $property['is_transfer'] = true;
-                $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\';
+                $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-                    $property['type_fully_qualified'] .= str_replace('[]', '', $property['type']);
+                    $property[self::TYPE_FULLY_QUALIFIED] .= str_replace('[]', '', $property['type']);
                     $property['is_collection'] = true;
                 } else {
                     $property['type'] = $property['type'] . 'Transfer';
-                    $property['type_fully_qualified'] .= $property['type'];
+                    $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
                 }
             }
 
@@ -225,10 +197,24 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|' . $property['type'];
+            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         return $property['type'];
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    private function isTypeTransferObject(array $property)
+    {
+        return ($property['is_transfer']);
     }
 
     /**
@@ -243,7 +229,11 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|' . $property['type'];
+            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         return $property['type'];
@@ -257,7 +247,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getAddVar(array $property)
     {
         if ($this->isArray($property)) {
-            return 'mixed';
+            return 'array';
+        }
+
+        if ($this->isCollection($property)) {
+            return '\Generated\Shared\Transfer\\' . str_replace('[]', '', $property['type']);
         }
 
         return str_replace('[]', '', $property['type']);
@@ -388,7 +382,11 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\\ArrayObject|' . $property['type'];
+            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         return $property['type'];
@@ -484,11 +482,9 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
             'bundles' => $property['bundles'],
-            'typeHint' => null,
-            'hasDefaultNull' => null,
         ];
         $method = $this->addTypeHint($property, $method);
-        $method = $this->addDefaultNull($method['typeHint'], $property, $method);
+        $method = $this->addDefaultNull(null, $property, $method);
 
         $this->methods[$methodName] = $method;
     }
