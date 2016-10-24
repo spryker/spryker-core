@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Category\Dependency\Plugin;
 
-interface CategoryDeletePluginInterface
+interface CategoryDeleteRelationPluginInterface
 {
 
     /**

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Shared\Category\CategoryConstants;
@@ -47,6 +48,8 @@ class DeleteController extends AbstractController
             'form' => $form->createView(),
             'category' => $categoryEntity->toArray(),
             'subTrees' => $this->getSubTrees($categoryEntity),
+            'urls' => $this->getUrls($categoryEntity),
+            'relations' => $this->getRelations($categoryEntity),
         ]);
     }
 
@@ -80,8 +83,13 @@ class DeleteController extends AbstractController
         $subTrees = [];
 
         foreach ($categoryNodeCollection as $categoryNodeTransfer) {
-            $parentCategoryEntity = $this->getParentCategoryEntity($categoryNodeTransfer);
             $subTree = $this->getSubTree($categoryNodeTransfer->getIdCategoryNode());
+
+            if (count($subTree) === 0) {
+                continue;
+            }
+
+            $parentCategoryEntity = $this->getParentCategoryEntity($categoryNodeTransfer);
             $subTrees[] = [
                 'text' => $categoryEntity->getAttributes()->getFirst()->getName(),
                 'isMain' => $categoryNodeTransfer->getIsMain(),
@@ -127,9 +135,75 @@ class DeleteController extends AbstractController
         return $parentCategoryEntity;
     }
 
-    protected function getUrls()
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return array
+     */
+    protected function getUrls(SpyCategory $categoryEntity)
     {
+        $categoryNodeCollection = $this
+            ->getFacade()
+            ->getAllNodesByIdCategory($categoryEntity->getIdCategory());
 
+        $urls = [];
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $urlCollection = $this
+                ->getQueryContainer()
+                ->queryUrlByIdCategoryNode($categoryNodeEntity->getIdCategoryNode())
+                ->find();
+
+            foreach ($urlCollection as $urlEntity) {
+                $urls[] = $urlEntity->toArray();
+            }
+        }
+
+        return $urls;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return array
+     */
+    protected function getRelations(SpyCategory $categoryEntity)
+    {
+        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $categoryTransfer = $this->getCategoryTransferFromEntity($categoryEntity);
+        $relationPlugins = $this->getFactory()->getRelationReadPluginStack();
+        $relations = [];
+
+        foreach ($relationPlugins as $relationPlugin) {
+            $relations[] = [
+                'name' => $relationPlugin->getRelationName(),
+                'list' => $relationPlugin->getRelations($categoryTransfer, $localeTransfer),
+            ];
+        }
+
+        return $relations;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function getCategoryTransferFromEntity(SpyCategory $categoryEntity)
+    {
+        $categoryTransfer = (new CategoryTransfer())->fromArray($categoryEntity->toArray(), true);
+        $categoryNodeCollection = $categoryEntity->getNodes();
+
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $categoryNodeTransfer = (new NodeTransfer())->fromArray($categoryNodeEntity->toArray());
+
+            if ($categoryNodeEntity->getIsMain()) {
+                $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+            } else {
+                $categoryTransfer->addExtraParent($categoryNodeTransfer);
+            }
+        }
+
+        return $categoryTransfer;
     }
 
 }

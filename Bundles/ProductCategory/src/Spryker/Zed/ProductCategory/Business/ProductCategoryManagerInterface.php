@@ -40,6 +40,14 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductTransferCollectionByCategory($idCategory, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery[]

@@ -13,7 +13,6 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductCategory\Communication\Plugin\RemoveProductsAssignmentPlugin;
 
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -26,7 +25,8 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_GRAPH = 'graph plugin';
 
-    const PLUGIN_STACK_DELETE = 'delete plugin stack';
+    const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
+    const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,9 +51,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getGraphPlugin();
         };
 
-        $container[static::PLUGIN_STACK_DELETE] = function () {
-            return $this->getDeletePluginStack();
-        };
+        $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
+            return $this->getRelationDeletePluginStack();
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryDeletePluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryDeleteRelationPluginInterface[]
      */
-    protected function getDeletePluginStack()
+    protected function getRelationDeletePluginStack()
     {
         return [];
     }
@@ -85,7 +85,19 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new CategoryToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
+        $container[static::PLUGIN_STACK_RELATION_READ] = Container::share(function () {
+            return $this->getRelationReadPluginStack();
+        });
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryReadRelationPluginInterface[]
+     */
+    protected function getRelationReadPluginStack()
+    {
+        return [];
     }
 
 }

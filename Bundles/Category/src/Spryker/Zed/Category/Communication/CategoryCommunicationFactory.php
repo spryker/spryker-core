@@ -193,4 +193,12 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
         return new UrlTable($urlQuery);
     }
 
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryReadRelationPluginInterface[]
+     */
+    public function getRelationReadPluginStack()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_READ);
+    }
+
 }

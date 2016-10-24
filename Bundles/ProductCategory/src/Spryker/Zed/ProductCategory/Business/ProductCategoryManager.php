@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
@@ -147,6 +148,35 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductTransferCollectionByCategory(
+        $idCategory,
+        LocaleTransfer $localeTransfer
+    ) {
+        $productCollection = $this->getProductsByCategory($idCategory, $localeTransfer);
+        $productTransferCollection = [];
+
+        foreach ($productCollection as $productEntity) {
+            $abstractProductTransfer = (new ProductAbstractTransfer())->fromArray($productEntity->toArray(), true);
+
+            $localizedAttributesData = json_decode($productEntity->getVirtualColumn('abstract_localized_attributes'), true);
+            $localizedAttributesTransfer = new LocalizedAttributesTransfer();
+            $localizedAttributesTransfer->setName($productEntity->getVirtualColumn('name'));
+            $localizedAttributesTransfer->setLocale($localeTransfer);
+            $localizedAttributesTransfer->setAttributes($localizedAttributesData);
+            $abstractProductTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+
+            $productTransferCollection[] = $abstractProductTransfer;
+        }
+
+        return $productTransferCollection;
     }
 
     /**

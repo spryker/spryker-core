@@ -208,4 +208,20 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->removeMappings($idCategory);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer)
+    {
+        return $this
+            ->getFactory()
+            ->createProductCategoryManager()
+            ->getAbstractProductTransferCollectionByCategory($idCategory, $localeTransfer);
+    }
+
 }

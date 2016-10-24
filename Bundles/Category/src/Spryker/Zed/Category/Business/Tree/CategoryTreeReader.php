@@ -478,4 +478,17 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         return $this->treeFormatter->getCategoryTree();
     }
 
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function getChildNodes($idCategoryNode)
+    {
+        return $this
+            ->queryContainer
+            ->queryFirstLevelChildren($idCategoryNode)
+            ->find();
+    }
+
 }

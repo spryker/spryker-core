@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Plugin;
 
-use Spryker\Zed\Category\Dependency\Plugin\CategoryDeletePluginInterface;
+use Spryker\Zed\Category\Dependency\Plugin\CategoryDeleteRelationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  */
-class RemoveProductsAssignmentPlugin extends AbstractPlugin implements CategoryDeletePluginInterface
+class RemoveProductCategoryRelationPlugin extends AbstractPlugin implements CategoryDeleteRelationPluginInterface
 {
 
     /**

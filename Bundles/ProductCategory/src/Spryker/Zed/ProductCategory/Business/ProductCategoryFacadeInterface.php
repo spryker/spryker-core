@@ -148,4 +148,14 @@ interface ProductCategoryFacadeInterface
      */
     public function removeAllProductMappingsForCategory($idCategory);
 
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer);
+
 }
