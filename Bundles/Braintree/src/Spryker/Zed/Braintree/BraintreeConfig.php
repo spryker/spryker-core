@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Braintree;
 
 use Spryker\Shared\Braintree\BraintreeConstants;
-use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class BraintreeConfig extends AbstractBundleConfig
@@ -67,7 +66,7 @@ class BraintreeConfig extends AbstractBundleConfig
      */
     public final function getChannel()
     {
-        return ApiConstants::CHANNEL;
+        return \Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants::CHANNEL;
     }
 
 }
