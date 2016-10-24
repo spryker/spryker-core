@@ -10,7 +10,7 @@ namespace Spryker\Shared\Braintree;
 interface BraintreeConstants
 {
 
-    const BUNDLE_VERSION = '0.3.0';
+    const BUNDLE_VERSION = '1';
 
     const PROVIDER_NAME = 'Braintree';
 
