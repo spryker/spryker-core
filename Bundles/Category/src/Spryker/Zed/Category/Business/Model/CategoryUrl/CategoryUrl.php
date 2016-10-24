@@ -77,12 +77,25 @@ class CategoryUrl implements CategoryUrlInterface
      */
     protected function build(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
+        $pathParts = $this->getUrlPathPartsForCategoryNode($categoryNodeTransfer, $localeTransfer);
+
+        return $this->urlPathGenerator->generate($pathParts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getUrlPathPartsForCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
         $pathParts = $this->queryContainer->queryPath(
             $categoryNodeTransfer->getIdCategoryNode(),
             $localeTransfer->getIdLocale()
         )->find();
 
-        return $this->urlPathGenerator->generate($pathParts);
+        return $pathParts;
     }
 
     /**
@@ -116,7 +129,105 @@ class CategoryUrl implements CategoryUrlInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        // Updating URLs not yet supported
+        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $localizedCategoryAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
+
+        foreach ($localizedCategoryAttributesTransferCollection as $localizedAttributesTransfer) {
+            $localeTransfer = $localizedAttributesTransfer->getLocale();
+            $this->updateLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer);
+
+            $this->updateAllChildrenUrls($categoryNodeTransfer, $localeTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
+     * @return void
+     */
+    public function updateLocalizedUrlForNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        $urlTransfer = $this->getUrlTransferForNode($categoryNodeTransfer, $localeTransfer);
+
+        $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
+        $urlTransfer->setUrl($categoryNodeUrl);
+
+        try {
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+        } catch (UrlExistsException $exception) {
+            throw new CategoryUrlExistsException($exception->getMessage(), $exception->getCode(), $exception);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function getUrlTransferForNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->setResourceType(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE);
+        $urlTransfer->setResourceId($categoryNodeTransfer->getIdCategoryNode());
+        $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
+
+        $urlEntity = $this->getUrlForNode($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        if ($urlEntity) {
+            $urlTransfer->setIdUrl($urlEntity->getIdUrl());
+        }
+
+        return $urlTransfer;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     */
+    protected function getUrlForNode($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        $urlCollection = $this
+            ->queryContainer
+            ->queryUrlByIdCategoryNode($idCategoryNode)
+            ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->findOne();
+
+        return $urlCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function updateAllChildrenUrls(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        $childNodeCollection = $this->getAllChildNodes($categoryNodeTransfer, $localeTransfer);
+
+        foreach ($childNodeCollection as $childNodeEntity) {
+            $childNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray());
+            $this->updateLocalizedUrlForNode($childNodeTransfer, $localeTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getAllChildNodes(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this
+            ->queryContainer
+            ->queryChildren($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer->getIdLocale())
+            ->find();
     }
 
     /**
