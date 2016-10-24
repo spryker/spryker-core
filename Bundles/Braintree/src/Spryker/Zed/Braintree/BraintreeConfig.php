@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Braintree;
 
 use Spryker\Shared\Braintree\BraintreeConstants;
+use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class BraintreeConfig extends AbstractBundleConfig
@@ -59,6 +60,14 @@ class BraintreeConfig extends AbstractBundleConfig
     public function getIs3DSecure()
     {
         return $this->get(BraintreeConstants::IS_3D_SECURE, false);
+    }
+
+    /**
+     * @return string
+     */
+    public final function getChannel()
+    {
+        return ApiConstants::CHANNEL;
     }
 
 }
