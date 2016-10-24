@@ -12,10 +12,23 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Library\Json;
+use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 
 class ProductTransferMapper implements ProductTransferMapperInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
+     */
+    protected $attributeEncoder;
+
+    /**
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
+     */
+    public function __construct(AttributeEncoderInterface $attributeEncoder)
+    {
+        $this->attributeEncoder = $attributeEncoder;
+    }
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
@@ -27,7 +40,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->fromArray($productAbstractEntity->toArray(), true);
 
-        $attributes = $this->decodeAttributes($productAbstractEntity->getAttributes());
+        $attributes = $this->attributeEncoder->decodeAttributes($productAbstractEntity->getAttributes());
         $productAbstractTransfer->setAttributes($attributes);
 
         return $productAbstractTransfer;
@@ -58,7 +71,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         $productTransfer = (new ProductConcreteTransfer())
             ->fromArray($productEntity->toArray(), true);
 
-        $attributes = $this->decodeAttributes($productEntity->getAttributes());
+        $attributes = $this->attributeEncoder->decodeAttributes($productEntity->getAttributes());
         $productTransfer->setAttributes($attributes);
         $productTransfer->setIdProductConcrete($productEntity->getIdProduct());
 
@@ -83,22 +96,6 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         }
 
         return $transferList;
-    }
-
-    /**
-     * @param string $json
-     *
-     * @return array
-     */
-    protected function decodeAttributes($json)
-    {
-        $value = Json::decode($json, true);
-
-        if (!is_array($value)) {
-            $value = [];
-        }
-
-        return $value;
     }
 
 }

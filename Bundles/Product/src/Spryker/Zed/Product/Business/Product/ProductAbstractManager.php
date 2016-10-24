@@ -16,7 +16,7 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
-use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -60,6 +60,11 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     private $attributeEncoder;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
+     */
+    private $productTransferMapper;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -67,6 +72,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManagerInterface $pluginAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
+     * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -75,7 +81,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         ProductAbstractAssertionInterface $productAbstractAssertion,
         PluginAbstractManagerInterface $pluginAbstractManager,
         SkuGeneratorInterface $skuGenerator,
-        AttributeEncoderInterface $attributeEncoder
+        AttributeEncoderInterface $attributeEncoder,
+        ProductTransferMapperInterface $productTransferMapper
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -84,6 +91,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         $this->pluginAbstractManager = $pluginAbstractManager;
         $this->skuGenerator = $skuGenerator;
         $this->attributeEncoder = $attributeEncoder;
+        $this->productTransferMapper = $productTransferMapper;
     }
 
     /**
@@ -191,8 +199,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferMapper(); //TODO inject
-        $productAbstractTransfer = $transferGenerator->convertProductAbstract($productAbstractEntity);
+        $productAbstractTransfer = $this->productTransferMapper->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
 
         $this->pluginAbstractManager->triggerReadPlugins($productAbstractTransfer);

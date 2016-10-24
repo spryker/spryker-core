@@ -25,6 +25,7 @@ use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -58,7 +59,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createPluginAbstractManager(),
             $this->createSkuGenerator(),
-            $this->createAttributeEncoder()
+            $this->createAttributeEncoder(),
+            $this->createProductTransferMapper()
         );
     }
 
@@ -74,7 +76,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createPluginConcreteManager(),
-            $this->createAttributeEncoder()
+            $this->createAttributeEncoder(),
+            $this->createProductTransferMapper()
         );
     }
 
@@ -156,7 +159,15 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createAttributeEncoder()
     {
-        return new AttributeEncoder();
+        return new AttributeEncoder($this->getUtilEncodingFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Transfer\ProductTransferMapper
+     */
+    public function createProductTransferMapper()
+    {
+        return new ProductTransferMapper($this->createAttributeEncoder());
     }
 
     /**

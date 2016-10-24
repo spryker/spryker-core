@@ -7,15 +7,23 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
-use Spryker\Shared\Library\Json;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface;
 
 class AttributeEncoder implements AttributeEncoderInterface
 {
 
     /**
-     * @var TODO: replace static to facade
+     * @var ProductToUtilEncodingInterface
      */
     protected $utilEncodingFacade;
+
+    /**
+     * @param ProductToUtilEncodingInterface $utilEncodingFacade
+     */
+    public function __construct(ProductToUtilEncodingInterface $utilEncodingFacade)
+    {
+        $this->utilEncodingFacade = $utilEncodingFacade;
+    }
 
     /**
      * @param array $attributes
@@ -24,7 +32,7 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     public function encodeAttributes(array $attributes)
     {
-        return Json::encode($attributes);
+        return $this->utilEncodingFacade->encodeJson($attributes);
     }
 
     /**
@@ -34,7 +42,7 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     public function decodeAttributes($json)
     {
-        $value = Json::decode($json, true);
+        $value = $this->utilEncodingFacade->decodeJson($json, true);
 
         if (!is_array($value)) {
             $value = [];

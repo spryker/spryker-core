@@ -17,7 +17,7 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface;
-use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
+use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -61,6 +61,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     private $attributeEncoder;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
+     */
+    private $productTransferMapper;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -68,6 +73,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
      * @param \Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManagerInterface $pluginConcreteManager
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
+     * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -76,7 +82,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion,
         PluginConcreteManagerInterface $pluginConcreteManager,
-        AttributeEncoderInterface $attributeEncoder
+        AttributeEncoderInterface $attributeEncoder,
+        ProductTransferMapperInterface $productTransferMapper
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -85,6 +92,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->productConcreteAssertion = $productConcreteAssertion;
         $this->pluginConcreteManager = $pluginConcreteManager;
         $this->attributeEncoder = $attributeEncoder;
+        $this->productTransferMapper = $productTransferMapper;
     }
 
     /**
@@ -214,8 +222,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             return null;
         }
 
-        $transferGenerator = new ProductTransferMapper(); //TODO inject
-        $productTransfer = $transferGenerator->convertProduct($productEntity);
+        $productTransfer = $this->productTransferMapper->convertProduct($productEntity);
         $productTransfer = $this->loadProductData($productTransfer);
 
         return $productTransfer;
@@ -277,8 +284,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->joinSpyProductAbstract()
             ->find();
 
-        $transferGenerator = new ProductTransferMapper(); //TODO inject
-        $transferCollection = $transferGenerator->convertProductCollection($entityCollection);
+        $transferCollection = $this->productTransferMapper->convertProductCollection($entityCollection);
 
         $numberOfProducts = count($transferCollection);
         for ($a = 0; $a < $numberOfProducts; $a++) {

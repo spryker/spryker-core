@@ -207,7 +207,8 @@ class FacadeTestAbstract extends Test
             $productAbstractAssertion,
             $productConcreteAssertion,
             $productConcretePluginManager,
-            $productBusinessFactory->createAttributeEncoder()
+            $productBusinessFactory->createAttributeEncoder(),
+            $productBusinessFactory->createProductTransferMapper()
         );
 
         $abstractPluginManager = new PluginAbstractManager(
@@ -225,7 +226,8 @@ class FacadeTestAbstract extends Test
             $productAbstractAssertion,
             $abstractPluginManager,
             new SkuGenerator($utilTextBridge),
-            $productBusinessFactory->createAttributeEncoder()
+            $productBusinessFactory->createAttributeEncoder(),
+            $productBusinessFactory->createProductTransferMapper()
         );
 
         $urlGenerator = new ProductUrlGenerator(
