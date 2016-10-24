@@ -11,7 +11,7 @@ interface ProductOptionStorageInterface
     /**
      * @param int $idAbstractProduct
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */
     public function get($idAbstractProduct);
 

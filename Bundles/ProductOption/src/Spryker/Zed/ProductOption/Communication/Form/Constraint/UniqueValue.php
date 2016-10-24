@@ -25,4 +25,5 @@ class UniqueValue extends SymfonyConstraint
     {
         return $this->productOptionQueryContainer;
     }
+
 }

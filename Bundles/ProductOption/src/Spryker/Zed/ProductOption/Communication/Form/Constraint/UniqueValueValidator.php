@@ -24,8 +24,11 @@ class UniqueValueValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
+     * @return void
+     *
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      */
     public function validate($value, Constraint $constraint)
     {
@@ -52,7 +55,7 @@ class UniqueValueValidator extends ConstraintValidator
 
     /**
      * @param string $value
-     * @param UniqueValue $constraint
+     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue $constraint
      *
      * @return bool
      */
@@ -67,7 +70,7 @@ class UniqueValueValidator extends ConstraintValidator
 
     /**
      * @param string $submitedValue
-     * @param UniqueValue $constraint
+     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue $constraint
      *
      * @return bool
      */
@@ -106,4 +109,5 @@ class UniqueValueValidator extends ConstraintValidator
             }
         }
     }
+
 }

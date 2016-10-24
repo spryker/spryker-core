@@ -24,7 +24,7 @@ class ProductOptionClient extends AbstractClient implements ProductOptionClientI
      * @param int $idAbstractProduct
      * @param int $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */
     public function getProductOptions($idAbstractProduct, $localeName)
     {

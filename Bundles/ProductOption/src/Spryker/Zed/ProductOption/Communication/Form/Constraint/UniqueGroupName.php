@@ -25,4 +25,5 @@ class UniqueGroupName extends SymfonyConstraint
     {
         return $this->productOptionQueryContainer;
     }
+
 }

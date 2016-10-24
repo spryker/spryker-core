@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
+use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -16,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 
 class ProductOptionGroupForm extends AbstractType
 {

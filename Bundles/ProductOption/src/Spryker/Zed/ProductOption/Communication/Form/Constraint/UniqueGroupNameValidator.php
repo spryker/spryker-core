@@ -6,11 +6,10 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class UniqueGroupNameValidator extends ConstraintValidator
 {
@@ -19,9 +18,13 @@ class UniqueGroupNameValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
-     * @param Constraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @api
+     *
+     * @return void
+     *
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      */
     public function validate($value, Constraint $constraint)
     {
@@ -41,7 +44,7 @@ class UniqueGroupNameValidator extends ConstraintValidator
 
     /**
      * @param string $groupName
-     * @param UniqueGroupName $constraint
+     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName $constraint
      *
      * @return bool
      */
@@ -56,7 +59,7 @@ class UniqueGroupNameValidator extends ConstraintValidator
 
     /**
      * @param string $submittedGroupName
-     * @param UniqueGroupName $constraint
+     * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName $constraint
      *
      * @return bool
      */
@@ -95,4 +98,5 @@ class UniqueGroupNameValidator extends ConstraintValidator
     {
         return ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $groupName;
     }
+
 }

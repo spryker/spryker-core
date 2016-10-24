@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\ProductOption\Storage;
 
-use Generated\Shared\Transfer\ProductOptionGroupsTransfer;
-use Generated\Shared\Transfer\ProductOptionGroupTransfer;
-use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer;
+use Generated\Shared\Transfer\StorageProductOptionGroupTransfer;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
@@ -51,7 +50,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     /**
      * @param int $idAbstractProduct
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */
     public function get($idAbstractProduct)
     {
@@ -59,51 +58,32 @@ class ProductOptionStorage implements ProductOptionStorageInterface
 
         $productOptions = $this->storage->get($productOptionKey);
         if (!$productOptions || !is_array($productOptions)) {
-            return new ProductOptionGroupsTransfer();
+            return new StorageProductOptionGroupCollectionTransfer();
         }
 
-        return $this->hydrateProductOptionGroups($productOptions);
+        return $this->mapProductOptionGroups($productOptions);
     }
 
     /**
      * @param array $productOptions
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupsTransfer
+     * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */
-    protected function hydrateProductOptionGroups(array $productOptions)
+    protected function mapProductOptionGroups(array $productOptions)
     {
-        $productOptionGroupsTransfer = new ProductOptionGroupsTransfer();
+        $productOptionGroupsTransfer = new StorageProductOptionGroupCollectionTransfer();
         foreach ($productOptions as $productOption) {
-            if (count($productOption) === 0) {
+            if (!$productOption) {
                 continue;
             }
 
-            $productOptionGroupTransfer = new ProductOptionGroupTransfer();
-            $productOptionGroupTransfer->fromArray($productOption, true);
+            $storageProductOptionGroupTransfer = new StorageProductOptionGroupTransfer();
+            $storageProductOptionGroupTransfer->fromArray($productOption, true);
 
-            $this->hydrateProductOptionGroupValue($productOption['values'], $productOptionGroupTransfer);
-
-            $productOptionGroupsTransfer->addProductOptionGroup($productOptionGroupTransfer);
+            $productOptionGroupsTransfer->addProductOptionGroup($storageProductOptionGroupTransfer);
         }
 
         return $productOptionGroupsTransfer;
-    }
-
-    /**
-     * @param array $values
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     *
-     * @return void
-     */
-    protected function hydrateProductOptionGroupValue(
-        array $values,
-        ProductOptionGroupTransfer $productOptionGroupTransfer
-    ) {
-        foreach ($values as $value) {
-            $productOptionValueTransfer = new ProductOptionValueTransfer();
-            $productOptionValueTransfer->fromArray($value, true);
-            $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
-        }
     }
 
 }
