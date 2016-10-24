@@ -73,23 +73,22 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
      * @return void
      */
-    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $subscriber)
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
-        if ($subscriber->getFkCustomer() === null) {
+        $newsletterSubscriberTransfer->requireFkCustomer();
+
+        $subscriberEntity = $this->queryContainer->querySubscriber()
+            ->findOneByEmail($newsletterSubscriberTransfer->getEmail());
+        if ($subscriberEntity === null) {
             return;
         }
 
-        $subscriberEntity = $this->queryContainer->querySubscriber()
-            ->findOneByEmail($subscriber->getEmail());
-
-        if ($subscriberEntity !== null) {
-            $subscriberEntity->setFkCustomer($subscriber->getFkCustomer());
-            $subscriberEntity->save();
-        }
+        $subscriberEntity->setFkCustomer($newsletterSubscriberTransfer->getFkCustomer());
+        $subscriberEntity->save();
     }
 
     /**

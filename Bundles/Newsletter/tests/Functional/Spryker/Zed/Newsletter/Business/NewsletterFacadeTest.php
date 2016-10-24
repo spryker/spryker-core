@@ -11,8 +11,11 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
 use Spryker\Zed\Newsletter\Business\NewsletterFacade;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
  * @group Functional
@@ -211,6 +214,38 @@ class NewsletterFacadeTest extends Test
 
         $result = $response->getSubscriptionResults()[0];
         $this->assertFalse($result->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAssignCustomerToExistingSubscriber()
+    {
+        $newsletterSubscriberTransfer = $this->createSubscriber();
+
+        $subscriberQuery = SpyNewsletterSubscriberQuery::create();
+        $subscriberQuery->filterByEmail($newsletterSubscriberTransfer->getEmail());
+        $subscriberQuery->filterBySubscriberKey($newsletterSubscriberTransfer->getSubscriberKey());
+        $subscriberEntity = $subscriberQuery->findOneOrCreate();
+        if ($subscriberEntity->getFkCustomer()) {
+            $subscriberEntity->setFkCustomer(null);
+        }
+        $subscriberEntity->save();
+
+        $customerQuery = SpyCustomerQuery::create();
+        $customerQuery->filterByEmail($newsletterSubscriberTransfer->getEmail());
+        $customerQuery->filterByCustomerReference('123');
+        $customer = $customerQuery->findOneOrCreate();
+        $customer->save();
+
+        $newsletterSubscriberTransfer->setFkCustomer($customer->getIdCustomer());
+
+        $this->newsletterFacade->assignCustomerToExistingSubscriber($newsletterSubscriberTransfer);
+
+        $queryContainer = new NewsletterQueryContainer();
+        $subscriberEntity = $queryContainer->querySubscriber()->filterByEmail($newsletterSubscriberTransfer->getEmail())->findOne();
+
+        $this->assertSame($customer->getIdCustomer(), $subscriberEntity->getFkCustomer());
     }
 
     /**

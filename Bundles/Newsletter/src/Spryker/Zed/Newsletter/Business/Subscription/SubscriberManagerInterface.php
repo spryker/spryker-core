@@ -27,10 +27,10 @@ interface SubscriberManagerInterface
     public function createSubscriberFromTransfer(NewsletterSubscriberTransfer $newsletterSubscriberTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
      * @return void
      */
-    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $subscriber);
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer);
 
 }
