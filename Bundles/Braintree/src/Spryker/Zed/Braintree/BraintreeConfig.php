@@ -66,7 +66,7 @@ class BraintreeConfig extends AbstractBundleConfig
      */
     public final function getChannel()
     {
-        return \Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants::CHANNEL;
+        return 'Spryker_BT_DE';
     }
 
 }
