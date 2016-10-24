@@ -8,6 +8,7 @@
 
 {% block action %}
     {{ backActionButton('/category/root', 'List Categories' | trans) }}
+    {{ viewActionButton('/product-category/assign?id-category='~idCategory, 'Assign Products' | trans) }}
 {% endblock %}
 
 {% block content %}

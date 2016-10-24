@@ -44,12 +44,18 @@ class Category
     protected $queryContainer;
 
     /**
+     * @var array|\Spryker\Zed\Category\Dependency\Plugin\CategoryDeletePluginInterface
+     */
+    protected $deletePlugins;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryDeletePluginInterface[] $deletePlugins
      */
     public function __construct(
         CategoryInterface $category,
@@ -57,7 +63,8 @@ class Category
         CategoryAttributeInterface $categoryAttribute,
         CategoryUrlInterface $categoryUrl,
         CategoryExtraParentsInterface $categoryExtraParents,
-        CategoryQueryContainerInterface $queryContainer
+        CategoryQueryContainerInterface $queryContainer,
+        array $deletePlugins
     ) {
         $this->category = $category;
         $this->categoryNode = $categoryNode;
@@ -65,6 +72,7 @@ class Category
         $this->categoryUrl = $categoryUrl;
         $this->categoryExtraParents = $categoryExtraParents;
         $this->queryContainer = $queryContainer;
+        $this->deletePlugins = $deletePlugins;
     }
 
     /**
@@ -116,9 +124,24 @@ class Category
         $this->categoryUrl->delete($idCategory);
         $this->categoryNode->delete($idCategory);
         $this->categoryExtraParents->delete($idCategory);
+
+        $this->runDeletePlugins($idCategory);
+
         $this->category->delete($idCategory);
 
         $this->queryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    protected function runDeletePlugins($idCategory)
+    {
+        foreach ($this->deletePlugins as $deletePlugin) {
+            $deletePlugin->delete($idCategory);
+        }
     }
 
 }

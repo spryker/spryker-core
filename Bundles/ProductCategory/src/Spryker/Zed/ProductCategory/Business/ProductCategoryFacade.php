@@ -193,4 +193,19 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, $localeTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeAllProductMappingsForCategory($idCategory)
+    {
+        $this
+            ->getFactory()
+            ->createProductCategoryManager()
+            ->removeMappings($idCategory);
+    }
+
 }

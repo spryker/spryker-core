@@ -73,6 +73,13 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeMappings($idCategory);
+
+    /**
+     * @param int $idCategory
      * @param array $productIdsToUnAssign
      *
      * @return void

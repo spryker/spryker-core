@@ -111,7 +111,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryAttribute(),
             $this->createCategoryUrl(),
             $this->createCategoryExtraParents(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getDeletePluginStack()
         );
     }
 
@@ -177,6 +178,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         $categoryToucher = $this->createCategoryToucher();
 
         return new CategoryExtraParents($queryContainer, $closureTableWriter, $categoryToucher);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryDeletePluginInterface[]
+     */
+    protected function getDeletePluginStack()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_DELETE);
     }
 
     /**

@@ -139,4 +139,13 @@ interface ProductCategoryFacadeInterface
      */
     public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer);
 
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeAllProductMappingsForCategory($idCategory);
+
 }

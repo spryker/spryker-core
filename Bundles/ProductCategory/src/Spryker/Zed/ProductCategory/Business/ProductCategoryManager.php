@@ -466,7 +466,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      *
      * @return void
      */
-    protected function removeMappings($idCategory)
+    public function removeMappings($idCategory)
     {
         $assignedProducts = $this->productCategoryQueryContainer
             ->queryProductCategoryMappingsByCategoryId($idCategory)

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\Form\FormInterface;
@@ -45,6 +46,7 @@ class EditController extends AbstractController
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'idCategory' => $this->castId($request->query->get(CategoryConstants::PARAM_ID_CATEGORY)),
         ]);
     }
 

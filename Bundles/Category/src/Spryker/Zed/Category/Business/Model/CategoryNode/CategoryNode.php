@@ -92,7 +92,7 @@ class CategoryNode implements CategoryNodeInterface
 
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
 
-        $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity);
+        $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity->getIdCategoryNode());
     }
 
     /**
