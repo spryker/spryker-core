@@ -21,7 +21,6 @@
     "nestable": "github:ilmente/Nestable#v1.1.1",
     "pace": "github:hubspot/pace#v1.0.2",
     "select2": "github:select2/select2#4.0.2",
-    "slick-carousel": "~1.6.0",
     "summernote": "~0.8.1",
     "sweetalert": "~1.1.3"
   }

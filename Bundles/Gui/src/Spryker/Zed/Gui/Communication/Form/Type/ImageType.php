@@ -19,7 +19,6 @@ class ImageType extends AbstractType
     const OPTION_IMAGE_HEIGHT = 'image_height';
     const OPTION_IMAGE_TITLE = 'image_title';
     const OPTION_IMAGE_URL = 'image_url';
-    const OPTION_IMAGE_GALLERY = 'image_gallery';
 
     /**
      * @param \Symfony\Component\Form\FormView $view
@@ -34,7 +33,6 @@ class ImageType extends AbstractType
         $view->vars[self::OPTION_IMAGE_HEIGHT] = $options[self::OPTION_IMAGE_HEIGHT];
         $view->vars[self::OPTION_IMAGE_TITLE] = $options[self::OPTION_IMAGE_TITLE];
         $view->vars[self::OPTION_IMAGE_URL] = $options[self::OPTION_IMAGE_URL];
-        $view->vars[self::OPTION_IMAGE_GALLERY] = $options[self::OPTION_IMAGE_GALLERY];
     }
 
     /**
@@ -49,7 +47,6 @@ class ImageType extends AbstractType
             self::OPTION_IMAGE_HEIGHT => null,
             self::OPTION_IMAGE_TITLE => null,
             self::OPTION_IMAGE_URL => null,
-            self::OPTION_IMAGE_GALLERY => null,
         ]);
     }
 

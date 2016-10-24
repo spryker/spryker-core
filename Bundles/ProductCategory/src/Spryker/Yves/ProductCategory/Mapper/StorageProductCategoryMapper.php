@@ -8,6 +8,7 @@
 namespace Spryker\Yves\ProductCategory\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\StorageProductCategoryTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 
 class StorageProductCategoryMapper implements StorageProductCategoryMapperInterface
@@ -28,7 +29,7 @@ class StorageProductCategoryMapper implements StorageProductCategoryMapperInterf
         $persistedCategories = $persistedProduct[StorageProductTransfer::CATEGORIES];
         $categories = new ArrayObject();
         foreach ($persistedCategories as $category) {
-            $storageProductCategoryTransfer = new StorageProductTransfer();
+            $storageProductCategoryTransfer = new StorageProductCategoryTransfer();
             $storageProductCategoryTransfer->fromArray($category, true);
 
             $categories->append($storageProductCategoryTransfer);

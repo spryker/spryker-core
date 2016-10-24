@@ -23,7 +23,7 @@ class UrlManager implements UrlManagerInterface
 
     const ITEM_TYPE_URL = 'url';
 
-    const PRODUCT_ABSTRACT = 'product_abstract';  //TODO get from product bundle
+    const PRODUCT_ABSTRACT = 'product_abstract';
 
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface

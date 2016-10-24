@@ -4,7 +4,6 @@
     {% set image_height = '' %}
     {% set image_title = '' %}
     {% set image_url = '' %}
-    {% set image_gallery = '' %}
 
     {% if form.vars.image_width is defined and form.vars.image_width %}
         {% set image_width = 'width="' ~ form.vars.image_width ~ '"' %}
@@ -20,10 +19,6 @@
 
     {% if form.vars.image_url is defined and form.vars.image_url %}
         {% set image_url = form.vars.image_url %}
-    {% endif %}
-
-    {% if form.vars.image_gallery is defined and form.vars.image_gallery %}
-        {% set image_gallery = form.vars.image_gallery %}
     {% endif %}
 
     {% set form_group_errors_css = '' %}
@@ -42,7 +37,7 @@
 
     {{ form_label(form) }}
     {% if value != "" %}
-        <a href="{{ image_url }}" data-lightbox="{{ image_gallery }}">
+        <a href="{{ image_url }}">
             <img src="{{ value }}" {{ image_width|raw }} {{ image_height|raw }} class="{{ css|raw }}" {{ image_title|raw }} />
         </a>
     {% else %}
