@@ -119,8 +119,13 @@ class ProductVariantBuilder implements ProductVariantBuilderInterface
             );
             $mergedAbstractAttributes = $productVariantTransfer->getAttributes();
 
-            $productVariantTransfer->fromArray($concreteProductEntity->toArray(), true);
-            $productVariantTransfer->fromArray($localizedAttributeEntity->toArray(), true);
+            $abstractProduct = $concreteProductEntity->toArray();
+            unset($abstractProduct['attributes']);
+            $productVariantTransfer->fromArray($abstractProduct, true);
+
+            $localizedAttributes = $localizedAttributeEntity->toArray();
+            unset($localizedAttributes['attributes']);
+            $productVariantTransfer->fromArray($localizedAttributes, true);
 
             $localizedConcreteProductAttributes = Json::decode($localizedAttributeEntity->getAttributes(), true);
 
@@ -173,8 +178,15 @@ class ProductVariantBuilder implements ProductVariantBuilderInterface
         array $abstractProductAttributes
     ) {
         $productVariantTransfer = new ProductVariantTransfer();
-        $productVariantTransfer->fromArray($abstractProductEntity->toArray(), true);
-        $productVariantTransfer->fromArray($localizedAttributeEntity->toArray(), true);
+
+        $abstractProduct = $abstractProductEntity->toArray();
+        unset($abstractProduct['attributes']);
+        $productVariantTransfer->fromArray($abstractProduct, true);
+
+        $localizedAttributes = $localizedAttributeEntity->toArray();
+        unset($localizedAttributes['attributes']);
+        $productVariantTransfer->fromArray($localizedAttributes, true);
+
         $productVariantTransfer->setLocaleName($localizedAttributeEntity->getLocale()->getLocaleName());
 
         $localizedAttributes = array_merge(

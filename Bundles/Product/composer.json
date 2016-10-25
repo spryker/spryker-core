@@ -23,6 +23,7 @@
     "spryker/symfony": "^2.0.0",
     "spryker/tax": "^3.0.0",
     "spryker/touch": "^2.0.0",
+    "spryker/transfer": "^2.2.0",
     "spryker/url": "^2.0.0"
   },
   "require-dev": {
