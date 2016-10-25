@@ -37,7 +37,6 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         $this->discountFacade = $discountFacade;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer

@@ -148,7 +148,6 @@ class RatepayToGlossaryBridge implements RatepayToGlossaryInterface
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
 
-
     /**
      * @api
      *

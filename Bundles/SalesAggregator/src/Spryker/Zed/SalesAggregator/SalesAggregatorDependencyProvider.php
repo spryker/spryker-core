@@ -26,7 +26,6 @@ class SalesAggregatorDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_ORDER_AMOUNT_AGGREGATION = 'PLUGINS_ORDER_AMOUNT_AGGREGATION';
     const PLUGINS_ITEM_AMOUNT_AGGREGATION = 'PLUGINS_ITEM_AMOUNT_AGGREGATION';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

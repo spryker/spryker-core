@@ -322,7 +322,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
             ->recalculate($quoteTransfer);
     }
 
-
     /**
      * Specification:
      *  - Calculate tax amount from given price and rate

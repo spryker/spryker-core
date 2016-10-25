@@ -208,7 +208,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->filterByIdDiscountVoucher($idVoucher);
     }
 
-
     /**
      * @api
      *

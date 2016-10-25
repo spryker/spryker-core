@@ -40,7 +40,6 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
         $this->addTaxWithProductOptions($orderTransfer->getItems());
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

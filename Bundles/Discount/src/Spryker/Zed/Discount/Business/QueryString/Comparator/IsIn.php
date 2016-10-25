@@ -60,7 +60,6 @@ class IsIn implements ComparatorInterface
         ];
     }
 
-
     /**
      * @param string $withValue
      *

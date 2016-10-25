@@ -94,7 +94,6 @@ class VoucherController extends AbstractController
         return $this->generateCsvFromVouchers($idPool);
     }
 
-
     /**
      * @param int $idPool
      *

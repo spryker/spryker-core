@@ -34,7 +34,6 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
         $totalsTransfer->setTaxTotal($taxTotalTransfer);
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

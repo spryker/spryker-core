@@ -79,7 +79,6 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MetaDataProvider::class, $collectorProvider);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory|null $discountBusinessFactoryMock
      *
@@ -101,7 +100,6 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMock(DiscountBusinessFactory::class);
     }
-
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators

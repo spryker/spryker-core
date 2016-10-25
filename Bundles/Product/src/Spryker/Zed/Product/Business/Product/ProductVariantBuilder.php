@@ -142,7 +142,6 @@ class ProductVariantBuilder implements ProductVariantBuilderInterface
         return $productVariants;
     }
 
-
     /**
      * @param array $abstractProductVariants
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductLocalizedAttributes $localizedAttributeEntity

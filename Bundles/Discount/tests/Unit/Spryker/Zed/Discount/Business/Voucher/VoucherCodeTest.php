@@ -64,7 +64,6 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1,  $updated);
     }
 
-
     /**
      * @return void
      */
