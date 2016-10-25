@@ -72,7 +72,7 @@ class TransferValidator implements TransferValidatorInterface
             $result = $result & $this->validateDefinition($bundle, $definition, $options);
         }
 
-        return $result;
+        return (bool)$result;
     }
 
     /**
