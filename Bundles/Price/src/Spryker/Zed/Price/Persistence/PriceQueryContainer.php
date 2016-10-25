@@ -134,4 +134,22 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
             ->filterByIdPriceProduct($idPriceProduct);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryProductAbstractPriceByIdConcreteProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductQuery()
+                    ->filterByIdProduct($idProduct)
+                ->endUse()
+            ->endUse();
+    }
+
 }

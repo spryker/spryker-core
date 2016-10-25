@@ -131,6 +131,13 @@ class Reader implements ReaderInterface
             ->findOne();
 
         if (!$priceEntity) {
+            $priceEntity = $this->queryContainer
+                ->queryProductAbstractPriceByIdConcreteProduct($idProduct)
+                ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+                ->findOne();
+        }
+
+        if (!$priceEntity) {
             return null;
         }
 
