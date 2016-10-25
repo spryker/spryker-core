@@ -23,6 +23,8 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Spryker\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander
@@ -36,6 +38,8 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
@@ -60,6 +64,8 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function createProductQuery()

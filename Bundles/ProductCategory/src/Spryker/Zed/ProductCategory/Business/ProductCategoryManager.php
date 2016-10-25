@@ -27,6 +27,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
@@ -37,11 +39,15 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $productCategoryQueryContainer;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected $productFacade;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected $categoryFacade;
@@ -52,11 +58,15 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $touchFacade;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     protected $cmsFacade;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
@@ -89,6 +99,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -104,6 +116,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -128,6 +142,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -194,6 +210,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
@@ -291,6 +309,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param array $productPreConfigList
      *
@@ -335,6 +355,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -352,6 +374,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -374,6 +398,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -391,6 +417,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -418,6 +446,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
@@ -451,6 +481,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -520,6 +552,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idProductAbstract
      *
      * @return void

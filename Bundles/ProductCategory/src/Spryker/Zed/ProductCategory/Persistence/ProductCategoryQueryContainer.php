@@ -26,6 +26,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     const COL_CATEGORY_NAME = 'category_name';
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -87,6 +89,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $sku
@@ -251,6 +255,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory

@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterface
 {
 

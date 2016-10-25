@@ -34,6 +34,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
@@ -42,6 +44,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
      */
     protected function getLocaleFacade()
@@ -50,6 +54,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected function getProductFacade()
@@ -58,6 +64,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected function getCategoryFacade()
@@ -74,6 +82,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * TODO: https://spryker.atlassian.net/browse/CD-540
      *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
@@ -84,6 +94,8 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Business\TransferGeneratorInterface
      */
     public function createProductCategoryTransferGenerator()

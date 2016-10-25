@@ -66,19 +66,23 @@
                 <div class="col-md-4">
                     <b>Sub-Trees to me moved</b>
                     <br />
-                    {% for subTree in subTrees %}
-                        <br />
-                        <p>
-                            {% if subTree.isMain %} Main {% else %} Extra parent {% endif %}
-                            category will be moved to <em>{{ subTree.parentCategory.name }}</em>
-                        </p>
-                        <ol class="dd-list">
-                            <li class="dd-item">
-                                <span class="dd-handle">{{ subTree.text }}</span>
-                                {{ tree.tree(subTree.tree) }}
-                            </li>
-                        </ol>
-                    {% endfor %}
+                    {% if subTrees | length > 0 %}
+                        {% for subTree in subTrees %}
+                            <br />
+                            <p>
+                                {% if subTree.isMain %} Main {% else %} Extra parent {% endif %}
+                                category will be moved to <em>{{ subTree.parentCategory.name }}</em>
+                            </p>
+                            <ol class="dd-list">
+                                <li class="dd-item">
+                                    <span class="dd-handle">{{ subTree.text }}</span>
+                                    {{ tree.tree(subTree.tree) }}
+                                </li>
+                            </ol>
+                        {% endfor %}
+                    {% else %}
+                        <p>This category does not have any sub-trees</p>
+                    {% endif %}
                 </div>
 
                 <div class="col-md-4">
@@ -99,11 +103,15 @@
 
                     <div class="col-md-4">
                         <b>{{ relation.name }} to be de-assigned</b>
-                        <ul class="nodes">
-                            {% for item in relation.list %}
-                                <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
+                        {% if relation.list | length > 0 %}
+                            <ul class="nodes">
+                                {% for item in relation.list %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>This category has no relations</p>
+                        {% endif %}
                     </div>
                 {% endfor %}
 

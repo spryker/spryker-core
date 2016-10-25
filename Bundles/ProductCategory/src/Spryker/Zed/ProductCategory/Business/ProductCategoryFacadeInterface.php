@@ -16,6 +16,8 @@ interface ProductCategoryFacadeInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $sku
@@ -32,6 +34,8 @@ interface ProductCategoryFacadeInterface
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $sku
@@ -43,6 +47,8 @@ interface ProductCategoryFacadeInterface
     public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -86,6 +92,8 @@ interface ProductCategoryFacadeInterface
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -96,6 +104,8 @@ interface ProductCategoryFacadeInterface
     public function updateProductCategoryPreConfig($idCategory, array $productPreConfig);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -106,6 +116,8 @@ interface ProductCategoryFacadeInterface
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
@@ -117,6 +129,8 @@ interface ProductCategoryFacadeInterface
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -128,6 +142,8 @@ interface ProductCategoryFacadeInterface
     public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode

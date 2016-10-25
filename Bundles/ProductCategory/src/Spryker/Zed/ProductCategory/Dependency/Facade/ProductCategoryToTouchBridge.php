@@ -35,6 +35,8 @@ class ProductCategoryToTouchBridge implements ProductCategoryToTouchInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $itemType
      * @param int $itemId
      *

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface ProductCategoryToProductInterface
 {
 

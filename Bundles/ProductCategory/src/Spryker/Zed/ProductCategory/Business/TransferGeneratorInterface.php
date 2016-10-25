@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,6 +9,9 @@ namespace Spryker\Zed\ProductCategory\Business;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Collection\ObjectCollection;
 
+/**
+ * @deprecated Interface will be removed with next major release
+ */
 interface TransferGeneratorInterface
 {
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -16,6 +15,8 @@ interface ProductCategoryManagerInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -25,6 +26,8 @@ interface ProductCategoryManagerInterface
     public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -55,6 +58,8 @@ interface ProductCategoryManagerInterface
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
@@ -105,6 +110,8 @@ interface ProductCategoryManagerInterface
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param array $productPreConfigList
      *
@@ -115,6 +122,8 @@ interface ProductCategoryManagerInterface
     public function updateProductMappingsPreConfig($idCategory, array $productPreConfigList);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -124,6 +133,8 @@ interface ProductCategoryManagerInterface
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -133,6 +144,8 @@ interface ProductCategoryManagerInterface
     public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -141,6 +154,8 @@ interface ProductCategoryManagerInterface
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren

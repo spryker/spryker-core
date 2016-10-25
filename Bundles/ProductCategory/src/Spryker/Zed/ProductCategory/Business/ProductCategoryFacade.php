@@ -20,6 +20,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $sku
@@ -36,6 +38,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $sku
@@ -52,6 +56,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -115,6 +121,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -130,6 +138,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -145,6 +155,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
@@ -161,6 +173,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -177,6 +191,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode

@@ -188,9 +188,10 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return array
      */
-    public function getChildNodes($idCategoryNode);
+    public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer);
 
 }

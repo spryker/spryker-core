@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface ProductCategoryToCategoryInterface
 {
 

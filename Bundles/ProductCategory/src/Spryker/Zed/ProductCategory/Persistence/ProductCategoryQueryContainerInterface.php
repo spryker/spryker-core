@@ -15,6 +15,8 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -46,6 +48,8 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductCategoryMappingByIds($idProductAbstract, $idCategoryNode);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $sku
