@@ -40,7 +40,7 @@ class Zed extends Infrastructure
      */
     public function amZed()
     {
-        $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.test']);
+        $this->getWebDriver()->_reconfigure(['url' => 'http://zed-test.de.project.local']);
 
         return $this;
     }

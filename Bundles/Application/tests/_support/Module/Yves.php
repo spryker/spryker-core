@@ -15,7 +15,7 @@ class Yves extends Infrastructure
      */
     public function amYves()
     {
-        $this->getModule('WebDriver')->_reconfigure(['url' => 'http://www.de.spryker.test']);
+        $this->getModule('WebDriver')->_reconfigure(['url' => 'http://www-test.de.project.local']);
 
         return $this;
     }
