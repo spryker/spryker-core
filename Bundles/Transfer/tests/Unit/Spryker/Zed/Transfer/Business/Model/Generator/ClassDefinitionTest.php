@@ -340,7 +340,6 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $method['typeHint'] = $typeHint;
 
-
         if ($constant !== null) {
             $method['propertyConst'] = $constant;
         }
