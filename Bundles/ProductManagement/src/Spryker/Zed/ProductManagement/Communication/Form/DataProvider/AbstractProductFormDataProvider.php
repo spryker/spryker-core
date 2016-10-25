@@ -707,22 +707,4 @@ class AbstractProductFormDataProvider
         return $transfer->getKey();
     }
 
-    /**
-     * @param string $inputType
-     *
-     * @return string
-     */
-    protected function getHtmlInputTypeByInput($inputType)
-    {
-        switch ($inputType) {
-            case 'textarea':
-                return 'textarea';
-                break;
-
-            default:
-                return 'text';
-                break;
-        }
-    }
-
 }

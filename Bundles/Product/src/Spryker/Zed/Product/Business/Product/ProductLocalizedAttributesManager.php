@@ -7,11 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 class ProductLocalizedAttributesManager
 {
-
 }

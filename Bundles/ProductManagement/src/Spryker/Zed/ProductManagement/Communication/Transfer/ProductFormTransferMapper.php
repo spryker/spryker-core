@@ -117,7 +117,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param LocaleTransfer[] $localeCollection
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param array $formData
      *
      * @return array

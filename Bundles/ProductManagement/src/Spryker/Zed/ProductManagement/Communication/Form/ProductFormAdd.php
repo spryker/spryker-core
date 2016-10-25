@@ -14,7 +14,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
@@ -507,11 +506,11 @@ class ProductFormAdd extends AbstractType
                 'prototype' => true,
                 'prototype_name' => '__image_set_name__',
                 // TODO: move this under ImageSetForm's itself
+                /*
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($imageSetCollection, ExecutionContextInterface $context) {
                             return;
-
                             if (array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
                                 return;
                             }
@@ -562,6 +561,7 @@ class ProductFormAdd extends AbstractType
                     ],
                     'groups' => [self::VALIDATION_GROUP_IMAGE_SET]
                 ])]
+                */
             ]);
 
         return $this;

@@ -13,12 +13,12 @@ class AttributeEncoder implements AttributeEncoderInterface
 {
 
     /**
-     * @var ProductToUtilEncodingInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface
      */
     protected $utilEncodingFacade;
 
     /**
-     * @param ProductToUtilEncodingInterface $utilEncodingFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface $utilEncodingFacade
      */
     public function __construct(ProductToUtilEncodingInterface $utilEncodingFacade)
     {

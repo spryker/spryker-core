@@ -315,7 +315,7 @@ class ProductImageFacadeTest extends Test
         $productImageTransfer = (new ProductImageTransfer())
             ->setIdProductImage($this->image->getIdProductImage())
             ->setExternalUrlSmall(self::URL_SMALL . 'foo')
-            ->setExternalUrlLarge(self::URL_LARGE. 'foo');
+            ->setExternalUrlLarge(self::URL_LARGE . 'foo');
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
             ->setIdProductImageSet($this->imageSetAbstract->getIdProductImageSet())
