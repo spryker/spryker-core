@@ -22,10 +22,10 @@ class SearchRequest extends AbstractRequest implements RequestInterface
      */
     public function request(QuoteTransfer $quoteTransfer)
     {
-        $searchRequestTransfer = $quoteTransfer->getFactFinderSearchRequest();
-        $requestParameters = $this->ffConnector->createRequestParametersFromSearchRequestTransfer($searchRequestTransfer);
-        $requestParameters2 = $this->ffConnector->createRequestParametersFromRequestParser();
-        $this->ffConnector->setRequestParameters($requestParameters2);
+//        $searchRequestTransfer = $quoteTransfer->getFactFinderSearchRequest();
+//        $requestParameters = $this->ffConnector->createRequestParametersFromSearchRequestTransfer($searchRequestTransfer);
+        $requestParameters = $this->ffConnector->createRequestParametersFromRequestParser();
+        $this->ffConnector->setRequestParameters($requestParameters);
 
         $searchAdapter = $this->ffConnector->createSearchAdapter();
 

@@ -15,6 +15,7 @@ use FACTFinder\Adapter\Suggest as FFSuggestAdapter;
 use FACTFinder\Adapter\TagCloud as FFTagCloudAdapter;
 use FACTFinder\Adapter\Tracking as FFTrackingAdapter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter;
+use Spryker\Client\FactFinder\Business\Api\Converter\Data\FilterGroupConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\ItemConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\PagingConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\RecordConverter;
@@ -34,6 +35,7 @@ class ConverterFactory
             $this->createDataPagingConverter(),
             $this->createDataItemConverter(),
             $this->createDataRecordConverter(),
+            $this->createDataFilterGroup(),
             $this->createDataAdvisorQuestionConverter()
         );
     }
@@ -122,6 +124,16 @@ class ConverterFactory
     public function createDataRecordConverter()
     {
         return new RecordConverter();
+    }
+
+    /**
+     * @return \Spryker\Client\FactFinder\Business\Api\Converter\Data\FilterGroupConverter
+     */
+    public function createDataFilterGroup()
+    {
+        return new FilterGroupConverter(
+            $this->createDataItemConverter()
+        );
     }
 
     /**

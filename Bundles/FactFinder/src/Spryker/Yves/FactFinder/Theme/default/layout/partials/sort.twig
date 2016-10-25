@@ -1,25 +1,24 @@
-<div class="callout">
-    <div class="row align-middle">
+<form method="get">
+    <div class="callout">
+        <div class="row align-middle">
 
-        <div class="small-12 large-4 xlarge-6 columns show-for-large">
-            <strong>{{ searchResponse.result.foundRecordsCount }}</strong> {{ "catalog.itemsFound"|trans }}
-        </div>
-        <div class="small-8 large-5 xlarge-4 columns">
-            <label>
-                <select name="sort" class="__no-margin-bottom">
-                    {#{% for sortParamName in sort.sortParamNames %}#}
-                        {#<option value="{{ sortParamName }}" {% if sortParamName == sort.currentSortParam %}selected{% endif %}>{{ ('catalog.sort.' ~ sortParamName) | trans }}</option>#}
-                    {#{% endfor %}#}
-                    {% for sortingItem in searchResponse.sortingItems %}
-                        <option value="{{ sortingItem.url }}" {% if sortingItem.selected %}selected{% endif %}>{{ ('catalog.' ~ sortingItem.label) | trans }}</option>
-                    {% endfor %}
-                </select>
-            </label>
-        </div>
-        <div class="small-4 large-3 xlarge-2 columns">
-            <button type="submit" class="button expanded __no-margin-bottom">
-                <i class="fa fa-sort"></i> Sort
-            </button>
+            <div class="small-12 large-4 xlarge-6 columns show-for-large">
+                <strong>{{ searchResponse.result.foundRecordsCount }}</strong> {{ "catalog.itemsFound"|trans }}
+            </div>
+            <div class="small-8 large-5 xlarge-4 columns">
+                <label>
+                    <select name="sort" class="__no-margin-bottom" id="ffSortSelect">
+                        {% for sortingItem in searchResponse.sortingItems %}
+                            <option value="{{ sortingItem.url }}" {% if sortingItem.selected %}selected{% endif %}>{{ ('catalog.' ~ sortingItem.label) | trans }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="small-4 large-3 xlarge-2 columns">
+                <button type="button" class="button expanded __no-margin-bottom" id="ffSortButton">
+                    <i class="fa fa-sort"></i> Sort
+                </button>
+            </div>
         </div>
     </div>
-</div>
+</form>

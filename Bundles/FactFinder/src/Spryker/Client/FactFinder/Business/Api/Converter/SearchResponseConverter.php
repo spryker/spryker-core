@@ -26,6 +26,7 @@ use Generated\Shared\Transfer\FactFinderDataSingleWordSearchItemTransfer;
 use Generated\Shared\Transfer\FactFinderDataSuggestQueryTransfer;
 use Generated\Shared\Transfer\FactFinderSearchResponseTransfer;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter;
+use Spryker\Client\FactFinder\Business\Api\Converter\Data\FilterGroupConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\ItemConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\PagingConverter;
 use Spryker\Client\FactFinder\Business\Api\Converter\Data\RecordConverter;
@@ -60,6 +61,11 @@ class SearchResponseConverter extends BaseConverter
     protected $recordConverter;
 
     /**
+     * @var \Spryker\Client\FactFinder\Business\Api\Converter\Data\FilterGroupConverter
+     */
+    protected $filterGroupConverter;
+
+    /**
      * @var \Spryker\Client\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter
      */
     protected $advisorQuestionConverter;
@@ -69,6 +75,7 @@ class SearchResponseConverter extends BaseConverter
      * @param \Spryker\Client\FactFinder\Business\Api\Converter\Data\PagingConverter $pagingConverter
      * @param \Spryker\Client\FactFinder\Business\Api\Converter\Data\ItemConverter $itemConverter
      * @param \Spryker\Client\FactFinder\Business\Api\Converter\Data\RecordConverter $recordConverter
+     * @param \Spryker\Client\FactFinder\Business\Api\Converter\Data\FilterGroupConverter $filterGroupConverter
      * @param \Spryker\Client\FactFinder\Business\Api\Converter\Data\AdvisorQuestionConverter $advisorQuestionConverter
      */
     public function __construct(
@@ -76,12 +83,14 @@ class SearchResponseConverter extends BaseConverter
         PagingConverter $pagingConverter,
         ItemConverter $itemConverter,
         RecordConverter $recordConverter,
+        FilterGroupConverter $filterGroupConverter,
         AdvisorQuestionConverter $advisorQuestionConverter
     ) {
         $this->searchAdapter = $searchAdapter;
         $this->pagingConverter = $pagingConverter;
         $this->itemConverter = $itemConverter;
         $this->recordConverter = $recordConverter;
+        $this->filterGroupConverter = $filterGroupConverter;
         $this->advisorQuestionConverter = $advisorQuestionConverter;
     }
 
@@ -212,24 +221,10 @@ class SearchResponseConverter extends BaseConverter
 
         /** @var \FACTFinder\Data\FilterGroup $filterGroup */
         foreach ($afterSearchNavigation as $filterGroup) {
-            $factFinderDataFilterGroupTransfer = new FactFinderDataFilterGroupTransfer();
-            $factFinderDataFilterGroupTransfer->setName($filterGroup->getName());
-            $factFinderDataFilterGroupTransfer->setDetailedLinkCount($filterGroup->getDetailedLinkCount());
-            $factFinderDataFilterGroupTransfer->setUnit($filterGroup->getUnit());
-            $factFinderDataFilterGroupTransfer->setIsRegularStyle($filterGroup->isRegularStyle());
-            $factFinderDataFilterGroupTransfer->setIsSliderStyle($filterGroup->isSliderStyle());
-            $factFinderDataFilterGroupTransfer->setIsTreeStyle($filterGroup->isTreeStyle());
-            $factFinderDataFilterGroupTransfer->setIsMultiSelectStyle($filterGroup->isMultiSelectStyle());
-            $factFinderDataFilterGroupTransfer->setHasPreviewImages($filterGroup->hasPreviewImages());
-            $factFinderDataFilterGroupTransfer->setHasSelectedItems($filterGroup->hasSelectedItems());
-            $factFinderDataFilterGroupTransfer->setIsSingleHideUnselectedType($filterGroup->isSingleHideUnselectedType());
-            $factFinderDataFilterGroupTransfer->setIsSingleShowUnselectedType($filterGroup->isSingleShowUnselectedType());
-            $factFinderDataFilterGroupTransfer->setIsMultiSelectOrType($filterGroup->isMultiSelectOrType());
-            $factFinderDataFilterGroupTransfer->setIsMultiSelectAndType($filterGroup->isMultiSelectAndType());
-            $factFinderDataFilterGroupTransfer->setIsTextType($filterGroup->isTextType());
-            $factFinderDataFilterGroupTransfer->setIsNumberType($filterGroup->isNumberType());
-
-            $factFinderDataAfterSearchNavigationTransfer->addFilterGroups($factFinderDataFilterGroupTransfer);
+            $this->filterGroupConverter->setFilterGroup($filterGroup);
+            $factFinderDataAfterSearchNavigationTransfer->addFilterGroups(
+                $this->filterGroupConverter->convert()
+            );
         }
 
         return $factFinderDataAfterSearchNavigationTransfer;

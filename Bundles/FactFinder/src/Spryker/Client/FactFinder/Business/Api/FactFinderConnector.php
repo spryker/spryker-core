@@ -292,7 +292,17 @@ class FactFinderConnector
      */
     public function createRequestParametersFromRequestParser()
     {
-        return $this->dic['requestParser']->getRequestParameters();
+        /** @var \FACTFinder\Util\Parameters $requestParameters */
+        $requestParameters = $this->dic['requestParser']->getRequestParameters();
+        if (!$requestParameters->offsetExists('query')) {
+            $requestParameters->offsetSet('query', '*');
+        }
+        $query = trim($requestParameters->offsetGet('query'));
+        if (!strlen($query)) {
+            $requestParameters->offsetSet('query', '*');
+        }
+
+        return $requestParameters;
     }
 
     /**

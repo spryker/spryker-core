@@ -7,7 +7,12 @@
 
 var $ = require('jquery');
 
-
 function init(config) {
-
+    $("#ffSortButton").click(function(){
+        window.location = $("#ffSortSelect").val();
+    });
 }
+
+module.exports = {
+    init: init
+};

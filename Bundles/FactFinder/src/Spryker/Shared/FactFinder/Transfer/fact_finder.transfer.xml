@@ -36,6 +36,11 @@
     </transfer>
 
     <!--FACTFinder\Data\.. Objects-->
+    <transfer name="FactFinderDataItem">
+        <property name="label" type="string"/>
+        <property name="url" type="string"/>
+        <property name="selected" type="bool"/>
+    </transfer>
 
     <transfer name="FactFinderDataCampaignIterator">
         <property name="hasRedirect" type="bool"/>
@@ -70,6 +75,8 @@
     </transfer>
 
     <transfer name="FactFinderDataFilterGroup">
+        <property name="filters" type="FactFinderDataFilter[]"/>
+
         <property name="name" type="string"/>
         <property name="detailedLinkCount" type="int"/>
         <property name="unit" type="string"/>
@@ -87,10 +94,14 @@
         <property name="isNumberType" type="bool"/>
     </transfer>
 
-    <transfer name="FactFinderDataItem">
-        <property name="label" type="string"/>
-        <property name="url" type="string"/>
-        <property name="selected" type="bool"/>
+    <transfer name="FactFinderDataFilter">
+        <property name="item" type="FactFinderDataItem"/>
+
+        <property name="fieldName" type="string"/>
+        <property name="matchCount" type="int"/>
+        <property name="clusterLevel" type="int"/>
+        <property name="previewImage" type="string"/>
+        <property name="hasPreviewImage" type="bool"/>
     </transfer>
 
     <transfer name="FactFinderDataBreadCrumb">
