@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -122,6 +122,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryEditDataProvider(
             $this->getQueryContainer(),
+            $this->getFacade(),
             $this->getLocaleFacade()
         );
     }

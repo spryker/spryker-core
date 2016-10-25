@@ -14,6 +14,7 @@ use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
+use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTree;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
@@ -135,8 +136,15 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         $queryContainer = $this->getQueryContainer();
         $transferGenerator = $this->createCategoryTransferGenerator();
         $categoryToucher = $this->createCategoryToucher();
+        $categoryTree = $this->createCategoryTree();
 
-        return new CategoryNode($closureTableWriter, $queryContainer, $transferGenerator, $categoryToucher);
+        return new CategoryNode(
+            $closureTableWriter,
+            $queryContainer,
+            $transferGenerator,
+            $categoryToucher,
+            $categoryTree
+        );
     }
 
     /**
@@ -148,6 +156,25 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         $queryContainer = $this->getQueryContainer();
 
         return new CategoryToucher($touchFacade, $queryContainer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface
+     */
+    protected function createCategoryTree()
+    {
+        $queryContainer = $this->getQueryContainer();
+        $categoryFacade = $this->createFacade();
+
+        return new CategoryTree($queryContainer, $categoryFacade);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
+     */
+    protected function createFacade()
+    {
+        return new CategoryFacade();
     }
 
     /**
@@ -176,8 +203,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         $queryContainer = $this->getQueryContainer();
         $closureTableWriter = $this->createClosureTableWriter();
         $categoryToucher = $this->createCategoryToucher();
+        $categoryTree = $this->createCategoryTree();
 
-        return new CategoryExtraParents($queryContainer, $closureTableWriter, $categoryToucher);
+        return new CategoryExtraParents(
+            $queryContainer,
+            $closureTableWriter,
+            $categoryToucher,
+            $categoryTree
+        );
     }
 
     /**

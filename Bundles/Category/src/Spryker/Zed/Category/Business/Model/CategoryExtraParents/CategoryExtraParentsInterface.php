@@ -12,6 +12,14 @@ interface CategoryExtraParentsInterface
 {
 
     /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory, CategoryTransfer $categoryTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void

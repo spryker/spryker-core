@@ -8,8 +8,11 @@
 namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
+use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -38,21 +41,63 @@ class CategoryNode implements CategoryNodeInterface
     protected $categoryToucher;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface
+     */
+    protected $categoryTree;
+
+    /**
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
+     * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
      */
     public function __construct(
         ClosureTableWriterInterface $closureTableWriter,
         CategoryQueryContainerInterface $queryContainer,
         TransferGeneratorInterface $transferGenerator,
-        CategoryToucherInterface $categoryToucher
+        CategoryToucherInterface $categoryToucher,
+        CategoryTreeInterface $categoryTree
     ) {
         $this->closureTableWriter = $closureTableWriter;
         $this->queryContainer = $queryContainer;
         $this->transferGenerator = $transferGenerator;
         $this->categoryToucher = $categoryToucher;
+        $this->categoryTree = $categoryTree;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory, CategoryTransfer $categoryTransfer)
+    {
+        $categoryNodeEntity = $this
+            ->queryContainer
+            ->queryMainNodesByCategoryId($idCategory)
+            ->findOne();
+
+        if (!$categoryNodeEntity) {
+            throw new MissingCategoryNodeException(sprintf(
+                'Could not find category node for category with ID "%s"',
+                $idCategory
+            ));
+        }
+
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray());
+        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+
+        $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
+        $parentCategoryNodeTransfer = new NodeTransfer();
+        $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray());
+        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
+
+        return $categoryTransfer;
     }
 
     /**
@@ -128,6 +173,7 @@ class CategoryNode implements CategoryNodeInterface
 
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
             $this->moveSubTreeToParent($categoryNodeEntity);
+
             $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
             $categoryNodeEntity->delete();
 
@@ -142,21 +188,10 @@ class CategoryNode implements CategoryNodeInterface
      */
     protected function moveSubTreeToParent(SpyCategoryNode $sourceNodeEntity)
     {
-        $idDestinationParentNode = $sourceNodeEntity->getFkParentCategoryNode();
-        $firstLevelChildNodeCollection = $this
-            ->queryContainer
-            ->queryFirstLevelChildren($sourceNodeEntity->getIdCategoryNode())
-            ->find();
-
-        foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
-            $childNodeEntity->setFkParentCategoryNode($idDestinationParentNode);
-            $childNodeEntity->save();
-
-            $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($childNodeEntity);
-            $this->closureTableWriter->moveNode($categoryNodeTransfer);
-
-            $this->categoryToucher->touchCategoryNodeActiveRecursively($childNodeEntity->getIdCategoryNode());
-        }
+        $this->categoryTree->moveSubTree(
+            $sourceNodeEntity->getIdCategoryNode(),
+            $sourceNodeEntity->getFkParentCategoryNode()
+        );
     }
 
 }

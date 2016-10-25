@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,13 +6,10 @@
 
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -31,17 +27,27 @@ class CategoryEditDataProvider
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
+     */
+    protected $categoryFacade;
+
+    /**
      * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
     protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface $localeFacade
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer, CategoryToLocaleInterface $localeFacade)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryFacadeInterface $categoryFacade,
+        CategoryToLocaleInterface $localeFacade
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
     }
 
@@ -50,108 +56,17 @@ class CategoryEditDataProvider
      */
     public function getData()
     {
-        $categoryEntity = $this->findCategory();
-        $categoryTransfer = $this->buildCategoryTransfer($categoryEntity);
+        $categoryTransfer = $this->buildCategoryTransfer();
 
         return $categoryTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function buildCategoryTransfer(SpyCategory $categoryEntity)
+    protected function buildCategoryTransfer()
     {
-        $categoryTransfer = new CategoryTransfer();
-        $categoryTransfer->fromArray($categoryEntity->toArray(), true);
-        $categoryTransfer = $this->addCategoryNodeTransfer($categoryEntity, $categoryTransfer);
-        $categoryTransfer = $this->addParentCategoryNodeTransfer($categoryEntity, $categoryTransfer);
-        $categoryTransfer = $this->addLocalizedAttributesTransferCollection($categoryEntity, $categoryTransfer);
-        $categoryTransfer = $this->addExtraParentTransferCollection($categoryTransfer);
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function addCategoryNodeTransfer(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
-    {
-        $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->setIdCategoryNode($categoryEntity->getVirtualColumn('id_category_node'));
-        $categoryNodeTransfer->setIsMain($categoryEntity->getVirtualColumn('is_main'));
-        $categoryNodeTransfer->setIsRoot($categoryEntity->getVirtualColumn('is_root'));
-        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function addParentCategoryNodeTransfer(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
-    {
-        $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->setIdCategoryNode($categoryEntity->getVirtualColumn('fk_parent_category_node'));
-        $categoryNodeTransfer->setIsMain($categoryEntity->getVirtualColumn('is_main'));
-        $categoryNodeTransfer->setIsRoot($categoryEntity->getVirtualColumn('is_root'));
-        $categoryTransfer->setParentCategoryNode($categoryNodeTransfer);
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function addLocalizedAttributesTransferCollection(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer)
-    {
-        $categoryTransfer->fromArray($categoryEntity->toArray(), true);
-        $categoryLocalizedAttributesEntityCollection = $categoryEntity->getAttributes();
-
-        foreach ($categoryLocalizedAttributesEntityCollection as $categoryLocalizedAttributesEntity) {
-            $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
-            $categoryLocalizedAttributesTransfer->fromArray($categoryLocalizedAttributesEntity->toArray(), true);
-            $localeTransfer = new LocaleTransfer();
-            $localeTransfer->fromArray($categoryLocalizedAttributesEntity->getLocale()->toArray(), true);
-            $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
-            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
-        }
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function addExtraParentTransferCollection(CategoryTransfer $categoryTransfer)
-    {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
-        $nodeEntityList = $this->queryContainer->queryNotMainNodesByCategoryId($categoryTransfer->getIdCategory())
-            ->where(
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' != ?',
-                $categoryNodeTransfer->getIdCategoryNode()
-            )
-            ->find();
-
-        foreach ($nodeEntityList as $nodeEntity) {
-            $categoryNodeTransfer = new NodeTransfer();
-            $categoryNodeTransfer->fromArray($nodeEntity->getParentCategoryNode()->toArray(), true);
-            $categoryTransfer->addExtraParent($categoryNodeTransfer);
-        }
-
-        return $categoryTransfer;
+        return $this->categoryFacade->read($this->getIdCategory());
     }
 
     /**
@@ -222,27 +137,6 @@ class CategoryEditDataProvider
     protected function getIdLocale()
     {
         return $this->localeFacade->getCurrentLocale()->getIdLocale();
-    }
-
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
-     */
-    protected function findCategory()
-    {
-        $categoryEntity = $this->queryContainer
-            ->queryCategoryById($this->getIdCategory())
-            ->innerJoinNode()
-            ->useNodeQuery()
-                ->filterByIsMain(true)
-            ->endUse()
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, 'fk_parent_category_node')
-            ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, 'is_main')
-            ->withColumn(SpyCategoryNodeTableMap::COL_IS_ROOT, 'is_root')
-            ->findOne();
-
-        return $categoryEntity;
     }
 
     /**

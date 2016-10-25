@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Model\Category;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class Category implements CategoryInterface
@@ -25,6 +26,30 @@ class Category implements CategoryInterface
     public function __construct(CategoryQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory, CategoryTransfer $categoryTransfer)
+    {
+        $categoryEntity = $this
+            ->queryContainer
+            ->queryCategoryById($idCategory)
+            ->findOne();
+
+        if (!$categoryEntity) {
+            throw new MissingCategoryException(sprintf('Could not find category for id "%s"', $idCategory));
+        }
+
+        $categoryTransfer->fromArray($categoryEntity->toArray(), true);
+
+        return $categoryTransfer;
     }
 
     /**

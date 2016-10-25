@@ -191,13 +191,13 @@ class CategoryUrl implements CategoryUrlInterface
      */
     protected function getUrlForNode($idCategoryNode, LocaleTransfer $localeTransfer)
     {
-        $urlCollection = $this
+        $urlEntity = $this
             ->queryContainer
             ->queryUrlByIdCategoryNode($idCategoryNode)
             ->filterByFkLocale($localeTransfer->getIdLocale())
             ->findOne();
 
-        return $urlCollection;
+        return $urlEntity;
     }
 
     /**
@@ -211,7 +211,7 @@ class CategoryUrl implements CategoryUrlInterface
         $childNodeCollection = $this->getAllChildNodes($categoryNodeTransfer, $localeTransfer);
 
         foreach ($childNodeCollection as $childNodeEntity) {
-            $childNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray());
+            $childNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray(), true);
             $this->updateLocalizedUrlForNode($childNodeTransfer, $localeTransfer);
         }
     }
@@ -224,9 +224,15 @@ class CategoryUrl implements CategoryUrlInterface
      */
     protected function getAllChildNodes(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
+        $onlyOneLevel = false;
+
         return $this
             ->queryContainer
-            ->queryChildren($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer->getIdLocale())
+            ->queryChildren(
+                $categoryNodeTransfer->getIdCategoryNode(),
+                $localeTransfer->getIdLocale(),
+                $onlyOneLevel
+            )
             ->find();
     }
 

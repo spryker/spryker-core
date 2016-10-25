@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Model\CategoryAttribute;
 
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -25,6 +27,33 @@ class CategoryAttribute implements CategoryAttributeInterface
     public function __construct(CategoryQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory, CategoryTransfer $categoryTransfer)
+    {
+        $attributeEntityCollection = $this
+            ->queryContainer
+            ->queryAttributeByCategoryId($idCategory)
+            ->find();
+
+        foreach ($attributeEntityCollection as $attributeEntity) {
+            $attributeTransfer = new CategoryLocalizedAttributesTransfer();
+            $attributeTransfer->fromArray($attributeEntity->toArray(), true);
+
+            $localeTransfer = new LocaleTransfer();
+            $localeTransfer->fromArray($attributeEntity->getLocale()->toArray());
+            $attributeTransfer->setLocale($localeTransfer);
+
+            $categoryTransfer->addLocalizedAttributes($attributeTransfer);
+        }
+
+        return $categoryTransfer;
     }
 
     /**

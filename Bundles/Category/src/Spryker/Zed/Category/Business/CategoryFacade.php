@@ -138,6 +138,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory)
+    {
+        return $this
+            ->getFactory()
+            ->createCategory()
+            ->read($idCategory);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *

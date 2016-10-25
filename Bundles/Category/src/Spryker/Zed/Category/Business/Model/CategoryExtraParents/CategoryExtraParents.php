@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
+use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -32,20 +33,50 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     protected $categoryToucher;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface
+     */
+    protected $categoryTree;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
+     * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
         ClosureTableWriterInterface $closureTableWriter,
-        CategoryToucherInterface $categoryToucher
+        CategoryToucherInterface $categoryToucher,
+        CategoryTreeInterface $categoryTree
     ) {
         $this->queryContainer = $queryContainer;
         $this->closureTableWriter = $closureTableWriter;
         $this->categoryToucher = $categoryToucher;
+        $this->categoryTree = $categoryTree;
     }
 
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory, CategoryTransfer $categoryTransfer)
+    {
+        $categoryNodeCollection = $this
+            ->queryContainer
+            ->queryNotMainNodesByCategoryId($idCategory)
+            ->find();
+
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $categoryNodeTransfer = new NodeTransfer();
+            $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray());
+
+            $categoryTransfer->addExtraParent($categoryNodeTransfer);
+        }
+
+        return $categoryTransfer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -221,21 +252,10 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
      */
     protected function moveSubTreeToParent(SpyCategoryNode $sourceNodeEntity)
     {
-        $idDestinationParentNode = $sourceNodeEntity->getFkParentCategoryNode();
-        $firstLevelChildNodeCollection = $this
-            ->queryContainer
-            ->queryFirstLevelChildren($sourceNodeEntity->getIdCategoryNode())
-            ->find();
-
-        foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
-            $childNodeEntity->setFkParentCategoryNode($idDestinationParentNode);
-            $childNodeEntity->save();
-
-            $categoryNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray());
-            $this->closureTableWriter->moveNode($categoryNodeTransfer);
-
-            $this->categoryToucher->touchCategoryNodeActiveRecursively($childNodeEntity->getIdCategoryNode());
-        }
+        $this->categoryTree->moveSubTree(
+            $sourceNodeEntity->getIdCategoryNode(),
+            $sourceNodeEntity->getFkParentCategoryNode()
+        );
     }
 
 }

@@ -76,6 +76,23 @@ class Category
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory)
+    {
+        $categoryTransfer = new CategoryTransfer();
+
+        $categoryTransfer = $this->category->read($idCategory, $categoryTransfer);
+        $categoryTransfer = $this->categoryNode->read($idCategory, $categoryTransfer);
+        $categoryTransfer = $this->categoryAttribute->read($idCategory, $categoryTransfer);
+        $categoryTransfer = $this->categoryExtraParents->read($idCategory, $categoryTransfer);
+
+        return $categoryTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
