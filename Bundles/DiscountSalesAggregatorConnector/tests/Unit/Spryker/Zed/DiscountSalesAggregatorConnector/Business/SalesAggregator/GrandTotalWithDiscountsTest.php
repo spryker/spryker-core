@@ -11,6 +11,15 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\GrandTotalWithDiscounts;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group DiscountSalesAggregatorConnector
+ * @group Business
+ * @group SalesAggregator
+ * @group GrandTotalWithDiscountsTest
+ */
 class GrandTotalWithDiscountsTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -23,7 +32,7 @@ class GrandTotalWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $grandTotalWithDiscountsAggregator->aggregate($orderTransfer);
 
-        $this->assertEquals(400, $orderTransfer->getTotals()->getGrandTotal());
+        $this->assertSame(400, $orderTransfer->getTotals()->getGrandTotal());
     }
 
     /**

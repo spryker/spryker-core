@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Application\Routing;
 
+use LogicException;
 use Silex\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Filter\CamelCaseToSeparatorFilter;
@@ -42,7 +43,7 @@ class Helper
             list($serviceName, $actionName) = explode(':', $destination);
             $controllerNamespaceName = get_class($this->app[$serviceName]);
         } else {
-            throw new \LogicException('Cannot parse destination');
+            throw new LogicException('Cannot parse destination');
         }
         list(, , $bundle, , $controllerName) = explode('\\', $controllerNamespaceName);
 

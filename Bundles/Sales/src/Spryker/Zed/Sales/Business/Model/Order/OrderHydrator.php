@@ -55,6 +55,52 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrder(OrderTransfer $orderTransfer)
+    {
+        $orderEntity = $this->getOrderEntity($orderTransfer);
+
+        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+
+        $orderTransfer = $this->createOrderTransfer($orderEntity);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function getOrderEntity(OrderTransfer $orderTransfer)
+    {
+        $orderTransfer->requireIdSalesOrder()
+            ->requireFkCustomer();
+
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
+            ->filterByFkCustomer($orderTransfer->getFkCustomer())
+            ->findOne();
+
+        if ($orderEntity === null) {
+            throw new InvalidSalesOrderException(sprintf(
+                'Order could not be found for ID %s and customer ID %s',
+                $orderTransfer->getIdSalesOrder(),
+                $orderTransfer->getFkCustomer()
+            ));
+        }
+
+        return $orderEntity;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -66,13 +112,12 @@ class OrderHydrator implements OrderHydratorInterface
             ->findOne();
 
         if ($orderEntity === null) {
-            throw new InvalidSalesOrderException();
+            throw new InvalidSalesOrderException(sprintf('Order could not be found for ID %s', $idSalesOrder));
         }
 
         $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
 
-        $orderTransfer = $this->applyOrderTransferHydrators($orderEntity);
-        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
+        $orderTransfer = $this->createOrderTransfer($orderEntity);
 
         return $orderTransfer;
     }
@@ -228,7 +273,6 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setState($stateTransfer);
     }
 
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -258,6 +302,19 @@ class OrderHydrator implements OrderHydratorInterface
             ->findByFkCustomer($idCustomer)->count();
 
         return $totalOrderCount;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createOrderTransfer(SpySalesOrder $orderEntity)
+    {
+        $orderTransfer = $this->applyOrderTransferHydrators($orderEntity);
+        $orderTransfer = $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
+
+        return $orderTransfer;
     }
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Application\Business\Routing;
 
+use Pimple;
 use Psr\Log\LoggerInterface;
 use Silex\RedirectableUrlMatcher;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -39,7 +40,7 @@ class SilexRouter implements RouterInterface
      * @param \Pimple $app
      * @param \Psr\Log\LoggerInterface|null $logger
      */
-    public function __construct(\Pimple $app, LoggerInterface $logger = null)
+    public function __construct(Pimple $app, LoggerInterface $logger = null)
     {
         $this->app = $app;
         $this->logger = $logger;
@@ -87,14 +88,11 @@ class SilexRouter implements RouterInterface
      * If the matcher can not find information, it must throw one of the exceptions documented
      * below.
      *
+     * @api
+     *
      * @param string $pathinfo The path info to be parsed (raw format, i.e. not urldecoded)
      *
-     * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException If the resource could not be found
-     * @throws \Symfony\Component\Routing\Exception\MethodNotAllowedException If the resource was found but the request method is not allowed
-     *
      * @return array An array of parameters
-     *
-     * @api
      */
     public function match($pathinfo)
     {

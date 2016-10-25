@@ -6,7 +6,14 @@
     }
   },
   "require": {
-    "spryker/kernel": "^2.0.0"
+    "spryker/kernel": "^2.0.0",
+    "spryker/locale": "^2.0.0",
+    "spryker/product": "^2.0.0 || ^3.0.0",
+    "spryker/propel": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "ProductImage bundle",
   "license": "proprietary",
@@ -19,5 +26,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Sales\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
+use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\Communication\Form\CommentForm;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
@@ -101,6 +103,34 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getSalesAggregator(),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
         );
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     *
+     * @return array
+     */
+    public function createOrderItemSplitFormCollection(\ArrayObject $orderItems)
+    {
+        $formCollection = [];
+        $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
+        foreach ($orderItems as $itemTransfer) {
+            $formType = new OrderItemSplitForm();
+            $formCollection[$itemTransfer->getIdSalesOrderItem()] = $this
+                ->getFormFactory()
+                ->create($formType, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
+                ->createView();
+        }
+
+        return $formCollection;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider
+     */
+    public function createOrderItemSplitDataProvider()
+    {
+        return new OrderItemSplitDataProvider();
     }
 
     /**

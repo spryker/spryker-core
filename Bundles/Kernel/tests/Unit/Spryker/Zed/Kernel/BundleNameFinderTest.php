@@ -10,8 +10,11 @@ namespace Unit\Spryker\Zed\Kernel;
 use Spryker\Zed\Kernel\BundleNameFinder;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
  * @group Kernel
- * @group BundleNameFinder
+ * @group BundleNameFinderTest
  */
 class BundleNameFinderTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +26,7 @@ class BundleNameFinderTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             BundleNameFinder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/Project/src/',
-            BundleNameFinder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/Vendor/*/src/',
+            BundleNameFinder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/VendorMock/*/src/',
             BundleNameFinder::OPTION_KEY_APPLICATION => 'Application',
         ];
 

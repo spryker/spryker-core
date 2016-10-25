@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Collector;
 
+use ErrorException;
 use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
 use Zend\Config\Config;
 use Zend\Config\Factory;
@@ -49,7 +50,7 @@ class NavigationCollector implements NavigationCollectorInterface
 
         foreach ($this->navigationSchemaFinder->getSchemaFiles() as $moduleNavigationFile) {
             if (!file_exists($moduleNavigationFile->getPathname())) {
-                throw new \ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
+                throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
             }
             $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
             $navigationDefinition->merge($configFromFile);

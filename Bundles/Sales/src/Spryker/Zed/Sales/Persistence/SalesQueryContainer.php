@@ -176,6 +176,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     {
         $query = $this->getFactory()->createSalesOrderQuery();
         $query->filterByFkCustomer($idCustomer);
+        if ($criteria !== null) {
+            $query->mergeWith($criteria);
+        }
 
         return $query;
     }

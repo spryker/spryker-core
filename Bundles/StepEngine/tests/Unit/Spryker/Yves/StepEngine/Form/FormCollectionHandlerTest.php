@@ -18,10 +18,12 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group StepEngine
- * @group FormCollectionHandler
+ * @group Form
+ * @group FormCollectionHandlerTest
  */
 class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
 {

@@ -13,7 +13,6 @@ use Psr\Log\NullLogger;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class TransferGenerate extends Module
 {
@@ -72,7 +71,7 @@ class TransferGenerate extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     private function getBundleTransferSchemas()
     {

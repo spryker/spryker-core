@@ -70,6 +70,8 @@ Def of done (by responsible developer):
 - [ ] If there are new OS components, they must be approved by legal department
 
 ##### Change log
+Improvements
+
 {Some explanation of what has been improved.}
 - I added this.
 
@@ -88,5 +90,7 @@ Def of done (by responsible developer):
 - [ ] If there are new OS components, they must be approved by legal department
 
 ##### Change log
+Bugfixes
+
 {Some explanation of what was wrong.}
 - I fixed this.

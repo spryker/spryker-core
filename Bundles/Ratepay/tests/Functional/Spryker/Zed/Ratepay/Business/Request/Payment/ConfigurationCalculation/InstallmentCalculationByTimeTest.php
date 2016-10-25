@@ -13,6 +13,17 @@ use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group ConfigurationCalculation
+ * @group InstallmentCalculationByTimeTest
+ */
 class InstallmentCalculationByTimeTest extends InstallmentAbstractTest
 {
 
@@ -76,6 +87,7 @@ class InstallmentCalculationByTimeTest extends InstallmentAbstractTest
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse $expectedResponse
+     *
      * @return void
      */
     protected function convertResponseToTransfer($expectedResponse)

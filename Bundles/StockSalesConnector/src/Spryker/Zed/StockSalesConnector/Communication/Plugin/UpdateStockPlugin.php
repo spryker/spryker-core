@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StockSalesConnector\Communication\StockSalesConnectorCommunicationFactory getFactory()
  */
 class UpdateStockPlugin extends AbstractPlugin
 {

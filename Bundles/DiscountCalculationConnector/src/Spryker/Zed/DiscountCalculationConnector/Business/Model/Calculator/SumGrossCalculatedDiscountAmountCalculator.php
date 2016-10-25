@@ -35,7 +35,14 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $this->setCalculatedDiscountsSumGrossAmount($itemTransfer->getCalculatedDiscounts());
 
         $totalDiscountUnitGrossAmount = $this->getCalculatedDiscountsUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
+        if ($totalDiscountUnitGrossAmount > $itemTransfer->getUnitGrossPrice()) {
+            $totalDiscountUnitGrossAmount = $itemTransfer->getUnitGrossPrice();
+        }
+
         $totalDiscountSumGrossAmount = $this->getCalculatedDiscountsSumGrossAmount($itemTransfer->getCalculatedDiscounts());
+        if ($totalDiscountSumGrossAmount > $itemTransfer->getSumGrossPrice()) {
+            $totalDiscountSumGrossAmount = $itemTransfer->getSumGrossPrice();
+        }
 
         $itemTransfer->setUnitTotalDiscountAmount($totalDiscountUnitGrossAmount);
         $itemTransfer->setSumTotalDiscountAmount($totalDiscountSumGrossAmount);
@@ -47,7 +54,6 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $itemTransfer->setSumGrossPriceWithDiscounts(
             $itemTransfer->getSumGrossPrice() - $totalDiscountSumGrossAmount
         );
-
     }
 
     /**
@@ -73,8 +79,14 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     protected function getCalculatedDiscountsUnitGrossAmount(\ArrayObject $calculatedDiscounts)
     {
         $totalDiscountUnitGrossAmount = 0;
+        $appliedDiscounts = [];
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
+            if (isset($appliedDiscounts[$idDiscount])) {
+                continue;
+            }
             $totalDiscountUnitGrossAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
+            $appliedDiscounts[$idDiscount] = true;
         }
 
         return $totalDiscountUnitGrossAmount;

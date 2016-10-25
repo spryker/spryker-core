@@ -14,6 +14,16 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Converter
+ * @group MoneyValueConverterTest
+ */
 class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -36,7 +46,6 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000, $convertedValues[0]);
         $this->assertEquals(1212, $convertedValues[1]);
         $this->assertEquals(1230, $convertedValues[2]);
-
     }
 
     /**
@@ -58,7 +67,6 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000, $convertedValues[0]);
         $this->assertEquals(1212, $convertedValues[1]);
         $this->assertEquals(1230, $convertedValues[2]);
-
     }
 
     /**
@@ -75,7 +83,6 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
         $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
         $this->assertEquals(1050, $clauseTransfer->getValue());
-
     }
 
     /**

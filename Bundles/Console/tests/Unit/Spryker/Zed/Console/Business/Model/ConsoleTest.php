@@ -5,10 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Console\Business\Model\Console;
+namespace Unit\Spryker\Zed\Console\Business\Model;
 
 use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Console
+ * @group Business
+ * @group Model
+ * @group ConsoleTest
+ */
 class ConsoleTest extends \PHPUnit_Framework_TestCase
 {
 

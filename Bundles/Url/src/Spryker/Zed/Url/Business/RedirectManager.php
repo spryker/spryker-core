@@ -62,10 +62,6 @@ class RedirectManager implements RedirectManagerInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\RedirectExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
      */
     public function createRedirect($toUrl, $status = 301)
@@ -129,8 +125,6 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\RedirectExistsException
-     *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirect(RedirectTransfer $redirect)
@@ -158,10 +152,6 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\RedirectExistsException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     protected function createRedirectFromTransfer(RedirectTransfer $redirectTransfer)
@@ -182,10 +172,6 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingRedirectException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
@@ -249,10 +235,6 @@ class RedirectManager implements RedirectManagerInterface
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingRedirectException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

@@ -35,6 +35,7 @@ class DetailController extends AbstractController
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
+        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
 
         $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
@@ -46,6 +47,7 @@ class DetailController extends AbstractController
             'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
+            'orderItemSplitFormCollection' => $orderItemSplitFormCollection
         ], $blockResponseData);
     }
 

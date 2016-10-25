@@ -8,15 +8,18 @@
 namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
+use LogicException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Library\Sanitize\Html;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 abstract class AbstractTable
 {
@@ -132,12 +135,11 @@ abstract class AbstractTable
     /**
      * @return $this
      */
-    private function init()
+    protected function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;
-            $this->request = (new Pimple())
-                ->getApplication()['request'];
+            $this->request = $this->getRequest();
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
@@ -145,6 +147,15 @@ abstract class AbstractTable
         }
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest()
+    {
+        return (new Pimple())
+            ->getApplication()['request'];
     }
 
     /**
@@ -158,11 +169,11 @@ abstract class AbstractTable
     /**
      * @todo CD-412 find a better solution (remove it)
      *
+     * @deprecated this method should not be needed.
+     *
      * @param string $name
      *
      * @return string
-     *
-     * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
     {
@@ -229,7 +240,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = twig_escape_filter(new \Twig_Environment(), $value);
+                $value = twig_escape_filter(new Twig_Environment(), $value);
             }
 
             return $value;
@@ -333,12 +344,12 @@ abstract class AbstractTable
             ->getApplication()['twig'];
 
         if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
+            throw new LogicException('Twig environment not set up.');
         }
 
         /** @var \Twig_Loader_Chain $loaderChain */
         $loaderChain = $twig->getLoader();
-        $loaderChain->addLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../../Presentation/Table/'));
+        $loaderChain->addLoader(new Twig_Loader_Filesystem(__DIR__ . '/../../Presentation/Table/'));
 
         return $twig;
     }
@@ -511,13 +522,14 @@ abstract class AbstractTable
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param array $order
+     *
      * @return string
      */
     protected function getOrderByColumn(ModelCriteria $query, TableConfiguration $config, array $order)
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (isset($order[0]) && (int)($order[0][self::SORT_BY_COLUMN]) > 0 && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
+        if (isset($order[0]) && isset($order[0][self::SORT_BY_COLUMN]) && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
 
             $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
 
@@ -532,6 +544,7 @@ abstract class AbstractTable
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
      * @return array
      */
     protected function getColumnsList(ModelCriteria $query, TableConfiguration $config)
@@ -578,7 +591,7 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(ApplicationConstants::ZED_DB_ENGINE);
+                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
                 // @todo fix this in CD-412
                 if ($sqlDriver === 'pgsql') {
                     $filter = '::TEXT';

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Exception;
+
 class TransferDefinitionMerger implements MergerInterface
 {
 
@@ -73,7 +75,7 @@ class TransferDefinitionMerger implements MergerInterface
             if (!array_key_exists($property['name'], $mergedProperties)) {
                 $mergedProperties[$property['name']] = $property;
             } elseif (!$this->propertiesAreIdentically($property, $mergedProperties[$property['name']])) {
-                throw new \Exception(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property['name']));
+                throw new Exception(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property['name']));
             } else {
                 $mergedProperties[$property['name']] = $this->mergePropertyBundles(
                     $mergedProperties[$property['name']],

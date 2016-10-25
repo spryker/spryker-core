@@ -26,8 +26,6 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductConcreteIdBySku($sku)
@@ -37,8 +35,6 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
 
     /**
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

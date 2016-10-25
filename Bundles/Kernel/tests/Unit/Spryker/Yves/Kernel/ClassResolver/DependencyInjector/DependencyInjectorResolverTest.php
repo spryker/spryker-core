@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\Kernel\ClassResolver\DependencyInjectorProvider;
+namespace Unit\Spryker\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -14,10 +14,13 @@ use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResol
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Kernel
- * @group DependencyInjectionProviderResolver
+ * @group ClassResolver
+ * @group DependencyInjector
+ * @group DependencyInjectorResolverTest
  */
 class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
 {

@@ -36,16 +36,16 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function boot(Application $app)
     {
-        $bundleSettings = $this->getFactory()->getConfig();
+        $config = $this->getFactory()->getConfig();
         $authFacade = $this->getFacade();
 
-        $app->before(function (Request $request) use ($app, $authFacade, $bundleSettings) {
+        $app->before(function (Request $request) use ($app, $authFacade, $config) {
             $bundle = $request->attributes->get('module');
             $controller = $request->attributes->get('controller');
             $action = $request->attributes->get('action');
 
             if ($authFacade->isIgnorable($bundle, $controller, $action)) {
-                return true;
+                return null;
             }
 
             $token = null;
@@ -58,9 +58,11 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
                 $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
             }
 
-            if (!$authFacade->isAuthenticated($token)) {
-                return $app->redirect($bundleSettings->getLoginPageUrl());
+            if ($authFacade->isAuthenticated($token)) {
+                return null;
             }
+
+            return $app->redirect($config->getLoginPageUrl());
         });
     }
 

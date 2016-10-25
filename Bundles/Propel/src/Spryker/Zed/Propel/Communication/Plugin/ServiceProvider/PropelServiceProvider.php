@@ -86,8 +86,6 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @throws \Exception
-     *
      * @return mixed
      */
     private function getPropelConfig()
@@ -102,8 +100,6 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
     /**
      * @param \Propel\Runtime\ServiceContainer\StandardServiceContainer $serviceContainer
-     *
-     * @throws \ErrorException
      *
      * @return void
      */

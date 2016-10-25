@@ -11,10 +11,23 @@ interface ConsoleFacadeInterface
 {
 
     /**
+     * Specification
+     * - Returns an array of console commands
+     *
      * @api
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands();
+
+    /**
+     * Specification
+     * - Returns an array of event subscribers
+     *
+     * @api
+     *
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     */
+    public function getEventSubscriber();
 
 }

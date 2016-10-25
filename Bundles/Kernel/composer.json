@@ -2,21 +2,17 @@
   "name": "spryker/kernel",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
-    "php": "~5.6.0",
+    "php": ">=5.6.0",
     "spryker/application": "^2.0.0",
     "spryker/config": "^2.1.1",
     "spryker/library": "^2.1.0",
     "spryker/messenger": "^2.0.0",
-    "spryker/new-relic": "^2.0.0",
     "spryker/propel": "^2.0.0",
-    "spryker/search": "^2.0.0 || ^3.0.0",
+    "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/storage": "^2.0.0",
@@ -28,7 +24,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/console": "^2.0.1",
-    "spryker/testify": "^2.0.0"
+    "spryker/testify": "*"
   },
   "description": "Kernel bundle",
   "license": "proprietary",
@@ -47,5 +43,11 @@
   ],
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

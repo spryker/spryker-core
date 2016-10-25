@@ -35,7 +35,6 @@ class AttributeProvider implements AttributeProviderInterface
             ->find();
 
         return $attributeMetaData->toArray();
-
     }
 
 }

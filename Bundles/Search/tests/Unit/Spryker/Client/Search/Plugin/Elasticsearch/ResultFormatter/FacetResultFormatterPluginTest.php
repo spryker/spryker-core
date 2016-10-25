@@ -18,14 +18,16 @@ use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Client\Search\SearchFactory;
-use Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\AbstractResultFormatterPluginTest;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
  * @group ResultFormatter
+ * @group FacetResultFormatterPluginTest
  */
 class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {

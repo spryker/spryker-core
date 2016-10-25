@@ -4,10 +4,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StateMachine\Persistence\Propel;
+namespace Spryker\Zed\Oms\Persistence\Propel;
 
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLock as BaseSpyStateMachineLock;
+use Orm\Zed\Oms\Persistence\Base\SpyOmsStateMachineLock as BaseSpyOmsStateMachineLock;
 
-abstract class AbstractSpyOmsStateMachineLock extends BaseSpyStateMachineLock
+abstract class AbstractSpyOmsStateMachineLock extends BaseSpyOmsStateMachineLock
 {
 }

@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Console\Business\Model;
 
 use Silex\Application;
-use Spryker\Shared\Library\System;
-use Spryker\Shared\NewRelic\Api;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
@@ -126,8 +124,6 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
@@ -162,8 +158,6 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
@@ -218,14 +212,10 @@ class Console extends SymfonyCommand
      * @param string $command
      * @param array $arguments
      *
-     * @throws \Exception
-     *
      * @return int
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
-        $this->setNewRelicTransaction($command, $arguments);
-
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command->getName();
         $input = new ArrayInput($arguments);
@@ -275,26 +265,6 @@ class Console extends SymfonyCommand
         }
 
         return $this->messenger;
-    }
-
-    /**
-     * @param string $command
-     * @param array $arguments
-     *
-     * @return void
-     */
-    protected function setNewRelicTransaction($command, array $arguments)
-    {
-        $newRelicApi = new Api();
-
-        $newRelicApi
-            ->markAsBackgroundJob()
-            ->setNameOfTransaction($command)
-            ->addCustomParameter('host', System::getHostname());
-
-        foreach ($arguments as $key => $value) {
-            $newRelicApi->addCustomParameter($key, $value);
-        }
     }
 
 }

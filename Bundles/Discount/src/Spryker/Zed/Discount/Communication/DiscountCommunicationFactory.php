@@ -22,8 +22,10 @@ use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
+use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
@@ -34,8 +36,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
+     * @param int|null $idDiscount
      *
-     * @param int $idDiscount
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createDiscountForm($idDiscount = null)
@@ -52,7 +54,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountFormType,
             $discountDataProvider->getData($idDiscount),
             [
-              'data_class'  => DiscountConfiguratorTransfer::class
+              'data_class' => DiscountConfiguratorTransfer::class
             ]
         );
     }
@@ -97,7 +99,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -110,7 +111,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $discountVoucherFormType,
             $discountVoucherTransfer,
             [
-                'data_class'  => DiscountVoucherTransfer::class
+                'data_class' => DiscountVoucherTransfer::class
             ]
         );
     }
@@ -198,6 +199,21 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     protected function createDiscountDataProvider()
     {
         return new DiscountFormDataProvider();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $discountForm
+     * @param \Symfony\Component\Form\FormInterface|null $voucherForm
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfiguratorTransfer
+     *
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createDiscountFormTabs(
+        FormInterface $discountForm,
+        FormInterface $voucherForm = null,
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
+    ) {
+        return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
     }
 
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Transfer;
 
+use ArrayObject;
+use InvalidArgumentException;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
@@ -62,7 +64,7 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
     {
         foreach ($this->transferMetadata as $property => $metaData) {
             if ($metaData['is_collection'] && $this->$property === null) {
-                $this->$property = new \ArrayObject();
+                $this->$property = new ArrayObject();
             }
         }
     }
@@ -145,7 +147,7 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
      */
     protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false)
     {
-        $transferObjectsArray = new \ArrayObject();
+        $transferObjectsArray = new ArrayObject();
         foreach ($arrayObject as $arrayElement) {
             if (is_array($arrayElement)) {
                 if ($this->isAssociativeArray($arrayElement)) {
@@ -288,7 +290,7 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
             $this->$setter($value);
         } catch (\Exception $e) {
             if ($ignoreMissingProperty === false) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
                 );
             }
@@ -355,7 +357,7 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
             if ($ignoreMissingProperty) {
                 return false;
             } else {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     sprintf('Missing property "%s" in "%s"', $property, get_class($this))
                 );
             }

@@ -56,7 +56,14 @@ class TriggerLocker implements LockerInterface
         try {
             $affectedRows = $stateMachineLockEntity->save();
         } catch (PropelException $exception) {
-            throw new LockException('State machine trigger is locked.');
+            throw new LockException(
+                sprintf(
+                    'State machine trigger is locked. Propel exception: %s',
+                    $exception->getMessage()
+                ),
+                $exception->getCode(),
+                $exception
+            );
         }
 
         return $affectedRows > 0;

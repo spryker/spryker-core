@@ -19,16 +19,16 @@ interface DiscountCalculatorPluginInterface
     public function calculate(array $discountableItems, $percentage);
 
     /**
-     * @param int $value
+     * @param float $value
      *
-     * @return float
+     * @return int
      */
     public function transformForPersistence($value);
 
     /**
      * @param int $value
      *
-     * @return float
+     * @return int
      */
     public function transformFromPersistence($value);
 

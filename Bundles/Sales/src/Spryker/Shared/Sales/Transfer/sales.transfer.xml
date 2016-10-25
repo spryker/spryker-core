@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers xmlns="http://xsd.spryker.com"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/transfer-01.xsd" >
+           xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd" >
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
@@ -90,7 +90,6 @@
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
         <property name="fkOmsOrderItemState" type="int" />
-        <property name="fkRefund" type="int" />
         <property name="name" type="string" />
         <property name="process" type="string" />
         <property name="sku" type="string" />
@@ -102,14 +101,12 @@
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="variety" type="string" />
         <property name="state" type="ItemState" />
-        <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
     </transfer>
 
     <transfer name="Expense">
-        <property name="refundableAmount" type="int"/>
-        <property name="canceledAmount" type="int"/>
+        <property name="unitGrossPrice" type="int" />
     </transfer>
 
     <transfer name="TaxSet">

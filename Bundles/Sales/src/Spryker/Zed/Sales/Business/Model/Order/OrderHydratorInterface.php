@@ -15,6 +15,17 @@ interface OrderHydratorInterface
 {
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getCustomerOrder(OrderTransfer $orderTransfer);
+
+    /**
+     * @param int $idSalesOrder
+     *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

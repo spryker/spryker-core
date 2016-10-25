@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Symfony\Component\Finder\Finder;
 use Zend\Config\Factory;
+use Zend\Filter\FilterChain;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
@@ -20,14 +21,14 @@ class TransferDefinitionLoader implements LoaderInterface
     const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
      */
-    private $definitionNormalizer;
+    private $finder;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
      */
-    private $sourceDirectories;
+    private $definitionNormalizer;
 
     /**
      * @var array
@@ -35,13 +36,18 @@ class TransferDefinitionLoader implements LoaderInterface
     private $transferDefinitions = [];
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer $normalizer
-     * @param array $sourceDirectories
+     * @var \Zend\Filter\FilterChain
      */
-    public function __construct(DefinitionNormalizer $normalizer, array $sourceDirectories)
+    private static $filter;
+
+    /**
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface $normalizer
+     */
+    public function __construct(FinderInterface $finder, DefinitionNormalizerInterface $normalizer)
     {
+        $this->finder = $finder;
         $this->definitionNormalizer = $normalizer;
-        $this->sourceDirectories = $sourceDirectories;
     }
 
     /**
@@ -49,7 +55,7 @@ class TransferDefinitionLoader implements LoaderInterface
      */
     public function getDefinitions()
     {
-        $this->loadDefinitions($this->sourceDirectories);
+        $this->loadDefinitions();
         $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
             $this->transferDefinitions
         );
@@ -58,32 +64,17 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param array $sourceDirectories
-     *
      * @return array
      */
-    private function loadDefinitions(array $sourceDirectories)
+    private function loadDefinitions()
     {
-        $xmlTransferDefinitions = $this->getXmlTransferDefinitionFiles($sourceDirectories);
+        $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
             $bundle = $this->getBundleFromPathName($xmlTransferDefinition->getFilename());
             $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
             $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
             $this->addDefinition($definition, $bundle, $containingBundle);
         }
-    }
-
-    /**
-     * @param array $sourceDirectories
-     *
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
-     */
-    private function getXmlTransferDefinitionFiles(array $sourceDirectories)
-    {
-        $finder = new Finder();
-        $finder->in($sourceDirectories)->name('*.transfer.xml')->depth('< 1');
-
-        return $finder;
     }
 
     /**
@@ -124,6 +115,8 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
+                $this->assertCasing($transfer, $bundle);
+
                 $transfer[self::KEY_BUNDLE] = $bundle;
                 $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
 
@@ -131,10 +124,54 @@ class TransferDefinitionLoader implements LoaderInterface
             }
         } else {
             $transfer = $definition[self::KEY_TRANSFER];
+            $this->assertCasing($transfer, $bundle);
+
             $transfer[self::KEY_BUNDLE] = $bundle;
             $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $this->transferDefinitions[] = $transfer;
         }
+    }
+
+    /**
+     * @param array $transfer
+     * @param string $bundle
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    private function assertCasing(array $transfer, $bundle)
+    {
+        $name = $transfer['name'];
+
+        $filteredName = $this->getFilter()->filter($name);
+
+        if ($name !== $filteredName) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Transfer name `%s` does not match expected name `%s` for bundle `%s`',
+                    $name,
+                    $filteredName,
+                    $bundle
+                )
+            );
+        }
+    }
+
+    /**
+     * @return \Zend\Filter\FilterChain
+     */
+    private function getFilter()
+    {
+        if (self::$filter === null) {
+            $filter = new FilterChain();
+            $filter->attach(new CamelCaseToUnderscore());
+            $filter->attach(new UnderscoreToCamelCase());
+
+            self::$filter = $filter;
+        }
+
+        return self::$filter;
     }
 
 }

@@ -2,13 +2,7 @@
   "name": "spryker/cart",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/",
-      "ClientUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -19,6 +13,10 @@
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Cart bundle",
   "license": "proprietary",
@@ -31,5 +29,12 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/",
+      "ClientUnit": "tests/"
+    }
   }
 }

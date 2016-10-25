@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ConsoleBootstrap extends Application
 {
@@ -31,6 +32,21 @@ class ConsoleBootstrap extends Application
 
         parent::__construct($name, $version);
         $this->setCatchExceptions(false);
+
+        $this->addEventDispatcher();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addEventDispatcher()
+    {
+        $eventDispatcher = new EventDispatcher();
+        $eventSubscriber = $this->getFacade()->getEventSubscriber();
+        foreach ($eventSubscriber as $subscriber) {
+            $eventDispatcher->addSubscriber($subscriber);
+        }
+        $this->setDispatcher($eventDispatcher);
     }
 
     /**
@@ -62,8 +78,6 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Console\Business\ConsoleFacade
      */
     protected function resolveFacade()
@@ -95,7 +109,7 @@ class ConsoleBootstrap extends Application
     /**
      * @return string
      */
-    private function getInfoText()
+    protected function getInfoText()
     {
         return sprintf(
             '<fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',

@@ -75,9 +75,9 @@ interface StateMachineFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $highlightState
-     * @param string $format
-     * @param int $fontSize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return string
      */
@@ -133,6 +133,7 @@ interface StateMachineFacadeInterface
      *
      * @param int $idStateMachineProcess
      * @param int $identifier
+     *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateHistoryByStateItemIdentifier($idStateMachineProcess, $identifier);

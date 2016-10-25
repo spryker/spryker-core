@@ -36,6 +36,15 @@ use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group BasePaymentTest
+ */
 class BasePaymentTest extends Test
 {
 
@@ -79,7 +88,6 @@ class BasePaymentTest extends Test
      */
     protected function getTransactionHandlerObject($className, $additionalMockMethods = [])
     {
-
         $executionAdapter = $this->getMockBuilder(Guzzle::class)
             ->disableOriginalConstructor()
             ->setMethods(['sendRequest', 'getMethodMapper'])

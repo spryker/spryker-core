@@ -11,11 +11,15 @@ use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSch
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Business
- * @group NavigationSchemaFinder
+ * @group Model
+ * @group Navigation
+ * @group SchemaFinder
+ * @group NavigationSchemaFinderTest
  */
 class NavigationSchemaFinderTest extends \PHPUnit_Framework_TestCase
 {

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication;
 
+use ReflectionClass;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
@@ -17,11 +18,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Communication
- * @group AbstractPlugin
+ * @group AbstractPluginTest
  */
 class AbstractPluginTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,7 +35,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     {
         $plugin = new FooPlugin();
 
-        $pluginReflection = new \ReflectionClass($plugin);
+        $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
         $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractCommunicationFactory::class, null, [], '', false));
@@ -61,7 +63,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     {
         $plugin = new FooPlugin();
 
-        $pluginReflection = new \ReflectionClass($plugin);
+        $pluginReflection = new ReflectionClass($plugin);
         $facadeProperty = $pluginReflection->getParentClass()->getProperty('facade');
         $facadeProperty->setAccessible(true);
         $facadeProperty->setValue($plugin, $this->getMock(AbstractFacade::class, null, [], '', false));
@@ -98,7 +100,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     {
         $plugin = new FooPlugin();
 
-        $pluginReflection = new \ReflectionClass($plugin);
+        $pluginReflection = new ReflectionClass($plugin);
         $queryContainerProperty = $pluginReflection->getParentClass()->getProperty('queryContainer');
         $queryContainerProperty->setAccessible(true);
         $queryContainerProperty->setValue($plugin, $this->getMock(AbstractQueryContainer::class, null, [], '', false));

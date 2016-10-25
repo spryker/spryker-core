@@ -8,7 +8,8 @@
 namespace Spryker\Yves\DummyPayment\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Yves\DummyPayment\Exception\PaymentMethodNotFoundException;
 use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
@@ -34,14 +35,14 @@ class DummyPaymentHandler
     ];
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
     protected $currencyManager;
 
     /**
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
      */
-    public function __construct(CurrencyManager $currencyManager)
+    public function __construct(CurrencyManagerInterface $currencyManager)
     {
         $this->currencyManager = $currencyManager;
     }
@@ -92,7 +93,7 @@ class DummyPaymentHandler
      */
     protected function getCurrency()
     {
-        return $this->currencyManager->getDefaultCurrency()->getIsoCode();
+        return Store::getInstance()->getCurrencyIsoCode();
     }
 
     /**

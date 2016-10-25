@@ -18,11 +18,13 @@ use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Oms
  * @group Business
- * @group Builder
+ * @group OrderStateMachine
+ * @group LockedOrderStateMachineTest
  */
 class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 {
@@ -69,14 +71,14 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
         $eventId = 'eventId';
         $orderItems = $this->createOrderItems();
         $orderItemIds = [10, 11, 12];
-        $orderItemsIdentifier = '10-11-12';
-        $singleOrderItemIdentifier = '10';
+        $orderItemsIdentifier = $this->hashIdentifier('10-11-12');
+        $singleOrderItemIdentifier = $this->hashIdentifier('10');
 
         return [
             ['triggerEvent', $orderItemsIdentifier, $eventId, $orderItems, []],
             ['triggerEventForNewItem', $orderItemsIdentifier,  $orderItems, []],
             ['triggerEventForNewOrderItems', $orderItemsIdentifier, $orderItemIds, []],
-            ['triggerEventForOneOrderItem', $singleOrderItemIdentifier, $eventId, $singleOrderItemIdentifier, []],
+            ['triggerEventForOneOrderItem', $singleOrderItemIdentifier, $eventId, $orderItemIds[0], []],
             ['triggerEventForOrderItems', $orderItemsIdentifier, $eventId, $orderItemIds, []],
         ];
     }
@@ -168,7 +170,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
         $testIdsList1 = ['100', '11', '12', '10', 11, 12];
         $testIdsList2 = [12, 11, 100, '10'];
 
-        $expectedResult = '10-11-12-100';
+        $expectedResult = $this->hashIdentifier('10-11-12-100');
 
         $lockedStateMachine = $this->createLockedStateMachine();
 
@@ -177,6 +179,16 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList1));
         $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList2));
+    }
+
+    /**
+     * @param string $identifer
+     *
+     * @return string
+     */
+    protected function hashIdentifier($identifer)
+    {
+        return hash('sha512', $identifer);
     }
 
     /**

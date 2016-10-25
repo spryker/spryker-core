@@ -11,6 +11,16 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Prepayment;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group MethodMapper
+ * @group PrepaymentTest
+ */
 class PrepaymentTest extends AbstractMethodMapperTest
 {
 
@@ -41,7 +51,6 @@ class PrepaymentTest extends AbstractMethodMapperTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer $ratepayPaymentEntity
      *
      * @return void

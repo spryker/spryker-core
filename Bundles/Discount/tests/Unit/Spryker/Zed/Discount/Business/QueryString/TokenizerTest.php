@@ -9,6 +9,15 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group TokenizerTest
+ */
 class TokenizerTest extends \PHPUnit_Framework_TestCase
 {
 

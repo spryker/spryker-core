@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Kernel\Communication\Plugin;
 
+use LogicException;
+use ReflectionObject;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Message;
@@ -27,7 +29,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
-     * @return callable
+     * @return callable|null
      */
     public function onKernelController(FilterControllerEvent $event)
     {
@@ -44,6 +46,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             MessengerConfig::setMessageTray(MessengerConstants::IN_MEMORY_TRAY);
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);
+
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
 
@@ -59,19 +62,19 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param string $action
      *
-     * @throw \LogicException
+     * @throws \LogicException
      *
      * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     private function getRequestTransfer(AbstractGatewayController $controller, $action)
     {
-        $classReflection = new \ReflectionObject($controller);
+        $classReflection = new ReflectionObject($controller);
         $methodReflection = $classReflection->getMethod($action);
         $parameters = $methodReflection->getParameters();
         $countParameters = count($parameters);
 
         if ($countParameters > 2 || $countParameters === 2 && end($parameters)->getClass() !== 'Spryker\\Shared\\Library\\Transfer\\Request') {
-            throw new \LogicException('Only one transfer object can be received in yves-action');
+            throw new LogicException('Only one transfer object can be received in yves-action');
         }
 
         /** @var \ReflectionParameter $parameter */
@@ -79,7 +82,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         if ($parameter) {
             $class = $parameter->getClass();
             if (empty($class)) {
-                throw new \LogicException('You need to specify a class for the parameter in the yves-action.');
+                throw new LogicException('You need to specify a class for the parameter in the yves-action.');
             }
 
             $this->validateClassIsTransferObject($class->getName());
@@ -174,6 +177,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param string $className
      *
+     * @throws \LogicException
+     *
      * @return bool
      */
     protected function validateClassIsTransferObject($className)
@@ -186,7 +191,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             return true;
         }
 
-        throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
+        throw new LogicException('Only transfer classes are allowed in yves action as parameter');
     }
 
 }

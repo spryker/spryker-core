@@ -26,9 +26,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
@@ -45,9 +42,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @param string $url
      * @param string $resourceType
      * @param int $idResource
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -106,8 +100,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @param string $urlString
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByPath($urlString)
@@ -122,8 +114,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @param int $idUrl
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -212,10 +202,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function createRedirect($toUrl, $status = 303)
@@ -248,9 +234,6 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

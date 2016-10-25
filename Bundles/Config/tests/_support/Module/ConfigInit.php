@@ -11,7 +11,6 @@ use Codeception\Module;
 use Spryker\Shared\Config\Config;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class ConfigInit extends Module
 {
@@ -47,7 +46,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     private function getConfigFiles()
     {
@@ -145,7 +144,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     private function getConfigDefaultFiles()
     {

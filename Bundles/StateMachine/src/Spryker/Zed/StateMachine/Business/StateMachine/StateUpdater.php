@@ -107,6 +107,7 @@ class StateUpdater implements StateUpdaterInterface
      * @param string $targetState
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
+     *
      * @return void
      */
     protected function assertTransitionAlreadyProcessed(
@@ -207,8 +208,6 @@ class StateUpdater implements StateUpdaterInterface
      * @param string $targetState
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
-     *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return void
      */

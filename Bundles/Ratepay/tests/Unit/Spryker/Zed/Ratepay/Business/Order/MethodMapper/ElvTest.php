@@ -10,6 +10,16 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Order\MethodMapper;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
 use Spryker\Zed\Ratepay\Business\Order\MethodMapper\Elv;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Order
+ * @group MethodMapper
+ * @group ElvTest
+ */
 class ElvTest extends BaseMethodMapperTest
 {
 

@@ -2,8 +2,8 @@
 <transfer
     xmlns="http://xsd.spryker.com"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd"
->
+    xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd">
+
     <transfer name="BraintreePayment">
         <property name="fkSalesOrder" type="int" />
         <property name="accountBrand" type="string" />
@@ -33,7 +33,7 @@
         <property name="transactionType" type="string"/>
         <property name="transactionStatus" type="string"/>
         <property name="transactionAmount" type="string"/>
-        <property name="processingTimestamp" type="integer"/>
+        <property name="processingTimestamp" type="int"/>
 
         <property name="merchantAccount" type="string"/>
         <property name="creditCardType" type="string"/>
@@ -82,6 +82,14 @@
         <property name="braintree" type="BraintreePayment"/>
         <property name="braintreePayPal" type="BraintreePayment"/>
         <property name="braintreeCreditCard" type="BraintreePayment"/>
+    </transfer>
+
+    <transfer name="TransactionMeta">
+        <property name="idSalesOrder" type="int"/>
+        <property name="idPayment" type="int"/>
+        <property name="transactionIdentifier" type="string"/>
+        <property name="refund" type="Refund"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
 </transfer>

@@ -36,8 +36,6 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @param string $localeName
      *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
@@ -53,8 +51,6 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      * @deprecated Use getLocale($localeName) instead
      *
      * @param string $localeCode
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -103,8 +99,6 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      * @api
      *
      * @param string $localeName
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */

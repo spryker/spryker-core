@@ -2,20 +2,18 @@
   "name": "spryker/event-journal",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
     "spryker/config": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
-    "spryker/new-relic": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/new-relic": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "EventJournal bundle",
   "license": "proprietary",
@@ -28,5 +26,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

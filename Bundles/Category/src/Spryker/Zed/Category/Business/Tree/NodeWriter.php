@@ -33,8 +33,6 @@ class NodeWriter implements NodeWriterInterface
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return int
      */
     public function create(NodeTransfer $categoryNode)
@@ -53,7 +51,6 @@ class NodeWriter implements NodeWriterInterface
      * @param int $nodeId
      *
      * @throws \Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -73,8 +70,6 @@ class NodeWriter implements NodeWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

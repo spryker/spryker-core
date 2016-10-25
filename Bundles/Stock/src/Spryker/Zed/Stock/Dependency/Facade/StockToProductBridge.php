@@ -26,8 +26,6 @@ class StockToProductBridge implements StockToProductInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdBySku($sku)
@@ -37,8 +35,6 @@ class StockToProductBridge implements StockToProductInterface
 
     /**
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

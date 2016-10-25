@@ -19,15 +19,29 @@ class SalesController extends AbstractController
 {
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
     public function listAction(Request $request)
     {
-        $idSalesOrder = $request->request->get('id-sales-order');
+        $refundQuery = $this->getQueryContainer()->queryRefunds();
+        $orderTransfer = $this->getOrderTransfer($request);
+        $refunds = $refundQuery->filterByFkSalesOrder($orderTransfer->getIdSalesOrder())->find();
 
-        $table = $this->getFactory()->createRefundTable($this->getFacade());
+        return $this->viewResponse([
+            'refunds' => $refunds,
+        ]);
+    }
 
-        return $this->viewResponse(['refunds' => $table->render()]);
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransfer(Request $request)
+    {
+        return $request->request->get('orderTransfer');
     }
 
 }

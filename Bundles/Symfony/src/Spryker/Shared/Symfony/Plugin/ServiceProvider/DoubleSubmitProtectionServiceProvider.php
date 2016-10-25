@@ -14,6 +14,9 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @deprecated Use \Spryker\Shared\Application\ServiceProvider\DoubleSubmitProtectionServiceProvider instead.
+ */
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
@@ -24,7 +27,6 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
      */
     public function register(Application $app)
     {
-
         $app['form.extension.double_submit_protection'] = $app->share(function ($app) {
             $translator = isset($app['translator']) ? $app['translator'] : null;
             return $this->createDoubleSubmitProtectionExtension($app, $translator);

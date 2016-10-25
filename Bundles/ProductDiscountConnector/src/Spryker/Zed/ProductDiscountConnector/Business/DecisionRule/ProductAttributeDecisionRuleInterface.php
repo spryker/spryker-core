@@ -20,7 +20,6 @@ interface ProductAttributeDecisionRuleInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $currentItemTransfer, ClauseTransfer $clauseTransfer);
 

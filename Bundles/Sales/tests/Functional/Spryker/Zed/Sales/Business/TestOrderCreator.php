@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Sales\Business;
 
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
@@ -61,8 +62,6 @@ class TestOrderCreator
      * @param int $grossPrice
      * @param int $taxRate
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createOrderItem(
@@ -90,14 +89,16 @@ class TestOrderCreator
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity)
     {
         $shipmentMethodEntity = SpyShipmentMethodQuery::create()->findOne();
 
+        $customerEntity = $this->createCustomer();
+
         $salesOrderEntity = new SpySalesOrder();
+        $salesOrderEntity->setCustomer($customerEntity);
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setShipmentMethod($shipmentMethodEntity);
@@ -108,7 +109,22 @@ class TestOrderCreator
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected function createCustomer()
+    {
+        $customerEntity = new SpyCustomer();
+        $customerEntity->setFirstName('First');
+        $customerEntity->setLastName('Last');
+        $customerEntity->setCompany('Company');
+        $customerEntity->setEmail('email@email.tld');
+        $customerEntity->setCustomerReference('testing-customer');
+        $customerEntity->save();
+
+        return $customerEntity;
+    }
+
+    /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     protected function createOmsState()
@@ -121,7 +137,6 @@ class TestOrderCreator
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function createOmsProcess()
@@ -135,13 +150,13 @@ class TestOrderCreator
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return void
      */
     protected function createSalesExpense(SpySalesOrder $salesOrderEntity)
     {
         $salesExpenseEntity = new SpySalesExpense();
-        $salesExpenseEntity->setName('shiping test');
+        $salesExpenseEntity->setName('shipping test');
         $salesExpenseEntity->setTaxRate(19);
         $salesExpenseEntity->setGrossPrice(100);
         $salesExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
@@ -149,7 +164,6 @@ class TestOrderCreator
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function createSalesOrderAddress()
@@ -162,14 +176,14 @@ class TestOrderCreator
         $salesOrderAddressEntity->setCity('City');
         $salesOrderAddressEntity->setCreatedAt(new \DateTime());
         $salesOrderAddressEntity->setUpdatedAt(new \DateTime());
-        $salesOrderAddressEntity->setComment('comment');
-        $salesOrderAddressEntity->setDescription('describtion');
-        $salesOrderAddressEntity->setCompany('company');
-        $salesOrderAddressEntity->setFirstName('First name');
-        $salesOrderAddressEntity->setLastName('Last Name');
+        $salesOrderAddressEntity->setComment('Comment');
+        $salesOrderAddressEntity->setDescription('Description');
+        $salesOrderAddressEntity->setCompany('Company');
+        $salesOrderAddressEntity->setFirstName('FirstName');
+        $salesOrderAddressEntity->setLastName('LastName');
         $salesOrderAddressEntity->setFkCountry(1);
-        $salesOrderAddressEntity->setEmail('email');
-        $salesOrderAddressEntity->setZipCode(10405);
+        $salesOrderAddressEntity->setEmail('Email');
+        $salesOrderAddressEntity->setZipCode(12345);
         $salesOrderAddressEntity->save();
 
         return $salesOrderAddressEntity;

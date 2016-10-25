@@ -21,7 +21,7 @@ class PropelInstall extends Module
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param null $config
+     * @param array|null $config
      */
     public function __construct(ModuleContainer $moduleContainer, $config = null)
     {
@@ -33,8 +33,6 @@ class PropelInstall extends Module
     }
 
     /**
-     * @throws \Exception
-     *
      * @return int
      */
     protected function initPropel()
@@ -80,8 +78,7 @@ class PropelInstall extends Module
         return $this->getBaseCommand()
         . ' vendor/bin/propel model:build'
         . $this->getConfigDirectoryForCommand($config)
-        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package'
-            ;
+        . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
     }
 
     /**
@@ -92,8 +89,7 @@ class PropelInstall extends Module
         return 'APPLICATION_ENV=' . APPLICATION_ENV
         . ' APPLICATION_STORE=' . APPLICATION_STORE
         . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-        . ' APPLICATION=' . APPLICATION
-            ;
+        . ' APPLICATION=' . APPLICATION;
     }
 
     /**
@@ -115,8 +111,7 @@ class PropelInstall extends Module
         $command = $this->getBaseCommand()
             . ' vendor/bin/propel diff'
             . $this->getConfigDirectoryForCommand($config)
-            . ' --schema-dir ' . $config['paths']['schemaDir']
-        ;
+            . ' --schema-dir ' . $config['paths']['schemaDir'];
 
         return $command;
     }
@@ -129,14 +124,13 @@ class PropelInstall extends Module
         $config = Config::get(PropelConstants::PROPEL);
         $command = $this->getBaseCommand()
             . ' vendor/bin/propel migrate'
-            . $this->getConfigDirectoryForCommand($config)
-        ;
+            . $this->getConfigDirectoryForCommand($config);
 
         return $command;
     }
 
     /**
-     * @param $command
+     * @param string $command
      *
      * @return void
      */
@@ -174,13 +168,17 @@ class PropelInstall extends Module
 
         $finder = $this->getBundleSchemaFinder($testBundleSchemaDirectory);
 
-        if ($finder->count() > 0) {
-            $pathForSchemas = $this->getTargetSchemaDirectory();
-            $filesystem = new Filesystem();
-            foreach ($finder as $file) {
-                $path = $pathForSchemas . DIRECTORY_SEPARATOR . $file->getFileName();
-                $filesystem->dumpFile($path, $file->getContents());
-            }
+        if ($finder->count() === 0) {
+            return;
+        }
+
+        $pathForSchemas = $this->getTargetSchemaDirectory();
+        $filesystem = new Filesystem();
+
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        foreach ($finder as $file) {
+            $path = $pathForSchemas . DIRECTORY_SEPARATOR . $file->getFilename();
+            $filesystem->dumpFile($path, $file->getContents());
         }
     }
 

@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductOption\Persistence;
+namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
@@ -21,9 +22,12 @@ use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group ProductOption
+ * @group Business
+ * @group Model
  * @group ProductOptionReaderTest
  *
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()

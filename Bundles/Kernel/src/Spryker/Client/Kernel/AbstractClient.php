@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Kernel;
 
+use BadMethodCallException;
 use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractClient
@@ -44,8 +45,6 @@ abstract class AbstractClient
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractFactory
      */
     private function resolveFactory()
@@ -62,13 +61,15 @@ abstract class AbstractClient
     }
 
     /**
+     * @throws \BadMethodCallException
+     *
      * @return \Spryker\Client\ZedRequest\Stub\BaseStub
      */
     protected function getZedStub()
     {
         $factory = $this->getFactory();
         if (!method_exists($factory, 'createZedStub')) {
-            throw new \BadMethodCallException(
+            throw new BadMethodCallException(
                 sprintf('createZedStub method is not implemented in "%s".', get_class($factory))
             );
         }

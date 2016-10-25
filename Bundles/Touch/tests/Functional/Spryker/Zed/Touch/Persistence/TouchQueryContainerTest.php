@@ -14,10 +14,12 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Touch
  * @group Persistence
+ * @group TouchQueryContainerTest
  */
 class TouchQueryContainerTest extends Test
 {
@@ -127,7 +129,6 @@ class TouchQueryContainerTest extends Test
      * @param string $itemEvent
      * @param int $itemId
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
     protected function createTouchEntity($itemEvent, $itemId)

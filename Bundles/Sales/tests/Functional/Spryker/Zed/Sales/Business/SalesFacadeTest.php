@@ -15,7 +15,12 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Sales\Business\SalesFacade;
 
 /**
- * @group SalesFacade
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Sales
+ * @group Business
+ * @group SalesFacadeTest
  */
 class SalesFacadeTest extends Test
 {
@@ -52,7 +57,7 @@ class SalesFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCustomerOrderShouldReturnListOfCustomerPlacdOrders()
+    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
     {
         $testOrderCreator = $this->createTestOrderCreator();
         $salesOrderEntity = $testOrderCreator->create();
@@ -86,15 +91,13 @@ class SalesFacadeTest extends Test
         $orderItemDiscountEntity->save();
 
         $salesFacade = $this->createSalesFacade();
-
         $orderListTransfer = new OrderListTransfer();
-
         $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
 
         $orderTransfer = $orderListTransfer->getOrders()[0];
         $grandTotal = $orderTransfer->getTotals()->getGrandTotal();
 
-        $this->assertSame(1350.0, $grandTotal);
+        $this->assertSame(1350, $grandTotal);
     }
 
     /**

@@ -39,8 +39,4 @@ interface OrderprocessConstant
     // CONDITION
     const RULE_ORDER_USED_CODE = 'order used code';
 
-    const RULE_AT_LEAST_ONE_CODE_IS_REFUNDABLE = 'at least one code is refundable';
-
-    const ALL_CODES_ARE_REFUNDABLE = 'all codes are refundable';
-
 }

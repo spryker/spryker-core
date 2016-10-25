@@ -55,8 +55,8 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     {
         if (isset($this->values['metaTransfers'][$name])) {
             $className = $this->values['metaTransfers'][$name]['className'];
-            $transfer = new $className();
-            $transfer->formArray($this->values['metaTransfers'][$name]['data']);
+            $transfer = $this->createTransferObject($className);
+            $transfer->fromArray($this->values['metaTransfers'][$name]['data']);
 
             return $transfer;
         }
@@ -141,17 +141,12 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
-        if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
-            $getMethodName = (new TransferLocatorHelper())
-                ->transferClassNameToLocatorMethod($this->values['transferClassName']);
-
-            return $this->locator->$getMethodName($this->values['transfer']);
-        }
-
         return null;
     }
 
@@ -186,6 +181,18 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
         $this->values['username'] = $username;
 
         return $this;
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return \Spryker\Shared\Transfer\TransferInterface
+     */
+    protected function createTransferObject($transferClassName)
+    {
+        $transfer = new $transferClassName();
+
+        return $transfer;
     }
 
 }

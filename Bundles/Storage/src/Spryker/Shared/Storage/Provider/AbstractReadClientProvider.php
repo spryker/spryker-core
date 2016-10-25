@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Storage\Provider;
 
+/**
+ * @deprecated Not used anymore.
+ */
 abstract class AbstractReadClientProvider extends AbstractKvProvider
 {
 

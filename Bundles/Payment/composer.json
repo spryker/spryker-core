@@ -2,16 +2,18 @@
   "name": "spryker/payment",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/sales": "^2.0.0",
+    "spryker/testify": "*"
   },
   "description": "Payment bundle",
   "license": "proprietary",
@@ -24,5 +26,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

@@ -74,8 +74,6 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @throws \Exception
-     *
      * @return int
      */
     public function getPriceBySku($sku, $priceTypeName = null)
@@ -270,8 +268,6 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdBySku($sku)
@@ -281,8 +277,6 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

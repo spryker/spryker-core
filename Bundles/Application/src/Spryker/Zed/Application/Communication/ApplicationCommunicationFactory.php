@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Application\Communication;
 
-use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\Application\EventListener\KernelLogListener;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -16,12 +17,13 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ApplicationCommunicationFactory extends AbstractCommunicationFactory
 {
 
-    /**
-     * @return \Spryker\Shared\NewRelic\Api
-     */
-    public function createNewRelicApi()
+    use LoggerTrait;
+
+    public function createKernelLogListener()
     {
-        return new Api();
+        return new KernelLogListener(
+            $this->getLogger()
+        );
     }
 
 }

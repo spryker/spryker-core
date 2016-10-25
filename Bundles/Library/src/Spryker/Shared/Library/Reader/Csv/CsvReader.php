@@ -9,6 +9,7 @@ namespace Spryker\Shared\Library\Reader\Csv;
 
 use SplFileObject;
 use Spryker\Shared\Library\Exception\ResourceNotFoundException;
+use UnexpectedValueException;
 
 class CsvReader implements CsvReaderInterface
 {
@@ -36,9 +37,9 @@ class CsvReader implements CsvReaderInterface
     /**
      * @param string $filename
      *
-     * @return \SplFileObject
-     *
      * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
+     *
+     * @return \SplFileObject
      */
     protected function createCsvFile($filename)
     {
@@ -83,8 +84,6 @@ class CsvReader implements CsvReaderInterface
      * @param array $columns
      * @param array $data
      *
-     * @throws \UnexpectedValueException
-     *
      * @return array
      */
     public function composeItem(array $columns, array $data)
@@ -105,6 +104,8 @@ class CsvReader implements CsvReaderInterface
      * @param string $filename
      * @param int $lineNumber
      *
+     * @throws \UnexpectedValueException
+     *
      * @return array
      */
     protected function composeAndValidateLine(array $columns, array $data, $filename, $lineNumber)
@@ -113,7 +114,7 @@ class CsvReader implements CsvReaderInterface
         $columns = array_values($columns);
 
         if (empty($data)) {
-            throw new \UnexpectedValueException(sprintf(
+            throw new UnexpectedValueException(sprintf(
                 'Expected %d column(s) but received data with %d column(s) in %s on line %d',
                 count($columns),
                 count($data),
@@ -135,8 +136,6 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @return \SplFileObject
-     *
-     * @throws \LogicException
      */
     public function getFile()
     {
@@ -157,8 +156,6 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @param string $filename
-     *
-     * @throws \Spryker\Shared\Library\Exception\ResourceNotFoundException
      *
      * @return $this
      */
@@ -183,7 +180,7 @@ class CsvReader implements CsvReaderInterface
     {
         $data = $this->getFile()->fgetcsv();
         if (empty($data)) {
-            throw new \UnexpectedValueException(sprintf(
+            throw new UnexpectedValueException(sprintf(
                 'Malformed data at line %d in %s',
                 $this->readIndex,
                 $this->csvFilename

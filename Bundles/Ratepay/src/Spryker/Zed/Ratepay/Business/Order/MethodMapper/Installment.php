@@ -22,7 +22,6 @@ class Installment extends AbstractMapper
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
@@ -33,7 +32,6 @@ class Installment extends AbstractMapper
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *

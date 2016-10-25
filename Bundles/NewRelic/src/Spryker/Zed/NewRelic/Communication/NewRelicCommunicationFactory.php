@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\NewRelic\Communication;
 
-use Spryker\Shared\NewRelic\Api;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\NewRelic\Communication\Plugin\ControllerListener;
+use Spryker\Zed\NewRelic\Communication\Plugin\GatewayControllerListener;
+use Spryker\Zed\NewRelic\NewRelicDependencyProvider;
 
 /**
  * @method \Spryker\Zed\NewRelic\NewRelicConfig getConfig()
@@ -17,11 +19,50 @@ class NewRelicCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Shared\NewRelic\Api
+     * @return \Spryker\Zed\NewRelic\Communication\Plugin\GatewayControllerListener
      */
-    public function createNewRelicApi()
+    public function createGatewayControllerListener()
     {
-        return new Api();
+        return new GatewayControllerListener(
+            $this->getNewRelicApi()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\NewRelic\Communication\Plugin\ControllerListener
+     */
+    public function createControllerListener()
+    {
+        return new ControllerListener(
+            $this->getNewRelicApi(),
+            $this->getStore(),
+            $this->getSystem(),
+            $this->getConfig()->getIgnorableTransactions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\NewRelic\NewRelicApiInterface
+     */
+    public function getNewRelicApi()
+    {
+        return $this->getProvidedDependency(NewRelicDependencyProvider::NEW_RELIC_API);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(NewRelicDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Library\System
+     */
+    public function getSystem()
+    {
+        return $this->getProvidedDependency(NewRelicDependencyProvider::SYSTEM);
     }
 
 }

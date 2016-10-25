@@ -11,10 +11,11 @@ use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Locator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Kernel
- * @group Locator
+ * @group LocatorTest
  */
 class LocatorTest extends \PHPUnit_Framework_TestCase
 {

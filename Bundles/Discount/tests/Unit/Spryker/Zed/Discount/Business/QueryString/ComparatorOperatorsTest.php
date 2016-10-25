@@ -11,12 +11,19 @@ use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group ComparatorOperatorsTest
+ */
 class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testCompareWhenComparatorEvaluatesToTrueShouldReturnTrue()
@@ -52,8 +59,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testCompareWhenComparatorNotFoundShouldThrowException()
@@ -74,8 +79,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testCompareWhenComparatorCannotHandleTypeShouldThrowException()
@@ -108,8 +111,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testComparatorExpressionsByTypesShouldReturnAllOperatorsMatchingDataType()
@@ -153,8 +154,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return void
      */
     public function testGetAvailableComparatorShouldReturnAllAvailableExpressions()
@@ -199,7 +198,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
         $combinedOperators = $comparatorOperators->getCompoundComparatorExpressions();
 
         $this->assertCount(2, $combinedOperators);
-
     }
 
     /**
@@ -241,7 +239,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      * @return void
      */
     public function testCompareWhenUsingMatchAllIdentifierShouldAlwaysReturnFalse()
@@ -257,7 +254,6 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      * @return void
      */
     public function testCompareWhenValueIsNotProvidedShouldReturnFalse()
@@ -273,7 +269,21 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     * @return void
+     */
+    public function testCompareWhenValueIsNumericZeroProvidedShouldReturnTrue()
+    {
+        $comparatorOperators = $this->createComparatorOperators([]);
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue(ComparatorOperators::MATCH_ALL_IDENTIFIER);
+
+        $isValid = $comparatorOperators->compare($clauseTransfer, 0);
+
+        $this->assertTrue($isValid);
+    }
+
+    /**
      * @return void
      */
     public function testWhenNoneOfComparatorsAcceptsClauseShouldThrowException()

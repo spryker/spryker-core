@@ -23,7 +23,7 @@ class Head extends AbstractBuilder implements BuilderInterface
             'transaction-id' => $this->requestTransfer->getHead()->getTransactionId(),
             'transaction-short-id' => $this->requestTransfer->getHead()->getTransactionShortId(),
             'credential' => [
-                'profile-id'   => $this->requestTransfer->getHead()->getProfileId(),
+                'profile-id' => $this->requestTransfer->getHead()->getProfileId(),
                 'securitycode' => $this->requestTransfer->getHead()->getSecurityCode()
             ],
             'customer-device' => [
@@ -35,7 +35,7 @@ class Head extends AbstractBuilder implements BuilderInterface
             'meta' => [
                 'systems' => [
                     'system' => [
-                        '@name'    => RatepayConstants::CLIENT_NAME,
+                        '@name' => RatepayConstants::CLIENT_NAME,
                         '@version' => RatepayConstants::CLIENT_VERSION,
                     ]
                 ]

@@ -66,8 +66,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @param array $localizedNames
      * @param float|null $price
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     *
      * @return int
      */
     public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null)
@@ -83,8 +81,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @param bool $isOptional
      * @param int|null $sequence
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     *
      * @return int
      */
     public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null)
@@ -99,9 +95,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @param string $importKeyProductOptionValue
      * @param int|null $sequence
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     *
      * @return int
      */
     public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null)
@@ -115,9 +108,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @param string $sku
      * @param string $importKeyProductOptionTypeA
      * @param string $importKeyProductOptionTypeB
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
      *
      * @return void
      */
@@ -134,10 +124,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @param string $importKeyProductOptionValueTarget
      * @param string $operator
      *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     *
      * @return void
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
@@ -152,10 +138,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @param array $importKeysOptionValues
      * @param bool $isDefault
      * @param int|null $sequence
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      *
      * @return int
      */

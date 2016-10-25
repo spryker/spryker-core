@@ -13,7 +13,8 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group Tax
  * @group ReaderTest
@@ -128,7 +129,6 @@ class ReaderTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
      */
     private function loadFixtures()

@@ -14,11 +14,13 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Discount
  * @group Business
  * @group Distributor
+ * @group DistributorTest
  */
 class DistributorTest extends Test
 {
@@ -34,8 +36,8 @@ class DistributorTest extends Test
     const DISCOUNT_AMOUNT_400 = 400;
     const DISCOUNT_AMOUNT_700 = 700;
     const DISCOUNT_AMOUNT_4000 = 4000;
-    const DISCOUNT_AMOUNT_13333 = 133.33;
-    const DISCOUNT_AMOUNT_13334 = 133.34;
+    const DISCOUNT_AMOUNT_13333 = 133;
+    const DISCOUNT_AMOUNT_13334 = 134;
     const DISCOUNT_AMOUNT_NEGATIVE = -100;
 
     /**

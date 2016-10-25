@@ -45,10 +45,9 @@ class SubRequestHandler implements SubRequestHandlerInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
-     *
      * @param array $additionalSubRequestParameters
+     *
      * @return \Symfony\Component\HttpFoundation\Request
-     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      */
     protected function createSubRequest(Request $request, $url, array $additionalSubRequestParameters)
     {
@@ -65,6 +64,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
 
     /**
      * @param string $url
+     *
      * @return string[]
      */
     protected function extractUrlParts($url)
@@ -74,8 +74,10 @@ class SubRequestHandler implements SubRequestHandlerInterface
 
     /**
      * @param string[] $urlParts
-     * @return bool
+     *
      * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
+     *
+     * @return bool
      */
     protected function validateUrlParts(array $urlParts)
     {
@@ -103,6 +105,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
      * @param array $additionalSubRequestParameters
+     *
      * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function createRequestObject(Request $request, $url, array $additionalSubRequestParameters)

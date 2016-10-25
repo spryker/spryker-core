@@ -32,8 +32,6 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
@@ -84,8 +82,6 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * @param string $urlString
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByPath($urlString)
@@ -127,9 +123,6 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

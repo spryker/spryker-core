@@ -16,8 +16,6 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 /**
  * @deprecated Will be removed in the next major version. Please use ZedRequestFactory.
  *
- * Class ZedRequestClientProvider
- *
  * @method \Spryker\Shared\ZedRequest\Client\AbstractZedClient getInstance()
  */
 abstract class AbstractZedClientProvider extends AbstractClientProvider
@@ -25,8 +23,6 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
 
     /**
      * @deprecated Will be removed in the next major version. Please use ZedRequestFactory->createClient().
-     *
-     * @throws \Exception
      *
      * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClient
      */

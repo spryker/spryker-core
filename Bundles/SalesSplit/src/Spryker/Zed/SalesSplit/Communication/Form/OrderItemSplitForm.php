@@ -16,8 +16,8 @@ class OrderItemSplitForm extends AbstractType
 {
 
     const FIELD_QUANTITY = 'quantity';
-    const FIELD_ID_ORDER_ITEM = 'id_order_item';
-    const FIELD_ID_ORDER = 'id_order';
+    const FIELD_ID_ORDER_ITEM = 'id_sales_order_item';
+    const FIELD_ID_ORDER = 'id_sales_order';
 
     const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
@@ -27,7 +27,7 @@ class OrderItemSplitForm extends AbstractType
      */
     public function getName()
     {
-        return 'order_item_split';
+        return 'orderItemSplit';
     }
 
     /**

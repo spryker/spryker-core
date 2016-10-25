@@ -9,6 +9,9 @@ namespace Spryker\Shared\Catalog\Code\Storage;
 
 use Spryker\Shared\Library\Storage\StorageKeyGenerator as BaseStorageKeyGenerator;
 
+/**
+ * @deprecated This Class is not used any more and will be removed.
+ */
 class StorageKeyGenerator extends BaseStorageKeyGenerator
 {
 

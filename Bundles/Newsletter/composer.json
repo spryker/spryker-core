@@ -3,21 +3,22 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
     "spryker/application": "^2.0.0",
+    "spryker/customer": "^2.0.0",
     "spryker/glossary": "^2.0.0",
     "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/mail": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Newsletter bundle",
   "license": "proprietary",
@@ -30,5 +31,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
   }
 }

@@ -2,26 +2,26 @@
   "name": "spryker/discount",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/config": "^2.0.0",
-    "spryker/gui": "^2.0.0",
+    "spryker/gui": "^2.2.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
+    "spryker/log": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0",
-    "spryker/transfer": "^2.0.0",
-    "spryker/zend": "^2.0.0"
+    "spryker/transfer": "^2.1.1",
+    "spryker/url": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/sales-split": "^1.0.0",
+    "spryker/testify": "*"
   },
   "description": "Discount bundle",
   "license": "proprietary",
@@ -34,5 +34,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

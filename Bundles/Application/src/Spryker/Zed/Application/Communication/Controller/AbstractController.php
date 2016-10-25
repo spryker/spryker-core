@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use LogicException;
 use Silex\Application;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -81,8 +82,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
@@ -111,8 +110,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
@@ -141,8 +138,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
-     *
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()
@@ -304,7 +299,7 @@ abstract class AbstractController
     {
         $twig = $this->getApplication()['twig'];
         if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
+            throw new LogicException('Twig environment not set up.');
         }
 
         return $twig;

@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\DummyPayment;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\DummyPayment\Form\CreditCardSubForm;
 use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentCreditCardFormDataProvider;
 use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentInvoiceFormDataProvider;
@@ -59,11 +58,11 @@ class DummyPaymentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
     protected function getCurrencyManager()
     {
-        return CurrencyManager::getInstance();
+        return $this->getProvidedDependency(DummyPaymentDependencyProvider::CURRENCY_MANAGER);
     }
 
 }

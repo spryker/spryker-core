@@ -49,8 +49,8 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
+     *
      * @return \Generated\Shared\Transfer\OrderListTransfer
-     * @throws \Spryker\Zed\Sales\Business\Exception\OrderNotFoundException
      */
     public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer)
     {
@@ -86,7 +86,6 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         }
 
         return $orders;
-
     }
 
 }

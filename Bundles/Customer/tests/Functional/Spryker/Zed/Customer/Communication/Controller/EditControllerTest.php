@@ -22,11 +22,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Customer
  * @group Communication
  * @group Controller
+ * @group EditControllerTest
  */
 class EditControllerTest extends Test
 {
@@ -139,7 +141,7 @@ class EditControllerTest extends Test
         $customerData = $this->getFormData();
         $customerData[CustomerForm::FIELD_FIRST_NAME] = self::NEW_FIRST_NAME;
         $data = [
-            'customer' => $customerData
+            'customer' => $customerData,
         ];
 
         $request = Request::create('/customer/edit?id-customer=' . $this->customer->getIdCustomer(), 'POST', $data);
@@ -165,7 +167,6 @@ class EditControllerTest extends Test
         $result = $this->controller->indexAction($request);
 
         return $this->getFormDataFromResult($result['form']);
-
     }
 
     /**

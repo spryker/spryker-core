@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Spryker\Zed\Storage\Business\StorageFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Storage
@@ -36,7 +37,7 @@ class StorageFacadeTest extends Test
      */
     protected function skipIfCircleCi()
     {
-        if (getenv('CIRCLECI')) {
+        if (getenv('CIRCLECI') || getenv('TRAVIS')) {
             $this->markTestSkipped('Circle ci not set up properly');
         }
     }

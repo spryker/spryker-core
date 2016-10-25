@@ -18,6 +18,14 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group ProductDiscountConnector
+ * @group Business
+ * @group ProductDiscountConnectorFacadeTest
+ */
 class ProductDiscountConnectorFacadeTest extends Test
 {
 
@@ -100,8 +108,6 @@ class ProductDiscountConnectorFacadeTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected function createAbstractProductWithAttributes()
@@ -136,7 +142,6 @@ class ProductDiscountConnectorFacadeTest extends Test
         $concreteLocalizedAttributesEntity->save();
 
         return $abstractProductEntity;
-
     }
 
     /**

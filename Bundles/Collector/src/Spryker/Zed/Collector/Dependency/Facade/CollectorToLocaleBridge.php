@@ -34,8 +34,6 @@ class CollectorToLocaleBridge implements CollectorToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)

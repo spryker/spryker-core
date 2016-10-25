@@ -90,12 +90,12 @@ class Drawer implements DrawerInterface
     protected $format = 'svg';
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $fontSizeBig = null;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $fontSizeSmall = null;
 

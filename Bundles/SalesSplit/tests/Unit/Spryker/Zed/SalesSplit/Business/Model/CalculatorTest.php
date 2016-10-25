@@ -5,11 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit\Validation;
+namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesSplit
+ * @group Business
+ * @group Model
+ * @group CalculatorTest
+ */
 class CalculatorTest extends \PHPUnit_Framework_TestCase
 {
 

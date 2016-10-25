@@ -10,7 +10,7 @@ namespace Spryker\Yves\Ratepay\Handler;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Ratepay\RatepayClientInterface;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -123,7 +123,7 @@ class RatepayHandler
      */
     protected function getCurrency()
     {
-        return CurrencyManager::getInstance()->getDefaultCurrency()->getIsoCode();
+        return Store::getInstance()->getCurrencyIsoCode();
     }
 
     /**

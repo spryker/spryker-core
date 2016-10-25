@@ -93,7 +93,7 @@ class RateController extends AbstractController
             } else {
                 $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage('Tax rate succesfully updated.');
+                    $this->addSuccessMessage('Tax rate successfully updated.');
                 }
             }
         }
@@ -148,7 +148,6 @@ class RateController extends AbstractController
     }
 
     /**
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listTableAction()

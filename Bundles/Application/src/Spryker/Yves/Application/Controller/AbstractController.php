@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Application\Controller;
 
+use LogicException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
@@ -115,8 +116,6 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return $this
      */
     protected function addSuccessMessage($message)
@@ -129,8 +128,6 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return $this
      */
     protected function addInfoMessage($message)
@@ -142,8 +139,6 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     *
-     * @throws \ErrorException
      *
      * @return $this
      */
@@ -170,6 +165,8 @@ abstract class AbstractController
      *
      * @param string $role
      *
+     * @throws \LogicException
+     *
      * @return mixed
      */
     protected function isGranted($role)
@@ -179,7 +176,7 @@ abstract class AbstractController
             return $security->isGranted($role);
         }
 
-        throw new \LogicException('Security is not enabled!');
+        throw new LogicException('Security is not enabled!');
     }
 
     /**
@@ -214,7 +211,7 @@ abstract class AbstractController
     {
         $securityContext = $this->getApplication()['security'];
         if ($securityContext === null) {
-            throw new \LogicException('Security is not enabled!');
+            throw new LogicException('Security is not enabled!');
         }
 
         return $securityContext;
@@ -234,6 +231,8 @@ abstract class AbstractController
     }
 
     /**
+     * @throws \LogicException
+     *
      * @return mixed
      */
     protected function getUser()
@@ -241,7 +240,7 @@ abstract class AbstractController
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
         if ($token === null) {
-            throw new \LogicException('No logged in user found.');
+            throw new LogicException('No logged in user found.');
         }
 
         return $token->getUser();
@@ -281,8 +280,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
-     *
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     private function resolveClient()
@@ -311,8 +308,6 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
-     *
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     private function resolveFactory()

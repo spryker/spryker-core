@@ -14,6 +14,15 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Propel
+ * @group Business
+ * @group Model
+ * @group PropelSchemaTest
+ */
 class PropelSchemaTest extends \PHPUnit_Framework_TestCase
 {
 

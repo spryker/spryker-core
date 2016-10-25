@@ -25,17 +25,6 @@ class Item implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function assertItemRequirements(ItemTransfer $itemTransfer)
-    {
-        $itemTransfer->requireUnitGrossPrice()
-            ->requireQuantity();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -57,6 +46,17 @@ class Item implements OrderAmountAggregatorInterface
             $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
             $itemTransfer->setRefundableAmount($itemTransfer->getSumGrossPrice() - $itemTransfer->getCanceledAmount());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function assertItemRequirements(ItemTransfer $itemTransfer)
+    {
+        $itemTransfer->requireUnitGrossPrice()
+            ->requireQuantity();
     }
 
 }

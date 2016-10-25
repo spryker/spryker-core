@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
+use LogicException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransferServer
 {
@@ -102,12 +104,14 @@ class TransferServer
     }
 
     /**
+     * @throws \LogicException
+     *
      * @return \Symfony\Component\HttpFoundation\Request
      */
     private function getHttpRequest()
     {
         if ($this->httpRequest === null) {
-            throw new \LogicException('No Http Request found in TransferServer. Maybe you try to access data from it before the request object is injected.');
+            throw new LogicException('No Http Request found in TransferServer. Maybe you try to access data from it before the request object is injected.');
         }
 
         return $this->httpRequest;
@@ -142,7 +146,7 @@ class TransferServer
      */
     public function send()
     {
-        $jsonResponse = new JsonResponse($this->response->toArray());
+        $jsonResponse = new JsonResponse($this->response->toArray(), Response::HTTP_OK, ['X-Zed-Host' => 1]);
         if ($this->repeatIsActive) {
             $jsonResponse->setEncodingOptions(JSON_PRETTY_PRINT);
         }

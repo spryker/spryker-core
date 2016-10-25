@@ -11,11 +11,12 @@ use Spryker\Zed\Propel\Business\PropelFacade;
 use Spryker\Zed\Propel\PropelConfig;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
- * @group PropelFacade
+ * @group PropelFacadeTest
  */
 class PropelFacadeTest extends \PHPUnit_Framework_TestCase
 {

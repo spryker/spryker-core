@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,6 +25,7 @@ class CodeStyleSnifferConsole extends Console
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FIX = 'fix';
     const OPTION_BUNDLE_ALL = 'all';
+    const ARGUMENT_SUB_PATH = 'path';
 
     /**
      * @return void
@@ -41,13 +43,12 @@ class CodeStyleSnifferConsole extends Console
         $this->addOption(self::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
         $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
         $this->addOption(self::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed');
+        $this->addArgument(self::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element for project level');
     }
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @throws \Exception
      *
      * @return int Exit code
      */
@@ -64,7 +65,13 @@ class CodeStyleSnifferConsole extends Console
         }
         $this->info($message);
 
-        return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
+        $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+        if ($bundle && $path) {
+            $this->error('Path is only valid for project level');
+            return self::CODE_ERROR;
+        }
+
+        return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
     }
 
 }

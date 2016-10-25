@@ -66,8 +66,6 @@ class OrderSaver implements OrderSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
@@ -153,9 +151,25 @@ class OrderSaver implements OrderSaverInterface
     protected function hydrateSalesOrderEntity(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $salesOrderEntity->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
-        $salesOrderEntity->fromArray($quoteTransfer->getCustomer()->toArray());
+        $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function hydrateSalesOrderCustomer(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
+    {
+        $customerTransfer = $quoteTransfer->getCustomer();
+
+        $salesOrderEntity->setFkCustomer($customerTransfer->getIdCustomer());
+        $salesOrderEntity->setEmail($customerTransfer->getEmail());
+        $salesOrderEntity->setFirstName($customerTransfer->getFirstName());
+        $salesOrderEntity->setLastName($customerTransfer->getLastName());
     }
 
     /**
@@ -191,7 +205,6 @@ class OrderSaver implements OrderSaverInterface
             $quantity = $itemTransfer->getQuantity();
             for ($i = 1; $quantity >= $i; $i++) {
                 $expandedItemTransfer = clone $itemTransfer;
-                $expandedItemTransfer->setGroupKey(null);
                 $expandedItemTransfer->setQuantity(1);
                 $expandedItems->append($expandedItemTransfer);
             }

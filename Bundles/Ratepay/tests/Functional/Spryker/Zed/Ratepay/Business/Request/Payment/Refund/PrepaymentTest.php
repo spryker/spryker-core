@@ -10,6 +10,17 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Request\Payment\Refund;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RefundAdapterMock;
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\PrepaymentAbstractTest;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group Refund
+ * @group PrepaymentTest
+ */
 class PrepaymentTest extends PrepaymentAbstractTest
 {
 
@@ -24,7 +35,6 @@ class PrepaymentTest extends PrepaymentAbstractTest
         $this->setUpPaymentTestData();
 
         $this->orderTransfer->fromArray($this->orderEntity->toArray(), true);
-
     }
 
     /**

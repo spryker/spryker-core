@@ -55,7 +55,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $this->hydrateDiscountVoucher($idDiscount, $discountEntity, $discountConfigurator);
 
         return $discountConfigurator;
-
     }
 
     /**

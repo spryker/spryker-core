@@ -7,17 +7,19 @@
 
 namespace Functional\Spryker\Zed\Braintree\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Braintree\Exception\NotFound;
+use Braintree\Transaction;
+use Braintree\Transaction\StatusDetails;
+use DateTime;
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
-use Spryker\Zed\Braintree\Business\BraintreeFacade;
-use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
+use Spryker\Zed\Braintree\Business\Payment\Transaction\AuthorizeTransaction;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Braintree
+ * @group Business
  * @group BraintreeFacadeAuthorizeTest
  */
 class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
@@ -28,56 +30,83 @@ class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
      */
     public function testAuthorizePaymentWithSuccessResponse()
     {
-        $orderTransfer = $this->createOrderTransfer();
+        $factoryMock = $this->getFactoryMock(['createAuthorizeTransaction']);
+        $factoryMock->expects($this->once())->method('createAuthorizeTransaction')->willReturn(
+            $this->getAuthorizeTransactionMock()
+        );
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
 
-        $idPayment = $this->getPaymentEntity()->getIdPaymentBraintree();
-        $facade = $this->getFacadeMockAuthorize($orderTransfer);
+        $transactionMetaTransfer = $this->getTransactionMetaTransfer();
 
-        $response = $facade->authorizePayment($orderTransfer, $idPayment);
+        $response = $braintreeFacade->authorizePayment($transactionMetaTransfer);
 
         $this->assertTrue($response->getIsSuccess());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
+     * @return void
      */
-    private function getFacadeMockAuthorize(OrderTransfer $orderTransfer)
+    public function testAuthorizePaymentWithErrorResponse()
     {
-        $facade = new BraintreeFacade();
+        $factoryMock = $this->getFactoryMock(['createAuthorizeTransaction']);
+        $factoryMock->expects($this->once())->method('createAuthorizeTransaction')->willReturn(
+            $this->getAuthorizeTransactionMock(true)
+        );
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
 
-        $factoryMock = $this->getMock(BraintreeBusinessFactory::class, ['createPaymentTransactionHandler']);
+        $transactionMetaTransfer = $this->getTransactionMetaTransfer();
+        $response = $braintreeFacade->authorizePayment($transactionMetaTransfer);
 
-        $queryContainer = new BraintreeQueryContainer();
-        $config = new BraintreeConfig();
-        $transactionMock = $this->getMock(Transaction::class, ['authorize'], [$queryContainer, $config]);
+        $this->assertFalse($response->getIsSuccess());
+    }
 
-        $factoryMock->expects($this->once())
-            ->method('createPaymentTransactionHandler')
-            ->willReturn($transactionMock);
+    /**
+     * @param bool $throwsException
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getAuthorizeTransactionMock($throwsException = false)
+    {
+        $authorizeTransactionMock = $this
+            ->getMockBuilder(AuthorizeTransaction::class)
+            ->setMethods(['findTransaction', 'initializeBraintree'])
+            ->setConstructorArgs(
+                [new BraintreeConfig()]
+            )
+            ->getMock();
 
-        $transaction = \Braintree\Transaction::factory([
+        if ($throwsException) {
+            $authorizeTransactionMock->method('findTransaction')->willThrowException(new NotFound());
+        } else {
+            $transaction = $this->getSuccessfulTransaction();
+            $authorizeTransactionMock->expects($this->once())
+                ->method('findTransaction')
+                ->willReturn($transaction);
+        }
+
+        return $authorizeTransactionMock;
+    }
+
+    /**
+     * @return \Braintree\Transaction
+     */
+    protected function getSuccessfulTransaction()
+    {
+        $orderTransfer = $this->createOrderTransfer();
+        return Transaction::factory([
+            'id' => 123,
             'processorResponseCode' => '1000',
             'processorResponseText' => 'Approved',
-            'createdAt' => new \DateTime(),
+            'createdAt' => new DateTime(),
             'status' => 'authorized',
             'type' => 'sale',
             'amount' => $orderTransfer->getTotals()->getGrandTotal() / 100,
             'merchantAccountId' => 'abc',
-            'statusHistory' => new \Braintree\Transaction\StatusDetails([
-                'timestamp' => new \DateTime(),
+            'statusHistory' => new StatusDetails([
+                'timestamp' => new DateTime(),
                 'status' => 'authorized'
             ])
         ]);
-
-        $transactionMock->expects($this->once())
-            ->method('authorize')
-            ->willReturn($transaction);
-
-        $facade->setFactory($factoryMock);
-
-        return $facade;
     }
 
 }

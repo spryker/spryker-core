@@ -12,6 +12,14 @@ use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorization
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\RefundAdapterMock;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Payolution
+ * @group Business
+ * @group PayolutionFacadeRefundTest
+ */
 class PayolutionFacadeRefundTest extends AbstractFacadeTest
 {
 

@@ -18,7 +18,11 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
- * @group PriceTest
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Price
+ * @group WriterTest
  */
 class WriterTest extends Test
 {
@@ -180,7 +184,6 @@ class WriterTest extends Test
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findPriceEntitiesProductAbstract($productAbstract, $priceType)
@@ -195,7 +198,6 @@ class WriterTest extends Test
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcrete
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findPriceEntitiesProductConcrete($productConcrete, $priceType)

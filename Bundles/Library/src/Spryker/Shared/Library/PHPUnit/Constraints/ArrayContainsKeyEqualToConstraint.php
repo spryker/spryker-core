@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\PHPUnit\Constraints;
 
+use PHPUnit_Framework_ExpectationFailedException;
+use PHPUnit_Util_Type;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Comparator\Factory;
 
@@ -38,6 +40,8 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
      * @param string $description
      * @param bool $returnResult
      *
+     * @throws \PHPUnit_Framework_ExpectationFailedException
+     *
      * @return bool
      */
     public function evaluate($other, $description = '', $returnResult = false)
@@ -47,7 +51,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
                 return false;
             }
 
-            throw new \PHPUnit_Framework_ExpectationFailedException(
+            throw new PHPUnit_Framework_ExpectationFailedException(
                 trim($description . "\n" . 'Value is not an array')
             );
         }
@@ -57,7 +61,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
                 return false;
             }
 
-            throw new \PHPUnit_Framework_ExpectationFailedException(
+            throw new PHPUnit_Framework_ExpectationFailedException(
                 trim($description . "\n" . 'Array does not contain the expected key ' . $this->key)
             );
         }
@@ -79,7 +83,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
                 return false;
             }
 
-            throw new \PHPUnit_Framework_ExpectationFailedException(
+            throw new PHPUnit_Framework_ExpectationFailedException(
                 trim($description . "\n" . $f->getMessage()),
                 $f
             );
@@ -101,7 +105,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
             return sprintf(
                 'key %s is equal to %s',
                 $this->key,
-                \PHPUnit_Util_Type::export($this->value)
+                PHPUnit_Util_Type::export($this->value)
             );
         }
     }

@@ -45,7 +45,6 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createMethodFormDataProvider()
     {
@@ -59,8 +58,8 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param array $data
      * @param array $options
+     *
      * @return \Symfony\Component\Form\FormInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createMethodForm(array $data, array $options = [])
     {

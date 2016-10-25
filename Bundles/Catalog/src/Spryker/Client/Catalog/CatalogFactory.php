@@ -9,8 +9,7 @@ namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
-use Spryker\Client\Catalog\Plugin\Query\CatalogSearchQueryPlugin;
-use Spryker\Client\Catalog\Plugin\ResultFormatter\Elasticsearch\CatalogSearchResultFormatterPlugin;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
 
@@ -26,37 +25,64 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use getCatalogSearchQueryPlugin() method instead.
+     *
      * @param string $searchString
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createCatalogSearchQueryPlugin($searchString)
     {
-        $searchQuery = new CatalogSearchQueryPlugin($searchString);
+        return new CatalogSearchQueryPlugin($searchString);
+    }
 
-        return $searchQuery;
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function getCatalogSearchQueryPlugin()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_PLUGIN);
+    }
+
+    /**
+     * @deprecated Use getCatalogSearchQueryExpanderPlugins() method instead.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function createCatalogSearchQueryExpanderPlugins()
+    {
+        return $this->getCatalogSearchQueryExpanderPlugins();
     }
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
-    public function createCatalogSearchQueryExpanderPlugins()
+    public function getCatalogSearchQueryExpanderPlugins()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS);
     }
 
     /**
+     * @deprecated Use getCatalogSearchResultFormatters() method instead.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function createCatalogSearchResultFormatters()
     {
-        $resultFormatters = $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS);
-        $resultFormatters[] = new CatalogSearchResultFormatterPlugin();
-
-        return $resultFormatters;
+        return $this->getCatalogSearchResultFormatters();
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getCatalogSearchResultFormatters()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS);
+    }
+
+    /**
+     * @deprecated See \Spryker\Client\Catalog\Model\Catalog for more info.
+     *
      * @return \Spryker\Client\Catalog\Model\Catalog
      */
     public function createCatalogModel()

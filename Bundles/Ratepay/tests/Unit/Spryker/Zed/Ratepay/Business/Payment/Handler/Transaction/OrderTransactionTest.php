@@ -12,6 +12,17 @@ use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\CancelPayme
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\ConfirmDeliveryTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\ConfirmPaymentTransaction;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group Handler
+ * @group Transaction
+ * @group OrderTransactionTest
+ */
 class OrderTransactionTest extends BaseTransactionTest
 {
 

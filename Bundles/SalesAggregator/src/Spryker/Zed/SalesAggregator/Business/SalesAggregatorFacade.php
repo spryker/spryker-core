@@ -110,7 +110,6 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
     }
 
     /**
-     *
      * Specification:
      *  - Sum up order subtotal
      *

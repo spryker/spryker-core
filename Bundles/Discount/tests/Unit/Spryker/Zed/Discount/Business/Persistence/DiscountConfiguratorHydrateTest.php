@@ -4,13 +4,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Business\Model;
+namespace Unit\Spryker\Zed\Discount\Business\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Persistence
+ * @group DiscountConfiguratorHydrateTest
+ */
 class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -89,7 +98,7 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      *
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
@@ -124,7 +133,6 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
             ->setIsExclusive(true);
 
         return $discountEntity;
-
     }
 
     /**

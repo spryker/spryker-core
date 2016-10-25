@@ -48,8 +48,8 @@ class Finder implements FinderInterface
     }
 
     /**
-     *
      * @param string $stateMachineName
+     *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
      */
     public function getProcesses($stateMachineName)
@@ -109,7 +109,6 @@ class Finder implements FinderInterface
         }
 
         return [];
-
     }
 
     /**
@@ -201,8 +200,6 @@ class Finder implements FinderInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param array $sourceStates
-     *
-     * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */

@@ -12,6 +12,9 @@ use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Shared\Library\DataDirectory;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class File extends AbstractWriter
 {
 

@@ -24,8 +24,6 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
 {
 
     /**
-     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
-     *
      * @return string
      */
     public function getResourceType()
@@ -38,8 +36,6 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     }
 
     /**
-     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
-     *
      * @return int
      */
     public function getResourceId()
@@ -79,8 +75,6 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     /**
      * @param string $resourceType
      * @param int $resourceId
-     *
-     * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
      *
      * @return $this
      */

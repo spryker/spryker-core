@@ -138,7 +138,7 @@ class AddressTable extends AbstractTable
      *
      * @return string
      */
-    private function buildLinks(array $details)
+    protected function buildLinks(array $details)
     {
         $buttons = [];
 
@@ -147,8 +147,8 @@ class AddressTable extends AbstractTable
             : null;
 
         if ($idCustomerAddress !== null) {
-            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
-            $buttons[] = $this->generateViewButton(sprintf('/customer/address/view/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'View');
+            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
+            $buttons[] = $this->generateViewButton(sprintf('/customer/address/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'View');
         }
 
         return implode(' ', $buttons);

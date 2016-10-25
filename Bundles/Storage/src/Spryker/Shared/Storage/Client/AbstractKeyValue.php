@@ -11,7 +11,7 @@ use Spryker\Shared\Library\Storage\AdapterInterface;
 use Spryker\Shared\Library\Storage\AdapterTrait;
 
 /**
- * Class AbstractKeyValue
+ * @deprecated Not used anymore.
  */
 abstract class AbstractKeyValue implements AdapterInterface
 {

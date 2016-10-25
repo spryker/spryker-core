@@ -10,8 +10,9 @@ namespace Spryker\Zed\Discount\Business\Calculator;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Shared\Library\Error\ErrorLogger;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
@@ -19,6 +20,8 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount implements DiscountInterface
 {
+
+    use LoggerTrait;
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -109,18 +112,39 @@ class Discount implements DiscountInterface
                 ->queryDiscountsBySpecifiedVouchers($voucherCodes)
                 ->find();
 
+            $voucherDiscounts = $this->filterUniqueVoucherDiscounts($voucherDiscounts);
+
             if (count($discounts) == 0) {
                 return $voucherDiscounts;
             }
 
-            foreach ($voucherDiscounts as $discount) {
-                $discounts->append($discount);
+            foreach ($voucherDiscounts as $discountEntity) {
+                $discounts->append($discountEntity);
             }
 
         }
 
         return $discounts;
+    }
 
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection $voucherDiscounts
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function filterUniqueVoucherDiscounts(ObjectCollection $voucherDiscounts)
+    {
+        $uniqueVoucherDiscounts = new ObjectCollection();
+        foreach ($voucherDiscounts as $discountEntity) {
+            $idDiscount = $discountEntity->getIdDiscount();
+            if (isset($uniqueVoucherDiscounts[$idDiscount])) {
+                continue;
+            }
+
+            $uniqueVoucherDiscounts[$idDiscount] = $discountEntity;
+        }
+
+        return $uniqueVoucherDiscounts;
     }
 
     /**
@@ -144,7 +168,6 @@ class Discount implements DiscountInterface
         }
 
         return $applicableDiscounts;
-
     }
 
     /**
@@ -161,8 +184,8 @@ class Discount implements DiscountInterface
         }
 
         $voucherCodes = [];
-        foreach ($voucherDiscounts as $voucherDiscount) {
-            $voucherCodes[] = $voucherDiscount->getVoucherCode();
+        foreach ($voucherDiscounts as $voucherDiscountTransfer) {
+            $voucherCodes[] = $voucherDiscountTransfer->getVoucherCode();
         }
 
         return $voucherCodes;
@@ -211,8 +234,8 @@ class Discount implements DiscountInterface
                 }
             }
 
-        } catch (QueryStringException $e) {
-            ErrorLogger::log($e);
+        } catch (QueryStringException $exception) {
+            $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
         }
 
         return false;

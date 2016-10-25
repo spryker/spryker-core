@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sales>
+        <label>Refunds</label>
+        <title>Refunds</title>
+        <bundle>refund</bundle>
+        <pages>
+            <table>
+                <label>Refunds</label>
+                <title>Refunds</title>
+                <bundle>refund</bundle>
+                <controller>table</controller>
+                <action>index</action>
+                <icon>fa-user-secret</icon>
+            </table>
+        </pages>
+    </sales>
+</config>

@@ -76,10 +76,6 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     * @throws \Spryker\Zed\Cms\Business\Exception\PageExistsException
-     *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePage(PageTransfer $pageTransfer)
@@ -95,10 +91,6 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
@@ -118,10 +110,6 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
@@ -206,8 +194,6 @@ class PageManager implements PageManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
-     *
      * @return void
      */
     public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
@@ -223,8 +209,6 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -244,8 +228,6 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function updatePageUrl(PageTransfer $pageTransfer)
@@ -259,8 +241,6 @@ class PageManager implements PageManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -320,6 +300,7 @@ class PageManager implements PageManagerInterface
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getLocaleTransfer($idLocale)

@@ -22,7 +22,7 @@
 
     {% block widget_content %}
 
-        <table class="footable table table-striped toggle-arrow-tiny">
+        <table class="footable table table-striped toggle-arrow-tiny" data-qa="order-item-list">
             <thead>
             <tr class="text-left">
                 <th><input type="checkbox" id="check-all-orders" /></th>
@@ -43,7 +43,7 @@
             </thead>
             <tbody>
             {% for orderItem in order.items %}
-                <tr>
+                <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
                     {#<td>#}
                         {#<a href="#" target="_blank">{{ 'Yves view' }}</a><br>#}
@@ -51,19 +51,24 @@
                     {#</td>#}
                     <td>{{ orderItem.Sku }}</td>
                     <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
-                    {#<td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>#}
-                    <td>{{ orderItem.quantity }}</td>{# remove this line and uncomment the above one #}
+
+                    {% if orderItem.quantity > 1 %}
+                        <td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>
+                    {% else %}
+                        <td>{{ orderItem.quantity }}</td>
+                    {% endif %}
+
                     <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
                     <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
-                    <td>{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
+                    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts }}">{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
                     <td>
                         <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
                             {{ orderItem.process }}
                         </a>
                     </td>
-                    <td>{{ orderItem.state.name }}</td>
+                    <td data-qa-item-current-state="{{ orderItem.idSalesOrderItem }}">{{ orderItem.state.name }}</td>
                     <td>
                         {% for stateHistory in orderItem.stateHistory | slice(0, 3) %}
                             <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
@@ -90,12 +95,12 @@
                     </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
-                <tr style="display: none;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
-                    <td colspan="12">
-                        <h4>{{ 'Split order items' | trans }}</h4>
-                        {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}
-                    </td>
-                </tr>
+                    <tr style="display: none;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
+                        <td colspan="12">
+                            <h4>{{ 'Split order items' | trans }}</h4>
+                            {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}
+                        </td>
+                    </tr>
                 {% endif %}
             {% endfor %}
             </tbody>

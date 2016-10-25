@@ -14,7 +14,15 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 
 /**
- * @group ResponseContainer
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Payone
+ * @group Business
+ * @group Api
+ * @group Response
+ * @group Container
+ * @group ResponseContainerTest
  */
 class ResponseContainerTest extends \PHPUnit_Framework_TestCase
 {

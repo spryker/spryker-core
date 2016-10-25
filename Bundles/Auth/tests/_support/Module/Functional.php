@@ -6,15 +6,17 @@
 
 namespace Auth\Module;
 
-use Codeception\TestCase;
 use Codeception\Module;
+use Codeception\TestCase;
 use Propel\Runtime\Propel;
 
 class Functional extends Module
 {
 
     /**
-     * @param TestCase $test
+     * @param \Codeception\TestCase $test
+     *
+     * @return void
      */
     public function _before(TestCase $test)
     {
@@ -24,7 +26,9 @@ class Functional extends Module
     }
 
     /**
-     * @param TestCase $test
+     * @param \Codeception\TestCase $test
+     *
+     * @return void
      */
     public function _after(TestCase $test)
     {
@@ -38,8 +42,10 @@ class Functional extends Module
     }
 
     /**
-     * @param TestCase $test
-     * @apram $fail
+     * @param \Codeception\TestCase $test
+     * @param bool $fail
+     *
+     * @return void
      */
     public function _failed(TestCase $test, $fail)
     {

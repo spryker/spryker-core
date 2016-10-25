@@ -11,10 +11,13 @@ use Silex\Controller;
 use Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Application
- * @group YvesControllerProvider
+ * @group Plugin
+ * @group Provider
+ * @group YvesControllerProviderTest
  */
 class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
 {

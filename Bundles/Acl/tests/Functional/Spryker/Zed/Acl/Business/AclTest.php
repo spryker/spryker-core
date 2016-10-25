@@ -16,9 +16,11 @@ use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
- * @group Business
  * @group Acl
+ * @group Business
  * @group AclTest
  */
 class AclTest extends Test

@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 
 /**
  * Symfony CMF Routing component Provider for URL generation.
+ *
+ * @deprecated Use Spryker\Shared\Application\ServiceProvider\UrlGeneratorServiceProvider instead
  */
 class UrlGeneratorServiceProvider implements ServiceProviderInterface
 {

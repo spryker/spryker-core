@@ -53,7 +53,8 @@ class NavigationCache implements NavigationCacheInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Application\Business\Exception\AbstractNavigationCacheException
+     * @throws \Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException
+     * @throws \Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException
      *
      * @return array
      */

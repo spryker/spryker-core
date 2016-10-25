@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library\Error;
 
+use Exception;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Shared\EventJournal\Model\EventJournalInterface;
@@ -16,6 +17,9 @@ use Spryker\Shared\Library\Log;
 use Spryker\Shared\NewRelic\Api;
 use Spryker\Shared\NewRelic\ApiInterface;
 
+/**
+ * @deprecated Use ErrorHandler bundle instead.
+ */
 class ErrorLogger
 {
 
@@ -24,7 +28,7 @@ class ErrorLogger
      *
      * @return void
      */
-    public static function log(\Exception $exception)
+    public static function log(Exception $exception)
     {
         $newRelicApi = new Api();
 
@@ -42,7 +46,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToEventJournal(
-        \Exception $exception,
+        Exception $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
         $ignoreInternalExceptions = false
@@ -73,7 +77,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToNewRelic(
-        \Exception $exception,
+        Exception $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
         $ignoreInternalExceptions = false
@@ -96,7 +100,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToFile(
-        \Exception $exception,
+        Exception $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi
     ) {

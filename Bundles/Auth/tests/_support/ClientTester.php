@@ -15,12 +15,14 @@ namespace Auth;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class ClientTester extends \Codeception\Actor
 {
+
     use _generated\ClientTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

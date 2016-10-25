@@ -8,9 +8,8 @@
 namespace Spryker\Shared\Storage\Client;
 
 /**
- * Class RedisRead
+ * @deprecated Not used anymore.
  */
-
 abstract class AbstractRedisRead extends AbstractRedis implements ReadInterface
 {
 

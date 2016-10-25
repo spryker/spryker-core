@@ -2,26 +2,27 @@
   "name": "spryker/search",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
     "spryker/application": "^2.3.0",
+    "spryker/collector": "^2.0.0 || ^3.0.0",
     "spryker/config": "^2.0.0",
     "spryker/console": "^2.0.0",
     "spryker/elastica": "^3.0.0",
     "spryker/gui": "^2.0.0",
-    "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.4.0",
     "spryker/library": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/storage": "^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/symfony": "^2.0.0",
+    "spryker/twig": "^2.1.0",
+    "spryker/zend": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Search bundle",
   "license": "proprietary",
@@ -34,5 +35,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

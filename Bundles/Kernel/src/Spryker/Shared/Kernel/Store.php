@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Kernel;
 
+use Exception;
+use InvalidArgumentException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 use Spryker\Shared\Library\Context;
@@ -137,7 +139,7 @@ class Store
         $stores = require APPLICATION_ROOT_DIR . '/config/Shared/stores.php';
 
         if (array_key_exists($currentStoreName, $stores) === false) {
-            throw new \Exception('Missing setup for store: ' . $currentStoreName);
+            throw new Exception('Missing setup for store: ' . $currentStoreName);
         }
 
         return $stores;
@@ -157,7 +159,7 @@ class Store
         $vars = get_object_vars($this);
         foreach ($storeArray as $k => $v) {
             if (!array_key_exists($k, $vars)) {
-                throw new \Exception('Unknown setup-key: ' . $k);
+                throw new Exception('Unknown setup-key: ' . $k);
             }
             $this->$k = $v;
         }
@@ -174,7 +176,7 @@ class Store
     }
 
     /**
-     * @throws \Exception
+     * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
      *
      * @return string
      */
@@ -289,7 +291,7 @@ class Store
     public function setCurrentLocale($currentLocale)
     {
         if (!in_array($currentLocale, $this->locales)) {
-            throw new \InvalidArgumentException(sprintf('"%s" locale is not a valid value. Please use one of "%s".', $currentLocale, implode('", "', $this->locales)));
+            throw new InvalidArgumentException(sprintf('"%s" locale is not a valid value. Please use one of "%s".', $currentLocale, implode('", "', $this->locales)));
         }
 
         $this->currentLocale = $currentLocale;

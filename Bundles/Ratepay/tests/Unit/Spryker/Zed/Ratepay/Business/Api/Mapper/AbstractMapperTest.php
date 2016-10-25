@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Ratepay\Business\Api\Converter;
+namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -16,6 +16,16 @@ use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Api
+ * @group Mapper
+ * @group AbstractMapperTest
+ */
 abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
 {
 

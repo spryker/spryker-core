@@ -10,9 +10,12 @@ namespace Unit\Spryker\Zed\Library\Generator;
 use Spryker\Zed\Library\Generator\StringGenerator;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Library
+ * @group Generator
+ * @group StringGeneratorTest
  */
 class StringGeneratorTest extends \PHPUnit_Framework_TestCase
 {

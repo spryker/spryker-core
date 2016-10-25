@@ -14,6 +14,16 @@ use Spryker\Zed\Collector\CollectorConfig;
 use Unit\Spryker\Zed\Collector\Business\Fixture\CollectorConfigWithNotDefinedDbEngineFake;
 use Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Collector
+ * @group Business
+ * @group Exporter
+ * @group Writer
+ * @group AbstractTouchUpdaterTest
+ */
 class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -88,7 +98,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can't resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery
      *
      * @return void
@@ -100,7 +110,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can't resolve bulk touch class name: BulkDeleteTouchByIdQuery
      *
      * @return void
@@ -112,7 +122,7 @@ class AbstractTouchUpdaterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
     protected function createTouchUpdater()
     {

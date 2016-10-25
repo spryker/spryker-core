@@ -30,8 +30,6 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param int $idKey
      * @param array $data
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
      * @return string
      */
     public function translateByKeyId($idKey, array $data = [])
@@ -43,10 +41,6 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param string $keyName
      * @param string $value
      * @param bool $isActive
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -61,10 +55,6 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
@@ -78,10 +68,6 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
-     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
@@ -91,8 +77,6 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
 
     /**
      * @param string $keyName
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      *
      * @return int
      */

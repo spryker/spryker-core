@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\Payolution\Communication\Plugin;
+namespace Unit\Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -15,19 +15,22 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlugin;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Payolution
  * @group Communication
- * @group PayolutionPostCheckPlugin
+ * @group Plugin
+ * @group Checkout
+ * @group PayolutionPostCheckPluginTest
  */
 class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
 {
 
-    const PROCESSING_SUCCESS_CODE = 'VA.PA.90';
+    const PROCESSING_SUCCESS_CODE = 'VA.PA.90.00';
     const PROCESSING_ERROR_CODE = 'error code';
 
     /**
@@ -37,9 +40,10 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     {
         $transactionStatusLogEntity = $this->getTransactionStatusLogEntity();
         $transactionStatusLogEntity->setProcessingCode(self::PROCESSING_SUCCESS_CODE);
-        $queryContainerMock = $this->getQueryContainerMock($transactionStatusLogEntity);
 
-        $postCheckPlugin = new PayolutionPostCheckPlugin($queryContainerMock);
+        $postCheckPlugin = new PayolutionPostCheckPlugin();
+        $queryContainer = $this->getQueryContainerMock($transactionStatusLogEntity);
+        $postCheckPlugin->setQueryContainer($queryContainer);
 
         $checkoutResponseTransfer = $this->getCheckoutResponseTransfer();
         $postCheckPlugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
@@ -54,9 +58,10 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     {
         $transactionStatusLogEntity = $this->getTransactionStatusLogEntity();
         $transactionStatusLogEntity->setProcessingCode(self::PROCESSING_ERROR_CODE);
-        $queryContainerMock = $this->getQueryContainerMock($transactionStatusLogEntity);
 
-        $postCheckPlugin = new PayolutionPostCheckPlugin($queryContainerMock);
+        $postCheckPlugin = new PayolutionPostCheckPlugin();
+        $queryContainer = $this->getQueryContainerMock($transactionStatusLogEntity);
+        $postCheckPlugin->setQueryContainer($queryContainer);
 
         $checkoutResponseTransfer = $this->getCheckoutResponseTransfer();
         $postCheckPlugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
@@ -78,13 +83,13 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer
      */
     private function getQueryContainerMock(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $queryContainerMock = $this->getMock(PayolutionQueryContainerInterface::class);
+        $queryContainerMock = $this->getMock(PayolutionQueryContainer::class);
         $transactionStatusLogQueryMock = $this->getTransactionStatusLogQueryMock($transactionStatusLogEntity);
-        $queryContainerMock->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
+        $queryContainerMock->expects($this->once())->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
 
         return $queryContainerMock;
     }

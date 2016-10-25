@@ -53,9 +53,6 @@ class Address
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
@@ -72,8 +69,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -105,7 +100,7 @@ class Address
         $addressEntity = $addressQuery->findOne();
 
         if ($addressEntity === null) {
-            throw new AddressNotFoundException();
+            throw new AddressNotFoundException(sprintf('Address not found for ID `%s` (and optional customer ID `%s`).', $idAddress, $idCustomer));
         }
 
         $addressTransfer = $this->entityToAddressTransfer($addressEntity);
@@ -162,10 +157,6 @@ class Address
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
@@ -181,8 +172,6 @@ class Address
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -194,7 +183,11 @@ class Address
             ->findOne();
 
         if (!$entity) {
-            throw new AddressNotFoundException();
+            throw new AddressNotFoundException(sprintf(
+                'Address not found for ID `%s` and customer email `%s`.',
+                $addressTransfer->getIdCustomerAddress(),
+                $customer->getEmail()
+            ));
         }
 
         $customer->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
@@ -207,8 +200,6 @@ class Address
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -220,7 +211,11 @@ class Address
             ->findOne();
 
         if (!$entity) {
-            throw new AddressNotFoundException();
+            throw new AddressNotFoundException(sprintf(
+                'Address not found for ID `%s` and customer email `%s`.',
+                $addressTransfer->getIdCustomerAddress(),
+                $customer->getEmail()
+            ));
         }
 
         $customer->setDefaultBillingAddress($addressTransfer->getIdCustomerAddress());
@@ -307,6 +302,7 @@ class Address
      */
     protected function getCustomerFromAddressTransfer(AddressTransfer $addressTransfer)
     {
+        $customer = null;
         if ($addressTransfer->getEmail()) {
             $customer = $this->queryContainer->queryCustomerByEmail($addressTransfer->getEmail())
                 ->findOne();
@@ -315,8 +311,12 @@ class Address
                 ->findOne();
         }
 
-        if (!isset($customer) || $customer === null) {
-            throw new CustomerNotFoundException();
+        if ($customer === null) {
+            throw new CustomerNotFoundException(sprintf(
+                'Customer not found for email `%s` or ID `%s`.',
+                $addressTransfer->getEmail(),
+                $addressTransfer->getFkCustomer()
+            ));
         }
 
         return $customer;
@@ -331,6 +331,7 @@ class Address
      */
     protected function getCustomerFromCustomerTransfer(CustomerTransfer $customerTransfer)
     {
+        $customer = null;
         if ($customerTransfer->getEmail()) {
             $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne();
@@ -339,8 +340,12 @@ class Address
                 ->findOne();
         }
 
-        if (!isset($customer) || $customer === null) {
-            throw new CustomerNotFoundException();
+        if ($customer === null) {
+            throw new CustomerNotFoundException(sprintf(
+                'Customer not found for email `%s` or ID `%s`.',
+                $customerTransfer->getEmail(),
+                $customerTransfer->getIdCustomer()
+            ));
         }
 
         return $customer;
@@ -356,7 +361,10 @@ class Address
         $idCountry = $this->countryFacade->getIdCountryByIso2Code($this->getIsoCode());
 
         if ($idCountry === null) {
-            throw new CountryNotFoundException();
+            throw new CountryNotFoundException(sprintf(
+                'Country not found for ISO code `%s`.',
+                $this->getIsoCode()
+            ));
         }
 
         return $idCountry;
@@ -364,8 +372,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -379,8 +385,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -407,8 +411,6 @@ class Address
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -424,7 +426,11 @@ class Address
             ->findOne();
 
         if (!$entity) {
-            throw new AddressNotFoundException();
+            throw new AddressNotFoundException(sprintf(
+                'Address not found for ID `%s` and customer email `%s`.',
+                $addressTransfer->getIdCustomerAddress(),
+                $customer->getEmail()
+            ));
         }
 
         $wasDefault = false;
@@ -450,8 +456,6 @@ class Address
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CountryNotFoundException
      *
      * @return int
      */
@@ -578,7 +582,11 @@ class Address
             ->findOne();
 
         if (!$addressEntity) {
-            throw new AddressNotFoundException();
+            throw new AddressNotFoundException(sprintf(
+                'Address not found for ID `%s` and customer email `%s`.',
+                $addressTransfer->getIdCustomerAddress(),
+                $customer->getEmail()
+            ));
         }
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);

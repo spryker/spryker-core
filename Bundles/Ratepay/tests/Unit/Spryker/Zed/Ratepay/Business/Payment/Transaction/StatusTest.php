@@ -14,6 +14,16 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use \Generated\Shared\Transfer\OrderTransfer;
 use \Spryker\Zed\Ratepay\Business\Status\TransactionStatus;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Payment
+ * @group Transaction
+ * @group StatusTest
+ */
 class StatusTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -36,7 +46,6 @@ class StatusTest extends \PHPUnit_Framework_TestCase
             );
             $this->assertEquals($expectedResult, $statusTransaction->isPaymentConfirmed($this->getOrderTransfer()));
         }
-
     }
 
     /**

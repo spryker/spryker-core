@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Ratepay\Business\Request\Payment\ConfigurationCalculation;
+namespace Functional\Spryker\Zed\Ratepay\Business\Request\Service;
 
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\ProfileAdapterMock;
@@ -12,6 +12,16 @@ use Functional\Spryker\Zed\Ratepay\Business\Request\AbstractFacadeTest;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ProfileResponse;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Service
+ * @group ProfileTest
+ */
 class ProfileTest extends AbstractFacadeTest
 {
 
@@ -138,7 +148,6 @@ class ProfileTest extends AbstractFacadeTest
     }
 
     /**
-     *
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $ratepayPaymentEntity
      *
      * @return void

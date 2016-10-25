@@ -42,6 +42,7 @@ abstract class AbstractButtonFunction extends TwigFunction
      * @param string $url
      * @param string $title
      * @param array $options
+     *
      * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonUrlGenerator
      */
     protected function createButtonUrlGenerator($url, $title, array $options)

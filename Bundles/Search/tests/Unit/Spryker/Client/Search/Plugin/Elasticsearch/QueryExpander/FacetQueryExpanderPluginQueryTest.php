@@ -10,11 +10,14 @@ namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 use Elastica\Query\BoolQuery;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPlugin
+ * @group QueryExpander
+ * @group FacetQueryExpanderPluginQueryTest
  */
 class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPluginQueryTest
 {

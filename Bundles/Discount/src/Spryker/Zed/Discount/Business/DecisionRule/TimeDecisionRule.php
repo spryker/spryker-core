@@ -34,8 +34,6 @@ class TimeDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
      * @return bool
      */
     public function isSatisfiedBy(

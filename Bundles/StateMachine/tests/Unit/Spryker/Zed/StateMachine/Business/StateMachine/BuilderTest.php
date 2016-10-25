@@ -6,7 +6,7 @@
  */
 
 
-namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
+namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
@@ -17,6 +17,15 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
 use Spryker\Zed\StateMachine\Business\StateMachine\Builder;
 use Spryker\Zed\StateMachine\StateMachineConfig;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group BuilderTest
+ */
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
 

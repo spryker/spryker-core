@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
-use Guzzle\Common\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
@@ -71,7 +71,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws \Guzzle\Common\Exception\InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
@@ -91,7 +91,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $stockType
      *
-     * @throws \Guzzle\Common\Exception\InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return int
      */
@@ -169,8 +169,6 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdBySku($sku)
@@ -180,8 +178,6 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

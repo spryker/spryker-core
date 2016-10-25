@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library;
 
+use DateTime;
+use DateTimeZone;
 use Spryker\Shared\Library\Exception\UnsupportedDateFormatException;
 
 class DateFormatter implements DateFormatterInterface
@@ -36,7 +38,7 @@ class DateFormatter implements DateFormatterInterface
      *
      * @return string
      */
-    public function dateShort($date, \DateTimeZone $timezone = null)
+    public function dateShort($date, DateTimeZone $timezone = null)
     {
         return $this->formatDate($date, self::DATE_FORMAT_SHORT, $timezone);
     }
@@ -47,7 +49,7 @@ class DateFormatter implements DateFormatterInterface
      *
      * @return string
      */
-    public function dateMedium($date, \DateTimeZone $timezone = null)
+    public function dateMedium($date, DateTimeZone $timezone = null)
     {
         return $this->formatDate($date, self::DATE_FORMAT_MEDIUM, $timezone);
     }
@@ -58,7 +60,7 @@ class DateFormatter implements DateFormatterInterface
      *
      * @return string
      */
-    public function dateRFC($date, \DateTimeZone $timezone = null)
+    public function dateRFC($date, DateTimeZone $timezone = null)
     {
         return $this->formatDate($date, self::DATE_FORMAT_RFC, $timezone);
     }
@@ -69,7 +71,7 @@ class DateFormatter implements DateFormatterInterface
      *
      * @return string
      */
-    public function dateTime($date, \DateTimeZone $timezone = null)
+    public function dateTime($date, DateTimeZone $timezone = null)
     {
         return $this->formatDate($date, self::DATE_FORMAT_DATETIME, $timezone);
     }
@@ -83,7 +85,7 @@ class DateFormatter implements DateFormatterInterface
      *
      * @return string|null
      */
-    protected function formatDate($date, $dateFormat, \DateTimeZone $timezone = null)
+    protected function formatDate($date, $dateFormat, DateTimeZone $timezone = null)
     {
         if (empty($date)) {
             return null;
@@ -98,7 +100,7 @@ class DateFormatter implements DateFormatterInterface
         }
 
         if (!($date instanceof \DateTime)) {
-            $date = new \DateTime($date, $timezone);
+            $date = new DateTime($date, $timezone);
         } else {
             $date->setTimezone($timezone);
         }

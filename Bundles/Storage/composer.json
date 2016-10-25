@@ -2,24 +2,31 @@
   "name": "spryker/storage",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
       "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Unit": "tests/"
     }
   },
   "require": {
     "spryker/application": "^2.3.0",
     "spryker/collector": "^2.0.0 || ^3.0.0",
-    "spryker/config": "^2.2.0",
+    "spryker/config": "^2.2.1",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/redis": "^2.0.0",
+    "spryker/session": "^2.0.0",
+    "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/url": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Storage bundle",
   "license": "proprietary",

@@ -24,4 +24,12 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ConsoleDependencyProvider::COMMANDS);
     }
 
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     */
+    public function getEventSubscriber()
+    {
+        return $this->getProvidedDependency(ConsoleDependencyProvider::EVENT_SUBSCRIBER);
+    }
+
 }

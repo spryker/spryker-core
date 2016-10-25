@@ -26,6 +26,14 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group DiscountFacadeTest
+ */
 class DiscountFacadeTest extends Test
 {
 
@@ -329,7 +337,6 @@ class DiscountFacadeTest extends Test
 
         $discountConditionTransfer = $discountConfiguratorTransfer->getDiscountCondition();
         $this->assertEquals($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
-
     }
 
     /**
@@ -352,7 +359,6 @@ class DiscountFacadeTest extends Test
 
         $voucherPool = $discountEntity->getVoucherPool();
         $this->assertNotEmpty($voucherPool);
-
     }
 
     /**
@@ -445,7 +451,6 @@ class DiscountFacadeTest extends Test
 
         $this->assertEquals($originalConfiguratorArray, $hydratedConfiguratorArray);
         $this->assertTrue($discountEntity->getIsActive());
-
     }
 
     /**
@@ -506,7 +511,6 @@ class DiscountFacadeTest extends Test
         $voucherCodes = $voucherPoolEntity->getDiscountVouchers();
 
         $this->assertCount(5, $voucherCodes);
-
     }
 
     /**
@@ -578,8 +582,8 @@ class DiscountFacadeTest extends Test
         $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
         $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
 
-        $this->assertEquals(14.29, $firstItemDistributedAmount);
-        $this->assertEquals(85.71, $secondItemDistributedAmount);
+        $this->assertEquals(14, $firstItemDistributedAmount);
+        $this->assertEquals(86, $secondItemDistributedAmount);
         $this->assertEquals($totalDiscountAmount, $firstItemDistributedAmount + $secondItemDistributedAmount);
     }
 

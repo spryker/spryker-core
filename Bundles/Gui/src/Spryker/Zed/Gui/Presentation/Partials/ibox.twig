@@ -1,0 +1,29 @@
+{#
+  Display collapsible ibox.
+
+  Example usage:
+
+    {% embed '@Gui/Partials/ibox.twig' with {'collapsed': true, 'hasError': true} %}
+        {% block title %}
+            Ibox title
+        {% endblock %}
+        {% block content %}
+            Ibox content
+        {% endblock %}
+    {% endembed %}
+#}
+<div class="ibox nested {% if collapsed is defined and collapsed == true %}collapsed{% endif %} {% if hasError is defined and hasError %}error{% endif %}">
+    <div class="ibox-title">
+        <a class="collapse-link">
+            <h5>
+                {% block title %}{% endblock %}
+            </h5>
+            <div class="ibox-tools">
+                <i class="fa fa-chevron-up"></i>
+            </div>
+        </a>
+    </div>
+    <div class="ibox-content">
+        {% block content %}{% endblock %}
+    </div>
+</div>

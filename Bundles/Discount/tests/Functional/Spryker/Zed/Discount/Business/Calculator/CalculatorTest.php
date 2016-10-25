@@ -30,8 +30,13 @@ use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 
 /**
- * @group DiscountCalculatorTest
+ * @group Functional
+ * @group Spryker
+ * @group Zed
  * @group Discount
+ * @group Business
+ * @group Calculator
+ * @group CalculatorTest
  */
 class CalculatorTest extends Test
 {
@@ -184,7 +189,6 @@ class CalculatorTest extends Test
             $this->createComparatorOperators(),
             $this->createLogicalOperators()
         );
-
     }
 
     protected function createDecisionRulePlugins()

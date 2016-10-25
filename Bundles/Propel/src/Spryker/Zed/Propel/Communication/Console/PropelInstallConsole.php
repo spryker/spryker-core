@@ -64,8 +64,6 @@ class PropelInstallConsole extends Console
      * @param string $command
      * @param array $arguments
      *
-     * @throws \Exception
-     *
      * @return void
      */
     protected function runDependingCommand($command, array $arguments = [])

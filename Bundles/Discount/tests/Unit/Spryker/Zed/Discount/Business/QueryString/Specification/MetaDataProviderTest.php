@@ -11,6 +11,16 @@ use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group QueryString
+ * @group Specification
+ * @group MetaDataProviderTest
+ */
 class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -104,7 +114,6 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
         $logicalOperators = $metaDataProvider->getLogicalComparators();
 
         $this->assertCount(1, $logicalOperators);
-
     }
 
 

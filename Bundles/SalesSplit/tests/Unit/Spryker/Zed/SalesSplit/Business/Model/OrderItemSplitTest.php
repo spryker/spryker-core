@@ -5,17 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model\Validation;
+namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
 use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
+use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemOptionMock;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group SalesSplit
+ * @group Business
+ * @group Model
+ * @group OrderItemSplitTest
+ */
 class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -47,7 +56,6 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     public function testIsOrderItemDataCopied()
     {
         $spySalesOrderItem = $this->createOrderItem();
-
         $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, 4);
         $orderItemId = 1;
         $quantity = 1;
@@ -62,18 +70,18 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
-        $copyofItemSalesOrderItemArray = $createdCopy->toArray();
+        $copyOfItemSalesOrderItemArray = $createdCopy->toArray();
 
         $oldSalesOrderItemArray = $this->filterOutNotCopiedFields(
             $oldSalesOrderItemArray,
             $this->notCopiedOrderItemFields
         );
-        $copyofItemSalesOrderItemArray = $this->filterOutNotCopiedFields(
-            $copyofItemSalesOrderItemArray,
+        $copyOfItemSalesOrderItemArray = $this->filterOutNotCopiedFields(
+            $copyOfItemSalesOrderItemArray,
             $this->notCopiedOrderItemFields
         );
 
-        $this->assertEquals($oldSalesOrderItemArray, $copyofItemSalesOrderItemArray);
+        $this->assertEquals($oldSalesOrderItemArray, $copyOfItemSalesOrderItemArray);
 
         $options = $spySalesOrderItem->getOptions();
 
@@ -92,9 +100,12 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param \Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock $orderItem
+     * @param int $quantityForOld
+     *
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit
      */
-    protected function createOrderItemSplitter(OrderItemSpy $orderItem, $quantityForOld)
+    protected function createOrderItemSplitter(SpySalesOrderItemMock $orderItem, $quantityForOld)
     {
         $validatorMock = $this->createValidatorMock();
         $salesQueryContainerMock = $this->createQueryContainerMock();
@@ -134,10 +145,7 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     protected function createValidatorMock()
     {
         $validatorMock = $this
-            ->getMockBuilder(
-                ValidatorInterface::class,
-                ['validate']
-            )
+            ->getMockBuilder(ValidatorInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -150,10 +158,7 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     protected function createQueryContainerMock()
     {
         return $this
-            ->getMockBuilder(
-                SalesQueryContainerInterface::class,
-                ['querySalesOrderItem']
-            )
+            ->getMockBuilder(SalesQueryContainerInterface::class)
             ->getMock();
     }
 
@@ -177,10 +182,7 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     protected function createCalculatorMock()
     {
         $calculatorMock = $this
-            ->getMockBuilder(
-                CalculatorInterface::class,
-                ['calculateQuantityAmountLeft']
-            )
+            ->getMockBuilder(CalculatorInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -217,11 +219,11 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock
      */
     protected function createOrderItem()
     {
-        $spySalesOrderItem = new OrderItemSpy();
+        $spySalesOrderItem = new SpySalesOrderItemMock();
         $spySalesOrderItem->setIdSalesOrderItem(1);
         $spySalesOrderItem->setQuantity(5);
         $spySalesOrderItem->setFkSalesOrder(1);
@@ -230,14 +232,14 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem->setSku('A');
         $spySalesOrderItem->setGrossPrice(100);
 
-        $spySalesOrderItemOption = new OrderItemOptionSpy();
+        $spySalesOrderItemOption = new SpySalesOrderItemOptionMock();
         $spySalesOrderItemOption->setLabelOptionType('X');
         $spySalesOrderItemOption->setLabelOptionValue('Y');
         $spySalesOrderItemOption->setGrossPrice(5);
 
         $spySalesOrderItem->addOption($spySalesOrderItemOption);
 
-        $spySalesOrderItemOption = new OrderItemOptionSpy();
+        $spySalesOrderItemOption = new SpySalesOrderItemOptionMock();
         $spySalesOrderItemOption->setLabelOptionType('XX');
         $spySalesOrderItemOption->setLabelOptionValue('YY');
         $spySalesOrderItemOption->setGrossPrice(30);
@@ -247,49 +249,5 @@ class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
 
         return $spySalesOrderItem;
     }
-
-}
-
-trait SpyTrait
-{
-
-    /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    protected $propelModelCopy;
-
-    /**
-     * @param bool|false $deepCopy
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function copy($deepCopy = false)
-    {
-        $this->propelModelCopy = parent::copy($deepCopy);
-
-        return $this->propelModelCopy;
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function getCreatedCopy()
-    {
-        return $this->propelModelCopy;
-    }
-
-}
-
-class OrderItemSpy extends SpySalesOrderItem
-{
-
-    use SpyTrait;
-
-}
-
-class OrderItemOptionSpy extends SpySalesOrderItemOption
-{
-
-    use SpyTrait;
 
 }

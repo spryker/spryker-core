@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group User
+ * @group UserTest
  */
 class UserTest extends Test
 {

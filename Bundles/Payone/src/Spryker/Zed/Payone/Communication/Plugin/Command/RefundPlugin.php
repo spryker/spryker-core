@@ -32,28 +32,29 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $refundTransfer = new PayoneRefundTransfer();
+        $payoneRefundTransfer = new PayoneRefundTransfer();
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
 
-        $amount = $this->getFactory()
+        $refundTransfer = $this->getFactory()
             ->getRefundFacade()
-            ->calculateRefundableAmount($orderTransfer);
-        $refundTransfer->setAmount($amount * -1);
+            ->calculateRefund($orderItems, $orderEntity);
+
+        $payoneRefundTransfer->setAmount($refundTransfer->getAmount() * -1);
 
         $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
 
         $payonePaymentTransfer = new PayonePaymentTransfer();
         $payonePaymentTransfer->fromArray($paymentPayoneEntity->toArray(), true);
 
-        $refundTransfer->setPayment($payonePaymentTransfer);
-        $refundTransfer->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
+        $payoneRefundTransfer->setPayment($payonePaymentTransfer);
+        $payoneRefundTransfer->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
 
         $narrativeText = $this->getFactory()->getConfig()->getNarrativeText($orderItems, $orderEntity, $data);
-        $refundTransfer->setNarrativeText($narrativeText);
+        $payoneRefundTransfer->setNarrativeText($narrativeText);
 
-        $this->getFacade()->refundPayment($refundTransfer);
+        $this->getFacade()->refundPayment($payoneRefundTransfer);
 
         return [];
     }

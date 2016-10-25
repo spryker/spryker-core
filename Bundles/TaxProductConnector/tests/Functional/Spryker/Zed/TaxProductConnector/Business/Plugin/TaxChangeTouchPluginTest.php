@@ -15,9 +15,12 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
- * @group Business
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group TaxProductConnector
+ * @group Business
+ * @group Plugin
  * @group TaxChangeTouchPluginTest
  */
 class TaxChangeTouchPluginTest extends Test

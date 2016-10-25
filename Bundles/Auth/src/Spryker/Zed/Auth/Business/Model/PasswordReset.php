@@ -61,8 +61,6 @@ class PasswordReset
      * @param string $email
      *
      * @return bool
-     *
-     * @throws \Spryker\Zed\Auth\Business\Exception\EmailNotFoundException
      */
     public function requestToken($email)
     {
@@ -82,8 +80,6 @@ class PasswordReset
     /**
      * @param string $passwordResetToken
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

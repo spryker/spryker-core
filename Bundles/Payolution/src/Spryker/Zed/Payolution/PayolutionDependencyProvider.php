@@ -27,7 +27,6 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-
         $container[self::FACADE_MAIL] = function (Container $container) {
             return new PayolutionToMailBridge($container->getLocator()->mail()->facade());
         };

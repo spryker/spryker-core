@@ -12,11 +12,14 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceP
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Application
  * @group Communication
- * @group RequestServiceProvider
+ * @group Plugin
+ * @group ServiceProvider
+ * @group RequestServiceProviderTest
  */
 class RequestServiceProviderTest extends \PHPUnit_Framework_TestCase
 {

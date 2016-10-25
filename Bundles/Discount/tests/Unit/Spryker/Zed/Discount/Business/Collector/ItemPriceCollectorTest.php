@@ -13,6 +13,15 @@ use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Discount
+ * @group Business
+ * @group Collector
+ * @group ItemPriceCollectorTest
+ */
 class ItemPriceCollectorTest extends BaseRuleTester
 {
 
@@ -44,8 +53,8 @@ class ItemPriceCollectorTest extends BaseRuleTester
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorMock
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManagerMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
+     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface|null $currencyManagerMock
      *
      * @return \Spryker\Zed\Discount\Business\Collector\ItemPriceCollector
      */

@@ -2,15 +2,11 @@
   "name": "spryker/symfony",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
+    "spryker/silex": "^2.0.0",
     "symfony-cmf/routing": "~1.3.0",
     "symfony/console": "~2.6.13",
     "symfony/debug": "~2.6.13",
@@ -19,6 +15,7 @@
     "symfony/form": "~2.6.13",
     "symfony/http-foundation": "~2.6.13",
     "symfony/http-kernel": "~2.6.13",
+    "symfony/intl": "~2.8.8",
     "symfony/options-resolver": "~2.6.13",
     "symfony/process": "~2.6.13",
     "symfony/property-access": "~2.6.13",
@@ -28,8 +25,11 @@
     "symfony/translation": "~2.6.13",
     "symfony/twig-bridge": "~2.6.13",
     "symfony/validator": "~2.6.13",
-    "symfony/var-dumper": "~2.6.13",
     "symfony/yaml": "~2.6.13"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Symfony bundle",
   "license": "proprietary",
@@ -42,5 +42,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

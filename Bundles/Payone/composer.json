@@ -3,23 +3,23 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Function": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Function": "tests/"
     }
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/guzzle": "^2.0.0",
+    "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^2.0.0",
     "spryker/library": "^2.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.2.0",
-    "spryker/refund": "^2.0.0",
+    "spryker/refund": "^3.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Payone bundle",
   "license": "proprietary",
@@ -27,10 +27,16 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

@@ -23,8 +23,6 @@ class Distributor implements DistributorInterface
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\DistributorException
-     *
      * @return void
      */
     public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
@@ -47,18 +45,20 @@ class Distributor implements DistributorInterface
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($collectedDiscountTransfer->getDiscount());
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-
             $singleItemGrossAmountShare = $discountableItemTransfer->getUnitGrossPrice() / $totalGrossAmount;
+            $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
+            for ($i = 0; $i < $quantity; $i++) {
+                $itemDiscountAmount = ($totalDiscountAmount * $singleItemGrossAmountShare) + $this->roundingError;
+                $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
+                $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
-            $itemDiscountAmount = ($totalDiscountAmount * $singleItemGrossAmountShare) + $this->roundingError;
-            $itemDiscountAmountRounded = round($itemDiscountAmount, 2);
-            $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+                $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
+                $distributedDiscountTransfer->setIdDiscount($collectedDiscountTransfer->getDiscount()->getIdDiscount());
+                $distributedDiscountTransfer->setUnitGrossAmount($itemDiscountAmountRounded);
+                $distributedDiscountTransfer->setQuantity(1);
 
-            $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
-            $distributedDiscountTransfer->setUnitGrossAmount($itemDiscountAmountRounded);
-            $distributedDiscountTransfer->setQuantity($discountableItemTransfer->getQuantity());
-
-            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+                $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+            }
         }
     }
 

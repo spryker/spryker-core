@@ -9,6 +9,17 @@ namespace Functional\Spryker\Zed\Ratepay\Business\Request\Payment\Cancel;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\CancelAdapterMock;
 use Functional\Spryker\Zed\Ratepay\Business\Request\Payment\PrepaymentAbstractTest;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Request
+ * @group Payment
+ * @group Cancel
+ * @group PrepaymentTest
+ */
 class PrepaymentTest extends PrepaymentAbstractTest
 {
 

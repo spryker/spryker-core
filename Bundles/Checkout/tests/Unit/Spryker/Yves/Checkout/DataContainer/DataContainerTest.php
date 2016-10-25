@@ -12,10 +12,12 @@ use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Yves
  * @group Checkout
  * @group DataContainer
+ * @group DataContainerTest
  */
 class DataContainerTest extends \PHPUnit_Framework_TestCase
 {

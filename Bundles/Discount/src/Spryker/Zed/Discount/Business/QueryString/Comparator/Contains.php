@@ -18,8 +18,6 @@ class Contains implements ComparatorInterface
      * @param string $withValue
      *
      * @return bool
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -32,7 +30,6 @@ class Contains implements ComparatorInterface
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
-     *
      */
     public function accept(ClauseTransfer $clauseTransfer)
     {
@@ -64,7 +61,6 @@ class Contains implements ComparatorInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isValidValue($withValue)
     {

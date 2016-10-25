@@ -11,4 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
+
+    /**
+     * Default Redis database number
+     *
+     * @const int
+     */
+    const DEFAULT_REDIS_DATABASE = 0;
+
 }

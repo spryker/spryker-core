@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Storage\Client;
 
+/**
+ * @deprecated Not used anymore.
+ */
 abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadWriteInterface
 {
 

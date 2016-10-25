@@ -39,8 +39,6 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
-     *
      * @return \Spryker\Zed\Application\Communication\Controller\AbstractController
      */
     protected function resolveController(BundleControllerActionInterface $bundleControllerAction)

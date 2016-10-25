@@ -19,7 +19,6 @@ interface MetaDataProviderInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
      * @return array|\string[]
-     *
      */
     public function getAcceptedTypesByFieldName($fieldName);
 

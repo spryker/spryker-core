@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication\Console;
 
+use Exception;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Console\Business\Model\Console;
@@ -45,7 +46,7 @@ class ApplicationIntegrationCheckConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!Config::get(ApplicationConstants::ALLOW_INTEGRATION_CHECKS, false)) {
-            throw new \Exception('This command is only allowed to run in development environment');
+            throw new Exception('This command is only allowed to run in development environment');
         }
 
         $this->checkApplication(

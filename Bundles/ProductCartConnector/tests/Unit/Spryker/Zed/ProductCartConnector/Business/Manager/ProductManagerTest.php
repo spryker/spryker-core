@@ -14,11 +14,13 @@ use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group ProductCartConnector
  * @group Business
- * @group ProductCartManager
+ * @group Manager
+ * @group ProductManagerTest
  */
 class ProductManagerTest extends \PHPUnit_Framework_TestCase
 {

@@ -20,28 +20,28 @@ class NestedPriceRangeQuery extends NestedRangeQuery
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param string $filterValue
+     * @param array|string $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
      * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $filterValue, QueryBuilderInterface $queryBuilder, CurrencyManager $currencyManager)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, CurrencyManager $currencyManager)
     {
-        parent::__construct($facetConfigTransfer, $filterValue, $queryBuilder);
-
         $this->currencyManager = $currencyManager;
+
+        parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);
     }
 
     /**
-     * @return array
+     * @param array|string $rangeValues
+     *
+     * @return void
      */
-    protected function getMinMaxValue()
+    protected function setMinMaxValues($rangeValues)
     {
-        list($minValue, $maxValue) = parent::getMinMaxValue();
+        parent::setMinMaxValues($rangeValues);
 
-        $minValue = $this->currencyManager->convertDecimalToCent($minValue);
-        $maxValue = $this->currencyManager->convertDecimalToCent($maxValue);
-
-        return [$minValue, $maxValue];
+        $this->minValue = $this->currencyManager->convertDecimalToCent($this->minValue);
+        $this->maxValue = $this->currencyManager->convertDecimalToCent($this->maxValue);
     }
 
 }

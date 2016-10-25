@@ -66,7 +66,7 @@ class ComposerDependencyParser
 
             $content = file_get_contents($composerJsonFile);
             $content = json_decode($content, true);
-            $require = $content['require'];
+            $require = isset($content['require']) ? $content['require'] : [];
 
             foreach ($require as $package => $version) {
                 if (strpos($package, 'spryker/') !== 0) {

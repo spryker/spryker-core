@@ -7,73 +7,45 @@
 
 namespace Spryker\Zed\Refund\Communication;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Refund\Business\RefundFacade;
-use Spryker\Zed\Refund\Communication\Form\RefundForm;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Refund\RefundConfig getConfig()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainer getQueryContainer()
  */
 class RefundCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createRefundForm(OrderTransfer $orderTransfer, RefundFacade $refundFacade)
-    {
-        $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
-
-        $form = new RefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
-
-        return $this->getFormFactory()->create($form);
-    }
-
-    /**
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
-     *
      * @return \Spryker\Zed\Refund\Communication\Table\RefundTable
      */
-    public function createRefundTable(RefundFacade $refundFacade)
+    public function createRefundTable()
     {
-        $refundQuery = $this->getQueryContainer()->queryRefund();
-
-        return new RefundTable(
-            $refundQuery,
-            $refundFacade,
-            $this->getProvidedDependency(RefundDependencyProvider::SERVICE_DATE_FORMATTER)
+        $refundTable = new RefundTable(
+            $this->getQueryContainer(),
+            $this->getDateFormatter(),
+            $this->getCurrencyManager()
         );
+
+        return $refundTable;
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     * @return \Spryker\Shared\Library\DateFormatterInterface
      */
-    public function getSalesQueryContainer()
+    protected function getDateFormatter()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
+        return $this->getProvidedDependency(RefundDependencyProvider::DATE_FORMATTER);
     }
 
     /**
-     * @return \Spryker\Zed\Payone\Business\PayoneFacadeInterface
+     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
      */
-    public function getPayoneFacade()
+    protected function getCurrencyManager()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_PAYONE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorInterface
-     */
-    public function getSalesAggregatorFacade()
-    {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES_AGGREGATOR);
+        return $this->getProvidedDependency(RefundDependencyProvider::CURRENCY_MANAGER);
     }
 
 }

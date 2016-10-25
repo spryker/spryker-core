@@ -10,10 +10,11 @@ namespace Unit\Spryker\Client\Kernel;
 use Unit\Spryker\Client\Kernel\Fixtures\KernelClient;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Client
  * @group Kernel
- * @group AbstractClient
+ * @group AbstractClientTest
  */
 class AbstractClientTest extends \PHPUnit_Framework_TestCase
 {

@@ -80,8 +80,6 @@ class ElasticsearchMarkerWriter implements WriterInterface
      *
      * @param array $dataSet
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function delete(array $dataSet)

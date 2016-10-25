@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\StateMachine\Business\SateMachine;
+namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Process\Event;
@@ -15,6 +15,15 @@ use Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface;
 use Spryker\Zed\StateMachine\Business\StateMachine\Timeout;
 use Unit\Spryker\Zed\StateMachine\Mocks\StateMachineMocks;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group StateMachine
+ * @group Business
+ * @group StateMachine
+ * @group TimeoutTest
+ */
 class TimeoutTest extends StateMachineMocks
 {
 
@@ -44,7 +53,6 @@ class TimeoutTest extends StateMachineMocks
             $this->createProcess(),
             $this->createStateMachineItemTransfer()
         );
-
     }
 
     /**
@@ -61,7 +69,7 @@ class TimeoutTest extends StateMachineMocks
         $timeout = $this->createTimeout($stateMachinePersistenceMock);
         $timeout->dropOldTimeout(
             $this->createProcess(),
-            self::STATE_WITH_TIMEOUT,
+            static::STATE_WITH_TIMEOUT,
             $this->createStateMachineItemTransfer()
         );
     }
@@ -82,7 +90,7 @@ class TimeoutTest extends StateMachineMocks
         $outgoingTransitions->setEvent($event);
 
         $state = new State();
-        $state->setName(self::STATE_WITH_TIMEOUT);
+        $state->setName(static::STATE_WITH_TIMEOUT);
         $state->addOutgoingTransition($outgoingTransitions);
 
         $process->addState($state);
@@ -96,7 +104,7 @@ class TimeoutTest extends StateMachineMocks
     protected function createStateMachineItemTransfer()
     {
         $stateMachineItemTransfer = new StateMachineItemTransfer();
-        $stateMachineItemTransfer->setStateName(self::STATE_WITH_TIMEOUT);
+        $stateMachineItemTransfer->setStateName(static::STATE_WITH_TIMEOUT);
 
         return $stateMachineItemTransfer;
     }

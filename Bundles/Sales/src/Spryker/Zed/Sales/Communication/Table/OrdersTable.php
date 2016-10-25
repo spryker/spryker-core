@@ -17,6 +17,7 @@ use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Library\Sanitize\Html;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 
 class OrdersTable extends AbstractTable
@@ -29,6 +30,8 @@ class OrdersTable extends AbstractTable
     const URL_SALES_DETAIL = '/sales/detail';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
+    const FILTER_DAY = 'day';
+    const FILTER_WEEK = 'week';
 
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -80,6 +83,10 @@ class OrdersTable extends AbstractTable
         $config->setSortable($this->getSortableFields());
 
         $config->addRawColumn(self::URL);
+        $config->addRawColumn(SpySalesOrderTableMap::COL_FK_CUSTOMER);
+
+        $config->setDefaultSortColumnIndex(0);
+        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         $this->persistFilters($config);
 
@@ -101,6 +108,25 @@ class OrdersTable extends AbstractTable
     }
 
     /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function formatCustomer(array $item)
+    {
+        $customer = $item[SpySalesOrderTableMap::COL_FIRST_NAME] . ' ' . $item[SpySalesOrderTableMap::COL_LAST_NAME];
+        $customer = Html::escape($customer);
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]) {
+            $url = Url::generate('/customer/view', [
+                'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+            ]);
+            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        }
+
+        return $customer;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -108,15 +134,15 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
-        $query->orderByIdSalesOrder(Criteria::DESC);
-
         $queryResults = $this->runQuery($query, $config);
+
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_FK_CUSTOMER => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+                SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
                 SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],
                 self::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
@@ -154,29 +180,19 @@ class OrdersTable extends AbstractTable
     {
         $query = $this->orderQuery;
 
-        $idOrderItemProcess = $this->request->get(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
         if (!$idOrderItemProcess) {
             return $query;
         }
 
-        $idOrderItemItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
-        $filter = $this->request->get(self::FILTER);
-        $filterValue = null;
-        if ($filter === 'day') {
-            $filterValue = new \DateTime('-1 day');
-        } elseif ($filter === 'week') {
-            $filterValue = new \DateTime('-7 day');
-        }
+        $idOrderItemItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
 
         $filterQuery = $this->orderItemQuery
             ->filterByFkOmsOrderProcess($idOrderItemProcess)
             ->filterByFkOmsOrderItemState($idOrderItemItemState);
 
-        if ($filterValue) {
-            $filterQuery->filterByLastStateChange($filterValue, Criteria::GREATER_EQUAL);
-        } else {
-            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
-        }
+        $filter = $this->request->query->get(self::FILTER);
+        $this->addRangeFilter($filterQuery, $filter);
 
         $orders = $filterQuery->groupByFkSalesOrder()
             ->select(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
@@ -195,10 +211,10 @@ class OrdersTable extends AbstractTable
      */
     protected function persistFilters(TableConfiguration $config)
     {
-        $idOrderItemProcess = $this->request->get(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
         if ($idOrderItemProcess) {
-            $idOrderItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
-            $filter = $this->request->get(self::FILTER);
+            $idOrderItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
+            $filter = $this->request->query->get(self::FILTER);
 
             $config->setUrl(
                 sprintf(
@@ -230,12 +246,13 @@ class OrdersTable extends AbstractTable
     {
         return [
             SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
-            SpySalesOrderTableMap::COL_CREATED_AT => 'Timestamp',
-            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
+            SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
+            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
             self::GRAND_TOTAL => 'GrandTotal',
-            self::URL => 'Url',
+            self::URL => 'Actions',
         ];
     }
 
@@ -246,8 +263,8 @@ class OrdersTable extends AbstractTable
     {
         return [
             SpySalesOrderTableMap::COL_ID_SALES_ORDER,
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
-            SpySalesOrderTableMap::COL_FK_CUSTOMER,
             SpySalesOrderTableMap::COL_EMAIL,
             SpySalesOrderTableMap::COL_FIRST_NAME,
         ];
@@ -259,8 +276,30 @@ class OrdersTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
+            SpySalesOrderTableMap::COL_EMAIL,
+            SpySalesOrderTableMap::COL_FIRST_NAME,
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $filterQuery
+     * @param string $filter
+     *
+     * @return void
+     */
+    protected function addRangeFilter(SpySalesOrderItemQuery $filterQuery, $filter)
+    {
+        if ($filter === self::FILTER_DAY) {
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_EQUAL);
+        } elseif ($filter === self::FILTER_WEEK) {
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_THAN);
+            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::GREATER_EQUAL);
+        } else {
+            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
+        }
     }
 
 }

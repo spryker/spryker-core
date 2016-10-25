@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Library;
 
+use Exception;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -140,11 +141,11 @@ class DataDirectory
             try {
                 mkdir($path, 0775, true);
             } catch (\ErrorException $e) {
-                throw new \Exception('Could not create data directory "' . $path . '"!');
+                throw new Exception('Could not create data directory "' . $path . '"!');
             }
         }
         if (is_writable($path) === false) {
-            throw new \Exception('Data directory not writable! (' . $path . ')');
+            throw new Exception('Data directory not writable! (' . $path . ')');
         }
 
         return $path;

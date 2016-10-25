@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Storage\Provider;
 
 /**
- * Class ReadWriteStorageProvider
+ * @deprecated Not used anymore.
  *
  * @method \Spryker\Shared\Storage\Client\ReadWriteInterface getInstance()
  */

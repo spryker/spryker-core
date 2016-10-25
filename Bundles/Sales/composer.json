@@ -2,16 +2,14 @@
   "name": "spryker/sales",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
+    },
+    "psr-4": {
+      "Sales\\Module\\": "tests/"
     }
   },
   "require": {
-    "spryker/application": "^2.0.0",
+    "spryker/application": "^2.4.4",
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0",
     "spryker/gui": "^2.0.0",
@@ -20,12 +18,17 @@
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/sales-aggregator": "^1.0.0 || ^2.0.0",
+    "spryker/sales-split": "^1.0.3",
     "spryker/sequence-number": "^2.0.0",
     "spryker/shipment": "^2.0.0 || ^3.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/url": "^2.0.0",
     "spryker/user": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "Sales bundle",
   "license": "proprietary",
@@ -38,5 +41,12 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

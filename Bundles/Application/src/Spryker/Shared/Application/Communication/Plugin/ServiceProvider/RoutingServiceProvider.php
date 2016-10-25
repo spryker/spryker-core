@@ -11,6 +11,9 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
+/**
+ * @deprecated Use Spryker\Shared\Application\ServiceProvider\RoutingServiceProvider instead
+ */
 class RoutingServiceProvider implements ServiceProviderInterface
 {
 
@@ -32,7 +35,7 @@ class RoutingServiceProvider implements ServiceProviderInterface
         });
 
         $app['routers'] = $app->share(function () use ($app) {
-            return new ChainRouter($app['logger']);
+            return new ChainRouter();
         });
     }
 

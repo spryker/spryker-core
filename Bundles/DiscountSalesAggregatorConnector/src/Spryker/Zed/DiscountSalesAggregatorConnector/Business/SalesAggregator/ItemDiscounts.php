@@ -47,6 +47,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         }
 
         $this->addDiscountsFromSalesOrderDiscountEntity($orderTransfer, $salesOrderDiscounts);
+        $this->updateItemGrossPriceWithDiscounts($orderTransfer);
     }
 
     /**
@@ -107,17 +108,39 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
             $itemTransfer->getQuantity()
         );
 
-        $itemTransfer->setUnitTotalDiscountAmount(
-            $itemTransfer->getUnitTotalDiscountAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
-        );
+        $totalUnitDiscountAmount = $itemTransfer->getUnitTotalDiscountAmount() + $calculatedDiscountTransfer->getUnitGrossAmount();
+        if ($totalUnitDiscountAmount > $itemTransfer->getUnitGrossPrice()) {
+            $totalUnitDiscountAmount = $itemTransfer->getUnitGrossPrice();
+        }
+        $itemTransfer->setUnitTotalDiscountAmount($totalUnitDiscountAmount);
 
-        $itemTransfer->setSumTotalDiscountAmount(
-            $itemTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
-        );
+        $totalSumDiscountAmount = $itemTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount();
+        if ($totalSumDiscountAmount > $itemTransfer->getSumGrossPrice()) {
+            $totalSumDiscountAmount = $itemTransfer->getSumGrossPrice();
+        }
 
-        $this->updateItemGrossPriceWithDiscounts($itemTransfer, $calculatedDiscountTransfer);
+        $this->updateItemRefundableAmountWithDiscounts($itemTransfer, $calculatedDiscountTransfer);
 
+        $itemTransfer->setSumTotalDiscountAmount($totalSumDiscountAmount);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function updateItemGrossPriceWithDiscounts(OrderTransfer $orderTransfer)
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setUnitGrossPriceWithDiscounts(
+                $itemTransfer->getUnitGrossPrice() - $itemTransfer->getUnitTotalDiscountAmount()
+            );
+
+            $itemTransfer->setSumGrossPriceWithDiscounts(
+                $itemTransfer->getSumGrossPrice() - $itemTransfer->getSumTotalDiscountAmount()
+            );
+        }
     }
 
     /**
@@ -172,16 +195,12 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
      *
      * @return void
      */
-    protected function updateItemGrossPriceWithDiscounts(
+    protected function updateItemRefundableAmountWithDiscounts(
         ItemTransfer $itemTransfer,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
-        $itemTransfer->setUnitGrossPriceWithDiscounts(
-            $itemTransfer->getUnitGrossPrice() - $calculatedDiscountTransfer->getUnitGrossAmount()
-        );
-
-        $itemTransfer->setSumGrossPriceWithDiscounts(
-            $itemTransfer->getSumGrossPrice() - $calculatedDiscountTransfer->getSumGrossAmount()
+        $itemTransfer->setRefundableAmount(
+            $itemTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getUnitGrossAmount()
         );
     }
 

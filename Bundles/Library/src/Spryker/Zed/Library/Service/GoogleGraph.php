@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Library\Service;
 
+use Exception;
 use Zend\Http\Client;
 use Zend\Http\Request;
 
@@ -15,46 +16,109 @@ class GoogleGraph
 
     const URI = 'https://chart.googleapis.com/chart';
 
+    /**
+     * @var string
+     */
     protected $chf;
 
+    /**
+     * @var string
+     */
     protected $chtt;
 
+    /**
+     * @var string
+     */
     protected $cht;
 
+    /**
+     * @var string
+     */
     protected $chof;
 
+    /**
+     * @var string
+     */
     protected $chl;
 
+    /**
+     * @var string
+     */
     protected $chd;
 
+    /**
+     * @var string
+     */
     protected $chs;
 
+    /**
+     * @var string
+     */
     protected $chld;
 
+    /**
+     * @var string
+     */
     protected $chdl;
 
+    /**
+     * @var string
+     */
     protected $chdlp;
 
+    /**
+     * @var string
+     */
     protected $chdls;
 
+    /**
+     * @var string
+     */
     protected $chco;
 
+    /**
+     * @var string
+     */
     protected $chxl;
 
+    /**
+     * @var string
+     */
     protected $chxr;
 
+    /**
+     * @var string
+     */
     protected $chxt;
 
+    /**
+     * @var string
+     */
     protected $chds;
 
+    /**
+     * @var string
+     */
     protected $chls;
 
+    /**
+     * @var string
+     */
     protected $chg;
 
+    /**
+     * @var string
+     */
     protected $chm;
 
+    /**
+     * @var string
+     */
     protected $chxp;
 
+    /**
+     * @var string
+     */
     protected $chbh;
 
     /**
@@ -62,12 +126,13 @@ class GoogleGraph
      * @param string $contentType
      *
      * @throws \Exception
+     *
      * @return string
      */
     public function request($sendHeader = true, $contentType = 'gif')
     {
         if (!in_array($contentType, ['gif', 'png', 'json'])) {
-            throw new \Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
+            throw new Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
         }
 
         $client = new Client();

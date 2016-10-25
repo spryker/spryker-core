@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DummyPayment\Dependency\Injector;
 
+use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheckPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentSaveOrderPlugin;
 use Spryker\Zed\DummyPayment\DummyPaymentConfig;
@@ -40,6 +41,7 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
             $pluginCollection->add(new DummyPaymentPreCheckPlugin(), DummyPaymentConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
             $pluginCollection->add(new DummyPaymentSaveOrderPlugin(), DummyPaymentConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
+            $pluginCollection->add(new DummyPaymentPostCheckPlugin(), DummyPaymentConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
 
             return $pluginCollection;
         });

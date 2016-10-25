@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
@@ -62,7 +63,7 @@ class FacetExtractor implements AggregationExtractorInterface
      */
     protected function extractFacetData(array $aggregation, $parameterName, $fieldName)
     {
-        $facetResultValues = new \ArrayObject();
+        $facetResultValues = new ArrayObject();
 
         foreach ($aggregation[$fieldName . StringFacetAggregation::NAME_SUFFIX]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {

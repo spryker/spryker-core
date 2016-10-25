@@ -9,6 +9,9 @@ namespace Spryker\Shared\EventJournal\Model\Writer;
 
 use Spryker\Shared\EventJournal\EventJournalConstants;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 abstract class AbstractWriter implements WriterInterface
 {
 

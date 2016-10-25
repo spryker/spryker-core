@@ -10,7 +10,12 @@ namespace Unit\Spryker\Shared\Library\Filter;
 use Spryker\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
 /**
+ * @group Unit
+ * @group Spryker
+ * @group Shared
+ * @group Library
  * @group Filter
+ * @group SeparatorToCamelCaseFilterTest
  */
 class SeparatorToCamelCaseFilterTest extends \PHPUnit_Framework_TestCase
 {

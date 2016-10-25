@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use InvalidArgumentException;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -55,6 +56,8 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     protected function parseCliRequestData(Request $request)
@@ -77,7 +80,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         foreach ($requiredParameters as $parameter) {
             if (!$request->attributes->has($parameter)) {
-                throw new \InvalidArgumentException(sprintf('Required parameter --%s is missing!', $parameter));
+                throw new InvalidArgumentException(sprintf('Required parameter --%s is missing!', $parameter));
             }
         }
     }

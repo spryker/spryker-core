@@ -11,11 +11,13 @@ use Codeception\TestCase\Test;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Shared
  * @group Symfony
  * @group Form
- * @group Extension
- * @group DoubleSubmitProtectionExtensionTest
+ * @group RequestTokenProvider
+ * @group TokenHashGeneratorTest
  */
 class TokenHashGeneratorTest extends Test
 {

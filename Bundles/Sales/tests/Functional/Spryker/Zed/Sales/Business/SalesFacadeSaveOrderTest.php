@@ -37,10 +37,12 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
+ * @group Functional
+ * @group Spryker
  * @group Zed
  * @group Sales
  * @group Business
- * @group SalesFacadeTest
+ * @group SalesFacadeSaveOrderTest
  */
 class SalesFacadeSaveOrderTest extends Test
 {
@@ -72,7 +74,8 @@ class SalesFacadeSaveOrderTest extends Test
                 'getManualEvents',
                 'getItemsWithFlag',
                 'getManualEventsByIdSalesOrder',
-                'getDistinctManualEventsByIdSalesOrder'
+                'getDistinctManualEventsByIdSalesOrder',
+                'getOrderItemMatrix'
             ]
         );
         $omsFacadeMock->method('selectProcess')
@@ -254,6 +257,28 @@ class SalesFacadeSaveOrderTest extends Test
     /**
      * @return void
      */
+    public function testSaveOrderWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData()
+    {
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+
+        $customerCreatedAt = new \DateTime('Yesterday');
+        $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
+
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+        $orderQuery = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
+
+        $orderEntity = $orderQuery->findOne();
+        $this->assertNotNull($orderEntity);
+
+        $this->assertNotEquals($customerCreatedAt->format('Y-m-d'), $orderEntity->getCreatedAt('Y-m-d'));
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesAndFillsOrderItems()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
@@ -328,8 +353,6 @@ class SalesFacadeSaveOrderTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function getProcessEntity()

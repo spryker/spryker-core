@@ -16,11 +16,14 @@ use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpanderPlugin;
 
 /**
+ * @group Unit
+ * @group Spryker
  * @group Client
  * @group Search
  * @group Plugin
  * @group Elasticsearch
- * @group FacetQueryExpanderPlugin
+ * @group QueryExpander
+ * @group SortedQueryExpanderPluginTest
  */
 class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {

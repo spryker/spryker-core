@@ -13,11 +13,14 @@ use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\Finder;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Development
  * @group Business
  * @group DependencyTree
+ * @group DependencyFinder
+ * @group ExternalDependencyTest
  */
 class ExternalDependencyTest extends \PHPUnit_Framework_TestCase
 {

@@ -38,8 +38,6 @@ class ClauseValidator implements ClauseValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
-     *
      * @return void
      */
     public function validateClause(ClauseTransfer $clauseTransfer)
@@ -69,8 +67,6 @@ class ClauseValidator implements ClauseValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
      * @return void
      */

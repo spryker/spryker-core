@@ -11,12 +11,15 @@ use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Storage\StorageConfig;
 
 /**
  * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
@@ -53,8 +56,6 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Elastica\Client
      */
     protected function createElasticaClient()
@@ -95,13 +96,11 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Predis\Client
      */
     protected function createPredisClient()
     {
-        $config =  $this->getConnectionParameters();
+        $config = $this->getConnectionParameters();
 
         return new PredisClient($config);
     }
@@ -112,13 +111,14 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     protected function getConnectionParameters()
     {
         $config = [
-            'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
+            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
+            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(SessionConstants::ZED_SESSION_REDIS_HOST)),
+            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE),
         ];
 
-        if (Config::hasKey(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PASSWORD);
+        if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD)) {
+            $config['password'] = Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD);
         }
 
         return $config;

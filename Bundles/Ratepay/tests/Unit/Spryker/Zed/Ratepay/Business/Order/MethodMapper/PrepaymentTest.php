@@ -10,6 +10,16 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Order\MethodMapper;
 use Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer;
 use Spryker\Zed\Ratepay\Business\Order\MethodMapper\Prepayment;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Ratepay
+ * @group Business
+ * @group Order
+ * @group MethodMapper
+ * @group PrepaymentTest
+ */
 class PrepaymentTest extends BaseMethodMapperTest
 {
 

@@ -11,10 +11,14 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollection;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
 
 /**
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business
+ * @group Model
+ * @group PropelDatabase
+ * @group DatabaseCreatorCollectionTest
  */
 class DatabaseCreatorCollectionTest extends \PHPUnit_Framework_TestCase
 {
