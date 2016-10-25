@@ -208,7 +208,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
-        $expectedGetter = $this->getMethod('getProperty1', 'property1', null, 'string', null, 'PROPERTY1');
+        $expectedGetter = $this->getGetMethod('getProperty1', 'property1', null, 'string', null, 'PROPERTY1');
         $this->assertEquals($expectedGetter, $givenGetter);
     }
 
@@ -273,7 +273,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
-        $expected = $this->getMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTY1', $bundles);
+        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty1'];
@@ -302,7 +302,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
-        $expected = $this->getMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTIES');
+        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTIES');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty'];
@@ -338,9 +338,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             $method['return'] = $return;
         }
 
-        if ($typeHint !== null) {
-            $method['typeHint'] = $typeHint;
-        }
+        $method['typeHint'] = $typeHint;
+
 
         if ($constant !== null) {
             $method['propertyConst'] = $constant;
@@ -349,6 +348,26 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         if ($hasDefaultNull !== null) {
             $method['hasDefaultNull'] = $hasDefaultNull;
         }
+
+        return $method;
+    }
+
+    /**
+     * @param string $method
+     * @param string $property
+     * @param string|null $var
+     * @param string|null $return
+     * @param string|null $typeHint
+     * @param string|null $constant
+     * @param array $bundles
+     * @param bool|null $hasDefaultNull
+     *
+     * @return array
+     */
+    private function getGetMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null)
+    {
+        $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
+        unset($method['typeHint']);
 
         return $method;
     }
