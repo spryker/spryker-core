@@ -40,13 +40,4 @@ interface FactFinderClientInterface
      */
     public function search(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer);
 
-    /**
-     * Returns the stored quote
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
 }

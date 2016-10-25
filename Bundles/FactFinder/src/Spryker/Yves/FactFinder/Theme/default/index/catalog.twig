@@ -1,4 +1,4 @@
-<form method="GET">
+{#<form method="get">#}
     <div class="row">
         <div class="small-12 medium-12 large-4 xlarge-3 columns">
             <input id="catalog-filters" type="checkbox" class="__toggler __no-margin-bottom hide" checked>
@@ -37,6 +37,6 @@
     </div>
 
     {% if searchString is defined and searchString != '' %}
-        <input type="hidden" name="q" value="{{ searchString }}" />
+        <input type="hidden" name="query" value="{{ searchString }}" />
     {% endif %}
-</form>
+{#</form>#}

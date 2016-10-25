@@ -27,7 +27,7 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $factFinderSearchRequestTransfer = new FactFinderSearchRequestTransfer();
-        $factFinderSearchRequestTransfer->setQuery($request->query->get('query', ''));
+        $factFinderSearchRequestTransfer->setQuery($request->query->get('query', '*'));
         $factFinderSearchRequestTransfer->setPage($request->query->get('page'));
         $factFinderSearchRequestTransfer->setSortName($request->query->get('sortName'));
         $factFinderSearchRequestTransfer->setSortPrice($request->query->get('sortPrice'));

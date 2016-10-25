@@ -45,14 +45,15 @@ class FactFinderStub implements FactFinderStubInterface
         return $this->zedStub->call('/fact-finder/gateway/get-fact-finder-csv', $factFinderTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
-     */
-    public function search(QuoteTransfer $quoteTransfer)
-    {
-        return $this->zedStub->call('/fact-finder/gateway/search', $quoteTransfer);
-    }
+    //@todo @artem delete
+//    /**
+//     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
+//     */
+//    public function search(QuoteTransfer $quoteTransfer)
+//    {
+//        return $this->zedStub->call('/fact-finder/gateway/search', $quoteTransfer);
+//    }
 
 }

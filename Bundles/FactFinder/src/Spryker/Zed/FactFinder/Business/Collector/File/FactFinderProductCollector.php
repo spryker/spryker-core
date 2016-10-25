@@ -10,12 +10,12 @@ namespace Spryker\Zed\FactFinder\Business\Collector\File;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Pyz\Zed\Collector\Business\Storage\ProductCollector as StorageProductCollector;
 use Pyz\Zed\Collector\CollectorConfig;
+use Spryker\Shared\FactFinder\FactFinderConstants;
 use Spryker\Zed\Collector\Business\Exporter\Writer\File\FileWriterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Spryker\Zed\FactFinder\Business\Api\ApiConstants;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class FactFinderProductCollector extends StorageProductCollector
@@ -81,15 +81,15 @@ class FactFinderProductCollector extends StorageProductCollector
             $imageURL = $this->getConfig()->getHostYves() . $imgs[0]['external_url_large'];
         }
         return [
-            ApiConstants::ITEM_PRODUCT_NUMBER => $collectItemData[self::ABSTRACT_SKU],
-            ApiConstants::ITEM_NAME => $collectItemData[self::ABSTRACT_NAME],
-            ApiConstants::ITEM_PRICE => $this->getPriceBySku($collectItemData[self::ABSTRACT_SKU]),
-            ApiConstants::ITEM_STOCK =>  (int)$collectItemData[self::QUANTITY],
-            ApiConstants::ITEM_CATEGORY => $category,
-            ApiConstants::ITEM_CATEGORY_PATH => implode('/', $categoryPaths),
-            ApiConstants::ITEM_PRODUCT_URL =>  $this->getConfig()->getHostYves() . $collectItemData[self::ABSTRACT_URL],
-            ApiConstants::ITEM_IMAGE_URL => $imageURL,
-            ApiConstants::ITEM_DESCRIPTION => $abstractAttributes[self::ABSTRACT_ATTRIBUTES_LONG_DESCRIPTION],
+            FactFinderConstants::ITEM_PRODUCT_NUMBER => $collectItemData[self::ABSTRACT_SKU],
+            FactFinderConstants::ITEM_NAME => $collectItemData[self::ABSTRACT_NAME],
+            FactFinderConstants::ITEM_PRICE => $this->getPriceBySku($collectItemData[self::ABSTRACT_SKU]),
+            FactFinderConstants::ITEM_STOCK =>  (int)$collectItemData[self::QUANTITY],
+            FactFinderConstants::ITEM_CATEGORY => $category,
+            FactFinderConstants::ITEM_CATEGORY_PATH => implode('/', $categoryPaths),
+            FactFinderConstants::ITEM_PRODUCT_URL =>  $this->getConfig()->getHostYves() . $collectItemData[self::ABSTRACT_URL],
+            FactFinderConstants::ITEM_IMAGE_URL => $imageURL,
+            FactFinderConstants::ITEM_DESCRIPTION => $abstractAttributes[self::ABSTRACT_ATTRIBUTES_LONG_DESCRIPTION],
         ];
     }
 

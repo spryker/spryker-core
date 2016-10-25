@@ -21,4 +21,26 @@ interface FactFinderConstants
     const CONFIG_BASIC_AUTH_USERNAME = 'fact_finder_basic_auth_username';
     const CONFIG_BASIC_AUTH_PASSWORD = 'fact_finder_basic_auth_password';
 
+    const ITEM_PRODUCT_NUMBER = 'ProductNumber';
+    const ITEM_NAME = 'Name';
+    const ITEM_PRICE = 'Price';
+    const ITEM_STOCK = 'Stock';
+    const ITEM_CATEGORY = 'Category';
+    const ITEM_CATEGORY_PATH = 'CategoryPath';
+    const ITEM_PRODUCT_URL = 'ProductURL';
+    const ITEM_IMAGE_URL = 'ImageURL';
+    const ITEM_DESCRIPTION = 'Description';
+
+    const ITEM_FIELDS = [
+        self::ITEM_PRODUCT_NUMBER,
+        self::ITEM_NAME,
+        self::ITEM_PRICE,
+        self::ITEM_STOCK,
+        self::ITEM_CATEGORY,
+        self::ITEM_CATEGORY_PATH,
+        self::ITEM_PRODUCT_URL,
+        self::ITEM_IMAGE_URL,
+        self::ITEM_DESCRIPTION,
+    ];
+
 }

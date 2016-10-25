@@ -19,17 +19,6 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
-     */
-    public function searchAction(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFacade()
-            ->search($quoteTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FactFinderCsvTransfer $csvTransfer
      *
      * @return \Generated\Shared\Transfer\FactFinderCsvTransfer

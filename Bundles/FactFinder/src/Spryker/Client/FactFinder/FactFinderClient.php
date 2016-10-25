@@ -27,7 +27,8 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
      */
     public function getProductCsv($locale, $number = '')
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createZedFactFinderStub()
             ->getExportedCsv($locale, CollectorConfig::COLLECTOR_TYPE_PRODUCT_ABSTRACT, $number);
     }
@@ -42,11 +43,11 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
      */
     public function getCategoryCsv($locale, $number = '')
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createZedFactFinderStub()
             ->getExportedCsv($locale, CollectorConfig::COLLECTOR_TYPE_CATEGORYNODE, $number);
     }
-
 
     /**
      * @api
@@ -59,21 +60,23 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
         $quoteTransfer = $this->getQuote();
         $quoteTransfer->setFactFinderSearchRequest($factFinderSearchRequestTransfer);
 
-        $ffSearchResponseTransfer = $this->getFactory()
-            ->createZedFactFinderStub()
-            ->search($quoteTransfer);
+//        $ffSearchResponseTransfer = $this
+//            ->getFactory()
+//            ->createZedFactFinderStub()
+//            ->search($quoteTransfer);
+
+        $ffSearchResponseTransfer = $this
+            ->getFactory()
+            ->createSearchRequest()
+            ->request($quoteTransfer);
 
         return $ffSearchResponseTransfer;
     }
 
     /**
-     * Returns the stored quote
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    protected function getQuote()
     {
         return $this->getSession()->getQuote();
     }

@@ -20,18 +20,6 @@ interface FactFinderFacadeInterface
 {
 
     /**
-     * Specification:
-     * - search request
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
-     */
-    public function search(QuoteTransfer $quoteTransfer);
-
-    /**
      * @api
      *
      * @param string $locale

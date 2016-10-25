@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FactFinder\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -22,23 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FactFinderFacade extends AbstractFacade implements FactFinderFacadeInterface
 {
-
-    /**
-     * Specification:
-     * - search request
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
-     */
-    public function search(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFactory()
-            ->createSearchRequest()
-            ->request($quoteTransfer);
-    }
 
     /**
      * @api
