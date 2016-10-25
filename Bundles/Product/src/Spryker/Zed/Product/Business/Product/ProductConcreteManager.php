@@ -414,8 +414,13 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         foreach ($productAttributeCollection as $attributeEntity) {
             $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
+            $localizedAttributesData = $attributeEntity->toArray();
+            if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
+                unset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES]);
+            }
+
             $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-                ->fromArray($attributeEntity->toArray(), true)
+                ->fromArray($localizedAttributesData, true)
                 ->setAttributes($this->attributeEncoder->decodeAttributes($attributeEntity->getAttributes()))
                 ->setLocale($localeTransfer);
 

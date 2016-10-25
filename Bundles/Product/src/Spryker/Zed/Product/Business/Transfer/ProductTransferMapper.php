@@ -68,8 +68,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
      */
     public function convertProduct(SpyProduct $productEntity)
     {
-        $productTransfer = (new ProductConcreteTransfer())
-            ->fromArray($productEntity->toArray(), true);
+        $productTransfer = $this->mapProductConcreteTransfer($productEntity);
 
         $attributes = $this->attributeEncoder->decodeAttributes($productEntity->getAttributes());
         $productTransfer->setAttributes($attributes);
@@ -96,6 +95,25 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         }
 
         return $transferList;
+    }
+
+    /**
+     * @param SpyProduct $productEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function mapProductConcreteTransfer(SpyProduct $productEntity)
+    {
+        $productData = $productEntity->toArray();
+
+        if (isset($productData[ProductConcreteTransfer::ATTRIBUTES])) {
+            unset($productData[ProductConcreteTransfer::ATTRIBUTES]);
+        }
+
+        $productTransfer = (new ProductConcreteTransfer())
+            ->fromArray($productData, true);
+
+        return $productTransfer;
     }
 
 }
