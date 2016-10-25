@@ -35,7 +35,6 @@ class SalesToSalesAggregatorBridge implements SalesToSalesAggregatorInterface
         return $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
     }
 
-
     /**
      * @param int $idSalesOrderItem
      *

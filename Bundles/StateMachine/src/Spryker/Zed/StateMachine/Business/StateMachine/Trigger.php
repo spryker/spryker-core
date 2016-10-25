@@ -235,7 +235,6 @@ class Trigger implements TriggerInterface
         return $stateMachineItemsFiltered;
     }
 
-
     /**
      * @param string $eventName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems

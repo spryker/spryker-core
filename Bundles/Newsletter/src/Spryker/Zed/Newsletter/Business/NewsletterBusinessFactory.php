@@ -95,7 +95,6 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
         return new SubscriberKeyGenerator();
     }
 
-
     /**
      * @return \Spryker\Zed\Newsletter\Business\Internal\NewsletterTypeInstaller
      */

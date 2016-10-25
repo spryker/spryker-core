@@ -44,7 +44,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
     const CURRENCY_MANAGER = 'CURRENCY_MANAGER';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

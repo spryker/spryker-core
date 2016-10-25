@@ -40,7 +40,6 @@ class DiscountPersist implements DiscountPersistInterface
         $this->discountQueryContainer = $discountQueryContainer;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *

@@ -52,7 +52,6 @@ class RequestPaymentElvAdapterMock extends AbstractAdapterMock
         </response>';
     }
 
-
     /**
      * @return array
      */

@@ -176,7 +176,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
      */
     abstract protected function testPaymentSpecificRequestData($request);
 
-
     /**
      * @return void
      */

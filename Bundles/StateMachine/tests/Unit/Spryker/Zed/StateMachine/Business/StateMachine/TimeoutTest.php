@@ -74,8 +74,6 @@ class TimeoutTest extends StateMachineMocks
         );
     }
 
-
-
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process
      */

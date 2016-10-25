@@ -55,7 +55,6 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         return new Guzzle($gatewayUrl);
     }
 
-
     /**
      * @return \Spryker\Zed\Ratepay\Business\Request\Service\Handler\Transaction\ProfileTransaction
      */
