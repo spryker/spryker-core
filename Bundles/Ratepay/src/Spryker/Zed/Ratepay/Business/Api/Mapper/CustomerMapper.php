@@ -54,6 +54,7 @@ class CustomerMapper extends BaseMapper
             ->setIpAddress($this->ratepayPaymentRequestTransfer->requireIpAddress()->getIpAddress())
             ->setFirstName($billingAddress->getFirstName())
             ->setLastName($billingAddress->getLastName())
+            ->setCompany($billingAddress->getCompany())
             ->setEmail($this->ratepayPaymentRequestTransfer->requireCustomerEmail()->getCustomerEmail())
             ->setPhone($this->ratepayPaymentRequestTransfer->requireCustomerPhone()->getCustomerPhone());
 

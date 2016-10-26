@@ -116,11 +116,11 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $payment = $this->loadOrderPayment($orderTransfer);
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_DELIVER_CONFIRM);
         $paymentData = $this->getTransferObjectFromPayment($payment);
-        $shippingAlreadySent = false;
+        $needToSendShipping = true;
         /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
         foreach ($paymentLogs as $paymentLog) {
             if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_DELIVER_CONFIRM] == $paymentLog->getResponseResultCode()) {
-                $shippingAlreadySent = true;
+                $needToSendShipping = false;
             }
         }
 
@@ -130,7 +130,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_DELIVER_CONFIRM);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $shippingAlreadySent);
+        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
 
         return $request;
     }
@@ -293,16 +293,12 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      */
     protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $needToSendShipping=false)
     {
-        $this->mapperFactory
-            ->getPartialBasketMapper($dataTransfer, $paymentData, $orderItems, $needToSendShipping)
-            ->map();
-
         $grouppedItems = [];
         foreach ($orderItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
-                $grouppedItems[$basketItem->getGroupKey()] = $basketItem;
+                $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
         }
 
@@ -312,6 +308,9 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
                 ->map();
         }
 
+        $this->mapperFactory
+            ->getPartialBasketMapper($dataTransfer, $paymentData, $grouppedItems, $needToSendShipping)
+            ->map();
     }
 
     /**
