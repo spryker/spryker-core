@@ -195,7 +195,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryReadRelationPluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
      */
     public function getRelationReadPluginStack()
     {

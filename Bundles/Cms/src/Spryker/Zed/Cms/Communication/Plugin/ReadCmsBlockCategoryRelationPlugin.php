@@ -8,14 +8,14 @@ namespace Spryker\Zed\Cms\Communication\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryReadRelationPluginInterface;
+use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  */
-class ReadCmsBlockCategoryRelationPlugin extends AbstractPlugin implements CategoryReadRelationPluginInterface
+class ReadCmsBlockCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
 
     /**

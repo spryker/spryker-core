@@ -48,7 +48,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_GRAPH] = function (Container $container) {
-            return $this->getGraphPlugin();
+            return $this->createGraphPlugin();
         };
 
         $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
@@ -61,13 +61,13 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Shared\Graph\GraphInterface
      */
-    protected function getGraphPlugin()
+    protected function createGraphPlugin()
     {
         return new GraphPlugin();
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryDeleteRelationPluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected function getRelationDeletePluginStack()
     {
@@ -93,7 +93,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryReadRelationPluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
      */
     protected function getRelationReadPluginStack()
     {

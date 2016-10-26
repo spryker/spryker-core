@@ -175,7 +175,7 @@ class CategoryUrl implements CategoryUrlInterface
         $urlTransfer->setResourceId($categoryNodeTransfer->getIdCategoryNode());
         $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
 
-        $urlEntity = $this->getUrlForNode($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        $urlEntity = $this->findUrlForNode($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
         if ($urlEntity) {
             $urlTransfer->setIdUrl($urlEntity->getIdUrl());
         }
@@ -187,9 +187,9 @@ class CategoryUrl implements CategoryUrlInterface
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl|null
      */
-    protected function getUrlForNode($idCategoryNode, LocaleTransfer $localeTransfer)
+    protected function findUrlForNode($idCategoryNode, LocaleTransfer $localeTransfer)
     {
         $urlEntity = $this
             ->queryContainer

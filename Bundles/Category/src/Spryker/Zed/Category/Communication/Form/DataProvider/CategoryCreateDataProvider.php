@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
-use Elastica\Node;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;

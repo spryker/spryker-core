@@ -44,7 +44,7 @@ class Category
     protected $queryContainer;
 
     /**
-     * @var array|\Spryker\Zed\Category\Dependency\Plugin\CategoryDeleteRelationPluginInterface
+     * @var array|\Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface
      */
     protected $deletePlugins;
 
@@ -55,7 +55,7 @@ class Category
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryDeleteRelationPluginInterface[] $deletePlugins
+     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
      */
     public function __construct(
         CategoryInterface $category,

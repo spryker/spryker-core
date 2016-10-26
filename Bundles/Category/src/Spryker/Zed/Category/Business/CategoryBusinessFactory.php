@@ -214,7 +214,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryDeleteRelationPluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected function getRelationDeletePluginStack()
     {

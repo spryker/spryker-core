@@ -9,7 +9,7 @@ namespace Spryker\Zed\Category\Dependency\Plugin;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface CategoryReadRelationPluginInterface
+interface CategoryRelationReadPluginInterface
 {
 
     /**
