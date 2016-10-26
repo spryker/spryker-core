@@ -51,8 +51,16 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
             $this->getTaxFacade(),
-            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+            $this->getPlugins()
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
     }
 
     /**

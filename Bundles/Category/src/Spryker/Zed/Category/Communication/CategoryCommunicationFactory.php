@@ -31,11 +31,19 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getCurrentLocale()
     {
         if ($this->currentLocale === null) {
-            $this->currentLocale = $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
+            $this->currentLocale = $this->getLocaleFacade()
                 ->getCurrentLocale();
         }
 
         return $this->currentLocale;
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
     }
 
     /**
