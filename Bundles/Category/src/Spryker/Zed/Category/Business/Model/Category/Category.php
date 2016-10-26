@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -74,12 +73,31 @@ class Category implements CategoryInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $categoryEntity = $this
-            ->queryContainer
-            ->queryCategoryById($categoryTransfer->getIdCategory())
-            ->findOne();
+        $categoryEntity = $this->getCategoryEntity($categoryTransfer->getIdCategory());
+
         $categoryEntity->fromArray($categoryTransfer->toArray());
         $categoryEntity->save();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     */
+    protected function getCategoryEntity($idCategory)
+    {
+        $categoryEntity = $this
+            ->queryContainer
+            ->queryCategoryById($idCategory)
+            ->findOne();
+
+        if (!$categoryEntity) {
+            throw new MissingCategoryException(sprintf('Could not find category for ID "%s"', $idCategory));
+        }
+
+        return $categoryEntity;
     }
 
     /**
@@ -89,10 +107,8 @@ class Category implements CategoryInterface
      */
     public function delete($idCategory)
     {
-        $this
-            ->queryContainer
-            ->queryCategoryById($idCategory)
-            ->delete();
+        $categoryEntity = $this->getCategoryEntity($idCategory);
+        $categoryEntity->delete();
     }
 
 }

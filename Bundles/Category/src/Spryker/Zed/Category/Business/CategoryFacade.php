@@ -90,6 +90,10 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Finds all category-node entities for idCategory
+     *  - Returns hydrated NodeTransfer collection
+     *
      * @api
      *
      * @param int $idCategory
@@ -148,6 +152,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Reads entity for idCategory from persistence
+     *  - Hydrates data from entities to CategoryTransfer
+     *  - Throws MissingCategoryException if category entity is not present
+     *  - Throws MissingCategoryNodeException if related category-node entity is not present
+     *  - Returns CategoryTransfer
+     *
      * @api
      *
      * @param int $idCategory
@@ -180,6 +191,19 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Hydrates category entity from CategoryTransfer and persists it
+     *  - Hydrates category-node entity from CategoryTransfer and persists it
+     *  - Hydrates category-attribute entities from CategoryTransfer (for all given locals) and persists them
+     *  - Hydrates extra-parent category-node entities from CategoryTransfer and persists them
+     *  - Generates urls from category names for all given locales (names are part of the attributes)
+     *  - Hydrates url entities from generated urls and persists them
+     *  - Throws CategoryUrlExistsException if generated url already exists
+     *  - Hydrates persisted entity identifiers into CategoryTransfer
+     *  - Touches created category-node entities active
+     *  - Touches navigation
+     *  - Touches created url entities active
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -209,6 +233,39 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Finds category entity, hydrates it from CategoryTransfer, and persists it
+     *  - Throws MissingCategoryException if category entity is not present
+     *  - Finds category-node entity, hydrates it from CategoryTransfer, and persists it
+     *  - Throws MissingCategoryNodeException if category-node entity is not present
+     *  - Finds category-attribute entities (for all given locals), hydrates them from CategoryTransfer, and persists them
+     *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
+     *  - Generates urls from category names for all given locales (names are part of the attributes)
+     *  - Finds url entities, hydrates them with generated URLs, and persists them
+     *  - Throws CategoryUrlExistsException if generated URL already exists
+     *  - Touches modified category-node entities active
+     *  - Touches modified url entities active
+     *  - Touches navigation active
+     *
+     *  - If parentCategoryNode changes:
+     *   - Finds existing url entities for existing parent path and removes them from persistence
+     *   - Re-generates urls for new path, hydrates url entities with generated urls, and persists them
+     *   - Touches modified category-node entities active
+     *   - Touches all category-node entities in path active
+     *   - Touches modified URL entities active
+     *   - Touches removed URL entities deleted
+     *   - Touches navigation active
+     *
+     *  - If existing extra-parent category-nodes entities are missing from CategoryTransfer:
+     *   - Finds related extra-parent category-node entities and removes them from persistence
+     *   - Finds related url entities and removes them from persistence
+     *   - Finds sub-trees for all extra-parent category-nodes and moves them to the next higher node in the tree
+     *   - Updates all category-node entities of all sub-trees that are moved
+     *   - Touches removed category-node entities deleted
+     *   - Touches all category-node entities in path active
+     *   - Touches removed URL entities deleted
+     *   - Touches navigation active
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -254,6 +311,19 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Finds category entity and removes them from persistence
+     *  - Throws MissingCategoryException if entity does not exist
+     *  - Finds category-node entity (main path) and removes it from persistence
+     *  - Finds category-attribute entities and removes them from persistence
+     *  - Finds extra-parent category-nodes and removes them from persistence
+     *  - Finds url entities and removes them from persistence
+     *  - Finds sub-trees for all category-nodes to be deleted and moves them to the next higher node in the tree
+     *  - Updates all category-node entities of all sub-trees that are moved
+     *  - Touches all deleted category-node entities deleted
+     *  - Touches all deleted url entities deleted
+     *  - Touches navigation active
+     *
      * @api
      *
      * @param int $idCategory
@@ -301,6 +371,11 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Finds category-node entity, updates node_order field, and persists it
+     *  - Touches category-node entity active
+     *  - Touches navigation active
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -419,6 +494,11 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Finds first category-node for idCategory and finds all of its children
+     *  - Formats all child category-nodes as a nested array structure
+     *  - Returns array representation of sub-tree
+     *
      * @api
      *
      * @param int $idCategory
@@ -434,6 +514,11 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Finds all category-nodes that are children of idCategoryNode
+     *  - Formats all child category-nodes as a nested array structure
+     *  - Return array representation of ub-tree
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -450,6 +535,10 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Removes circular relations from closure table
+     *  - Finds all category-node entities, removes them, and re-creates them in closure table
+     *
      * @api
      *
      * @return void

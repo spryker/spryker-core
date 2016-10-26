@@ -125,10 +125,9 @@ class CategoryNode implements CategoryNodeInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $categoryNodeEntity = $this
-            ->queryContainer
-            ->queryCategoryNodeByNodeId($categoryTransfer->getCategoryNode()->getIdCategoryNode())
-            ->findOne();
+        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $categoryNodeEntity = $this->getCategoryNodeEntity($categoryNodeTransfer->getIdCategoryNode());
+
         $categoryNodeEntity = $this->setUpCategoryNodeEntity($categoryTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();
 
@@ -138,6 +137,30 @@ class CategoryNode implements CategoryNodeInterface
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
 
         $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity->getIdCategoryNode());
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     */
+    protected function getCategoryNodeEntity($idCategoryNode)
+    {
+        $categoryNodeEntity = $this
+            ->queryContainer
+            ->queryCategoryNodeByNodeId($idCategoryNode)
+            ->findOne();
+
+        if (!$categoryNodeEntity) {
+            throw new MissingCategoryNodeException(sprintf(
+                'Could not find category node for ID "%s"',
+                $idCategoryNode
+            ));
+        }
+
+        return $categoryNodeEntity;
     }
 
     /**
