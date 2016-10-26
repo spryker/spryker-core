@@ -14,7 +14,7 @@
             {% endif %}
             {{ title }}
         </h4>
-        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping for ' ~ locale.localeName } %}
 
 
                 {% block widget_content %}
