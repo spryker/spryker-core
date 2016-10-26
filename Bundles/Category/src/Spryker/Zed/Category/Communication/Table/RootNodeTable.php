@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,7 +7,6 @@
 namespace Spryker\Zed\Category\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -22,8 +20,8 @@ class RootNodeTable extends AbstractTable
 
     const ID_CATEGORY_NODE = 'id_category_node';
     const LOCALE_NAME = 'locale_name';
-    const COL_REORDER = 'Reorder';
-    const URL_CATEGORY_RE_SORT= '/category/re-sort';
+    const COL_ACTIONS = 'actions';
+    const URL_CATEGORY_RE_SORT = '/category/re-sort';
     const URL_PRODUCT_CATEGORY_ADD = '/category/create';
 
     /**
@@ -56,17 +54,21 @@ class RootNodeTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $this->tableClass = 'gui-table-data-category';
+
         $config->setHeader([
             SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 'Category Id',
             SpyCategoryAttributeTableMap::COL_NAME => 'Name',
-            SpyLocaleTableMap::COL_LOCALE_NAME => 'Locale',
-            self::COL_REORDER => '',
+            self::COL_ACTIONS => 'Actions',
         ]);
 
-        $config->addRawColumn(self::COL_REORDER);
+        $config->addRawColumn(self::COL_ACTIONS);
 
         $config->setSortable([
-            SpyLocaleTableMap::COL_LOCALE_NAME,
+            SpyCategoryAttributeTableMap::COL_NAME,
+        ]);
+
+        $config->setSearchable([
+            SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
             SpyCategoryAttributeTableMap::COL_NAME,
         ]);
 
@@ -92,8 +94,7 @@ class RootNodeTable extends AbstractTable
             $results[] = [
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $rootNode[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
                 SpyCategoryAttributeTableMap::COL_NAME => $rootNode[SpyCategoryAttributeTableMap::COL_NAME],
-                SpyLocaleTableMap::COL_LOCALE_NAME => $rootNode[self::LOCALE_NAME],
-                self::COL_REORDER => implode(' ', $this->createActionButtons($rootNode)),
+                self::COL_ACTIONS => implode(' ', $this->createActionButtons($rootNode)),
             ];
         }
         unset($queryResults);
