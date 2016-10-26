@@ -40,5 +40,22 @@ class IndexController extends AbstractController
         ];
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function detailAction(Request $request)
+    {
+//        $ffSearchResponseTransfer = $this->getClient()->recommendations();
+        $tt=1;
+        $sku = $request->attributes->get('sku');
+        $locale = $this->getApplication()['locale'];
 
+        return [];
+        return [
+            'searchResponse' => $ffSearchResponseTransfer,
+            'pagingRote' => FactFinderControllerProvider::ROUTE_FACT_FINDER,
+        ];
+    }
 }

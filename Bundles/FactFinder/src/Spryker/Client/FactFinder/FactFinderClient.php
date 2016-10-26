@@ -60,17 +60,22 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
         $quoteTransfer = $this->getQuote();
         $quoteTransfer->setFactFinderSearchRequest($factFinderSearchRequestTransfer);
 
-//        $ffSearchResponseTransfer = $this
-//            ->getFactory()
-//            ->createZedFactFinderStub()
-//            ->search($quoteTransfer);
-
         $ffSearchResponseTransfer = $this
             ->getFactory()
             ->createSearchRequest()
             ->request($quoteTransfer);
 
         return $ffSearchResponseTransfer;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
+     */
+    public function recommendations()
+    {
+
     }
 
     /**

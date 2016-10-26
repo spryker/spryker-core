@@ -40,6 +40,11 @@ interface FactFinderClientInterface
      */
     public function search(FactFinderSearchRequestTransfer $factFinderSearchRequestTransfer);
 
-    
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\FactFinderRecommendationsResponseTransfer
+     */
+    public function recommendations();
 
 }
