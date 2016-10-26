@@ -98,7 +98,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     }
 
     /**
-     * @param SpyProduct $productEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
