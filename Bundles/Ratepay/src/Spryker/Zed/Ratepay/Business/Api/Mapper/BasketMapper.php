@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -52,7 +53,8 @@ class BasketMapper extends BaseMapper
         $shippingUnitPrice = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
         $grandTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
 
-        $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
+        $this->requestTransfer
+            ->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
             ->setAmount($grandTotal)
             ->setCurrency($this->ratepayPaymentRequestTransfer->requireCurrencyIso3()->getCurrencyIso3())
 

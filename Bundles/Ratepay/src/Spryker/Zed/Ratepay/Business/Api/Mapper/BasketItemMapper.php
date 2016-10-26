@@ -8,6 +8,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketItemTransfer;
+use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 
 class BasketItemMapper extends BaseMapper
@@ -66,6 +67,10 @@ class BasketItemMapper extends BaseMapper
         }
 
         $itemTransfer->setProductOptions($productOptions);
+
+        if (!$this->requestTransfer->getShoppingBasket()) {
+            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
+        }
         $this->requestTransfer->getShoppingBasket()->addItems($itemTransfer);
     }
 

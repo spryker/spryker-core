@@ -66,9 +66,12 @@ class PartialBasketMapper extends BaseMapper
     {
         $grandTotal = 0;
         foreach ($this->basketItems as $basketItem) {
-            $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts();
+            $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts() * $basketItem->getQuantity();
         }
-        $shoppingBasket = $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket();
+        if (!$this->requestTransfer->getShoppingBasket()) {
+            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
+        }
+        $shoppingBasket = $this->requestTransfer->getShoppingBasket();
         $shoppingBasket
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
 
