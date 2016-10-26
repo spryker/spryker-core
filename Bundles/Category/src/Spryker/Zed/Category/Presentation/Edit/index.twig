@@ -1,14 +1,14 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Category Edit' | trans %}
+    {% set widget_title = 'Edit category' | trans %}
 {% endif %}
 
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton('/category/root', 'List Categories' | trans) }}
-    {{ viewActionButton('/product-category/assign?id-category='~idCategory, 'Assign Products' | trans) }}
+    {{ viewActionButton('/product-category/assign?id-category='~idCategory, 'Assign products' | trans) }}
+    {{ backActionButton('/category/root', 'List of categories' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -25,7 +25,11 @@
             {{ form_row(categoryForm.parent_category_node) }}
             {{ form_row(categoryForm.extra_parents) }}
 
-            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes', row_class: 'widget-class', row_id: 'widget-id' } %}
+            {% embed '@Gui/Partials/widget.twig' with {
+                widget_title: 'Name and meta information',
+                row_class: 'widget-class',
+                row_id: 'widget-id'
+            } %}
                 {% block widget_content %}
 
                     <div class="tabs-container">

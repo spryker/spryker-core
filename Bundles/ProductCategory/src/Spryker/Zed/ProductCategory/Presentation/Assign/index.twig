@@ -5,17 +5,17 @@
 {% endif %}
 
 {% block head_title -%}
-    {{ 'Product Category' | trans }} {% if idCategory > 0 %} [{{ idCategory }}] {% endif %}
+    {{ 'Assign product to category' | trans }} {% if idCategory > 0 %} [{{ idCategory }}] {% endif %}
 {%- endblock %}
-{% block section_title %}{{ 'Product Category' | trans }}{% endblock %}
+{% block section_title %}{{ 'Assign products to category' | trans }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton('/category/root', 'List Categories' | trans) }}
+    {{ backActionButton('/category/root', 'List of categories' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Assign' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Assign products to category' | trans } %}
 
         {% block widget_content %}
 

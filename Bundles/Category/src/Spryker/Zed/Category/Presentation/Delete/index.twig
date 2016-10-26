@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if submit_title is not defined %}
-    {% set widget_title = 'Delete Category' | trans %}
+    {% set widget_title = 'Delete category' | trans %}
     {% set widget_title = widget_title ~ ': ' ~ category.name %}
 {% endif %}
 
@@ -15,8 +15,8 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton('/category', 'List Categories' | trans) }}
-    {{ createActionButton('/category/add', 'Create Category' | trans) }}
+    {{ createActionButton('/category/add', 'Create category' | trans) }}
+    {{ backActionButton('/category', 'List of categories' | trans) }}
 {% endblock %}
 
 {% block content %}

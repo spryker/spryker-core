@@ -9,12 +9,12 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ createActionButton('/category/create', 'Create Category' | trans) }}
+    {{ createActionButton('/category/create', 'Create category' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes listing' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' } %}
         {% block widget_content %}
             {{ rootCategories | raw }}
             <div class="progress hidden" id="category-loader">
@@ -23,7 +23,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Category Tree' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Category tree' } %}
         {% block widget_content %}
             <div id="category-tree-progress-bar" class="progress hidden">
                 <div class="progress-bar progress-bar-100 progress-bar-striped active" role="progressbar">&nbsp;</div>
