@@ -60,7 +60,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $messages);
     }
 
-
     /**
      * @return void
      */
@@ -129,7 +128,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $messages);
         $this->assertEquals($queryStringException, $messages[0]);
     }
-
 
     /**
      * @return void

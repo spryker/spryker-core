@@ -61,4 +61,12 @@ class BraintreeConfig extends AbstractBundleConfig
         return $this->get(BraintreeConstants::IS_3D_SECURE, false);
     }
 
+    /**
+     * @return string
+     */
+    public final function getChannel()
+    {
+        return 'Spryker_BT_DE';
+    }
+
 }

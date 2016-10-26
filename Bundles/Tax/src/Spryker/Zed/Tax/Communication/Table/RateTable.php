@@ -43,7 +43,6 @@ class RateTable extends AbstractTable
         $this->dateFormatter = $dateFormatter;
     }
 
-
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *

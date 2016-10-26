@@ -112,7 +112,6 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
 
-
     /**
      * @return void
      */

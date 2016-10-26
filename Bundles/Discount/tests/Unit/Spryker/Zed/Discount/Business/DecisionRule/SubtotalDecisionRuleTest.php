@@ -51,7 +51,6 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
         $this->assertTrue($isSatisfied);
     }
 
-
     /**
      * @return void
      */
@@ -67,7 +66,6 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
 
         $this->assertFalse($isSatisfied);
     }
-
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock

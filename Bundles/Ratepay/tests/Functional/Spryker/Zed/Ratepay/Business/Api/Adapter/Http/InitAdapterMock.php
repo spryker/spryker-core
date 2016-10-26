@@ -32,7 +32,6 @@ class InitAdapterMock extends AbstractAdapterMock
         </response>';
     }
 
-
     /**
      * @return array
      */

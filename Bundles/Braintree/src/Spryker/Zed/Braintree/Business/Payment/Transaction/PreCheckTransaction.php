@@ -85,6 +85,7 @@ class PreCheckTransaction extends AbstractTransaction
             'customer' => $this->getCustomerData(),
             'billing' => $this->getCustomerAddressData($this->getBillingAddress()),
             'shipping' => $this->getCustomerAddressData($this->getShippingAddress()),
+            'channel' => $this->config->getChannel(),
         ];
     }
 

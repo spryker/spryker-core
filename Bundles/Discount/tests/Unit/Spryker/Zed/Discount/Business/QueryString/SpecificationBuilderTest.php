@@ -227,7 +227,6 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $specificationBuilder->buildFromQueryString('(sku = 123');
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $createComparatorOperatorsMock
@@ -296,7 +295,6 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
 
         return $createComparatorOperatorsMock;
     }
-
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface
