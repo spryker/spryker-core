@@ -96,6 +96,8 @@ interface UrlFacadeInterface
      * Specification:
      * - check if a ResourceUrl by CategoryNode and Locale exist
      *
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -106,6 +108,8 @@ interface UrlFacadeInterface
     public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -116,6 +120,8 @@ interface UrlFacadeInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode

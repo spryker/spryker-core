@@ -234,7 +234,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
-    protected function createClosureTableWriter()
+    public function createClosureTableWriter()
     {
         return new ClosureTableWriter(
             $this->getQueryContainer()

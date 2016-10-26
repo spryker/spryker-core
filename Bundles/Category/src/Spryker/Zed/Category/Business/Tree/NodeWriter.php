@@ -33,6 +33,8 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return int
@@ -50,6 +52,8 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return void
@@ -66,6 +70,8 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
@@ -81,5 +87,27 @@ class NodeWriter implements NodeWriterInterface
             $nodeEntity->save();
         }
     }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateOrder($idCategoryNode, $position)
+    {
+        $categoryNodeEntity = $this
+            ->queryContainer
+            ->queryNodeById($idCategoryNode)
+            ->findOne();
+
+        if ($categoryNodeEntity) {
+            $categoryNodeEntity->setNodeOrder($position);
+            $categoryNodeEntity->save();
+
+            // Add touch handling
+        }
+    }
+
 
 }

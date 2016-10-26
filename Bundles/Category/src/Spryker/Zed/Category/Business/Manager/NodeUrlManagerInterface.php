@@ -10,6 +10,9 @@ namespace Spryker\Zed\Category\Business\Manager;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface NodeUrlManagerInterface
 {
 

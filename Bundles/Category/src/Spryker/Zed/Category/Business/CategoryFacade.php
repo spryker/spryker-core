@@ -19,6 +19,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $categoryName
@@ -34,6 +36,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idNode
@@ -52,6 +56,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $categoryName
@@ -67,6 +73,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $categoryName
@@ -100,6 +108,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -118,6 +128,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -151,6 +163,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -178,6 +192,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -205,6 +221,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -220,6 +238,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -246,6 +266,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
@@ -262,6 +284,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
@@ -279,6 +303,24 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateCategoryNodeOrder($idCategoryNode, $position)
+    {
+        $this
+            ->getFactory()
+            ->createNodeWriter()
+            ->updateOrder($idCategoryNode, $position);
+    }
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param bool $deleteChildren
@@ -293,6 +335,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @return bool
@@ -305,6 +349,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -321,6 +367,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -336,6 +384,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idNode
@@ -351,6 +401,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idNode
@@ -404,12 +456,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function rebuildClosureTable()
     {
-        $this->getFactory()
-            ->createCategoryTreeWriter()
-            ->rebuildClosureTable();
+        $this
+            ->getFactory()
+            ->createClosureTableWriter()
+            ->rebuildCategoryNodes();
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param array $pathTokens
@@ -424,6 +479,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param array $categoryKey

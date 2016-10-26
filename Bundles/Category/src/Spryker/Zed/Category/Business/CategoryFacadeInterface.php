@@ -15,6 +15,8 @@ interface CategoryFacadeInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $categoryName
@@ -25,6 +27,8 @@ interface CategoryFacadeInterface
     public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idNode
@@ -34,6 +38,8 @@ interface CategoryFacadeInterface
     public function getNodeById($idNode);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $categoryName
@@ -44,6 +50,8 @@ interface CategoryFacadeInterface
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param string $categoryName
@@ -63,6 +71,8 @@ interface CategoryFacadeInterface
     public function getAllNodesByIdCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -72,6 +82,8 @@ interface CategoryFacadeInterface
     public function getMainNodesByIdCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -90,6 +102,8 @@ interface CategoryFacadeInterface
     public function read($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -109,6 +123,8 @@ interface CategoryFacadeInterface
     public function create(CategoryTransfer $categoryTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -128,6 +144,8 @@ interface CategoryFacadeInterface
     public function update(CategoryTransfer $categoryTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -138,6 +156,8 @@ interface CategoryFacadeInterface
     public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -156,6 +176,8 @@ interface CategoryFacadeInterface
     public function delete($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
@@ -167,6 +189,8 @@ interface CategoryFacadeInterface
     public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
@@ -179,6 +203,18 @@ interface CategoryFacadeInterface
     /**
      * @api
      *
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateCategoryNodeOrder($idCategoryNode, $position);
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
+     * @api
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param bool $deleteChildren
@@ -188,6 +224,8 @@ interface CategoryFacadeInterface
     public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @return bool
@@ -195,6 +233,8 @@ interface CategoryFacadeInterface
     public function renderCategoryTreeVisual();
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -202,6 +242,8 @@ interface CategoryFacadeInterface
     public function getRootNodes();
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategory
@@ -212,6 +254,8 @@ interface CategoryFacadeInterface
     public function getTree($idCategory, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idNode
@@ -222,6 +266,8 @@ interface CategoryFacadeInterface
     public function getChildren($idNode, LocaleTransfer $localeTransfer);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idNode
@@ -250,6 +296,8 @@ interface CategoryFacadeInterface
     public function rebuildClosureTable();
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param array $pathTokens
@@ -259,6 +307,8 @@ interface CategoryFacadeInterface
     public function generatePath(array $pathTokens);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param array $categoryKey

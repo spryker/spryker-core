@@ -6,16 +6,15 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
-use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class ReSortController extends AbstractController
 {
@@ -59,23 +58,13 @@ class ReSortController extends AbstractController
      */
     public function saveAction(Request $request)
     {
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
         $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
+        $positionCursor = (count($categoryNodesToReorder) - 1);
 
-        $positionCursor = count($categoryNodesToReorder) - 1;
         foreach ($categoryNodesToReorder as $index => $nodeData) {
-            $idNode = $nodeData['id'];
+            $idCategoryNode = $this->castId($nodeData['id']);
 
-            $nodeEntity = $this
-                ->getQueryContainer()
-                ->queryNodeById($idNode)
-                ->findOne();
-
-            $nodeTransfer = new NodeTransfer();
-            $nodeTransfer->fromArray($nodeEntity->toArray());
-            $nodeTransfer->setNodeOrder($positionCursor);
-
-            $this->getFacade()->updateCategoryNode($nodeTransfer, $localeTransfer);
+            $this->getFacade()->updateCategoryNodeOrder($idCategoryNode, $positionCursor);
 
             $positionCursor--;
         }

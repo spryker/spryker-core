@@ -129,6 +129,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * Specification:
      * - check if a ResourceUrl by CategoryNode and Locale exist
      *
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -144,6 +146,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -159,6 +163,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @api
      *
      * @param int $idCategoryNode

@@ -17,6 +17,9 @@ use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class NodeUrlManager implements NodeUrlManagerInterface
 {
 

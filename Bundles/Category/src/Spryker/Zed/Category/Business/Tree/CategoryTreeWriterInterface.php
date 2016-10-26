@@ -9,8 +9,12 @@ namespace Spryker\Zed\Category\Business\Tree;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface CategoryTreeWriterInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -41,4 +45,5 @@ interface CategoryTreeWriterInterface
      * @return void
      */
     public function rebuildClosureTable();
+
 }
