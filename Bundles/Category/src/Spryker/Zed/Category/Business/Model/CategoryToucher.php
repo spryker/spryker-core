@@ -70,6 +70,7 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchCategoryNodeActive($idCategoryNode)
     {
         $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchNavigationActive();
     }
 
     /**
@@ -80,6 +81,15 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchCategoryNodeDeleted($idCategoryNode)
     {
         $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchNavigationActive();
+    }
+
+    /**
+     * @return void
+     */
+    public function touchNavigationActive()
+    {
+        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, 1);
     }
 
 }
