@@ -15,7 +15,6 @@ use Spryker\Zed\Availability\Communication\Table\AvailabilityTable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToLocaleInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use src\Spryker\Zed\Availability\Communication\Form\StockSubForm;
 
 /**
  * @method AvailabilityQueryContainerInterface getQueryContainer
@@ -39,7 +38,7 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return AvailabilityAbstractTable
+     * @return \Spryker\Zed\Availability\Communication\Table\AvailabilityTable
      */
     public function createAvailabilityTable($idProductAbstract, $idLocale)
     {
@@ -62,7 +61,8 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
             $availabilityStockFormDataProvider->getData(),
             [
                 'data_class' => AvailabilityStockTransfer::class,
-            ]);
+            ]
+        );
     }
 
     /**

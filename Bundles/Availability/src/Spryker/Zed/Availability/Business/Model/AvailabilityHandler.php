@@ -104,7 +104,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function saveCurrentAvailability($sku, $quantity)
     {
-        $spyAvailability = $this->querySpyAvailabilityBySku($sku)->findOneOrCreate();
+        $spyAvailability = $this->querySpyAvailabilityBySku($sku)
+            ->findOneOrCreate();
 
         if ($spyAvailability->isNew()) {
             $availabilityAbstractEntity = $this->findOrCreateSpyAvailabilityAbstract($sku);
@@ -123,11 +124,12 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     protected function querySpyAvailabilityBySku($sku)
     {
-        return  $this->queryContainer->querySpyAvailabilityBySku($sku);
+        return $this->queryContainer
+            ->querySpyAvailabilityBySku($sku);
     }
 
     /**
@@ -158,7 +160,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected function getOldPhysicalQuantity($sku)
     {
         $oldQuantity = null;
-        $availabilityEntity = $this->querySpyAvailabilityBySku($sku)->findOne();
+        $availabilityEntity = $this->querySpyAvailabilityBySku($sku)
+            ->findOne();
 
         if ($availabilityEntity !== null) {
             $oldQuantity = $availabilityEntity->getQuantity();
@@ -178,7 +181,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 
-        $sumQuantity = (int) $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)->findOne();
+        $sumQuantity = (int) $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
+            ->findOne();
 
         $availabilityAbstractEntity->setQuantity($sumQuantity);
         $availabilityAbstractEntity->save();

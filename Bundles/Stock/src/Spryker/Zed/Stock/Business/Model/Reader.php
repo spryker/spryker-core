@@ -81,6 +81,7 @@ class Reader implements ReaderInterface
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
             ->find();
+
         if (count($stockEntities) < 1) {
             throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);
         } else {

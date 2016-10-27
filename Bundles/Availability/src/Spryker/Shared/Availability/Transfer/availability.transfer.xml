@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/transfer-01.xsd" >
 
-    <transfer name="availabilityStock">
+    <transfer name="AvailabilityStock">
         <property name="idAvailability" type="int" />
         <property name="sku" type="string" />
         <property name="stocks" type="StockProduct[]" singular="StockProduct"/>

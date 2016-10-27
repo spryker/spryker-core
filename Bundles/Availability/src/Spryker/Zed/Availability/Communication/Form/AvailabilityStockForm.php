@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AvailabilityStockForm extends AbstractType
 {
+    const FIELD_STOCKS = 'stocks';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -31,12 +32,7 @@ class AvailabilityStockForm extends AbstractType
      */
     protected function addStock(FormBuilderInterface $builder)
     {
-        $builder->add('stocks', 'collection',[
-            'type' => new StockSubForm(),
-            'options' => [
-                'data_class' => StockProductTransfer::class
-            ]
-        ]);
+        $this->addStockField($builder);
 
         return $this;
     }
@@ -47,5 +43,22 @@ class AvailabilityStockForm extends AbstractType
     public function getName()
     {
         return 'availability_stock';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStockField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_STOCKS, 'collection', [
+            'type' => new StockSubForm(),
+            'options' => [
+                'data_class' => StockProductTransfer::class
+            ]
+        ]);
+
+        return $this;
     }
 }

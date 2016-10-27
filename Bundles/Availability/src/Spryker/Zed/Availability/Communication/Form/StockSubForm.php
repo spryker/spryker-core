@@ -22,13 +22,8 @@ class StockSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
-            'label' => 'Current Stock'
-        ])
-        ->add(self::FIELD_STOCK_TYPE, 'text', [
-            'label' => 'Stock Type',
-            'disabled' => true
-        ]);
+        $this->addQuantityField($builder)
+            ->addStockTypeField($builder);
     }
 
     /**
@@ -37,5 +32,34 @@ class StockSubForm extends AbstractType
     public function getName()
     {
         return 'stock_form';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addQuantityField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_QUANTITY, 'text', [
+            'label' => 'Current Stock'
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStockTypeField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_STOCK_TYPE, 'text', [
+            'label' => 'Stock Type',
+            'disabled' => true
+        ]);
+
+        return $this;
     }
 }

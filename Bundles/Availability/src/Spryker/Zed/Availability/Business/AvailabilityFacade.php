@@ -18,6 +18,11 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 {
 
     /**
+     * Specification:
+     *  - Check if product is never out of stock
+     *  - Check if product have stock in productStock table
+     *  - Check if have placed orders where items have statemachine state flagged as reserved
+     *
      * @api
      *
      * @param string $sku
@@ -27,10 +32,16 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getFactory()->createSellableModel()->isProductSellable($sku, $quantity);
+        return $this->getFactory()
+            ->createSellableModel()
+            ->isProductSellable($sku, $quantity);
     }
 
     /**
+     * Specification:
+     *  - Check if product have stock in productStock table
+     *  - Check if have placed orders where items have statemachine state flagged as reserved
+     *
      * @api
      *
      * @param string $sku
@@ -39,10 +50,16 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getFactory()->createSellableModel()->calculateStockForProduct($sku);
+        return $this->getFactory()
+            ->createSellableModel()
+            ->calculateStockForProduct($sku);
     }
 
     /**
+     * Specification:
+     *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
+     *  - Write error message into CheckoutResponseTransfer
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -60,6 +77,13 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
+     *
+     * Specification:
+     *  - Calculate current item stock, take into account reserved items
+     *  - Store new stock for concrete product
+     *  - Store sum of all concrete product stocks for abstract product
+     *  - Touch availability abstract collector
+     *
      * @api
      *
      * @param string $sku
@@ -68,6 +92,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function updateAvailability($sku)
     {
-        $this->getFactory()->createAvailabilityHandler()->updateAvailability($sku);
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->updateAvailability($sku);
     }
 }

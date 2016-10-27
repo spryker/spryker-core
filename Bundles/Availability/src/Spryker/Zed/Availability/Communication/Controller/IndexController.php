@@ -51,12 +51,12 @@ class IndexController extends AbstractController
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract);
         $localeTransfer =  $this->getCurrentLocaleTransfer();
 
-        $ProductAbstractEntity = $this->getQueryContainer()
+        $productAbstractEntity = $this->getQueryContainer()
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $localeTransfer->getIdLocale())
             ->findOne();
 
         return [
-            'productAbstractInfo' => $this->getOverviewData($ProductAbstractEntity),
+            'productAbstractInfo' => $this->getOverviewData($productAbstractEntity),
             'indexTable' => $availabilityTable->render()
         ];
     }
@@ -89,7 +89,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function availabilityAbstractTableAction()
     {
@@ -139,7 +139,7 @@ class IndexController extends AbstractController
     /**
      * @param int $idProductAbstract
      *
-     * @return AvailabilityAbstractTable
+     * @return \Spryker\Zed\Availability\Communication\Table\AvailabilityTable
      */
     protected function getAvailabilityTable($idProductAbstract)
     {
@@ -149,18 +149,18 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param $ProductAbstractEntity
+     * @param $productAbstractEntity
      *
      * @return array
      */
-    protected function getOverviewData(SpyProductAbstract $ProductAbstractEntity)
+    protected function getOverviewData(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            'sku' => $ProductAbstractEntity->getSku(),
-            'productName' => $ProductAbstractEntity->getProductName(),
-            'availability' => $ProductAbstractEntity->getAvailabilityQuantity(),
-            'stockQuantity' => $ProductAbstractEntity->getStockQuantity(),
-            'reservationQuantity' => $this->calculateReservation($ProductAbstractEntity->getReservationQuantity())
+            'sku' => $productAbstractEntity->getSku(),
+            'productName' => $productAbstractEntity->getProductName(),
+            'availability' => $productAbstractEntity->getAvailabilityQuantity(),
+            'stockQuantity' => $productAbstractEntity->getStockQuantity(),
+            'reservationQuantity' => $this->calculateReservation($productAbstractEntity->getReservationQuantity())
         ];
     }
 
