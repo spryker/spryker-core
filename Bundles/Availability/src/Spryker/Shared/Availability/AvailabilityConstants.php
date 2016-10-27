@@ -10,4 +10,5 @@ interface AvailabilityConstants
 {
 
     const RESOURCE_TYPE_AVAILABILITY_ABSTRACT = 'availability_abstract';
+
 }

@@ -44,4 +44,5 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
     {
         return $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
     }
+
 }

@@ -15,4 +15,5 @@ interface AvailabilityHandlerInterface
      * @return void
      */
     public function updateAvailability($sku);
+
 }

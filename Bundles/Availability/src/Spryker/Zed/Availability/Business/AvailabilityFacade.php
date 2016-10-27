@@ -96,4 +96,5 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->createAvailabilityHandler()
             ->updateAvailability($sku);
     }
+
 }

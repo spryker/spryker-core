@@ -9,21 +9,16 @@ namespace Spryker\Zed\Availability\Communication\Controller;
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstract;
-use Orm\Zed\Stock\Persistence\SpyStock;
-use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Availability\Business\AvailabilityFacade;
-use Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityTable;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AvailabilityFacade getFacade()
- * @method AvailabilityCommunicationFactory getFactory()
- * @method AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Business\AvailabilityFacade getFacade()
+ * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
  */
 class IndexController extends AbstractController
 {
@@ -41,7 +36,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -49,7 +44,7 @@ class IndexController extends AbstractController
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract);
-        $localeTransfer =  $this->getCurrentLocaleTransfer();
+        $localeTransfer = $this->getCurrentLocaleTransfer();
 
         $productAbstractEntity = $this->getQueryContainer()
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $localeTransfer->getIdLocale())
@@ -62,7 +57,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -101,7 +96,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -165,8 +160,8 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param AvailabilityStockTransfer $availabilityStockTransfer
-     * @param SpyStock $type
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $type
      *
      * @return bool
      */
@@ -182,11 +177,11 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param AvailabilityStockTransfer $availabilityStockTransfer
-     * @param SpyStockProduct $stockProductEntity
-     * @param string $stockType
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct|null $stockProductEntity
+     * @param string|null $stockType
      *
-     * @return StockProductTransfer
+     * @return \Generated\Shared\Transfer\StockProductTransfer
      */
     protected function addStockProduct($availabilityStockTransfer, $stockProductEntity = null, $stockType = null)
     {
@@ -206,9 +201,9 @@ class IndexController extends AbstractController
 
     /**
      * @param string $sku
-     * @param SpyStockProduct[]|ObjectCollection $stockProducts
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Propel\Runtime\Collection\ObjectCollection $stockProducts
      *
-     * @return AvailabilityStockTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
     protected function loadAvailabilityStockTransfer($sku, ObjectCollection $stockProducts)
     {
@@ -223,7 +218,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param AvailabilityStockTransfer $availabilityStockTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
      * @return void
      */
@@ -239,7 +234,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param AvailabilityStockTransfer $data
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $data
      *
      * @return void
      */
@@ -298,11 +293,12 @@ class IndexController extends AbstractController
         foreach ($reservationItems as $item) {
             $value = explode(':', $item);
 
-            if(count($value) > 1 ) {
+            if(count($value) > 1) {
                 $reservation += $value[1];
             }
         }
 
         return $reservation;
     }
+
 }

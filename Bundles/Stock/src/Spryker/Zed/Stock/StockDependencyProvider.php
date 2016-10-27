@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
-use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 
 class StockDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -43,9 +42,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return StockUpdateHandlerPluginInterface[]
+     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected function getStockUpdateHandlerPlugins($container)
     {

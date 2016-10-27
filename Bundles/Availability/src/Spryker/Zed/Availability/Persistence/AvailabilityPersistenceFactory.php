@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
-use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
@@ -22,7 +20,7 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function createSpyAvailabilityQuery()
     {
@@ -30,7 +28,7 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyAvailabilityAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function createSpyAvailabilityAbstractQuery()
     {
@@ -38,7 +36,7 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return ProductQueryContainer
+     * @return \Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer
      */
     public function getProductQueryContainer()
     {
@@ -46,10 +44,11 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return StockQueryContainer
+     * @return \Spryker\Zed\Stock\Persistence\StockQueryContainer
      */
     public function getStockQueryContainer()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::QUERY_CONTAINER_STOCK);
     }
+
 }

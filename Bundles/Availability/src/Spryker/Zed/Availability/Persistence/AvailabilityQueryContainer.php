@@ -7,24 +7,20 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
-use Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method AvailabilityPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityPersistenceFactory getFactory()
  */
 class AvailabilityQueryContainer extends AbstractQueryContainer implements AvailabilityQueryContainerInterface
 {
@@ -43,9 +39,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     const CONCAT = "CONCAT";
 
     /**
+     * @api
+     *
      * @param string $sku
      *
-     * @return SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku)
     {
@@ -56,9 +54,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @param string $abstractSku
      *
-     * @return SpyAvailabilityAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function querySpyAvailabilityAbstractByAbstractSku($abstractSku)
     {
@@ -67,6 +67,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @param int $idAvailabilityAbstract
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
@@ -78,9 +80,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @param int $idAvailabilityAbstract
      *
-     * @return SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
     {
@@ -91,6 +95,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function querySpyProductBySku($sku)
@@ -101,36 +107,41 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdLocale($idLocale)
     {
         return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
-            ->withColumn('SUM('.SpyStockProductTableMap::COL_QUANTITY.')', self::STOCK_QUANTITY)
-            ->withColumn("" . self::GROUP_CONCAT . "(" . self::CONCAT . "(" .SpyProductTableMap::COL_ID_PRODUCT.",':',".SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY."))", self::RESERVATION_QUANTITY)
+            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
+            ->withColumn("" . self::GROUP_CONCAT . "(" . self::CONCAT . "(" . SpyProductTableMap::COL_ID_PRODUCT . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . "))", self::RESERVATION_QUANTITY)
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdLocale($idLocale)
     {
         return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_SKU, SpyAvailabilityTableMap::COL_SKU,Criteria::INNER_JOIN)
-            ->addAnd(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale)
-        ;
+            ->addAnd(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale);
     }
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
     {
@@ -143,7 +154,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
-     * @return SpyProductAbstractQuery
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailabilityWithStock()
     {
@@ -153,7 +166,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
-     * @return SpyProductAbstractQuery
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailability()
     {
@@ -163,10 +178,12 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
@@ -175,10 +192,12 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
@@ -188,15 +207,16 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->withColumn(SpyAvailabilityTableMap::COL_QUANTITY, self::CONCRETE_AVAILABILITY)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::CONCRETE_NAME)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->withColumn('SUM('.SpyStockProductTableMap::COL_QUANTITY.')', self::STOCK_QUANTITY)
+            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
             ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, self::RESERVATION_QUANTITY)
             ->filterByIdProductAbstract($idProductAbstract)
             ->select([self::CONCRETE_SKU])
-            ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
-        ;
+            ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -214,6 +234,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     }
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockType()
@@ -221,4 +243,5 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         return $this->getFactory()->getStockQueryContainer()
             ->queryAllStockTypes();
     }
+
 }

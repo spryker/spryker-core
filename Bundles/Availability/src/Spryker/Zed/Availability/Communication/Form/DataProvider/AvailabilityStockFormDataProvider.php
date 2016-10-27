@@ -12,12 +12,12 @@ class AvailabilityStockFormDataProvider
 {
 
     /**
-     * @var AvailabilityStockTransfer
+     * @var \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
     protected $availabilityStockTransfer;
 
     /**
-     * @param AvailabilityStockTransfer $availabilityStockTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      */
     public function __construct(AvailabilityStockTransfer $availabilityStockTransfer)
     {
@@ -25,7 +25,7 @@ class AvailabilityStockFormDataProvider
     }
 
     /**
-     * @return AvailabilityStockTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
     public function getData()
     {

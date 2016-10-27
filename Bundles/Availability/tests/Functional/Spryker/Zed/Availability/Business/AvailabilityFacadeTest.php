@@ -19,10 +19,18 @@ use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 
+/**
+ * @group Functional
+ * @group Spryker
+ * @group Zed
+ * @group Availability
+ * @group Business
+ * @group AvailabilityFacadeTest
+ */
 class AvailabilityFacadeTest extends Test
 {
+
     const ABSTRACT_SKU = '123_availability_test';
     const CONCRETE_SKU = '123_availability_test-concrete';
 
@@ -82,7 +90,6 @@ class AvailabilityFacadeTest extends Test
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
         $this->assertEquals($quantity, $calculatedQuantity);
-
     }
 
     /**
@@ -93,7 +100,6 @@ class AvailabilityFacadeTest extends Test
         $this->expectException(MissingProductException::class);
         $availabilityFacade = $this->createAvailabilityFacade();
         $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
-
     }
 
     /**
@@ -265,4 +271,5 @@ class AvailabilityFacadeTest extends Test
 
         return $availabilityEntity;
     }
+
 }

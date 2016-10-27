@@ -64,4 +64,5 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     {
         return $this->stockFacade->updateStockProduct($stockProductTransfer);
     }
+
 }

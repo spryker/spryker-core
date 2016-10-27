@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConstants;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
@@ -18,38 +17,38 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 {
 
     /**
-     * @var SellableInterface
+     * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     protected $sellable;
 
     /**
-     * @var AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected $stockFacade;
 
     /**
-     * @var AvailabilityToTouchInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var AvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param SellableInterface $sellable
-     * @param AvailabilityToStockInterface $stockFacade
-     * @param AvailabilityToTouchInterface $touchFacade
-     * @param AvailabilityQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
      */
     public function __construct(
         SellableInterface $sellable,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer
-    )
-    {
+    ) {
+
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
         $this->touchFacade = $touchFacade;
@@ -100,7 +99,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param int $quantity
      *
-     * @return SpyAvailability
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
     protected function saveCurrentAvailability($sku, $quantity)
     {
@@ -181,7 +180,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 
-        $sumQuantity = (int) $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
+        $sumQuantity = (int)$this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 
         $availabilityAbstractEntity->setQuantity($sumQuantity);
@@ -191,8 +190,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param $sku
      *
-     * @throws ProductNotFoundException
-     * @return SpyAvailabilityAbstract
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
     protected function findOrCreateSpyAvailabilityAbstract($sku)
     {
@@ -217,7 +217,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $abstractSku
      *
-     * @return SpyAvailabilityAbstract
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
     protected function createSpyAvailabilityAbstract($abstractSku)
     {

@@ -855,7 +855,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $sourceStateId
      * @param string $targetStateId
      * @param string $sku

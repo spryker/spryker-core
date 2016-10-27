@@ -7,14 +7,13 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
-use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Reservation implements ReservationInterface
 {
 
     /**
-     * @var ReadOnlyArrayObject
+     * @var \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
     protected $activeProcesses;
 
@@ -24,28 +23,28 @@ class Reservation implements ReservationInterface
     protected $builder;
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var ReservationHandlerPluginInterface[]
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
      */
     protected $reservationHandlerPlugins;
 
     /**
      * @param array $activeProcesses
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
-     * @param OmsQueryContainerInterface $queryContainer
-     * @param ReservationHandlerPluginInterface[] $reservationHandlerPlugins
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      */
     public function __construct(
         ReadOnlyArrayObject $activeProcesses,
         BuilderInterface $builder,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins
-    )
-    {
+    ) {
+
         $this->activeProcesses = $activeProcesses;
         $this->builder = $builder;
         $this->queryContainer = $queryContainer;
@@ -82,7 +81,9 @@ class Reservation implements ReservationInterface
      */
     protected function sumProductQuantitiesForSku(array $states, $sku, $returnTest = true)
     {
-        return $this->queryContainer->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)->findOne();
+        return $this->queryContainer
+            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
+            ->findOne();
     }
 
     /**

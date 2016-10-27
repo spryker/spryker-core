@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AvailabilityStockForm extends AbstractType
 {
+
     const FIELD_STOCKS = 'stocks';
 
     /**
@@ -61,4 +62,5 @@ class AvailabilityStockForm extends AbstractType
 
         return $this;
     }
+
 }

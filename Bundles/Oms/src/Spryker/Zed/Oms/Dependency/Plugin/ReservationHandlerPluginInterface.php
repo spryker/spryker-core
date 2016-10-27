@@ -17,4 +17,5 @@ interface ReservationHandlerPluginInterface
      * @return void
      */
     public function handle($sku);
+
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Stock\Business\Model\Reader;
 use Spryker\Zed\Stock\Business\Model\Writer;
-use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
@@ -72,7 +71,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StockUpdateHandlerPluginInterface[]
+     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected function getStockUpdateHandlerPlugins()
     {

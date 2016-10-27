@@ -11,11 +11,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class StockSubForm extends AbstractType
 {
+
     const FIELD_QUANTITY = 'quantity';
     const FIELD_STOCK_TYPE = 'stockType';
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -62,4 +63,5 @@ class StockSubForm extends AbstractType
 
         return $this;
     }
+
 }

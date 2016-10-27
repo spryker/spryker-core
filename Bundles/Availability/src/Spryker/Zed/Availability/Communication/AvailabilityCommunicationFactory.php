@@ -12,12 +12,12 @@ use Spryker\Zed\Availability\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityTable;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToLocaleInterface;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method AvailabilityQueryContainerInterface getQueryContainer
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer getQueryContainer()
  */
 class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -25,7 +25,7 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idLocale
      *
-     * @return AvailabilityAbstractTable
+     * @return \Spryker\Zed\Availability\Communication\Table\AvailabilityAbstractTable
      */
     public function createAvailabilityAbstractTable($idLocale)
     {
@@ -48,7 +48,7 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param AvailabilityStockFormDataProvider $availabilityStockFormDataProvider
+     * @param \Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider $availabilityStockFormDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -66,9 +66,9 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param AvailabilityStockTransfer $availabilityStockTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
-     * @return AvailabilityStockFormDataProvider
+     * @return \Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
      */
     public function createAvailabilityStockFormDataProvider(AvailabilityStockTransfer $availabilityStockTransfer)
     {
@@ -76,7 +76,7 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AvailabilityToLocaleInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToLocaleInterface
      */
     public function getLocalFacade()
     {
@@ -90,4 +90,5 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STOCK);
     }
+
 }

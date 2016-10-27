@@ -165,7 +165,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true)
     {
         $query = $this->getSalesQueryContainer()->querySalesOrderItem();
-        $query->withColumn('SUM('. SpySalesOrderItemTableMap::COL_QUANTITY .')', 'Sum')->select(['Sum']);
+        $query->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', 'Sum')->select(['Sum']);
 
         if ($returnTest === false) {
             $query->useOrderQuery()->filterByIsTest(false)->endUse();
@@ -345,6 +345,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery

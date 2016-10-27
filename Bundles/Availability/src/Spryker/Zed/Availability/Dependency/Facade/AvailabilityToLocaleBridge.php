@@ -7,18 +7,16 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class AvailabilityToLocaleBridge implements AvailabilityToLocaleInterface
 {
 
     /**
-     * @var LocaleFacadeInterface
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param LocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
     public function __construct($localeFacade)
     {

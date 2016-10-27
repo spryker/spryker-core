@@ -14,7 +14,6 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
-use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -40,7 +39,7 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @var StockUpdateHandlerPluginInterface[]
+     * @var \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected $stockUpdateHandlerPlugins;
 
@@ -48,7 +47,7 @@ class Writer implements WriterInterface
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
-     * @param StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
+     * @param \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,

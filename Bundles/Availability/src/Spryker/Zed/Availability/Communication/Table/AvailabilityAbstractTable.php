@@ -25,12 +25,12 @@ class AvailabilityAbstractTable extends AbstractTable
 
 
     /**
-     * @var SpyProductAbstractQuery
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $queryProductAbstractAvailability;
 
     /**
-     * @param SpyProductAbstractQuery $queryProductAbstractAvailability
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailability
      */
     public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailability)
     {
@@ -40,7 +40,7 @@ class AvailabilityAbstractTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -101,7 +101,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param SpyProductAbstract $productAbstractEntity
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
@@ -140,11 +140,12 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($reservationItems as $item) {
             $value = explode(':', $item);
 
-            if(count($value) > 1 ) {
+            if(count($value) > 1) {
                 $reservation += $value[1];
             }
         }
 
         return $reservation;
     }
+
 }

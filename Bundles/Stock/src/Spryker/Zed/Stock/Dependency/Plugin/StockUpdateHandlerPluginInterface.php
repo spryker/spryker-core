@@ -17,4 +17,5 @@ interface StockUpdateHandlerPluginInterface
      * @return void
      */
     public function handle($sku);
+
 }

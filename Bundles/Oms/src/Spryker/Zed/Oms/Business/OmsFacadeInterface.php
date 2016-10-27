@@ -179,6 +179,9 @@ interface OmsFacadeInterface
     public function countReservedOrderItemsForSku($sku);
 
     /**
+     * Specification:
+     *  - Count orders with items with given sku which are in state with flag reserved
+     *
      * @api
      *
      * @param string $sku

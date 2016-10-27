@@ -7,28 +7,30 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
-use Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-
 interface AvailabilityQueryContainerInterface
 {
 
     /**
+     * @api
+     *
      * @param string $sku
      *
-     * @return SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku);
 
     /**
+     * @api
+     *
      * @param string $abstractSku
      *
-     * @return SpyAvailabilityAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function querySpyAvailabilityAbstractByAbstractSku($abstractSku);
 
     /**
+     * @api
+     *
      * @param int $idAvailabilityAbstract
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
@@ -36,13 +38,17 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
+     * @api
+     *
      * @param int $idAvailabilityAbstract
      *
-     * @return SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -50,53 +56,69 @@ interface AvailabilityQueryContainerInterface
     public function querySpyProductBySku($sku);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityAbstractWithStockByIdLocale($idLocale);
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdLocale($idLocale);
 
     /**
+     * @api
+     *
      * @param int $idLocale
      *
-     * @return SpyAvailabilityAbstractQuery|SpyProductAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale);
 
     /**
-     * @return SpyProductAbstractQuery
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailabilityWithStock();
 
     /**
-     * @return SpyProductAbstractQuery
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailability();
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -104,7 +126,10 @@ interface AvailabilityQueryContainerInterface
     public function queryStockByIdProduct($idProduct);
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockType();
+
 }

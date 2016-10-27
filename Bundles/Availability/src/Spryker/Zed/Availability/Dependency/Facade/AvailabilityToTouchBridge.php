@@ -7,18 +7,16 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacadeInterface;
-
 class AvailabilityToTouchBridge implements AvailabilityToTouchInterface
 {
 
     /**
-     * @var TouchFacadeInterface
+     * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
-     * @param TouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacadeInterface $touchFacade
      */
     public function __construct($touchFacade)
     {
@@ -36,4 +34,5 @@ class AvailabilityToTouchBridge implements AvailabilityToTouchInterface
     {
         return $this->touchFacade->touchActive($itemType,$idItem, $keyChange);
     }
+
 }

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Availability\Communication\Table;
 
-use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -29,12 +28,12 @@ class AvailabilityTable extends AbstractTable
     protected $idProductAbstract;
 
     /**
-     * @var SpyProductAbstractQuery
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $queryProductAbstractAvailability;
 
     /**
-     * @param SpyProductAbstractQuery $queryProductAbstractAvailability
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailability
      * @param $idProductAbstract
      */
     public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailability, $idProductAbstract)
@@ -46,7 +45,7 @@ class AvailabilityTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -109,7 +108,7 @@ class AvailabilityTable extends AbstractTable
     }
 
     /**
-     * @param SpyAvailability $productAbstractEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $productAbstractEntity
      *
      * @return string
      */
@@ -125,4 +124,5 @@ class AvailabilityTable extends AbstractTable
         );
         return $this->generateEditButton($viewTaxSetUrl, 'Edit Stock');
     }
+
 }
