@@ -240,7 +240,8 @@ class NewsletterFacadeTest extends Test
 
         $newsletterSubscriberTransfer->setFkCustomer($customer->getIdCustomer());
 
-        $this->newsletterFacade->assignCustomerToExistingSubscriber($newsletterSubscriberTransfer);
+        $result = $this->newsletterFacade->assignCustomerToExistingSubscriber($newsletterSubscriberTransfer);
+        $this->assertTrue($result);
 
         $queryContainer = new NewsletterQueryContainer();
         $subscriberEntity = $queryContainer->querySubscriber()->filterByEmail($newsletterSubscriberTransfer->getEmail())->findOne();

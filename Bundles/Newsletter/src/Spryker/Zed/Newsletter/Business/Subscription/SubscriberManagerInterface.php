@@ -29,7 +29,7 @@ interface SubscriberManagerInterface
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @return void
+     * @return bool
      */
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer);
 
