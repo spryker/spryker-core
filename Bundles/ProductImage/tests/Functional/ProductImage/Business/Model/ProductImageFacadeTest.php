@@ -277,11 +277,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testCreateProductAbstractImageSetCollection()
     {
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->fromArray(
-                $this->productAbstractEntity->toArray(),
-                true
-            );
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setExternalUrlSmall(self::URL_SMALL)
@@ -306,11 +302,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testUpdateProductAbstractImageSetCollection()
     {
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->fromArray(
-                $this->productAbstractEntity->toArray(),
-                true
-            );
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setIdProductImage($this->image->getIdProductImage())
@@ -337,11 +329,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testExpandProductAbstractWithImageSets()
     {
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->fromArray(
-                $this->productAbstractEntity->toArray(),
-                true
-            );
+        $productAbstractTransfer = $this->createProductAbstractTransfer();
 
         $productAbstractTransfer = $this->productImageFacade->expandProductAbstractWithImageSets(
             $productAbstractTransfer
@@ -362,12 +350,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testCreateProductConcreteImageSetCollection()
     {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
-            ->fromArray(
-                $this->productConcreteEntity->toArray(),
-                true
-            );
+        $productConcreteTransfer = $this->createProductConcreteTransfer();
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setExternalUrlSmall(self::URL_SMALL)
@@ -392,12 +375,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testUpdateProductConcreteImageSetCollection()
     {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
-            ->fromArray(
-                $this->productConcreteEntity->toArray(),
-                true
-            );
+        $productConcreteTransfer = $this->createProductConcreteTransfer();
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setIdProductImage($this->image->getIdProductImage())
@@ -424,12 +402,7 @@ class ProductImageFacadeTest extends Test
      */
     public function testExpandProductConcreteWithImageSets()
     {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
-            ->fromArray(
-                $this->productConcreteEntity->toArray(),
-                true
-            );
+        $productConcreteTransfer = $this->createProductConcreteTransfer();
 
         $productConcreteTransfer = $this->productImageFacade->expandProductConcreteWithImageSets(
             $productConcreteTransfer
@@ -499,6 +472,35 @@ class ProductImageFacadeTest extends Test
         );
 
         $this->assertNotEmpty($imageCollection);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function createProductAbstractTransfer()
+    {
+        $productData = $this->productAbstractEntity->toArray();
+        unset($productData[ProductAbstractTransfer::ATTRIBUTES]);
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->fromArray($productData, true);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function createProductConcreteTransfer()
+    {
+        $productData = $this->productConcreteEntity->toArray();
+        unset($productData[ProductAbstractTransfer::ATTRIBUTES]);
+
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
+            ->fromArray($productData, true);
+
+        return $productConcreteTransfer;
     }
 
 }

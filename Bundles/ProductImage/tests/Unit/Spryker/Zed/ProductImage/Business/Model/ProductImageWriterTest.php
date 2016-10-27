@@ -84,7 +84,6 @@ class ProductImageWriterTest extends Test
         $imageSetTransfer = new ProductImageSetTransfer();
         $imageSetTransfer
             ->setIdProductAbstract(1)
-            ->setLocale(null)
             ->setName('Foo')
             ->setProductImages($imageCollection);
 
