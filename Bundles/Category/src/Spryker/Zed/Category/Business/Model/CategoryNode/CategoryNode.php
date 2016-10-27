@@ -115,7 +115,22 @@ class CategoryNode implements CategoryNodeInterface
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $this->closureTableWriter->create($categoryNodeTransfer);
-        $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity->getIdCategoryNode());
+        $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     *
+     * @return void
+     */
+    protected function touchCategoryNode(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer)
+    {
+        if ($categoryTransfer->getIsActive()) {
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeTransfer->getIdCategoryNode());
+        } else {
+            $this->categoryToucher->touchCategoryNodeDeletedRecursively($categoryNodeTransfer->getIdCategoryNode());
+        }
     }
 
     /**
@@ -135,8 +150,7 @@ class CategoryNode implements CategoryNodeInterface
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
-
-        $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeEntity->getIdCategoryNode());
+        $this->touchCategoryNode($categoryTransfer, $categoryNodeTransfer);
     }
 
     /**

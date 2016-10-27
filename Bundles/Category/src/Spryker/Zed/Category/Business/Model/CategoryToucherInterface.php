@@ -28,12 +28,26 @@ interface CategoryToucherInterface
      *
      * @return void
      */
+    public function touchCategoryNodeDeletedRecursively($idCategoryNode);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
     public function touchCategoryNodeDeleted($idCategoryNode);
 
     /**
      * @return void
      */
     public function touchNavigationActive();
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function touchCategoryActive($idCategory);
 
 }
 

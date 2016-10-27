@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class NodeWriter implements NodeWriterInterface
@@ -25,11 +26,20 @@ class NodeWriter implements NodeWriterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer)
-    {
+    protected $categoryToucher;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
+     */
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryToucherInterface $categoryToucher
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->categoryToucher = $categoryToucher;
     }
 
     /**
@@ -105,9 +115,8 @@ class NodeWriter implements NodeWriterInterface
             $categoryNodeEntity->setNodeOrder($position);
             $categoryNodeEntity->save();
 
-            // Add touch handling
+            $this->categoryToucher->touchCategoryNodeActive($categoryNodeEntity->getIdCategoryNode());
         }
     }
-
 
 }

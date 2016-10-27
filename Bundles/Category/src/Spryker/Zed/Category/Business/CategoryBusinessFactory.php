@@ -154,7 +154,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
      */
-    protected function createCategoryToucher()
+    public function createCategoryToucher()
     {
         $touchFacade = $this->getTouchFacade();
         $queryContainer = $this->getQueryContainer();
@@ -230,9 +230,10 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createNodeWriter()
     {
-        return new NodeWriter(
-            $this->getQueryContainer()
-        );
+        $queryContainer = $this->getQueryContainer();
+        $categoryToucher = $this->createCategoryToucher();
+
+        return new NodeWriter($queryContainer, $categoryToucher);
     }
 
     /**

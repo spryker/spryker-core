@@ -78,6 +78,20 @@ class CategoryToucher implements CategoryToucherInterface
      *
      * @return void
      */
+    public function touchCategoryNodeDeletedRecursively($idCategoryNode)
+    {
+        foreach ($this->getRelatedNodes($idCategoryNode) as $relatedNodeEntity) {
+            $this->touchCategoryNodeDeleted($relatedNodeEntity->getFkCategoryNodeDescendant());
+        }
+
+        $this->touchCategoryNodeDeleted($idCategoryNode);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
     public function touchCategoryNodeDeleted($idCategoryNode)
     {
         $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
@@ -90,6 +104,23 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchNavigationActive()
     {
         $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, 1);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function touchCategoryActive($idCategory)
+    {
+        $categoryNodeCollection = $this
+            ->queryContainer
+            ->queryAllNodesByCategoryId($idCategory)
+            ->find();
+
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $this->touchCategoryNodeActive($categoryNodeEntity->getIdCategoryNode());
+        }
     }
 
 }

@@ -584,4 +584,23 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->getCategoryByKey($categoryKey, $idLocale);
     }
 
+    /**
+     * Specification:
+     *  - Finds all category-node entities for idCategory
+     *  - Touches all nodes active
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function touchCategoryActive($idCategory)
+    {
+        $this
+            ->getFactory()
+            ->createCategoryToucher()
+            ->touchCategoryActive($idCategory);
+    }
+
 }

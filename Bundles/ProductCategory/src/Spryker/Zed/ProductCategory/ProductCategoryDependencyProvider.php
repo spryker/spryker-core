@@ -36,13 +36,9 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Will be removed with next major release
      */
-    const FACADE_CATEGORY = 'category facade';
-
-    /**
-     * @deprecated Will be removed with next major release
-     */
     const PRODUCT_QUERY_CONTAINER = 'product query container';
 
+    const FACADE_CATEGORY = 'category facade';
     const FACADE_TOUCH = 'touch facade';
     const CATEGORY_QUERY_CONTAINER = 'category query container';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';

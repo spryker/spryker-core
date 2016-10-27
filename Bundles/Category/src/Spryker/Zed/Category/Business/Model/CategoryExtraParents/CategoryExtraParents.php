@@ -69,8 +69,10 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
             ->find();
 
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $parentNodeEntity = $categoryNodeEntity->getParentCategoryNode();
+
             $categoryNodeTransfer = new NodeTransfer();
-            $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray());
+            $categoryNodeTransfer->fromArray($parentNodeEntity->toArray());
 
             $categoryTransfer->addExtraParent($categoryNodeTransfer);
         }
@@ -133,7 +135,6 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
 
         $this->categoryToucher->touchCategoryNodeActiveRecursively($assignmentNodeEntity->getIdCategoryNode());
     }
-
 
     /**
      * @param int $idCategory

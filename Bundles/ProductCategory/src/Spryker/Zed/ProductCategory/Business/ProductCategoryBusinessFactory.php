@@ -64,8 +64,6 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected function getCategoryFacade()

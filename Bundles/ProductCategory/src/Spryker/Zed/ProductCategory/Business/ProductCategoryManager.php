@@ -46,8 +46,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $productFacade;
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected $categoryFacade;
@@ -256,6 +254,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             //yes, Active is correct, it should update touch items, not mark them to delete
             //it's just a change to the mappings and not an actual product abstract
             $this->touchProductAbstractActive($idProduct);
+            $this->touchCategoryActive($idCategory);
         }
     }
 
@@ -280,6 +279,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->save();
 
             $this->touchProductAbstractActive($idProduct);
+            $this->touchCategoryActive($idCategory);
         }
     }
 
@@ -305,6 +305,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->save();
 
             $this->touchProductAbstractActive($idProduct);
+            $this->touchCategoryActive($idCategory);
         }
     }
 
@@ -549,6 +550,16 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected function touchProductAbstractActive($idProductAbstract)
     {
         $this->touchFacade->touchActive(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    protected function touchCategoryActive($idCategory)
+    {
+        $this->categoryFacade->touchCategoryActive($idCategory);
     }
 
     /**

@@ -11,13 +11,19 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
-/**
- * @deprecated Will be removed with next major release
- */
 interface ProductCategoryToCategoryInterface
 {
 
     /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function touchCategoryActive($idCategory);
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -26,6 +32,8 @@ interface ProductCategoryToCategoryInterface
     public function hasCategoryNode($categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -34,6 +42,8 @@ interface ProductCategoryToCategoryInterface
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -42,6 +52,8 @@ interface ProductCategoryToCategoryInterface
     public function getCategoryIdentifier($categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -49,6 +61,8 @@ interface ProductCategoryToCategoryInterface
     public function getNodeById($idCategoryNode);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -57,6 +71,8 @@ interface ProductCategoryToCategoryInterface
     public function createCategory(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
@@ -66,6 +82,8 @@ interface ProductCategoryToCategoryInterface
     public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -74,6 +92,8 @@ interface ProductCategoryToCategoryInterface
     public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
@@ -83,6 +103,8 @@ interface ProductCategoryToCategoryInterface
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return void
@@ -90,6 +112,8 @@ interface ProductCategoryToCategoryInterface
     public function deleteCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -98,6 +122,8 @@ interface ProductCategoryToCategoryInterface
     public function updateCategory(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -105,6 +131,8 @@ interface ProductCategoryToCategoryInterface
     public function getNotMainNodesByIdCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param array $pathTokens
      *
      * @return string
@@ -112,6 +140,8 @@ interface ProductCategoryToCategoryInterface
     public function generatePath(array $pathTokens);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryKey
      * @param int $idLocale
      *
