@@ -8,6 +8,8 @@ namespace Spryker\Zed\Availability\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Required;
 
 class StockSubForm extends AbstractType
 {
@@ -43,7 +45,11 @@ class StockSubForm extends AbstractType
     protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_QUANTITY, 'text', [
-            'label' => 'Current Stock'
+            'label' => 'Current Stock',
+            'constraints' => [
+                new Required(),
+                new Regex(['pattern' => '/[\d]+/']),
+            ]
         ]);
 
         return $this;

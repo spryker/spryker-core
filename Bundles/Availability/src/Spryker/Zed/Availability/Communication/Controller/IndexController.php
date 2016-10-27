@@ -72,9 +72,13 @@ class IndexController extends AbstractController
         $availabilityStockForm = $this->getFactory()->createAvailabilityStockForm($availabilityStockFormDataProvider);
         $availabilityStockForm->handleRequest($request);
 
-        if($availabilityStockForm->isValid()) {
+        if ($availabilityStockForm->isValid()) {
             $data = $availabilityStockForm->getData();
-            $this->saveData($data);
+            if ($this->saveData($data)) {
+                $this->addSuccessMessage('Stock successfully updated');
+            } else  {
+                $this->addErrorMessage('Failed to update stock');
+            }
         }
 
         return [
@@ -236,20 +240,24 @@ class IndexController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $data
      *
-     * @return void
+     * @return bool
      */
     protected function saveData(AvailabilityStockTransfer $data)
     {
         foreach ($data->getStocks() as $stockProductTransfer) {
             if ($stockProductTransfer->getIdStockProduct() !== null) {
-                $this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer);
+                $idStockProduct = $this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer);
+                return $idStockProduct > 0;
             }
 
             if ($stockProductTransfer->getIdStockProduct() === null && (int)$stockProductTransfer->getQuantity() !== 0) {
                 $stockProductTransfer->setSku($data->getSku());
-                $this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer);
+                $idStockProduct = $this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer);
+                return $idStockProduct > 0;
             }
         }
+
+        return false;
     }
 
     /**
