@@ -10,6 +10,9 @@ namespace Spryker\Zed\Category\Business\Model;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface CategoryWriterInterface
 {
 

@@ -13,6 +13,9 @@ use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class CategoryWriter implements CategoryWriterInterface
 {
 

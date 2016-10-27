@@ -157,6 +157,8 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable

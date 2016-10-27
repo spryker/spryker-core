@@ -26,9 +26,9 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     const COL_CATEGORY_NAME = 'category_name';
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -89,9 +89,9 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $sku
      * @param string $categoryName
@@ -255,9 +255,9 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param int $idProductAbstract

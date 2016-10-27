@@ -34,6 +34,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Category\Business\Tree\CategoryTreeWriter
      */
     public function createCategoryTreeWriter()
@@ -92,6 +94,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Category\Business\Model\CategoryWriterInterface
      */
     public function createCategoryWriter()

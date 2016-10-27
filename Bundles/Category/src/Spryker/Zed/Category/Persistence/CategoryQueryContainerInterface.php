@@ -18,6 +18,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -44,6 +46,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param int $idParentNode
@@ -136,6 +140,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idParentNode
      * @param bool $excludeRoot
      *
@@ -145,6 +151,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idChildNode
      * @param int $idLocale
@@ -163,6 +171,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      *
@@ -254,6 +264,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param int $idLocale
      *
@@ -263,6 +275,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $name
      * @param int $idLocale
@@ -287,6 +301,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $rightTableAlias
      * @param string $fieldIdentifier
@@ -298,6 +314,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param bool $excludeDirectParent
@@ -325,6 +343,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
@@ -335,6 +355,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
@@ -349,6 +371,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $tableAlias
      *
@@ -359,6 +383,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -367,6 +393,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryName
      * @param int $idLocale
@@ -388,6 +416,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryKey
      * @param int $idLocale

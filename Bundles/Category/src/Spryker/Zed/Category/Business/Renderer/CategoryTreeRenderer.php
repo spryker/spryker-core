@@ -13,6 +13,9 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class CategoryTreeRenderer
 {
 

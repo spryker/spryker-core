@@ -19,9 +19,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -36,9 +36,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      *
@@ -56,9 +56,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -73,9 +73,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -112,9 +112,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      *
@@ -132,9 +132,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      *
@@ -174,9 +174,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -216,9 +216,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -278,9 +278,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -295,9 +295,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      *
@@ -336,9 +336,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -354,9 +354,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -392,9 +392,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -410,9 +410,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @return bool
      */
@@ -424,9 +424,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
@@ -442,9 +442,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -459,9 +459,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -476,9 +476,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -552,9 +552,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param array $pathTokens
      *
@@ -568,9 +568,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param array $categoryKey
      * @param int $idLocale
