@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -32,13 +31,17 @@ class CategoryLocalizedAttributeType extends AbstractType
         return 'localizedAttributes';
     }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults(['data_class' => CategoryLocalizedAttributesTransfer::class]);
     }
-
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -138,6 +141,9 @@ class CategoryLocalizedAttributeType extends AbstractType
             ->add(self::FIELD_META_DESCRIPTION, 'textarea', [
                 'label' => 'Meta Description',
                 'required' => false,
+                'attr' => [
+                    'rows' => 5,
+                ],
             ]);
 
         return $this;

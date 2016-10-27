@@ -32,44 +32,19 @@
             } %}
                 {% block widget_content %}
 
-                    <div class="tabs-container">
-                        <ul class="nav nav-tabs">
-                            {% for localizedAttributes in categoryForm.localized_attributes %}
-                                {% set activeCss = '' %}
-                                {% set invalidCss = '' %}
-                                {% set locale = localizedAttributes.vars.value.locale.localeName %}
+                    {% for localizedAttributes in categoryForm.localized_attributes %}
+                        {% set localeName = localizedAttributes.vars.value.locale.localeName %}
+                        {% set collapsed = (currentLocale != localeName) %}
 
-                                {% if currentLocale == locale %}
-                                    {% set activeCss =  'active' %}
-                                {% endif %}
-
-                                {% if errors.localizedAttributes is defined %}
-                                    {% if locale in errors.localizedAttributes|keys %}
-                                        {% set invalidCss = 'invalid-tab' %}
-                                    {% endif %}
-                                {% endif %}
-
-                                <li class="{{ activeCss }}  {{ invalidCss }}"><a href="#content_{{ locale }}" data-toggle="tab">{{ locale }}</a></li>
-                            {% endfor %}
-                        </ul>
-
-                        <div class="tab-content">
-                            {% for localizedAttributes in categoryForm.localized_attributes %}
-                                {% set active = '' %}
-                                {% set locale = localizedAttributes.vars.value.locale.localeName %}
-
-                                {% if currentLocale == locale %}
-                                    {% set active = 'active' %}
-                                {% endif %}
-
-                                <div id="content_{{ locale }}" class="tab-pane {{ active }}">
-                                    <div class="panel-body">
-                                        {{ form_widget(localizedAttributes) }}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+                        {% embed '@Gui/Partials/localized-ibox.twig' with {
+                            'localeName': localeName,
+                            'collapsed': collapsed
+                        } %}
+                            {% block content %}
+                                {{ form_widget(localizedAttributes) }}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endfor %}
 
                 {% endblock %}
             {% endembed %}
