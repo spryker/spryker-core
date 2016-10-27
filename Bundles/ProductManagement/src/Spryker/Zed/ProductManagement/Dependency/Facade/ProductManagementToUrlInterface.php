@@ -32,12 +32,4 @@ interface ProductManagementToUrlInterface
      */
     public function touchUrlActive($idUrl);
 
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
-
 }

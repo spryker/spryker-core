@@ -48,15 +48,4 @@ class ProductManagementToUrlBridge implements ProductManagementToUrlInterface
         $this->urlFacade->touchUrlActive($idUrl);
     }
 
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
-    {
-        return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
-    }
-
 }

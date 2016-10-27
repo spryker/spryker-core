@@ -50,7 +50,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Business\Product\\UrlProductUrlGeneratorInterface $urlGenerator
+     * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         ProductToUrlInterface $urlFacade,

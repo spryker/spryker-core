@@ -37,11 +37,17 @@ class ProductTransferMapper implements ProductTransferMapperInterface
      */
     public function convertProductAbstract(SpyProductAbstract $productAbstractEntity)
     {
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->fromArray($productAbstractEntity->toArray(), true);
+        $productAbstractTransfer = new ProductAbstractTransfer();
 
-        $attributes = $this->attributeEncoder->decodeAttributes($productAbstractEntity->getAttributes());
-        $productAbstractTransfer->setAttributes($attributes);
+        $productData = $productAbstractEntity->toArray();
+        if (isset($productData[ProductAbstractTransfer::ATTRIBUTES])) {
+            $attributes = $this->attributeEncoder->decodeAttributes($productAbstractEntity->getAttributes());
+            $productAbstractTransfer->setAttributes($attributes);
+
+            unset($productData[ProductAbstractTransfer::ATTRIBUTES]);
+        }
+
+        $productAbstractTransfer->fromArray($productData, true);
 
         return $productAbstractTransfer;
     }

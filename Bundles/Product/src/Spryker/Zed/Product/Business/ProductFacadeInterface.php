@@ -129,6 +129,9 @@ interface ProductFacadeInterface
     public function getProductAbstractById($idProductAbstract);
 
     /**
+     * Specification:
+     * - Returns the SKU of an abstract product that belongs to the given SKU of a concrete product.
+     *
      * @api
      *
      * @param string $sku

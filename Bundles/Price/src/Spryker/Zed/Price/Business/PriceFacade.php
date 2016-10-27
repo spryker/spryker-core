@@ -20,6 +20,9 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Reads all persisted price types and returns their names in an array.
+     *
      * @api
      *
      * @return array
@@ -30,45 +33,66 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Searches for a persisted price in database that has the given SKU for the given price type.
+     * - If price type is not provided, then the default price type will be used.
+     * - The SKU can belong to either a concrete or an abstract product.
+     * - If it's a concrete product's SKU and it doesn't have any price assigned explicitly, then the price of the
+     * abstract product will be returned instead.
+     *
      * @api
      *
      * @param string $sku
-     * @param string|null $priceType
+     * @param string|null $priceTypeName
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function getPriceBySku($sku, $priceTypeName = null)
     {
-        return $this->getFactory()->createReaderModel()->getPriceBySku($sku, $priceType);
+        return $this->getFactory()->createReaderModel()->getPriceBySku($sku, $priceTypeName);
     }
 
     /**
+     * Specification:
+     * - Reads the persisted price for the given abstract product id for the given price type.
+     * - If price type is not provided, then the default price type will be used.
+     * - Returns a hydrated PriceProductTransfer if the price exists, null otherwise.
+     *
      * @api
      *
      * @param int $idAbstractProduct
-     * @param null $priceType
+     * @param string|null $priceTypeName
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductAbstractPrice($idAbstractProduct, $priceType = null)
+    public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
-        return $this->getFactory()->createReaderModel()->getProductAbstractPrice($idAbstractProduct, $priceType);
+        return $this->getFactory()->createReaderModel()->getProductAbstractPrice($idAbstractProduct, $priceTypeName);
     }
 
     /**
+     * Specification:
+     * - Reads the persisted price for the given concrete product id for the given price type.
+     * - If price type is not provided, then the default price type will be used.
+     * - If the price is not found, then it'll read the abstract product price instead.
+     * - Returns a hydrated PriceProductTransfer if one of the concrete or abstract price exists, null otherwise.
+     *
      * @api
      *
      * @param int $idProduct
-     * @param null $priceType
+     * @param string|null $priceTypeName
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductConcretePrice($idProduct, $priceType = null)
+    public function getProductConcretePrice($idProduct, $priceTypeName = null)
     {
-        return $this->getFactory()->createReaderModel()->getProductConcretePrice($idProduct, $priceType);
+        return $this->getFactory()->createReaderModel()->getProductConcretePrice($idProduct, $priceTypeName);
     }
 
     /**
+     * Specification:
+     * - Creates a new price type entity and persists it in database.
+     *
      * @api
      *
      * @param string $name
@@ -93,6 +117,9 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Creates the default price type from configuration and persists it in database.
+     *
      * @api
      *
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
@@ -105,6 +132,13 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Searches for a persisted price in database that has the given SKU for the given price type.
+     * - If price type is not provided, then the default price type will be used.
+     * - The SKU can belong to either a concrete or an abstract product.
+     * - If it's a concrete product's SKU and it doesn't have any price assigned explicitly, then the price of the
+     * abstract product will be checked instead.
+     *
      * @api
      *
      * @param string $sku
@@ -130,6 +164,9 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns the default price type name from configuration.
+     *
      * @api
      *
      * @return string
@@ -140,6 +177,12 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Searches for a persisted price ID in database that has the given SKU for the given price type.
+     * - The SKU can belong to either a concrete or an abstract product.
+     * - If it's a concrete product's SKU and it doesn't have any price assigned explicitly, then the price ID of the
+     * abstract product will be returned instead.
+     *
      * @api
      *
      * @param string $sku

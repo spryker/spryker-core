@@ -168,6 +168,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns the SKU of an abstract product that belongs to the given SKU of a concrete product.
+     *
      * @api
      *
      * @param string $sku
