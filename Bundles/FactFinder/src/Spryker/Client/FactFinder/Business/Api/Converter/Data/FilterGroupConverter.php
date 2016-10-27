@@ -11,8 +11,6 @@ use FACTFinder\Data\Filter;
 use FACTFinder\Data\FilterGroup;
 use Generated\Shared\Transfer\FactFinderDataFilterGroupTransfer;
 use Generated\Shared\Transfer\FactFinderDataFilterTransfer;
-use Generated\Shared\Transfer\FactFinderDataPageTransfer;
-use Generated\Shared\Transfer\FactFinderDataPagingTransfer;
 use Spryker\Client\FactFinder\Business\Api\Converter\BaseConverter;
 
 class FilterGroupConverter extends BaseConverter

@@ -43,6 +43,16 @@ interface FactFinderClientInterface
     /**
      * @api
      *
+     * @param string $locale
+     * @param string $lang
+     * @param string $sku
+     * @return \Pyz\Yves\Product\Model\ProductAbstract
+     */
+    public function getProductData($locale, $lang, $sku);
+
+    /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FactFinderRecommendationsResponseTransfer
      */
     public function recommendations();

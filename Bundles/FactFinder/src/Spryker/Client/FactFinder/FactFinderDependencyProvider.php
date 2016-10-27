@@ -15,6 +15,7 @@ class FactFinderDependencyProvider extends AbstractDependencyProvider
 
     const SERVICE_ZED = 'ff zed service';
     const CLIENT_SESSION = 'session client';
+    const CLIENT_KV_STORAGE = 'kv storage client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,6 +29,9 @@ class FactFinderDependencyProvider extends AbstractDependencyProvider
         };
         $container[self::CLIENT_SESSION] = function (Container $container) {
             return $container->getLocator()->session()->client();
+        };
+        $container[self::CLIENT_KV_STORAGE] = function (Container $container) {
+            return $container->getLocator()->storage()->client();
         };
 
         return $container;

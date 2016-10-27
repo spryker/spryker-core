@@ -71,6 +71,24 @@ class FactFinderClient extends AbstractClient implements FactFinderClientInterfa
     /**
      * @api
      *
+     * @param string $locale
+     * @param string $lang
+     * @param string $sku
+     * @return \Pyz\Yves\Product\Model\ProductAbstract
+     */
+    public function getProductData($locale, $lang, $sku)
+    {
+        $productData = $this->getFactory()
+            ->createProductByUrlResolver()
+            ->getProductDataByLocaleAndSku($locale, $lang, $sku);
+
+        return $this->getFactory()->createFrontendProductBuilder()->buildProduct($productData);
+
+    }
+
+    /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\FactFinderSearchResponseTransfer
      */
     public function recommendations()

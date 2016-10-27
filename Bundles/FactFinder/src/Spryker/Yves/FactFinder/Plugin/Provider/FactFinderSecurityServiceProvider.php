@@ -48,7 +48,7 @@ class FactFinderSecurityServiceProvider extends AbstractServiceProvider
         $app['security.firewalls'] = array_merge(
             [
                 self::FIREWALL_FACT_FINDER => [
-                    'pattern' => '^.*/' . FactFinderControllerProvider::FACT_FINDER_CSV_PATH . '*',
+                    'pattern' => '^.*/' . FactFinderControllerProvider::ROUTE_FACT_FINDER_CSV_PATH . '*',
                     'http' => true,
                     'users' => [
                         Config::get(FactFinderConstants::CONFIG_BASIC_AUTH_USERNAME) => [

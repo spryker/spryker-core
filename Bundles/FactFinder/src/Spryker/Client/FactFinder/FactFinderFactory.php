@@ -7,10 +7,15 @@
 
 namespace Spryker\Client\FactFinder;
 
+use Pyz\Yves\Product\Builder\FrontendProductBuilder;
+use Pyz\Yves\Product\Model\ProductAbstract;
 use Spryker\Client\Cart\Session\QuoteSession;
+use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
+use Spryker\Client\Collector\Matcher\UrlMatcher;
 use Spryker\Client\FactFinder\Business\Api\Converter\ConverterFactory;
 use Spryker\Client\FactFinder\Business\Api\FactFinderConnector;
 use Spryker\Client\FactFinder\Business\Api\Handler\Request\SearchRequest;
+use Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver;
 use Spryker\Client\FactFinder\Zed\FactFinderStub;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -66,6 +71,62 @@ class FactFinderFactory extends AbstractFactory
     public function createSession()
     {
         return new QuoteSession($this->getSessionClient());
+    }
+
+    /**
+     * @return \Spryker\Client\FactFinder\Business\Service\ProductByUrlResolver
+     */
+    public function createProductByUrlResolver()
+    {
+        return new ProductByUrlResolver(
+            $this->createUrlMatcher(),
+            $this->getStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Collector\Matcher\UrlMatcher
+     */
+    public function createUrlMatcher()
+    {
+        return new UrlMatcher(
+            $this->createUrlKeyBuilder(),
+            $this->getStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    public function getStorageClient()
+    {
+        return $this->getProvidedDependency(FactFinderDependencyProvider::CLIENT_KV_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder
+     */
+    public function createUrlKeyBuilder()
+    {
+        return new UrlKeyBuilder();
+    }
+
+    /**
+     * @return \Pyz\Yves\Product\Builder\FrontendProductBuilder
+     */
+    public function createFrontendProductBuilder()
+    {
+        return new FrontendProductBuilder(
+            $this->createProductAbstract()
+        );
+    }
+
+    /**
+     * @return \Pyz\Yves\Product\Model\ProductAbstract
+     */
+    protected function createProductAbstract()
+    {
+        return new ProductAbstract();
     }
 
 }
