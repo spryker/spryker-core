@@ -208,12 +208,16 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         $closureTableWriter = $this->createClosureTableWriter();
         $categoryToucher = $this->createCategoryToucher();
         $categoryTree = $this->createCategoryTree();
+        $categoryUrl = $this->createCategoryUrl();
+        $transferGenerator = $this->createCategoryTransferGenerator();
 
         return new CategoryExtraParents(
             $queryContainer,
             $closureTableWriter,
             $categoryToucher,
-            $categoryTree
+            $categoryTree,
+            $categoryUrl,
+            $transferGenerator
         );
     }
 

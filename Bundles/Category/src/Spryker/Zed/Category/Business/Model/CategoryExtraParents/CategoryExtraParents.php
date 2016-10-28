@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
+use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
+use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -38,21 +40,37 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     protected $categoryTree;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface
+     */
+    protected $categoryUrl;
+
+    /**
+     * @var \Spryker\Zed\Category\Business\TransferGeneratorInterface
+     */
+    protected $transferGenerator;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
+     * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
+     * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
         ClosureTableWriterInterface $closureTableWriter,
         CategoryToucherInterface $categoryToucher,
-        CategoryTreeInterface $categoryTree
+        CategoryTreeInterface $categoryTree,
+        CategoryUrlInterface $categoryUrl,
+        TransferGeneratorInterface $transferGenerator
     ) {
         $this->queryContainer = $queryContainer;
         $this->closureTableWriter = $closureTableWriter;
         $this->categoryToucher = $categoryToucher;
         $this->categoryTree = $categoryTree;
+        $this->categoryUrl = $categoryUrl;
+        $this->transferGenerator = $transferGenerator;
     }
 
     /**
@@ -111,27 +129,31 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
         $extraParentNodesTransferCollection = $categoryTransfer->getExtraParents();
 
         foreach ($extraParentNodesTransferCollection as $extraParentNodeTransfer) {
-            $this->assignParent($categoryTransfer->getIdCategory(), $extraParentNodeTransfer);
+            $this->assignParent($categoryTransfer, $extraParentNodeTransfer);
         }
     }
 
     /**
-     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
      *
      * @return void
      */
-    protected function assignParent($idCategory, NodeTransfer $extraParentNodeTransfer)
+    protected function assignParent(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer)
     {
-        $assignmentNodeEntity = $this->getAssignmentNodeEntity($idCategory, $extraParentNodeTransfer);
+        $assignmentNodeEntity = $this->getAssignmentNodeEntity(
+            $categoryTransfer->getIdCategory(),
+            $extraParentNodeTransfer
+        );
 
         $isNewNode = $assignmentNodeEntity->isNew();
 
-        $assignmentNodeEntity->setFkCategory($idCategory);
+        $assignmentNodeEntity->setFkCategory($categoryTransfer->getIdCategory());
         $assignmentNodeEntity->setIsMain(false);
         $assignmentNodeEntity->save();
 
         $this->updateClosureTable($assignmentNodeEntity, $isNewNode);
+        $this->saveAssignmentNodeUrls($categoryTransfer, $assignmentNodeEntity);
 
         $this->categoryToucher->touchCategoryNodeActiveRecursively($assignmentNodeEntity->getIdCategoryNode());
     }
@@ -159,12 +181,30 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
      */
     protected function updateClosureTable(SpyCategoryNode $categoryNodeEntity, $isNewNode)
     {
-        $categoryNodeTransfer = (new NodeTransfer())->fromArray($categoryNodeEntity->toArray());
+        $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
 
         if ($isNewNode) {
             $this->closureTableWriter->create($categoryNodeTransfer);
         } else {
             $this->closureTableWriter->moveNode($categoryNodeTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     *
+     * @return void
+     */
+    protected function saveAssignmentNodeUrls(CategoryTransfer $categoryTransfer, SpyCategoryNode $categoryNodeEntity)
+    {
+        $localizedAttributesCollection = $categoryTransfer->getLocalizedAttributes();
+        $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
+
+        foreach ($localizedAttributesCollection as $localizedAttributesTransfer) {
+            $localeTransfer = $localizedAttributesTransfer->getLocale();
+
+            $this->categoryUrl->saveLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
         }
     }
 
@@ -222,6 +262,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
      */
     protected function removeAssignmentNode(SpyCategoryNode $categoryNodeEntity)
     {
+        $this->categoryUrl->deleteUrlsForCategoryNode($categoryNodeEntity->getIdCategoryNode());
         $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
         $categoryNodeEntity->delete();
 

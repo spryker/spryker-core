@@ -63,9 +63,34 @@ class CategoryUrl implements CategoryUrlInterface
 
         foreach ($localizedCategoryAttributesTransferCollection as $localizedAttributesTransfer) {
             $localeTransfer = $localizedAttributesTransfer->getLocale();
-            $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
+            $this->saveLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
+        }
+    }
 
-            $this->createUrl($categoryNodeUrl, $localeTransfer, $categoryNodeTransfer, $categoryTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
+     * @return void
+     */
+    public function saveLocalizedUrlForNode(
+        NodeTransfer $categoryNodeTransfer,
+        LocaleTransfer $localeTransfer,
+        CategoryTransfer $categoryTransfer
+    ) {
+        $urlTransfer = $this->getUrlTransferForNode($categoryNodeTransfer, $localeTransfer);
+
+        $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
+        $urlTransfer->setUrl($categoryNodeUrl);
+
+        try {
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            $this->touchUrl($categoryTransfer, $urlTransfer);
+        } catch (UrlExistsException $exception) {
+            throw new CategoryUrlExistsException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
@@ -96,96 +121,6 @@ class CategoryUrl implements CategoryUrlInterface
         )->find();
 
         return $pathParts;
-    }
-
-    /**
-     * @param string $categoryNodeUrl
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     *
-     * @return void
-     */
-    protected function createUrl(
-        $categoryNodeUrl,
-        LocaleTransfer $localeTransfer,
-        NodeTransfer $categoryNodeTransfer,
-        CategoryTransfer $categoryTransfer
-    ) {
-        try {
-            $urlTransfer = $this->urlFacade->createUrl(
-                $categoryNodeUrl,
-                $localeTransfer,
-                CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE,
-                $categoryNodeTransfer->getIdCategoryNode()
-            );
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
-            $this->touchUrl($categoryTransfer, $urlTransfer);
-        } catch (UrlExistsException $e) {
-            throw new CategoryUrlExistsException($e->getMessage(), $e->getCode(), $e);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
-    protected function touchUrl(CategoryTransfer $categoryTransfer, UrlTransfer $urlTransfer)
-    {
-        if ($categoryTransfer->getIsActive()) {
-            $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
-        } else {
-            $this->urlFacade->touchUrlDeleted($urlTransfer->getIdUrl());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
-    public function update(CategoryTransfer $categoryTransfer)
-    {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
-        $localizedCategoryAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
-
-        foreach ($localizedCategoryAttributesTransferCollection as $localizedAttributesTransfer) {
-            $localeTransfer = $localizedAttributesTransfer->getLocale();
-
-            $this->updateLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
-            $this->updateAllChildrenUrls($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     *
-     * @return void
-     */
-    public function updateLocalizedUrlForNode(
-        NodeTransfer $categoryNodeTransfer,
-        LocaleTransfer $localeTransfer,
-        CategoryTransfer $categoryTransfer
-    ) {
-        $urlTransfer = $this->getUrlTransferForNode($categoryNodeTransfer, $localeTransfer);
-
-        $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
-        $urlTransfer->setUrl($categoryNodeUrl);
-
-        try {
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
-            $this->touchUrl($categoryTransfer, $urlTransfer);
-        } catch (UrlExistsException $exception) {
-            throw new CategoryUrlExistsException($exception->getMessage(), $exception->getCode(), $exception);
-        }
     }
 
     /**
@@ -227,6 +162,39 @@ class CategoryUrl implements CategoryUrlInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    protected function touchUrl(CategoryTransfer $categoryTransfer, UrlTransfer $urlTransfer)
+    {
+        if ($categoryTransfer->getIsActive()) {
+            $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
+        } else {
+            $this->urlFacade->touchUrlDeleted($urlTransfer->getIdUrl());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function update(CategoryTransfer $categoryTransfer)
+    {
+        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $localizedCategoryAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
+
+        foreach ($localizedCategoryAttributesTransferCollection as $localizedAttributesTransfer) {
+            $localeTransfer = $localizedAttributesTransfer->getLocale();
+
+            $this->saveLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
+            $this->updateAllChildrenUrls($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -242,7 +210,7 @@ class CategoryUrl implements CategoryUrlInterface
 
         foreach ($childNodeCollection as $childNodeEntity) {
             $childNodeTransfer = (new NodeTransfer())->fromArray($childNodeEntity->toArray(), true);
-            $this->updateLocalizedUrlForNode($childNodeTransfer, $localeTransfer, $categoryTransfer);
+            $this->saveLocalizedUrlForNode($childNodeTransfer, $localeTransfer, $categoryTransfer);
         }
     }
 
@@ -279,15 +247,25 @@ class CategoryUrl implements CategoryUrlInterface
             ->find();
 
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
-            $urlCollection = $this
-                ->queryContainer
-                ->queryUrlByIdCategoryNode($categoryNodeEntity->getIdCategoryNode())
-                ->find();
+            $this->deleteUrlsForCategoryNode($categoryNodeEntity->getIdCategoryNode());
+        }
+    }
 
-            foreach ($urlCollection as $urlEntity) {
-                $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
-                $this->urlFacade->deleteUrl($urlTransfer);
-            }
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteUrlsForCategoryNode($idCategoryNode)
+    {
+        $urlCollection = $this
+            ->queryContainer
+            ->queryUrlByIdCategoryNode($idCategoryNode)
+            ->find();
+
+        foreach ($urlCollection as $urlEntity) {
+            $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+            $this->urlFacade->deleteUrl($urlTransfer);
         }
     }
 
