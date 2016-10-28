@@ -11,6 +11,8 @@ interface GlossaryInstallerPluginInterface
 {
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function installGlossaryData();

@@ -20,6 +20,8 @@ interface StateMachineHandlerInterface
      *   'Command/Plugin2' => new Command2(),
      * ]
      *
+     * @api
+     *
      * @return array
      */
     public function getCommandPlugins();
@@ -32,12 +34,16 @@ interface StateMachineHandlerInterface
      *   'Condition/Plugin2' => new Condition2(),
      * ]
      *
+     * @api
+     *
      * @return array
      */
     public function getConditionPlugins();
 
     /**
      * Name of state machine used by this handler.
+     *
+     * @api
      *
      * @return string
      */
@@ -51,12 +57,16 @@ interface StateMachineHandlerInterface
      *   'ProcessName2 ,
      * ]
      *
+     * @api
+     *
      * @return string[]
      */
     public function getActiveProcesses();
 
     /**
      * Provide initial state name for item when state machine initialized. Using process name.
+     *
+     * @api
      *
      * @param string $processName
      *
@@ -68,6 +78,8 @@ interface StateMachineHandlerInterface
      * This method is called when state of item was changed, client can create custom logic for example update it's related table with new stateId and processId.
      * StateMachineItemTransfer:identifier is id of entity from client.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool
@@ -76,6 +88,8 @@ interface StateMachineHandlerInterface
 
     /**
      * This method should return all list of StateMachineItemTransfer, with (identifier, IdStateMachineProcess, IdItemState)
+     *
+     * @api
      *
      * @param int[] $stateIds
      *
