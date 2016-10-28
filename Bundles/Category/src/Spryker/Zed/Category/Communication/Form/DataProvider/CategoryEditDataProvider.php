@@ -99,6 +99,10 @@ class CategoryEditDataProvider
         $categoryNodes = [];
 
         foreach ($categoryEntityList as $categoryEntity) {
+            if ($categoryEntity->getIdCategory() === $this->getIdCategory()) {
+                continue;
+            }
+
             foreach ($categoryEntity->getNodes() as $nodeEntity) {
                 $path = $this->buildPath($nodeEntity);
                 $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
