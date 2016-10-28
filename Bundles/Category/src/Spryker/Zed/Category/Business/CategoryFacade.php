@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -193,20 +194,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * Specification:
      *  - Hydrates category entity from CategoryTransfer and persists it
-     *  - Hydrates category-node entity from CategoryTransfer and persists it
-     *  - Hydrates category-attribute entities from CategoryTransfer (for all given locals) and persists them
-     *  - Hydrates extra-parent category-node entities from CategoryTransfer and persists them
+     *  - Hydrates category-node entity from nested NodeTransfer and persists it
+     *  - Hydrates category-attribute entities from nested CategoryLocalizedAttributesTransfer (for all given locals) and persists them
+     *  - Hydrates extra-parent category-node entities from nested NodeTransfer and persists them
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Hydrates url entities from generated urls and persists them
-     *  - Throws CategoryUrlExistsException if generated url already exists
-     *  - Hydrates persisted entity identifiers into CategoryTransfer
-     *  - Touches created category-node entities active
-     *  - Touches navigation
-     *  - Touches created url entities active
+     *  - Hydrates persisted entity identifiers into CategoryTransfer (and nested transfers)
+     *  - Touches created category-node entities active (via TouchFacade)
+     *  - Touches navigation (via TouchFacade)
+     *  - Touches created url entities active (via TouchFacade)
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return void
      */
@@ -235,40 +237,46 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * Specification:
      *  - Finds category entity, hydrates it from CategoryTransfer, and persists it
-     *  - Throws MissingCategoryException if category entity is not present
      *  - Finds category-node entity, hydrates it from CategoryTransfer, and persists it
-     *  - Throws MissingCategoryNodeException if category-node entity is not present
      *  - Finds category-attribute entities (for all given locals), hydrates them from CategoryTransfer, and persists them
      *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Finds url entities, hydrates them with generated URLs, and persists them
-     *  - Throws CategoryUrlExistsException if generated URL already exists
-     *  - Touches modified category-node entities active
-     *  - Touches modified url entities active
-     *  - Touches navigation active
+     *  - Touches modified category-node entities active (via TouchFacade)
+     *  - Touches modified url entities active (via TouchFacade)
+     *  - Touches navigation active (via TouchFacade)
      *
      *  - If parentCategoryNode changes:
      *   - Finds existing url entities for existing parent path and removes them from persistence
      *   - Re-generates urls for new path, hydrates url entities with generated urls, and persists them
      *   - Touches modified category-node entities active
      *   - Touches all category-node entities in path active
-     *   - Touches modified URL entities active
-     *   - Touches removed URL entities deleted
-     *   - Touches navigation active
+     *   - Touches modified URL entities active (via TouchFacade)
+     *   - Touches removed URL entities deleted (via TouchFacade)
+     *   - Touches navigation active (via TouchFacade)
      *
      *  - If existing extra-parent category-nodes entities are missing from CategoryTransfer:
      *   - Finds related extra-parent category-node entities and removes them from persistence
      *   - Finds related url entities and removes them from persistence
      *   - Finds sub-trees for all extra-parent category-nodes and moves them to the next higher node in the tree
      *   - Updates all category-node entities of all sub-trees that are moved
-     *   - Touches removed category-node entities deleted
-     *   - Touches all category-node entities in path active
-     *   - Touches removed URL entities deleted
-     *   - Touches navigation active
+     *   - Touches removed category-node entities deleted (via TouchFacade)
+     *   - Touches all category-node entities in path active (via TouchFacade)
+     *   - Touches removed URL entities deleted (via TouchFacade)
+     *   - Touches navigation active (via TouchFacade)
+     *
+     * Exceptions:
+     *  - \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *  - \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     *  - \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
      * @return void
      */
@@ -313,20 +321,22 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * Specification:
      *  - Finds category entity and removes them from persistence
-     *  - Throws MissingCategoryException if entity does not exist
      *  - Finds category-node entity (main path) and removes it from persistence
      *  - Finds category-attribute entities and removes them from persistence
      *  - Finds extra-parent category-nodes and removes them from persistence
      *  - Finds url entities and removes them from persistence
      *  - Finds sub-trees for all category-nodes to be deleted and moves them to the next higher node in the tree
      *  - Updates all category-node entities of all sub-trees that are moved
-     *  - Touches all deleted category-node entities deleted
-     *  - Touches all deleted url entities deleted
-     *  - Touches navigation active
+     *  - Touches all deleted category-node entities deleted (via TouchFacade)
+     *  - Touches all deleted url entities deleted (via TouchFacade)
+     *  - Touches navigation active (via TouchFacade)
+     *  - Calls all registered CategoryRelationDeletePluginInterface-plugins directly before removing the category entity
      *
      * @api
      *
      * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return void
      */

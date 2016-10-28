@@ -11,6 +11,11 @@ interface CategoryRelationDeletePluginInterface
 {
 
     /**
+     * Specification:
+     *  - Cleans up related entities
+     *
+     * @api
+     *
      * @param int $idCategory
      *
      * @return void
