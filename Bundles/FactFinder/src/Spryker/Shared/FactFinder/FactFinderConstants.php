@@ -23,6 +23,7 @@ interface FactFinderConstants
 
     const ITEM_PRODUCT_NUMBER = 'ProductNumber';
     const ITEM_NAME = 'Name';
+    const ABSTRACT_URL = 'AbstractUrl';
     const ITEM_PRICE = 'Price';
     const ITEM_STOCK = 'Stock';
     const ITEM_CATEGORY = 'Category';
@@ -34,6 +35,7 @@ interface FactFinderConstants
     const ITEM_FIELDS = [
         self::ITEM_PRODUCT_NUMBER,
         self::ITEM_NAME,
+        self::ABSTRACT_URL,
         self::ITEM_PRICE,
         self::ITEM_STOCK,
         self::ITEM_CATEGORY,

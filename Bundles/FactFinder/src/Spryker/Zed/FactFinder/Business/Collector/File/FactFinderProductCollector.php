@@ -80,9 +80,11 @@ class FactFinderProductCollector extends StorageProductCollector
         if (count($imgs)) {
             $imageURL = $this->getConfig()->getHostYves() . $imgs[0]['external_url_large'];
         }
+
         return [
             FactFinderConstants::ITEM_PRODUCT_NUMBER => $collectItemData[self::ABSTRACT_SKU],
             FactFinderConstants::ITEM_NAME => $collectItemData[self::ABSTRACT_NAME],
+            FactFinderConstants::ABSTRACT_URL => $collectItemData[self::ABSTRACT_URL],
             FactFinderConstants::ITEM_PRICE => $this->getPriceBySku($collectItemData[self::ABSTRACT_SKU]),
             FactFinderConstants::ITEM_STOCK =>  (int)$collectItemData[self::QUANTITY],
             FactFinderConstants::ITEM_CATEGORY => $category,

@@ -1,9 +1,9 @@
-{% extends "@application/layout/layout.twig" %}
+{% extends "@FactFinder/layout/layout.twig" %}
 
 {% block page_title %}{{ product.abstract_name }}{% endblock %}
 
 {% block breadcrumbItems %}
-    <li><a href="/">{{ 'global.home' | trans }}</a></li>
+    <li><a href="{{ url('fact-finder', {'factfinder': 'fact-finder'}) }}">{{ 'global.home' | trans }}</a></li>
     {% if productCategories|length %}
         {% for category in productCategories %}
             <li><a href="{{ category.url }}">{{ category.name }}</a></li>
@@ -73,17 +73,6 @@
                 <p>{{ product.abstractAttributes.short_description }}</p>
 
                 <form class="row align-bottom" method="POST" action="/cart/add/{{ product.abstractSku }}">
-                    {#<div class="small-12 columns">#}
-                        {#<label>#}
-                            {#Variants#}
-                            {#<select name="variant">#}
-                                {#<option value="red">Red</option>#}
-                                {#<option value="green">Green</option>#}
-                                {#<option value="blue">Blue</option>#}
-                                {#<option value="yellow">Yellow</option>#}
-                            {#</select>#}
-                        {#</label>#}
-                    {#</div>#}
                     <div class="small-12 columns">
                         <button type="submit" class="button expanded success">
                             <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}

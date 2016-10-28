@@ -40,6 +40,7 @@ class IndexController extends AbstractController
         return [
             'searchResponse' => $ffSearchResponseTransfer,
             'pagingRote' => FactFinderControllerProvider::ROUTE_FACT_FINDER,
+            'lang' => Store::getInstance()->getCurrentLanguage(),
         ];
     }
 
@@ -50,16 +51,11 @@ class IndexController extends AbstractController
      */
     public function detailAction(Request $request)
     {
-//        $ffSearchResponseTransfer = $this->getClient()->recommendations();
-        $tt=1;
         $sku = $request->attributes->get('sku');
         $lang = Store::getInstance()->getCurrentLanguage();
         $locale = $this->getApplication()['locale'];
-//        $url = "/" . $lang . "/" . $sku;
-
 
         $product = $this->getClient()->getProductData($locale, $lang, $sku);
-
         $categories = $product->getCategory();
 
         $productData = [
@@ -69,33 +65,5 @@ class IndexController extends AbstractController
         ];
 
         return $productData;
-
-
-//        $app = $this->getApplication();
-//        $app = clone $app;
-
-//        $app->register(new \Silex\Provider\SerializerServiceProvider());
-
-//        $ttt = $this->getApplication()->get("/en/tomtom-golf-52");
-//        $ttt->
-////        $a1 = $ttt->generateRouteName('aaaa');
-//        $ttt->detailAction();
-
-//        $a2 = Config::get('fact_finder_basic_auth_username');
-
-
-//        $subRequest = Request::create($url, 'GET', array(), $request->cookies->all(), array(), $request->server->all());
-//        $response = $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
-
-//        $blockResponse = $this->getApplication()['sub_request']->handleSubRequest($request, $url);
-//        $response = $blockResponse->getContent();
-
-
-
-        return [];
-        return [
-            'searchResponse' => $ffSearchResponseTransfer,
-            'pagingRote' => FactFinderControllerProvider::ROUTE_FACT_FINDER,
-        ];
     }
 }

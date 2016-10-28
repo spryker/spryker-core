@@ -22,6 +22,10 @@
         <div class="row">
             {% for record in searchResponse.result.records %}
                 <div class="small-12 medium-6 large-6 xlarge-4 columns">
+                        {#detailsUrl: record.fields.ProductURL,#}
+                        {#detailsUrl: url('fact-finder-product-detail', {'factfinder':'fact-finder', 'sku':record.fields.AbstractUrl|slice(3) }),#}
+                        {#detailsUrl: record.fields.AbstractUrl|slice(3),#}
+
                     {% include "@FactFinder/layout/catalog/product.twig" with {
                         detailsUrl: record.fields.ProductURL,
                         name: record.fields.Name,
