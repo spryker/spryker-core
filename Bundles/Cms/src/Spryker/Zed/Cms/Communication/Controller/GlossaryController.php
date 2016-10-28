@@ -87,7 +87,7 @@ class GlossaryController extends AbstractController
             'title' => $title,
             'type' => $type,
             'forms' => $formViews,
-            'locale' => $localeTransfer
+            'localeTransfer' => $localeTransfer
         ];
     }
 
