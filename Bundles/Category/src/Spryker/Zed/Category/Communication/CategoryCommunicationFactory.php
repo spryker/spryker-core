@@ -39,7 +39,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
