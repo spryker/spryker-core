@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Braintree\Zed;
+namespace Acceptance\Availability\Zed;
 
 use Acceptance\Availability\Zed\Tester\AvailabilityTester;
 use Acceptance\Availability\Zed\PageObject\AvailabilityPage;
@@ -30,6 +30,8 @@ class AvailabilityEditStockCest
             )
         );
 
+        $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
+
         $i->fillField('//*[@id="availability_stock_stocks_0_quantity"]', 50);
         $i->click('input[type=submit]');
         $i->see(AvailabilityPage::SUCCESS_MESSAGE);
@@ -37,5 +39,9 @@ class AvailabilityEditStockCest
         $i->fillField('//*[@id="availability_stock_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
         $i->see('This value is not valid.');
+
+        $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
+        $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
+
     }
 }

@@ -18,4 +18,8 @@ class AvailabilityPage
     const AVAILABILITY_EDIT_STOCK_URL = 'availability/index/edit?id-product=%d&sku=%s&id-abstract=%d';
 
     const SUCCESS_MESSAGE = 'Stock successfully updated';
+
+    const PAGE_AVAILABILITY_VIEW_HEADER = 'Detail Availability';
+    const PAGE_AVAILABILITY_LIST_HEADER = 'Availability list';
+    const PAGE_AVAILABILITY_EDIT_HEADER = 'Edit Stock';
 }

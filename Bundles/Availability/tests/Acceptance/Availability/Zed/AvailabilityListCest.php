@@ -6,7 +6,7 @@
  */
 
 
-namespace Acceptance\Braintree\Zed;
+namespace Acceptance\Availability\Zed;
 
 use Acceptance\Availability\Zed\PageObject\AvailabilityPage;
 use Acceptance\Availability\Zed\Tester\AvailabilityTester;
@@ -33,7 +33,10 @@ class AvailabilityListCest
 
         $i->wait(1);
 
-        $i->see('Availability list');
+        $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
         $i->assertTableWithDataExists(10);
+
+        $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[6]/a");
+        $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
 }
