@@ -13,45 +13,38 @@
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
 
             {{ form_start(categoryForm) }}
-            {{ form_row(categoryForm.category_key) }}
-            {{ form_row(categoryForm.is_active) }}
-            {{ form_row(categoryForm.is_in_menu) }}
-            {{ form_row(categoryForm.is_clickable) }}
-            {{ form_row(categoryForm.parent_category_node) }}
-            {{ form_row(categoryForm.extra_parents) }}
+                {{ form_row(categoryForm.category_key) }}
+                {{ form_row(categoryForm.is_active) }}
+                {{ form_row(categoryForm.is_in_menu) }}
+                {{ form_row(categoryForm.is_clickable) }}
+                {{ form_row(categoryForm.parent_category_node) }}
+                {{ form_row(categoryForm.extra_parents) }}
 
-            {% embed '@Gui/Partials/widget.twig' with {
-                widget_title: 'Name and meta information',
-                row_class: 'widget-class',
-                row_id: 'widget-id'
-            } %}
-                {% block widget_content %}
+                <hr />
+                <p><strong>{{ 'Translations' | trans }}</strong></p>
 
-                    {% for localizedAttributes in categoryForm.localized_attributes %}
-                        {% set localeName = localizedAttributes.vars.value.locale.localeName %}
+                {% for localizedAttributes in categoryForm.localized_attributes %}
+                    {% set localeName = localizedAttributes.vars.value.locale.localeName %}
 
-                        {% embed '@Gui/Partials/localized-ibox.twig' with {
-                        'localeName': localeName,
-                        'collapsed': false
-                        } %}
-                            {% block content %}
-                                {{ form_widget(localizedAttributes) }}
-                            {% endblock %}
-                        {% endembed %}
-                    {% endfor %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {
+                        localeName: localeName,
+                        collapsed: false
+                    } %}
+                        {% block content %}
+                            {{ form_widget(localizedAttributes) }}
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
 
-                {% endblock %}
-            {% endembed %}
+                <hr />
 
-            <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}"/>
+                <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}"/>
             {{ form_end(categoryForm) }}
 
         {% endblock %}
-
     {% endembed %}
 
 {% endblock %}
