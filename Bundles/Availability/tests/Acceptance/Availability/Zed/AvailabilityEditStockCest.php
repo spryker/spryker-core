@@ -6,13 +6,20 @@
 
 namespace Acceptance\Availability\Zed;
 
-use Acceptance\Availability\Zed\Tester\AvailabilityTester;
 use Acceptance\Availability\Zed\PageObject\AvailabilityPage;
+use Acceptance\Availability\Zed\Tester\AvailabilityTester;
 
+/**
+ * @group Acceptance
+ * @group Availability
+ * @group Zed
+ * @group AvailabilityEditStockCest
+ */
 class AvailabilityEditStockCest
 {
+
     /**
-     * @param AvailabilityTester $i
+     * @param \Acceptance\Availability\Zed\Tester\AvailabilityTester $i
      *
      * @return void
      */
@@ -42,6 +49,6 @@ class AvailabilityEditStockCest
 
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
-
     }
+
 }

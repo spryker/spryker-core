@@ -15,12 +15,13 @@ use Acceptance\Availability\Zed\Tester\AvailabilityTester;
  * @group Acceptance
  * @group Availability
  * @group Zed
- * @group AvailabilityCreate
+ * @group AvailabilityListCest
  */
 class AvailabilityListCest
 {
+
     /**
-     * @param AvailabilityTester $i
+     * @param \Acceptance\Availability\Zed\Tester\AvailabilityTester $i
      *
      * @return void
      */
@@ -39,4 +40,5 @@ class AvailabilityListCest
         $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[6]/a");
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
+
 }

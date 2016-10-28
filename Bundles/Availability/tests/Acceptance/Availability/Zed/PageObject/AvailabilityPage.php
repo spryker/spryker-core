@@ -22,4 +22,5 @@ class AvailabilityPage
     const PAGE_AVAILABILITY_VIEW_HEADER = 'Detail Availability';
     const PAGE_AVAILABILITY_LIST_HEADER = 'Availability list';
     const PAGE_AVAILABILITY_EDIT_HEADER = 'Edit Stock';
+
 }

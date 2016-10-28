@@ -11,6 +11,7 @@ use Availability\ZedAcceptanceTester;
 
 class AvailabilityTester extends ZedAcceptanceTester
 {
+
     /**
      * @return void
      */
@@ -25,4 +26,5 @@ class AvailabilityTester extends ZedAcceptanceTester
 
         $this->assertEquals($numberOfItemsExpected, $itemListItems);
     }
+
 }

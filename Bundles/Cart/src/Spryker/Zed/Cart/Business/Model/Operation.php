@@ -41,21 +41,29 @@ class Operation implements OperationInterface
     protected $itemExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[]
+     */
+    protected $preCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $preCheckPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToMessengerInterface $messengerFacade,
-        array $itemExpanderPlugins
+        array $itemExpanderPlugins,
+        array $preCheckPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
         $this->messengerFacade = $messengerFacade;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
+        $this->preCheckPlugins = $preCheckPlugins;
     }
 
     /**
@@ -65,6 +73,10 @@ class Operation implements OperationInterface
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
+        if (!$this->preCheckCart($cartChangeTransfer)) {
+            return $cartChangeTransfer->getQuote();
+        }
+
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
@@ -89,6 +101,30 @@ class Operation implements OperationInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
+     * @return bool
+     */
+    protected function preCheckCart(CartChangeTransfer $cartChangeTransfer)
+    {
+        $isCartValid = true;
+        foreach ($this->preCheckPlugins as $preCheck) {
+            $cartPreCheckResponseTransfer = $preCheck->check($cartChangeTransfer);
+            if ($cartPreCheckResponseTransfer->getIsSuccess()) {
+                continue;
+            }
+
+            foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
+                $this->messengerFacade->addErrorMessage($messageTransfer);
+            }
+
+            $isCartValid = false;
+        }
+
+        return $isCartValid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function expandChangedItems(CartChangeTransfer $cartChangeTransfer)
@@ -102,14 +138,15 @@ class Operation implements OperationInterface
 
     /**
      * @param string $message
+     * @param array $parameters
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessengerMessageTransfer($message)
+    protected function createMessengerMessageTransfer($message, array $parameters = [])
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($message);
-        $messageTransfer->setParameters([]);
+        $messageTransfer->setParameters($parameters);
 
         return $messageTransfer;
     }
