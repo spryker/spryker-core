@@ -1,0 +1,38 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Product Attributes</h3>
+        <p>Select attributes, add corresponding values and translate them if needed for every locale (language). The attributes are then inherited by the product variants, but can be changed there on an individual level.</p>
+        <p><i>Note: If you only add a translation for one language, but not for the other, that attribute-value pair will not be displayed in the language where the translation is missing.</i></p>
+    {% endfilter %}
+</div>
+
+{% set formKey = 'attribute_abstract_default' %}
+{% embed '@Gui/Partials/ibox.twig' with {'collapsed': false} %}
+    {% block title %}
+        {{ 'Default' | trans }}
+    {% endblock %}
+
+    {% block content %}
+        <div class='row'>
+            {% for inputGroup in form[formKey] %}
+                {% include '@ProductManagement/Product/_partials/input-group.twig' with {'localeName': 'default'} %}
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}
+
+{% for localeTransfer in localeCollection %}
+    {% set formKey = 'attribute_abstract_' ~ localeTransfer.localeName %}
+
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': localeTransfer.localeName} %}
+            {% block content %}
+                <div class='row'>
+                    {% for inputGroup in form[formKey] %}
+                        {% include '@ProductManagement/Product/_partials/input-group.twig' %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

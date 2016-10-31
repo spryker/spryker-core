@@ -1,0 +1,39 @@
+{% extends '@ProductManagement/Add/index.twig' %}
+{% set submit_title = 'Save' | trans %}
+{% set widget_title = ('Edit Product Abstract' | trans) ~ ': ' ~ currentProduct.sku %}
+{% set variant_tpl = '@ProductManagement/Product/_partials/variant-tab-editing.twig' %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block action %}
+    {{ parent() }}
+    {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+
+        {{ tabs(productFormEditTabs, {
+            'form': form,
+            'currentLocale': currentLocale,
+            'concreteProductCollection': concreteProductCollection,
+            'localeCollection': localeCollection,
+            'attributeLocaleCollection': attributeLocaleCollection,
+            'submit_title': submit_title,
+            'currentProduct': currentProduct,
+            'variantTable': variantTable,
+            'idProduct': null,
+            'idProductAbstract': idProductAbstract,
+        }) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productmanagement-edit.js"></script>
+{% endblock %}

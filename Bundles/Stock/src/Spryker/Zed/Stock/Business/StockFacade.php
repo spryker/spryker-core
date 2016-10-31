@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Business;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -141,6 +142,42 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getIdStockProduct($sku, $stockType)
     {
         return $this->getFactory()->createReaderModel()->getIdStockProduct($sku, $stockType);
+    }
+
+    /**
+     * Specification:
+     * - Processes all provided stocks of the concrete product transfer
+     * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
+     * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createWriterModel()
+            ->persistStockProductCollection($productConcreteTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->expandProductConcreteWithStocks($productConcreteTransfer);
     }
 
 }

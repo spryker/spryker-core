@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
@@ -26,16 +26,33 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $resourceId
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
-        return $this->urlFacade->createUrl($url, $locale, $resourceType, $resourceId);
+        return $this->urlFacade->saveUrlAndTouch($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function deleteUrlAndTouch(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->deleteUrl($urlTransfer);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    public function hasUrl($url)
+    {
+        return $this->urlFacade->hasUrl($url);
     }
 
     /**
@@ -49,14 +66,13 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
+     * @param int $idUrl
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
-    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
+    public function touchUrlDeleted($idUrl)
     {
-        return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+        $this->urlFacade->touchUrlDeleted($idUrl);
     }
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <products>
+                <label>Products</label>
+                <title>Products</title>
+                <bundle>product-management</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <icon>fa-database</icon>
+            </products>
+            <attributes>
+                <label>Attributes</label>
+                <title>Attributes</title>
+                <bundle>product-management</bundle>
+                <controller>attribute</controller>
+                <action>index</action>
+                <icon>fa-bolt</icon>
+            </attributes>
+        </pages>
+    </product>
+</config>

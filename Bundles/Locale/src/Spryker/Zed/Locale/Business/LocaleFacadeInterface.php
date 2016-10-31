@@ -46,6 +46,17 @@ interface LocaleFacadeInterface
     /**
      * @api
      *
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentLocaleName();

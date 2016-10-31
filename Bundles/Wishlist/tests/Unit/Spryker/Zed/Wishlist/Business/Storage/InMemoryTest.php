@@ -189,7 +189,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
     public function createProductFacadeProductConcreteMock()
     {
         $concreateProductTransfer = new ProductConcreteTransfer();
-        $concreateProductTransfer->setIdProductAbstract(1);
+        $concreateProductTransfer->setIdProductConcrete(1);
 
         $productFacadeMock = $this
             ->getMockBuilder(WishlistToProductBridge::class)

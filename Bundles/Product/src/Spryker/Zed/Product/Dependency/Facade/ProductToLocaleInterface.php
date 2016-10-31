@@ -16,9 +16,9 @@ interface ProductToLocaleInterface
     public function getCurrentLocale();
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getAvailableLocales();
+    public function getLocaleCollection();
 
     /**
      * @param string $localeName
@@ -28,5 +28,14 @@ interface ProductToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName);
+
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
 
 }

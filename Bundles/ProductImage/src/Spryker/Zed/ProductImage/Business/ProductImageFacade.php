@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +18,163 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function persistProductImage(ProductImageTransfer $productImageTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->persistProductImage($productImageTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->persistProductImageSet($productImageSetTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductId($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesSetCollectionByProductId($idProduct);
+    }
+
+    /**
+     * Specification:
+     * - Persists all provided image sets to database for the given abstract product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function createProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->createProductAbstractImageSetCollection($productAbstractTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Persists all provided image sets to database for the given abstract product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function updateProductAbstractImageSetCollection(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->updateProductAbstractImageSetCollection($productAbstractTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Expands the ProductAbstractTransfer with the product's image sets from database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->expandProductAbstractWithImageSets($productAbstractTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Persists all provided image sets to database for the given concrete product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function createProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->createProductConcreteImageSetCollection($productConcreteTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Persists all provided image sets to database for the given concrete product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageWriter()
+            ->updateProductConcreteImageSetCollection($productConcreteTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Expands the ProductConcreteTransfer with the product's image sets from database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->expandProductConcreteWithImageSets($productConcreteTransfer);
+    }
+
 }

@@ -9,109 +9,60 @@ namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Adds product abstract with its concrete variants
+     * - Adds product abstract with attributes
+     * - Adds product abstract with meta information
+     * - Throws exception if product concrete with same SKU exists
+     * - Throws exception if abstract product with same SKU exists
+     * - Trigger before and after CREATE plugins
+     * - Abstract and concrete products are created but not activated or touched
+     *
      * @api
      *
-     * @param \SplFileInfo $file
-     *
-     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
-     */
-    public function importProductsFromFile(\SplFileInfo $file);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
-    public function getProductAbstractIdBySku($sku);
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
+     * Specification:
+     * - Saves product abstract with its concrete variants
+     * - Saves product abstract attributes
+     * - Saves product abstract meta
+     * - Triggers before and after UPDATE plugins
+     * - Throws exception if product concrete with same SKU exists
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract and concrete products are updated but not activated or touched
+     *
      * @api
      *
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
-    public function getProductConcreteIdBySku($sku);
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
-     * @api
+     * Specification:
+     * - Adds product abstract attributes
+     * - Adds product abstract localized attributes
+     * - Adds product abstract meta
+     * - Triggers before and after CREATE plugins
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract product is created but not activated or touched
      *
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function getProductAbstractIdByConcreteSku($sku);
-
-    /**
-     * @api
-     *
-     * @param string $attributeName
-     *
-     * @return bool
-     */
-    public function hasAttribute($attributeName);
-
-    /**
-     * @api
-     *
-     * @param string $attributeType
-     *
-     * @return bool
-     */
-    public function hasAttributeType($attributeType);
-
-    /**
-     * @api
-     *
-     * @param string $name
-     * @param string $inputType
-     * @param int|null $fkParentAttributeType
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
-     *
-     * @return int
-     */
-    public function createAttributeType($name, $inputType, $fkParentAttributeType = null);
-
-    /**
-     * @api
-     *
-     * @param string $attributeName
-     * @param string $attributeType
-     * @param bool $isEditable
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
-     *
-     * @return int
-     */
-    public function createAttribute($attributeName, $attributeType, $isEditable = true);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function hasProductAbstract($sku);
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -121,89 +72,61 @@ interface ProductFacadeInterface
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * Specification:
+     * - Saves product abstract attributes
+     * - Saves product abstract localized attributes
+     * - Saves product abstract meta
+     * - Triggers before and after CREATE plugins
+     * - Throws exception if abstract product with same SKU exists
+     * - Abstract product is created but not activated or touched
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
+     * - Checks if product abstract exists
+     *
      * @api
      *
      * @param string $sku
      *
      * @return bool
      */
-    public function hasProductConcrete($sku);
+    public function hasProductAbstract($sku);
 
     /**
+     * Specification:
+     * - Returns abstract product with attributes
+     * - Returns abstract product with localized attributes
+     * - Triggers READ plugins
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param int $idProductAbstract
+     * @param string $sku
      *
      * @return int
      */
-    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
+    public function getProductAbstractIdBySku($sku);
 
     /**
+     * Specification:
+     * - Returns abstract product with attributes
+     * - Returns abstract product with localized attributes
+     * - Triggers READ plugins
+     *
      * @api
      *
      * @param int $idProductAbstract
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function touchProductActive($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createProductUrl($sku, $url, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface|null $messenger
-     *
-     * @return void
-     */
-    public function install(MessengerInterface $messenger = null);
+    public function getProductAbstractById($idProductAbstract);
 
     /**
      * @api
@@ -215,6 +138,89 @@ interface ProductFacadeInterface
     public function getAbstractSkuFromProductConcrete($sku);
 
     /**
+     * Specification:
+     * - Finds product abstract based on product concrete SKU and returns product abstract ID
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteSku($concreteSku);
+
+    /**
+     * Specification:
+     * - Adds concrete product with attributes
+     * - Adds concrete product with localized attributes
+     * - Triggers before and after CREATE plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int
+     */
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     * - Saves concrete product with attributes
+     * - Saves concrete product with localized attributes
+     * - Triggers before and after UPDATE plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int
+     */
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     * - Checks if product concrete exists
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
+
+    /**
+     * Specification:
+     * - Returns id of concrete product
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getProductConcreteIdBySku($sku);
+
+    /**
+     * Specification:
+     * - Returns concrete product with attributes
+     * - Returns concrete product with localized attributes
+     * - Triggers READ plugins
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcreteById($idProduct);
+
+    /**
+     * Specification:
+     * - Returns concrete product with attributes
+     * - Returns concrete product with localized attributes
+     * - Triggers READ plugins
+     *
      * @api
      *
      * @param string $concreteSku
@@ -224,14 +230,414 @@ interface ProductFacadeInterface
     public function getProductConcrete($concreteSku);
 
     /**
+     * Specification:
+     * - Returns concrete product collection
+     * - Triggers READ plugins
+     *
      * @api
      *
      * @param int $idProductAbstract
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
+    public function getConcreteProductsByAbstractProductId($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Checks if the product attribute key exists
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasProductAttributeKey($key);
+
+    /**
+     * Specification:
+     * - Returns product attribute key if exists, null otherwise
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
+     */
+    public function getProductAttributeKey($key);
+
+    /**
+     * Specification:
+     * - Creates new product attribute key
+     * - Returns created product attribute key
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
+
+    /**
+     * Specification:
+     * - Updates an existing product attribute key
+     * - Returns the updated product attribute key
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
+
+    /**
+     * Specification:
+     * - Touches as active: product abstract and product attribute map
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductActive($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Touches as in-active: product abstract and product attribute map
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductInactive($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Touches as deleted: product abstract and product attribute map
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductDeleted($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Touches as active: product concrete
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteActive($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Touches as in-active: product concrete
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteInactive($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Touches as deleted: product concrete
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteDelete($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Creates localized product urls based on product abstract localized attributes name
+     * - Executes touch logic for product url activation
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function createProductUrl(ProductAbstractTransfer $productAbstract);
+
+    /**
+     * Specification:
+     * - Updates localized product urls based on product abstract localized attributes name
+     * - Executes touch logic for product url update
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function updateProductUrl(ProductAbstractTransfer $productAbstract);
+
+    /**
+     * Specification:
+     * - Returns localized product urls based on product abstract localized attributes name
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    public function getProductUrl(ProductAbstractTransfer $productAbstract);
+
+    /**
+     * Specification:
+     * - Deletes all urls belonging to given abstract product
+     * - Executes touch logic for product url deletion
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     *
+     * @return void
+     */
+    public function deleteProductUrl(ProductAbstractTransfer $productAbstract);
+
+    /**
+     * Specification:
+     * - Touches the url of the product as active for all available locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
+     * - Touches the url of the product as deleted for all available locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
+     * - Returns localized product abstract name based on localized attributes
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductAbstractName(
+        ProductAbstractTransfer $productAbstractTransfer,
+        LocaleTransfer $localeTransfer
+    );
+
+    /**
+     * Specification:
+     * - Returns localized product concrete name based on localized attributes
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    );
+
+    /**
+     * Specification:
+     * - Activates product concrete
+     * - Generates and saves product abstract url
+     * - Touches as active product
+     * - Touches as active product url
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Deactivates product concrete
+     * - Removes product url
+     * - Touches as in-active product
+     * - Touches as in-active product url
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Generatate all possible permutations for given attributes.
+     *
+     * Leaf node of a tree is concrete id.
+     * (
+     *   [color:red] => array (
+     *       [brand:nike] => array(
+     *          [id] => 1
+     *       )
+     *   ),
+     *   [brand:nike] => array(
+     *       [color:red] => array(
+     *          [id] => 1
+     *       )
+     *   )
+     * )
+     *
+     * @api
+     *
+     * @param array $superAttributes
+     * @param int $idProductConcrete
+     *
+     * @return array
+     */
+    public function generateAttributePermutations(array $superAttributes, $idProductConcrete);
+
+    /**
+     * Specification:
+     * - Generates product variants based on attributes
+     *
+     * $attributeCollection = Array
+     *  (
+     *     [color] => Array
+     *      (
+     *          [red] => Red
+     *          [blue] => Blue
+     *      )
+     *     [flavour] => Array
+     *      (
+     *          [sweet] => Cakes
+     *      )
+     *     [size] => Array
+     *      (
+     *          [40] => 40
+     *          [41] => 41
+     *          [42] => 42
+     *          )
+     *      )
+     * )
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $attributeCollection
+     *
+     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
+
+    /**
+     * Specification:
+     * - Returns true if any of the concrete products of abstract products are active
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Returns an associative array of attribute key - attribute value pairs of a persisted product.
+     * - The result is a combination of the abstract product's attributes and all it's existing concretes' attributes.
+     * - If $localeTransfer is provided then localized abstract and concrete attributes are also part of the result.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Returns an associative array with attribute key - attribute value pairs of a persisted concrete product.
+     * - The result is a combination of the concrete's attributes and it's abstract's attributes.
+     * - If $localeTransfer is provided then localized concrete and abstract attributes are also part of the result.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Returns an associative array of attribute key - attribute value pairs.
+     * - The result is the correct inheritance combination of the provided raw product attribute data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RawProductAttributesTransfer $rawProductAttributesTransfer
+     *
+     * @return array
+     */
+    public function combineRawProductAttributes(RawProductAttributesTransfer $rawProductAttributesTransfer);
+
+    /**
+     * Specification:
+     * - Encodes an array of product attribute key - attribute value pairs to Json string.
+     *
+     * @api
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function encodeProductAttributes(array $attributes);
+
+    /**
+     * Specification:
+     * - Decodes product attributes Json string to an array of attribute key - attribute value pairs.
+     *
+     * @api
+     *
+     * @param string $attributes
+     *
+     * @return array
+     */
+    public function decodeProductAttributes($attributes);
 
 }

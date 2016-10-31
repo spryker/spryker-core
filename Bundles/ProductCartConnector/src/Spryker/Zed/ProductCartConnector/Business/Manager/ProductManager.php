@@ -8,46 +8,85 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductManager implements ProductManagerInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
      */
-    private $productFacade;
+    protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
      */
-    public function __construct(ProductCartConnectorToProductInterface $productFacade)
-    {
+    public function __construct(
+        ProductCartConnectorToLocaleInterface $localeFacade,
+        ProductCartConnectorToProductInterface $productFacade
+    ) {
+        $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        foreach ($change->getItems() as $cartItem) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($cartItem->getSku());
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $productConcreteTransfer = $this->productFacade->getProductConcrete($itemTransfer->getSku());
 
-            $cartItem->setId($productConcreteTransfer->getIdProductConcrete())
-                ->setSku($productConcreteTransfer->getSku())
-                ->setIdProductAbstract($productConcreteTransfer->getIdProductAbstract())
-                ->setAbstractSku($productConcreteTransfer->getProductAbstractSku())
-                ->setName($productConcreteTransfer->getName());
+            $this->assertProductConcreteTransfer($productConcreteTransfer);
 
-            if ($productConcreteTransfer->getTaxRate() !== null) {
-                $cartItem->setTaxRate($productConcreteTransfer->getTaxRate());
-            }
+            $this->expandItemWithProductConcrete($productConcreteTransfer, $itemTransfer);
         }
 
-        return $change;
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $productConcreteTransfer
+            ->requireSku()
+            ->requireAbstractSku()
+            ->requireFkProductAbstract();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer)
+    {
+        $localizedProductName = $this->productFacade->getLocalizedProductConcreteName(
+            $productConcreteTransfer,
+            $this->localeFacade->getCurrentLocale()
+        );
+
+        $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete())
+            ->setSku($productConcreteTransfer->getSku())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setAbstractSku($productConcreteTransfer->getAbstractSku())
+            ->setName($localizedProductName);
     }
 
 }

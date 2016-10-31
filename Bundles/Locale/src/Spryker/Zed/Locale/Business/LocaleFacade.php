@@ -62,6 +62,23 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Read persisted locale by given locale id
+     *
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale)
+    {
+        return $this->getFactory()
+            ->createLocaleManager()
+            ->getLocaleById($idLocale);
+    }
+
+    /**
      * @api
      *
      * @return string

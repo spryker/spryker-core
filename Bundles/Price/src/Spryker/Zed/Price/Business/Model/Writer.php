@@ -8,11 +8,15 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
+use Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
 
 class Writer implements WriterInterface
 {
@@ -200,7 +204,9 @@ class Writer implements WriterInterface
     protected function setPriceType(PriceProductTransfer $priceProductTransfer)
     {
         if ($priceProductTransfer->getPriceTypeName() === null) {
-            $priceProductTransfer->setPriceTypeName($this->priceConfig->getPriceTypeDefaultName());
+            $priceProductTransfer->setPriceTypeName(
+                $this->priceConfig->getPriceTypeDefaultName()
+            );
         }
 
         return $priceProductTransfer;
@@ -220,7 +226,9 @@ class Writer implements WriterInterface
             throw new \Exception(self::ENTITY_NOT_FOUND);
         }
 
-        return $this->queryContainer->queryPriceProductEntity($idPriceProduct)->findOne();
+        return $this->queryContainer
+            ->queryPriceProductEntity($idPriceProduct)
+            ->findOne();
     }
 
     /**
@@ -249,6 +257,89 @@ class Writer implements WriterInterface
             ->queryPriceEntityForProductConcrete($transferPriceProduct->getSkuProduct(), $priceType);
 
         return $priceEntities->count() > 0;
+    }
+
+    /**
+     * @param string $priceTypeName
+     *
+     * @throws \Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     */
+    protected function getPriceTypeEntity($priceTypeName)
+    {
+        $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
+        $priceTypeEntity = $this->queryContainer
+            ->queryPriceType($priceTypeName)
+            ->findOne();
+
+        if (!$priceTypeEntity) {
+            throw new UndefinedPriceTypeException('Undefined product price type: ' . $priceTypeName);
+        }
+
+        return $priceTypeEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        if (!$productAbstractTransfer->getPrice()) {
+            return $productAbstractTransfer;
+        }
+
+        $productAbstractTransfer->requireIdProductAbstract();
+
+        $priceTransfer = $productAbstractTransfer->getPrice();
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
+
+        $priceProductEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($priceTransfer->getIdProductAbstract())
+            ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
+            ->findOneOrCreate();
+
+        $priceProductEntity->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        $priceProductEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->save();
+
+        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        if (!$productConcreteTransfer->getPrice()) {
+            return $productConcreteTransfer;
+        }
+
+        $productConcreteTransfer->requireIdProductConcrete();
+        $priceTransfer = $productConcreteTransfer->getPrice();
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
+
+        $priceProductEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProduct($priceTransfer->getIdProduct())
+            ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
+            ->filterByFkProductAbstract(null, Criteria::ISNULL)
+            ->findOneOrCreate();
+
+        $priceProductEntity->setFkProduct($productConcreteTransfer->getIdProductConcrete());
+        $priceProductEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->save();
+
+        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+
+        return $productConcreteTransfer;
     }
 
 }

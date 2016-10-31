@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Price\Business;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 interface PriceFacadeInterface
@@ -29,6 +31,26 @@ interface PriceFacadeInterface
      * @return int
      */
     public function getPriceBySku($sku, $priceType = null);
+
+    /**
+     * @api
+     *
+     * @param int $idAbstractProduct
+     * @param null $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function getProductAbstractPrice($idAbstractProduct, $priceType = null);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param null $priceType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function getProductConcretePrice($idProduct, $priceType = null);
 
     /**
      * @api
@@ -92,5 +114,33 @@ interface PriceFacadeInterface
      * @return int
      */
     public function getIdPriceProduct($sku, $priceType);
+
+    /**
+     * Specification:
+     * - Create a new product price entity if it doesn't exists by abstract product id and price type.
+     * - Updates the price of a product price entity if it exists by abstract product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
+     * - Create a new product price entity if it doesn't exists by concrete product id and price type.
+     * - Updates the price of a product price entity if it exists by concrete product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
 
 }

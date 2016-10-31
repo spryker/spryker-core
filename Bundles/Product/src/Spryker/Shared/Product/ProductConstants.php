@@ -7,16 +7,18 @@
 
 namespace Spryker\Shared\Product;
 
-/**
- * @TODO https://github.com/spryker/spryker/issues/1219
- */
 interface ProductConstants
 {
 
-    const RESOURCE_TYPE_PRODUCT = 'product';
-    const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
-    const RESOURCE_TYPE_HOST_YVES = 'HOST_YVES';
+    const HOST_YVES = 'HOST_YVES';
 
-    const PRODUCT_IMAGE_IMAGE_URL_PREFIX = 'PRODUCT_IMAGE_IMAGE_URL_PREFIX';
+    const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
+    const RESOURCE_TYPE_PRODUCT_CONCRETE = 'product_concrete';
+    const RESOURCE_TYPE_ATTRIBUTE_MAP = 'attribute_map';
+    const RESOURCE_TYPE_URL = 'url'; //TODO this should come from the Url / collector / touch bundle
+
+    const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
+
+    const VARIANT_LEAF_NODE_ID = 'id_product_concrete';
 
 }

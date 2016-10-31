@@ -6,6 +6,7 @@
     <transfer name="StockProduct">
         <property name="sku" type="string" />
         <property name="stockType" type="string" />
+        <property name="fkStock" type="int" />
         <property name="quantity" type="int" />
         <property name="isNeverOutOfStock" type="string" />
         <property name="idStockProduct" type="int" />
@@ -14,6 +15,10 @@
     <transfer name="Type">
         <property name="idStock" type="int" />
         <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="stocks" type="StockProduct[]" singular="stock" />
     </transfer>
 
 </transfers>

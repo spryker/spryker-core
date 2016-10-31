@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
+use Exception;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
+use Spryker\Zed\Price\Business\Exception\MissingPriceException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
@@ -16,7 +19,6 @@ class Reader implements ReaderInterface
 {
 
     const PRICE_TYPE_UNKNOWN = 'price type unknown: ';
-    const NO_RESULT = 'no result';
     const SKU_UNKNOWN = 'sku unknown';
 
     /**
@@ -85,6 +87,70 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param int $idAbstractProduct
+     * @param string|null $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
+    {
+        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
+        $priceEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($idAbstractProduct)
+            ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+            ->findOne();
+
+        if (!$priceEntity) {
+            return null;
+        }
+
+        $priceTransfer = (new PriceProductTransfer());
+        $priceTransfer
+            ->fromArray($priceEntity->toArray(), true)
+            ->setIdProductAbstract($idAbstractProduct)
+            ->setPrice($priceEntity->getPrice())
+            ->setPriceTypeName($priceTypeName);
+
+        return $priceTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param string|null $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function getProductConcretePrice($idProduct, $priceTypeName = null)
+    {
+        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
+        $priceEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProduct($idProduct)
+            ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+            ->findOne();
+
+        if (!$priceEntity) {
+            $priceEntity = $this->queryContainer
+                ->queryProductAbstractPriceByIdConcreteProduct($idProduct)
+                ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+                ->findOne();
+        }
+
+        if (!$priceEntity) {
+            return null;
+        }
+
+        $priceTransfer = (new PriceProductTransfer())
+            ->fromArray($priceEntity->toArray(), true)
+            ->setIdProduct($idProduct)
+            ->setPrice($priceEntity->getPrice())
+            ->setPriceTypeName($priceTypeName);
+
+        return $priceTransfer;
+    }
+
+    /**
      * @param string $priceTypeName
      *
      * @throws \Exception
@@ -96,7 +162,7 @@ class Reader implements ReaderInterface
         if (!isset($this->priceTypeEntityByNameCache[$priceTypeName])) {
             $priceTypeEntity = $this->queryContainer->queryPriceType($priceTypeName)->findOne();
             if ($priceTypeEntity === null) {
-                throw new \Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
+                throw new Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
             }
 
             $this->priceTypeEntityByNameCache[$priceTypeName] = $priceTypeEntity;
@@ -106,8 +172,6 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * TODO missing validation of dates
-     *
      * @param string $sku
      * @param string|null $priceTypeName
      *
@@ -118,8 +182,12 @@ class Reader implements ReaderInterface
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
         $priceType = $this->getPriceTypeByName($priceTypeName);
 
-        if ($this->hasPriceForProductConcrete($sku, $priceType)
-            || $this->hasPriceForProductAbstract($sku, $priceType)) {
+        if ($this->hasPriceForProductConcrete($sku, $priceType) || $this->hasPriceForProductAbstract($sku, $priceType)) {
+            return true;
+        }
+
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
             return true;
         }
 
@@ -163,6 +231,10 @@ class Reader implements ReaderInterface
                 ->getIdPriceProduct();
         }
 
+        if (!$this->hasPriceForProductAbstract($sku, $priceType)) {
+            $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        }
+
         return $this->queryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceType)
             ->findOne()
@@ -173,7 +245,7 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Price\Business\Exception\MissingPriceException
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
@@ -182,17 +254,20 @@ class Reader implements ReaderInterface
         if ($this->hasPriceForProductConcrete($sku, $priceType)) {
             return $this->getPriceEntityForProductConcrete($sku, $priceType);
         }
+
         if ($this->hasPriceForProductAbstract($sku, $priceType)) {
             return $this->getPriceEntityForProductAbstract($sku, $priceType);
         }
+
         $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-        if (!$this->hasProductAbstract($sku)
-            || !$this->hasPriceForProductAbstract($abstractSku, $priceType)
-        ) {
-            throw new \Exception(self::NO_RESULT);
+        if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
+            return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
         }
 
-        return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+        throw new MissingPriceException(sprintf(
+            'Price not found for product with SKU: %s!',
+            $sku
+        ));
     }
 
     /**
@@ -254,9 +329,9 @@ class Reader implements ReaderInterface
     /**
      * @param string|null $priceType
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return string
      */
-    protected function handleDefaultPriceType($priceType = null)
+    public function handleDefaultPriceType($priceType = null)
     {
         if ($priceType === null) {
             $priceType = $this->priceConfig->getPriceTypeDefaultName();

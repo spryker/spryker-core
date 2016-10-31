@@ -8,22 +8,23 @@
         <property name="productImages" type="ProductImage[]" singular="productImage" />
         <property name="name" type="string" />
         <property name="locale" type="Locale" />
+        <property name="idProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
     </transfer>
 
     <transfer name="ProductImage">
         <property name="idProductImage" type="int" />
-        <property name="idProductImageSetToProductImage" type="int" />
-
-        <property name="sort" type="int" />
+        <property name="sortOrder" type="int" />
         <property name="externalUrlSmall" type="string" />
         <property name="externalUrlLarge" type="string" />
     </transfer>
 
     <transfer name="ProductAbstract">
-        <property name="productImagesSets" type="ProductImageSet[]" singular="productImageSet" />
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
     </transfer>
-    <transfer name="Product">
-        <property name="productImagesSets" type="ProductImageSet[]" singular="productImageSet" />
+
+    <transfer name="ProductConcrete">
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
     </transfer>
 
 </transfers>

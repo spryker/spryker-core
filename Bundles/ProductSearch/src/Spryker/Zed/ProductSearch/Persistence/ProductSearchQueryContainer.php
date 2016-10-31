@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductSearch\Persistence;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeTypeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
@@ -84,7 +84,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
         $productSearchAttributeMapQuery = $this
             ->getFactory()
             ->createProductSearchAttributeMapQuery()
-            ->joinWith('SpyProductAttributesMetadata');
+            ->joinWith('SpyProductAttributeKey');
 
         return $productSearchAttributeMapQuery;
     }
@@ -92,16 +92,16 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @param int $fkProductAttributesMetadata
+     * @param int $fkProductAttributeKey
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
      */
-    public function queryProductSearchAttributeMapByFkProductAttributesMetadata($fkProductAttributesMetadata)
+    public function queryProductSearchAttributeMapByFkProductAttributeKey($fkProductAttributeKey)
     {
         $productSearchAttributeMapQuery = $this
             ->getFactory()
             ->createProductSearchAttributeMapQuery()
-            ->filterByFkProductAttributesMetadata($fkProductAttributesMetadata);
+            ->filterByFkProductAttributeKey($fkProductAttributeKey);
 
         return $productSearchAttributeMapQuery;
     }
@@ -109,15 +109,13 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function querySearchPreferencesTable()
     {
         $query = $this
             ->getFactory()
-            ->createProductAttributesMetadataQuery()
-            ->joinSpyProductAttributeType()
-            ->withColumn(SpyProductAttributeTypeTableMap::COL_NAME, SearchPreferencesTable::COL_PROPERTY_TYPE);
+            ->createProductAttributeKeyQuery();
 
         $query->setIdentifierQuoting(true);
 
@@ -131,13 +129,13 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query
      * @param string $alias
      * @param string $targetField
      *
      * @return $this
      */
-    protected function leftJoinProductSearchAttributeMap($query, $alias, $targetField)
+    protected function leftJoinProductSearchAttributeMap(SpyProductAttributeKeyQuery $query, $alias, $targetField)
     {
         $quotedAlias = $query->quoteIdentifier($alias);
 

@@ -1,0 +1,30 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Product Image(s)</h3>
+        <p>For each image to be displayed in the shop one image set must be created. An image set has a name for identification and may contain a small and a large version of the image. The order of your image sets can be changed via drag and drop. The product variants inherit these product image sets, but can be changed there on an individual level.</p>
+        <p><i>Note: The first image will be the image displayed in the catalog. The full image set will be displayed on the product detail page before the customer has configured what variant he wants.</i></p>
+    {% endfilter %}
+</div>
+
+{% set formKey = 'image_set_default' %}
+{% embed '@Gui/Partials/ibox.twig' with {'collapsed': false} %}
+    {% block title %}
+        {{ 'Default' | trans }}
+    {% endblock %}
+
+    {% block content %}
+        {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
+    {% endblock %}
+{% endembed %}
+
+{% for localeTransfer in localeCollection %}
+    {% set formKey = 'image_set_' ~ localeTransfer.localeName %}
+
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': localeTransfer.localeName} %}
+            {% block content %}
+                {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}
