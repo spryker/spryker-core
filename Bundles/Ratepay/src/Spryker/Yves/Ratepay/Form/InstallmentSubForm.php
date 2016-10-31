@@ -54,7 +54,6 @@ class InstallmentSubForm extends SubFormAbstract
                 return [$this->getPropertyPath()];
             },
         ]);
-
     }
 
     /**
@@ -99,8 +98,7 @@ class InstallmentSubForm extends SubFormAbstract
             ->addBankAccountIban($builder)
             ->addAllowedMonth($builder, $options)
             ->addInterestRate($builder)
-            ->addInterestRateDefault($builder)
-        ;
+            ->addInterestRateDefault($builder);
     }
 
     /**
@@ -196,9 +194,9 @@ class InstallmentSubForm extends SubFormAbstract
             'text',
             [
                 'label' => false,
-//                'required' => true,
+            //                'required' => true,
                 'constraints' => [
-//                    $this->createNotBlankConstraint(),
+            //                    $this->createNotBlankConstraint(),
                 ],
                 'attr' => [
                 ]

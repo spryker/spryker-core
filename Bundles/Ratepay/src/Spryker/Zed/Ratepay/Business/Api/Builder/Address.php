@@ -58,7 +58,6 @@ class Address extends AbstractBuilder implements BuilderInterface
             ]
         );
 
-
         return $result;
     }
 

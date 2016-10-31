@@ -373,7 +373,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $this->assertEquals(3, $firstItem->getQuantity());
         $this->assertEquals(10, $firstItem->getUnitPriceGross());
         $this->assertEquals(19, $firstItem->getTaxRate());
-
     }
 
     /**

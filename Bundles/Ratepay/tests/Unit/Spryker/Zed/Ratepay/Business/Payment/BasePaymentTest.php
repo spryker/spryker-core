@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
-use Generated\Shared\Transfer\RatepayRequestShoppingBasketItemTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
@@ -37,7 +36,6 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request;
-use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Elv;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
@@ -132,7 +130,6 @@ class BasePaymentTest extends Test
                 ->willReturn($return);
         }
 
-
         return $transactionHandler;
     }
 
@@ -188,8 +185,7 @@ class BasePaymentTest extends Test
         $quoteTransfer
             ->setCustomer($this->mockCustomerTransfer())
             ->setBillingAddress($this->mockAddressTransfer())
-            ->setShippingAddress($this->mockAddressTransfer())
-        ;
+            ->setShippingAddress($this->mockAddressTransfer());
 
         $total = new TotalsTransfer();
         $total->setGrandTotal(1800)
@@ -214,8 +210,7 @@ class BasePaymentTest extends Test
             ->setQuantity(3)
             ->setTaxRate(19)
             ->setUnitGrossPriceWithProductOptions(1000)
-            ->setGroupKey('133333333333')
-        ;
+            ->setGroupKey('133333333333');
         return $item;
     }
 
@@ -227,8 +222,7 @@ class BasePaymentTest extends Test
         $ratepayPaymentInitTransfer = new RatepayPaymentInitTransfer();
         $ratepayPaymentInitTransfer
             ->setTransactionId('58-201604122719694')
-            ->setTransactionShortId('5QTZ.2VWD.OMWW.9D3E')
-        ;
+            ->setTransactionShortId('5QTZ.2VWD.OMWW.9D3E');
 
         return $ratepayPaymentInitTransfer;
     }

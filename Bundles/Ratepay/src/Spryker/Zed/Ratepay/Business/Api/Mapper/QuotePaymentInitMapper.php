@@ -62,13 +62,11 @@ class QuotePaymentInitMapper extends BaseMapper
             $this->ratepayPaymentInitTransfer
                 ->setTransactionId($paymentMethod->getTransactionId())
                 ->setTransactionShortId($paymentMethod->getTransactionShortId())
-                ->setDeviceFingerprint($paymentMethod->getDeviceFingerprint())
-            ;
+                ->setDeviceFingerprint($paymentMethod->getDeviceFingerprint());
         }
 
         $this->ratepayPaymentInitTransfer
-            ->setCustomerId($this->quoteTransfer->getCustomer()->getIdCustomer())
-        ;
+            ->setCustomerId($this->quoteTransfer->getCustomer()->getIdCustomer());
     }
 
 }

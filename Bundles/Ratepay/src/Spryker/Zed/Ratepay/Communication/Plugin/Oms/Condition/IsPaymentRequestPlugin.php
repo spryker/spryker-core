@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
  */
-class IsPaymentRequestPlugin  extends AbstractCheckPlugin
+class IsPaymentRequestPlugin extends AbstractCheckPlugin
 {
 
     /**
@@ -24,4 +24,5 @@ class IsPaymentRequestPlugin  extends AbstractCheckPlugin
     {
         return $this->getFacade()->isPaymentRequestSuccess($orderTransfer);
     }
+
 }

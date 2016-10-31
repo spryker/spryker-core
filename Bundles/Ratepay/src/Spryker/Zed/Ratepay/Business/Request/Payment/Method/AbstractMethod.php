@@ -6,12 +6,13 @@
 
 namespace Spryker\Zed\Ratepay\Business\Request\Payment\Method;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
-use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Constants;
+use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface;
 use Spryker\Zed\Ratepay\Business\Request\RequestMethodInterface;
@@ -285,13 +286,13 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param bool $needToSendShipping
      *
      * @return void
      */
-    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $needToSendShipping=false)
+    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $needToSendShipping = false)
     {
         $grouppedItems = [];
         foreach ($orderItems as $basketItem) {
@@ -299,6 +300,19 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
+                $ratepayOrderItem = $this->loadOrderPaymentItemByOrderIdAndSku($dataTransfer->getIdSalesOrder(), $basketItem->getGroupKey());
+                if ($ratepayOrderItem) {
+                    /**
+                     * In Spryker system each Item has own discount,
+                     * but we need to send discount amount like in previous item.
+                     * That's why we save first
+                     */
+                    $grouppedItems[$basketItem->getGroupKey()]->setUnitGrossPriceWithProductOptions($ratepayOrderItem->getUnitGrossPriceWithProductOptions());
+                    $grouppedItems[$basketItem->getGroupKey()]->setUnitTotalDiscountAmountWithProductOption($ratepayOrderItem->getUnitTotalDiscountAmountWithProductOption());
+                    $grouppedItems[$basketItem->getGroupKey()]->setSumGrossPriceWithProductOptionAndDiscountAmounts($ratepayOrderItem->getSumGrossPriceWithProductOptionAndDiscountAmounts());
+                } else {
+                    $this->addOrderPaymentItem($grouppedItems[$basketItem->getGroupKey()]);
+                }
             }
         }
 
@@ -375,6 +389,30 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         );
 
         return $query->getData();
+    }
+
+    /**
+     * @param int $orderId
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
+     */
+    protected function loadOrderPaymentItemByOrderIdAndSku($orderId, $sku)
+    {
+        return $this->queryContainer
+            ->queryPaymentItemByOrderIdAndSku($orderId, $sku)
+            ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
+     */
+    protected function addOrderPaymentItem(ItemTransfer $orderItem)
+    {
+        return $this->queryContainer
+            ->addPaymentItem($orderItem);
     }
 
 }
