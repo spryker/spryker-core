@@ -184,7 +184,7 @@ class MapperFactory extends AbstractBusinessFactory
         $quoteTransfer,
         $ratepayPaymentTransfer,
         array $orderItems,
-        $needToSendShipping=false
+        $needToSendShipping = false
     ) {
         return new PartialBasketMapper(
             $quoteTransfer,

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Ratepay\Business\Status;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\Ratepay\Persistence\Base\SpyPaymentRatepayLog;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
@@ -51,13 +50,12 @@ class TransactionStatus implements TransactionStatusInterface
      */
     public function isPaymentRequestSuccess(OrderTransfer $orderTransfer)
     {
-        /** @var SpyPaymentRatepayLog $paymentLog */
+        /** @var \Orm\Zed\Ratepay\Persistence\Base\SpyPaymentRatepayLog $paymentLog */
         $paymentLog = $this->queryContainer
             ->queryPaymentLogQueryBySalesOrderId($orderTransfer->requireIdSalesOrder()->getIdSalesOrder())
             ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST)
             ->find()
-            ->getLast()
-        ;
+            ->getLast();
         if (!$paymentLog) {
             return false;
         }

@@ -133,8 +133,7 @@ abstract class AbstractBusinessTest extends Test
         $ratepayPaymentInitTransfer
             ->setTransactionId('58-201604122719694')
             ->setTransactionShortId('5QTZ.2VWD.OMWW.9D3E')
-            ->setPaymentMethodName(static::PAYMENT_METHOD)
-        ;
+            ->setPaymentMethodName(static::PAYMENT_METHOD);
 
         return $ratepayPaymentInitTransfer;
     }

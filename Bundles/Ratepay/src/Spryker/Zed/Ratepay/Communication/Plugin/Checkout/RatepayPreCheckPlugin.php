@@ -59,8 +59,7 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
             $paymentData
                 ->setTransactionId($ratepayResponseTransfer->getTransactionId())
                 ->setTransactionShortId($ratepayResponseTransfer->getTransactionShortId())
-                ->setResultCode($ratepayResponseTransfer->getStatusCode())
-            ;
+                ->setResultCode($ratepayResponseTransfer->getStatusCode());
         }
         $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
         $quotePaymentInitMapper = $this->getFactory()->createPaymentRequestMapperByQuote(

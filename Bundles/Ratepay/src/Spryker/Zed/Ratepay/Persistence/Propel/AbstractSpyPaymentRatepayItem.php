@@ -6,10 +6,10 @@
 
 namespace Spryker\Zed\Ratepay\Persistence\Propel;
 
-use Orm\Zed\Ratepay\Persistence\Base\SpyPaymentRatepayHistory as BaseSpyPaymentRatepayHistory;
+use Orm\Zed\Ratepay\Persistence\Base\SpyPaymentRatepayItem as BaseSpyPaymentRatepayItem;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_payment_ratepay_history' table.
+ * Skeleton subclass for representing a row from the 'spy_payment_ratepay_item' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\Ratepay\Persistence\Base\SpyPaymentRatepayHistory as BaseSpyPaymentR
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyPaymentRatepayHistory extends BaseSpyPaymentRatepayHistory
+class AbstractSpyPaymentRatepayItem extends BaseSpyPaymentRatepayItem
 {
 }

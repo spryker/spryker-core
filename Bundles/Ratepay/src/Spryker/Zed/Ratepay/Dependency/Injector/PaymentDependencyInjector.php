@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepayPostCheckPlugin;
-use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepayPreCheckPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepaySaveOrderPlugin;
 
 class PaymentDependencyInjector extends AbstractDependencyInjector

@@ -37,12 +37,10 @@ class InitPaymentTransaction extends BaseTransaction implements PaymentInitTrans
         if ($initResponseTransfer->getSuccessful()) {
             $ratepayPaymentInitTransfer
                 ->setTransactionId($initResponseTransfer->requireTransactionId()->getTransactionId())
-                ->setTransactionShortId($initResponseTransfer->requireTransactionShortId()->getTransactionShortId())
-            ;
+                ->setTransactionShortId($initResponseTransfer->requireTransactionShortId()->getTransactionShortId());
         }
 
         return $initResponseTransfer;
-
     }
 
 }

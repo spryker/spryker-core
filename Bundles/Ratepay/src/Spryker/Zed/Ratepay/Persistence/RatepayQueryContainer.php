@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Ratepay\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -77,6 +79,53 @@ class RatepayQueryContainer extends AbstractQueryContainer implements RatepayQue
     public function queryPaymentLog()
     {
         return $this->getFactory()->createPaymentRatepayLogQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
+     */
+    public function addPaymentItem(ItemTransfer $orderItem)
+    {
+        $paymentRatepayItem = new SpyPaymentRatepayItem();
+        $paymentRatepayItem->setFkSalesOrder($orderItem->getFkSalesOrder());
+        $paymentRatepayItem->setSku($orderItem->getGroupKey());
+        $paymentRatepayItem->setUnitGrossPriceWithProductOptions($orderItem->getUnitGrossPriceWithProductOptions());
+        $paymentRatepayItem->setUnitTotalDiscountAmountWithProductOption($orderItem->getUnitTotalDiscountAmountWithProductOption());
+        $paymentRatepayItem->setSumGrossPriceWithProductOptionAndDiscountAmounts($orderItem->getSumGrossPriceWithProductOptionAndDiscountAmounts());
+
+        $paymentRatepayItem->save();
+
+        return $paymentRatepayItem;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
+     */
+    public function queryPaymentItem()
+    {
+        return $this->getFactory()->createPaymentRatepayItemQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
+     */
+    public function queryPaymentItemByOrderIdAndSku($idSalesOrder, $sku)
+    {
+        return $this
+            ->queryPaymentItem()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->filterBySku($sku);
     }
 
     /**

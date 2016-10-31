@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Ratepay\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface RatepayQueryContainerInterface extends QueryContainerInterface
@@ -53,6 +54,32 @@ interface RatepayQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery
      */
     public function queryPaymentLog();
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
+     */
+    public function addPaymentItem(ItemTransfer $orderItem);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
+     */
+    public function queryPaymentItem();
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
+     */
+    public function queryPaymentItemByOrderIdAndSku($idSalesOrder, $sku);
 
     /**
      * @api

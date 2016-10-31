@@ -144,7 +144,8 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $orderTransfer,
-            $orderEntity
+            $orderEntity,
+            $this->getQueryContainer()
         );
     }
 

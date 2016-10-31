@@ -50,6 +50,23 @@
         <id-method-parameter value="spy_payment_ratepay_pk_seq"/>
     </table>
 
+    <table name="spy_payment_ratepay_item" phpName="SpyPaymentRatepayItem">
+        <column name="id_payment_ratepay_item" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
+        <column name="fk_sales_order" type="INTEGER"/>
+        <column name="sku" type="VARCHAR" />
+        <column name="unit_gross_price_with_product_options" type="INTEGER" />
+        <column name="unit_total_discount_amount_with_product_option" type="INTEGER" />
+        <column name="sum_gross_price_with_product_option_and_discount_amounts" type="INTEGER" />
+
+        <foreign-key name="spy_payment_ratepay_item-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
+            <reference foreign="id_sales_order" local="fk_sales_order"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_payment_ratepay_item_pk_seq"/>
+    </table>
+
     <table name="spy_payment_ratepay_log" phpName="SpyPaymentRatepayLog">
         <column name="id_payment_ratepay_log" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 

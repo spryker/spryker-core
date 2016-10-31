@@ -30,7 +30,7 @@ class PaymentMethodExtractor
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer|null
-     * @throws NoPaymentMethodException
+     * @throws \Spryker\Zed\Ratepay\Business\Exception\NoPaymentMethodException
      */
     public function extractPaymentMethod(QuoteTransfer $quoteTransfer)
     {

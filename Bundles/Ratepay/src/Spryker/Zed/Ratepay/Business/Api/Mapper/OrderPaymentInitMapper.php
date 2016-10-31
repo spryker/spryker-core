@@ -40,8 +40,7 @@ class OrderPaymentInitMapper extends BaseMapper
      */
     public function map()
     {
-        if (
-            $this->orderEntity->getSpyPaymentRatepays() &&
+        if ($this->orderEntity->getSpyPaymentRatepays() &&
             count($this->orderEntity->getSpyPaymentRatepays()->getData())
         ) {
             /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $paymentRatepayEntity */
@@ -50,14 +49,12 @@ class OrderPaymentInitMapper extends BaseMapper
                 ->setPaymentMethodName($paymentRatepayEntity->getPaymentType())
                 ->setTransactionId($paymentRatepayEntity->getTransactionId())
                 ->setTransactionShortId($paymentRatepayEntity->getTransactionShortId())
-                ->setDeviceFingerprint($paymentRatepayEntity->getDeviceFingerprint())
-            ;
+                ->setDeviceFingerprint($paymentRatepayEntity->getDeviceFingerprint());
         }
 
         $customerId = $this->orderEntity->getCustomer() ? $this->orderEntity->getCustomer()->getIdCustomer() : 0;
         $this->ratepayPaymentInitTransfer
-            ->setCustomerId($customerId)
-        ;
+            ->setCustomerId($customerId);
     }
 
 }

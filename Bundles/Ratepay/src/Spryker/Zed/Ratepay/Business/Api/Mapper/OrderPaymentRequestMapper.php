@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 class OrderPaymentRequestMapper extends BaseMapper
 {
@@ -38,21 +39,29 @@ class OrderPaymentRequestMapper extends BaseMapper
     protected $ratepayPaymentInitTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
+     */
+    protected $queryContainer;
+
+    /**
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
      */
     public function __construct(
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayPaymentInitTransfer $ratepayPaymentInitTransfer,
         OrderTransfer $orderTransfer,
-        SpySalesOrder $orderEntity
+        SpySalesOrder $orderEntity,
+        RatepayQueryContainerInterface $queryContainer
     ) {
         $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->ratepayPaymentInitTransfer = $ratepayPaymentInitTransfer;
         $this->orderTransfer = $orderTransfer;
         $this->orderEntity = $orderEntity;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -65,8 +74,7 @@ class OrderPaymentRequestMapper extends BaseMapper
         $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
         $expenses = $this->orderTransfer->getExpenses();
 
-        if (
-            $this->orderEntity->getSpyPaymentRatepays() &&
+        if ($this->orderEntity->getSpyPaymentRatepays() &&
             count($this->orderEntity->getSpyPaymentRatepays()->getData())
         ) {
             /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $paymentRatepayEntity */
@@ -91,11 +99,8 @@ class OrderPaymentRequestMapper extends BaseMapper
                 ->setInstallmentRate($paymentRatepayEntity->getInstallmentRate())
                 ->setInstallmentLastRate($paymentRatepayEntity->getInstallmentLastRate())
                 ->setInstallmentInterestRate($paymentRatepayEntity->getInstallmentInterestRate())
-                ->setInstallmentPaymentFirstDay($paymentRatepayEntity->getInstallmentPaymentFirstDay())
-            ;
+                ->setInstallmentPaymentFirstDay($paymentRatepayEntity->getInstallmentPaymentFirstDay());
         }
-
-
 
         $this->ratepayPaymentRequestTransfer
             ->setOrderId($this->orderEntity->getIdSalesOrder())
@@ -106,8 +111,7 @@ class OrderPaymentRequestMapper extends BaseMapper
             ->setCustomerEmail($this->orderTransfer->getEmail())
 
             ->setBillingAddress($billingAddress)
-            ->setShippingAddress($shippingAddress)
-        ;
+            ->setShippingAddress($shippingAddress);
         if (count($expenses)) {
             $this->ratepayPaymentRequestTransfer
                 ->setShippingTaxRate($expenses[0]->getTaxRate());
@@ -118,7 +122,23 @@ class OrderPaymentRequestMapper extends BaseMapper
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
-                $grouppedItems[$basketItem->getGroupKey()] = $basketItem;
+                $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
+                $ratepayOrderItem = $this->queryContainer
+                    ->queryPaymentItemByOrderIdAndSku($this->orderEntity->getIdSalesOrder(), $basketItem->getGroupKey())
+                    ->findOne();
+                if ($ratepayOrderItem) {
+                    /**
+                     * In Spryker system each Item has own discount,
+                     * but we need to send discount amount like in previous item.
+                     * That's why we save first
+                     */
+                    $grouppedItems[$basketItem->getGroupKey()]->setUnitGrossPriceWithProductOptions($ratepayOrderItem->getUnitGrossPriceWithProductOptions());
+                    $grouppedItems[$basketItem->getGroupKey()]->setUnitTotalDiscountAmountWithProductOption($ratepayOrderItem->getUnitTotalDiscountAmountWithProductOption());
+                    $grouppedItems[$basketItem->getGroupKey()]->setSumGrossPriceWithProductOptionAndDiscountAmounts($ratepayOrderItem->getSumGrossPriceWithProductOptionAndDiscountAmounts());
+                } else {
+                    $this->queryContainer
+                        ->addPaymentItem($grouppedItems[$basketItem->getGroupKey()]);
+                }
             }
         }
 
@@ -147,8 +167,7 @@ class OrderPaymentRequestMapper extends BaseMapper
             ->setAddress2($addressEntity->getAddress2())
             ->setAddress3($addressEntity->getAddress3())
             ->setCellPhone($addressEntity->getCellPhone())
-            ->setEmail($addressEntity->getEmail())
-        ;
+            ->setEmail($addressEntity->getEmail());
 
         return $addressTransfer;
     }

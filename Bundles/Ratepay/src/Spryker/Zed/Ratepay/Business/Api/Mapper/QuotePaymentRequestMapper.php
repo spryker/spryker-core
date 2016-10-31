@@ -78,8 +78,7 @@ class QuotePaymentRequestMapper extends BaseMapper
             ->setIpAddress($this->paymentData->getIpAddress())
 
             ->setBillingAddress($billingAddress)
-            ->setShippingAddress($shippingAddress)
-        ;
+            ->setShippingAddress($shippingAddress);
         if (count($expenses)) {
             $this->ratepayPaymentRequestTransfer
                 ->setShippingTaxRate($expenses[0]->getTaxRate());
@@ -138,7 +137,7 @@ class QuotePaymentRequestMapper extends BaseMapper
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
-                $grouppedItems[$basketItem->getGroupKey()] = $basketItem;
+                $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
         }
 

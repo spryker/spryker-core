@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Payment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
@@ -37,15 +36,13 @@ class PostSaveHook implements PostSaveHookInterface
      */
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        /** @var SpyPaymentRatepayLog $paymentLog */
+        /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
         $logRecord = $this->queryContainer
             ->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder())
             ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST)
             ->find()
-            ->getLast()
-        ;
-        if (
-            $logRecord
+            ->getLast();
+        if ($logRecord
             && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST]
         ) {
             $error = new CheckoutErrorTransfer();
@@ -60,10 +57,8 @@ class PostSaveHook implements PostSaveHookInterface
             ->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder())
             ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM)
             ->find()
-            ->getLast()
-        ;
-        if (
-            $logRecord
+            ->getLast();
+        if ($logRecord
             && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM]
         ) {
             $error = new CheckoutErrorTransfer();
