@@ -33,7 +33,7 @@ class BankAccountMapperTest extends AbstractMapperTest
 
         $this->assertEquals('iban', $this->requestTransfer->getBankAccount()->getIban());
         $this->assertEquals('bic', $this->requestTransfer->getBankAccount()->getBicSwift());
-        $this->assertEquals('holder', $this->requestTransfer->getBankAccount()->getOwner());
+        $this->assertEquals('fn ln', $this->requestTransfer->getBankAccount()->getOwner());
     }
 
 }

@@ -87,7 +87,7 @@ class ElvTest extends AbstractMethodMapperTest
         $this->assertNull($this->requestTransfer->getPayment()->getInstallmentDetails());
         $this->assertNull($this->requestTransfer->getPayment()->getDebitPayType());
 
-        $this->assertEquals('holder', $this->requestTransfer->getBankAccount()->getOwner());
+        $this->assertEquals('fn ln', $this->requestTransfer->getBankAccount()->getOwner());
         $this->assertEquals('bic', $this->requestTransfer->getBankAccount()->getBicSwift());
         $this->assertEquals('iban', $this->requestTransfer->getBankAccount()->getIban());
     }

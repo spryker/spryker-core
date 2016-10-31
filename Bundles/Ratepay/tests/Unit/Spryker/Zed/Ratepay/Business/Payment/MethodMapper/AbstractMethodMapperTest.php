@@ -14,7 +14,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
+use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery;
+use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog;
+use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Zed\Ratepay\Business\Api\ApiFactory;
@@ -332,14 +336,31 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     protected function getQueryContainerMock()
     {
         $queryContainer = $this->getMock(RatepayQueryContainerInterface::class);
-        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst']);
+
+        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst', 'filterByMessage']);
 
         $ratepayPaymentEntity = new SpyPaymentRatepay();
+        $salesOrder = new SpySalesOrder();
+        $ratepayPaymentEntity->setSpySalesOrder($salesOrder);
         $this->setRatepayPaymentEntityData($ratepayPaymentEntity);
 
         $queryPaymentsMock->method('findByFkSalesOrder')->willReturnSelf();
+        $queryPaymentsMock->method('filterByMessage')->willReturnSelf();
         $queryPaymentsMock->method('getFirst')->willReturn($ratepayPaymentEntity);
         $queryContainer->method('queryPayments')->willReturn($queryPaymentsMock);
+
+        $queryPaymentLogMock = $this->getMock(SpyPaymentRatepayLogQuery::class, ['findByFkSalesOrder', 'getData', 'filterByMessage']);
+        $queryPaymentLogMock->method('findByFkSalesOrder')->willReturnSelf();
+        $queryPaymentLogMock->method('filterByMessage')->willReturnSelf();
+        $queryPaymentLogMock->method('getData')->willReturn([]);
+        $queryContainer->method('queryPaymentLog')->willReturn($queryPaymentLogMock);
+
+
+        $paymentRatepayItemQuery = $this->getMock(SpyPaymentRatepayItemQuery::class, ['findOne']);
+        $paymentRatepayItemQuery->method('findOne')->willReturn(null);
+
+        $queryContainer->method('queryPaymentItemByOrderIdAndSku')->willReturn($paymentRatepayItemQuery);
+        $queryContainer->method('addPaymentItem')->willReturnSelf();
 
         return $queryContainer;
     }
@@ -350,7 +371,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     protected function testBasketAndItems()
     {
         //Basket
-        $this->assertEquals('18.00', $this->requestTransfer->getShoppingBasket()->getAmount());
+        $this->assertContains($this->requestTransfer->getShoppingBasket()->getAmount(), ['54.00', '18.00']);
         $this->assertEquals('iso3', $this->requestTransfer->getShoppingBasket()->getCurrency());
         $this->assertEquals(0, (float)$this->requestTransfer->getShoppingBasket()->getShippingUnitPrice());
         $this->assertEquals(0, (float)$this->requestTransfer->getShoppingBasket()->getShippingTaxRate());
