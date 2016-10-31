@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
-interface CustomerInterface
+interface ReaderInterface
 {
 
     /**
+     * @api
+     *
+     * @param int $idCustomer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getWishlist();
+    public function getWishlist($idCustomer);
 
 }

@@ -4,37 +4,21 @@
     <table name="spy_wishlist" phpName="SpyWishlist">
         <column name="id_wishlist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
-        <unique name="spy_wishlist-unique-fk_customer">
+        <column name="fk_product" required="true" type="INTEGER"/>
+
+        <unique name="spy_wishlist-unique-fk_customer-fk_product">
             <unique-column name="fk_customer"/>
+            <unique-column name="fk_product"/>
         </unique>
         <foreign-key name="spy_wishlist-fk_customer" foreignTable="spy_customer">
             <reference local="fk_customer" foreign="id_customer"/>
         </foreign-key>
+        <foreign-key name="spy_wishlist-fk_product" foreignTable="spy_product">
+            <reference local="fk_product" foreign="id_product"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
         <id-method-parameter value="spy_wishlist_pk_seq"/>
-    </table>
-
-    <table name="spy_wishlist_item" phpName="SpyWishlistItem">
-        <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_product" required="false" type="INTEGER"/>
-        <column name="fk_wishlist" required="true" type="INTEGER"/>
-        <column name="quantity" required="true" type="INTEGER"/>
-        <column name="added_at" required="true" type="TIMESTAMP"/>
-        <column name="group_key" required="false" type="VARCHAR"/>
-
-        <foreign-key name="spy_wishlist_item-fk_wishlist" foreignTable="spy_wishlist" phpName="SpyWishlist">
-            <reference foreign="id_wishlist" local="fk_wishlist"/>
-        </foreign-key>
-
-        <foreign-key name="spy_wishlist_item-fk_product" foreignTable="spy_product">
-            <reference foreign="id_product" local="fk_product"/>
-        </foreign-key>
-
-        <column name="fk_product_abstract" required="true" type="INTEGER"/>
-        <foreign-key name="spy_wishlist_item-fk_product_abstract" foreignTable="spy_product_abstract">
-            <reference foreign="id_product_abstract" local="fk_product_abstract"/>
-        </foreign-key>
-
-        <id-method-parameter value="spy_wishlist_item_pk_seq"/>
     </table>
 
 </database>

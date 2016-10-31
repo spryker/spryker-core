@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,61 +19,43 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistChangeTransfer $wishlistChange)
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->getFactory()->createAddOperator($wishlistChange)->executeOperation();
+        return $this->getFactory()
+            ->createWriter()
+            ->addItem($wishlistItemTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistChangeTransfer $wishlistChange)
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->getFactory()->createRemoveOperator($wishlistChange)->executeOperation();
+        return $this->getFactory()
+            ->createWriter()
+            ->removeItem($wishlistItemTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function decreaseQuantity(WishlistChangeTransfer $wishlistChange)
+    public function getCustomerWishlist($idCustomer)
     {
-        return $this->getFactory()->createDecreaseOperator($wishlistChange)->executeOperation();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
-    {
-        return $this->getFactory()->createIncreaseOperator($wishlistChange)->executeOperation();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function getCustomerWishlist(CustomerTransfer $customerTransfer)
-    {
-        return $this->getFactory()->createCustomer($customerTransfer)->getWishlist();
+        return $this->getFactory()
+            ->createReader()
+            ->getWishlist($idCustomer);
     }
 
 }

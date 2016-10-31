@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Wishlist\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -18,53 +19,33 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItemAction(WishlistChangeTransfer $changeTransfer)
+    public function addItemAction(WishlistItemTransfer $WishlistItemTransfer)
     {
-        return $this->getFacade()->addItem($changeTransfer);
+        return $this->getFacade()->addItem($WishlistItemTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItemAction(WishlistChangeTransfer $changeTransfer)
+    public function removeItemAction(WishlistItemTransfer $WishlistItemTransfer)
     {
-        return $this->getFacade()->removeItem($changeTransfer);
+        return $this->getFacade()->removeItem($WishlistItemTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $WishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function decreaseQuantityAction(WishlistChangeTransfer $changeTransfer)
+    public function getCustomerWishlistAction(WishlistTransfer $WishlistTransfer)
     {
-        return $this->getFacade()->decreaseQuantity($changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function increaseQuantityAction(WishlistChangeTransfer $changeTransfer)
-    {
-        return $this->getFacade()->increaseQuantity($changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function getCustomerWishlistAction(CustomerTransfer $customer)
-    {
-        return $this->getFacade()->getCustomerWishlist($customer);
+        return $this->getFacade()->getCustomerWishlist($WishlistTransfer);
     }
 
 }
