@@ -11,6 +11,8 @@ interface AuthPasswordResetSenderInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *

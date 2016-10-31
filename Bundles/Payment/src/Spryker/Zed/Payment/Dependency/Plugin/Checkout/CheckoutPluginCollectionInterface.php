@@ -11,6 +11,8 @@ interface CheckoutPluginCollectionInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface $plugin
      * @param string $provider
      * @param string $type
@@ -20,6 +22,8 @@ interface CheckoutPluginCollectionInterface
     public function add(CheckoutPluginInterface $plugin, $provider, $type);
 
     /**
+     * @api
+     *
      * @param string $provider
      * @param string $pluginType
      *
@@ -28,6 +32,8 @@ interface CheckoutPluginCollectionInterface
     public function get($provider, $pluginType);
 
     /**
+     * @api
+     *
      * @param string $provider
      * @param string $pluginType
      *

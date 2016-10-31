@@ -11,6 +11,8 @@ interface PasswordRestoreTokenSenderPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *
