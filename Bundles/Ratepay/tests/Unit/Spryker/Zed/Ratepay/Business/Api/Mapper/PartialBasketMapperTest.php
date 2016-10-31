@@ -39,7 +39,7 @@ class PartialBasketMapperTest extends AbstractMapperTest
             )
             ->map();
 
-        $this->assertEquals(115, $this->requestTransfer->getShoppingBasket()->getAmount());
+        $this->assertEquals(0, $this->requestTransfer->getShoppingBasket()->getAmount());
         $this->assertEquals('iso3', $this->requestTransfer->getShoppingBasket()->getCurrency());
     }
 

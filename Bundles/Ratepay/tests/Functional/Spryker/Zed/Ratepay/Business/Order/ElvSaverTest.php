@@ -66,7 +66,6 @@ class ElvSaverTest extends AbstractSaverTest
 
         $paymentMethodTransfer = $this->getPaymentTransferFromQuote();
         $this->assertEquals($paymentMethodTransfer->getBankAccountBic(), $this->paymentEntity->getBankAccountBic());
-        $this->assertEquals($paymentMethodTransfer->getBankAccountHolder(), $this->paymentEntity->getBankAccountHolder());
         $this->assertEquals($paymentMethodTransfer->getBankAccountIban(), $this->paymentEntity->getBankAccountIban());
     }
 

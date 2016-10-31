@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
@@ -71,6 +72,9 @@ class BasePaymentTest extends Test
         parent::setUp();
 
         $this->requestTransfer = new RatepayRequestTransfer();
+        $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())
+            ->getShoppingBasket()
+            ->setShippingTitle('Shipping costs');
         $this->mapperFactory = new MapperFactory($this->requestTransfer);
     }
 
