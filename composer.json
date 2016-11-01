@@ -43,6 +43,7 @@
       "Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/src",
       "Unit\\Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/tests",
       "Spryker\\Shared\\Availability\\": "Bundles/Availability/src",
+      "Unit\\Spryker\\Zed\\Availability\\": "Bundles/Availability/tests",
       "Acceptance\\Availability\\": "Bundles/Availability/tests",
       "Spryker\\Zed\\Availability\\": "Bundles/Availability/src",
       "Spryker\\Client\\Availability\\": "Bundles/Availability/src",

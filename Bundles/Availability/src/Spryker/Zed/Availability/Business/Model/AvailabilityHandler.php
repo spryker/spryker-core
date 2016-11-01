@@ -48,7 +48,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer
     ) {
-
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
         $this->touchFacade = $touchFacade;
@@ -180,7 +179,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 
-        $sumQuantity = (int)$this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
+        $sumQuantity = $this->queryContainer
+            ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 
         $availabilityAbstractEntity->setQuantity($sumQuantity);
