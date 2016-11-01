@@ -164,11 +164,16 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true)
     {
-        $query = $this->getSalesQueryContainer()->querySalesOrderItem();
-        $query->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', 'Sum')->select(['Sum']);
+        $salesOrderItemQuery = $this->getSalesQueryContainer()
+            ->querySalesOrderItem();
+
+        $salesOrderItemQuery->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', 'Sum')
+            ->select(['Sum']);
 
         if ($returnTest === false) {
-            $query->useOrderQuery()->filterByIsTest(false)->endUse();
+            $salesOrderItemQuery->useOrderQuery()
+                ->filterByIsTest(false)
+                ->endUse();
         }
 
         $stateNames = [];
@@ -176,10 +181,12 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             $stateNames[] = $state->getName();
         }
 
-        $query->useStateQuery()->filterByName($stateNames, Criteria::IN)->endUse();
-        $query->filterBySku($sku);
+        $salesOrderItemQuery->useStateQuery()
+            ->filterByName($stateNames, Criteria::IN)
+            ->endUse()
+            ->filterBySku($sku);
 
-        return $query;
+        return $salesOrderItemQuery;
     }
 
     /**
