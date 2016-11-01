@@ -7,11 +7,12 @@
 
 namespace Spryker\Client\Availability\KeyBuilder;
 
-use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 use Spryker\Shared\Availability\AvailabilityConstants;
+use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 class AvailabilityResourceKeyBuilder extends SharedResourceKeyBuilder
 {
+
     /**
      * @return string
      */

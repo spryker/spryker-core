@@ -9,5 +9,10 @@
         <property name="stocks" type="StockProduct[]" singular="StockProduct"/>
     </transfer>
 
+    <transfer name="StorageAvailability">
+        <property name="abstractProductQuantity" type="string" />
+        <property name="concreteProductQuantityItems" type="array" singular="concreteProductQuantityItem"/>
+    </transfer>
+
 </transfers>
 

@@ -7,11 +7,12 @@
 namespace Spryker\Client\Availability;
 
 use Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder;
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Availability\Storage\AvailabilityStorage;
+use Spryker\Client\Kernel\AbstractFactory;
 
 class AvailabilityFactory extends AbstractFactory
 {
+
     /**
      * @param string $locale
      *
@@ -49,4 +50,5 @@ class AvailabilityFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_LOCALE);
     }
+
 }

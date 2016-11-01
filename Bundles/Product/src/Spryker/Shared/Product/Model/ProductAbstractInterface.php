@@ -83,5 +83,4 @@ interface ProductAbstractInterface
      */
     public function getAbstractProductId();
 
-
 }

@@ -33,5 +33,4 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-
 }

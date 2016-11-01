@@ -5,7 +5,6 @@
  */
 namespace Spryker\Client\Availability;
 
-
 /**
  * @method \Spryker\Client\Availability\AvailabilityFactory getFactory()
  */
@@ -17,7 +16,8 @@ interface AvailabilityClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
+
 }

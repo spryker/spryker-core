@@ -20,7 +20,7 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      *
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
@@ -30,4 +30,5 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
 
         return $availability;
     }
+
 }

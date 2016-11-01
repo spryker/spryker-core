@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Availability\Storage;
 
+use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
@@ -43,14 +44,27 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailability($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storage->get($key);
 
-        return $availability;
+        return $this->mapStorageAvailabilityTransferFromStorage($availability);
+    }
+
+    /**
+     * @param array $availability
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     */
+    protected function mapStorageAvailabilityTransferFromStorage(array $availability)
+    {
+        $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
+        $storageAvailabilityTransfer->fromArray($availability);
+
+        return $storageAvailabilityTransfer;
     }
 
 }
