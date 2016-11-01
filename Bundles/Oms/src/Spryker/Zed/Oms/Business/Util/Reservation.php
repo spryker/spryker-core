@@ -81,7 +81,7 @@ class Reservation implements ReservationInterface
      */
     protected function sumProductQuantitiesForSku(array $states, $sku, $returnTest = true)
     {
-        return $this->queryContainer
+        return (int)$this->queryContainer
             ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
             ->findOne();
     }
@@ -108,7 +108,7 @@ class Reservation implements ReservationInterface
      */
     protected function saveReservation($sku)
     {
-        $reservationQuantity = (int)$this->sumReservedProductQuantitiesForSku($sku);
+        $reservationQuantity = $this->sumReservedProductQuantitiesForSku($sku);
         $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
         $reservationEntity->setReservationQuantity($reservationQuantity);
 

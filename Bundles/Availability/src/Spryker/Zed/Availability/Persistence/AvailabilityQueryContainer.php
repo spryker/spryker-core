@@ -47,10 +47,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySpyAvailabilityBySku($sku)
     {
-        $query = $this->getFactory()->createSpyAvailabilityQuery();
-        $query->filterBySku($sku);
-
-        return $query;
+        return $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->filterBySku($sku);
     }
 
     /**
@@ -62,7 +61,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySpyAvailabilityAbstractByAbstractSku($abstractSku)
     {
-        return $this->getFactory()->createSpyAvailabilityAbstractQuery()
+        return $this->getFactory()
+            ->createSpyAvailabilityAbstractQuery()
             ->filterByAbstractSku($abstractSku);
     }
 
@@ -75,7 +75,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
     {
-        return $this->getFactory()->createSpyAvailabilityAbstractQuery()
+        return $this->getFactory()
+            ->createSpyAvailabilityAbstractQuery()
             ->filterByIdAvailabilityAbstract($idAvailabilityAbstract);
     }
 
@@ -88,7 +89,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
     {
-        return $this->getFactory()->createSpyAvailabilityQuery()
+        return $this->getFactory()
+            ->createSpyAvailabilityQuery()
             ->filterByFkAvailabilityAbstract($idAvailabilityAbstract)
             ->withColumn('SUM(' . SpyAvailabilityTableMap::COL_QUANTITY . ')', self::SUM_QUANTITY)
             ->select([self::SUM_QUANTITY]);
@@ -101,7 +103,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySpyProductBySku($sku)
     {
-        return $this->getFactory()->getProductQueryContainer()->queryProductConcreteBySku($sku)
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductConcreteBySku($sku)
             ->innerJoinSpyProductAbstract()
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, self::ABSTRACT_SKU);
     }
@@ -172,7 +176,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySpyProductAbstractAvailability()
     {
-        return $this->getFactory()->getProductQueryContainer()->queryProductAbstract()
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductAbstract()
             ->addJoin(SpyProductAbstractTableMap::COL_SKU, SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU ,Criteria::INNER_JOIN)
             ->addJoin(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::LEFT_JOIN);
     }
@@ -223,7 +229,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function queryStockByIdProduct($idProduct)
     {
-        return $this->getFactory()->getStockQueryContainer()
+        return $this->getFactory()
+            ->getStockQueryContainer()
             ->queryStockByProducts($idProduct)
             ->useStockQuery()
                 ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
@@ -240,7 +247,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function queryAllStockType()
     {
-        return $this->getFactory()->getStockQueryContainer()
+        return $this->getFactory()
+            ->getStockQueryContainer()
             ->queryAllStockTypes();
     }
 

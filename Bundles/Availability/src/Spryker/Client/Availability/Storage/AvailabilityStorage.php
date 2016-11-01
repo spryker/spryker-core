@@ -51,7 +51,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storage->get($key);
 
-        return $this->mapStorageAvailabilityTransferFromStorage($availability);
+        return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
     }
 
     /**
@@ -59,7 +59,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
-    protected function mapStorageAvailabilityTransferFromStorage(array $availability)
+    protected function getMappedStorageAvailabilityTransferFromStorage(array $availability)
     {
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
         $storageAvailabilityTransfer->fromArray($availability);

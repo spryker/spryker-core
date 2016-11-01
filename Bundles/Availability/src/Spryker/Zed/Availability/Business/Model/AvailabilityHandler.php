@@ -61,7 +61,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        $oldQuantity = $this->getOldPhysicalQuantity($sku);
+        $oldQuantity = $this->findOldPhysicalQuantity($sku);
         $newQuantity = $this->getNewPhysicalQuantity($this->sellable->calculateStockForProduct($sku));
 
         $savedAvailabilityEntity = $this->saveCurrentAvailability($sku, $newQuantity);
@@ -155,7 +155,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return int|null
      */
-    protected function getOldPhysicalQuantity($sku)
+    protected function findOldPhysicalQuantity($sku)
     {
         $oldQuantity = null;
         $availabilityEntity = $this->querySpyAvailabilityBySku($sku)
@@ -179,7 +179,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 
-        $sumQuantity = $this->queryContainer
+        $sumQuantity = (int)$this->queryContainer
             ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
             ->findOne();
 

@@ -19,9 +19,9 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 
     /**
      * Specification:
-     *  - Check if product is never out of stock
-     *  - Check if product have stock in productStock table
-     *  - Check if have placed orders where items have statemachine state flagged as reserved
+     *  - Checks if product is never out of stock
+     *  - Checks if product have stock in productStock table
+     *  - Checks if have placed orders where items have statemachine state flagged as reserved
      *
      * @api
      *
@@ -39,8 +39,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 
     /**
      * Specification:
-     *  - Check if product have stock in productStock table
-     *  - Check if have placed orders where items have statemachine state flagged as reserved
+     *  - Checks if product have stock in productStock table
+     *  - Checks if have placed orders where items have statemachine state flagged as reserved
      *
      * @api
      *
@@ -58,7 +58,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     /**
      * Specification:
      *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
-     *  - Write error message into CheckoutResponseTransfer
+     *  - Writes error message into CheckoutResponseTransfer
      *
      * @api
      *
@@ -79,10 +79,10 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     /**
      *
      * Specification:
-     *  - Calculate current item stock, take into account reserved items
-     *  - Store new stock for concrete product
-     *  - Store sum of all concrete product stocks for abstract product
-     *  - Touch availability abstract collector
+     *  - Calculates current item stock, take into account reserved items
+     *  - Stores new stock for concrete product
+     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Touches availability abstract collector
      *
      * @api
      *
