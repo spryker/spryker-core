@@ -8,7 +8,7 @@
 namespace Spryker\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class WishlistStub implements WishlistStubInterface
@@ -28,53 +28,33 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistChangeTransfer $wishlistChange)
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistChange);
+        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistChangeTransfer $wishlistChange)
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistChange);
+        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function descreaseQuantity(WishlistChangeTransfer $wishlistChange)
+    public function getCustomerWishlist(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/decrease-quantity', $wishlistChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
-    {
-        return $this->zedStub->call('/wishlist/gateway/increase-quantity', $wishlistChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function getCustomerWishlist(CustomerTransfer $customer)
-    {
-        return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist', $customer);
+        return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist', $wishlistItemTransfer);
     }
 
 }

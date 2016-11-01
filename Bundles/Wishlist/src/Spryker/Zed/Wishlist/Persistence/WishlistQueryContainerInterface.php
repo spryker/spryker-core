@@ -19,6 +19,14 @@ interface WishlistQueryContainerInterface extends QueryContainerInterface
      */
     public function queryWishlist();
 
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    public function queryWishlistItem();
+
     /**
      * @api
      *
@@ -27,5 +35,14 @@ interface WishlistQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
     public function queryWishlistByCustomerId($idCustomer);
+
+    /**
+     * @api
+     *
+     * @param int $idWishlist
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    public function queryItemsByWishlistId($idWishlist);
 
 }

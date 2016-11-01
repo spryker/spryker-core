@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class WishlistTransferMapper implements WishlistTransferMapperInterface
@@ -17,11 +19,11 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     /**
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function convertWishlistItem(SpyWishlist $wishlistEntity)
+    public function convertWishlist(SpyWishlist $wishlistEntity)
     {
-        $wishlistTransfer = (new WishlistItemTransfer())
+        $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($wishlistEntity->toArray(), true);
 
         return $wishlistTransfer;
@@ -30,12 +32,40 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     /**
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return \Generated\Shared\Transfer\WishlistTransfer[]
      */
-    public function convertWishlistItemCollection(ObjectCollection $wishlistEntityCollection)
+    public function convertWishlistCollection(ObjectCollection $wishlistEntityCollection)
     {
         $transferList = [];
         foreach ($wishlistEntityCollection as $wishlistEntity) {
+            $transferList[] = $this->convertWishlist($wishlistEntity);
+        }
+
+        return $transferList;
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function convertWishlistItem(SpyWishlistItem $wishlistItemEntity)
+    {
+        $wishlistTransfer = (new WishlistItemTransfer())
+            ->fromArray($wishlistItemEntity->toArray(), true);
+
+        return $wishlistTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     */
+    public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection)
+    {
+        $transferList = [];
+        foreach ($wishlistItemEntityCollection as $wishlistEntity) {
             $transferList[] = $this->convertWishlistItem($wishlistEntity);
         }
 

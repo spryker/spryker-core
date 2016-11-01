@@ -15,54 +15,5 @@ use Generated\Shared\Transfer\ItemTransfer;
 interface WishlistClientInterface
 {
 
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function addItem(ItemTransfer $wishlistItem);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function increaseItemQuantity(ItemTransfer $wishlistItem);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function decreaseItemQuantity(ItemTransfer $wishlistItem);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function removeItem(ItemTransfer $wishlistItem);
-
-    /**
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function getWishlist();
-
-    /**
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function synchronizeSession();
 
 }

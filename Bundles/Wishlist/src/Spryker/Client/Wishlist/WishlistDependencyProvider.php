@@ -13,11 +13,11 @@ use Spryker\Client\Kernel\Container;
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
 
-    const SERVICE_ZED = 'service zed';
-    const SESSION = 'session';
-    const STORAGE = 'store';
-    const CLIENT_PRODUCT = 'client product';
-    const CLIENT_CUSTOMER = 'client customer';
+    const SERVICE_ZED = 'SERVICE_ZED';
+    const SESSION = 'SESSION';
+    const STORAGE = 'STORAGE';
+    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

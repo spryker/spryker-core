@@ -28,6 +28,16 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @api
      *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    public function queryWishlistItem()
+    {
+        return $this->getFactory()->createWishlistItemQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idCustomer
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
@@ -37,6 +47,20 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
         return $this->getFactory()
             ->createWishlistQuery()
             ->filterByFkCustomer($idCustomer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idWishlist
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    public function queryItemsByWishlistId($idWishlist)
+    {
+        return $this->getFactory()
+            ->createWishlistItemQuery()
+            ->filterByFkWishlist($idWishlist);
     }
 
 }

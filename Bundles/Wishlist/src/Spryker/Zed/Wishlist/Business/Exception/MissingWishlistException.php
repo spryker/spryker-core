@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Wishlist\Zed;
+namespace Spryker\Zed\Wishlist\Business\Exception;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
-
-interface WishlistStubInterface
+class MissingWishlistException extends \Exception
 {
 
 }
