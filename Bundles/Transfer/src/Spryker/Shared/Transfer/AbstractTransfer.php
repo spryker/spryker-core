@@ -13,7 +13,6 @@ use InvalidArgumentException;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
-use Throwable;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 abstract class AbstractTransfer implements TransferInterface, \Serializable
@@ -151,20 +150,21 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
     {
         $transferObjectsArray = new ArrayObject();
         foreach ($arrayObject as $arrayElement) {
-            if (is_array($arrayElement)) {
-                if ($this->isAssociativeArray($arrayElement)) {
-                    $transferObject = $this->createInstance($elementType);
-                    $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
-                    $transferObjectsArray->append($transferObject);
-                } else {
-                    foreach ($arrayElement as $arrayElementItem) {
-                        $transferObject = $this->createInstance($elementType);
-                        $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
-                        $transferObjectsArray->append($transferObject);
-                    }
-                }
-            } else {
+            if (!is_array($arrayElement)) {
                 $transferObjectsArray->append(new $elementType());
+                continue;
+            }
+
+            if ($this->isAssociativeArray($arrayElement)) {
+                $transferObject = $this->createInstance($elementType);
+                $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
+                $transferObjectsArray->append($transferObject);
+            } else {
+                foreach ($arrayElement as $arrayElementItem) {
+                    $transferObject = $this->createInstance($elementType);
+                    $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
+                    $transferObjectsArray->append($transferObject);
+                }
             }
         }
 
@@ -289,17 +289,11 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
 
         try {
             $this->$setter($value);
-        } catch (Throwable $e) {
+        } catch (Exception $exception) {
             throw new InvalidArgumentException(
                 sprintf('Could not call "%s(%s)" (type %s) in "%s". Maybe there is a type miss match.', $setter, $value, gettype($value), get_class($this)),
-                $e->getCode(),
-                $e
-            );
-        } catch (Exception $e) {
-            throw new InvalidArgumentException(
-                sprintf('Could not call "%s(%s)" (type %s) in "%s". Maybe there is a type miss match.', $setter, $value, gettype($value), get_class($this)),
-                $e->getCode(),
-                $e
+                $exception->getCode(),
+                $exception
             );
         }
     }
@@ -360,17 +354,17 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
      */
     private function hasProperty($property, array $properties, $ignoreMissingProperty)
     {
-        if (in_array($property, $properties) === false) {
-            if ($ignoreMissingProperty) {
-                return false;
-            } else {
-                throw new InvalidArgumentException(
-                    sprintf('Missing property "%s" in "%s"', $property, get_class($this))
-                );
-            }
+        if (in_array($property, $properties)) {
+            return true;
         }
 
-        return true;
+        if ($ignoreMissingProperty) {
+            return false;
+        }
+
+        throw new InvalidArgumentException(
+            sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+        );
     }
 
     /**
@@ -453,12 +447,16 @@ abstract class AbstractTransfer implements TransferInterface, \Serializable
         try {
             $this->fromArray(Json::decode($serialized, true), true);
             $this->initCollectionProperties();
-        } catch (\Exception $exception) {
-            throw new TransferUnserializationException(sprintf(
-                'Failed to unserialize %s. Updating or clearing your data source may solve this problem: %s',
-                get_class($this),
-                $exception->getMessage()
-            ));
+        } catch (Exception $exception) {
+            throw new TransferUnserializationException(
+                sprintf(
+                    'Failed to unserialize %s. Updating or clearing your data source may solve this problem: %s',
+                    get_class($this),
+                    $exception->getMessage()
+                ),
+                $exception->getCode(),
+                $exception
+            );
         }
     }
 
