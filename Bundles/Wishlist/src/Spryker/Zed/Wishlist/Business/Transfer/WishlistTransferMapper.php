@@ -42,5 +42,4 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         return $transferList;
     }
 
-
 }

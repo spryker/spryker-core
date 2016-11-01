@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
-
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Propel\Runtime\Collection\ObjectCollection;
 

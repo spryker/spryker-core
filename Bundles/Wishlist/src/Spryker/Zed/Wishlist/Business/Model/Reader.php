@@ -26,7 +26,7 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
-     * @param WishlistQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
      */
     public function __construct(
