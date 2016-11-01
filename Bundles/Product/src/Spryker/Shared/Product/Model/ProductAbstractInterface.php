@@ -73,4 +73,15 @@ interface ProductAbstractInterface
      */
     public function setName($name);
 
+    /**
+     * @param string $abstractProductId
+     */
+    public function setAbstractProductId($abstractProductId);
+
+    /**
+     * @return string
+     */
+    public function getAbstractProductId();
+
+
 }
