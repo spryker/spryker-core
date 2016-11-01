@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
@@ -25,11 +24,18 @@ class Writer implements WriterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Wishlist\Business\Model\ReaderInterface
      */
-    public function __construct(WishlistQueryContainerInterface $queryContainer)
+    protected $reader;
+
+    /**
+     * @param WishlistQueryContainerInterface $queryContainer
+     * @param ReaderInterface $reader
+     */
+    public function __construct(WishlistQueryContainerInterface $queryContainer, ReaderInterface $reader)
     {
         $this->queryContainer = $queryContainer;
+        $this->reader = $reader;
     }
 
     /**
@@ -68,7 +74,7 @@ class Writer implements WriterInterface
         $this->queryContainer->getConnection()->beginTransaction();
 
         $wishlistTransfer->requireIdWishlist();
-        $wishListEntity = $this->getWishlistEntityById($wishlistTransfer->getIdWishlist());
+        $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
         $this->assertWishlistUniqueNameWhenUpdating($wishlistTransfer);
 
         $wishListEntity->fromArray($wishlistTransfer->toArray());
@@ -89,7 +95,7 @@ class Writer implements WriterInterface
         $this->queryContainer->getConnection()->beginTransaction();
 
         $wishlistTransfer->requireIdWishlist();
-        $wishListEntity = $this->getWishlistEntityById($wishlistTransfer->getIdWishlist());
+        $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
 
         $this->removeItemCollection($wishlistTransfer);
         $wishListEntity->delete();
@@ -234,29 +240,6 @@ class Writer implements WriterInterface
                 $wishlistTransfer->getFkCustomer()
             ));
         }
-    }
-
-    /**
-     * @param int $idWishlist
-     *
-     * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
-     */
-    protected function getWishlistEntityById($idWishlist)
-    {
-        $wishListEntity = $this->queryContainer->queryWishlist()
-            ->filterByIdWishlist($idWishlist)
-            ->findOne();
-
-        if (!$wishListEntity) {
-            throw new MissingWishlistException(sprintf(
-                'Wishlist with id %s not found',
-                $idWishlist
-            ));
-        }
-
-        return $wishListEntity;
     }
 
 }

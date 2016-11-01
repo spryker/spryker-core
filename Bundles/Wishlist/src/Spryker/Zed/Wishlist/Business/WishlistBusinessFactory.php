@@ -36,7 +36,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     public function createWriter()
     {
         return new Writer(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createReader()
         );
     }
 

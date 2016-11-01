@@ -8,19 +8,12 @@
         <property name="fkCustomer" type="integer" />
         <property name="name" type="string" />
         <property name="items" type="WishlistItem[]" singular="item" />
+        <property name="itemsFilter" type="Filter" />
     </transfer>
 
     <transfer name="WishlistItem">
         <property name="fkWishlist" type="integer" />
         <property name="fkProduct" type="integer" />
-    </transfer>
-
-    <transfer name="WishlistOverviewRequest">
-        <property name="wishlist" type="Wishlist" />
-        <property name="limit" type="int" />
-        <property name="offset" type="int" />
-        <property name="orderBy" type="string" />
-        <property name="orderDirection" type="string" defalut="ASC" />
     </transfer>
 
 </transfers>

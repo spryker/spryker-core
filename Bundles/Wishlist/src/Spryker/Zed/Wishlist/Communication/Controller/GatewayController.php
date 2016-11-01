@@ -43,7 +43,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function getCustomerWishlistAction($idCustomer)
     {
-        return $this->getFacade()->getCustomerWishlist($idCustomer);
+        return $this->getFacade()->getCustomerWishlistCollection($idCustomer);
     }
 
 }

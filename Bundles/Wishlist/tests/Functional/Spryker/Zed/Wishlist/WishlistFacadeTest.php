@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Wishlist;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -134,6 +135,29 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
+    protected function setupBigWishlist()
+    {
+        for ($a=0; $a<100; $a++) {
+            $product = new SpyProduct();
+            $product->fromArray([
+                'sku' => 'concrete_sku_many_' . $a,
+                'attributes' => '{}',
+                'fk_product_abstract' => $this->productAbstract->getIdProductAbstract()
+            ]);
+            $product->save();
+
+            $wishlistItem = new SpyWishlistItem();
+            $wishlistItem->fromArray([
+                'fk_wishlist' => $this->wishlist->getIdWishlist(),
+                'fk_product' => $product->getIdProduct()
+            ]);
+            $wishlistItem->save();
+        }
+    }
+
+    /**
+     * @return void
+     */
     protected function setupWishlist()
     {
         $this->wishlist = new SpyWishlist();
@@ -163,7 +187,10 @@ class WishlistFacadeTest extends Test
      */
     public function SKIP_testGetWishListShouldReturnTransfer()
     {
-        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlist($this->idCustomer);
+        $wishlistTransfer = new WishlistTransfer();
+        $wishlistTransfer->setFkCustomer($this->customer->getIdCustomer());
+
+        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlistCollection($wishlistTransfer);
 
         $this->assertInstanceOf(WishlistTransfer::class, $wishlistTransfer);
     }
@@ -173,9 +200,34 @@ class WishlistFacadeTest extends Test
      */
     public function SKIP_testGetWishListShouldReturnTransferWithTwoItems()
     {
-        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlist($this->idCustomer);
+        $wishlistTransfer = (new WishlistTransfer())
+            ->setFkCustomer($this->customer->getIdCustomer())
+            ->setName($this->wishlist->getName());
+
+        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlistByName($wishlistTransfer);
 
         $this->assertCount(2, $wishlistTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWishListShouldReturnFilteredItems()
+    {
+        $this->setupBigWishlist();
+
+        $filter = (new FilterTransfer())
+            ->setLimit(50)
+            ->setOffset(0);
+
+        $wishlistTransfer = (new WishlistTransfer())
+            ->setFkCustomer($this->customer->getIdCustomer())
+            ->setName($this->wishlist->getName())
+            ->setItemsFilter($filter);
+
+        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlistByName($wishlistTransfer);
+
+        $this->assertCount(50, $wishlistTransfer->getItems());
     }
 
     /**

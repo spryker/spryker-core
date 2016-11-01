@@ -79,10 +79,12 @@ interface WishlistFacadeInterface
     /**
      * @api
      *
-     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlist($idCustomer);
+    public function getCustomerWishlistByName(WishlistTransfer $wishlistTransfer);
+
+
 
 }
