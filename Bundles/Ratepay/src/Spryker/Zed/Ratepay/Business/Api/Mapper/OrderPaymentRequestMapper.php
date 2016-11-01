@@ -105,7 +105,7 @@ class OrderPaymentRequestMapper extends BaseMapper
         $this->ratepayPaymentRequestTransfer
             ->setOrderId($this->orderEntity->getIdSalesOrder())
             ->setRatepayPaymentInit($this->ratepayPaymentInitTransfer)
-            ->setGrandTotal($totalsTransfer->requireGrandTotal()->getGrandTotal())
+//            ->setGrandTotal($totalsTransfer->requireGrandTotal()->getGrandTotal())
             ->setExpenseTotal($totalsTransfer->requireExpenseTotal()->getExpenseTotal())
 
             ->setCustomerEmail($this->orderTransfer->getEmail())
@@ -142,9 +142,14 @@ class OrderPaymentRequestMapper extends BaseMapper
             }
         }
 
+        $grandTotal = $totalsTransfer->requireExpenseTotal()->getExpenseTotal();
         foreach ($grouppedItems as $basketItem) {
             $this->ratepayPaymentRequestTransfer->addItem($basketItem);
+            $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts() * $basketItem->getQuantity();
         }
+
+        $this->ratepayPaymentRequestTransfer
+            ->setGrandTotal($grandTotal);
     }
 
     /**
