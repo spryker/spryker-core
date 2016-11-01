@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -231,7 +232,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param string $url
+     * @param string $url @deprecated Will be removed with the next major
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -239,7 +240,14 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     {
         $pageManager = $this->getFactory()->createPageManager();
 
-        return $pageManager->createPageUrl($pageTransfer, $url);
+        // For BC reasons only
+        if ($url) {
+            $urlTransfer = new UrlTransfer();
+            $urlTransfer->setUrl($url);
+            $pageTransfer->setUrl($urlTransfer);
+        }
+
+        return $pageManager->createPageUrl($pageTransfer);
     }
 
     /**
