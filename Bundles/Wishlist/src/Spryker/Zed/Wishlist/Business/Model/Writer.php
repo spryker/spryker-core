@@ -8,9 +8,23 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
+     */
+    public function __construct(WishlistQueryContainerInterface $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -19,6 +33,15 @@ class Writer implements WriterInterface
      */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
+        $this->assertWishlistItem($wishlistItemTransfer);
+
+        $entity = $this->queryContainer->queryWishlist()
+            ->filterByFkCustomer($wishlistItemTransfer->getFkCustomer())
+            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
+            ->findOneOrCreate();
+
+        $entity->save();
+
         return $wishlistItemTransfer;
     }
 
@@ -29,7 +52,25 @@ class Writer implements WriterInterface
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
+        $this->assertWishlistItem($wishlistItemTransfer);
+
+        $this->queryContainer->queryWishlist()
+            ->filterByFkCustomer($wishlistItemTransfer->getFkProduct())
+            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
+            ->delete();
+
         return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return void
+     */
+    protected function assertWishlistItem(WishlistItemTransfer $wishlistItemTransfer)
+    {
+        $wishlistItemTransfer->requireFkCustomer();
+        $wishlistItemTransfer->requireFkProduct();
     }
 
 }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Wishlist\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -39,13 +37,13 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $WishlistTransfer
+     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlistAction(WishlistTransfer $WishlistTransfer)
+    public function getCustomerWishlistAction($idCustomer)
     {
-        return $this->getFacade()->getCustomerWishlist($WishlistTransfer);
+        return $this->getFacade()->getCustomerWishlist($idCustomer);
     }
 
 }

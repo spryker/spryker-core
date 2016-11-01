@@ -18,55 +18,25 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @api
      *
-     * @param int $idWishlist
-     * @param int $idProduct
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
-     */
-    public function queryCustomerWishlistByProductId($idWishlist, $idProduct)
-    {
-        $query = $this->getFactory()->createWishlistItemQuery()
-            ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($idProduct);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idWishlist
-     * @param string $groupKey
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
-     */
-    public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey)
-    {
-        $query = $this->getFactory()->createWishlistItemQuery()
-            ->filterByFkWishlist($idWishlist)
-            ->filterByGroupKey($groupKey);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
-     */
-    public function queryWishlistItem()
-    {
-        return $this->getFactory()->createWishlistItemQuery();
-    }
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
     public function queryWishlist()
     {
         return $this->getFactory()->createWishlistQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
+     */
+    public function queryWishlistByCustomerId($idCustomer)
+    {
+        return $this->getFactory()
+            ->createWishlistQuery()
+            ->filterByFkCustomer($idCustomer);
     }
 
 }

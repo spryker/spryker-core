@@ -9,9 +9,8 @@ namespace Spryker\Zed\Wishlist\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
-use Spryker\Zed\Wishlist\Business\Model\ReaderInterface;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
-use Spryker\Zed\Wishlist\Business\Model\WriterInterface;
+use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
 
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer getQueryContainer()
@@ -21,19 +20,32 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ReaderInterface
+     * @return \Spryker\Zed\Wishlist\Business\Model\ReaderInterface
      */
     public function createReader()
     {
-        return new Reader();
+        return new Reader(
+            $this->getQueryContainer(),
+            $this->createTransferMapper()
+        );
     }
 
     /**
-     * @return WriterInterface
+     * @return \Spryker\Zed\Wishlist\Business\Model\WriterInterface
      */
     public function createWriter()
     {
-        return new Writer();
+        return new Writer(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface
+     */
+    protected function createTransferMapper()
+    {
+        return new WishlistTransferMapper();
     }
 
 }
