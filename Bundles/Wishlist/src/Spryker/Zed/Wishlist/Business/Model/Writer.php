@@ -55,7 +55,7 @@ class Writer implements WriterInterface
         $this->assertWishlistItem($wishlistItemTransfer);
 
         $this->queryContainer->queryWishlist()
-            ->filterByFkCustomer($wishlistItemTransfer->getFkProduct())
+            ->filterByFkCustomer($wishlistItemTransfer->getFkCustomer())
             ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
             ->delete();
 

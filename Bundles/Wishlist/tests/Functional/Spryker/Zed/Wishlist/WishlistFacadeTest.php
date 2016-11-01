@@ -159,13 +159,55 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
-    public function testAddItemShouldAddItemOnlyOnce()
+    public function testAddItemShouldNotThrowExceptionWhenItemAlreadyExists()
     {
         $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setFkCustomer($this->idCustomer)
             ->setFkProduct($this->idProduct);
 
         $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
+
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
+        $this->assertWishlistItemCount(2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveShouldNotThrowExceptionWhenItemIsAlreadyRemoved()
+    {
+        $this->wishlistQueryContainer
+            ->queryWishlistByCustomerId($this->idCustomer)
+            ->filterByFkProduct($this->idProduct)
+            ->delete();
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setFkCustomer($this->idCustomer)
+            ->setFkProduct($this->idProduct);
+
+        $wishlistItemTransfer = $this->wishlistFacade->removeItem($wishlistItemTransfer);
+
+        $this->assertWishlistItemCount(1);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveItemShouldRemoveItem()
+    {
+        $product = new SpyProduct();
+        $product->fromArray([
+            'sku' => 'concrete_sku_3',
+            'attributes' => '{}',
+            'fk_product_abstract' => $this->idProductAbstract
+        ]);
+        $product->save();
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setFkCustomer($this->idCustomer)
+            ->setFkProduct($product->getIdProduct());
+
+        $wishlistItemTransfer = $this->wishlistFacade->removeItem($wishlistItemTransfer);
 
         $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
         $this->assertWishlistItemCount(2);
