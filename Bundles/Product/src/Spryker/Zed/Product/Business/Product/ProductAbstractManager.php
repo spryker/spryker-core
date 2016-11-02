@@ -310,9 +310,13 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             ->filterByIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->findOneOrCreate();
 
-        $productAbstractEntity
-            ->setAttributes($jsonAttributes)
-            ->setSku($productAbstractTransfer->getSku());
+        $productAbstractData = $productAbstractTransfer->modifiedToArray();
+        if (isset($productAbstractData[ProductAbstractTransfer::ATTRIBUTES])) {
+            unset($productAbstractData[ProductAbstractTransfer::ATTRIBUTES]);
+        }
+
+        $productAbstractEntity->fromArray($productAbstractData);
+        $productAbstractEntity->setAttributes($jsonAttributes);
 
         $productAbstractEntity->save();
 

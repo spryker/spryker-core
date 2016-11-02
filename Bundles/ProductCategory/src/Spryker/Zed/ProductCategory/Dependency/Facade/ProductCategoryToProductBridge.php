@@ -38,7 +38,7 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
      *
      * @return int
      */
-    public function getProductAbstractIdBySku($sku)
+    public function findProductAbstractIdBySku($sku)
     {
         return $this->productFacade->findProductAbstractIdBySku($sku);
     }
