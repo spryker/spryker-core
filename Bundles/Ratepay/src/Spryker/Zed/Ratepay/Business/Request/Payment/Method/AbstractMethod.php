@@ -295,25 +295,14 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $needToSendShipping = false)
     {
         $grouppedItems = [];
+        $discountTotal = 0;
         foreach ($orderItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
-                $ratepayOrderItem = $this->loadOrderPaymentItemByOrderIdAndSku($dataTransfer->getIdSalesOrder(), $basketItem->getGroupKey());
-                if ($ratepayOrderItem) {
-                    /**
-                     * In Spryker system each Item has own discount,
-                     * but we need to send discount amount like in previous item.
-                     * That's why we save first
-                     */
-                    $grouppedItems[$basketItem->getGroupKey()]->setUnitGrossPriceWithProductOptions($ratepayOrderItem->getUnitGrossPriceWithProductOptions());
-                    $grouppedItems[$basketItem->getGroupKey()]->setUnitTotalDiscountAmountWithProductOption($ratepayOrderItem->getUnitTotalDiscountAmountWithProductOption());
-                    $grouppedItems[$basketItem->getGroupKey()]->setSumGrossPriceWithProductOptionAndDiscountAmounts($ratepayOrderItem->getSumGrossPriceWithProductOptionAndDiscountAmounts());
-                } else {
-                    $this->addOrderPaymentItem($grouppedItems[$basketItem->getGroupKey()]);
-                }
             }
+            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
         }
 
         foreach ($grouppedItems as $basketItem) {
@@ -323,7 +312,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         }
 
         $this->mapperFactory
-            ->getPartialBasketMapper($dataTransfer, $paymentData, $grouppedItems, $needToSendShipping)
+            ->getPartialBasketMapper($dataTransfer, $paymentData, $grouppedItems, $needToSendShipping, $discountTotal)
             ->map();
     }
 

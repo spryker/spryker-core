@@ -52,6 +52,7 @@ class BasketMapper extends BaseMapper
     {
         $shippingUnitPrice = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
         $grandTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
+        $discountTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireDiscountTotal()->getDiscountTotal());
 
         $this->requestTransfer
             ->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
@@ -63,7 +64,7 @@ class BasketMapper extends BaseMapper
             ->setShippingTaxRate($this->ratepayPaymentRequestTransfer->getShippingTaxRate())
 
             ->setDiscountTitle(self::DEFAULT_DISCOUNT_NODE_VALUE)
-            ->setDiscountUnitPrice(self::DEFAULT_DISCOUNT_UNIT_PRICE * self::BASKET_DISCOUNT_COEFFICIENT)
+            ->setDiscountUnitPrice($discountTotal * self::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate(self::DEFAULT_DISCOUNT_TAX_RATE);
     }
 

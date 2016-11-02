@@ -56,10 +56,10 @@ class BasketItemMapper extends BaseMapper
             ->setDescriptionAddition($this->itemTransfer->getDescriptionAddition())
             ->setUnitPriceGross($itemPrice);
 
-        $itemDiscount = $this->getBasketItemDiscount();
-        if ($itemDiscount) {
-            $itemTransfer->setDiscount($itemDiscount);
-        }
+//        $itemDiscount = $this->getBasketItemDiscount();
+//        if ($itemDiscount) {
+//            $itemTransfer->setDiscount($itemDiscount);
+//        }
 
         $productOptions = [];
         foreach ($this->itemTransfer->getProductOptions() as $productOption) {
