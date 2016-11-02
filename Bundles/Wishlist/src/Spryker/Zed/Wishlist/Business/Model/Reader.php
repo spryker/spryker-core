@@ -115,9 +115,9 @@ class Reader implements ReaderInterface
 
         if (!$wishlistEntity) {
             throw new MissingWishlistException(sprintf(
-                'Wishlist: %s for customer: %s not found',
-                $idCustomer,
-                $name
+                'Wishlist: %s for customer with id: %s not found',
+                $name,
+                $idCustomer
             ));
         }
 
