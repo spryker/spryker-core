@@ -38,6 +38,11 @@ class PartialBasketMapper extends BaseMapper
     protected $discountTotal;
 
     /**
+     * @var float
+     */
+    protected $discountTaxRate;
+
+    /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
      */
     protected $requestTransfer;
@@ -48,6 +53,7 @@ class PartialBasketMapper extends BaseMapper
      * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
      * @param bool $needToSendShipping
      * @param int $discountTotal
+     * @param float $discountTaxRate
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
@@ -56,6 +62,7 @@ class PartialBasketMapper extends BaseMapper
         array $basketItems,
         $needToSendShipping,
         $discountTotal,
+        $discountTaxRate,
         RatepayRequestTransfer $requestTransfer
     ) {
 
@@ -64,6 +71,7 @@ class PartialBasketMapper extends BaseMapper
         $this->basketItems = $basketItems;
         $this->needToSendShipping = $needToSendShipping;
         $this->discountTotal = $discountTotal;
+        $this->discountTaxRate = $discountTaxRate;
         $this->requestTransfer = $requestTransfer;
     }
 
@@ -85,7 +93,7 @@ class PartialBasketMapper extends BaseMapper
 
             ->setDiscountTitle(BasketMapper::DEFAULT_DISCOUNT_NODE_VALUE)
             ->setDiscountUnitPrice($this->centsToDecimal($this->discountTotal) * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
-            ->setDiscountTaxRate(BasketMapper::DEFAULT_DISCOUNT_TAX_RATE);
+            ->setDiscountTaxRate($this->discountTaxRate);
         $grandTotal -= $this->discountTotal;
 
         if ($this->needToSendShipping) {

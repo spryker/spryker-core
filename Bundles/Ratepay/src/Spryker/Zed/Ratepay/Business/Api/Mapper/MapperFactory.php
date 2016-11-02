@@ -178,6 +178,7 @@ class MapperFactory extends AbstractBusinessFactory
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param bool $needToSendShipping
      * @param int $discountTotal
+     * @param float $discountTaxRate
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PartialBasketMapper
      */
@@ -186,7 +187,8 @@ class MapperFactory extends AbstractBusinessFactory
         $ratepayPaymentTransfer,
         array $orderItems,
         $needToSendShipping = false,
-        $discountTotal = 0
+        $discountTotal = 0,
+        $discountTaxRate = 0
     ) {
         return new PartialBasketMapper(
             $quoteTransfer,
@@ -194,6 +196,7 @@ class MapperFactory extends AbstractBusinessFactory
             $orderItems,
             $needToSendShipping,
             $discountTotal,
+            $discountTaxRate,
             $this->requestTransfer
         );
     }
