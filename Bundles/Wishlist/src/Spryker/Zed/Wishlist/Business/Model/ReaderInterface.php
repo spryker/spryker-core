@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 interface ReaderInterface
@@ -19,7 +21,14 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlistByName(WishlistTransfer $wishlistTransfer);
+    public function getWishlistByName(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
     /**
      * @param int $idWishlist

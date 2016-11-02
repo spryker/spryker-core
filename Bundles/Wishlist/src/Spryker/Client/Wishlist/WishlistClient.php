@@ -8,6 +8,7 @@
 namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -86,7 +87,17 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     public function getWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->getZedStub()->getCustomerWishlist($wishlistTransfer);
+        return $this->getZedStub()->getWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
     }
 
     /**

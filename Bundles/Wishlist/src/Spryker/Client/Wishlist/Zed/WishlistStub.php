@@ -8,6 +8,7 @@
 namespace Spryker\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -82,9 +83,19 @@ class WishlistStub implements WishlistStubInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlist(WishlistTransfer $wishlistTransfer)
+    public function getWishlist(WishlistTransfer $wishlistTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist', $wishlistTransfer);
+        return $this->zedStub->call('/wishlist/gateway/get-wishlist', $wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return $this->zedStub->call('/wishlist/gateway/get-wishlist-overview', $wishlistOverviewRequestTransfer);
     }
 
 }

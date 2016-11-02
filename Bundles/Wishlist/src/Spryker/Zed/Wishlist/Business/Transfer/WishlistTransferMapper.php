@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewProductTransfer;
+use Generated\Shared\Transfer\WishlistProductOverviewTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
@@ -51,10 +54,10 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
      */
     public function convertWishlistItem(SpyWishlistItem $wishlistItemEntity)
     {
-        $wishlistTransfer = (new WishlistItemTransfer())
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->fromArray($wishlistItemEntity->toArray(), true);
 
-        return $wishlistTransfer;
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -67,6 +70,41 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         $transferList = [];
         foreach ($wishlistItemEntityCollection as $wishlistEntity) {
             $transferList[] = $this->convertWishlistItem($wishlistEntity);
+        }
+
+        return $transferList;
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewProductTransfer
+     */
+    public function convertWishlistOverviewProduct(SpyWishlistItem $wishlistItemEntity)
+    {
+        $wishlistOverviewItemTransfer = (new WishlistOverviewProductTransfer())
+            ->fromArray($wishlistItemEntity->toArray(), true);
+
+        $wishlistOverviewItemTransfer
+            ->setIdProduct($wishlistItemEntity->getSpyProduct()->getIdProduct())
+            ->setSku($wishlistItemEntity->getSpyProduct()->getSku())
+            ->setName($wishlistItemEntity->getSpyProduct()->getSpyProductLocalizedAttributess()->getFirst()->getName())
+            ->setDescription($wishlistItemEntity->getSpyProduct()->getSpyProductLocalizedAttributess()->getFirst()->getDescription())
+            ->setFkLocale($wishlistItemEntity->getSpyProduct()->getSpyProductLocalizedAttributess()->getFirst()->getFkLocale());
+
+        return $wishlistOverviewItemTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewProductTransfer[]
+     */
+    public function convertWishlistOverviewProductCollection(ObjectCollection $wishlistItemEntityCollection)
+    {
+        $transferList = [];
+        foreach ($wishlistItemEntityCollection as $wishlistEntity) {
+            $transferList[] = $this->convertWishlistOverviewProduct($wishlistEntity);
         }
 
         return $transferList;

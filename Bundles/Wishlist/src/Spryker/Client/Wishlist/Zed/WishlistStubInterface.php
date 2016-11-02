@@ -8,6 +8,7 @@
 namespace Spryker\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistStubInterface
@@ -53,6 +54,15 @@ interface WishlistStubInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlist(WishlistTransfer $wishlistTransfer);
+    public function getWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
+
+
 
 }

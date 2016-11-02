@@ -9,11 +9,17 @@ namespace Spryker\Zed\Wishlist\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Generated\Shared\Transfer\WishlistOverviewTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -30,15 +36,23 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
+     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface $localeFacade
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
-        WishlistTransferMapperInterface $transferMapper
+        WishlistTransferMapperInterface $transferMapper,
+        WishlistToLocaleInterface $localeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->transferMapper = $transferMapper;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -46,7 +60,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlistByName(WishlistTransfer $wishlistTransfer)
+    public function getWishlistByName(WishlistTransfer $wishlistTransfer)
     {
         $wishlistTransfer->requireFkCustomer();
         $wishlistTransfer->requireName();
@@ -56,23 +70,69 @@ class Reader implements ReaderInterface
             $wishlistTransfer->getName()
         );
 
-        $filter = $this->mergeDefaultFilter(
-            $wishlistTransfer->getItemsFilter()
+        return $this->transferMapper->convertWishlist($wishlistEntity);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        $wishlistOverviewRequestTransfer->requireWishlist();
+        $wishlistOverviewRequestTransfer->requireLocaleCode();
+
+        $wishlistTransfer = $wishlistOverviewRequestTransfer->getWishlist();
+        $wishlistTransfer->requireFkCustomer();
+        $wishlistTransfer->requireName();
+
+        $wishlistOverviewResponseTransfer = (new WishlistOverviewResponseTransfer())
+            ->setWishlist($wishlistTransfer);
+
+        $wishlistEntity = $this->queryContainer
+            ->queryWishlistByCustomerId($wishlistTransfer->getFkCustomer())
+            ->filterByName($wishlistTransfer->getName())
+            ->findOne();
+
+        if (!$wishlistEntity) {
+            return $wishlistOverviewResponseTransfer;
+        }
+
+        $localeTransfer = $this->localeFacade->getLocale($wishlistOverviewRequestTransfer->getLocaleCode());
+        $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
+
+        $filterCriteria = new PropelFilterCriteria(
+            $this->mergeDefaultFilter(
+                $wishlistOverviewRequestTransfer->getFilter()
+            )
         );
 
-        $filterCriteria = new PropelFilterCriteria($filter);
         $itemCollection = $this->queryContainer
             ->queryItemsByWishlistId($wishlistEntity->getIdWishlist())
             ->mergeWith($filterCriteria->toCriteria())
+            ->useSpyProductQuery()
+                ->joinSpyProductLocalizedAttributes()
+                ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . '=' . $localeTransfer->getIdLocale())
+                ->useSpyProductImageSetQuery()
+                    ->useSpyProductImageSetToProductImageQuery()
+                        ->joinSpyProductImage()
+                    ->endUse()
+                    ->where(SpyProductImageSetTableMap::COL_FK_LOCALE . '=' . $localeTransfer->getIdLocale())
+                ->endUse()
+            ->endUse()
             ->find();
 
-        $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
-        $wishlistItems = $this->transferMapper->convertWishlistItemCollection($itemCollection);
-        $wishlistTransfer->setItems(new ArrayObject(
-            $wishlistItems
+
+        $wishlistOverviewProducts = $this->transferMapper->convertWishlistOverviewProductCollection($itemCollection);
+        $wishlistOverviewResponseTransfer->setWishlist($wishlistTransfer);
+        $wishlistOverviewResponseTransfer->setProducts(new ArrayObject(
+            $wishlistOverviewProducts
         ));
 
-        return $wishlistTransfer;
+        return $wishlistOverviewResponseTransfer;
     }
 
     /**
@@ -147,6 +207,20 @@ class Reader implements ReaderInterface
 
         return (new FilterTransfer())
             ->fromArray($data);
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function hasCustomerWishlist($idCustomer, $name)
+    {
+        return $this->queryContainer
+            ->queryWishlistByCustomerId($idCustomer)
+            ->filterByName($name)
+            ->count() > 0;
     }
 
 }

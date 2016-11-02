@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -63,14 +64,15 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param array|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return void
      */
-    public function addItemCollection(WishlistTransfer $wishlistTransfer)
+    public function addItemCollection(WishlistTransfer $wishlistTransfer, array $wishlistItemCollection)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
-            ->addItemCollection($wishlistTransfer);
+            ->addItemCollection($wishlistTransfer, $wishlistItemCollection);
     }
 
     /**
@@ -78,13 +80,13 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return void
      */
     public function removeItemCollection(WishlistTransfer $wishlistTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
-            ->removeItemCollection($wishlistTransfer);
+            ->emptyWishlist($wishlistTransfer);
     }
 
     /**
@@ -106,11 +108,11 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createWriter()
             ->removeItem($wishlistItemTransfer);
     }
@@ -122,11 +124,25 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlistByName(WishlistTransfer $wishlistTransfer)
+    public function getWishlistByName(WishlistTransfer $wishlistTransfer)
     {
         return $this->getFactory()
             ->createReader()
-            ->getCustomerWishlistByName($wishlistTransfer);
+            ->getWishlistByName($wishlistTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createReader()
+            ->getWishlistOverview($wishlistOverviewRequestTransfer);
     }
 
 }

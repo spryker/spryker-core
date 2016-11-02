@@ -29,8 +29,8 @@ class Writer implements WriterInterface
     protected $reader;
 
     /**
-     * @param WishlistQueryContainerInterface $queryContainer
-     * @param ReaderInterface $reader
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
      */
     public function __construct(WishlistQueryContainerInterface $queryContainer, ReaderInterface $reader)
     {
@@ -50,14 +50,10 @@ class Writer implements WriterInterface
         $this->assertWishlistUniqueName($wishlistTransfer);
 
         $wishlistEntity = new SpyWishlist();
-        $data = $wishlistTransfer->toArray();
-        unset($data[WishlistTransfer::ID_WISHLIST]);
-        $wishlistEntity->fromArray($data);
+        $wishlistEntity->fromArray($wishlistTransfer->toArray());
         $wishlistEntity->save();
 
         $wishlistTransfer->setIdWishlist($wishlistEntity->getIdWishlist());
-
-        $this->addItemCollection($wishlistTransfer);
 
         $this->queryContainer->getConnection()->commit();
 
@@ -97,7 +93,7 @@ class Writer implements WriterInterface
         $wishlistTransfer->requireIdWishlist();
         $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
 
-        $this->removeItemCollection($wishlistTransfer);
+        $this->emptyWishlist($wishlistTransfer);
         $wishListEntity->delete();
 
         $this->queryContainer->getConnection()->commit();
@@ -107,37 +103,32 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param array|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return void
      */
-    public function addItemCollection(WishlistTransfer $wishlistTransfer)
+    public function addItemCollection(WishlistTransfer $wishlistTransfer, array $wishlistItemCollection)
     {
         $wishlistTransfer->requireIdWishlist();
 
-        foreach ($wishlistTransfer->getItems() as $itemTransfer) {
+        foreach ($wishlistItemCollection as $itemTransfer) {
             $itemTransfer->setFkWishlist($wishlistTransfer->getIdWishlist());
             $this->addItem($itemTransfer);
         }
-
-        return $wishlistTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return void
      */
-    public function removeItemCollection(WishlistTransfer $wishlistTransfer)
+    public function emptyWishlist(WishlistTransfer $wishlistTransfer)
     {
         $wishlistTransfer->requireIdWishlist();
 
         $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($wishlistTransfer->getIdWishlist())
             ->deleteAll();
-
-        $wishlistTransfer->setItems(new \ArrayObject());
-
-        return $wishlistTransfer;
     }
 
     /**
@@ -162,7 +153,7 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
@@ -172,8 +163,6 @@ class Writer implements WriterInterface
             ->filterByFkWishlist($wishlistItemTransfer->getFkWishlist())
             ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
             ->delete();
-
-        return $wishlistItemTransfer;
     }
 
     /**

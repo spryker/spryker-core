@@ -199,7 +199,7 @@ class WishlistFacadeTest extends Test
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setName($this->wishlist->getName());
 
-        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlistByName($wishlistTransfer);
+        $wishlistTransfer = $this->wishlistFacade->getWishlistByName($wishlistTransfer);
 
         $this->assertCount(2, $wishlistTransfer->getItems());
     }
@@ -221,7 +221,7 @@ class WishlistFacadeTest extends Test
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setName('INVALIDNAME');
 
-        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlistByName($wishlistTransfer);
+        $wishlistTransfer = $this->wishlistFacade->getWishlistByName($wishlistTransfer);
     }
 
     /**
@@ -240,7 +240,7 @@ class WishlistFacadeTest extends Test
             ->setName($this->wishlist->getName())
             ->setItemsFilter($filter);
 
-        $wishlistTransfer = $this->wishlistFacade->getCustomerWishlistByName($wishlistTransfer);
+        $wishlistTransfer = $this->wishlistFacade->getWishlistByName($wishlistTransfer);
 
         $this->assertCount(50, $wishlistTransfer->getItems());
     }

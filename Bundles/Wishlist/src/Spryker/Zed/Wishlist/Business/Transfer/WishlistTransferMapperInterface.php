@@ -42,4 +42,18 @@ interface WishlistTransferMapperInterface
      */
     public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection);
 
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewItemTransfer
+     */
+    public function convertWishlistOverviewProduct(SpyWishlistItem $wishlistItemEntity);
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewItemTransfer[]
+     */
+    public function convertWishlistOverviewProductCollection(ObjectCollection $wishlistItemEntityCollection);
+
 }

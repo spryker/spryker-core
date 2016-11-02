@@ -40,17 +40,18 @@ interface WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param array $wishlistItemCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return void
      */
-    public function addItemCollection(WishlistTransfer $wishlistTransfer);
+    public function addItemCollection(WishlistTransfer $wishlistTransfer, array $wishlistItemCollection);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return void
      */
-    public function removeItemCollection(WishlistTransfer $wishlistTransfer);
+    public function emptyWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -62,7 +63,7 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 

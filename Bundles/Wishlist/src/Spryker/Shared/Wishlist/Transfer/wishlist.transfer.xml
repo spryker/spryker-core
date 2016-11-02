@@ -7,13 +7,30 @@
         <property name="idWishlist" type="integer" />
         <property name="fkCustomer" type="integer" />
         <property name="name" type="string" />
-        <property name="items" type="WishlistItem[]" singular="item" />
-        <property name="itemsFilter" type="Filter" />
     </transfer>
 
     <transfer name="WishlistItem">
         <property name="fkWishlist" type="integer" />
         <property name="fkProduct" type="integer" />
+    </transfer>
+
+    <transfer name="WishlistOverviewProduct">
+        <property name="idProduct" type="integer" />
+        <property name="sku" type="string" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
+        <property name="fkLocale" type="integer" />
+    </transfer>
+
+    <transfer name="WishlistOverviewResponse">
+        <property name="wishlist" type="Wishlist" />
+        <property name="products" type="WishlistOverviewProduct[]" singular="product" />
+    </transfer>
+
+    <transfer name="WishlistOverviewRequest">
+        <property name="wishlist" type="Wishlist" />
+        <property name="localeCode" type="string" />
+        <property name="filter" type="Filter" />
     </transfer>
 
 </transfers>
