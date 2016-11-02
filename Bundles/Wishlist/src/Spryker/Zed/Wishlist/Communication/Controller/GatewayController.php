@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Wishlist\Communication\Controller;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -15,6 +16,36 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function createWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFacade()->createWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function updateWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFacade()->updateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function removeWishlist(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getFacade()->removeWishlist($wishlistTransfer);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
@@ -37,13 +68,13 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlistAction($idCustomer)
+    public function getCustomerWishlistAction(WishlistTransfer $wishlistTransfer)
     {
-        return $this->getFacade()->getCustomerWishlistCollection($idCustomer);
+        return $this->getFacade()->getCustomerWishlistByName($wishlistTransfer);
     }
 
 }
