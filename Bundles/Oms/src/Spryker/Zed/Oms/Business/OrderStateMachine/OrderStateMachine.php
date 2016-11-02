@@ -796,11 +796,9 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
             }
 
-            if ($orderItem->isModified()) {
-                $orderItem->save();
-                $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
-                $log->save($orderItem);
-            }
+            $orderItem->save();
+            $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
+            $log->save($orderItem);
         }
 
         $connection->commit();

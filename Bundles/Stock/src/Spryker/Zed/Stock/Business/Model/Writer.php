@@ -142,6 +142,7 @@ class Writer implements WriterInterface
             ->setQuantity($transferStockProduct->getQuantity())
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
             ->save();
+
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
         $this->handleStockUpdatePlugins($transferStockProduct->getSku());
 

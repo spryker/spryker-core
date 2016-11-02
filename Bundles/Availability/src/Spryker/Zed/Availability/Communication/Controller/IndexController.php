@@ -244,20 +244,21 @@ class IndexController extends AbstractController
      */
     protected function saveData(AvailabilityStockTransfer $data)
     {
+        $updated = false;
         foreach ($data->getStocks() as $stockProductTransfer) {
             if ($stockProductTransfer->getIdStockProduct() !== null) {
-                $idStockProduct = $this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer);
-                return $idStockProduct > 0;
+                $this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer);
+                $updated = true;
             }
 
             if ($stockProductTransfer->getIdStockProduct() === null && (int)$stockProductTransfer->getQuantity() !== 0) {
                 $stockProductTransfer->setSku($data->getSku());
-                $idStockProduct = $this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer);
-                return $idStockProduct > 0;
+                $this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer);
+                $updated = true;
             }
         }
 
-        return false;
+        return $updated;
     }
 
     /**

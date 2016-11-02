@@ -49,7 +49,7 @@ class AvailabilityTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('availabilityTable', [
+        $url = Url::generate('/availability-table', [
             AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract
         ])->build();
 

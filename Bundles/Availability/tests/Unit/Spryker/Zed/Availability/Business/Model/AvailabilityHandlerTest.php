@@ -17,8 +17,18 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
+/**
+ * @group Unit
+ * @group Spryker
+ * @group Zed
+ * @group Availability
+ * @group Business
+ * @group Model
+ * @group AvailabilityHandlerTest
+ */
 class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
 {
+
     const PRODUCT_SKU = 'sku-123-321';
 
     /**
@@ -68,10 +78,11 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\Availability\Business\Model\SellableInterface|null $sellable
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface|null $touchFacade
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface|null $availabilityQueryContainer
+     *
      * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
      */
     protected function createAvailabilityHandler(
@@ -79,8 +90,8 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
         AvailabilityToStockInterface $stockFacade = null,
         AvailabilityToTouchInterface $touchFacade = null,
         AvailabilityQueryContainerInterface $availabilityQueryContainer = null
-    )
-    {
+    ) {
+
         if ($sellable === null) {
             $sellable = $this->createSellableMock();
         }
@@ -101,7 +112,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AvailabilityToStockInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function createStockFacadeMock()
     {
@@ -110,7 +121,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AvailabilityToOmsInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function createOmsFacadeMock()
     {
@@ -119,7 +130,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AvailabilityToTouchInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
      */
     protected function createTouchFacadeMock()
     {
@@ -128,7 +139,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SellableInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     protected function createSellableMock()
     {
@@ -177,11 +188,10 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($availabilityEntity);
 
         return $availabilityContainerMock;
-
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyAvailability
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Availability\Persistence\SpyAvailability
      */
     protected function createAvailabilityEntityMock()
     {
@@ -190,11 +200,12 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyAvailabilityAbstract
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
     protected function createAvailabilityAbstractEntityMock()
     {
         return $this->getMockBuilder(SpyAvailabilityAbstract::class)
             ->getMock();
     }
+
 }

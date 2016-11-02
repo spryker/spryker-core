@@ -44,7 +44,7 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('/availabilityAbstractTable');
+        $url = Url::generate('/availability-abstract-table');
 
         $config->setUrl($url);
         $config->setHeader([

@@ -18,10 +18,11 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
  * @group Availability
  * @group Business
  * @group Model
- * @group Sellable
+ * @group SellableTest
  */
 class SellableTest extends \PHPUnit_Framework_TestCase
 {
+
     const SKU_PRODUCT = 'sku-123-321';
 
     /**
@@ -62,7 +63,6 @@ class SellableTest extends \PHPUnit_Framework_TestCase
             ->with(self::SKU_PRODUCT)
             ->willReturn($reservedItems);
 
-
         $sellable = $this->createSellable($omsFacadeMock, $stockFacadeMock);
         $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, 1);
 
@@ -93,7 +93,7 @@ class SellableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AvailabilityToStockInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function createStockFacadeMock()
     {
@@ -102,11 +102,12 @@ class SellableTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AvailabilityToOmsInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function createOmsFacadeMock()
     {
         return $this->getMockBuilder(AvailabilityToOmsInterface::class)
             ->getMock();
     }
+
 }
