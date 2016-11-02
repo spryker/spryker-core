@@ -105,7 +105,7 @@ class OrderPaymentRequestMapper extends BaseMapper
         $this->ratepayPaymentRequestTransfer
             ->setOrderId($this->orderEntity->getIdSalesOrder())
             ->setRatepayPaymentInit($this->ratepayPaymentInitTransfer)
-//            ->setGrandTotal($totalsTransfer->requireGrandTotal()->getGrandTotal())
+            ->setGrandTotal($totalsTransfer->requireGrandTotal()->getGrandTotal())
             ->setExpenseTotal($totalsTransfer->requireExpenseTotal()->getExpenseTotal())
 
             ->setCustomerEmail($this->orderTransfer->getEmail())
@@ -118,38 +118,20 @@ class OrderPaymentRequestMapper extends BaseMapper
         }
         $basketItems = $this->orderTransfer->requireItems()->getItems();
         $grouppedItems = [];
+        $discountTotal = 0;
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
-                $ratepayOrderItem = $this->queryContainer
-                    ->queryPaymentItemByOrderIdAndSku($this->orderEntity->getIdSalesOrder(), $basketItem->getGroupKey())
-                    ->findOne();
-                if ($ratepayOrderItem) {
-                    /**
-                     * In Spryker system each Item has own discount,
-                     * but we need to send discount amount like in previous item.
-                     * That's why we save first
-                     */
-                    $grouppedItems[$basketItem->getGroupKey()]->setUnitGrossPriceWithProductOptions($ratepayOrderItem->getUnitGrossPriceWithProductOptions());
-                    $grouppedItems[$basketItem->getGroupKey()]->setUnitTotalDiscountAmountWithProductOption($ratepayOrderItem->getUnitTotalDiscountAmountWithProductOption());
-                    $grouppedItems[$basketItem->getGroupKey()]->setSumGrossPriceWithProductOptionAndDiscountAmounts($ratepayOrderItem->getSumGrossPriceWithProductOptionAndDiscountAmounts());
-                } else {
-                    $this->queryContainer
-                        ->addPaymentItem($grouppedItems[$basketItem->getGroupKey()]);
-                }
             }
+            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
         }
+        $this->ratepayPaymentRequestTransfer->setDiscountTotal($discountTotal);
 
-        $grandTotal = $totalsTransfer->requireExpenseTotal()->getExpenseTotal();
         foreach ($grouppedItems as $basketItem) {
             $this->ratepayPaymentRequestTransfer->addItem($basketItem);
-            $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts() * $basketItem->getQuantity();
         }
-
-        $this->ratepayPaymentRequestTransfer
-            ->setGrandTotal($grandTotal);
     }
 
     /**

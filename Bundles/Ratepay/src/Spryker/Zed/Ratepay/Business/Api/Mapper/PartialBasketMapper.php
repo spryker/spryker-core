@@ -33,6 +33,11 @@ class PartialBasketMapper extends BaseMapper
     protected $needToSendShipping;
 
     /**
+     * @var int
+     */
+    protected $discountTotal;
+
+    /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
      */
     protected $requestTransfer;
@@ -42,6 +47,7 @@ class PartialBasketMapper extends BaseMapper
      * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
      * @param bool $needToSendShipping
+     * @param int $discountTotal
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
@@ -49,6 +55,7 @@ class PartialBasketMapper extends BaseMapper
         $ratepayPaymentTransfer,
         array $basketItems,
         $needToSendShipping,
+        $discountTotal,
         RatepayRequestTransfer $requestTransfer
     ) {
 
@@ -56,6 +63,7 @@ class PartialBasketMapper extends BaseMapper
         $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
         $this->basketItems = $basketItems;
         $this->needToSendShipping = $needToSendShipping;
+        $this->discountTotal = $discountTotal;
         $this->requestTransfer = $requestTransfer;
     }
 
@@ -66,7 +74,7 @@ class PartialBasketMapper extends BaseMapper
     {
         $grandTotal = 0;
         foreach ($this->basketItems as $basketItem) {
-            $grandTotal += $basketItem->getSumGrossPriceWithProductOptionAndDiscountAmounts() * $basketItem->getQuantity();
+            $grandTotal += $basketItem->getUnitGrossPriceWithProductOptions() * $basketItem->getQuantity();
         }
         if (!$this->requestTransfer->getShoppingBasket()) {
             $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
@@ -76,8 +84,9 @@ class PartialBasketMapper extends BaseMapper
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
 
             ->setDiscountTitle(BasketMapper::DEFAULT_DISCOUNT_NODE_VALUE)
-            ->setDiscountUnitPrice(BasketMapper::DEFAULT_DISCOUNT_UNIT_PRICE * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
+            ->setDiscountUnitPrice($this->centsToDecimal($this->discountTotal) * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate(BasketMapper::DEFAULT_DISCOUNT_TAX_RATE);
+        $grandTotal -= $this->discountTotal;
 
         if ($this->needToSendShipping) {
             $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();

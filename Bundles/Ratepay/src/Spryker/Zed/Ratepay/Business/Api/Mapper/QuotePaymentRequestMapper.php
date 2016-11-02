@@ -133,13 +133,16 @@ class QuotePaymentRequestMapper extends BaseMapper
 
         $basketItems = $this->quoteTransfer->getItems();
         $grouppedItems = [];
+        $discountTotal = 0;
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
+            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
         }
+        $this->ratepayPaymentRequestTransfer->setDiscountTotal($discountTotal);
 
         foreach ($grouppedItems as $basketItem) {
             $this->ratepayPaymentRequestTransfer->addItem($basketItem);
