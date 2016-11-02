@@ -91,7 +91,7 @@ class AvailabilityAbstractTable extends AbstractTable
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $productAbstract->getSku(),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstract->getProductName(),
-                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->addAvailabilityLabel($productAbstract->getAvailabilityQuantity()),
+                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstract->getAvailabilityQuantity()),
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstract->getStockQuantity(),
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productAbstract->getReservationQuantity()),
                 self::TABLE_COL_ACTION => $this->createViewButton($productAbstract),
@@ -106,7 +106,7 @@ class AvailabilityAbstractTable extends AbstractTable
      *
      * @return string
      */
-    protected function addAvailabilityLabel($quantity)
+    protected function getAvailabilityLabel($quantity)
     {
         if ($quantity > 0) {
             return '<span class="label label-info">' . self::AVAILABLE .'</span>';
