@@ -12,10 +12,15 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
 use Spryker\Zed\Wishlist\Business\WishlistFacade;
@@ -89,12 +94,15 @@ class WishlistFacadeTest extends Test
      */
     protected function setupCustomer()
     {
-        $this->customer = new SpyCustomer();
-        $this->customer->fromArray([
-                'customer_reference' => 'customer_reference',
-                'email' => 'email'
-            ]);
-        $this->customer->save();
+        $customerQuery = new SpyCustomerQuery();
+        $customerEntity = $customerQuery
+            ->filterByCustomerReference('customer_reference')
+            ->filterByEmail('email')
+            ->findOneOrCreate();
+
+        $customerEntity->save();
+
+        $this->customer = $customerEntity;
     }
 
     /**
@@ -102,36 +110,37 @@ class WishlistFacadeTest extends Test
      */
     protected function setupProduct()
     {
-        $this->productAbstract = new SpyProductAbstract();
-        $this->productAbstract->fromArray([
-            'sku' => 'abstract_sku',
-            'attributes' => '{}',
-        ]);
+        $productAbstractQuery = new SpyProductAbstractQuery();
+        $this->productAbstract = $productAbstractQuery
+            ->filterBySku('abstract_sku')
+            ->filterByAttributes('{}')
+            ->findOneOrCreate();
+
         $this->productAbstract->save();
 
-        $this->product_1 = new SpyProduct();
-        $this->product_1->fromArray([
-            'sku' => 'concrete_sku_1',
-            'attributes' => '{}',
-            'fk_product_abstract' => $this->productAbstract->getIdProductAbstract()
-        ]);
-        $this->product_1->save();
+        $this->product_1 = $this->findOrCreateProduct('concrete_sku_1', $this->productAbstract->getIdProductAbstract());
+        $this->product_2 = $this->findOrCreateProduct('concrete_sku_2', $this->productAbstract->getIdProductAbstract());
+        $this->product_3 = $this->findOrCreateProduct('concrete_sku_3', $this->productAbstract->getIdProductAbstract());
+    }
 
-        $this->product_2 = new SpyProduct();
-        $this->product_2->fromArray([
-            'sku' => 'concrete_sku_2',
-            'attributes' => '{}',
-            'fk_product_abstract' => $this->productAbstract->getIdProductAbstract()
-        ]);
-        $this->product_2->save();
+    /**
+     * @param string $sku
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    protected function findOrCreateProduct($sku, $idProductAbstract)
+    {
+        $productQuery = new SpyProductQuery();
+        $productEntity = $productQuery
+            ->filterBySku($sku)
+            ->filterByAttributes('{}')
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->findOneOrCreate();
 
-        $this->product_3 = new SpyProduct();
-        $this->product_3->fromArray([
-            'sku' => 'concrete_sku_3',
-            'attributes' => '{}',
-            'fk_product_abstract' => $this->productAbstract->getIdProductAbstract()
-        ]);
-        $this->product_3->save();
+        $productEntity->save();
+
+        return $productEntity;
     }
 
     /**
@@ -140,21 +149,28 @@ class WishlistFacadeTest extends Test
     protected function setupBigWishlist()
     {
         for ($a = 0; $a < 100; $a++) {
-            $product = new SpyProduct();
-            $product->fromArray([
-                'sku' => 'concrete_sku_many_' . $a,
-                'attributes' => '{}',
-                'fk_product_abstract' => $this->productAbstract->getIdProductAbstract()
-            ]);
-            $product->save();
-
-            $wishlistItem = new SpyWishlistItem();
-            $wishlistItem->fromArray([
-                'fk_wishlist' => $this->wishlist->getIdWishlist(),
-                'fk_product' => $product->getIdProduct()
-            ]);
-            $wishlistItem->save();
+            $productEntity = $this->findOrCreateProduct('concrete_sku_many_' . $a, $this->productAbstract->getIdProductAbstract());
+            $this->findOrCreateWishlistItem($this->wishlist->getIdWishlist(), $productEntity->getIdProduct());
         }
+    }
+
+    /**
+     * @param int $idWishlist
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem
+     */
+    protected function findOrCreateWishlistItem($idWishlist, $idProduct)
+    {
+        $wishlistItemQuery = new SpyWishlistItemQuery();
+        $wishlistItemEntity = $wishlistItemQuery
+            ->filterByFkWishlist($idWishlist)
+            ->filterByFkProduct($idProduct)
+            ->findOneOrCreate();
+
+        $wishlistItemEntity->save();
+
+        return $wishlistItemEntity;
     }
 
     /**
@@ -162,26 +178,16 @@ class WishlistFacadeTest extends Test
      */
     protected function setupWishlist()
     {
-        $this->wishlist = new SpyWishlist();
-        $this->wishlist->fromArray([
-            'fk_customer' => $this->customer->getIdCustomer(),
-            'name' => 'Default'
-        ]);
+        $wishlistQuery = new SpyWishlistQuery();
+        $this->wishlist = $wishlistQuery
+            ->filterByFkCustomer($this->customer->getIdCustomer())
+            ->filterByName('Default')
+            ->findOneOrCreate();
+
         $this->wishlist->save();
 
-        $wishlistItem = new SpyWishlistItem();
-        $wishlistItem->fromArray([
-            'fk_wishlist' => $this->wishlist->getIdWishlist(),
-            'fk_product' => $this->product_1->getIdProduct()
-        ]);
-        $wishlistItem->save();
-
-        $wishlistItem = new SpyWishlistItem();
-        $wishlistItem->fromArray([
-            'fk_wishlist' => $this->wishlist->getIdWishlist(),
-            'fk_product' => $this->product_2->getIdProduct()
-        ]);
-        $wishlistItem->save();
+        $this->findOrCreateWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getIdProduct());
+        $this->findOrCreateWishlistItem($this->wishlist->getIdWishlist(), $this->product_2->getIdProduct());
     }
 
     /**
@@ -203,7 +209,7 @@ class WishlistFacadeTest extends Test
      *
      * @return void
      */
-    public function SKIP_testGetWishListShouldThrowException()
+    public function testGetWishListShouldThrowException()
     {
         $this->expectException(MissingWishlistException::class);
         $this->expectExceptionMessage(sprintf(
@@ -393,7 +399,7 @@ class WishlistFacadeTest extends Test
      *
      * @return void
      */
-    public function SKIP_testUpdateWishlistShouldCheckUniqueName()
+    public function testUpdateWishlistShouldCheckUniqueName()
     {
         $this->expectException(WishlistExistsException::class);
         $this->expectExceptionMessage(sprintf(
@@ -468,7 +474,7 @@ class WishlistFacadeTest extends Test
      *
      * @return void
      */
-    public function SKIP_testUpdateWishlistShouldThrowException()
+    public function testUpdateWishlistShouldThrowException()
     {
         $this->expectException(MissingWishlistException::class);
 
