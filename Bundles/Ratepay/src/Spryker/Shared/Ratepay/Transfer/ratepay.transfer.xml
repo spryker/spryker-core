@@ -30,6 +30,7 @@
         <property name="grandTotal" type="int" />
         <property name="expenseTotal" type="int" />
         <property name="discountTotal" type="int" />
+        <property name="discountTaxRate" type="float" />
         <property name="shippingTaxRate" type="float" />
         <property name="paymentType" type="string" /> <!-- INVOICE, INSTALLMENT, ELV, PREPAYMENT -->
         <property name="currencyIso3" type="string" />

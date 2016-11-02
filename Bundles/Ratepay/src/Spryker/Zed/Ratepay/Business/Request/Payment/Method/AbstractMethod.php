@@ -305,6 +305,13 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
             $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
         }
 
+        $discountTaxRate = 0;
+        foreach ($dataTransfer->getItems() as $basketItem) {
+            if ($discountTaxRate < $basketItem->getTaxRate()) { // take max taxRate from all the Items
+                $discountTaxRate = $basketItem->getTaxRate();
+            }
+        }
+
         foreach ($grouppedItems as $basketItem) {
             $this->mapperFactory
                 ->getBasketItemMapper($basketItem)
@@ -312,7 +319,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         }
 
         $this->mapperFactory
-            ->getPartialBasketMapper($dataTransfer, $paymentData, $grouppedItems, $needToSendShipping, $discountTotal)
+            ->getPartialBasketMapper($dataTransfer, $paymentData, $grouppedItems, $needToSendShipping, $discountTotal, $discountTaxRate)
             ->map();
     }
 

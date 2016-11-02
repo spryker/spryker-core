@@ -65,7 +65,7 @@ class BasketMapper extends BaseMapper
 
             ->setDiscountTitle(self::DEFAULT_DISCOUNT_NODE_VALUE)
             ->setDiscountUnitPrice($discountTotal * self::BASKET_DISCOUNT_COEFFICIENT)
-            ->setDiscountTaxRate(self::DEFAULT_DISCOUNT_TAX_RATE);
+            ->setDiscountTaxRate($this->ratepayPaymentRequestTransfer->getDiscountTaxRate());
     }
 
 }
