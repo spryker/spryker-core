@@ -503,78 +503,78 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Creates localized product urls based on product abstract localized attributes name
-     * - Executes touch logic for product url activation
+     * - Creates localized product URLs based on product abstract localized attributes name
+     * - Executes touch logic for product URL activation
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createProductUrl(ProductAbstractTransfer $productAbstract)
+    public function createProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductUrlManager()
-            ->createProductUrl($productAbstract);
+            ->createProductUrl($productAbstractTransfer);
     }
 
     /**
      * Specification:
-     * - Updates localized product urls based on product abstract localized attributes name
-     * - Executes touch logic for product url update
+     * - Updates localized product URLs based on product abstract localized attributes name
+     * - Executes touch logic for product URL update
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function updateProductUrl(ProductAbstractTransfer $productAbstract)
+    public function updateProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductUrlManager()
-            ->updateProductUrl($productAbstract);
+            ->updateProductUrl($productAbstractTransfer);
     }
 
     /**
      * Specification:
-     * - Returns localized product urls based on product abstract localized attributes name
+     * - Returns localized product URLs based on product abstract localized attributes name
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function getProductUrl(ProductAbstractTransfer $productAbstract)
+    public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
             ->createProductUrlManager()
-            ->getProductUrl($productAbstract);
+            ->getProductUrl($productAbstractTransfer);
     }
 
     /**
      * Specification:
-     * - Deletes all urls belonging to given abstract product
-     * - Executes touch logic for product url deletion
+     * - Deletes all URLs belonging to given abstract product
+     * - Executes touch logic for product URL deletion
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function deleteProductUrl(ProductAbstractTransfer $productAbstract)
+    public function deleteProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
         $this->getFactory()
             ->createProductUrlManager()
-            ->deleteProductUrl($productAbstract);
+            ->deleteProductUrl($productAbstractTransfer);
     }
 
     /**
      * Specification:
-     * - Touches the url of the product as active for all available locales.
+     * - Touches the URL of the product as active for all available locales.
      *
      * @api
      *
@@ -591,7 +591,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches the url of the product as deleted for all available locales.
+     * - Touches the URL of the product as deleted for all available locales.
      *
      * @api
      *
@@ -645,9 +645,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Activates product concrete
-     * - Generates and saves product abstract url
+     * - Generates and saves product abstract URL
      * - Touches as active product
-     * - Touches as active product url
+     * - Touches as active product URL
      *
      * @api
      *
@@ -665,9 +665,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Deactivates product concrete
-     * - Removes product url
+     * - Removes product URL
      * - Touches as in-active product
-     * - Touches as in-active product url
+     * - Touches as in-active product URL
      *
      * @api
      *
@@ -772,7 +772,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Returns an array with attribute keys of a persisted product.
-     * - The result is a combination of the abstract product's attribute keys and all it's existing concretes' attribute keys.
+     * - The result is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
      * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
      *
      * @api
@@ -792,7 +792,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     /**
      * Specification:
      * - Returns an associative array of attribute key - attribute value pairs of a persisted concrete product.
-     * - The result is a combination of the concrete's attributes and it's abstract's attributes.
+     * - The result is a combination of the concrete's attributes and its abstract's attributes.
      * - If $localeTransfer is provided then localized concrete and abstract attributes are also part of the result.
      *
      * @api
@@ -829,7 +829,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Encodes an array of product attribute key - attribute value pairs to Json string.
+     * - Encodes an array of product attribute key - attribute value pairs to JSON string.
      *
      * @api
      *
@@ -846,7 +846,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Decodes product attributes Json string to an array of attribute key - attribute value pairs.
+     * - Decodes product attributes JSON string to an array of attribute key - attribute value pairs.
      *
      * @api
      *

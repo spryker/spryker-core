@@ -13,32 +13,32 @@ interface ProductUrlManagerInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function createProductUrl(ProductAbstractTransfer $productAbstract);
+    public function createProductUrl(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function updateProductUrl(ProductAbstractTransfer $productAbstract);
+    public function updateProductUrl(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function getProductUrl(ProductAbstractTransfer $productAbstract);
+    public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
      */
-    public function deleteProductUrl(ProductAbstractTransfer $productAbstract);
+    public function deleteProductUrl(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

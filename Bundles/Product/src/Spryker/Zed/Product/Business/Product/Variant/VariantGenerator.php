@@ -206,7 +206,7 @@ class VariantGenerator implements VariantGeneratorInterface
         array $attributeTokens
     ) {
         return (new ProductConcreteTransfer())
-            ->fromArray($productAbstractTransfer->toArray(), true)
+            ->fromArray($productAbstractTransfer->modifiedToArray(), true)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setAttributes($attributeTokens)

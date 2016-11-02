@@ -153,7 +153,7 @@ class EditController extends AddController
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
-                $idProduct = $this->getFactory()
+                $this->getFactory()
                     ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
 
@@ -187,6 +187,8 @@ class EditController extends AddController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function variantTableAction(Request $request)
