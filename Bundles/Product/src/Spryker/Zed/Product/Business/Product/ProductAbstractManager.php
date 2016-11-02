@@ -170,7 +170,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      *
      * @return int|null
      */
-    public function getProductAbstractIdBySku($sku)
+    public function findProductAbstractIdBySku($sku)
     {
         $productAbstract = $this->productQueryContainer
             ->queryProductAbstractBySku($sku)
@@ -188,7 +188,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractById($idProductAbstract)
+    public function findProductAbstractById($idProductAbstract)
     {
         $productAbstractEntity = $this->productQueryContainer
             ->queryProductAbstract()

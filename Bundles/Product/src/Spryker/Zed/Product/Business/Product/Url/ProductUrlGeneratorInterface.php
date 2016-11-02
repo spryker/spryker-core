@@ -11,10 +11,10 @@ interface ProductUrlGeneratorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function generateProductUrl(ProductAbstractTransfer $productAbstract);
+    public function generateProductUrl(ProductAbstractTransfer $productAbstractTransfer);
 
 }

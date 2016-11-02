@@ -28,13 +28,11 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
         $productAbstractTransfer->requireIdProductAbstract();
 
         $priceProductTransfer = $this->getFacade()
-            ->getProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
+            ->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
 
-        if (!$priceProductTransfer) {
-            return $productAbstractTransfer;
+        if ($priceProductTransfer) {
+            $productAbstractTransfer->setPrice($priceProductTransfer);
         }
-
-        $productAbstractTransfer->setPrice($priceProductTransfer);
 
         return $productAbstractTransfer;
     }

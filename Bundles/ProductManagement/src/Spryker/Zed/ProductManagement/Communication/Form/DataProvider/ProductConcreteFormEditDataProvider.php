@@ -69,8 +69,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     public function getData($idProductAbstract, $idProduct)
     {
         $formData = $this->getDefaultFormFields();
-        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
-        $productTransfer = $this->productFacade->getProductConcreteById($idProduct);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+        $productTransfer = $this->productFacade->findProductConcreteById($idProduct);
 
         if ($productAbstractTransfer) {
             $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
@@ -126,7 +126,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
-        $priceTransfer = $this->priceFacade->getProductConcretePrice($productTransfer->getIdProductConcrete());
+        $priceTransfer = $this->priceFacade->findProductConcretePrice($productTransfer->getIdProductConcrete());
         if ($priceTransfer) {
             $formData[ProductFormAdd::FORM_PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }

@@ -45,7 +45,7 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getAttributeKey($key)
+    public function findAttributeKey($key)
     {
         $productAttributeKeyEntity = $this->productQueryContainer
             ->queryProductAttributeKey()

@@ -65,9 +65,9 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
-        return $this->getFactory()->createReaderModel()->getProductAbstractPrice($idAbstractProduct, $priceTypeName);
+        return $this->getFactory()->createReaderModel()->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
     }
 
     /**
@@ -84,9 +84,9 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductConcretePrice($idProduct, $priceTypeName = null)
+    public function findProductConcretePrice($idProduct, $priceTypeName = null)
     {
-        return $this->getFactory()->createReaderModel()->getProductConcretePrice($idProduct, $priceTypeName);
+        return $this->getFactory()->createReaderModel()->findProductConcretePrice($idProduct, $priceTypeName);
     }
 
     /**

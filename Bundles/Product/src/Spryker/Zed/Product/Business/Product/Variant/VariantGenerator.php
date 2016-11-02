@@ -129,12 +129,12 @@ class VariantGenerator implements VariantGeneratorInterface
             while ($changeIndex < $attributeCount) {
                 $current[$changeIndex]++;
 
-                if ($current[$changeIndex] === count($tokenAttributeCollection[$changeIndex])) {
-                    $current[$changeIndex] = 0;
-                    $changeIndex++;
-                } else {
+                if ($current[$changeIndex] !== count($tokenAttributeCollection[$changeIndex])) {
                     break;
                 }
+
+                $current[$changeIndex] = 0;
+                $changeIndex++;
             }
         }
 
@@ -168,10 +168,6 @@ class VariantGenerator implements VariantGeneratorInterface
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
-        if (empty($productAbstractTransfer)) {
-            return [];
-        }
-
         $tokenCollection = $this->generateTokens(
             $this->convertAttributesIntoTokens($attributeCollection)
         );

@@ -48,19 +48,19 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function generateProductUrl(ProductAbstractTransfer $productAbstract)
+    public function generateProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         $productUrlTransfer = new ProductUrlTransfer();
-        $productUrlTransfer->setAbstractSku($productAbstract->getSku());
+        $productUrlTransfer->setAbstractSku($productAbstractTransfer->getSku());
 
         foreach ($availableLocales as $localeTransfer) {
-            $url = $this->generateUrlByLocale($productAbstract, $localeTransfer);
+            $url = $this->generateUrlByLocale($productAbstractTransfer, $localeTransfer);
 
             $localizedUrl = new LocalizedUrlTransfer();
             $localizedUrl->setLocale($localeTransfer);
@@ -73,18 +73,18 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */
-    protected function generateUrlByLocale(ProductAbstractTransfer $productAbstract, LocaleTransfer $localeTransfer)
+    protected function generateUrlByLocale(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
     {
         $productName = $this->utilTextFacade->generateSlug(
-            $this->productAbstractManager->getLocalizedProductAbstractName($productAbstract, $localeTransfer)
+            $this->productAbstractManager->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer)
         );
 
-        return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstract->getIdProductAbstract();
+        return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstractTransfer->getIdProductAbstract();
     }
 
 }

@@ -92,7 +92,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
         $priceEntity = $this->queryContainer
@@ -121,19 +121,21 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductConcretePrice($idProduct, $priceTypeName = null)
+    public function findProductConcretePrice($idProduct, $priceTypeName = null)
     {
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
+        $priceTypeEntity = $this->getPriceTypeByName($priceTypeName);
+
         $priceEntity = $this->queryContainer
             ->queryPriceProduct()
             ->filterByFkProduct($idProduct)
-            ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+            ->filterByPriceType($priceTypeEntity)
             ->findOne();
 
         if (!$priceEntity) {
             $priceEntity = $this->queryContainer
                 ->queryProductAbstractPriceByIdConcreteProduct($idProduct)
-                ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
+                ->filterByPriceType($priceTypeEntity)
                 ->findOne();
         }
 
@@ -347,7 +349,7 @@ class Reader implements ReaderInterface
      */
     public function getProductAbstractIdBySku($sku)
     {
-        return $this->productFacade->getProductAbstractIdBySku($sku);
+        return $this->productFacade->findProductAbstractIdBySku($sku);
     }
 
     /**

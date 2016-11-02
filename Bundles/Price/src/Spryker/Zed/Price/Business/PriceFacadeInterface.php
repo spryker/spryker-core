@@ -55,7 +55,7 @@ interface PriceFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
 
     /**
      * Specification:
@@ -71,7 +71,7 @@ interface PriceFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductConcretePrice($idProduct, $priceTypeName = null);
+    public function findProductConcretePrice($idProduct, $priceTypeName = null);
 
     /**
      * Specification:

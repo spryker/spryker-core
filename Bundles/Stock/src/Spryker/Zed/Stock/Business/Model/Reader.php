@@ -186,11 +186,11 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getProductAbstractIdBySku($sku)
+    public function findProductAbstractIdBySku($sku)
     {
-        return $this->productFacade->getProductAbstractIdBySku($sku);
+        return $this->productFacade->findProductAbstractIdBySku($sku);
     }
 
     /**

@@ -145,7 +145,7 @@ class AbstractProductFormDataProvider
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
-        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         $localizedAttributeOptions = [];
         foreach ($localeCollection as $localeTransfer) {

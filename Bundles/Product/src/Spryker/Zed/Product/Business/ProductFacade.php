@@ -139,13 +139,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getProductAbstractIdBySku($sku)
+    public function findProductAbstractIdBySku($sku)
     {
         return $this->getFactory()
             ->createProductAbstractManager()
-            ->getProductAbstractIdBySku($sku);
+            ->findProductAbstractIdBySku($sku);
     }
 
     /**
@@ -158,13 +158,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractById($idProductAbstract)
+    public function findProductAbstractById($idProductAbstract)
     {
         return $this->getFactory()
             ->createProductAbstractManager()
-            ->getProductAbstractById($idProductAbstract);
+            ->findProductAbstractById($idProductAbstract);
     }
 
     /**
@@ -264,13 +264,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getProductConcreteIdBySku($sku)
+    public function findProductConcreteIdBySku($sku)
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getProductConcreteIdBySku($sku);
+            ->findProductConcreteIdBySku($sku);
     }
 
     /**
@@ -283,13 +283,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductConcreteById($idProduct)
+    public function findProductConcreteById($idProduct)
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getProductConcreteById($idProduct);
+            ->findProductConcreteById($idProduct);
     }
 
     /**
@@ -356,11 +356,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getProductAttributeKey($key)
+    public function findProductAttributeKey($key)
     {
         return $this->getFactory()
             ->createAttributeKeyManager()
-            ->getAttributeKey($key);
+            ->findAttributeKey($key);
     }
 
     /**

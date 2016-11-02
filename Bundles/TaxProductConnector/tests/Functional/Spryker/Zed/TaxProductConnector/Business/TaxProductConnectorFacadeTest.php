@@ -42,7 +42,7 @@ class TaxProductConnectorFacadeTest extends Test
 
         $productAbstractTransfer = $taxProductConnectorFacade->saveTaxSetToProductAbstract($productAbstractTransfer);
         $productAbstractTransfer = $this->createProductFacade()
-            ->getProductAbstractById($productAbstractTransfer->getIdProductAbstract());
+            ->findProductAbstractById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertEquals($taxSetTransfer->getIdTaxSet(), $productAbstractTransfer->getIdTaxSet());
     }

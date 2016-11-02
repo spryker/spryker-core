@@ -27,12 +27,12 @@ class AttributeLoader implements AttributeLoaderInterface
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeMergerInterface
      */
-    private $attributeMerger;
+    protected $attributeMerger;
 
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
-    private $attributeEncoder;
+    protected $attributeEncoder;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer

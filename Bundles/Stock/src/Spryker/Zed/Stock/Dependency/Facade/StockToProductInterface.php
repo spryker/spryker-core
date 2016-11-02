@@ -15,9 +15,9 @@ interface StockToProductInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return int
+     * @return int|null
      */
-    public function getProductAbstractIdBySku($sku);
+    public function findProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku

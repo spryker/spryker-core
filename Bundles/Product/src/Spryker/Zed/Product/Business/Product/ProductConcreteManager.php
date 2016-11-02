@@ -148,11 +148,11 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->requireSku()
             ->getSku();
 
-        $idProduct = (int)$productConcreteTransfer
+        $idProduct = $productConcreteTransfer
             ->requireIdProductConcrete()
             ->getIdProductConcrete();
 
-        $idProductAbstract = (int)$productConcreteTransfer
+        $idProductAbstract = $productConcreteTransfer
             ->requireFkProductAbstract()
             ->getFkProductAbstract();
 
@@ -211,7 +211,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductConcreteById($idProduct)
+    public function findProductConcreteById($idProduct)
     {
         $productEntity = $this->productQueryContainer
             ->queryProduct()
@@ -233,7 +233,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      *
      * @return int|null
      */
-    public function getProductConcreteIdBySku($sku)
+    public function findProductConcreteIdBySku($sku)
     {
         $productEntity = $this->productQueryContainer
             ->queryProduct()
@@ -256,8 +256,8 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     public function getProductConcrete($concreteSku)
     {
-        $idProduct = (int)$this->getProductConcreteIdBySku($concreteSku);
-        $productConcreteTransfer = $this->getProductConcreteById($idProduct);
+        $idProduct = (int)$this->findProductConcreteIdBySku($concreteSku);
+        $productConcreteTransfer = $this->findProductConcreteById($idProduct);
 
         if (!$productConcreteTransfer) {
             throw new MissingProductException(
@@ -323,7 +323,7 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     public function findProductEntityByAbstractAndConcrete(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
     {

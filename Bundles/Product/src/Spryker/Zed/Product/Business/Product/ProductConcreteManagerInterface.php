@@ -44,14 +44,14 @@ interface ProductConcreteManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductConcreteById($idProduct);
+    public function findProductConcreteById($idProduct);
 
     /**
      * @param string $sku
      *
      * @return int|null
      */
-    public function getProductConcreteIdBySku($sku);
+    public function findProductConcreteIdBySku($sku);
 
     /**
      * @param string $concreteSku
@@ -82,7 +82,7 @@ interface ProductConcreteManagerInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     public function findProductEntityByAbstractAndConcrete(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
 

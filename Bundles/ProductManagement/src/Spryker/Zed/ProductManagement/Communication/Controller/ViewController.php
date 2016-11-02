@@ -38,7 +38,7 @@ class ViewController extends AddController
 
         $productAbstractTransfer = $this->getFactory()
             ->getProductFacade()
-            ->getProductAbstractById($idProductAbstract);
+            ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
             $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
@@ -98,7 +98,7 @@ class ViewController extends AddController
 
         $productTransfer = $this->getFactory()
             ->getProductFacade()
-            ->getProductConcreteById($idProduct);
+            ->findProductConcreteById($idProduct);
 
         if (!$productTransfer) {
             $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProduct));

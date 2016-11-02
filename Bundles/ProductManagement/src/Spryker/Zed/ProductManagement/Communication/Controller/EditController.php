@@ -35,7 +35,7 @@ class EditController extends AddController
 
         $productAbstractTransfer = $this->getFactory()
             ->getProductFacade()
-            ->getProductAbstractById($idProductAbstract);
+            ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
             $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
@@ -124,7 +124,7 @@ class EditController extends AddController
 
         $productTransfer = $this->getFactory()
             ->getProductFacade()
-            ->getProductConcreteById($idProduct);
+            ->findProductConcreteById($idProduct);
 
         if (!$productTransfer) {
             $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProduct));
@@ -147,7 +147,7 @@ class EditController extends AddController
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->getProductFacade()
-                    ->getProductAbstractById($idProductAbstract);
+                    ->findProductAbstractById($idProductAbstract);
 
                 $productConcreteTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()

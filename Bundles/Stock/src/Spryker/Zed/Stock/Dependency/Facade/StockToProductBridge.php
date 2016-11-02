@@ -26,11 +26,11 @@ class StockToProductBridge implements StockToProductInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getProductAbstractIdBySku($sku)
+    public function findProductAbstractIdBySku($sku)
     {
-        return $this->productFacade->getProductAbstractIdBySku($sku);
+        return $this->productFacade->findProductAbstractIdBySku($sku);
     }
 
     /**
@@ -40,7 +40,7 @@ class StockToProductBridge implements StockToProductInterface
      */
     public function getProductConcreteIdBySku($sku)
     {
-        return $this->productFacade->getProductConcreteIdBySku($sku);
+        return $this->productFacade->findProductConcreteIdBySku($sku);
     }
 
     /**
