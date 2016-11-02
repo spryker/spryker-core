@@ -45,7 +45,7 @@ class StockSubForm extends AbstractType
     protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_QUANTITY, 'text', [
-            'label' => 'Current Stock',
+            'label' => 'Stock',
             'constraints' => [
                 new Required(),
                 new Regex(['pattern' => '/[\d]+/']),

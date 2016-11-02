@@ -70,6 +70,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $config->setDefaultSortColumnIndex(0);
         $config->addRawColumn(self::TABLE_COL_ACTION);
+        $config->addRawColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
@@ -90,7 +91,7 @@ class AvailabilityAbstractTable extends AbstractTable
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $productAbstract->getSku(),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstract->getProductName(),
-                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $productAbstract->getAvailabilityQuantity() ? self::AVAILABLE : self::NOT_AVAILABLE,
+                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->addAvailabilityLabel($productAbstract->getAvailabilityQuantity()),
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstract->getStockQuantity(),
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productAbstract->getReservationQuantity()),
                 self::TABLE_COL_ACTION => $this->createViewButton($productAbstract),
@@ -98,6 +99,19 @@ class AvailabilityAbstractTable extends AbstractTable
         }
 
         return $result;
+    }
+
+    /**
+     * @param int $quantity
+     *
+     * @return string
+     */
+    protected function addAvailabilityLabel($quantity)
+    {
+        if ($quantity > 0) {
+            return '<span class="label label-info">' . self::AVAILABLE .'</span>';
+        }
+        return '<span class="label">' . self::NOT_AVAILABLE .'</span>';
     }
 
     /**
@@ -113,7 +127,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 self::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract()
             ]
         );
-        return $this->generateViewButton($viewTaxSetUrl, 'View Detail');
+        return $this->generateViewButton($viewTaxSetUrl, 'View');
     }
 
     /**

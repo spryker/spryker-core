@@ -12,7 +12,6 @@
                 <bundle>availability</bundle>
                 <controller>index</controller>
                 <action>index</action>
-                <icon>fa-file-o</icon>
             </availability>
         </pages>
     </product>

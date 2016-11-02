@@ -62,7 +62,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected function getMappedStorageAvailabilityTransferFromStorage(array $availability)
     {
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
-        $storageAvailabilityTransfer->fromArray($availability);
+        $storageAvailabilityTransfer->fromArray($availability, true);
 
         return $storageAvailabilityTransfer;
     }

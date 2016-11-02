@@ -10,8 +10,8 @@
     </transfer>
 
     <transfer name="StorageAvailability">
-        <property name="abstractProductQuantity" type="string" />
-        <property name="concreteProductQuantityItems" type="array" singular="concreteProductQuantityItem"/>
+        <property name="abstractProductAvailability" type="bool" />
+        <property name="concreteProductAvailabilityItems" type="array" singular="concreteProductAvailabilityItem"/>
     </transfer>
 
 </transfers>

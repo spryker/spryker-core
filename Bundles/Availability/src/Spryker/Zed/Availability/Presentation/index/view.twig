@@ -1,15 +1,15 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Detail Availability' | trans %}
+{% block section_title 'Product availability' | trans %}
 
 {% block action %}
-    {{ backActionButton('/availability', 'List of Product Abstract Availability' | trans) }}
+    {{ backActionButton('/availability', 'List of product availability' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Abstract Availability Overview' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
         {% block widget_content %}
             <div class="row">
                 <div class="col-lg-2">
@@ -25,14 +25,14 @@
                     <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractInfo.stockQuantity }}</p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Reservation' | trans }}:</b></p><p> {{ productAbstractInfo.reservationQuantity }}</p>
+                    <p><b>{{ 'Reserved Products"' | trans }}:</b></p><p> {{ productAbstractInfo.reservationQuantity }}</p>
                 </div>
             </div>
 
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Availability list' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Variant availability' | trans } %}
 
         {% block widget_content %}
             {{ indexTable | raw }}
