@@ -16,7 +16,8 @@ class CheckCartAvailability
 {
 
     const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
-    const STOCK_TRANSLATION_KEY = 'stock';
+    const CART_PRE_CHECK_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+    const STOCK_TRANSLATION_PARAMETER = 'stock';
 
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
@@ -92,11 +93,29 @@ class CheckCartAvailability
      */
     protected function createItemIsNotAvailableMessageTransfer($stock)
     {
+        $translationKey = $this->getTranslationKey($stock);
+
         $messageTranfer = new MessageTransfer();
-        $messageTranfer->setValue(self::CART_PRE_CHECK_AVAILABILITY_FAILED);
-        $messageTranfer->setParameters([self::STOCK_TRANSLATION_KEY => $stock]);
+        $messageTranfer->setValue($translationKey);
+        $messageTranfer->setParameters([
+            self::STOCK_TRANSLATION_PARAMETER => $stock
+        ]);
 
         return $messageTranfer;
+    }
+
+    /**
+     * @param int $stock
+     *
+     * @return string
+     */
+    protected function getTranslationKey($stock)
+    {
+        $translationKey = self::CART_PRE_CHECK_AVAILABILITY_FAILED;
+        if ($stock <= 0) {
+            $translationKey = self::CART_PRE_CHECK_AVAILABILITY_EMPTY;
+        }
+        return $translationKey;
     }
 
 }
