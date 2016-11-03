@@ -128,7 +128,6 @@ class ViewController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
-            'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
         ]);
     }
 
@@ -199,8 +198,8 @@ class ViewController extends AddController
 
         foreach ($imageSetTransfer->getProductImages() as $imageTransfer) {
             $image = $imageTransfer->toArray();
-            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
-            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL] = $imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_LARGE];
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $this->getImageUrl($image[ImageCollectionForm::FIELD_IMAGE_SMALL], $imageUrlPrefix);
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL] = $this->getImageUrl($image[ImageCollectionForm::FIELD_IMAGE_SMALL], $image[ImageCollectionForm::FIELD_IMAGE_LARGE]);
             $image[ImageCollectionForm::FIELD_FK_IMAGE_SET_ID] = $imageSetTransfer->getIdProductImageSet();
             $itemImages[] = $image;
         }
@@ -208,6 +207,23 @@ class ViewController extends AddController
         $item[ImageSetForm::PRODUCT_IMAGES] = $itemImages;
 
         return $item;
+    }
+
+    /**
+     * @param string $baseUrl
+     * @param string $imageUrlPrefix
+     *
+     * @return string
+     */
+    protected function getImageUrl($baseUrl, $imageUrlPrefix)
+    {
+        $url = $baseUrl;
+
+        if (strpos($url, '/') === 0) {
+            $url = $imageUrlPrefix . $url;
+        }
+
+        return $url;
     }
 
 }
