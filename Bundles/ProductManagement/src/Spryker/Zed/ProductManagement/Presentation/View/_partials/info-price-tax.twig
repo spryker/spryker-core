@@ -4,14 +4,14 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="row">
-                    <div class="col-xs-2"><b>Price</b></div>
+                    <div class="col-xs-2"><b>{{ 'Price' | trans }}</b></div>
                     <div class="col-xs-10">{{ currentProduct.price.price | currency }}</div>
                 </div>
             </div>
             <div class="col-xs-6">
                 <div class="row">
-                    <div class="col-xs-2"><b>Tax</b></div>
-                    <div class="col-xs-10">{{ currentProduct.tax_set_id }}</div>
+                    <div class="col-xs-2"><b>{{ 'Tax Set' | trans }}</b></div>
+                    <div class="col-xs-10">{{ taxSet.name }}</div>
                 </div>
             </div>
         </div>

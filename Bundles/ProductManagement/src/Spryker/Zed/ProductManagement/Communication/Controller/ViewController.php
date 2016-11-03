@@ -78,6 +78,7 @@ class ViewController extends AddController
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
+            'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
         ]);
     }
 

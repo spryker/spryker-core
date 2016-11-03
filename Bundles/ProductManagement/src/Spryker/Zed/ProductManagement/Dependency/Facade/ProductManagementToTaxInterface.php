@@ -20,4 +20,11 @@ interface ProductManagementToTaxInterface
      */
     public function getTaxSets();
 
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
+    public function getTaxSet($idTaxSet);
+
 }
