@@ -1,8 +1,8 @@
 {
   "name": "spryker/money",
   "require": {
-    "mathiasverraes/money": "~3.0.0-beta3",
-    "spryker/currency": "^0.1.0 || ^1.0.0",
+    "moneyphp/money": "~3.0.0",
+    "spryker/currency": "^1.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/twig": "^2.1.0"

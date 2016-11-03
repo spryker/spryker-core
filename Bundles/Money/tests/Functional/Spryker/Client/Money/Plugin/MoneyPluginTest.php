@@ -10,8 +10,8 @@ namespace Functional\Spryker\Client\Money\Plugin;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * @group Functional

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Money\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -83,7 +83,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     {
         return $this->getFactory()->createMoneyFormatter()->format(
             $moneyTransfer,
-            MoneyConstants::FORMATTER_WITH_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITH_SYMBOL
         );
     }
 
@@ -101,7 +101,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     {
         return $this->getFactory()->createMoneyFormatter()->format(
             $moneyTransfer,
-            MoneyConstants::FORMATTER_WITHOUT_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL
         );
     }
 

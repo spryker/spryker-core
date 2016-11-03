@@ -10,7 +10,6 @@ namespace Spryker\Client\Money;
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
-use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
@@ -21,7 +20,6 @@ use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutC
 use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
-use Spryker\Shared\Money\MoneyConstants;
 use Spryker\Shared\Money\Parser\Parser;
 
 class MoneyFactory extends AbstractFactory
@@ -57,12 +55,12 @@ class MoneyFactory extends AbstractFactory
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterCollection->addFormatter(
             $this->createIntlFormatterCurrency(),
-            MoneyConstants::FORMATTER_WITH_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITH_SYMBOL
         );
 
         $moneyFormatterCollection->addFormatter(
             $this->createIntlFormatterDecimal(),
-            MoneyConstants::FORMATTER_WITHOUT_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL
         );
 
         return $moneyFormatterCollection;

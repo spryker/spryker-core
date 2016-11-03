@@ -9,7 +9,7 @@ namespace Spryker\Yves\Money\Plugin;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
@@ -63,7 +63,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function formatWithSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITH_SYMBOL);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyFormatterCollection::FORMATTER_WITH_SYMBOL);
     }
 
     /**
@@ -77,7 +77,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL);
     }
 
     /**
