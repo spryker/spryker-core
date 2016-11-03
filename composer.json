@@ -252,6 +252,7 @@
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
 
+      "Spryker\\Client\\Money\\": "Bundles/Money/src",
       "Spryker\\Shared\\Money\\": "Bundles/Money/src",
       "Spryker\\Yves\\Money\\": "Bundles/Money/src",
       "Spryker\\Zed\\Money\\": "Bundles/Money/src",
