@@ -17,7 +17,7 @@ class UtilEncodingBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Shared\UtilEncoding\Json
+     * @return \Spryker\Shared\UtilEncoding\JsonInterface
      */
     public function createJsonEncoder()
     {

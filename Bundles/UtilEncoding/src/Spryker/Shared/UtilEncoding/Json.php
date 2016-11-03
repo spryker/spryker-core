@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\UtilEncoding;
 
-class Json
+class Json implements JsonInterface
 {
 
     const DEFAULT_OPTIONS = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_ERROR_INF_OR_NAN | JSON_PARTIAL_OUTPUT_ON_ERROR;
