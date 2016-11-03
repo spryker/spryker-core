@@ -143,26 +143,6 @@ class StockFacadeTest extends Test
     }
 
     /**
-     * TODO: Impossible to update stock type, the only field we can change it the name, and it's used in the query to locate the entity
-     *
-     * @return void
-     */
-    public function SKIP_testUpdateStockType()
-    {
-        $stockTypeTransfer = (new TypeTransfer())
-            ->setIdStock($this->stockEntity1->getIdStock())
-            ->setName('Foo');
-
-        $idStock = $this->stockFacade->updateStockType($stockTypeTransfer);
-
-        $stockEntity = SpyStockQuery::create()
-                ->filterByIdStock($idStock)
-                ->findOne();
-
-        $this->assertEquals('Foo', $stockEntity->getName());
-    }
-
-    /**
      * @return void
      */
     public function testCreateStockProduct()

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -71,33 +70,6 @@ class Writer implements WriterInterface
         $this->queryContainer->getConnection()->commit();
 
         return $stockEntity->getPrimaryKey();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
-     *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException
-     *
-     * @return int
-     */
-    public function updateStockType(TypeTransfer $stockTypeTransfer)
-    {
-        $this->queryContainer->getConnection()->beginTransaction();
-
-        $stockTypeEntity = $this->queryContainer
-            ->queryStockByName($stockTypeTransfer->getName())
-            ->findOne();
-
-        if ($stockTypeEntity === null) {
-            throw new StockTypeNotFoundException();
-        }
-
-        $stockTypeEntity->setName($stockTypeTransfer->getName());
-        $stockTypeEntity->save();
-
-        $this->queryContainer->getConnection()->commit();
-
-        return $stockTypeEntity->getIdStock();
     }
 
     /**

@@ -75,7 +75,7 @@ class Reader implements ReaderInterface
      */
     public function isNeverOutOfStock($sku)
     {
-        $idProduct = $this->productFacade->getProductConcreteIdBySku($sku);
+        $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
 
         return $this->queryContainer
             ->queryStockByNeverOutOfStockAllTypes($idProduct)
@@ -91,7 +91,7 @@ class Reader implements ReaderInterface
      */
     public function getStocksProduct($sku)
     {
-        $productId = $this->productFacade->getProductConcreteIdBySku($sku);
+        $productId = $this->productFacade->findProductConcreteIdBySku($sku);
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
             ->find();
@@ -200,7 +200,7 @@ class Reader implements ReaderInterface
      */
     public function getProductConcreteIdBySku($sku)
     {
-        return $this->productFacade->getProductConcreteIdBySku($sku);
+        return $this->productFacade->findProductConcreteIdBySku($sku);
     }
 
     /**

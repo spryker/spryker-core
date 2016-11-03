@@ -22,13 +22,6 @@ interface WriterInterface
     public function createStockType(TypeTransfer $stockTypeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
-     *
-     * @return int
-     */
-    public function updateStockType(TypeTransfer $stockTypeTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
