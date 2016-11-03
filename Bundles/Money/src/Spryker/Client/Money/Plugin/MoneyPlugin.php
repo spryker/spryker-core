@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
-use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 /**
  * @method \Spryker\Client\Money\MoneyFactory getFactory()

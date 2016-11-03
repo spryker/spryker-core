@@ -68,7 +68,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Money\Parser\Parser
+     * @return \Spryker\Shared\Money\Parser\ParserInterface
      */
     public function createMoneyParser()
     {
