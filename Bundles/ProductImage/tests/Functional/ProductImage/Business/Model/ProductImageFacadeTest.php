@@ -209,7 +209,7 @@ class ProductImageFacadeTest extends Test
             ->setExternalUrlSmall(self::URL_SMALL)
             ->setExternalUrlLarge(self::URL_LARGE);
 
-        $productImageTransfer = $this->productImageFacade->persistProductImage($productImageTransfer);
+        $productImageTransfer = $this->productImageFacade->saveProductImage($productImageTransfer);
 
         $this->assertCreateImage($productImageTransfer);
     }
@@ -223,7 +223,7 @@ class ProductImageFacadeTest extends Test
             ->setName(self::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract());
 
-        $productImageSetTransfer = $this->productImageFacade->persistProductImageSet($productImageSetTransfer);
+        $productImageSetTransfer = $this->productImageFacade->saveProductImageSet($productImageSetTransfer);
 
         $this->assertCreateImageSet($productImageSetTransfer);
     }
@@ -242,7 +242,7 @@ class ProductImageFacadeTest extends Test
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->addProductImage($productImageTransfer);
 
-        $productImageSetTransfer = $this->productImageFacade->persistProductImageSet($productImageSetTransfer);
+        $productImageSetTransfer = $this->productImageFacade->saveProductImageSet($productImageSetTransfer);
 
         $this->assertCreateImageSet($productImageSetTransfer);
         $this->assertAbstractCreateImageForImageSet();

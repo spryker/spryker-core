@@ -42,7 +42,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper
+     * @return \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface
      */
     public function createTransferGenerator()
     {

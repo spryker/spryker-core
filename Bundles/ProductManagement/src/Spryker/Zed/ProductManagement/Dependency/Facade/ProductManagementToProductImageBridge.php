@@ -31,9 +31,9 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function persistProductImage(ProductImageTransfer $productImageTransfer)
+    public function saveProductImage(ProductImageTransfer $productImageTransfer)
     {
-        return $this->productImageFacade->persistProductImage($productImageTransfer);
+        return $this->productImageFacade->saveProductImage($productImageTransfer);
     }
 
     /**
@@ -41,9 +41,9 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        return $this->productImageFacade->persistProductImageSet($productImageSetTransfer);
+        return $this->productImageFacade->saveProductImageSet($productImageSetTransfer);
     }
 
     /**

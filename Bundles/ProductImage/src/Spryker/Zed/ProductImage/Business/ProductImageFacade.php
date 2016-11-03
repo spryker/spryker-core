@@ -30,11 +30,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function persistProductImage(ProductImageTransfer $productImageTransfer)
+    public function saveProductImage(ProductImageTransfer $productImageTransfer)
     {
         return $this->getFactory()
             ->createProductImageWriter()
-            ->persistProductImage($productImageTransfer);
+            ->saveProductImage($productImageTransfer);
     }
 
     /**
@@ -49,11 +49,11 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
         return $this->getFactory()
             ->createProductImageWriter()
-            ->persistProductImageSet($productImageSetTransfer);
+            ->saveProductImageSet($productImageSetTransfer);
     }
 
     /**
@@ -93,6 +93,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
+     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -110,6 +111,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
+     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -144,6 +146,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     /**
      * Specification:
      * - Persists all provided image sets to database for the given concrete product.
+     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -161,6 +164,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     /**
      * Specification:
      * - Persists all provided image sets to database for the given concrete product.
+     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *

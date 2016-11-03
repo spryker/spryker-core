@@ -16,8 +16,6 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_LOCALE = 'FACADE_LOCALE';
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -27,10 +25,6 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductImageToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
         };
 
         return $container;
@@ -43,10 +37,6 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
-        };
-
         return $container;
     }
 

@@ -26,7 +26,7 @@ interface ProductImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function persistProductImage(ProductImageTransfer $productImageTransfer);
+    public function saveProductImage(ProductImageTransfer $productImageTransfer);
 
     /**
      * Specification:
@@ -40,7 +40,7 @@ interface ProductImageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
     /**
      * Specification:
@@ -69,6 +69,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
+     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -81,6 +82,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
+     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -105,6 +107,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given concrete product.
+     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -117,6 +120,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given concrete product.
+     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
