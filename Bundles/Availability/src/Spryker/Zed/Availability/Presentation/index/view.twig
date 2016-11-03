@@ -19,13 +19,19 @@
                     <p><b>{{ 'Name' | trans }}:</b></p><p> {{ productAbstractInfo.productName }}</p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Availability' | trans }}:</b></p><p> {{ productAbstractInfo.availability }}</p>
+                    <p><b>{{ 'Availability' | trans }}:</b></p><p>
+                        {% if productAbstractInfo.availability > 0 %}
+                            <span class="label label-info"> {{ "Availabile" | trans }}</span>
+                        {% else  %}
+                            <span class="label label-info"> {{ "Not available" | trans }}</span>
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="col-lg-2">
                     <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractInfo.stockQuantity }}</p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Reserved Products"' | trans }}:</b></p><p> {{ productAbstractInfo.reservationQuantity }}</p>
+                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractInfo.reservationQuantity }}</p>
                 </div>
             </div>
 
