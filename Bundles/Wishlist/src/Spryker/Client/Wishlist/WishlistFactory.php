@@ -20,11 +20,9 @@ class WishlistFactory extends AbstractFactory
      */
     public function createSession()
     {
-        $session = new WishlistSession(
+        return new WishlistSession(
             $this->getProvidedDependency(WishlistDependencyProvider::SESSION)
         );
-
-        return $session;
     }
 
     /**
@@ -32,10 +30,9 @@ class WishlistFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        $zedStub = $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED);
-        $cartStub = new WishlistStub($zedStub);
-
-        return $cartStub;
+        return new WishlistStub(
+            $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED)
+        );
     }
 
     /**

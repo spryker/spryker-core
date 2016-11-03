@@ -52,4 +52,20 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
         return $product;
     }
 
+    /**
+     * @param array $idProductConcreteCollection
+     *
+     * @return array
+     */
+    public function getProductConcreteCollection(array $idProductConcreteCollection)
+    {
+        $keyCollection = [];
+        foreach ($idProductConcreteCollection as $idProductConcrete) {
+            $key = $this->keyBuilder->generateKey($idProductConcrete, $this->localeName);
+            $keyCollection[] = $key;
+        }
+
+        return $this->storage->getMulti($keyCollection);
+    }
+
 }

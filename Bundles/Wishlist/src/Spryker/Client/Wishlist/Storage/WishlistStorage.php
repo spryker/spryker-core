@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Storage;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
+use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Client\Storage\StorageClientInterface;
 
@@ -18,12 +17,12 @@ class WishlistStorage implements WishlistStorageInterface
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storageClient;
+    protected $storageClient;
 
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
-    private $productClient;
+    protected $productClient;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
@@ -36,28 +35,21 @@ class WishlistStorage implements WishlistStorageInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlist
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
-    public function expandProductDetails(WishlistTransfer $wishlist)
+    public function expandProductDetails(WishlistOverviewResponseTransfer $wishlistResponseTransfer)
     {
-        foreach ($wishlist->getItems() as $item) {
-            $productData = $this
-                ->productClient
-                ->getProductAbstractFromStorageByIdForCurrentLocale($item->getIdProductAbstract());
+        foreach ($wishlistResponseTransfer->getItems() as $wishlistItem) {
+            $productData = $this->productClient->getProductConcreteByIdForCurrentLocale(
+                $wishlistItem->getFkProduct()
+            );
 
-            foreach ($productData['product_concrete_collection'] as $product) {
-                if ($product['sku'] !== $item->getSku()) {
-                    continue;
-                }
-                $productConcrete = new ProductConcreteTransfer();
-                $productConcrete->setName($product['name']);
-                $productConcrete->setSku($product['sku']);
-                $productConcrete->setAttributes($product['attributes']);
-                $item->setProductConcrete($productConcrete);
-            }
+            $wishlistItem->setProductData($productData);
         }
+
+        return $wishlistResponseTransfer;
     }
 
 }

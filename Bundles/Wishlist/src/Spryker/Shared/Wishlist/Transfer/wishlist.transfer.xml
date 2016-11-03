@@ -12,6 +12,7 @@
     <transfer name="WishlistItem">
         <property name="fkWishlist" type="integer" />
         <property name="fkProduct" type="integer" />
+        <property name="productData" type="array" />
     </transfer>
 
     <transfer name="WishlistOverviewResponse">

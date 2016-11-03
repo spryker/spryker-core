@@ -7,16 +7,16 @@
 
 namespace Spryker\Client\Wishlist\Storage;
 
-use Generated\Shared\Transfer\WishlistTransfer;
+use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 
 interface WishlistStorageInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlist
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistResponseTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
-    public function expandProductDetails(WishlistTransfer $wishlist);
+    public function expandProductDetails(WishlistOverviewResponseTransfer $wishlistResponseTransfer);
 
 }

@@ -91,13 +91,16 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
-        return $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+        $wishlistOverviewResponse = $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+        return $this->getStorage()->expandProductDetails($wishlistOverviewResponse);
     }
 
     /**
@@ -106,6 +109,14 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     protected function getZedStub()
     {
         return $this->getFactory()->createZedStub();
+    }
+
+    /**
+     * @return \Spryker\Client\Wishlist\Storage\WishlistStorageInterface
+     */
+    protected function getStorage()
+    {
+        return $this->getFactory()->createStorage();
     }
 
 }

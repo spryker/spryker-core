@@ -49,9 +49,4 @@ interface ReaderInterface
      */
     public function getWishlistEntityByCustomerIdAndName($idCustomer, $name);
 
-    /**
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    public function mergeDefaultFilter();
-
 }

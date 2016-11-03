@@ -129,4 +129,29 @@ class ProductClient extends AbstractClient implements ProductClientInterface
         return $attributeMap;
     }
 
+    /**
+     * Specification:
+     * - Read product concrete information based on product concrete id collection
+     *
+     * @api
+     *
+     * @param array $idProductConcreteCollection
+     *
+     * @return array
+     */
+    public function getProductConcreteCollection(array $idProductConcreteCollection)
+    {
+        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
+        $productStorage = $this->getFactory()->createProductConcreteStorage($locale);
+
+        $jsonData = $productStorage->getProductConcreteCollection($idProductConcreteCollection);
+
+        $result = [];
+        foreach ($jsonData as $key => $json) {
+            $result[] = json_decode($json, true); //TODO util
+        }
+
+        return $result;
+    }
+
 }

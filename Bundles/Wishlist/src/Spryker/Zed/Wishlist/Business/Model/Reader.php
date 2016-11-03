@@ -11,11 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
-use Generated\Shared\Transfer\WishlistOverviewTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
@@ -88,7 +86,7 @@ class Reader implements ReaderInterface
         $wishlistTransfer->requireFkCustomer();
         $wishlistTransfer->requireName();
 
-        $wishlistOverviewResponseTransfer = (new WishlistOverviewResponseTransfer())
+        $responseTransfer = (new WishlistOverviewResponseTransfer())
             ->setWishlist($wishlistTransfer);
 
         $wishlistEntity = $this->queryContainer
@@ -97,40 +95,39 @@ class Reader implements ReaderInterface
             ->findOne();
 
         if (!$wishlistEntity) {
-            return $wishlistOverviewResponseTransfer;
+            return $responseTransfer;
         }
 
         $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
 
-        $filterCriteria = new PropelFilterCriteria(
-            $this->mergeDefaultFilter(
-                $wishlistOverviewRequestTransfer->getFilter()
-            )
-        );
+        $wishlistOverviewRequestTransfer->setWishlist($wishlistTransfer);
 
-        $itemCollection = $this->queryContainer
-            ->queryItemsByWishlistId($wishlistEntity->getIdWishlist())
-            ->mergeWith($filterCriteria->toCriteria())
-/*            ->useSpyProductQuery()
-                ->joinSpyProductLocalizedAttributes()
-                ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . '=' . $localeTransfer->getIdLocale())
-                ->useSpyProductImageSetQuery()
-                    ->useSpyProductImageSetToProductImageQuery()
-                        ->joinSpyProductImage()
-                    ->endUse()
-                    ->where(SpyProductImageSetTableMap::COL_FK_LOCALE . '=' . $localeTransfer->getIdLocale())
-                ->endUse()
-            ->endUse()*/
-            ->find();
-
-
-        $wishlistOverviewItems = $this->transferMapper->convertWishlistItemCollection($itemCollection);
-        $wishlistOverviewResponseTransfer->setWishlist($wishlistTransfer);
-        $wishlistOverviewResponseTransfer->setItems(new ArrayObject(
-            $wishlistOverviewItems
+        $responseTransfer->setItems(new ArrayObject(
+            $this->getWishlistOverviewItems($wishlistOverviewRequestTransfer)
         ));
 
-        return $wishlistOverviewResponseTransfer;
+        $responseTransfer->setWishlist($wishlistTransfer);
+
+        return $responseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     */
+    protected function getWishlistOverviewItems(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        $wishlistOverviewRequestTransfer->requireWishlist();
+        $wishlistOverviewRequestTransfer->getWishlist()->requireIdWishlist();
+
+        $filterCriteria = $this->getFilterCriteria($wishlistOverviewRequestTransfer->getFilter());
+        $itemCollection = $this->queryContainer
+            ->queryItemsByWishlistId($wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist())
+            ->mergeWith($filterCriteria->toCriteria())
+            ->find();
+
+        return $this->transferMapper->convertWishlistItemCollection($itemCollection);
     }
 
     /**
@@ -185,23 +182,36 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filter
      *
+     * @return \Spryker\Zed\Propel\PropelFilterCriteria
+     */
+    protected function getFilterCriteria(FilterTransfer $filter = null)
+    {
+        return new PropelFilterCriteria(
+            $this->mergeDefaultFilter($filter)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filter
+     *
      * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    public function mergeDefaultFilter(FilterTransfer $filter = null)
+    protected function mergeDefaultFilter(FilterTransfer $filter = null)
     {
         $defaultFilter = (new FilterTransfer())
-            ->setOrderDirection('DESC')
+            ->setOrderDirection(Criteria::DESC)
             ->setOrderBy(SpyWishlistItemTableMap::COL_CREATED_AT)
             ->setLimit(10)
             ->setOffset(0);
 
-        if ($filter == null) {
+        if ($filter === null) {
             return $defaultFilter;
         }
 
-        $filterData = $filter->toArray();
-        $defaultFilterData = $defaultFilter->toArray();
-        $data = array_merge($defaultFilterData, $filterData);
+        $data = array_merge(
+            $defaultFilter->toArray(),
+            $filter->toArray()
+        );
 
         return (new FilterTransfer())
             ->fromArray($data);
