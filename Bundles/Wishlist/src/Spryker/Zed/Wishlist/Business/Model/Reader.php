@@ -83,7 +83,6 @@ class Reader implements ReaderInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
         $wishlistOverviewRequestTransfer->requireWishlist();
-        $wishlistOverviewRequestTransfer->requireLocaleCode();
 
         $wishlistTransfer = $wishlistOverviewRequestTransfer->getWishlist();
         $wishlistTransfer->requireFkCustomer();
@@ -101,7 +100,6 @@ class Reader implements ReaderInterface
             return $wishlistOverviewResponseTransfer;
         }
 
-        $localeTransfer = $this->localeFacade->getLocale($wishlistOverviewRequestTransfer->getLocaleCode());
         $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
 
         $filterCriteria = new PropelFilterCriteria(
@@ -113,7 +111,7 @@ class Reader implements ReaderInterface
         $itemCollection = $this->queryContainer
             ->queryItemsByWishlistId($wishlistEntity->getIdWishlist())
             ->mergeWith($filterCriteria->toCriteria())
-            ->useSpyProductQuery()
+/*            ->useSpyProductQuery()
                 ->joinSpyProductLocalizedAttributes()
                 ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . '=' . $localeTransfer->getIdLocale())
                 ->useSpyProductImageSetQuery()
@@ -122,14 +120,14 @@ class Reader implements ReaderInterface
                     ->endUse()
                     ->where(SpyProductImageSetTableMap::COL_FK_LOCALE . '=' . $localeTransfer->getIdLocale())
                 ->endUse()
-            ->endUse()
+            ->endUse()*/
             ->find();
 
 
-        $wishlistOverviewProducts = $this->transferMapper->convertWishlistOverviewProductCollection($itemCollection);
+        $wishlistOverviewItems = $this->transferMapper->convertWishlistItemCollection($itemCollection);
         $wishlistOverviewResponseTransfer->setWishlist($wishlistTransfer);
-        $wishlistOverviewResponseTransfer->setProducts(new ArrayObject(
-            $wishlistOverviewProducts
+        $wishlistOverviewResponseTransfer->setItems(new ArrayObject(
+            $wishlistOverviewItems
         ));
 
         return $wishlistOverviewResponseTransfer;

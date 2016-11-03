@@ -75,39 +75,4 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         return $transferList;
     }
 
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
-     *
-     * @return \Generated\Shared\Transfer\WishlistOverviewProductTransfer
-     */
-    public function convertWishlistOverviewProduct(SpyWishlistItem $wishlistItemEntity)
-    {
-        $wishlistOverviewItemTransfer = (new WishlistOverviewProductTransfer())
-            ->fromArray($wishlistItemEntity->toArray(), true);
-
-        $wishlistOverviewItemTransfer
-            ->setIdProduct($wishlistItemEntity->getSpyProduct()->getIdProduct())
-            ->setSku($wishlistItemEntity->getSpyProduct()->getSku())
-            ->setName($wishlistItemEntity->getSpyProduct()->getSpyProductLocalizedAttributess()->getFirst()->getName())
-            ->setDescription($wishlistItemEntity->getSpyProduct()->getSpyProductLocalizedAttributess()->getFirst()->getDescription())
-            ->setFkLocale($wishlistItemEntity->getSpyProduct()->getSpyProductLocalizedAttributess()->getFirst()->getFkLocale());
-
-        return $wishlistOverviewItemTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistOverviewProductTransfer[]
-     */
-    public function convertWishlistOverviewProductCollection(ObjectCollection $wishlistItemEntityCollection)
-    {
-        $transferList = [];
-        foreach ($wishlistItemEntityCollection as $wishlistEntity) {
-            $transferList[] = $this->convertWishlistOverviewProduct($wishlistEntity);
-        }
-
-        return $transferList;
-    }
-
 }
