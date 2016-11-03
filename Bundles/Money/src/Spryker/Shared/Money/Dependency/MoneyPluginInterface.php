@@ -15,7 +15,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will return a MoneyTransfer object created from given integer value.
+     * - Returns a MoneyTransfer object created from given integer value.
      *
      * @api
      *
@@ -28,7 +28,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will return a MoneyTransfer object created from given float value.
+     * - Returns a MoneyTransfer object created from given float value.
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will return a MoneyTransfer object created from given string value.
+     * - Returns a MoneyTransfer object created from given string value.
      *
      * @api
      *
@@ -54,7 +54,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will return formatted string representation of the given MoneyTransfer object with currency symbol
+     * - Returns formatted string representation of the given MoneyTransfer object with currency symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `CurrencyTransfer::$code = EUR` will return `10,00 €`
      *
@@ -68,7 +68,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will return float representation of the given MoneyTransfer object without symbol
+     * - Returns float representation of the given MoneyTransfer object without symbol
      *
      * E.g. `MoneyTransfer::$amount = 1000`, `CurrencyTransfer::$code = EUR` will return `10,00`
      *
@@ -82,7 +82,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This money will return a MoneyTransfer parsed from the given value.
+     * - Returns a MoneyTransfer parsed from the given value.
      *
      * E.g. `$value = 10,00 €` `CurrencyTransfer::$code = EUR` will return `MoneyTransfer::$amount(1000)`
      *
@@ -97,7 +97,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will convert a given integer value into a decimal value.
+     * - Returns from a given integer value converted decimal value.
      *
      * E.g. `$value = 1000` will return `10.00`
      *
@@ -109,7 +109,7 @@ interface MoneyPluginInterface
 
     /**
      * Specification:
-     * - This method will convert a given decimal value into a integer value.
+     * - Returns from a given decimal value converted integer value.
      *
      * E.g. `$value = 10.00` will return `1000`
      *
