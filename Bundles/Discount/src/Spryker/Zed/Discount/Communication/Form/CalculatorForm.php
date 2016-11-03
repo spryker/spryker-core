@@ -63,7 +63,6 @@ class CalculatorForm extends AbstractType
         $this->calculatorAmountTransformer = $calculatorAmountTransformer;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array|string[] $options

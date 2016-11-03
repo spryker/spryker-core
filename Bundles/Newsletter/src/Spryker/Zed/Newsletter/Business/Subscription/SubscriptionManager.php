@@ -37,6 +37,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
      */
     public function subscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {
+        $newsletterSubscriber->requireIdNewsletterSubscriber();
+
         $subscriptionEntity = new SpyNewsletterSubscription();
         $subscriptionEntity->setFkNewsletterSubscriber($newsletterSubscriber->getIdNewsletterSubscriber());
         $subscriptionEntity->setFkNewsletterType($this->getIdNewsletterType($newsletterType));
@@ -51,6 +53,9 @@ class SubscriptionManager implements SubscriptionManagerInterface
      */
     public function isAlreadySubscribed(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {
+        $newsletterSubscriber->requireEmail();
+        $newsletterType->requireName();
+
         $subscriptionCount = $this->queryContainer
             ->querySubscriptionByEmailAndNewsletterTypeName($newsletterSubscriber->getEmail(), $newsletterType->getName())
             ->count();

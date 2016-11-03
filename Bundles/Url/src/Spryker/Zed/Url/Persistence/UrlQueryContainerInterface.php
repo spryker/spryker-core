@@ -56,6 +56,22 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $id
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlByIdWithRedirect($id);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsWithRedirect();
+
+    /**
+     * @api
+     *
      * @param int $idCategoryNode
      * @param int $idLocale
      *

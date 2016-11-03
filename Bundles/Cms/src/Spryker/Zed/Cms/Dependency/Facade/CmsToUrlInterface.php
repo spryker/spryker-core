@@ -47,6 +47,15 @@ interface CmsToUrlInterface
     public function touchUrlActive($idUrl);
 
     /**
+     * @api
+     *
+     * @param int $idUrl
+     *
+     * @return void
+     */
+    public function touchUrlDeleted($idUrl);
+
+    /**
      * @param string $url
      *
      * @return bool

@@ -88,8 +88,6 @@ class TransitionLogTest extends StateMachineMocks
         $this->assertEquals('two=2', $storedParams[1]);
     }
 
-
-
     /**
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock
      *

@@ -43,7 +43,6 @@ class LockedTriggerTest extends StateMachineMocks
         $lockedTrigger->triggerForNewStateMachineItem(new StateMachineProcessTransfer(), 1);
     }
 
-
     /**
      * @return void
      */
@@ -61,8 +60,6 @@ class LockedTriggerTest extends StateMachineMocks
         $lockedTrigger = $this->createLockedTrigger($triggerMock, $itemLockMock);
         $lockedTrigger->triggerEvent('event', []);
     }
-
-
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface|null $triggerMock

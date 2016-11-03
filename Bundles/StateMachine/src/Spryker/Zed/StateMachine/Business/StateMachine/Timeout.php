@@ -122,8 +122,6 @@ class Timeout implements TimeoutInterface
         return $this->stateIdToModelBuffer[$stateName];
     }
 
-
-
     /**
      * @param \DateInterval $interval
      * @param string $timeout

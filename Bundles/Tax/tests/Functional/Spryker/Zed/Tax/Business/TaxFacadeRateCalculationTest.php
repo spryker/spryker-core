@@ -67,7 +67,6 @@ class TaxFacadeRateCalculationTest extends Test
         $this->assertEquals('20.00', $itemTransfer->getTaxRate());
     }
 
-
     /**
      * @param int $taxRate
      * @param string $iso2Code

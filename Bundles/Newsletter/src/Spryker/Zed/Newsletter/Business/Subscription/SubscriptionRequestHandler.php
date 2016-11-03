@@ -237,11 +237,11 @@ class SubscriptionRequestHandler
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
      *
-     * @return void
+     * @return bool
      */
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $subscriber)
     {
-        $this->subscriberManager->assignCustomerToExistingSubscriber($subscriber);
+        return $this->subscriberManager->assignCustomerToExistingSubscriber($subscriber);
     }
 
 }

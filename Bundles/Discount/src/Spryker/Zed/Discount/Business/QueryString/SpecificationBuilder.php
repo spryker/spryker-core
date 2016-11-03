@@ -301,7 +301,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         return $this->comparatorOperators->isExistingComparator($clauseTransfer);
     }
 
-
     /**
      * @param string $token
      *

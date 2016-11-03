@@ -10,6 +10,8 @@ interface DiscountRuleWithAttributesPluginInterface
 {
 
     /**
+     * @api
+     *
      * @return array|string[]
      */
     public function getAttributeTypes();

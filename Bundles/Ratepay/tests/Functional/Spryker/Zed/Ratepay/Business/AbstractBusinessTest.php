@@ -219,7 +219,6 @@ abstract class AbstractBusinessTest extends Test
      */
     abstract protected function getRatepayPaymentMethodTransfer();
 
-
     /**
      * @return mixed
      */
@@ -293,7 +292,6 @@ abstract class AbstractBusinessTest extends Test
 
         return $orderEntity;
     }
-
 
     /**
      * @param int $idSalesOrder

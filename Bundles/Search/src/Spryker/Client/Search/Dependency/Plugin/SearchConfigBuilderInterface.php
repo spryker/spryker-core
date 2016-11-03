@@ -11,6 +11,8 @@ interface SearchConfigBuilderInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfigBuilder
      *
      * @return void
@@ -18,6 +20,8 @@ interface SearchConfigBuilderInterface
     public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder);
 
     /**
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
      *
      * @return void
@@ -25,6 +29,8 @@ interface SearchConfigBuilderInterface
     public function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder);
 
     /**
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfigBuilder
      *
      * @return void

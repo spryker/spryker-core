@@ -112,7 +112,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     /**
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
-    protected  abstract function getPaymentTransfer();
+    abstract protected function getPaymentTransfer();
 
     /**
      * @return void
@@ -175,7 +175,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
      * @return void
      */
     abstract protected function testPaymentSpecificRequestData($request);
-
 
     /**
      * @return void

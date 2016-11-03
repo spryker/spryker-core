@@ -130,7 +130,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     /**
      * @param array $touchData
      *
-     * @return int
+     * @return int|null
      */
     protected function getCollectorKeyFromData(array $touchData)
     {

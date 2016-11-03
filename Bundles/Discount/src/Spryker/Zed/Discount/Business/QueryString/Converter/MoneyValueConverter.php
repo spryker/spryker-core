@@ -78,7 +78,6 @@ class MoneyValueConverter implements MoneyValueConverterInterface
         $clauseTransfer->setValue($amountInCents);
     }
 
-
     /**
      * @param string $value
      *
