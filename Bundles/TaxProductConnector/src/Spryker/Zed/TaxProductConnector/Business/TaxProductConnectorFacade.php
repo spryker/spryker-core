@@ -17,16 +17,6 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
 {
 
     /**
-     * @api
-     *
-     * @return \Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin
-     */
-    public function getTaxChangeTouchPlugin()
-    {
-        return $this->getFactory()->createTaxChangeTouchPlugin();
-    }
-
-    /**
      * Specification:
      * - Save tax set id to product abstract table
      *
