@@ -126,20 +126,6 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Returns the ID of a persisted stock product entity of the given concrete product and stock type.
-     * - Throws exception if the entity is not existing.
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param string $stockType
-     *
-     * @return int
-     */
-    public function getIdStockProduct($sku, $stockType);
-
-    /**
-     * Specification:
      * - Processes all provided stocks of the concrete product transfer
      * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
      * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.

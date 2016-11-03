@@ -279,35 +279,6 @@ class StockFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetIdStockProduct()
-    {
-        $idStockProduct = $this->stockFacade->getIdStockProduct(
-            self::CONCRETE_SKU,
-            $this->stockEntity1->getName()
-        );
-
-        $this->assertEquals(
-            $this->productStockEntity1->getIdStockProduct(),
-            $idStockProduct
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetIdStockProductShouldThrowException()
-    {
-        $this->expectException(StockProductNotFoundException::class);
-
-        $idStockProduct = $this->stockFacade->getIdStockProduct(
-            'INVALIDSKU',
-            $this->stockEntity1->getName()
-        );
-    }
-
-    /**
-     * @return void
-     */
     public function testPersistStockProductCollection()
     {
         $increment = 20;
