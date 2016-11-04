@@ -19,17 +19,17 @@ class CurrencyFactory extends AbstractFactory
     public function createCurrencyBuilder()
     {
         return new CurrencyBuilder(
-            $this->getIntlCurrencyBundle(),
+            $this->getInternationalization(),
             $this->getStore()->getCurrencyIsoCode()
         );
     }
 
     /**
-     * @return \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface
+     * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
-    protected function getIntlCurrencyBundle()
+    protected function getInternationalization()
     {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::INTL_CURRENCY_BUNDLE);
+        return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Client\Currency;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
 use Symfony\Component\Intl\Intl;
 
@@ -16,7 +17,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
 {
 
     const STORE = 'store';
-    const INTL_CURRENCY_BUNDLE = 'intl currency bundle';
+    const INTERNATIONALIZATION = 'internationalization';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,7 +27,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStore($container);
-        $container = $this->addIntlCurrencyBundle($container);
+        $container = $this->addInternationalization($container);
 
         return $container;
     }
@@ -50,10 +51,14 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addIntlCurrencyBundle(Container $container)
+    protected function addInternationalization(Container $container)
     {
-        $container[static::INTL_CURRENCY_BUNDLE] = function () {
-            return Intl::getCurrencyBundle();
+        $container[static::INTERNATIONALIZATION] = function () {
+            $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
+                Intl::getCurrencyBundle()
+            );
+
+            return $currencyToInternationalizationBridge;
         };
 
         return $container;
