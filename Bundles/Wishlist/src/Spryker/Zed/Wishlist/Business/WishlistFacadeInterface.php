@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -64,20 +63,20 @@ interface WishlistFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemTransfer);
+    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
+    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer);
 
     /**
      * @api
@@ -86,7 +85,9 @@ interface WishlistFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getWishlistByName(WishlistTransfer $wishlistTransfer);
+    public
+
+    function getWishlistByName(WishlistTransfer $wishlistTransfer);
 
     /**
      * @api

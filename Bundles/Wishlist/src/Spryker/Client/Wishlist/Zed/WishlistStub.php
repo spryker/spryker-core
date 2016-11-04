@@ -8,6 +8,7 @@
 namespace Spryker\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -59,23 +60,23 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
+    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
+        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemUpdateRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
+    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
+        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemUpdateRequestTransfer);
     }
 
     /**

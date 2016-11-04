@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\Wishlist;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -48,20 +47,20 @@ interface WishlistClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemTransfer);
+    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
+    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer);
 
     /**
      * @api
@@ -73,6 +72,8 @@ interface WishlistClientInterface
     public function getWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer

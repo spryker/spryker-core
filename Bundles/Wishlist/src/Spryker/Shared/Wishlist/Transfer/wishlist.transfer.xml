@@ -15,6 +15,11 @@
         <property name="product" type="StorageProduct" />
     </transfer>
 
+    <transfer name="WishlistItemUpdateRequest">
+        <property name="fkProduct" type="int" />
+        <property name="fkCustomer" type="int" />
+    </transfer>
+
     <transfer name="WishlistOverviewRequest">
         <property name="wishlist" type="Wishlist" />
         <property name="page" type="int" />

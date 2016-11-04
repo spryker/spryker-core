@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
@@ -17,6 +18,8 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
+
+    const DEFAULT_NAME = 'default';
 
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
@@ -132,37 +135,41 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
+    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        $this->assertWishlistItem($wishlistItemTransfer);
+        $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
+        $idWishlist = $this->getDefaultWishlistId($wishlistItemUpdateRequestTransfer->getFkCustomer());
 
         $entity = $this->queryContainer->queryWishlistItem()
-            ->filterByFkWishlist($wishlistItemTransfer->getFkWishlist())
-            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
+            ->filterByFkWishlist($idWishlist)
+            ->filterByFkProduct($wishlistItemUpdateRequestTransfer->getFkProduct())
             ->findOneOrCreate();
 
         $entity->save();
 
-        return $wishlistItemTransfer;
+        return $wishlistItemUpdateRequestTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
+    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        $this->assertWishlistItem($wishlistItemTransfer);
+        $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
+        $idWishlist = $this->getDefaultWishlistId($wishlistItemUpdateRequestTransfer->getFkCustomer());
 
         $this->queryContainer->queryWishlistItem()
-            ->filterByFkWishlist($wishlistItemTransfer->getFkWishlist())
-            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
+            ->filterByFkWishlist($idWishlist)
+            ->filterByFkProduct($wishlistItemUpdateRequestTransfer->getFkProduct())
             ->delete();
+
+        return $wishlistItemUpdateRequestTransfer;
     }
 
     /**
@@ -172,8 +179,19 @@ class Writer implements WriterInterface
      */
     protected function assertWishlistItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        $wishlistItemTransfer->getFkWishlist();
+        $wishlistItemTransfer->requireFkWishlist();
         $wishlistItemTransfer->requireFkProduct();
+    }
+
+    /**
+     * @param WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertWishlistItemUpdateRequest(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
+    {
+        $wishlistItemUpdateRequestTransfer->requireFkCustomer();
+        $wishlistItemUpdateRequestTransfer->requireFkProduct();
     }
 
     /**
@@ -229,6 +247,24 @@ class Writer implements WriterInterface
                 $wishlistTransfer->getFkCustomer()
             ));
         }
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return int|null
+     */
+    public function getDefaultWishlistId($idCustomer)
+    {
+        $wishlistEntity = $this->queryContainer->queryWishlistByCustomerId($idCustomer)
+            ->filterByName(self::DEFAULT_NAME)
+            ->findOne();
+
+        if ($wishlistEntity) {
+            return $wishlistEntity->getIdWishlist();
+        }
+
+        return null;
     }
 
 }

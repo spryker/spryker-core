@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -50,23 +50,23 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function addItemAction(WishlistItemTransfer $WishlistItemTransfer)
+    public function addItemAction(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        return $this->getFacade()->addItem($WishlistItemTransfer);
+        return $this->getFacade()->addItem($wishlistItemUpdateRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function removeItemAction(WishlistItemTransfer $WishlistItemTransfer)
+    public function removeItemAction(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        return $this->getFacade()->removeItem($WishlistItemTransfer);
+        return $this->getFacade()->removeItem($wishlistItemUpdateRequestTransfer);
     }
 
     /**

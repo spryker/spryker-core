@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -92,29 +93,29 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
+    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
         return $this->getFactory()
             ->createWriter()
-            ->addItem($wishlistItemTransfer);
+            ->addItem($wishlistItemUpdateRequestTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
+    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriter()
-            ->removeItem($wishlistItemTransfer);
+            ->removeItem($wishlistItemUpdateRequestTransfer);
     }
 
     /**
