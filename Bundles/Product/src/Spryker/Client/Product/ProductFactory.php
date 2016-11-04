@@ -100,4 +100,9 @@ class ProductFactory extends AbstractFactory
         return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_LOCALE);
     }
 
+    public function getUtilEncodingClient()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::UTIL_ENCODING_CLIENT);
+    }
+
 }

@@ -87,7 +87,8 @@ class Reader implements ReaderInterface
         $wishlistTransfer->requireName();
 
         $responseTransfer = (new WishlistOverviewResponseTransfer())
-            ->setWishlist($wishlistTransfer);
+            ->setWishlist($wishlistTransfer)
+            ->setItemsTotal(0);
 
         $wishlistEntity = $this->queryContainer
             ->queryWishlistByCustomerId($wishlistTransfer->getFkCustomer())
@@ -106,7 +107,11 @@ class Reader implements ReaderInterface
             $this->getWishlistOverviewItems($wishlistOverviewRequestTransfer)
         ));
 
-        $responseTransfer->setWishlist($wishlistTransfer);
+        $totalItemsCount = $this->getTotalItemCount($wishlistTransfer->getIdWishlist());
+
+        $responseTransfer
+            ->setWishlist($wishlistTransfer)
+            ->setItemsTotal($totalItemsCount);
 
         return $responseTransfer;
     }
@@ -128,6 +133,18 @@ class Reader implements ReaderInterface
             ->find();
 
         return $this->transferMapper->convertWishlistItemCollection($itemCollection);
+    }
+
+    /**
+     * @param int $idWishlist
+     *
+     * @return int
+     */
+    protected function getTotalItemCount($idWishlist)
+    {
+        return $this->queryContainer->queryWishlistItem()
+            ->filterByFkWishlist($idWishlist)
+            ->count();
     }
 
     /**
@@ -208,10 +225,23 @@ class Reader implements ReaderInterface
             return $defaultFilter;
         }
 
+        $filterData = $filter->toArray();
+        $defaultFilterData = $defaultFilter->toArray();
+        $isEmpty = empty(array_filter(
+            array_values($filterData)
+        ));
+
         $data = array_merge(
-            $defaultFilter->toArray(),
-            $filter->toArray()
+            $defaultFilterData,
+            $filterData
         );
+
+        if ($isEmpty) {
+            $data = array_merge(
+                $filterData,
+                $defaultFilterData
+            );
+        }
 
         return (new FilterTransfer())
             ->fromArray($data);

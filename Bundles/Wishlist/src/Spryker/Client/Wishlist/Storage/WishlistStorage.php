@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Storage;
 
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Client\Storage\StorageClientInterface;
@@ -41,12 +42,28 @@ class WishlistStorage implements WishlistStorageInterface
      */
     public function expandProductDetails(WishlistOverviewResponseTransfer $wishlistResponseTransfer)
     {
-        foreach ($wishlistResponseTransfer->getItems() as $wishlistItem) {
-            $productData = $this->productClient->getProductConcreteByIdForCurrentLocale(
-                $wishlistItem->getFkProduct()
-            );
+        $wishlistResponseTransfer->requireWishlist();
 
-            $wishlistItem->setProductData($productData);
+        $ids = [];
+        foreach ($wishlistResponseTransfer->getItems() as $wishlistItem) {
+            $ids[] = $wishlistItem->getFkProduct();
+        }
+
+        if (empty($ids)) {
+            return $wishlistResponseTransfer;
+        }
+
+        $wishlistResponseTransfer->setItems(new \ArrayObject());
+
+        $storageProductCollection = $this->productClient->getProductConcreteCollection($ids);
+
+        foreach ($storageProductCollection as $storageProduct) {
+            $wishlistItem = (new WishlistItemTransfer())
+                ->setFkProduct($storageProduct->getId())
+                ->setFkWishlist($wishlistResponseTransfer->getWishlist()->getIdWishlist())
+                ->setProduct($storageProduct);
+
+            $wishlistResponseTransfer->addItem($wishlistItem);
         }
 
         return $wishlistResponseTransfer;

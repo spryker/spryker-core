@@ -12,17 +12,22 @@
     <transfer name="WishlistItem">
         <property name="fkWishlist" type="integer" />
         <property name="fkProduct" type="integer" />
-        <property name="productData" type="array" />
+        <property name="product" type="StorageProduct" />
     </transfer>
 
     <transfer name="WishlistOverviewResponse">
         <property name="wishlist" type="Wishlist" />
         <property name="items" type="WishlistItem[]" singular="item" />
+        <property name="itemsTotal" type="integer" />
     </transfer>
 
     <transfer name="WishlistOverviewRequest">
         <property name="wishlist" type="Wishlist" />
         <property name="filter" type="Filter" />
+    </transfer>
+
+    <transfer name="StorageProduct">
+        <property name="id" type="int" />
     </transfer>
 
 </transfers>

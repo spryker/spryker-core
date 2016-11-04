@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Product;
 
+use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -137,7 +138,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
      *
      * @param array $idProductConcreteCollection
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection)
     {
@@ -148,10 +149,26 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 
         $result = [];
         foreach ($jsonData as $key => $json) {
-            $result[] = json_decode($json, true); //TODO util
+            $data = json_decode($json, true); //TODO util
+            $result[] = $this->mapStorageProduct($data);
         }
 
         return $result;
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    protected function mapStorageProduct($data)
+    {
+        $storageProduct = new StorageProductTransfer();
+        if (is_array($data)) {
+            $storageProduct->fromArray($data);
+        }
+
+        return $storageProduct;
     }
 
 }

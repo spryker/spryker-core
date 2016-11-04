@@ -75,7 +75,7 @@ interface ProductClientInterface
      *
      * @param array $idProductConcreteCollection
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
 

@@ -67,5 +67,9 @@
         <property name="concreteLocalizedAttributes" type="array" singular="concreteLocalizedAttribute" />
     </transfer>
 
+    <transfer name="StorageProduct">
+        <property name="sku" type="string" />
+    </transfer>
+
 </transfers>
 
