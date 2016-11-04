@@ -21,7 +21,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     public function createCurrencyBuilder()
     {
         return new CurrencyBuilder(
-            Intl::getCurrencyBundle(),
+            $this->getIntlCurrencyBundle(),
             $this->getStore()->getCurrencyIsoCode()
         );
     }
@@ -32,6 +32,14 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface
+     */
+    protected function getIntlCurrencyBundle()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::INTL_CURRENCY_BUNDLE);
     }
 
 }
