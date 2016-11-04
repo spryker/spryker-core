@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Currency;
+namespace Spryker\Yves\Currency;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Intl\Intl;
 
-class CurrencyDependencyProvider extends AbstractDependencyProvider
+class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORE = 'store';
     const INTL_CURRENCY_BUNDLE = 'intl currency bundle';
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container|void
+     * @return \Spryker\Yves\Kernel\Container|void
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideDependencies(Container $container)
     {
         $container = $this->addStore($container);
         $container = $this->addIntlCurrencyBundle($container);
@@ -32,9 +32,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addStore(Container $container)
     {
@@ -46,9 +46,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addIntlCurrencyBundle(Container $container)
     {

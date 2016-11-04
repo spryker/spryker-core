@@ -8,9 +8,7 @@
 namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Symfony\Component\Intl\Intl;
 
 class CurrencyFactory extends AbstractFactory
 {
@@ -21,9 +19,25 @@ class CurrencyFactory extends AbstractFactory
     public function createCurrencyBuilder()
     {
         return new CurrencyBuilder(
-            Intl::getCurrencyBundle(),
-            Store::getInstance()->getCurrencyIsoCode()
+            $this->getIntlCurrencyBundle(),
+            $this->getStore()->getCurrencyIsoCode()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface
+     */
+    protected function getIntlCurrencyBundle()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::INTL_CURRENCY_BUNDLE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
     }
 
 }

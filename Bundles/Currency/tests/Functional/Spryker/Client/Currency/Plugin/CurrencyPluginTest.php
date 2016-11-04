@@ -35,7 +35,7 @@ class CurrencyPluginTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetDefaultShouldReturnCurrencyTransfer()
+    public function testGetCurrentShouldReturnCurrencyTransfer()
     {
         $currencyPlugin = new CurrencyPlugin();
         $currencyTransfer = $currencyPlugin->getCurrent();
