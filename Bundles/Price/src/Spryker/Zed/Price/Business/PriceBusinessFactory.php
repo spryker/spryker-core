@@ -23,21 +23,6 @@ class PriceBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
-     */
-    private $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface
-     */
-    protected $touchFacade;
-
-    /**
-     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
-     */
-    protected $productFacade;
-
-    /**
      * @return \Spryker\Zed\Price\Business\Model\ReaderInterface
      */
     public function createReaderModel()
@@ -88,17 +73,13 @@ class PriceBusinessFactory extends AbstractBusinessFactory
      */
     protected function getTouchFacade()
     {
-        if ($this->touchFacade === null) {
-            $this->touchFacade = $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
-        }
-
-        return $this->touchFacade;
+        return $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
     }
 
     /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return \Spryker\Zed\Price\Business\Internal\Install
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller
      */
     public function createInstaller(MessengerInterface $messenger)
     {

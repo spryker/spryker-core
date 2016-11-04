@@ -76,21 +76,29 @@ interface PriceFacadeInterface
     /**
      * Specification:
      * - Creates a new price type entity and persists it in database.
+     * - Returns the ID of the persisted type.
      *
      * @api
      *
      * @param string $name
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return int
      */
     public function createPriceType($name);
 
     /**
+     * Specification:
+     * - Updates existing product price entity with the newly provided data.
+     * - If the price type is not defined, then the default price type will be used.
+     * - The product to assign can be either concrete or abstract, depending on the provided IDs.
+     * - If the product doesn't have price, it throws exception.
+     * - Touches product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
-     * @return mixed
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
@@ -123,6 +131,13 @@ interface PriceFacadeInterface
     public function hasValidPrice($sku, $priceType = null);
 
     /**
+     * Specification:
+     * - Creates and assigns a new price product entity for the given product.
+     * - If the price type is not defined, then the default price type will be used.
+     * - The product to assign can be either concrete or abstract, depending on the provided IDs.
+     * - If the product already has price, it throws exception.
+     * - Touches product.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCartConnector\Business\Manager;
+namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface ProductManagerInterface
+interface ProductExpanderInterface
 {
 
     /**

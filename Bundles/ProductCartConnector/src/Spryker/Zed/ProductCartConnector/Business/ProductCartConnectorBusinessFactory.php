@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
 use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 
 /**
@@ -19,11 +19,11 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManagerInterface
+     * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface
      */
-    public function createProductManager()
+    public function createProductExpander()
     {
-        return new ProductManager(
+        return new ProductExpander(
             $this->getLocaleFacade(),
             $this->getProductFacade()
         );

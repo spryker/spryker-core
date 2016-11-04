@@ -101,7 +101,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
      *
      * @return array
      */
-    public function getAttributeMapByIdProductAbstractForCurrectLocale($idProductAbstract)
+    public function getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract)
     {
         $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
         $attributeMapStorage = $this->getFactory()->createAttributeMapStorage($locale);

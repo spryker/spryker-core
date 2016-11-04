@@ -5,15 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCartConnector\Business\Manager;
+namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
-class ProductManager implements ProductManagerInterface
+class ProductExpander implements ProductExpanderInterface
 {
 
     /**
