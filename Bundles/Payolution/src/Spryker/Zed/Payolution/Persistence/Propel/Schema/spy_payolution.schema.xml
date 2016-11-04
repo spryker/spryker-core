@@ -3,7 +3,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     name="zed"
     defaultIdMethod="native"
-    defaultPhpNamingMethod="underscore"
     xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
     namespace="Orm\Zed\Payolution\Persistence"
     package="src.Orm.Zed.Payolution.Persistence"

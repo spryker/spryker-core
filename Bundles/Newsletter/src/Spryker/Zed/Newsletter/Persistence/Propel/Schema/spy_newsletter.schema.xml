@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Newsletter\Persistence" package="src.Orm.Zed.Newsletter.Persistence">
+<database
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        defaultIdMethod="native"
+        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Zed\Newsletter\Persistence" package="src.Orm.Zed.Newsletter.Persistence">
 
     <table name="spy_newsletter_subscriber" idMethod="native" identifierQuoting="true">
         <column name="id_newsletter_subscriber" primaryKey="true" autoIncrement="true" type="INTEGER"/>
