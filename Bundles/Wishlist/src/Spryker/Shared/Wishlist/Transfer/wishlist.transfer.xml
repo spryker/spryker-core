@@ -18,6 +18,7 @@
     <transfer name="WishlistItemUpdateRequest">
         <property name="fkProduct" type="int" />
         <property name="fkCustomer" type="int" />
+        <property name="wishlistName" type="string" />
     </transfer>
 
     <transfer name="WishlistOverviewRequest">
