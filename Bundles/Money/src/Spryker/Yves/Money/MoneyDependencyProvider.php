@@ -24,6 +24,9 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addStore($container);
+        $container = $this->addIntlMoneyParser($container);
+        $container = $this->addIsoCurrencies($container);
+        $container = $this->addNumberFormatter($container);
 
         return $container;
     }

@@ -150,6 +150,7 @@ class MoneyPluginTest extends PHPUnit_Framework_TestCase
         return [
             ['10,00 €', 'EUR', '1000'],
             ['10,99 €', 'EUR', '1099'],
+            ['10,999 €', 'EUR', '1100'],
             ['1000 ¥', 'JPY', '1000'],
             ['1099 ¥', 'JPY', '1099'],
         ];

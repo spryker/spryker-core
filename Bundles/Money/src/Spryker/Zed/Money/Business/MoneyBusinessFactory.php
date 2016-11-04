@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Money\Business;
 
-use Money\Currencies\ISOCurrencies;
-use Money\Parser\IntlMoneyParser;
-use NumberFormatter;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
@@ -73,7 +70,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     public function createMoneyParser()
     {
         return new Parser(
-            $this->createIntlMoneyParser(),
+            $this->getIntlMoneyParser(),
             $this->createMoneyToTransferMapper()
         );
     }
@@ -81,34 +78,9 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Money\Parser\IntlMoneyParser
      */
-    protected function createIntlMoneyParser()
+    protected function getIntlMoneyParser()
     {
-        $numberFormatter = $this->createNumberFormatter();
-        $currencies = $this->createCurrencies();
-        $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
-
-        return $intlMoneyParser;
-    }
-
-    /**
-     * @return \NumberFormatter
-     */
-    protected function createNumberFormatter()
-    {
-        $numberFormatter = new NumberFormatter(
-            $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
-        );
-
-        return $numberFormatter;
-    }
-
-    /**
-     * @return \Money\Currencies\ISOCurrencies
-     */
-    protected function createCurrencies()
-    {
-        return new ISOCurrencies();
+        return $this->getProvidedDependency(MoneyDependencyProvider::INTL_MONEY_PARSER);
     }
 
     /**
