@@ -7,9 +7,6 @@
 
 namespace Spryker\Yves\Money;
 
-use Money\Currencies\ISOCurrencies;
-use Money\Parser\IntlMoneyParser;
-use NumberFormatter;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
@@ -73,42 +70,17 @@ class MoneyFactory extends AbstractFactory
     public function createMoneyParser()
     {
         return new Parser(
-            $this->createIntlMoneyParser(),
+            $this->getMoneyParser(),
             $this->createMoneyToTransferMapper()
         );
     }
 
     /**
-     * @return \Money\Parser\IntlMoneyParser
+     * @return \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
      */
-    protected function createIntlMoneyParser()
+    protected function getMoneyParser()
     {
-        $numberFormatter = $this->createNumberFormatter();
-        $currencies = $this->createCurrencies();
-        $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
-
-        return $intlMoneyParser;
-    }
-
-    /**
-     * @return \NumberFormatter
-     */
-    protected function createNumberFormatter()
-    {
-        $numberFormatter = new NumberFormatter(
-            $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
-        );
-
-        return $numberFormatter;
-    }
-
-    /**
-     * @return \Money\Currencies\ISOCurrencies
-     */
-    protected function createCurrencies()
-    {
-        return new ISOCurrencies();
+        return $this->getProvidedDependency(MoneyDependencyProvider::MONEY_PARSER);
     }
 
     /**

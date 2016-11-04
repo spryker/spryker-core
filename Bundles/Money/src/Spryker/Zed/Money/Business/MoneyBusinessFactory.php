@@ -70,17 +70,17 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     public function createMoneyParser()
     {
         return new Parser(
-            $this->getIntlMoneyParser(),
+            $this->getMoneyParser(),
             $this->createMoneyToTransferMapper()
         );
     }
 
     /**
-     * @return \Money\Parser\IntlMoneyParser
+     * @return \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
      */
-    protected function getIntlMoneyParser()
+    protected function getMoneyParser()
     {
-        return $this->getProvidedDependency(MoneyDependencyProvider::INTL_MONEY_PARSER);
+        return $this->getProvidedDependency(MoneyDependencyProvider::MONEY_PARSER);
     }
 
     /**

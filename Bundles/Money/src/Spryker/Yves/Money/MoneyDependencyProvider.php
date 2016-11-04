@@ -7,14 +7,19 @@
 
 namespace Spryker\Yves\Money;
 
+use Money\Currencies\ISOCurrencies;
+use Money\Parser\IntlMoneyParser;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use \NumberFormatter;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORE = 'store';
+    const MONEY_PARSER = 'money parser';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,9 +29,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addStore($container);
-        $container = $this->addIntlMoneyParser($container);
-        $container = $this->addIsoCurrencies($container);
-        $container = $this->addNumberFormatter($container);
+        $container = $this->addMoneyParser($container);
 
         return $container;
     }
@@ -39,10 +42,69 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStore(Container $container)
     {
         $container[static::STORE] = function () {
-            return Store::getInstance();
+            return $this->getStore();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return Store::getInstance();
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMoneyParser(Container $container)
+    {
+        $container[static::MONEY_PARSER] = function () {
+            $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser());
+
+            return $moneyToParserBridge;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Money\Parser\IntlMoneyParser
+     */
+    private function getIntlMoneyParser()
+    {
+        $numberFormatter = $this->getNumberFormatter();
+        $currencies = $this->getIsoCurrencies();
+        $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
+
+        return $intlMoneyParser;
+    }
+
+    /**
+     * @return \NumberFormatter
+     */
+    private function getNumberFormatter()
+    {
+        $numberFormatter = new NumberFormatter(
+            $this->getStore()->getCurrentLocale(),
+            NumberFormatter::CURRENCY
+        );
+
+        return $numberFormatter;
+    }
+
+    /**
+     * @return \Money\Currencies\ISOCurrencies
+     */
+    private function getIsoCurrencies()
+    {
+        $isoCurrencies = new ISOCurrencies();
+
+        return $isoCurrencies;
     }
 
 }
