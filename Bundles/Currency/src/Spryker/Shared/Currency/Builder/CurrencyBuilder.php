@@ -25,7 +25,7 @@ class CurrencyBuilder implements CurrencyBuilderInterface
 
     /**
      * @param \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface $currencyRepository
-     * @param $defaultIsoCode
+     * @param string $defaultIsoCode
      */
     public function __construct(CurrencyToInternationalizationInterface $currencyRepository, $defaultIsoCode)
     {
