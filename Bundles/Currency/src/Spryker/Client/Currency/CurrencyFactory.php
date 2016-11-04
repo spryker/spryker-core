@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Currency;
+namespace Spryker\Client\Currency;
 
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
-use Spryker\Yves\Kernel\AbstractFactory;
 
 class CurrencyFactory extends AbstractFactory
 {

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Currency;
+namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
@@ -20,11 +20,11 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     const INTERNATIONALIZATION = 'internationalization';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container|void
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideDependencies(Container $container)
     {
         $container = $this->addStore($container);
         $container = $this->addInternationalization($container);
@@ -33,9 +33,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addStore(Container $container)
     {
@@ -47,9 +47,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addInternationalization(Container $container)
     {

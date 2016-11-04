@@ -131,13 +131,13 @@
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
 
+      "Spryker\\Client\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Zed\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Yves\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Shared\\Currency\\": "Bundles/Currency/src",
+      "Functional\\Client\\Currency\\": "Bundles/Currency/tests",
       "Functional\\Zed\\Currency\\": "Bundles/Currency/tests",
       "Functional\\Yves\\Currency\\": "Bundles/Currency/tests",
-      "Unit\\Yves\\Currency\\": "Bundles/Currency/tests",
-      "Unit\\Zed\\Currency\\": "Bundles/Currency/tests",
       "Unit\\Shared\\Currency\\": "Bundles/Currency/tests",
 
       "Spryker\\Shared\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/src",

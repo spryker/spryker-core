@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Currency;
+namespace Spryker\Client\Currency;
 
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Intl\Intl;
 
-class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
+class CurrencyDependencyProvider extends AbstractDependencyProvider
 {
 
     const STORE = 'store';
     const INTERNATIONALIZATION = 'internationalization';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container|void
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStore($container);
         $container = $this->addInternationalization($container);
@@ -33,9 +33,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container)
     {
@@ -47,9 +47,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addInternationalization(Container $container)
     {
