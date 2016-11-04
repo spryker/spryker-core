@@ -9,12 +9,12 @@ namespace Spryker\Zed\Money;
 
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
+use NumberFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyBridge;
-use \NumberFormatter;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {

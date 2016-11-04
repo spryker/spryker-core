@@ -10,6 +10,9 @@ namespace Spryker\Shared\Money\Dependency\Parser;
 class MoneyToParserBridge implements MoneyToParserInterface
 {
 
+    /**
+     * @var \Money\MoneyParser
+     */
     protected $parser;
 
     /**

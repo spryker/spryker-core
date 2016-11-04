@@ -7,9 +7,6 @@
 
 namespace Spryker\Client\Money;
 
-use Money\Currencies\ISOCurrencies;
-use Money\Parser\IntlMoneyParser;
-use NumberFormatter;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
@@ -78,36 +75,11 @@ class MoneyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Money\Parser\IntlMoneyParser
+     * @return \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
      */
     protected function createIntlMoneyParser()
     {
-        $numberFormatter = $this->createNumberFormatter();
-        $currencies = $this->createCurrencies();
-        $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
-
-        return $intlMoneyParser;
-    }
-
-    /**
-     * @return \NumberFormatter
-     */
-    protected function createNumberFormatter()
-    {
-        $numberFormatter = new NumberFormatter(
-            $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
-        );
-
-        return $numberFormatter;
-    }
-
-    /**
-     * @return \Money\Currencies\ISOCurrencies
-     */
-    protected function createCurrencies()
-    {
-        return new ISOCurrencies();
+        return $this->getProvidedDependency(MoneyDependencyProvider::MONEY_PARSER);
     }
 
     /**

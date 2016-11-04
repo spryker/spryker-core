@@ -9,11 +9,11 @@ namespace Spryker\Yves\Money;
 
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
+use NumberFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use \NumberFormatter;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {

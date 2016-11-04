@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
+use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Parser\Parser;
 
@@ -69,8 +70,10 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         $intlMoneyParser = new IntlMoneyParser($numberFormatter, new ISOCurrencies());
 
+        $moneyToParserBridge = new MoneyToParserBridge($intlMoneyParser);
+
         $moneyToTransferMapper = new MoneyToTransferMapper();
-        $parser = new Parser($intlMoneyParser, $moneyToTransferMapper);
+        $parser = new Parser($moneyToParserBridge, $moneyToTransferMapper);
 
         return $parser;
     }
