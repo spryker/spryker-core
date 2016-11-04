@@ -101,6 +101,8 @@ interface MoneyPluginInterface
      *
      * E.g. `$value = 1000` will return `10.00`
      *
+     * @api
+     * 
      * @param int $value
      *
      * @return float
