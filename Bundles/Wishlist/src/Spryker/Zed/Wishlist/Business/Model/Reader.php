@@ -8,13 +8,11 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use ArrayObject;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Generated\Shared\Transfer\WishlistPaginationTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Propel\PropelFilterCriteria;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface;
@@ -86,9 +84,13 @@ class Reader implements ReaderInterface
         $wishlistTransfer->requireFkCustomer();
         $wishlistTransfer->requireName();
 
+        $paginationTransfer = (new WishlistPaginationTransfer())
+            ->setPage($wishlistOverviewRequestTransfer->getPage())
+            ->setItemsPerPage($wishlistOverviewRequestTransfer->getItemsPerPage());
+
         $responseTransfer = (new WishlistOverviewResponseTransfer())
             ->setWishlist($wishlistTransfer)
-            ->setItemsTotal(0);
+            ->setPagination($paginationTransfer);
 
         $wishlistEntity = $this->queryContainer
             ->queryWishlistByCustomerId($wishlistTransfer->getFkCustomer())
@@ -100,39 +102,61 @@ class Reader implements ReaderInterface
         }
 
         $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
-
         $wishlistOverviewRequestTransfer->setWishlist($wishlistTransfer);
+        $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
 
-        $responseTransfer->setItems(new ArrayObject(
-            $this->getWishlistOverviewItems($wishlistOverviewRequestTransfer)
-        ));
-
-        $totalItemsCount = $this->getTotalItemCount($wishlistTransfer->getIdWishlist());
+        $paginationTransfer = $this->updatePaginationTransfer($paginationTransfer, $itemPaginationModel);
+        $items = $this->transferMapper->convertWishlistItemCollection(
+            $itemPaginationModel->getResults()
+        );
 
         $responseTransfer
             ->setWishlist($wishlistTransfer)
-            ->setItemsTotal($totalItemsCount);
+            ->setPagination($paginationTransfer)
+            ->setItems(new ArrayObject($items));
 
         return $responseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistPaginationTransfer $paginationTransfer
+     * @param \Propel\Runtime\Util\PropelModelPager $itemPaginationModel
+     *
+     * @return \Generated\Shared\Transfer\WishlistPaginationTransfer
+     */
+    protected function updatePaginationTransfer(WishlistPaginationTransfer $paginationTransfer, PropelModelPager $itemPaginationModel)
+    {
+        $pagesTotal = ceil($itemPaginationModel->getNbResults() / $itemPaginationModel->getMaxPerPage());
+        $paginationTransfer->setPagesTotal($pagesTotal);
+        $paginationTransfer->setItemsTotal($itemPaginationModel->getNbResults());
+        $paginationTransfer->setItemsPerPage($itemPaginationModel->getMaxPerPage());
+
+        return $paginationTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Util\PropelModelPager
      */
-    protected function getWishlistOverviewItems(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    protected function getWishlistOverviewPaginationModel(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
         $wishlistOverviewRequestTransfer->requireWishlist();
         $wishlistOverviewRequestTransfer->getWishlist()->requireIdWishlist();
 
-        $filterCriteria = $this->getFilterCriteria($wishlistOverviewRequestTransfer->getFilter());
-        $itemCollection = $this->queryContainer
-            ->queryItemsByWishlistId($wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist())
-            ->mergeWith($filterCriteria->toCriteria())
-            ->find();
+        $page = $wishlistOverviewRequestTransfer
+            ->requirePage()
+            ->getPage();
 
-        return $this->transferMapper->convertWishlistItemCollection($itemCollection);
+        $maxPerPage = $wishlistOverviewRequestTransfer
+            ->requireItemsPerPage()
+            ->getItemsPerPage();
+
+        $ordersQuery = $this->queryContainer->queryItemsByWishlistId(
+            $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist()
+        );
+
+        return $ordersQuery->paginate($page, $maxPerPage);
     }
 
     /**
@@ -194,57 +218,6 @@ class Reader implements ReaderInterface
         }
 
         return $wishlistEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer|null $filter
-     *
-     * @return \Spryker\Zed\Propel\PropelFilterCriteria
-     */
-    protected function getFilterCriteria(FilterTransfer $filter = null)
-    {
-        return new PropelFilterCriteria(
-            $this->mergeDefaultFilter($filter)
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer|null $filter
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function mergeDefaultFilter(FilterTransfer $filter = null)
-    {
-        $defaultFilter = (new FilterTransfer())
-            ->setOrderDirection(Criteria::DESC)
-            ->setOrderBy(SpyWishlistItemTableMap::COL_CREATED_AT)
-            ->setLimit(10)
-            ->setOffset(0);
-
-        if ($filter === null) {
-            return $defaultFilter;
-        }
-
-        $filterData = $filter->toArray();
-        $defaultFilterData = $defaultFilter->toArray();
-        $isEmpty = empty(array_filter(
-            array_values($filterData)
-        ));
-
-        $data = array_merge(
-            $defaultFilterData,
-            $filterData
-        );
-
-        if ($isEmpty) {
-            $data = array_merge(
-                $filterData,
-                $defaultFilterData
-            );
-        }
-
-        return (new FilterTransfer())
-            ->fromArray($data);
     }
 
     /**
