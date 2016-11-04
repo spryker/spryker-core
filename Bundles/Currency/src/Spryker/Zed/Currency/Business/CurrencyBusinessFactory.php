@@ -10,7 +10,6 @@ namespace Spryker\Zed\Currency\Business;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Zed\Currency\CurrencyDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Symfony\Component\Intl\Intl;
 
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
