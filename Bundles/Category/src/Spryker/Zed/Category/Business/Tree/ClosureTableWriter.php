@@ -196,7 +196,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $query
             ->innerJoinCategory()
             ->useCategoryQuery()
-            ->innerJoinAttribute()
+                ->innerJoinAttribute()
             ->endUse()
             ->orderByFkParentCategoryNode()
             ->orderByNodeOrder('DESC')

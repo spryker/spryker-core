@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -48,16 +50,64 @@ class CategoryTree implements CategoryTreeInterface
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
             $categoryTransfer = $this->categoryFacade->read($childNodeEntity->getFkCategory());
 
-            $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
-            $categoryNodeTransfer->setFkParentCategoryNode($idDestinationCategoryNode);
-            $categoryTransfer->setCategoryNode($categoryNodeTransfer);
-
-            $categoryParentNodeTransfer = $categoryTransfer->getParentCategoryNode();
-            $categoryParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
-            $categoryTransfer->setParentCategoryNode($categoryParentNodeTransfer);
-
-            $this->categoryFacade->update($categoryTransfer);
+            if ($childNodeEntity->getIsMain()) {
+                $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);
+            } else {
+                $this->moveExtraParentCategoryNodeSubTree(
+                    $categoryTransfer,
+                    $idDestinationCategoryNode,
+                    $idSourceCategoryNode
+                );
+            }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $idDestinationCategoryNode
+     *
+     * @return void
+     */
+    protected function moveMainCategoryNodeSubTree(CategoryTransfer $categoryTransfer, $idDestinationCategoryNode)
+    {
+        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $categoryNodeTransfer->setFkParentCategoryNode($idDestinationCategoryNode);
+        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+
+        $categoryParentNodeTransfer = $categoryTransfer->getParentCategoryNode();
+        $categoryParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
+        $categoryTransfer->setParentCategoryNode($categoryParentNodeTransfer);
+
+        $this->categoryFacade->update($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $idDestinationCategoryNode
+     * @param int $idSourceCategoryNode
+     *
+     * @return void
+     */
+    protected function moveExtraParentCategoryNodeSubTree(
+        CategoryTransfer $categoryTransfer,
+        $idDestinationCategoryNode,
+        $idSourceCategoryNode
+    ) {
+        $extraParentNodeTransferCollection = $categoryTransfer->getExtraParents();
+        $updatedParentNodeTransferCollection = new \ArrayObject();
+
+        foreach ($extraParentNodeTransferCollection as $extraParentNodeTransfer) {
+            if ($extraParentNodeTransfer->getIdCategoryNode() === $idSourceCategoryNode) {
+                $extraParentNodeTransfer = new NodeTransfer();
+                $extraParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
+            }
+
+            $updatedParentNodeTransferCollection->append($extraParentNodeTransfer);
+        }
+
+        $categoryTransfer->setExtraParents($updatedParentNodeTransferCollection);
+
+        $this->categoryFacade->update($categoryTransfer);
     }
 
 }
