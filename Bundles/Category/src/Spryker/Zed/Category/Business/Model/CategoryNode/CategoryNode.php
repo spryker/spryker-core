@@ -211,10 +211,10 @@ class CategoryNode implements CategoryNodeInterface
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
             $this->moveSubTreeToParent($categoryNodeEntity);
 
-            $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
-            $categoryNodeEntity->delete();
-
             $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
+            $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
+
+            $categoryNodeEntity->delete();
         }
     }
 

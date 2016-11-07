@@ -43,17 +43,38 @@ class CategoryAttribute implements CategoryAttributeInterface
             ->find();
 
         foreach ($attributeEntityCollection as $attributeEntity) {
-            $attributeTransfer = new CategoryLocalizedAttributesTransfer();
-            $attributeTransfer->fromArray($attributeEntity->toArray(), true);
-
-            $localeTransfer = new LocaleTransfer();
-            $localeTransfer->fromArray($attributeEntity->getLocale()->toArray());
-            $attributeTransfer->setLocale($localeTransfer);
-
+            $attributeTransfer = $this->createLocalizedAttributesTransferFromEntity($attributeEntity);
+            $attributeTransfer->setLocale($this->createLocaleTransferFromEntity($attributeEntity));
             $categoryTransfer->addLocalizedAttributes($attributeTransfer);
         }
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $attributeEntity
+     *
+     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+     */
+    protected function createLocalizedAttributesTransferFromEntity(SpyCategoryAttribute $attributeEntity)
+    {
+        $attributeTransfer = new CategoryLocalizedAttributesTransfer();
+        $attributeTransfer->fromArray($attributeEntity->toArray(), true);
+
+        return $attributeTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $attributeEntity
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function createLocaleTransferFromEntity(SpyCategoryAttribute $attributeEntity)
+    {
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->fromArray($attributeEntity->getLocale()->toArray());
+
+        return $localeTransfer;
     }
 
     /**
@@ -67,12 +88,36 @@ class CategoryAttribute implements CategoryAttributeInterface
 
         foreach ($localizedCategoryAttributeTransferCollection as $localizedCategoryAttributesTransfer) {
             $localizedCategoryAttributeEntity = new SpyCategoryAttribute();
-            $localizedCategoryAttributeEntity->fromArray($localizedCategoryAttributesTransfer->toArray());
-            $localizedCategoryAttributeEntity->setFkCategory($categoryTransfer->getIdCategory());
-            $localizedCategoryAttributeEntity->setFkLocale($localizedCategoryAttributesTransfer->getLocale()->getIdLocale());
+
+            $localizedCategoryAttributeEntity = $this->updateEntity(
+                $localizedCategoryAttributeEntity,
+                $localizedCategoryAttributesTransfer,
+                $categoryTransfer->getIdCategory()
+            );
 
             $localizedCategoryAttributeEntity->save();
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $localizedCategoryAttributesTransfer
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
+     */
+    protected function updateEntity(
+        SpyCategoryAttribute $categoryAttributeEntity,
+        CategoryLocalizedAttributesTransfer $localizedCategoryAttributesTransfer,
+        $idCategory
+    ) {
+        $categoryAttributeEntity->fromArray($localizedCategoryAttributesTransfer->toArray());
+        $categoryAttributeEntity->setFkCategory($idCategory);
+
+        $idLocale = $localizedCategoryAttributesTransfer->getLocale()->getIdLocale();
+        $categoryAttributeEntity->setFkLocale($idLocale);
+
+        return $categoryAttributeEntity;
     }
 
     /**
@@ -94,9 +139,12 @@ class CategoryAttribute implements CategoryAttributeInterface
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
 
-            $localizedCategoryAttributesEntity->fromArray($localizedCategoryAttributesTransfer->toArray());
-            $localizedCategoryAttributesEntity->setFkCategory($idCategory);
-            $localizedCategoryAttributesEntity->setFkLocale($idLocale);
+            $localizedCategoryAttributesEntity = $this->updateEntity(
+                $localizedCategoryAttributesEntity,
+                $localizedCategoryAttributesTransfer,
+                $idCategory
+            );
+
             $localizedCategoryAttributesEntity->save();
         }
     }

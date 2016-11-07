@@ -31,7 +31,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->hasCategoryNode($categoryName, $localeTransfer);
     }
@@ -47,11 +48,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNodeById($idNode)
     {
-        $nodeEntity = $this->getFactory()
+        $nodeEntity = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getNodeById($idNode);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNode($nodeEntity);
     }
@@ -68,7 +71,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getCategoryNodeIdentifier($categoryName, $localeTransfer);
     }
@@ -85,7 +89,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getCategoryIdentifier($categoryName, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getCategoryIdentifier($categoryName, $localeTransfer);
     }
@@ -103,11 +108,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getFactory()
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getAllNodesByIdCategory($idCategory);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -123,11 +130,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getMainNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getFactory()
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getMainNodesByIdCategory($idCategory);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -143,11 +152,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getFactory()
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getNotMainNodesByIdCategory($idCategory);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -156,11 +167,12 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * Specification:
      *  - Reads entity for idCategory from persistence
      *  - Hydrates data from entities to CategoryTransfer
-     *  - Throws MissingCategoryException if category entity is not present
-     *  - Throws MissingCategoryNodeException if related category-node entity is not present
      *  - Returns CategoryTransfer
      *
      * @api
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      *
      * @param int $idCategory
      *
@@ -186,7 +198,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryWriter()
             ->create($categoryTransfer, $localeTransfer);
     }
@@ -214,7 +227,10 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function create(CategoryTransfer $categoryTransfer)
     {
-        $this->getFactory()->createCategory()->create($categoryTransfer);
+        $this
+            ->getFactory()
+            ->createCategory()
+            ->create($categoryTransfer);
     }
 
     /**
@@ -229,7 +245,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryWriter()
             ->update($categoryTransfer, $localeTransfer);
     }
@@ -265,24 +282,22 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *   - Touches removed URL entities deleted (via TouchFacade)
      *   - Touches navigation active (via TouchFacade)
      *
-     * Exceptions:
-     *  - \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *  - \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     *  - \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
      * @return void
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $this->getFactory()->createCategory()->update($categoryTransfer);
+        $this
+            ->getFactory()
+            ->createCategory()
+            ->update($categoryTransfer);
     }
 
     /**
@@ -297,7 +312,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryWriter()
             ->addCategoryAttribute($categoryTransfer, $localeTransfer);
     }
@@ -313,7 +329,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function deleteCategory($idCategory)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryWriter()
             ->delete($idCategory);
     }
@@ -334,15 +351,18 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @param int $idCategory
-     *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *
+     * @param int $idCategory
      *
      * @return void
      */
     public function delete($idCategory)
     {
-        $this->getFactory()->createCategory()->delete($idCategory);
+        $this
+            ->getFactory()
+            ->createCategory()
+            ->delete($idCategory);
     }
 
     /**
@@ -358,7 +378,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeWriter()
             ->createCategoryNode($nodeTransfer, $localeTransfer, $createUrlPath);
     }
@@ -375,7 +396,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryTreeWriter()
             ->updateNode($categoryNodeTransfer, $localeTransfer);
     }
@@ -414,7 +436,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeWriter()
             ->deleteNode($idNode, $localeTransfer, $deleteChildren);
     }
@@ -428,7 +451,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function renderCategoryTreeVisual()
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeRenderer()
             ->render();
     }
@@ -442,11 +466,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getRootNodes()
     {
-        $rootNodes = $this->getFactory()
+        $rootNodes = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getRootNodes();
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($rootNodes);
     }
@@ -463,7 +489,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getTree($idCategory, $localeTransfer);
     }
@@ -480,7 +507,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getChildren($idNode, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getChildren($idNode, $localeTransfer);
     }
@@ -498,7 +526,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getParents($idNode, LocaleTransfer $localeTransfer, $excludeStartNode = true)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getParents($idNode, $localeTransfer, $excludeStartNode);
     }
@@ -518,7 +547,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
     }
@@ -572,7 +602,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function generatePath(array $pathTokens)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createUrlPathGenerator()
             ->generate($pathTokens);
     }
@@ -589,7 +620,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getCategoryByKey($categoryKey, $idLocale)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getCategoryByKey($categoryKey, $idLocale);
     }

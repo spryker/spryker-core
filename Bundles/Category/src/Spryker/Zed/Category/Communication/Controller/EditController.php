@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Communication\Controller;
 
 use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\Form\FormInterface;
@@ -37,7 +38,9 @@ class EditController extends AbstractController
                 $this->getFacade()->update($categoryTransfer);
                 $this->addSuccessMessage('The category was updated successfully.');
 
-                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
+                return $this->redirectResponse(
+                    $this->createSuccessRedirectUrl($categoryTransfer->getIdCategory())
+                );
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }
@@ -58,6 +61,23 @@ class EditController extends AbstractController
     protected function getCategoryTransferFromForm(FormInterface $form)
     {
         return $form->getData();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return string
+     */
+    protected function createSuccessRedirectUrl($idCategory)
+    {
+        $url = Url::generate(
+            '/category/edit',
+            [
+                CategoryConstants::PARAM_ID_CATEGORY => $idCategory,
+            ]
+        );
+
+        return $url->build();
     }
 
 }

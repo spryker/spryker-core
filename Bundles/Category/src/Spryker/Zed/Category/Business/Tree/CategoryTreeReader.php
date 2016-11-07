@@ -153,9 +153,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -498,14 +498,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer)
     {
         $categoryNodeEntity = $this->getNodeById($idCategoryNode);
-
-        if (!$categoryNodeEntity) {
-            $categories = $this->getTreeNodesRecursively($localeTransfer, null, true);
-        } else {
-            $categories = $this->getTreeNodesRecursively($localeTransfer, $categoryNodeEntity, true);
-        }
-
-        $this->treeFormatter->setupCategories($categories);
+        $subTreeCategories = $this->getTreeNodesRecursively($localeTransfer, $categoryNodeEntity, true);
+        $this->treeFormatter->setupCategories($subTreeCategories);
 
         return $this->treeFormatter->getCategoryTree();
     }

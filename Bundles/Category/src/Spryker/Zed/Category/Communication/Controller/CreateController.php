@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Communication\Controller;
 
 use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\Form\FormInterface;
@@ -28,7 +29,7 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idParentNode = $this->getParentNodeId($request);
+        $idParentNode = $this->readParentNodeId($request);
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
         $form->handleRequest($request);
 
@@ -38,7 +39,9 @@ class CreateController extends AbstractController
                 $this->getFacade()->create($categoryTransfer);
                 $this->addSuccessMessage('The category was added successfully.');
 
-                return $this->redirectResponse('/category/edit?id-category=' . $categoryTransfer->getIdCategory());
+                return $this->redirectResponse(
+                    $this->createSuccessRedirectUrl($categoryTransfer->getIdCategory())
+                );
             } catch (CategoryUrlExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
             }
@@ -55,7 +58,7 @@ class CreateController extends AbstractController
      *
      * @return int|null
      */
-    protected function getParentNodeId(Request $request)
+    protected function readParentNodeId(Request $request)
     {
         $parentNodeId = $request->query->get(CategoryConstants::PARAM_ID_PARENT_NODE);
 
@@ -74,6 +77,23 @@ class CreateController extends AbstractController
     protected function getCategoryTransferFromForm(FormInterface $form)
     {
         return $form->getData();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return string
+     */
+    protected function createSuccessRedirectUrl($idCategory)
+    {
+        $url = Url::generate(
+            '/category/edit',
+            [
+                CategoryConstants::PARAM_ID_CATEGORY => $idCategory,
+            ]
+        );
+
+        return $url->build();
     }
 
 }

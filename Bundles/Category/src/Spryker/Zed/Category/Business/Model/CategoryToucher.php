@@ -70,7 +70,7 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchCategoryNodeActive($idCategoryNode)
     {
         $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
-        $this->touchNavigationActive();
+        $this->touchNavigationActive($idCategoryNode);
     }
 
     /**
@@ -95,15 +95,42 @@ class CategoryToucher implements CategoryToucherInterface
     public function touchCategoryNodeDeleted($idCategoryNode)
     {
         $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
-        $this->touchNavigationActive();
+        $this->touchNavigationActive($idCategoryNode);
     }
 
     /**
+     * @param int $idCategoryNode
+     *
      * @return void
      */
-    public function touchNavigationActive()
+    protected function touchNavigationActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, 1);
+        $rootNodeEntity = $this->findRootNode($idCategoryNode);
+
+        if ($rootNodeEntity) {
+            $this->touchFacade->touchActive(
+                CategoryConstants::RESOURCE_TYPE_NAVIGATION,
+                $rootNodeEntity->getIdCategoryNode()
+            );
+        }
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     */
+    protected function findRootNode($idCategoryNode)
+    {
+        $categoryNodeEntity = $this
+            ->queryContainer
+            ->queryRootNode()
+            ->useClosureTableQuery()
+                ->filterByFkCategoryNodeDescendant($idCategoryNode)
+            ->endUse()
+            ->findOne();
+
+        return $categoryNodeEntity;
     }
 
     /**
