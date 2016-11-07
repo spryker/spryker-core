@@ -18,18 +18,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Adds product abstract with its concrete variants
-     * - Adds product abstract with attributes
-     * - Adds product abstract with meta information
-     * - Throws exception if product concrete with same SKU exists
-     * - Throws exception if abstract product with same SKU exists
-     * - Trigger before and after CREATE plugins
-     * - Abstract and concrete products are created but not activated or touched
+     * - Adds product abstract with its attributes, meta information and concrete variants.
+     * - Throws exception if product concrete with same SKU exists.
+     * - Throws exception if abstract product with same SKU exists.
+     * - Trigger before and after CREATE plugins.
+     * - Abstract and concrete products are created but not activated or touched.
+     * - Returns the ID of the newly created abstract product.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
@@ -37,18 +39,22 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Saves product abstract with its concrete variants
-     * - Saves product abstract attributes
-     * - Saves product abstract meta
-     * - Triggers before and after UPDATE plugins
-     * - Throws exception if product concrete with same SKU exists
-     * - Throws exception if abstract product with same SKU exists
-     * - Abstract and concrete products are updated but not activated or touched
+     * - Saves product abstract with its concrete variants.
+     * - Saves product abstract attributes.
+     * - Saves product abstract meta.
+     * - Triggers before and after UPDATE plugins.
+     * - Throws exception if product concrete with same SKU exists.
+     * - Throws exception if abstract product with same SKU exists.
+     * - Abstract and concrete products are updated but not activated or touched.
+     * - Returns the ID of the abstract product.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
@@ -56,16 +62,19 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Adds product abstract attributes
-     * - Adds product abstract localized attributes
-     * - Adds product abstract meta
-     * - Triggers before and after CREATE plugins
-     * - Throws exception if abstract product with same SKU exists
-     * - Abstract product is created but not activated or touched
+     * - Adds product abstract attributes.
+     * - Adds product abstract localized attributes.
+     * - Adds product abstract meta.
+     * - Triggers before and after CREATE plugins.
+     * - Throws exception if abstract product with same SKU exists.
+     * - Abstract product is created but not activated or touched.
+     * - Returns the ID of the newly created abstract product.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
      * @return int
      */
@@ -79,10 +88,13 @@ interface ProductFacadeInterface
      * - Triggers before and after CREATE plugins
      * - Throws exception if abstract product with same SKU exists
      * - Abstract product is created but not activated or touched
+     * - Returns the ID of the abstract product.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
      * @return int
      */
@@ -102,9 +114,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns abstract product with attributes
-     * - Returns abstract product with localized attributes
-     * - Triggers READ plugins
+     * - Returns the ID of an abstract product for the given SKU if it exists, NULL otherwise.
      *
      * @api
      *
@@ -116,8 +126,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns abstract product with attributes
-     * - Returns abstract product with localized attributes
+     * - Returns abstract product with attributes and localized attributes
      * - Triggers READ plugins
      *
      * @api
@@ -131,10 +140,13 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Returns the SKU of an abstract product that belongs to the given SKU of a concrete product.
+     * - Throws exception if no abstract product is found.
      *
      * @api
      *
      * @param string $sku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return string
      */
@@ -142,11 +154,14 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Finds product abstract based on product concrete SKU and returns product abstract ID
+     * - Returns the abstract product ID of the given concrete product SKU if exists.
+     * - Throws exception if no abstract product is found.
      *
      * @api
      *
      * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -154,13 +169,16 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Adds concrete product with attributes
-     * - Adds concrete product with localized attributes
-     * - Triggers before and after CREATE plugins
+     * - Adds concrete product with attributes and localized attributes.
+     * - Throws exception if product concrete with same SKU exists.
+     * - Triggers before and after CREATE plugins.
+     * - Returns the ID of the newly created concrete product.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
@@ -168,13 +186,16 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Saves concrete product with attributes
-     * - Saves concrete product with localized attributes
-     * - Triggers before and after UPDATE plugins
+     * - Saves concrete product with attributes and localized attributes.
+     * - Throws exception if product concrete with same SKU exists.
+     * - Triggers before and after UPDATE plugins.
+     * - Returns the ID of the concrete product.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
@@ -182,7 +203,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Checks if product concrete exists
+     * - Checks if product concrete exists.
      *
      * @api
      *
@@ -194,7 +215,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns id of concrete product
+     * - Returns ID of concrete product.
      *
      * @api
      *
@@ -206,9 +227,9 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product with attributes
-     * - Returns concrete product with localized attributes
-     * - Triggers READ plugins
+     * - Returns concrete product with attributes and localized attributes.
+     * - Returns NULL if the concrete product is not found by ID.
+     * - Triggers READ plugins.
      *
      * @api
      *
@@ -220,13 +241,15 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product with attributes
-     * - Returns concrete product with localized attributes
-     * - Triggers READ plugins
+     * - Returns concrete product with attributes and localized attributes.
+     * - Throws exception if the concrete product is not found by SKU.
+     * - Triggers READ plugins.
      *
      * @api
      *
      * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -234,8 +257,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product collection
-     * - Triggers READ plugins
+     * - Returns concrete product collection.
+     * - Triggers READ plugins.
      *
      * @api
      *
@@ -247,7 +270,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Checks if the product attribute key exists
+     * - Checks if the product attribute key exists.
      *
      * @api
      *
@@ -259,7 +282,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns product attribute key if exists, null otherwise
+     * - Returns product attribute key if exists, NULL otherwise.
      *
      * @api
      *
@@ -271,8 +294,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Creates new product attribute key
-     * - Returns created product attribute key
+     * - Creates new product attribute key.
+     * - Returns created product attribute key.
      *
      * @api
      *
@@ -284,8 +307,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Updates an existing product attribute key
-     * - Returns the updated product attribute key
+     * - Updates an existing product attribute key.
+     * - Returns the updated product attribute key.
      *
      * @api
      *
@@ -297,7 +320,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product abstract and product attribute map
+     * - Touches as active: product abstract and product attribute map.
      *
      * @api
      *
@@ -309,7 +332,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: product abstract and product attribute map
+     * - Touches as in-active: product abstract and product attribute map.
      *
      * @api
      *
@@ -321,7 +344,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: product abstract and product attribute map
+     * - Touches as deleted: product abstract and product attribute map.
      *
      * @api
      *
@@ -333,7 +356,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product concrete
+     * - Touches as active: product concrete.
      *
      * @api
      *
@@ -345,7 +368,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: product concrete
+     * - Touches as in-active: product concrete.
      *
      * @api
      *
@@ -357,7 +380,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: product concrete
+     * - Touches as deleted: product concrete.
      *
      * @api
      *
@@ -369,8 +392,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Creates localized product URLs based on product abstract localized attributes name
-     * - Executes touch logic for product URL activation
+     * - Creates localized product URLs based on product abstract localized attributes name.
+     * - Executes touch logic for product URL activation.
      *
      * @api
      *
@@ -382,8 +405,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Updates localized product URLs based on product abstract localized attributes name
-     * - Executes touch logic for product URL update
+     * - Updates localized product URLs based on product abstract localized attributes name.
+     * - Executes touch logic for product URL update.
      *
      * @api
      *
@@ -395,7 +418,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product URLs based on product abstract localized attributes name
+     * - Returns localized product URLs based on product abstract localized attributes name.
      *
      * @api
      *
@@ -407,8 +430,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Deletes all URLs belonging to given abstract product
-     * - Executes touch logic for product URL deletion
+     * - Deletes all URLs belonging to given abstract product.
+     * - Executes touch logic for product URL deletion.
      *
      * @api
      *
@@ -444,7 +467,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product abstract name based on localized attributes
+     * - Returns localized product abstract name based on localized attributes.
      *
      * @api
      *
@@ -453,14 +476,11 @@ interface ProductFacadeInterface
      *
      * @return string
      */
-    public function getLocalizedProductAbstractName(
-        ProductAbstractTransfer $productAbstractTransfer,
-        LocaleTransfer $localeTransfer
-    );
+    public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
-     * - Returns localized product concrete name based on localized attributes
+     * - Returns localized product concrete name based on localized attributes.
      *
      * @api
      *
@@ -469,17 +489,14 @@ interface ProductFacadeInterface
      *
      * @return string
      */
-    public function getLocalizedProductConcreteName(
-        ProductConcreteTransfer $productConcreteTransfer,
-        LocaleTransfer $localeTransfer
-    );
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
-     * - Activates product concrete
-     * - Generates and saves product abstract URL
-     * - Touches as active product
-     * - Touches as active product URL
+     * - Activates product concrete.
+     * - Generates and saves product abstract URL.
+     * - Touches as active product.
+     * - Touches as active product URL.
      *
      * @api
      *
@@ -491,10 +508,10 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Deactivates product concrete
-     * - Removes product URL
-     * - Touches as in-active product
-     * - Touches as in-active product URL
+     * - Deactivates product concrete.
+     * - Removes product URL.
+     * - Touches as in-active product.
+     * - Touches as in-active product URL.
      *
      * @api
      *
@@ -533,7 +550,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Generates product variants based on attributes
+     * - Generates product variants based on attributes.
      *
      * $attributeCollection = Array
      *  (
@@ -566,7 +583,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if any of the concrete products of abstract products are active
+     * - Returns true if any of the concrete products of abstract products are active.
      *
      * @api
      *
@@ -578,14 +595,16 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns an associative array of attribute key - attribute value pairs of a persisted product.
-     * - The result is a combination of the abstract product's attributes and all its existing concretes' attributes.
-     * - If $localeTransfer is provided then localized abstract and concrete attributes are also part of the result.
+     * - Returns an array with attribute keys of a persisted product.
+     * - The result is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
+     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return array
      */
@@ -593,7 +612,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns an associative array with attribute key - attribute value pairs of a persisted concrete product.
+     * - Returns an associative array of attribute key - attribute value pairs of a persisted concrete product.
      * - The result is a combination of the concrete's attributes and its abstract's attributes.
      * - If $localeTransfer is provided then localized concrete and abstract attributes are also part of the result.
      *

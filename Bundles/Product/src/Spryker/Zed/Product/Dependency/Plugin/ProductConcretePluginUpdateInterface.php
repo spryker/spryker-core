@@ -13,6 +13,11 @@ interface ProductConcretePluginUpdateInterface
 {
 
     /**
+     * Specification:
+     * - Executed before and after an concrete product is updated.
+     * - Can be used for persisting other concrete product related information to database or execute any other logic.
+     * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

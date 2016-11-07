@@ -14,13 +14,12 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextBridge;
+use Spryker\Zed\Product\Dependency\QueryContainer\ProductToUrlBridge as ProductToUrlQueryContainerBridge;
 
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_LOCALE = 'FACADE_LOCALE';
-    const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
-    const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
@@ -128,7 +127,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
-            return $container->getLocator()->url()->queryContainer();
+            return new ProductToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
         };
 
         return $container;
@@ -141,9 +140,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductAbstractBeforeCreatePlugins(Container $container)
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -173,9 +170,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductAbstractBeforeUpdatePlugins(Container $container)
     {
-        return [
-
-        ];
+        return [];
     }
 
     /**
@@ -195,8 +190,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductConcreteBeforeCreatePlugins(Container $container)
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -226,8 +220,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductConcreteBeforeUpdatePlugins(Container $container)
     {
-        return [
-        ];
+        return [];
     }
 
     /**

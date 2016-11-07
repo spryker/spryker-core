@@ -35,7 +35,7 @@ class ProductFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return \Spryker\Client\Product\Storage\AttributeMapStorage
+     * @return \Spryker\Client\Product\Storage\AttributeMapStorageInterface
      */
     public function createAttributeMapStorage($locale)
     {
@@ -49,7 +49,7 @@ class ProductFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return \Spryker\Client\Product\Storage\ProductConcreteStorage
+     * @return \Spryker\Client\Product\Storage\ProductConcreteStorageInterface
      */
     public function createProductConcreteStorage($locale)
     {
@@ -61,7 +61,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createAttributeMapKeyBuilder()
     {
@@ -69,7 +69,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createProductConcreteKeyBuilder()
     {
@@ -77,7 +77,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
     protected function getStorage()
     {
@@ -93,7 +93,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Locale\LocaleClient
+     * @return \Spryker\Client\Product\Dependency\Client\ProductToLocaleInterface
      */
     public function getLocaleClient()
     {

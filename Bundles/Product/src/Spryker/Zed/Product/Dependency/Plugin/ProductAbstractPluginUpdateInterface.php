@@ -13,6 +13,11 @@ interface ProductAbstractPluginUpdateInterface
 {
 
     /**
+     * Specification:
+     * - Executed before and after an abstract product is updated.
+     * - Can be used for persisting other abstract product related information to database or execute any other logic.
+     * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

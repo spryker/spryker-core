@@ -108,7 +108,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator
+     * @return \Spryker\Zed\Product\Business\Product\Url\ProductUrlGeneratorInterface
      */
     public function createProductUrlGenerator()
     {
@@ -120,7 +120,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\Variant\VariantGenerator
+     * @return \Spryker\Zed\Product\Business\Product\Variant\VariantGeneratorInterface
      */
     public function createProductVariantGenerator()
     {
@@ -131,7 +131,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGenerator
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
      */
     protected function createSkuGenerator()
     {
@@ -139,7 +139,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator
+     * @return \Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGeneratorInterface
      */
     public function createAttributePermutationGenerator()
     {
@@ -163,7 +163,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Transfer\ProductTransferMapper
+     * @return \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
      */
     public function createProductTransferMapper()
     {
@@ -228,14 +228,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getUtilEncodingFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocale()
-    {
-        return $this->getLocaleFacade()->getCurrentLocale();
     }
 
     /**
