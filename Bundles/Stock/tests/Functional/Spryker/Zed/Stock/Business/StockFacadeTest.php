@@ -18,7 +18,6 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 

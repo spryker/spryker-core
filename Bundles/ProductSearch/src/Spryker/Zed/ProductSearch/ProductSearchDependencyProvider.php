@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
