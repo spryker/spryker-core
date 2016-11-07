@@ -38,7 +38,8 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
-        $communicationFactoryProperty->setValue($plugin, $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock());
+        $abstractCommunicationFactoryMock = $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock();
+        $communicationFactoryProperty->setValue($plugin, $abstractCommunicationFactoryMock);
 
         $communicationFactory = $plugin->getFactory();
 
@@ -66,7 +67,8 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $facadeProperty = $pluginReflection->getParentClass()->getProperty('facade');
         $facadeProperty->setAccessible(true);
-        $facadeProperty->setValue($plugin, $this->getMockBuilder(AbstractFacade::class)->disableOriginalConstructor()->getMock());
+        $abstractFacadeMock = $this->getMockBuilder(AbstractFacade::class)->disableOriginalConstructor()->getMock();
+        $facadeProperty->setValue($plugin, $abstractFacadeMock);
 
         $facade = $plugin->getFacade();
 

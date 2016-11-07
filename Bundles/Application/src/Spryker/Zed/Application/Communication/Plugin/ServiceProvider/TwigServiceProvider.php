@@ -77,10 +77,6 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             return [];
         });
 
-        $app['twig.global.variables'] = $app->share(function () {
-             return [];
-        });
-
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',

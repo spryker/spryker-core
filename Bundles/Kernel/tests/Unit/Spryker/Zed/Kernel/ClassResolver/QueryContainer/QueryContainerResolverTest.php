@@ -31,12 +31,12 @@ class QueryContainerResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelQueryContainer';
+    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelQueryContainer';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelQueryContainer';
+    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelQueryContainer';
 
     /**
      * @var string

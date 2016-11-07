@@ -7,14 +7,12 @@
 
 namespace Spryker\Shared\Testify;
 
-// This is the only place where Project namespace is allowed
 use Exception;
 use Propel\Runtime\Propel;
 use Pyz\Yves\Application\Plugin\Provider\SessionServiceProvider;
-use Pyz\Yves\Application\YvesBootstrap;
-use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
 use Silex\Application;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Library\Application\Environment;
 use Spryker\Yves\Kernel\Locator;
@@ -106,7 +104,7 @@ class SystemUnderTestBootstrap
      */
     protected function bootstrapZed()
     {
-        $application = new ZedBootstrap();
+        $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
         $application = $application->boot();
@@ -119,13 +117,11 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @TODO do we need to bootstrap Yves in a test case?
-     *
      * @return void
      */
     protected function bootstrapYves()
     {
-        $application = new YvesBootstrap();
+        $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_YVES);
 
         $locator = Locator::getInstance();
         $this->resetLocator($locator);
@@ -134,6 +130,28 @@ class SystemUnderTestBootstrap
 
         $sessionServiceProvider = new SessionServiceProvider();
         $sessionServiceProvider->boot($application);
+    }
+
+    /**
+     * @param string $configKey
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return mixed
+     */
+    private function getBootstrapClass($configKey)
+    {
+        if (!Config::hasKey($configKey)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Could not find a configured bootstrap class for config key "%s". You need to add the class name of your bootstrap class in your test configuration.',
+                    $configKey
+                )
+            );
+        }
+        $bootstrapClassName = Config::get($configKey);
+
+        return new $bootstrapClassName();
     }
 
     /**
