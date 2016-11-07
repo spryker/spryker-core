@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
-use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer getQueryContainer()
@@ -27,8 +26,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     {
         return new Reader(
             $this->getQueryContainer(),
-            $this->createTransferMapper(),
-            $this->getLocaleFacade()
+            $this->createTransferMapper()
         );
     }
 
@@ -49,14 +47,6 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function createTransferMapper()
     {
         return new WishlistTransferMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_LOCALE);
     }
 
 }

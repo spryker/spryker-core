@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
-use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -32,23 +31,15 @@ class Reader implements ReaderInterface
     protected $transferMapper;
 
     /**
-     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
-     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface $localeFacade
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
-        WishlistTransferMapperInterface $transferMapper,
-        WishlistToLocaleInterface $localeFacade
+        WishlistTransferMapperInterface $transferMapper
     ) {
         $this->queryContainer = $queryContainer;
         $this->transferMapper = $transferMapper;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -152,11 +143,11 @@ class Reader implements ReaderInterface
             ->requireItemsPerPage()
             ->getItemsPerPage();
 
-        $ordersQuery = $this->queryContainer->queryItemsByWishlistId(
+        $itemsQuery = $this->queryContainer->queryItemsByWishlistId(
             $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist()
         );
 
-        return $ordersQuery->paginate($page, $maxPerPage);
+        return $itemsQuery->paginate($page, $maxPerPage);
     }
 
     /**

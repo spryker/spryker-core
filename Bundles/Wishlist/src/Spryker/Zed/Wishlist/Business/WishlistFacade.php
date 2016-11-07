@@ -82,7 +82,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @return void
      */
-    public function removeItemCollection(WishlistTransfer $wishlistTransfer)
+    public function emptyWishlist(WishlistTransfer $wishlistTransfer)
     {
         $this->getFactory()
             ->createWriter()

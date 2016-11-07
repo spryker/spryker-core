@@ -58,7 +58,7 @@ interface WishlistFacadeInterface
      *
      * @return void
      */
-    public function removeItemCollection(WishlistTransfer $wishlistTransfer);
+    public function emptyWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @api

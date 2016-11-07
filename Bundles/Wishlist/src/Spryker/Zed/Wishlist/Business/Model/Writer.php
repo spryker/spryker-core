@@ -107,16 +107,18 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param array|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     * @param array|\Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer[] $wishlistItemCollection
      *
      * @return void
      */
     public function addItemCollection(WishlistTransfer $wishlistTransfer, array $wishlistItemCollection)
     {
-        $wishlistTransfer->requireIdWishlist();
+        $wishlistTransfer->requireFkCustomer();
+        $wishlistTransfer->requireName();
 
         foreach ($wishlistItemCollection as $itemTransfer) {
-            $itemTransfer->setFkWishlist($wishlistTransfer->getIdWishlist());
+            $itemTransfer->setWishlistName($wishlistTransfer->getName());
+            $itemTransfer->setFkCustomer($wishlistTransfer->getFkCustomer());
             $this->addItem($itemTransfer);
         }
     }
@@ -143,7 +145,10 @@ class Writer implements WriterInterface
     public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
-        $idWishlist = $this->getDefaultWishlistIdByName($wishlistItemUpdateRequestTransfer);
+        $idWishlist = $this->getDefaultWishlistIdByName(
+            $wishlistItemUpdateRequestTransfer->getWishlistName(),
+            $wishlistItemUpdateRequestTransfer->getFkCustomer()
+        );
 
         $entity = $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
@@ -163,7 +168,10 @@ class Writer implements WriterInterface
     public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
-        $idWishlist = $this->getDefaultWishlistIdByName($wishlistItemUpdateRequestTransfer);
+        $idWishlist = $this->getDefaultWishlistIdByName(
+            $wishlistItemUpdateRequestTransfer->getWishlistName(),
+            $wishlistItemUpdateRequestTransfer->getFkCustomer()
+        );
 
         $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
@@ -174,21 +182,21 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     * @param string $name
+     * @param int $fkCustomer
      *
-     * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException
-     *
+     * @throws MissingWishlistException
      * @return int
      */
-    protected function getDefaultWishlistIdByName(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
+    protected function getDefaultWishlistIdByName($name, $fkCustomer)
     {
-        $name = trim($wishlistItemUpdateRequestTransfer->getWishlistName());
+        $name = trim($name);
         if ($name === '') {
             $name = self::DEFAULT_NAME;
         }
 
         $wishlistEntity = $this->queryContainer
-            ->queryWishlistByCustomerId($wishlistItemUpdateRequestTransfer->getFkCustomer())
+            ->queryWishlistByCustomerId($fkCustomer)
             ->filterByName($name)
             ->findOne();
 
@@ -196,7 +204,7 @@ class Writer implements WriterInterface
             throw new MissingWishlistException(sprintf(
                 'Wishlist with name: %s does not exist for customer with id: %s',
                 $name,
-                $wishlistItemUpdateRequestTransfer->getFkCustomer()
+                $fkCustomer
             ));
         }
 
