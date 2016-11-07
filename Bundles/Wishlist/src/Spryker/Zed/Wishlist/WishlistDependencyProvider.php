@@ -9,10 +9,6 @@ namespace Spryker\Zed\Wishlist;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Wishlist\Business\Operator\Add;
-use Spryker\Zed\Wishlist\Business\Operator\Decrease;
-use Spryker\Zed\Wishlist\Business\Operator\Increase;
-use Spryker\Zed\Wishlist\Business\Operator\Remove;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleBridge;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
 

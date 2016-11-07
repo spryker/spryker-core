@@ -35,15 +35,15 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
         };
 
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();  //TODO bridge
+            return $container->getLocator()->product()->client();
         };
 
         $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client(); //TODO bridge
+            return $container->getLocator()->cart()->client();
         };
 
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();  //TODO bridge
+            return $container->getLocator()->customer()->client();
         };
 
         return $container;

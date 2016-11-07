@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Wishlist\Communication\Controller;
 
-use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;

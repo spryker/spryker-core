@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
-use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -53,7 +52,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return WishlistToLocaleInterface
+     * @return \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToLocaleInterface
      */
     protected function getLocaleFacade()
     {

@@ -9,5 +9,4 @@ namespace Spryker\Zed\Wishlist\Business\Exception;
 
 class WishlistExistsException extends \Exception
 {
-
 }

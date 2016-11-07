@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 

@@ -8,9 +8,6 @@
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
-use Generated\Shared\Transfer\WishlistOverviewItemTransfer;
-use Generated\Shared\Transfer\WishlistOverviewProductTransfer;
-use Generated\Shared\Transfer\WishlistProductOverviewTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
