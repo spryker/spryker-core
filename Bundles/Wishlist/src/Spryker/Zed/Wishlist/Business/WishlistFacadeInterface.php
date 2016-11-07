@@ -85,9 +85,7 @@ interface WishlistFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public
-
-    function getWishlistByName(WishlistTransfer $wishlistTransfer);
+    public function getWishlistByName(WishlistTransfer $wishlistTransfer);
 
     /**
      * @api

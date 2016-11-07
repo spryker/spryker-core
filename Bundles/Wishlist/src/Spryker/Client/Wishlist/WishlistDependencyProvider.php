@@ -14,10 +14,10 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
 {
 
     const SERVICE_ZED = 'SERVICE_ZED';
-    const SESSION = 'SESSION';
     const STORAGE = 'STORAGE';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    const CLIENT_CART = 'CLIENT_CART';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,20 +30,20 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->zedRequest()->client();
         };
 
-        $container[self::SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
-        };
-
         $container[self::STORAGE] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
 
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return $container->getLocator()->product()->client();  //TODO bridge
+        };
+
+        $container[self::CLIENT_CART] = function (Container $container) {
+            return $container->getLocator()->cart()->client(); //TODO bridge
         };
 
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return $container->getLocator()->customer()->client();  //TODO bridge
         };
 
         return $container;

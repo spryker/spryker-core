@@ -7,23 +7,14 @@
 
 namespace Spryker\Client\Wishlist;
 
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Wishlist\Session\WishlistSession;
+use Spryker\Client\Wishlist\Cart\CartHandler;
 use Spryker\Client\Wishlist\Storage\WishlistStorage;
 use Spryker\Client\Wishlist\Zed\WishlistStub;
 
 class WishlistFactory extends AbstractFactory
 {
-
-    /**
-     * @return \Spryker\Client\Wishlist\Session\WishlistSessionInterface
-     */
-    public function createSession()
-    {
-        return new WishlistSession(
-            $this->getProvidedDependency(WishlistDependencyProvider::SESSION)
-        );
-    }
 
     /**
      * @return \Spryker\Client\Wishlist\Zed\WishlistStubInterface
@@ -52,6 +43,36 @@ class WishlistFactory extends AbstractFactory
     public function createCustomerClient()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\Product\ProductClientInterface
+     */
+    public function createProductClient()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\CartClientInterface
+     */
+    public function createCartClient()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
+     *
+     * @return \Spryker\Client\Wishlist\Cart\CartHandler
+     */
+    public function createCartHandler(CartClientInterface $cartClient, WishlistClientInterface $wishlistClient)
+    {
+        return new CartHandler(
+            $cartClient,
+            $wishlistClient
+        );
     }
 
 }

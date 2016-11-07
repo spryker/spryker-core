@@ -8,6 +8,7 @@
 namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -81,6 +82,18 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
+     */
+    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
+    {
+        return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -117,6 +130,25 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     protected function getStorage()
     {
         return $this->getFactory()->createStorage();
+    }
+
+    /**
+     * @return \Spryker\Client\Product\ProductClientInterface
+     */
+    protected function getProductClient()
+    {
+        return $this->getFactory()->createProductClient();
+    }
+
+    /**
+     * @return \Spryker\Client\Wishlist\Cart\CartHandlerInterface
+     */
+    protected function createCartHandler()
+    {
+        return $this->getFactory()->createCartHandler(
+            $this->getFactory()->createCartClient(),
+            $this
+        );
     }
 
 }
