@@ -79,10 +79,10 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
             }
 
             $orderCalculatedDiscounts[$displayName]->setUnitGrossAmount(
-                $orderCalculatedDiscounts[$displayName]->getUnitGrossAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
+                (int)$orderCalculatedDiscounts[$displayName]->getUnitGrossAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
             );
             $orderCalculatedDiscounts[$displayName]->setSumGrossAmount(
-                $orderCalculatedDiscounts[$displayName]->getSumGrossAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
+                (int)$orderCalculatedDiscounts[$displayName]->getSumGrossAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
             );
         }
 

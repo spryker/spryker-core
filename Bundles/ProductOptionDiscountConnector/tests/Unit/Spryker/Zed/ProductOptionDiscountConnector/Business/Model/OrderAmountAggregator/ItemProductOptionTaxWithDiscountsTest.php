@@ -36,7 +36,7 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemProductOptionTaxWithDiscountsAggregator->aggregate($orderTransfer);
 
         $this->assertSame(
-            13.0,
+            13,
             $orderTransfer->getItems()[0]->getUnitTaxAmountWithProductOptionAndDiscountAmounts()
         );
     }
@@ -51,7 +51,7 @@ class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $itemProductOptionTaxWithDiscountsAggregator->aggregate($orderTransfer);
 
         $this->assertSame(
-            26.0,
+            26,
             $orderTransfer->getItems()[0]->getSumTaxAmountWithProductOptionAndDiscountAmounts()
         );
     }

@@ -13,9 +13,11 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
+use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 
@@ -50,6 +52,12 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $searchFactoryMock
             ->method('getSearchConfig')
             ->willReturn($searchConfig);
+
+        $container = new Container();
+        $searchDependencyProvider = new SearchDependencyProvider();
+        $searchDependencyProvider->provideServiceLayerDependencies($container);
+
+        $searchFactoryMock->setContainer($container);
 
         $facetResultFormatterPlugin = new FacetResultFormatterPlugin();
         $facetResultFormatterPlugin->setFactory($searchFactoryMock);

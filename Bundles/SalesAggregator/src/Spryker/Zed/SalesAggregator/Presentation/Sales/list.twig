@@ -10,44 +10,44 @@
                     {% for orderItem in order.items %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
-                            <td class="text-right">{{ orderItem.unitGrossPrice | currency  }}</td>
+                            <td class="text-right">{{ orderItem.unitGrossPrice | money }}</td>
                             <td>{{ 'gross price per item' | trans }}</td>
                         </tr>
                         {% for orderItemOption in orderItem.productOptions %}
                             <tr>
                                 <td> + {{ orderItemOption.value }}</td>
-                                <td class="text-right">{{ orderItemOption.unitGrossPrice | currency  }}</td>
+                                <td class="text-right">{{ orderItemOption.unitGrossPrice | money }}</td>
                                 <td>{{ 'gross option price' | trans }}</td>
                             </tr>
                         {% endfor %}
                     {% endfor %}
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
-                        <td class="text-right">{{ order.totals.subtotal | currency }}</td>
+                        <td class="text-right">{{ order.totals.subtotal | money }}</td>
                         <td></td>
                     </tr>
                     {% for expense in order.expenses %}
                         <tr>
                             <th>{{ 'Shipment' | trans }} -  {{ expense.name }}</th>
-                            <td class="text-right">{{ expense.unitGrossPrice | currency  }}</td>
+                            <td class="text-right">{{ expense.unitGrossPrice | money }}</td>
                             <td></td>
                         </tr>
                     {% endfor %}
 
                     <tr>
                         <th>{{ 'Discount' | trans }}</th>
-                        <td class="text-right">-{{ order.totals.discountTotal | currency }}</td>
+                        <td class="text-right">-{{ order.totals.discountTotal | money }}</td>
                         <td></td>
                     </tr>
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
-                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal|currency }}</td>
+                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal | money }}</td>
                         <td></td>
                     </tr>
 
                     <tr>
                         <td>{{ 'Included tax amount' | trans }}</td>
-                        <td class="text-right" data-qa="grand-total">{{ order.totals.taxTotal.amount | currency }}</td>
+                        <td class="text-right" data-qa="grand-total">{{ order.totals.taxTotal.amount | money }}</td>
                         <td></td>
                     </tr>
                     </tbody>

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 
 class RefundTable extends AbstractTable
@@ -30,20 +30,20 @@ class RefundTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface
      */
-    protected $currencyManager;
+    protected $moneyFacade;
 
     /**
      * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface $moneyFacade
      */
-    public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, CurrencyManagerInterface $currencyManager)
+    public function __construct(RefundQueryContainerInterface $refundQueryContainer, DateFormatterInterface $dateFormatter, RefundToMoneyInterface $moneyFacade)
     {
         $this->refundQueryContainer = $refundQueryContainer;
         $this->dateFormatter = $dateFormatter;
-        $this->currencyManager = $currencyManager;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -115,9 +115,12 @@ class RefundTable extends AbstractTable
      */
     protected function formatAmount($value, $includeSymbol = true)
     {
-        $value = $this->currencyManager->convertCentToDecimal($value);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value);
+        if ($includeSymbol) {
+            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        }
 
-        return $this->currencyManager->format($value, $includeSymbol);
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**

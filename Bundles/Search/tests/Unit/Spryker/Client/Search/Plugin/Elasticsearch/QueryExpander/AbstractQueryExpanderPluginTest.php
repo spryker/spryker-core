@@ -14,11 +14,13 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
+use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 use Unit\Spryker\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
@@ -91,9 +93,16 @@ abstract class AbstractQueryExpanderPluginTest extends \PHPUnit_Framework_TestCa
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig'])
             ->getMock();
+
         $searchFactoryMock
             ->method('getSearchConfig')
             ->willReturn($searchConfig);
+
+        $container = new Container();
+        $searchDependencyProvider = new SearchDependencyProvider();
+        $searchDependencyProvider->provideServiceLayerDependencies($container);
+        $searchFactoryMock->setContainer($container);
+
         return $searchFactoryMock;
     }
 

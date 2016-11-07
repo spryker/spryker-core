@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,6 +33,7 @@ class MethodForm extends AbstractType
     const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     const OPTION_TAX_SETS = 'option_tax_sets';
+    const OPTION_MONEY_FACADE = 'money facade';
 
     /**
      * @return string
@@ -53,7 +53,7 @@ class MethodForm extends AbstractType
     {
         $this->addCarrierField($builder, $options)
             ->addNameField($builder)
-            ->addDefaultPriceField($builder)
+            ->addDefaultPriceField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -75,6 +75,11 @@ class MethodForm extends AbstractType
         $resolver->setRequired(self::OPTION_PRICE_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_TAX_SETS);
+        $resolver->setRequired(self::OPTION_MONEY_FACADE);
+
+        $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, 'array');
+        $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, 'array');
+        $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, 'array');
     }
 
     /**
@@ -112,25 +117,42 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addDefaultPriceField(FormBuilderInterface $builder)
+    protected function addDefaultPriceField(FormBuilderInterface $builder, $options)
     {
         $builder->add(self::FIELD_DEFAULT_PRICE, 'money', [
             'label' => 'Default price',
         ]);
 
+        $moneyFacade = $this->getMoneyFacade($options);
+
         $builder->get(self::FIELD_DEFAULT_PRICE)->addModelTransformer(new CallbackTransformer(
-            function ($originalPrice) {
-                return CurrencyManager::getInstance()->convertCentToDecimal($originalPrice);
+            function ($originalPrice) use ($moneyFacade) {
+                if ($originalPrice === null) {
+                    return $originalPrice;
+                }
+
+                return $moneyFacade->convertIntegerToDecimal($originalPrice);
             },
-            function ($submittedPrice) {
-                return CurrencyManager::getInstance()->convertDecimalToCent($submittedPrice);
+            function ($submittedPrice) use ($moneyFacade) {
+                return $moneyFacade->convertDecimalToInteger($submittedPrice);
             }
         ));
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
+     */
+    protected function getMoneyFacade(array $options)
+    {
+        return $options[static::OPTION_MONEY_FACADE];
     }
 
     /**

@@ -101,7 +101,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $orderQuery,
             $orderItemQuery,
             $this->getSalesAggregator(),
-            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY)
         );
     }
 

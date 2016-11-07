@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Money\Plugin\MoneyPlugin;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Shared\Search\SearchConfig;
 
 class QueryFactory implements QueryFactoryInterface
@@ -20,11 +20,18 @@ class QueryFactory implements QueryFactoryInterface
     protected $queryBuilder;
 
     /**
-     * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
+     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    public function __construct(QueryBuilderInterface $queryBuilder)
+    protected $moneyPlugin;
+
+    /**
+     * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
+     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
+     */
+    public function __construct(QueryBuilderInterface $queryBuilder, MoneyPluginInterface $moneyPlugin)
     {
         $this->queryBuilder = $queryBuilder;
+        $this->moneyPlugin = $moneyPlugin;
     }
 
     /**
@@ -103,7 +110,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedPriceRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->createMoneyPlugin());
+        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->moneyPlugin);
     }
 
     /**
@@ -139,14 +146,6 @@ class QueryFactory implements QueryFactoryInterface
         return $this
             ->queryBuilder
             ->createTermQuery($facetConfigTransfer->getFieldName(), $filterValue);
-    }
-
-    /**
-     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
-     */
-    protected function createMoneyPlugin()
-    {
-        return new MoneyPlugin();
     }
 
 }

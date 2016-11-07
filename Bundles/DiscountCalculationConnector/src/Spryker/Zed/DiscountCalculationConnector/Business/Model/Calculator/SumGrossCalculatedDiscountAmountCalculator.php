@@ -102,7 +102,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $this->assertCalculatedDiscountRequirements($calculatedDiscountTransfer);
             $calculatedDiscountTransfer->setSumGrossAmount(
-                $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
+                (int)$calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
             );
         }
     }
@@ -123,11 +123,11 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $expenseTransfer->setSumTotalDiscountAmount($sumAmount);
 
             $expenseTransfer->setUnitGrossPriceWithDiscounts(
-                $expenseTransfer->getUnitGrossPrice() - $unitAmount
+                (int)$expenseTransfer->getUnitGrossPrice() - $unitAmount
             );
 
             $expenseTransfer->setSumGrossPriceWithDiscounts(
-                $expenseTransfer->getSumGrossPrice() - $sumAmount
+                (int)$expenseTransfer->getSumGrossPrice() - $sumAmount
             );
         }
     }

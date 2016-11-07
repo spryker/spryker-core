@@ -30,7 +30,6 @@
                 <th>{{ 'SKU' | trans }}</th>
                 <th>{{ 'Unit Price' | trans }}</th>
                 <th>{{ 'QTY' | trans }}</th>
-                <th>{{ 'Unit price * Qty' | trans }}</th>
                 <th>{{ 'Tax amount' | trans }}</th>
                 <th>{{ 'Tax %' | trans }}</th>
                 <th>{{ 'Discount amount' | trans }}</th>
@@ -50,7 +49,7 @@
                         {#<a href="#" target="_blank">{{ 'Zed View' }}</a>#}
                     {#</td>#}
                     <td>{{ orderItem.Sku }}</td>
-                    <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
+                    <td>{{ orderItem.unitGrossPriceWithProductOptions | default(0) | money }}</td>
 
                     {% if orderItem.quantity > 1 %}
                         <td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>
@@ -58,11 +57,10 @@
                         <td>{{ orderItem.quantity }}</td>
                     {% endif %}
 
-                    <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
-                    <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
+                    <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | default(0) | money }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
-                    <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
-                    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts }}">{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | currency }} </td>
+                    <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | default(0) | money }} </td>
+                    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts }}">{{ orderItem.sumGrossPriceWithProductOptionAndDiscountAmounts | default(0) | money }} </td>
                     <td>
                         <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">
                             {{ orderItem.process }}
