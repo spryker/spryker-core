@@ -8,7 +8,7 @@
 namespace Spryker\Client\Availability\Storage;
 
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
@@ -17,7 +17,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storage;
+    private $storageClient;
 
     /**
      * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
@@ -30,13 +30,13 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     private $locale;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $storage
+     * @param \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
-    public function __construct(StorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
+    public function __construct(AvailabilityToStorageInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
     {
-        $this->storage = $storage;
+        $this->storageClient = $storage;
         $this->keyBuilder = $keyBuilder;
         $this->locale = $localeName;
     }
@@ -49,7 +49,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     public function getProductAvailability($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
-        $availability = $this->storage->get($key);
+        $availability = $this->storageClient->get($key);
 
         return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
     }

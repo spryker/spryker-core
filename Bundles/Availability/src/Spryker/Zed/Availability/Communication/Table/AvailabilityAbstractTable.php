@@ -109,9 +109,9 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function getAvailabilityLabel($quantity)
     {
         if ($quantity > 0) {
-            return '<span class="label label-info">' . self::AVAILABLE .'</span>';
+            return '<span class="label label-info">' . self::AVAILABLE . '</span>';
         }
-        return '<span class="label">' . self::NOT_AVAILABLE .'</span>';
+        return '<span class="label">' . self::NOT_AVAILABLE . '</span>';
     }
 
     /**

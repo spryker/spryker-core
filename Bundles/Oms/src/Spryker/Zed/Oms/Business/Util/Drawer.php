@@ -8,16 +8,16 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Shared\Graph\GraphInterface;
-use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 
 class Drawer implements DrawerInterface
 {
@@ -94,22 +94,33 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
-     * @param \Spryker\Shared\Graph\GraphInterface $graph
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface
      */
-    public function __construct($commands, $conditions, GraphInterface $graph)
-    {
+    protected $utilTextFacade;
+
+    /**
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Shared\Graph\GraphInterface $graph
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface $utilTextFacade
+     */
+    public function __construct(
+        $commands,
+        $conditions,
+        GraphInterface $graph,
+        OmsToUtilTextInterface $utilTextFacade
+    ) {
         $this->setCommands($commands);
         $this->setConditions($conditions);
 
         $this->graph = $graph;
+        $this->utilTextFacade = $utilTextFacade;
     }
 
     /**
      * Converts array to collection for BC
      *
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      *
      * @return void
      */
@@ -132,7 +143,7 @@ class Drawer implements DrawerInterface
     /**
      * Converts array to collection for BC
      *
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      *
      * @return void
      */
@@ -205,9 +216,7 @@ class Drawer implements DrawerInterface
      */
     protected function getDiamondId()
     {
-        $generator = new StringGenerator();
-
-        return $generator->generateRandomString();
+        return $this->utilTextFacade->generateRandomString(32);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConstants;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -37,21 +38,29 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      */
     public function __construct(
         SellableInterface $sellable,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToTouchInterface $touchFacade,
-        AvailabilityQueryContainerInterface $queryContainer
+        AvailabilityQueryContainerInterface $queryContainer,
+        AvailabilityToProductInterface $productFacade
     ) {
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
         $this->touchFacade = $touchFacade;
         $this->queryContainer = $queryContainer;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -196,16 +205,17 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function findOrCreateSpyAvailabilityAbstract($sku)
     {
-        $productEntity = $this->queryContainer->querySpyProductBySku($sku)->findOne();
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
 
-        if ($productEntity === null) {
+        if ($abstractSku === null) {
             throw new ProductNotFoundException(
                 sprintf('The product was not found with this SKU: %s', $sku)
             );
         }
 
-        $abstractSku = $productEntity->getAbstractSku();
-        $availabilityAbstractEntity = $this->queryContainer->querySpyAvailabilityAbstractByAbstractSku($abstractSku)->findOne();
+        $availabilityAbstractEntity = $this->queryContainer
+            ->querySpyAvailabilityAbstractByAbstractSku($abstractSku)
+            ->findOne();
 
         if ($availabilityAbstractEntity !== null) {
             return $availabilityAbstractEntity;

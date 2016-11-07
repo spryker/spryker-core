@@ -12,6 +12,14 @@ interface CartPreCheckPluginInterface
 {
 
     /**
+     *
+     * Specification:
+     * - This plugin is executed before cart add operation is executed,
+     *   for example could be used to check if item quantity is available for selected item
+     *   Should return CartPreCheckResponseTransfer where error messages set and flag that check failed.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer

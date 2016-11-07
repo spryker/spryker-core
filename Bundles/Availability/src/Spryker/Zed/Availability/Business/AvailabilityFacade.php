@@ -41,6 +41,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * Specification:
      *  - Checks if product have stock in productStock table
      *  - Checks if have placed orders where items have statemachine state flagged as reserved
+     *  - Returns integer value which is Product stock - reserved state machine items.
      *
      * @api
      *
@@ -87,6 +88,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
+     *
+     * @throw ProductNotFoundException
      *
      * @return void
      */

@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -31,19 +30,13 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemsByState(array $states, $processName)
     {
-        return $this->getSalesQueryContainer()->querySalesOrderItem()
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
             ->joinProcess(null, Criteria::INNER_JOIN)
             ->joinState(null, Criteria::INNER_JOIN)
             ->where('Process.name = ?', $processName)
             ->where("State.name IN ('" . implode("', '", $states) . "')");
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
-     */
-    protected function getSalesQueryContainer()
-    {
-        return $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
@@ -55,7 +48,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemsByIdOrder($idOrder)
     {
-        return $this->getSalesQueryContainer()->querySalesOrderItem()
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
             ->filterByFkSalesOrder($idOrder);
     }
 
@@ -68,7 +63,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder)
     {
-        return $this->getSalesQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder);
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItemsByIdSalesOrder($idOrder);
     }
 
     /**
@@ -80,7 +77,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryLogForOrder(SpySalesOrder $order)
     {
-        return $this->getFactory()->createOmsTransitionLogQuery()
+        return $this->getFactory()
+            ->createOmsTransitionLogQuery()
             ->filterByOrder($order)
             ->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
     }
@@ -95,9 +93,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryLogByIdOrder($idOrder, $orderById = true)
     {
-        $transitionLogQuery = $this->getFactory()->createOmsTransitionLogQuery();
-
-        $transitionLogQuery
+        $transitionLogQuery = $this->getFactory()
+            ->createOmsTransitionLogQuery()
             ->filterByFkSalesOrder($idOrder);
 
         if ($orderById) {
@@ -116,7 +113,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now)
     {
-        return $this->getSalesQueryContainer()->querySalesOrderItem()
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
             ->joinEventTimeout()
             ->where('EventTimeout.timeout < ?', $now)
             ->withColumn('EventTimeout.event', 'event');
@@ -135,8 +134,10 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $query = $this->getSalesQueryContainer()->querySalesOrderItem();
-        $query->withColumn('COUNT(*)', 'Count')->select(['Count']);
+        $query = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->withColumn('COUNT(*)', 'Count')->select(['Count']);
 
         if ($returnTest === false) {
             $query->useOrderQuery()->filterByIsTest(false)->endUse();
@@ -164,10 +165,10 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true)
     {
-        $salesOrderItemQuery = $this->getSalesQueryContainer()
-            ->querySalesOrderItem();
-
-        $salesOrderItemQuery->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', 'Sum')
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', 'Sum')
             ->select(['Sum']);
 
         if ($returnTest === false) {
@@ -200,7 +201,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        $query = $this->getSalesQueryContainer()->querySalesOrderItem();
+        $query = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem();
 
         if ($returnTest === false) {
             $query->useOrderQuery()->filterByIsTest(false)->endUse();
@@ -226,7 +229,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItems(array $orderItemIds)
     {
-        return $this->getSalesQueryContainer()->querySalesOrderItem()
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
             ->filterByIdSalesOrderItem($orderItemIds, Criteria::IN);
     }
 
@@ -239,7 +244,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderById($idOrder)
     {
-        return $this->getSalesQueryContainer()->querySalesOrder()
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrder()
             ->filterByIdSalesOrder($idOrder);
     }
 
@@ -252,7 +259,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function getActiveProcesses(array $activeProcesses)
     {
-        $query = $this->getFactory()->createOmsOrderProcessQuery();
+        $query = $this->getFactory()
+            ->createOmsOrderProcessQuery();
 
         return $query->filterByName($activeProcesses, Criteria::IN);
     }
@@ -266,7 +274,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function getOrderItemStates(array $orderItemStates)
     {
-        $query = $this->getFactory()->createOmsOrderItemStateQuery();
+        $query = $this->getFactory()
+            ->createOmsOrderItemStateQuery();
 
         return $query->filterByIdOmsOrderItemState($orderItemStates, Criteria::IN);
     }
@@ -281,8 +290,11 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist)
     {
-        $query = $this->getFactory()->createSalesOrderItemQuery();
-        $query->filterByFkOmsOrderProcess($processIds, Criteria::IN);
+        $query = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->filterByFkOmsOrderProcess($processIds, Criteria::IN);
+
         if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
         }
@@ -299,10 +311,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemStatesByName(array $orderItemStates)
     {
-        $query = $this->getFactory()->createOmsOrderItemStateQuery();
-        $query->filterByName($orderItemStates, Criteria::IN);
-
-        return $query;
+        return $this->getFactory()
+            ->createOmsOrderItemStateQuery()
+            ->filterByName($orderItemStates, Criteria::IN);
     }
 
     /**
@@ -360,7 +371,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function createOmsProductReservationQuery($sku)
     {
-        return $this->getFactory()->createOmsProductReservationQuery()
+        return $this->getFactory()
+            ->createOmsProductReservationQuery()
             ->filterBySku($sku);
     }
 

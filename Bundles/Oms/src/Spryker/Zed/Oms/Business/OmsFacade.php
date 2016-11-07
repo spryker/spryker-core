@@ -19,6 +19,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
 
     /**
+     *
+     * Specification:
+     *  - Reads all manual event for given order.
+     *  - Returns list of manuals events
+     *
      * @api
      *
      * @param int $idOrderItem
@@ -33,6 +38,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Checks if any order items is in state with givent flag
+     *  - Returns true if order item have flag in state
+     *
      * @api
      *
      * @param int $idOrder
@@ -48,6 +58,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Checks if all order items is in state with givent flag
+     *  - Returns true if all order items have flag in state
+     *
      * @api
      *
      * @param int $idOrder
@@ -63,6 +78,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -79,6 +107,20 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Initialises correct state machine, sets initial state
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param array $orderItemIds
@@ -94,6 +136,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -110,6 +165,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all active state machine processes, which defined in spryker configuration OmsConstants::ACTIVE_PROCESSES
+     *  - Returns array of Process objects
+     *
      * @api
      *
      * @return \Spryker\Zed\Oms\Business\Process\Process[]
@@ -122,6 +182,10 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Returns list of active processes, which defined in spryker configuration OmsConstants::ACTIVE_PROCESSES
+     *
      * @api
      *
      * @return array
@@ -134,6 +198,13 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all transitions without event.
+     *  - Reads from database items with those transitions
+     *  - Executes each transition
+     *  - Returns number of affected items
+     *
      * @api
      *
      * @param array $logContext
@@ -148,6 +219,12 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all expired timeout events
+     *  - Execute events
+     *  - Returns number of affected items
+     *
      * @api
      *
      * @param array $logContext
@@ -165,6 +242,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Draws state machine process using internal graphic library
+     *  - Returns html to display in presentation
+     *
      * @api
      *
      * @param string $processName
@@ -172,7 +254,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null)
     {
@@ -184,6 +266,12 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets all events for order item with source state having manual event
+     *  - Gets all events for whole order state having manual event
+     *  - Returns array of order manual events
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -198,6 +286,10 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets all order items which have state with given flag
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -213,6 +305,10 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets all order items which does not have state with given flag
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -228,6 +324,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all logged state machine operations for givent order
+     *  - Returns TransitionLog entity list
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -244,11 +345,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all order items having state with reserved attribute for given concrete product
+     *
      * @api
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+         * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku)
     {
@@ -292,6 +397,10 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets state entity by state name from persistence
+     *
      * @api
      *
      * @param string $stateName
@@ -306,6 +415,10 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets process entity by process name from persistence
+     *
      * @api
      *
      * @param string $processName
@@ -320,6 +433,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets inital state entity for new order state machine process
+     *  - Inital state name is set in OmsConstants
+     *
      * @api
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
@@ -332,6 +450,12 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Gets current state machine process for give order item
+     *  - Reads state display name from xml definition
+     *  - Returns display name
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
@@ -346,6 +470,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -365,6 +502,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
@@ -383,6 +533,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -402,6 +565,13 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all order states
+     *  - Counts orders in each state and puts into corresponding state
+     *  - Return matrix
+     *
+     *
      * @api
      *
      * @return array
@@ -412,6 +582,12 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Reads all order states
+     *  - Counts orders in each state and puts into corresponding state
+     *  - Return matrix
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -426,6 +602,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Read all order manual event from persistence
+     *  - Return array of manual events
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -440,6 +621,10 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
+     *
+     * Specification:
+     *  - Clear state machine lock table, which used when items are locked. This is garbage collection call
+     *
      * @api
      *
      * @return void

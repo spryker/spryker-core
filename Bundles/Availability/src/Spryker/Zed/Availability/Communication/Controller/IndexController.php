@@ -9,7 +9,6 @@ namespace Spryker\Zed\Availability\Communication\Controller;
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstract;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityTable;
@@ -181,41 +180,18 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct|null $stockProductEntity
-     * @param string|null $stockType
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer
-     */
-    protected function addStockProduct($availabilityStockTransfer, $stockProductEntity = null, $stockType = null)
-    {
-        $stockProductTransfer = new StockProductTransfer();
-
-        if ($stockProductEntity !== null) {
-            $stockProductTransfer->fromArray($stockProductEntity->toArray(), true);
-        } else {
-            $stockProductTransfer->setStockType($stockType);
-            $stockProductTransfer->setQuantity(0);
-        }
-
-        $availabilityStockTransfer->addStockProduct($stockProductTransfer);
-
-        return $stockProductTransfer;
-    }
-
-    /**
      * @param string $sku
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Propel\Runtime\Collection\ObjectCollection $stockProducts
+     * @param array|\Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
      *
      * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
-    protected function loadAvailabilityStockTransfer($sku, ObjectCollection $stockProducts)
+    protected function loadAvailabilityStockTransfer($sku, array $stockProducts)
     {
         $availabilityStockTransfer = new AvailabilityStockTransfer();
         $availabilityStockTransfer->setSku($sku);
 
-        foreach ($stockProducts as $stockProduct) {
-            $this->addStockProduct($availabilityStockTransfer, $stockProduct);
+        foreach ($stockProducts as $stockProductTransfer) {
+            $availabilityStockTransfer->addStockProduct($stockProductTransfer);
         }
 
         return $availabilityStockTransfer;
@@ -228,12 +204,17 @@ class IndexController extends AbstractController
      */
     protected function addEmptyStockType($availabilityStockTransfer)
     {
-        $allStockType = $this->getQueryContainer()->queryAllStockType()->find();
+        $allStockType = $this->getFactory()->getStockFacade()->getAvailableStockTypes();
 
         foreach ($allStockType as $type) {
-            if (!$this->stockTypeExist($availabilityStockTransfer, $type)) {
-                $this->addStockProduct($availabilityStockTransfer, null, $type->getName());
+            if ($this->stockTypeExist($availabilityStockTransfer, $type)) {
+                continue;
             }
+            $stockProductTransfer = new StockProductTransfer();
+            $stockProductTransfer->setStockType($type);
+            $stockProductTransfer->setQuantity(0);
+
+            $availabilityStockTransfer->addStockProduct($stockProductTransfer);
         }
     }
 
@@ -269,7 +250,7 @@ class IndexController extends AbstractController
      */
     protected function createAvailabilityStockFormProvider($idProduct, $sku)
     {
-        $stockProducts = $this->getQueryContainer()->queryStockByIdProduct($idProduct)->find();
+        $stockProducts = $this->getFactory()->getStockFacade()->getStockProductsByIdProduct($idProduct);
         $availabilityStockTransfer = $this->loadAvailabilityStockTransfer($sku, $stockProducts);
         $this->addEmptyStockType($availabilityStockTransfer);
 

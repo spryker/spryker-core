@@ -9,7 +9,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
@@ -20,11 +20,17 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $sellable;
 
     /**
+     * @var \Spryker\Zed\Availability\AvailabilityConfig
+     */
+    protected $availabilityConfig;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      */
-    public function __construct(SellableInterface $sellable)
+    public function __construct(SellableInterface $sellable, AvailabilityConfig $availabilityConfig)
     {
         $this->sellable = $sellable;
+        $this->availabilityConfig = $availabilityConfig;
     }
 
     /**
@@ -94,7 +100,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer
-            ->setErrorCode(CheckoutConstants::ERROR_CODE_PRODUCT_UNAVAILABLE)
+            ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
             ->setMessage('product.unavailable');
 
         $checkoutResponse

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Zed\Library\Sanitize\Html;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilSanitizeInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
@@ -47,11 +47,20 @@ class OrderItemMatrix
     protected $orderItemStateBlacklist = [];
 
     /**
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilSanitizeInterface
+     */
+    protected $utilSanitizeFacade;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\OmsConfig $config
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilSanitizeInterface $utilSanitizeFacade
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer, OmsConfig $config)
-    {
+    public function __construct(
+        OmsQueryContainerInterface $queryContainer,
+        OmsConfig $config,
+        OmsToUtilSanitizeInterface $utilSanitizeFacade
+    ) {
         $this->queryContainer = $queryContainer;
         $this->config = $config;
 
@@ -60,6 +69,7 @@ class OrderItemMatrix
         $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist())
             ->find();
         $this->orderItems = $this->preProcessItems($orderItems);
+        $this->utilSanitizeFacade = $utilSanitizeFacade;
     }
 
     /**
@@ -149,7 +159,7 @@ class OrderItemMatrix
             }
 
             $url = sprintf('/sales?id-order-item-process=%s&id-order-item-state=%s&filter=%s', $idProcess, $idState, $key);
-            $grid[$key] = '<a href="' . Html::escape($url) . '">' . $value . '</a>';
+            $grid[$key] = '<a href="' . $this->utilSanitizeFacade->escapeHtml($url) . '">' . $value . '</a>';
         }
 
         return implode(' | ', $grid);

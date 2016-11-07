@@ -43,12 +43,4 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
         return $this->getProvidedDependency(AvailabilityDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
-    /**
-     * @return \Spryker\Zed\Stock\Persistence\StockQueryContainer
-     */
-    public function getStockQueryContainer()
-    {
-        return $this->getProvidedDependency(AvailabilityDependencyProvider::QUERY_CONTAINER_STOCK);
-    }
-
 }

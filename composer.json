@@ -527,7 +527,36 @@
       "Spryker\\Shared\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
       "Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
       "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
-      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests"
+      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
+
+      "Spryker\\Yves\\UtilText\\": "Bundles/UtilText/src",
+      "Acceptance\\UtilText\\": "Bundles/UtilText/tests",
+      "Spryker\\Shared\\UtilText\\": "Bundles/UtilText/src",
+      "Unit\\Spryker\\Shared\\UtilText\\": "Bundles/UtilText/tests",
+      "Functional\\Spryker\\Shared\\UtilText\\": "Bundles/UtilText/tests",
+      "Spryker\\Zed\\UtilText\\": "Bundles/UtilText/src",
+      "Unit\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests",
+      "Functional\\Spryker\\Zed\\UtilText\\": "Bundles/UtilText/tests",
+
+
+      "Spryker\\Yves\\UtilSanitize\\": "Bundles/UtilSanitize/src",
+      "Acceptance\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
+      "Spryker\\Shared\\UtilSanitize\\": "Bundles/UtilSanitize/src",
+      "Unit\\Spryker\\Shared\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
+      "Functional\\Spryker\\Shared\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
+      "Spryker\\Zed\\UtilSanitize\\": "Bundles/UtilSanitize/src",
+      "Unit\\Spryker\\Zed\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
+      "Functional\\Spryker\\Zed\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
+
+      "Spryker\\Yves\\UtilNetwork\\": "Bundles/UtilNetwork/src",
+      "Acceptance\\UtilNetwork\\": "Bundles/UtilNetwork/tests",
+      "Spryker\\Shared\\UtilNetwork\\": "Bundles/UtilNetwork/src",
+      "Unit\\Spryker\\Shared\\UtilNetwork\\": "Bundles/UtilNetwork/tests",
+      "Functional\\Spryker\\Shared\\UtilNetwork\\": "Bundles/UtilNetwork/tests",
+      "Spryker\\Zed\\UtilNetwork\\": "Bundles/UtilNetwork/src",
+      "Unit\\Spryker\\Zed\\UtilNetwork\\": "Bundles/UtilNetwork/tests",
+      "Functional\\Spryker\\Zed\\UtilNetwork\\": "Bundles/UtilNetwork/tests"
+
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",

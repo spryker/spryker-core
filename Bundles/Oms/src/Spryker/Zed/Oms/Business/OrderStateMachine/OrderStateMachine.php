@@ -18,13 +18,13 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
@@ -81,12 +81,12 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $activeProcesses;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface
      */
     protected $conditions;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface
      */
     protected $commands;
 
@@ -101,8 +101,8 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLog
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface $timeout
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      * @param \Spryker\Zed\Oms\Business\Util\ReservationInterface $reservation
      */
     public function __construct(
@@ -128,7 +128,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * Converts array to collection for BC
      *
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      *
      * @return void
      */
@@ -151,7 +151,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * Converts array to collection for BC
      *
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      *
      * @return void
      */
@@ -458,7 +458,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
      *
      * @throws \LogicException
      *
@@ -807,7 +807,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $command
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     protected function getCommand($command)
     {
@@ -817,7 +817,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $condition
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     protected function getCondition($condition)
     {

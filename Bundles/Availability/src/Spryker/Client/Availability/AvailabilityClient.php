@@ -16,6 +16,10 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
 {
 
     /**
+     *
+     * Specification
+     *  - Read product availability data for current locale, from current Yves storage provider
+     *
      * @api
      *
      * @param int $idProductAbstract

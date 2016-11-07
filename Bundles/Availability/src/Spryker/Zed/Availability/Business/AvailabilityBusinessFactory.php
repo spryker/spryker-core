@@ -40,7 +40,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->createSellableModel(),
             $this->getStockFacade(),
             $this->getTouchFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getProductFacade()
         );
     }
 
@@ -69,11 +70,19 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODDUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditionInterface
      */
     public function createProductsAvailablePreCondition()
     {
-        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel());
+        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
     }
 
 }

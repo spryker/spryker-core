@@ -13,6 +13,7 @@ use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -82,6 +83,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface|null $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface|null $availabilityQueryContainer
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface|null $availabilityToProductFacade
      *
      * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
      */
@@ -89,7 +91,8 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
         SellableInterface $sellable = null,
         AvailabilityToStockInterface $stockFacade = null,
         AvailabilityToTouchInterface $touchFacade = null,
-        AvailabilityQueryContainerInterface $availabilityQueryContainer = null
+        AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
+        AvailabilityToProductInterface $availabilityToProductFacade = null
     ) {
 
         if ($sellable === null) {
@@ -108,7 +111,17 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
             $availabilityQueryContainer = $this->createAvailabilityQueryContainerMock();
         }
 
-        return new AvailabilityHandler($sellable, $stockFacade, $touchFacade, $availabilityQueryContainer);
+        if ($availabilityToProductFacade === null) {
+            $availabilityToProductFacade = $this->createAvailabilityToProductFacade();
+        }
+
+        return new AvailabilityHandler(
+            $sellable,
+            $stockFacade,
+            $touchFacade,
+            $availabilityQueryContainer,
+            $availabilityToProductFacade
+        );
     }
 
     /**
@@ -205,6 +218,15 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     protected function createAvailabilityAbstractEntityMock()
     {
         return $this->getMockBuilder(SpyAvailabilityAbstract::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
+     */
+    protected function createAvailabilityToProductFacade()
+    {
+        return $this->getMockBuilder(AvailabilityToProductInterface::class)
             ->getMock();
     }
 

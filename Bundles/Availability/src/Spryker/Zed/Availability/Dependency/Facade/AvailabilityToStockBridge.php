@@ -65,4 +65,22 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
         return $this->stockFacade->updateStockProduct($stockProductTransfer);
     }
 
+    /**
+     * @return array
+     */
+    public function getAvailableStockTypes()
+    {
+        return $this->stockFacade->getAvailableStockTypes();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete)
+    {
+        return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
+    }
+
 }

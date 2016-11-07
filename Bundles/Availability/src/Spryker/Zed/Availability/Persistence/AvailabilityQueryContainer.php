@@ -15,7 +15,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
-use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -94,20 +93,6 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->filterByFkAvailabilityAbstract($idAvailabilityAbstract)
             ->withColumn('SUM(' . SpyAvailabilityTableMap::COL_QUANTITY . ')', self::SUM_QUANTITY)
             ->select([self::SUM_QUANTITY]);
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function querySpyProductBySku($sku)
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProductConcreteBySku($sku)
-            ->innerJoinSpyProductAbstract()
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, self::ABSTRACT_SKU);
     }
 
     /**
@@ -218,38 +203,6 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->filterByIdProductAbstract($idProductAbstract)
             ->select([self::CONCRETE_SKU])
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
-     */
-    public function queryStockByIdProduct($idProduct)
-    {
-        return $this->getFactory()
-            ->getStockQueryContainer()
-            ->queryStockByProducts($idProduct)
-            ->useStockQuery()
-                ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
-            ->endUse()
-            ->useSpyProductQuery()
-                ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
-            ->endUse();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
-     */
-    public function queryAllStockType()
-    {
-        return $this->getFactory()
-            ->getStockQueryContainer()
-            ->queryAllStockTypes();
     }
 
 }

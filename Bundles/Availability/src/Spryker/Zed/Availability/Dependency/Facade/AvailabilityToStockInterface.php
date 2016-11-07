@@ -40,4 +40,16 @@ interface AvailabilityToStockInterface
      */
     public function updateStockProduct(StockProductTransfer $stockProductTransfer);
 
+    /**
+     * @return array
+     */
+    public function getAvailableStockTypes();
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete);
+
 }

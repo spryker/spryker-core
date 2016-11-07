@@ -28,7 +28,7 @@ class AvailabilityFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface
      */
     protected function getStorage()
     {
@@ -44,7 +44,7 @@ class AvailabilityFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Locale\LocaleClient
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToLocaleInterface
      */
     public function getLocaleClient()
     {

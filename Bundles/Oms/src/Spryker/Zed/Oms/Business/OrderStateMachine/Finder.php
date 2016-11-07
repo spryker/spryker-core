@@ -201,7 +201,9 @@ class Finder implements FinderInterface
      */
     protected function countOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
-        return $this->queryContainer->countSalesOrderItemsForSku($states, $sku, $returnTest)->findOne();
+        return $this->queryContainer
+            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
+            ->findOne();
     }
 
     /**
@@ -242,21 +244,10 @@ class Finder implements FinderInterface
             }
         }
 
-        $allEventsByItem = [];
-        foreach ($order->getItems() as $item) {
-            $stateName = $item->getState()->getName();
-            if (isset($eventsBySource[$stateName])) {
-                $events = $eventsBySource[$stateName];
-                $allEventsByItem[$item->getIdSalesOrderItem()] = $events;
-            }
-        }
-
-        $uniqueItemEvents = [];
         $orderEvents = array_unique($allEvents);
 
         $result = [
             'order_events' => $orderEvents,
-            'unique_item_events' => $uniqueItemEvents,
             'item_events' => $eventsByItem,
         ];
 

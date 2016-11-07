@@ -7,12 +7,18 @@
 
 namespace Spryker\Zed\Library\Sanitize;
 
-/**
- * (c) Spryker Systems GmbH copyright protected.
- */
+use Spryker\Shared\UtilSanitize\Html AS UtilSanitizeHtml;
 
+/**
+ * @deprecated use \Spryker\Zed\UtilSanitize\Business\UtilSanitizeFacade instead
+ */
 class Html
 {
+
+    /**
+     * @var \Spryker\Shared\UtilSanitize\Html
+     */
+    protected static $utilSanitizeHtml;
 
     /**
      * Convenience method for htmlspecialchars to use UTF8 by default.
@@ -28,37 +34,21 @@ class Html
      */
     public static function escape($text, $double = true, $charset = null)
     {
-        if (is_string($text)) {
-            //optimize for strings
-        } elseif (is_array($text)) {
-            $texts = [];
-            foreach ($text as $k => $t) {
-                $texts[$k] = static::escape($t, $double, $charset);
-            }
+        return static::createUtilSanitizeHtml()->escape($text, $double, $charset);
+    }
 
-            return $texts;
-        } elseif (is_object($text)) {
-            if (method_exists($text, '__toString')) {
-                $text = (string)$text;
-            } else {
-                $text = '(object)' . get_class($text);
-            }
-        } elseif (is_bool($text)) {
-            return $text;
+    /**
+     * @var \Spryker\Shared\UtilSanitize\Html
+     *
+     * @return \Spryker\Shared\UtilSanitize\Html
+     */
+    protected static function createUtilSanitizeHtml()
+    {
+        if (static::$utilSanitizeHtml === null) {
+            static::$utilSanitizeHtml = new UtilSanitizeHtml();
         }
 
-        static $defaultCharset = false;
-        if ($defaultCharset === false) {
-            $defaultCharset = mb_internal_encoding();
-            if ($defaultCharset === null) {
-                $defaultCharset = 'UTF-8';
-            }
-        }
-        if (is_string($double)) {
-            $charset = $double;
-        }
-
-        return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, ($charset) ? $charset : $defaultCharset, $double);
+        return static::$utilSanitizeHtml;
     }
 
 }

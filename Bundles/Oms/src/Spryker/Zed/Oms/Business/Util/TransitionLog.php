@@ -10,10 +10,10 @@ namespace Spryker\Zed\Oms\Business\Util;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Shared\Library\System;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface
@@ -40,13 +40,24 @@ class TransitionLog implements TransitionLogInterface
     protected $logEntities;
 
     /**
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface
+     */
+    protected $utilNetworkFacade;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param array $logContext
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface $utilNetworkFacade
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext)
-    {
+    public function __construct(
+        OmsQueryContainerInterface $queryContainer,
+        array $logContext,
+        OmsToUtilNetworkInterface $utilNetworkFacade
+    ) {
+
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;
+        $this->utilNetworkFacade = $utilNetworkFacade;
     }
 
     /**
@@ -84,7 +95,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
      *
      * @return void
      */
@@ -95,7 +106,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $condition
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface $condition
      *
      * @return void
      */
@@ -162,8 +173,7 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setQuantity($salesOrderItem->getQuantity());
         $logEntity->setFkSalesOrder($salesOrderItem->getFkSalesOrder());
         $logEntity->setFkOmsOrderProcess($salesOrderItem->getFkOmsOrderProcess());
-
-        $logEntity->setHostname(System::getHostname());
+        $logEntity->setHostname($this->utilNetworkFacade->getHostName());
 
         if (PHP_SAPI === self::SAPI_CLI) {
             $path = self::SAPI_CLI;

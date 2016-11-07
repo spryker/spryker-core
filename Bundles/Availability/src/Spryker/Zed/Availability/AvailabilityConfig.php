@@ -11,4 +11,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityConfig extends AbstractBundleConfig
 {
+
+    const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
+
+    /**
+     * @return string
+     */
+    public function getProductUnavailableErrorCode()
+    {
+        return static::ERROR_CODE_PRODUCT_UNAVAILABLE;
+    }
+
 }

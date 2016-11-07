@@ -7,18 +7,19 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
 class CommandCollection implements CommandCollectionInterface, \ArrayAccess
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface[]
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface[]
      */
     protected $commands = [];
 
     /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
      * @param string $name
      *
      * @return $this
@@ -71,7 +72,7 @@ class CommandCollection implements CommandCollectionInterface, \ArrayAccess
     /**
      * @param string $offset
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     public function offsetGet($offset)
     {
@@ -80,7 +81,7 @@ class CommandCollection implements CommandCollectionInterface, \ArrayAccess
 
     /**
      * @param string $offset
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $value
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $value
      *
      * @return void
      */

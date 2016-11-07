@@ -152,7 +152,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         $queryContainer = $this->getQueryContainer();
 
-        return new TransitionLog($queryContainer, $logContext);
+        return new TransitionLog($queryContainer, $logContext, $this->getUtilNetworkFacade());
     }
 
     /**
@@ -203,7 +203,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Drawer(
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false)
+            $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
+            $this->getUtilTextFacade()
         );
     }
 
@@ -220,7 +221,11 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createUtilOrderItemMatrix()
     {
-        return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
+        return new OrderItemMatrix(
+            $this->getQueryContainer(),
+            $this->getConfig(),
+            $this->getUtilSanitizeFacade()
+        );
     }
 
     /**
@@ -253,6 +258,38 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getReservationHandlerPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
+     */
+    protected function getSalesFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface
+     */
+    protected function getUtilTextFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface
+     */
+    protected function getUtilNetworkFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_NETWORK);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilSanitizeInterface
+     */
+    protected function getUtilSanitizeFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_SANITIZE);
     }
 
 }

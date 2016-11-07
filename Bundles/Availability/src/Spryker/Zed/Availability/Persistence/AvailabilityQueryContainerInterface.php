@@ -49,15 +49,6 @@ interface AvailabilityQueryContainerInterface
     /**
      * @api
      *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function querySpyProductBySku($sku);
-
-    /**
-     * @api
-     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -115,21 +106,5 @@ interface AvailabilityQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailability();
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
-     */
-    public function queryStockByIdProduct($idProduct);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
-     */
-    public function queryAllStockType();
 
 }
