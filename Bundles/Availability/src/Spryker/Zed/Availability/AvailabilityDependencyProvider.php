@@ -14,6 +14,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge AS PersistenceAvailabilityToProductBridge;
 
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -78,7 +79,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
+            return new PersistenceAvailabilityToProductBridge(
+                $container->getLocator()->product()->queryContainer()
+            );
         };
 
         return $container;

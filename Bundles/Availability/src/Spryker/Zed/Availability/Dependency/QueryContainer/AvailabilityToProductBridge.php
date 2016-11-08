@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Availability\Dependency\QueryContainer;
 
-class AvailabilityToProductBridge
+class AvailabilityToProductBridge implements AvailabilityToProductInterface
 {
 
     /**

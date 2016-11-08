@@ -36,7 +36,7 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer
+     * @return \Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductInterface
      */
     public function getProductQueryContainer()
     {
