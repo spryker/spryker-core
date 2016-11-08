@@ -48,7 +48,7 @@ interface PayolutionClientInterface
     /**
      * @api
      *
-     * @return mixed
+     * @return bool
      */
     public function removeInstallmentPaymentsFromSession();
 

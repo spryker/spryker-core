@@ -167,7 +167,7 @@ abstract class AbstractController
      *
      * @throws \LogicException
      *
-     * @return mixed
+     * @return bool
      */
     protected function isGranted($role)
     {

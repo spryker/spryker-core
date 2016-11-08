@@ -36,7 +36,7 @@ class InvoiceSaverTest extends AbstractSaverTest
     }
 
     /**
-     * @return mixed
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function getPaymentTransferFromQuote()
     {

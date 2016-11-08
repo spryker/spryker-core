@@ -22,7 +22,7 @@ interface AdapterInterface
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
-     * @return mixed
+     * @return array
      */
     public function sendRequest(AbstractRequestContainer $container);
 

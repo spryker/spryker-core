@@ -34,16 +34,6 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartTransfer $foo
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function good2Action(QuoteTransfer $foo)
-    {
-        return $foo;
-    }
-
-    /**
      * @param \Spryker\Shared\Transfer\TransferInterface $foo
      * @param \Spryker\Shared\Transfer\TransferInterface $bar
      *
@@ -73,11 +63,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \StdClass $foo
+     * @param \stdClass $foo
      *
-     * @return \StdClass
+     * @return \stdClass
      */
-    public function notTransferAction(StdClass $foo)
+    public function notTransferAction(stdClass $foo)
     {
         return $foo;
     }

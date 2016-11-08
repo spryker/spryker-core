@@ -26,7 +26,7 @@ class TokenHashGenerator implements TokenGeneratorInterface
     /**
      * Generates and returns random token
      *
-     * @return mixed
+     * @return string
      */
     public function generateToken()
     {

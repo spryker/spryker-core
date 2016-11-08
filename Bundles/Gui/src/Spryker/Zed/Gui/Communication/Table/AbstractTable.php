@@ -103,14 +103,14 @@ abstract class AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     abstract protected function configure(TableConfiguration $config);
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     abstract protected function prepareData(TableConfiguration $config);
 
