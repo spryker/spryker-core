@@ -185,7 +185,6 @@ class Writer implements WriterInterface
      * @param string $name
      * @param int $fkCustomer
      *
-     * @throws MissingWishlistException
      * @return int
      */
     protected function getDefaultWishlistIdByName($name, $fkCustomer)
@@ -196,16 +195,13 @@ class Writer implements WriterInterface
         }
 
         $wishlistEntity = $this->queryContainer
-            ->queryWishlistByCustomerId($fkCustomer)
+            ->queryWishlist()
+            ->filterByFkCustomer($fkCustomer)
             ->filterByName($name)
-            ->findOne();
+            ->findOneOrCreate();
 
-        if (!$wishlistEntity) {
-            throw new MissingWishlistException(sprintf(
-                'Wishlist with name: %s does not exist for customer with id: %s',
-                $name,
-                $fkCustomer
-            ));
+        if ($wishlistEntity->isNew()) {
+            $wishlistEntity->save();
         }
 
         return $wishlistEntity->getIdWishlist();
