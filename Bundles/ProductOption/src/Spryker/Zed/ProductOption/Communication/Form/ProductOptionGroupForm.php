@@ -7,10 +7,9 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
-use Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer;
-use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -47,32 +46,32 @@ class ProductOptionGroupForm extends AbstractType
     protected $productOptionTranslationForm;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer
+     * @var \Symfony\Component\Form\DataTransformerInterface
      */
     protected $arrayToArrayObjectTransformer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer
+     * @var \Symfony\Component\Form\DataTransformerInterface
      */
     protected $stringToArrayTransformer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Communication\Form\ProductOptionQueryContainerInterface
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $productOptionQueryContainer;
 
     /**
      * @param \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm $productOptionForm
      * @param \Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm $productOptionTranslationForm
-     * @param \Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer $arrayToArrayObjectTransformer
-     * @param \Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer $stringToArrayTransformer
+     * @param \Symfony\Component\Form\DataTransformerInterface $arrayToArrayObjectTransformer
+     * @param \Symfony\Component\Form\DataTransformerInterface $stringToArrayTransformer
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      */
     public function __construct(
         ProductOptionValueForm $productOptionForm,
         ProductOptionTranslationForm $productOptionTranslationForm,
-        ArrayToArrayObjectTransformer $arrayToArrayObjectTransformer,
-        StringToArrayTransformer $stringToArrayTransformer,
+        DataTransformerInterface $arrayToArrayObjectTransformer,
+        DataTransformerInterface $stringToArrayTransformer,
         ProductOptionQueryContainerInterface $productOptionQueryContainer
     ) {
         $this->productOptionForm = $productOptionForm;

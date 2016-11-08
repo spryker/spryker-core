@@ -12,6 +12,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -50,6 +51,14 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractProductOptionGroupQuery()
     {
         return SpyProductAbstractProductOptionGroupQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesInterface
+     */
+    public function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
 }

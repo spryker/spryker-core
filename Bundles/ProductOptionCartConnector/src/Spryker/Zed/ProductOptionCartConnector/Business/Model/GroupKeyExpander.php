@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
-class GroupKeyExpander
+class GroupKeyExpander implements GroupKeyExpanderInterface
 {
 
     /**

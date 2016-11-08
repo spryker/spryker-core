@@ -14,22 +14,22 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
-    protected $salesQueryContainer;
+    protected $productOptionQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      */
-    public function __construct(SalesQueryContainerInterface $salesQueryContainer)
+    public function __construct(ProductOptionQueryContainerInterface $productOptionQueryContainer)
     {
-        $this->salesQueryContainer = $salesQueryContainer;
+        $this->productOptionQueryContainer = $productOptionQueryContainer;
     }
 
     /**
@@ -177,8 +177,8 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
             return new ObjectCollection();
         }
 
-        return $this->salesQueryContainer
-            ->querySalesOrderItem()
+        return $this->productOptionQueryContainer
+            ->querySalesOrder()
             ->filterByIdSalesOrderItem($saleOrderItemIds, Criteria::IN)
             ->find();
     }

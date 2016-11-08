@@ -16,7 +16,7 @@ class ProductOptionFactory extends AbstractFactory
     /**
      * @param string $localeName
      *
-     * @return \Spryker\Client\ProductOption\Storage\ProductOptionStorage
+     * @return \Spryker\Client\ProductOption\Storage\ProductOptionStorageInterface
      */
     public function createProductOptionStorage($localeName)
     {
@@ -28,7 +28,7 @@ class ProductOptionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductOption\KeyBuilder\ProductOptionKeyBuilder
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {
@@ -36,7 +36,7 @@ class ProductOptionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface
      */
     protected function getStorage()
     {

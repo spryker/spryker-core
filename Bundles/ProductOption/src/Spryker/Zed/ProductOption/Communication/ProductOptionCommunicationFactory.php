@@ -150,7 +150,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer
+     * @return \Symfony\Component\Form\DataTransformerInterface
      */
     protected function createArrayToArrayObjectTransformer()
     {
@@ -158,7 +158,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer
+     * @return \Symfony\Component\Form\DataTransformerInterface
      */
     protected function createStringToArrayTransformer()
     {
@@ -166,7 +166,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer
+     * @return \Symfony\Component\Form\DataTransformerInterface
      */
     protected function createPriceTranformer()
     {

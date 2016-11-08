@@ -8,6 +8,7 @@ namespace Spryker\Client\ProductOption;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageBridge;
 
 class ProductOptionDependencyProvider extends AbstractDependencyProvider
 {
@@ -22,7 +23,7 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container[self::KV_STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
+            return new ProductOptionToStorageBridge($container->getLocator()->storage()->client());
         };
 
         return $container;

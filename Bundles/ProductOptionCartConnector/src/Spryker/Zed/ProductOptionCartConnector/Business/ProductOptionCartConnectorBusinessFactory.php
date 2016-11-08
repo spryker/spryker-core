@@ -21,7 +21,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpanderInterface
      */
     public function createProductOptionValueExpander()
     {
@@ -31,7 +31,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantityInterface
      */
     public function createProductOptionCartQuantity()
     {
@@ -39,7 +39,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpanderInterface
      */
     public function createGroupKeyExpander()
     {

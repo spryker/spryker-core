@@ -105,4 +105,11 @@ interface ProductOptionQueryContainerInterface
      */
     public function queryProductOptionValue($value);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrder();
+
 }

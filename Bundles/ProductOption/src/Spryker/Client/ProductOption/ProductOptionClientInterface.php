@@ -12,6 +12,10 @@ interface ProductOptionClientInterface
 {
 
     /**
+     *
+     * Specification:
+     *   - Reads product option from Yves store
+     *
      * @api
      *
      * @param int $idAbstractProduct

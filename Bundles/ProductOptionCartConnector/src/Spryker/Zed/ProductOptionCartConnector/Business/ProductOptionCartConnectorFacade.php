@@ -18,8 +18,10 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
 {
 
     /**
-     *  Specification:
-     *  - Expand product option transfer object with additional data from persistence
+     *
+     * Specification:
+     *  - Expands product option transfer object with additional data from persistence
+     *  - Returns CartChangeTransfer transfer with option data included
      *
      * @api
      *
@@ -35,8 +37,10 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     }
 
     /**
+     *
      * Specification:
-     *  - Set group key to itemTransfer to contain product option identifiers.
+     *  - Sets group key to itemTransfer to contain product option identifiers.
+     *  - Returns CartChangeTransfer with modified group key for each item, which includes options
      *
      * @api
      *
@@ -52,6 +56,11 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     }
 
     /**
+     *
+     * Specification:
+     *  - Sets each product quantity to item quantity
+     *  - Returns CartChangeTransfer with modified item quantity
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

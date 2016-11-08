@@ -44,6 +44,18 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrder()
+    {
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery

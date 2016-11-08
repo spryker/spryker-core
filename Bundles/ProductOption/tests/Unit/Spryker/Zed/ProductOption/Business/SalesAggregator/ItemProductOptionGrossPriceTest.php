@@ -81,10 +81,10 @@ class ItemProductOptionGrossPriceTest extends MockProvider
      */
     protected function createItemProductOptionGrossPriceAggregator()
     {
-        $salesQueryContainer = $this->createSalesContainerMock();
+        $productOptionQueryContainerMock = $this->createProductOptionQueryContainerMock();
 
         return $this->getMockBuilder(ItemProductOptionGrossPrice::class)
-            ->setConstructorArgs([$salesQueryContainer])
+            ->setConstructorArgs([$productOptionQueryContainerMock])
             ->setMethods(['getSalesOrderItems'])
             ->getMock();
     }

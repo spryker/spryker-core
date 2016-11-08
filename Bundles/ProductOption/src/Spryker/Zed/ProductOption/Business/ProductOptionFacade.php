@@ -22,12 +22,13 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * Specification:
-     *  - Persist new product option group, with tax set
+     *  - Persist new product option group, update existing group if idOptionGroup is set
      *  - Persist option values if provided
-     *  - Add abstract products if provided in productsToBeAssigned array of primary keys
-     *  - Remove abstract products if provided in productsToBeDeAssigned array of primary keys
-     *  - Remove product option values if provided in productOptionValuesToBeRemoved array of primary keys
-     *  - Persist value and group name translations, add to glossary
+     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys
+     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
+     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
+     *  - Persists value and group name translations, add to glossary
+     *  - Returns id of option group
      *
      * @api
      *
@@ -44,7 +45,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * Specification:
-     *  - Persist new product option value
+     *  - Persist new product option value, updates existing value if idOptionValue is set
+     *  - Returns id of option value
      *
      * @api
      *
@@ -61,14 +63,15 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * Specification:
-     *  - Attach abstract product to existing product group
+     *  - Attaches abstract product to existing product group
+     *  - Returns true if product successfully added
      *
      * @api
      *
      * @param string $abstractSku
      * @param int $idProductOptionGroup
      *
-     * @return bool|void
+     * @return bool
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
     {
@@ -79,7 +82,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
 
     /**
      * Specification:
-     *  - Read product option from persistence
+     *  - Reads product option from persistence
      *
      * @api
      *
@@ -97,8 +100,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     /**
      *
      * Specification:
-     *  - Get product option group from persistence
-     *  - Get all related product option values
+     *  - Gets product option group from persistence
+     *  - Gets all related product option values
      *
      * @api
      *

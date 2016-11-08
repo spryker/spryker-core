@@ -28,7 +28,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReaderInterface
      */
     public function createProductOptionGroupReader()
     {
@@ -40,7 +40,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaverInterface
      */
     public function createProductOptionGroupSaver()
     {
@@ -54,7 +54,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
      */
     public function createProductOptionValueSaver()
     {
@@ -66,7 +66,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface
      */
     protected function createTranslationSaver()
     {
@@ -77,7 +77,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
      */
     public function createAbstractProductOptionSaver()
     {
@@ -88,15 +88,15 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice
+     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
      */
     public function createItemProductOptionGrossPriceAggregator()
     {
-        return new ItemProductOptionGrossPrice($this->getSalesQueryContainer());
+        return new ItemProductOptionGrossPrice($this->getQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaverInterface
      */
     public function createProductOptionOrderSaver()
     {
@@ -104,7 +104,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReaderInterface
      */
     public function createProductOptionValueReader()
     {
@@ -112,7 +112,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\SubtotalWithProductOptions
+     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
      */
     public function createSubtotalWithProductOption()
     {
@@ -120,19 +120,11 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */
     public function createProductOptionTaxRateCalculator()
     {
         return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
-     */
-    protected function getSalesQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
@@ -141,14 +133,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
-     */
-    protected function getProductFacade()
-    {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductOption\Communication\Form;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
-use Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -36,17 +36,17 @@ class ProductOptionValueForm extends AbstractType
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer
+     * @var \Symfony\Component\Form\DataTransformerInterface
      */
     protected $priceTransformer;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer $priceTransformer
+     * @param \Symfony\Component\Form\DataTransformerInterface $priceTransformer
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        PriceTransformer $priceTransformer
+        DataTransformerInterface $priceTransformer
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->priceTransformer = $priceTransformer;
