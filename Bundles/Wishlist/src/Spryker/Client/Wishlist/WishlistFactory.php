@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Wishlist;
 
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Wishlist\Cart\CartHandler;
-use Spryker\Client\Wishlist\Storage\WishlistStorage;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface;
+use Spryker\Client\Wishlist\Product\ProductStorage;
 use Spryker\Client\Wishlist\Zed\WishlistStub;
 
 class WishlistFactory extends AbstractFactory
@@ -27,26 +27,17 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Wishlist\Storage\WishlistStorageInterface
+     * @return \Spryker\Client\Wishlist\Product\ProductStorageInterface
      */
-    public function createStorage()
+    public function createProductStorage()
     {
-        return new WishlistStorage(
-            $this->getProvidedDependency(WishlistDependencyProvider::STORAGE),
-            $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_PRODUCT)
+        return new ProductStorage(
+            $this->createProductClient()
         );
     }
 
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
-     */
-    public function createCustomerClient()
-    {
-        return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Client\Product\ProductClientInterface
+     * @return \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface
      */
     public function createProductClient()
     {
@@ -54,7 +45,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartClientInterface
+     * @return \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface
      */
     public function createCartClient()
     {
@@ -62,12 +53,12 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface $cartClient
      * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
      *
      * @return \Spryker\Client\Wishlist\Cart\CartHandler
      */
-    public function createCartHandler(CartClientInterface $cartClient, WishlistClientInterface $wishlistClient)
+    public function createCartHandler(WishlistToCartInterface $cartClient, WishlistClientInterface $wishlistClient)
     {
         return new CartHandler(
             $cartClient,

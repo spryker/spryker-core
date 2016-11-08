@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Wishlist\Storage;
+namespace Spryker\Client\Wishlist\Product;
 
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 
-interface WishlistStorageInterface
+interface ProductStorageInterface
 {
 
     /**

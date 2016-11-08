@@ -9,7 +9,7 @@ namespace Spryker\Client\Wishlist\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
-use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface;
 use Spryker\Client\Wishlist\WishlistClientInterface;
 
 class CartHandler implements CartHandlerInterface
@@ -26,10 +26,10 @@ class CartHandler implements CartHandlerInterface
     protected $wishlistClient;
 
     /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface $cartClient
      * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
      */
-    public function __construct(CartClientInterface $cartClient, WishlistClientInterface $wishlistClient)
+    public function __construct(WishlistToCartInterface $cartClient, WishlistClientInterface $wishlistClient)
     {
         $this->cartClient = $cartClient;
         $this->wishlistClient = $wishlistClient;
@@ -45,20 +45,25 @@ class CartHandler implements CartHandlerInterface
         $wishlistMoveToCartRequestTransfer->requireSku();
         $wishlistMoveToCartRequestTransfer->requireWishlistItem();
 
-        $wishlistItem = $wishlistMoveToCartRequestTransfer->getWishlistItem();
-        $wishlistItem->requireFkCustomer();
-        $wishlistItem->requireFkProduct();
+        $this->handleCart($wishlistMoveToCartRequestTransfer->getSku());
+        $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
 
+        return $wishlistMoveToCartRequestTransfer;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function handleCart($sku)
+    {
         $cartItem = (new ItemTransfer())
-            ->setSku($wishlistMoveToCartRequestTransfer->getSku())
+            ->setSku($sku)
             ->setQuantity(1);
 
         $quoteTransfer = $this->cartClient->addItem($cartItem);
         $this->cartClient->storeQuote($quoteTransfer);
-
-        $this->wishlistClient->removeItem($wishlistItem);
-
-        return $wishlistMoveToCartRequestTransfer;
     }
 
 }

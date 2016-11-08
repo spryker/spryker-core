@@ -9,14 +9,16 @@ namespace Spryker\Client\Wishlist;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartBridge;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToCustomerBridge;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToStorageBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
 
     const SERVICE_ZED = 'SERVICE_ZED';
-    const STORAGE = 'STORAGE';
     const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
     /**
@@ -30,20 +32,12 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->zedRequest()->client();
         };
 
-        $container[self::STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
-        };
-
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return new WishlistToProductBridge($container->getLocator()->product()->client());
         };
 
         $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client();
-        };
-
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return new WishlistToCartBridge($container->getLocator()->cart()->client());
         };
 
         return $container;

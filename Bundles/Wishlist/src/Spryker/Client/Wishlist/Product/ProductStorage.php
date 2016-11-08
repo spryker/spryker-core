@@ -5,33 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Wishlist\Storage;
+namespace Spryker\Client\Wishlist\Product;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
-use Spryker\Client\Product\ProductClientInterface;
-use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
-class WishlistStorage implements WishlistStorageInterface
+class ProductStorage implements ProductStorageInterface
 {
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
-     */
-    protected $storageClient;
-
-    /**
-     * @var \Spryker\Client\Product\ProductClientInterface
+     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface
      */
     protected $productClient;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
-     * @param \Spryker\Client\Product\ProductClientInterface $productClient
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
      */
-    public function __construct(StorageClientInterface $storageClient, ProductClientInterface $productClient)
+    public function __construct(WishlistToProductInterface $productClient)
     {
-        $this->storageClient = $storageClient;
         $this->productClient = $productClient;
     }
 

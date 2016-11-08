@@ -122,6 +122,14 @@ class Reader implements ReaderInterface
         $paginationTransfer->setItemsTotal($itemPaginationModel->getNbResults());
         $paginationTransfer->setItemsPerPage($itemPaginationModel->getMaxPerPage());
 
+        if ($paginationTransfer->getPage() <= 0) {
+            $paginationTransfer->setPage(1);
+        }
+
+        if ($paginationTransfer->getPage() > $pagesTotal) {
+            $paginationTransfer->setPage($pagesTotal);
+        }
+
         return $paginationTransfer;
     }
 
