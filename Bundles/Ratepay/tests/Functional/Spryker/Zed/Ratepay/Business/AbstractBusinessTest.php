@@ -121,7 +121,7 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function getTotalsTransfer()
     {
@@ -138,7 +138,7 @@ abstract class AbstractBusinessTest extends Test
     /**
      * @param string $itemPrefix
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getAddressTransfer($itemPrefix)
     {
@@ -161,7 +161,7 @@ abstract class AbstractBusinessTest extends Test
     /**
      * @param string $itemPrefix
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemTransfer($itemPrefix)
     {
@@ -180,7 +180,7 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getCustomerTransfer()
     {

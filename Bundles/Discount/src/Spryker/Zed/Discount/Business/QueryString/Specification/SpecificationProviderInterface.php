@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Specification;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
-use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 
 interface SpecificationProviderInterface
 {
@@ -16,7 +14,7 @@ interface SpecificationProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return DecisionRuleSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     public function getSpecificationContext(ClauseTransfer $clauseTransfer);
 
@@ -24,7 +22,7 @@ interface SpecificationProviderInterface
      * @param mixed $leftNode
      * @param mixed $rightNode
      *
-     * @return CollectorSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     public function createAnd($leftNode, $rightNode);
 
@@ -32,7 +30,7 @@ interface SpecificationProviderInterface
      * @param mixed $leftNode
      * @param mixed $rightNode
      *
-     * @return CollectorSpecificationInterface
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     public function createOr($leftNode, $rightNode);
 
