@@ -65,7 +65,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
      *
      * @return \Spryker\Shared\Money\Parser\Parser
      */
-    private function getParser($locale)
+    protected function getParser($locale)
     {
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         $intlMoneyParser = new IntlMoneyParser($numberFormatter, new ISOCurrencies());

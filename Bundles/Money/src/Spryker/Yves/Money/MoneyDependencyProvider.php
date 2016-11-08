@@ -75,7 +75,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Money\Parser\IntlMoneyParser
      */
-    private function getIntlMoneyParser()
+    protected function getIntlMoneyParser()
     {
         $numberFormatter = $this->getNumberFormatter();
         $currencies = $this->getIsoCurrencies();
@@ -87,7 +87,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \NumberFormatter
      */
-    private function getNumberFormatter()
+    protected function getNumberFormatter()
     {
         $numberFormatter = new NumberFormatter(
             $this->getStore()->getCurrentLocale(),
@@ -100,7 +100,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Money\Currencies\ISOCurrencies
      */
-    private function getIsoCurrencies()
+    protected function getIsoCurrencies()
     {
         $isoCurrencies = new ISOCurrencies();
 
