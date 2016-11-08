@@ -63,20 +63,20 @@ interface WishlistFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer);
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer);
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
      * @api

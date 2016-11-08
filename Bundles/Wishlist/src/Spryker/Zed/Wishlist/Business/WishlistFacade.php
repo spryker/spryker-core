@@ -54,7 +54,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes wishlist
+     *  - Removes wishlist and its items
      *
      * @api
      *
@@ -88,6 +88,9 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Removes all wishlist items
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -102,34 +105,43 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Adds item to wishlist
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         return $this->getFactory()
             ->createWriter()
-            ->addItem($wishlistItemUpdateRequestTransfer);
+            ->addItem($wishlistItemTransfer);
     }
 
     /**
+     * Specification:
+     *  - Removes item from wishlist
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         return $this->getFactory()
             ->createWriter()
-            ->removeItem($wishlistItemUpdateRequestTransfer);
+            ->removeItem($wishlistItemTransfer);
     }
 
     /**
+     * Specification:
+     *  - Returns wishlist by specific name for a given customer
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -144,6 +156,9 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * Specification:
+     *  - Returns wishlist by specific name for a given customer, with paginated items.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer

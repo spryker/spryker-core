@@ -136,47 +136,49 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
+        $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
+
         $idWishlist = $this->getDefaultWishlistIdByName(
-            $wishlistItemUpdateRequestTransfer->getWishlistName(),
-            $wishlistItemUpdateRequestTransfer->getFkCustomer()
+            $wishlistItemTransfer->getWishlistName(),
+            $wishlistItemTransfer->getFkCustomer()
         );
 
         $entity = $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($wishlistItemUpdateRequestTransfer->getFkProduct())
+            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
             ->findOneOrCreate();
 
         $entity->save();
 
-        return $wishlistItemUpdateRequestTransfer;
+        return $wishlistItemTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
+        $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
+
         $idWishlist = $this->getDefaultWishlistIdByName(
-            $wishlistItemUpdateRequestTransfer->getWishlistName(),
-            $wishlistItemUpdateRequestTransfer->getFkCustomer()
+            $wishlistItemTransfer->getWishlistName(),
+            $wishlistItemTransfer->getFkCustomer()
         );
 
         $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($wishlistItemUpdateRequestTransfer->getFkProduct())
+            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
             ->delete();
 
-        return $wishlistItemUpdateRequestTransfer;
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -217,14 +219,15 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return void
      */
-    protected function assertWishlistItemUpdateRequest(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    protected function assertWishlistItemUpdateRequest(WishlistItemTransfer $wishlistItemTransfer)
     {
-        $wishlistItemUpdateRequestTransfer->requireFkCustomer();
-        $wishlistItemUpdateRequestTransfer->requireFkProduct();
+        $wishlistItemTransfer->requireFkCustomer();
+        $wishlistItemTransfer->requireFkProduct();
+        $wishlistItemTransfer->requireWishlistName();
     }
 
     /**
