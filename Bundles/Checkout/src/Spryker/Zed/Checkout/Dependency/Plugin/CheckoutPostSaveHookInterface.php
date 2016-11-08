@@ -16,6 +16,8 @@ interface CheckoutPostSaveHookInterface
     /**
      * This plugin is called after the order is placed.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

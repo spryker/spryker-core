@@ -64,7 +64,7 @@ class BraintreeConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public final function getChannel()
+    final public function getChannel()
     {
         return 'Spryker_BT_DE';
     }

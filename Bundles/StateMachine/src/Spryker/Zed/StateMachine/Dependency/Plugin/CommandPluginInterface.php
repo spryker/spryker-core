@@ -15,6 +15,8 @@ interface CommandPluginInterface
     /**
      * This method is called when event have concrete command assigned.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <statemachine
-        xmlns="http://static.spryker.com"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/oms-01.xsd">
+    xmlns="spryker:oms"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms http://static.spryker.com/oms-01.xsd">
 
     <process name="DummyPayment01" main="true">
 

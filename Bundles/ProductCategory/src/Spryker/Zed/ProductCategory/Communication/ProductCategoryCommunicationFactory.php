@@ -31,7 +31,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCurrentLocale()
     {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE)
+        return $this->getLocaleFacade()
             ->getCurrentLocale();
     }
 
@@ -175,6 +175,14 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getPropelConnection()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
     }
 
 }

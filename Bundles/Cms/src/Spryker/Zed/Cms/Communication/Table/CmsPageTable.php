@@ -44,7 +44,7 @@ class CmsPageTable extends AbstractTable
     {
         $config->setHeader([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
-            CmsQueryContainer::URL => 'url',
+            CmsQueryContainer::URL => 'URL',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             CmsQueryContainer::IS_ACTIVE => 'Active',
             self::ACTIONS => self::ACTIONS,

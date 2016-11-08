@@ -11,16 +11,22 @@ interface SearchConfigInterface
 {
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     public function getFacetConfigBuilder();
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     public function getSortConfigBuilder();
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function getPaginationConfigBuilder();

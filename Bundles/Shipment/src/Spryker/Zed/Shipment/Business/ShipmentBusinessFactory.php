@@ -36,8 +36,16 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new Method(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+            $this->getPlugins()
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
     }
 
     /**

@@ -9,8 +9,4 @@ namespace Spryker\Shared\Money;
 
 interface MoneyConstants
 {
-
-    const FORMATTER_WITH_SYMBOL = 'FORMATTER_WITH_CURRENCY';
-    const FORMATTER_WITHOUT_SYMBOL = 'FORMATTER_WITHOUT_CURRENCY';
-
 }
