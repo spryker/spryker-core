@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Wishlist;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -259,14 +259,14 @@ class WishlistFacadeTest extends Test
      */
     public function testAddItemShouldAddItem()
     {
-        $wishlistItemUpdateRequestTransfer = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setFkProduct($this->product_3->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
 
-        $this->assertInstanceOf(WishlistItemUpdateRequestTransfer::class, $wishlistItemUpdateRequestTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(3);
     }
 
@@ -275,14 +275,14 @@ class WishlistFacadeTest extends Test
      */
     public function testAddItemShouldNotThrowExceptionWhenItemAlreadyExists()
     {
-        $wishlistItemUpdateRequestTransfer = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setFkProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
 
-        $this->assertInstanceOf(WishlistItemUpdateRequestTransfer::class, $wishlistItemUpdateRequestTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(2);
     }
 
@@ -296,14 +296,14 @@ class WishlistFacadeTest extends Test
             ->filterByFkProduct($this->product_1->getIdProduct())
             ->delete();
 
-        $wishlistItemUpdateRequestTransfer = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setFkProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
-        $this->assertInstanceOf(WishlistItemUpdateRequestTransfer::class, $wishlistItemUpdateRequestTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(1);
     }
 
@@ -316,14 +316,14 @@ class WishlistFacadeTest extends Test
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
             ->delete();
 
-        $wishlistItemUpdateRequestTransfer = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setFkProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
-        $this->assertInstanceOf(WishlistItemUpdateRequestTransfer::class, $wishlistItemUpdateRequestTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(0);
     }
 
@@ -332,14 +332,14 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveItemShouldRemoveItem()
     {
-        $wishlistItemUpdateRequestTransfer = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setFkProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
-        $this->assertInstanceOf(WishlistItemUpdateRequestTransfer::class, $wishlistItemUpdateRequestTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(1);
     }
 
@@ -472,15 +472,15 @@ class WishlistFacadeTest extends Test
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
 
-        $wishlistItemTransfer_1 = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemTransfer_1 = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkProduct($this->product_1->getIdProduct());
 
-        $wishlistItemTransfer_2 = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemTransfer_2 = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkProduct($this->product_2->getIdProduct());
 
-        $wishlistItemTransfer_3 = (new WishlistItemUpdateRequestTransfer())
+        $wishlistItemTransfer_3 = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkProduct($this->product_3->getIdProduct());
 

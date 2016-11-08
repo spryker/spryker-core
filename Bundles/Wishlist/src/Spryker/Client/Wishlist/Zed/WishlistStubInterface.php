@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Zed;
 
-use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -36,18 +36,18 @@ interface WishlistStubInterface
     public function removeWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer);
+    public function addItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer);
+    public function removeItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer

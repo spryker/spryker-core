@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
-use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
@@ -106,7 +105,7 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param array|\Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer[] $wishlistItemCollection
+     * @param array|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
      * @return void
      */
@@ -137,11 +136,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
+    public function addItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
         $idWishlist = $this->getDefaultWishlistIdByName(
@@ -160,11 +159,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
+    public function removeItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemUpdateRequestTransfer);
         $idWishlist = $this->getDefaultWishlistIdByName(
@@ -218,11 +217,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
      * @return void
      */
-    protected function assertWishlistItemUpdateRequest(WishlistItemUpdateRequestTransfer $wishlistItemUpdateRequestTransfer)
+    protected function assertWishlistItemUpdateRequest(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
     {
         $wishlistItemUpdateRequestTransfer->requireFkCustomer();
         $wishlistItemUpdateRequestTransfer->requireFkProduct();

@@ -12,18 +12,14 @@
     <transfer name="WishlistItem">
         <property name="fkWishlist" type="int" />
         <property name="fkProduct" type="int" />
-        <property name="product" type="StorageProduct" />
-    </transfer>
-
-    <transfer name="WishlistItemUpdateRequest">
-        <property name="fkProduct" type="int" />
         <property name="fkCustomer" type="int" />
         <property name="wishlistName" type="string" />
+        <property name="product" type="StorageProduct" />
     </transfer>
 
     <transfer name="WishlistMoveToCartRequest">
         <property name="sku" type="string" />
-        <property name="wishlistItem" type="WishlistItemUpdateRequest" />
+        <property name="wishlistItem" type="WishlistItem" />
     </transfer>
 
     <transfer name="WishlistOverviewRequest">
