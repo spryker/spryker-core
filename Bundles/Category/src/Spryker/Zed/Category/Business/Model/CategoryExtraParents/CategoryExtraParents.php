@@ -141,14 +141,13 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
      */
     protected function assignParent(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer)
     {
-        $assignmentNodeEntity = $this->getAssignmentNodeEntity(
-            $categoryTransfer->getIdCategory(),
-            $extraParentNodeTransfer
-        );
+        $idCategory = $categoryTransfer->requireIdCategory()->getIdCategory();
+
+        $assignmentNodeEntity = $this->getAssignmentNodeEntity($idCategory, $extraParentNodeTransfer);
 
         $isNewNode = $assignmentNodeEntity->isNew();
 
-        $assignmentNodeEntity->setFkCategory($categoryTransfer->getIdCategory());
+        $assignmentNodeEntity->setFkCategory($idCategory);
         $assignmentNodeEntity->setIsMain(false);
         $assignmentNodeEntity->save();
 
@@ -169,7 +168,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
         return $this
             ->queryContainer
             ->queryNotMainNodesByCategoryId($idCategory)
-            ->filterByFkParentCategoryNode($parentNodeTransfer->getIdCategoryNode())
+            ->filterByFkParentCategoryNode($parentNodeTransfer->requireIdCategoryNode()->getIdCategoryNode())
             ->findOneOrCreate();
     }
 
@@ -202,7 +201,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
         $categoryNodeTransfer = $this->transferGenerator->convertCategoryNode($categoryNodeEntity);
 
         foreach ($localizedAttributesCollection as $localizedAttributesTransfer) {
-            $localeTransfer = $localizedAttributesTransfer->getLocale();
+            $localeTransfer = $localizedAttributesTransfer->requireLocale()->getLocale();
 
             $this->categoryUrl->saveLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
         }
@@ -236,7 +235,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     {
         return $this
             ->queryContainer
-            ->queryNotMainNodesByCategoryId($categoryTransfer->getIdCategory())
+            ->queryNotMainNodesByCategoryId($categoryTransfer->requireIdCategory()->getIdCategory())
             ->find();
     }
 
@@ -249,7 +248,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     {
         $nodeIds = [];
         foreach ($categoryTransfer->getExtraParents() as $categoryNodeTransfer) {
-            $nodeIds[] = (int)$categoryNodeTransfer->getIdCategoryNode();
+            $nodeIds[] = (int)$categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode();
         }
 
         return $nodeIds;

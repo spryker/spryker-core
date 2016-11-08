@@ -126,10 +126,12 @@ class CategoryNode implements CategoryNodeInterface
      */
     protected function touchCategoryNode(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer)
     {
+        $idCategoryNode = $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode();
+
         if ($categoryTransfer->getIsActive()) {
-            $this->categoryToucher->touchCategoryNodeActiveRecursively($categoryNodeTransfer->getIdCategoryNode());
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($idCategoryNode);
         } else {
-            $this->categoryToucher->touchCategoryNodeDeletedRecursively($categoryNodeTransfer->getIdCategoryNode());
+            $this->categoryToucher->touchCategoryNodeDeletedRecursively($idCategoryNode);
         }
     }
 
@@ -140,8 +142,9 @@ class CategoryNode implements CategoryNodeInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
-        $categoryNodeEntity = $this->getCategoryNodeEntity($categoryNodeTransfer->getIdCategoryNode());
+        $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
+        $idCategoryNode = $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode();
+        $categoryNodeEntity = $this->getCategoryNodeEntity($idCategoryNode);
 
         $categoryNodeEntity = $this->setUpCategoryNodeEntity($categoryTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();
@@ -185,13 +188,15 @@ class CategoryNode implements CategoryNodeInterface
      */
     private function setUpCategoryNodeEntity(CategoryTransfer $categoryTransfer, SpyCategoryNode $categoryNodeEntity)
     {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
-        $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNode();
+        $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
+        $parentCategoryNodeTransfer = $categoryTransfer->requireParentCategoryNode()->getParentCategoryNode();
 
         $categoryNodeEntity->fromArray($categoryNodeTransfer->toArray());
         $categoryNodeEntity->setIsMain(true);
-        $categoryNodeEntity->setFkCategory($categoryTransfer->getIdCategory());
-        $categoryNodeEntity->setFkParentCategoryNode($parentCategoryNodeTransfer->getIdCategoryNode());
+        $categoryNodeEntity->setFkCategory($categoryTransfer->requireIdCategory()->getIdCategory());
+        $categoryNodeEntity->setFkParentCategoryNode(
+            $parentCategoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode()
+        );
 
         return $categoryNodeEntity;
     }

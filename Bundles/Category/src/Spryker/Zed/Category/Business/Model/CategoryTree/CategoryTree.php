@@ -70,11 +70,11 @@ class CategoryTree implements CategoryTreeInterface
      */
     protected function moveMainCategoryNodeSubTree(CategoryTransfer $categoryTransfer, $idDestinationCategoryNode)
     {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
         $categoryNodeTransfer->setFkParentCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
-        $categoryParentNodeTransfer = $categoryTransfer->getParentCategoryNode();
+        $categoryParentNodeTransfer = $categoryTransfer->requireParentCategoryNode()->getParentCategoryNode();
         $categoryParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setParentCategoryNode($categoryParentNodeTransfer);
 
@@ -97,7 +97,7 @@ class CategoryTree implements CategoryTreeInterface
         $updatedParentNodeTransferCollection = new \ArrayObject();
 
         foreach ($extraParentNodeTransferCollection as $extraParentNodeTransfer) {
-            if ($extraParentNodeTransfer->getIdCategoryNode() === $idSourceCategoryNode) {
+            if ($extraParentNodeTransfer->requireIdCategoryNode()->getIdCategoryNode() === $idSourceCategoryNode) {
                 $extraParentNodeTransfer = new NodeTransfer();
                 $extraParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
             }

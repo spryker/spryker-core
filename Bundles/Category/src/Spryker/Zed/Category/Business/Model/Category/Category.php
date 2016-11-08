@@ -73,7 +73,7 @@ class Category implements CategoryInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $categoryEntity = $this->getCategoryEntity($categoryTransfer->getIdCategory());
+        $categoryEntity = $this->getCategoryEntity($categoryTransfer->requireIdCategory()->getIdCategory());
 
         $categoryEntity->fromArray($categoryTransfer->toArray());
         $categoryEntity->save();

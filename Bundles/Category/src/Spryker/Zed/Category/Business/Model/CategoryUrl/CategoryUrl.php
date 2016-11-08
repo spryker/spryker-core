@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
@@ -58,11 +59,11 @@ class CategoryUrl implements CategoryUrlInterface
      */
     public function create(CategoryTransfer $categoryTransfer)
     {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
         $localizedCategoryAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
 
         foreach ($localizedCategoryAttributesTransferCollection as $localizedAttributesTransfer) {
-            $localeTransfer = $localizedAttributesTransfer->getLocale();
+            $localeTransfer = $localizedAttributesTransfer->requireLocale()->getLocale();
             $this->saveLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
         }
     }
@@ -115,10 +116,13 @@ class CategoryUrl implements CategoryUrlInterface
      */
     protected function getUrlPathPartsForCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $pathParts = $this->queryContainer->queryPath(
-            $categoryNodeTransfer->getIdCategoryNode(),
-            $localeTransfer->getIdLocale()
-        )->find();
+        $pathParts = $this
+            ->queryContainer
+            ->queryPath(
+                $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode(),
+                $localeTransfer->requireIdLocale()->getIdLocale()
+            )
+            ->find();
 
         return $pathParts;
     }
@@ -133,10 +137,13 @@ class CategoryUrl implements CategoryUrlInterface
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setResourceType(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE);
-        $urlTransfer->setResourceId($categoryNodeTransfer->getIdCategoryNode());
-        $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
+        $urlTransfer->setResourceId($categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode());
+        $urlTransfer->setFkLocale($localeTransfer->requireIdLocale()->getIdLocale());
 
-        $urlEntity = $this->findUrlForNode($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        $urlEntity = $this->findUrlForNode(
+            $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode(),
+            $localeTransfer
+        );
         if ($urlEntity) {
             $urlTransfer->setIdUrl($urlEntity->getIdUrl());
         }
@@ -155,7 +162,7 @@ class CategoryUrl implements CategoryUrlInterface
         $urlEntity = $this
             ->queryContainer
             ->queryUrlByIdCategoryNode($idCategoryNode)
-            ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->filterByFkLocale($localeTransfer->requireIdLocale()->getIdLocale())
             ->findOne();
 
         return $urlEntity;
@@ -170,9 +177,9 @@ class CategoryUrl implements CategoryUrlInterface
     protected function touchUrl(CategoryTransfer $categoryTransfer, UrlTransfer $urlTransfer)
     {
         if ($categoryTransfer->getIsActive()) {
-            $this->urlFacade->touchUrlActive($urlTransfer->getIdUrl());
+            $this->urlFacade->touchUrlActive($urlTransfer->requireIdUrl()->getIdUrl());
         } else {
-            $this->urlFacade->touchUrlDeleted($urlTransfer->getIdUrl());
+            $this->urlFacade->touchUrlDeleted($urlTransfer->requireIdUrl()->getIdUrl());
         }
     }
 
@@ -183,11 +190,11 @@ class CategoryUrl implements CategoryUrlInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $categoryNodeTransfer = $categoryTransfer->getCategoryNode();
+        $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
         $localizedCategoryAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
 
         foreach ($localizedCategoryAttributesTransferCollection as $localizedAttributesTransfer) {
-            $localeTransfer = $localizedAttributesTransfer->getLocale();
+            $localeTransfer = $localizedAttributesTransfer->requireLocale()->getLocale();
 
             $this->saveLocalizedUrlForNode($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
             $this->updateAllChildrenUrls($categoryNodeTransfer, $localeTransfer, $categoryTransfer);
@@ -227,8 +234,8 @@ class CategoryUrl implements CategoryUrlInterface
         return $this
             ->queryContainer
             ->queryChildren(
-                $categoryNodeTransfer->getIdCategoryNode(),
-                $localeTransfer->getIdLocale(),
+                $categoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode(),
+                $localeTransfer->requireIdLocale()->getIdLocale(),
                 $onlyOneLevel
             )
             ->find();
@@ -264,9 +271,22 @@ class CategoryUrl implements CategoryUrlInterface
             ->find();
 
         foreach ($urlCollection as $urlEntity) {
-            $urlTransfer = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+            $urlTransfer = $this->getUrlTransferFromEntity($urlEntity);
             $this->urlFacade->deleteUrl($urlTransfer);
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function getUrlTransferFromEntity(SpyUrl $urlEntity)
+    {
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->fromArray($urlEntity->toArray(), true);
+
+        return $urlTransfer;
     }
 
 }

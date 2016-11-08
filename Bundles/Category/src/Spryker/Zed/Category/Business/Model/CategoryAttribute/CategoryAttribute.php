@@ -84,14 +84,14 @@ class CategoryAttribute implements CategoryAttributeInterface
      */
     public function create(CategoryTransfer $categoryTransfer)
     {
-        $localizedCategoryAttributeTransferCollection = $categoryTransfer->getLocalizedAttributes();
+        $localizedAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
 
-        foreach ($localizedCategoryAttributeTransferCollection as $localizedCategoryAttributesTransfer) {
+        foreach ($localizedAttributesTransferCollection as $localizedAttributesTransfer) {
             $localizedCategoryAttributeEntity = new SpyCategoryAttribute();
 
             $localizedCategoryAttributeEntity = $this->updateEntity(
                 $localizedCategoryAttributeEntity,
-                $localizedCategoryAttributesTransfer,
+                $localizedAttributesTransfer,
                 $categoryTransfer->getIdCategory()
             );
 
@@ -101,20 +101,21 @@ class CategoryAttribute implements CategoryAttributeInterface
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $localizedCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $localizedAttributesTransfer
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
      */
     protected function updateEntity(
         SpyCategoryAttribute $categoryAttributeEntity,
-        CategoryLocalizedAttributesTransfer $localizedCategoryAttributesTransfer,
+        CategoryLocalizedAttributesTransfer $localizedAttributesTransfer,
         $idCategory
     ) {
-        $categoryAttributeEntity->fromArray($localizedCategoryAttributesTransfer->toArray());
+        $categoryAttributeEntity->fromArray($localizedAttributesTransfer->toArray());
         $categoryAttributeEntity->setFkCategory($idCategory);
 
-        $idLocale = $localizedCategoryAttributesTransfer->getLocale()->getIdLocale();
+        $localeTransfer = $localizedAttributesTransfer->requireLocale()->getLocale();
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
         $categoryAttributeEntity->setFkLocale($idLocale);
 
         return $categoryAttributeEntity;
@@ -127,11 +128,12 @@ class CategoryAttribute implements CategoryAttributeInterface
      */
     public function update(CategoryTransfer $categoryTransfer)
     {
-        $localizedCategoryAttributeTransferCollection = $categoryTransfer->getLocalizedAttributes();
+        $idCategory = $categoryTransfer->requireIdCategory()->getIdCategory();
+        $localizedAttributesTransferCollection = $categoryTransfer->getLocalizedAttributes();
 
-        foreach ($localizedCategoryAttributeTransferCollection as $localizedCategoryAttributesTransfer) {
-            $idCategory = $categoryTransfer->getIdCategory();
-            $idLocale = $localizedCategoryAttributesTransfer->getLocale()->getIdLocale();
+        foreach ($localizedAttributesTransferCollection as $localizedAttributesTransfer) {
+            $localeTransfer = $localizedAttributesTransfer->requireLocale()->getLocale();
+            $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
 
             $localizedCategoryAttributesEntity = $this
                 ->queryContainer
@@ -141,7 +143,7 @@ class CategoryAttribute implements CategoryAttributeInterface
 
             $localizedCategoryAttributesEntity = $this->updateEntity(
                 $localizedCategoryAttributesEntity,
-                $localizedCategoryAttributesTransfer,
+                $localizedAttributesTransfer,
                 $idCategory
             );
 
