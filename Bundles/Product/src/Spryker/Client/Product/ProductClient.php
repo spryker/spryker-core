@@ -9,6 +9,7 @@ namespace Spryker\Client\Product;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\UtilEncoding\Json;
 
 /**
  * @method \Spryker\Client\Product\ProductFactory getFactory()
@@ -146,10 +147,11 @@ class ProductClient extends AbstractClient implements ProductClientInterface
         $productStorage = $this->getFactory()->createProductConcreteStorage($locale);
 
         $jsonData = $productStorage->getProductConcreteCollection($idProductConcreteCollection);
+        $jsonUtil = new Json();
 
         $result = [];
         foreach ($jsonData as $key => $json) {
-            $data = json_decode($json, true); //TODO util
+            $data = $jsonUtil->encode($json);
             $result[] = $this->mapStorageProduct($data);
         }
 
