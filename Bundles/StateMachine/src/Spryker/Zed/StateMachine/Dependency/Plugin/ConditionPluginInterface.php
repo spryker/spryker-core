@@ -14,6 +14,8 @@ interface ConditionPluginInterface
     /**
      * This method is called when transition in SM xml file have concrete condition assigned.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return bool

@@ -13,6 +13,8 @@ interface PaginationConfigBuilderInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PaginationConfigTransfer $paginationConfigTransfer
      *
      * @return void
@@ -20,11 +22,15 @@ interface PaginationConfigBuilderInterface
     public function setPagination(PaginationConfigTransfer $paginationConfigTransfer);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function get();
 
     /**
+     * @api
+     *
      * @param array $requestParameters
      *
      * @return int
@@ -32,6 +38,8 @@ interface PaginationConfigBuilderInterface
     public function getCurrentPage(array $requestParameters);
 
     /**
+     * @api
+     *
      * @param array $requestParameters
      *
      * @return int

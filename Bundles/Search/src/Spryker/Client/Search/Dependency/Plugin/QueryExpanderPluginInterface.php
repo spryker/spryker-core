@@ -11,6 +11,8 @@ interface QueryExpanderPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *

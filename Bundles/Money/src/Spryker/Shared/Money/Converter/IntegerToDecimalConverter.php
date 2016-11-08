@@ -30,7 +30,7 @@ class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
             ));
         }
 
-        return (float)($value / static::PRICE_PRECISION);
+        return (float)bcdiv($value, static::PRICE_PRECISION, 2);
     }
 
 }

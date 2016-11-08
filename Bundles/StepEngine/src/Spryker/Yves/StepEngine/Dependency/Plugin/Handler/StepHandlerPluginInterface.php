@@ -14,6 +14,8 @@ interface StepHandlerPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *

@@ -11,6 +11,8 @@ interface DiscountCalculatorPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param mixed $percentage
      *
@@ -19,6 +21,8 @@ interface DiscountCalculatorPluginInterface
     public function calculate(array $discountableItems, $percentage);
 
     /**
+     * @api
+     *
      * @param float $value
      *
      * @return int
@@ -26,6 +30,8 @@ interface DiscountCalculatorPluginInterface
     public function transformForPersistence($value);
 
     /**
+     * @api
+     *
      * @param int $value
      *
      * @return int
@@ -33,6 +39,8 @@ interface DiscountCalculatorPluginInterface
     public function transformFromPersistence($value);
 
     /**
+     * @api
+     *
      * @param int $amount
      *
      * @return string
@@ -40,6 +48,8 @@ interface DiscountCalculatorPluginInterface
     public function getFormattedAmount($amount);
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAmountValidators();

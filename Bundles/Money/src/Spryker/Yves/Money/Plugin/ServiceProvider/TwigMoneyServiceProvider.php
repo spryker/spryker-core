@@ -10,7 +10,7 @@ namespace Spryker\Yves\Money\Plugin\ServiceProvider;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Money\MoneyConstants;
+use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_SimpleFilter;
 
@@ -68,10 +68,10 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             }
 
             if ($withSymbol) {
-                return $moneyFactory->createMoneyFormatter()->format($money, MoneyConstants::FORMATTER_WITH_SYMBOL);
+                return $moneyFactory->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITH_SYMBOL);
             }
 
-            return $moneyFactory->createMoneyFormatter()->format($money, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
+            return $moneyFactory->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL);
         });
 
         return $filter;
