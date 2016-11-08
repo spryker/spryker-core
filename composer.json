@@ -6,7 +6,7 @@
     "phpdocumentor/graphviz": "~1.0.4",
     "paragonie/random_compat": "~1.2.1",
     "everon/criteria-builder": "^1.1.0",
-    "mathiasverraes/money": "~3.0.0-beta2"
+    "moneyphp/money": "~3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
@@ -252,9 +252,11 @@
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
 
+      "Spryker\\Client\\Money\\": "Bundles/Money/src",
       "Spryker\\Shared\\Money\\": "Bundles/Money/src",
       "Spryker\\Yves\\Money\\": "Bundles/Money/src",
       "Spryker\\Zed\\Money\\": "Bundles/Money/src",
+      "Unit\\Spryker\\Client\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Shared\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Yves\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Zed\\Money\\": "Bundles/Money/tests",

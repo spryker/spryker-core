@@ -4,21 +4,18 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Spryker\Zed\Money\Business;
+
+namespace Spryker\Shared\Money\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 
-/**
- * @method \Spryker\Zed\Money\Business\MoneyBusinessFactory getFactory()
- */
-interface MoneyFacadeInterface
+interface MoneyPluginInterface
 {
 
     /**
      * Specification:
-     * - Converts int amount and isoCode to MoneyTransfer Object
-     * - If isoCode is not provided it will use from Store configured one
+     * - Returns a MoneyTransfer object created from given integer value.
      *
      * @api
      *
@@ -31,8 +28,7 @@ interface MoneyFacadeInterface
 
     /**
      * Specification:
-     * - Converts float amount and isoCode to MoneyTransfer Object
-     * - If isoCode is not provided it will use from Store configured one
+     * - Returns a MoneyTransfer object created from given float value.
      *
      * @api
      *
@@ -45,8 +41,7 @@ interface MoneyFacadeInterface
 
     /**
      * Specification:
-     * - Converts string amount and isoCode to MoneyTransfer Object
-     * - If isoCode is not provided it will use from Store configured one
+     * - Returns a MoneyTransfer object created from given string value.
      *
      * @api
      *
@@ -59,7 +54,9 @@ interface MoneyFacadeInterface
 
     /**
      * Specification:
-     * - Converts MoneyTransfer Object into string representation with currency symbol
+     * - Returns formatted string representation of the given MoneyTransfer object with currency symbol
+     *
+     * E.g. `MoneyTransfer::$amount = 1000`, `CurrencyTransfer::$code = EUR` will return `10,00 €`
      *
      * @api
      *
@@ -71,7 +68,9 @@ interface MoneyFacadeInterface
 
     /**
      * Specification:
-     * - Converts MoneyTransfer Object into string representation without currency symbol
+     * - Returns float representation of the given MoneyTransfer object without symbol
+     *
+     * E.g. `MoneyTransfer::$amount = 1000`, `CurrencyTransfer::$code = EUR` will return `10,00`
      *
      * @api
      *
@@ -83,7 +82,9 @@ interface MoneyFacadeInterface
 
     /**
      * Specification:
-     * - Parses a formatted string representation to MoneyTransfer
+     * - Returns a MoneyTransfer parsed from the given value.
+     *
+     * E.g. `$value = 10,00 €` `CurrencyTransfer::$code = EUR` will return `MoneyTransfer::$amount(1000)`
      *
      * @api
      *
@@ -95,8 +96,10 @@ interface MoneyFacadeInterface
     public function parse($value, CurrencyTransfer $currencyTransfer);
 
     /**
-     * Specification
-     * - Converts an integer value into decimal value
+     * Specification:
+     * - Returns from a given integer value converted decimal value.
+     *
+     * E.g. `$value = 1000` will return `10.00`
      *
      * @api
      *
@@ -107,8 +110,10 @@ interface MoneyFacadeInterface
     public function convertIntegerToDecimal($value);
 
     /**
-     * Specification
-     * - Converts a decimal value into integer value
+     * Specification:
+     * - Returns from a given decimal value converted integer value.
+     *
+     * E.g. `$value = 10.00` will return `1000`
      *
      * @api
      *

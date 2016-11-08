@@ -5,47 +5,61 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Money;
+namespace Spryker\Client\Money;
 
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
+use Spryker\Client\Currency\Plugin\CurrencyPlugin;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyBridge;
 
-class MoneyDependencyProvider extends AbstractBundleDependencyProvider
+class MoneyDependencyProvider extends AbstractDependencyProvider
 {
 
     const STORE = 'store';
-    const FACADE_CURRENCY = 'currency facade';
+    const PLUGIN_CURRENCY = 'currency plugin';
     const MONEY_PARSER = 'money parser';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStore($container);
-        $container = $this->addCurrencyFacade($container);
+        $container = $this->addCurrencyPlugin($container);
         $container = $this->addMoneyParser($container);
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container)
     {
         $container[static::STORE] = function () {
             return $this->getStore();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCurrencyPlugin(Container $container)
+    {
+        $container[static::PLUGIN_CURRENCY] = function () {
+            return new CurrencyPlugin();
         };
 
         return $container;
@@ -60,23 +74,9 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCurrencyFacade(Container $container)
-    {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
-            return new MoneyToCurrencyBridge($container->getLocator()->currency()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addMoneyParser(Container $container)
     {

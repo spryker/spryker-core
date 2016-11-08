@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Money;
+namespace Spryker\Client\Money;
 
+use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Converter\IntegerToDecimalConverter;
@@ -16,9 +18,6 @@ use Spryker\Shared\Money\Formatter\MoneyFormatter;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Parser\Parser;
-use Spryker\Yves\Currency\Plugin\CurrencyPlugin;
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Money\Mapper\MoneyToTransferMapper;
 
 class MoneyFactory extends AbstractFactory
 {
@@ -70,7 +69,7 @@ class MoneyFactory extends AbstractFactory
     public function createMoneyParser()
     {
         return new Parser(
-            $this->getMoneyParser(),
+            $this->createIntlMoneyParser(),
             $this->createMoneyToTransferMapper()
         );
     }
@@ -78,7 +77,7 @@ class MoneyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
      */
-    protected function getMoneyParser()
+    protected function createIntlMoneyParser()
     {
         return $this->getProvidedDependency(MoneyDependencyProvider::MONEY_PARSER);
     }
@@ -102,11 +101,11 @@ class MoneyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Currency\Plugin\CurrencyPluginInterface
+     * @return \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
      */
     protected function getCurrencyPlugin()
     {
-        return new CurrencyPlugin();
+        return $this->getProvidedDependency(MoneyDependencyProvider::PLUGIN_CURRENCY);
     }
 
     /**

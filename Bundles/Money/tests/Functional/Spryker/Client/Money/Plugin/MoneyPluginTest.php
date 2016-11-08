@@ -5,19 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Yves\Money\Plugin;
+namespace Functional\Spryker\Client\Money\Plugin;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Money\Money;
 use PHPUnit_Framework_TestCase;
+use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Yves\Money\Plugin\MoneyPlugin;
 
 /**
  * @group Functional
  * @group Spryker
- * @group Yves
+ * @group Client
  * @group Money
  * @group Plugin
  * @group MoneyPluginTest
