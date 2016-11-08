@@ -151,7 +151,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 
         $result = [];
         foreach ($jsonData as $key => $json) {
-            $data = $jsonUtil->encode($json);
+            $data = $jsonUtil->decode($json, true);
             $result[] = $this->mapStorageProduct($data);
         }
 
