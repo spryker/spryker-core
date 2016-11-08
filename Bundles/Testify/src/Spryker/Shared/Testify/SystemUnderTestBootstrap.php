@@ -137,7 +137,7 @@ class SystemUnderTestBootstrap
      *
      * @throws \InvalidArgumentException
      *
-     * @return mixed
+     * @return object
      */
     private function getBootstrapClass($configKey)
     {
