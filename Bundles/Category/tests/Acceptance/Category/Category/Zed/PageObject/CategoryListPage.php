@@ -15,7 +15,7 @@ class CategoryListPage
     const SELECTOR_TABLE = 'dataTables_wrapper';
     const SELECTOR_CATEGORIES_LIST = 'categories-list';
 
-    const BUTTON_CREATE_CATEGORY = 'Create Category';
+    const BUTTON_CREATE_CATEGORY = 'Create category';
 
     const SELECTOR_TREE_LIST = '#category-tree > div.dd > ol.dd-list';
 

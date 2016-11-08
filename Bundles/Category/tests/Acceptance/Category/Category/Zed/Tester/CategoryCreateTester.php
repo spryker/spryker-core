@@ -30,7 +30,6 @@ class CategoryCreateTester extends ZedAcceptanceTester
         $localizedAttributes = $category['attributes'];
 
         foreach ($localizedAttributes as $locale => $attributes) {
-            $i->click($locale);
             foreach ($attributes as $selector => $value) {
                 $i->fillField(['name' => $selector], $value);
             }
