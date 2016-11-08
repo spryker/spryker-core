@@ -27,7 +27,7 @@ interface ProductManagementToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getProductAttributeKey($key);
+    public function findProductAttributeKey($key);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
@@ -82,14 +82,14 @@ interface ProductManagementToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractById($idProductAbstract);
+    public function findProductAbstractById($idProductAbstract);
 
     /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductConcreteById($idProduct);
+    public function findProductConcreteById($idProduct);
 
     /**
      * @param int $idProductAbstract

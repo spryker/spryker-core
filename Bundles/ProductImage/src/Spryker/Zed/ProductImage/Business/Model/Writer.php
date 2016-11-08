@@ -38,7 +38,7 @@ class Writer implements WriterInterface
      */
     public function createProductImage(ProductImageTransfer $productImageTransfer)
     {
-        return $this->persistProductImage($productImageTransfer);
+        return $this->saveProductImage($productImageTransfer);
     }
 
     /**
@@ -48,7 +48,7 @@ class Writer implements WriterInterface
      */
     public function updateProductImage(ProductImageTransfer $productImageTransfer)
     {
-        return $this->persistProductImage($productImageTransfer);
+        return $this->saveProductImage($productImageTransfer);
     }
 
     /**
@@ -56,7 +56,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function persistProductImage(ProductImageTransfer $productImageTransfer)
+    public function saveProductImage(ProductImageTransfer $productImageTransfer)
     {
         $productImageEntity = $this->productImageContainer
             ->queryProductImage()
@@ -78,7 +78,7 @@ class Writer implements WriterInterface
      */
     public function createProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        return $this->persistProductImageSet($productImageSetTransfer);
+        return $this->saveProductImageSet($productImageSetTransfer);
     }
 
     /**
@@ -88,7 +88,7 @@ class Writer implements WriterInterface
      */
     public function updateProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
-        return $this->persistProductImageSet($productImageSetTransfer);
+        return $this->saveProductImageSet($productImageSetTransfer);
     }
 
     /**
@@ -96,7 +96,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
     {
         $this->assertProductIsAssigned($productImageSetTransfer);
 
@@ -148,7 +148,7 @@ class Writer implements WriterInterface
     protected function persistProductImageSetCollection(ProductImageSetTransfer $productImageSetTransfer)
     {
         foreach ($productImageSetTransfer->getProductImages() as $imageTransfer) {
-            $imageTransfer = $this->persistProductImage($imageTransfer);
+            $imageTransfer = $this->saveProductImage($imageTransfer);
 
             $this->persistProductImageRelation(
                 $productImageSetTransfer->requireIdProductImageSet()->getIdProductImageSet(),

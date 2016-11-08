@@ -15,6 +15,9 @@ interface StockFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     *
      * @api
      *
      * @param string $sku
@@ -24,6 +27,9 @@ interface StockFacadeInterface
     public function isNeverOutOfStock($sku);
 
     /**
+     * Specification:
+     * - Returns the total stock amount of the concrete product for all its available stock types.
+     *
      * @api
      *
      * @param string $sku
@@ -33,6 +39,11 @@ interface StockFacadeInterface
     public function calculateStockForProduct($sku);
 
     /**
+     * Specification:
+     * - Persists a new stock type entity to database.
+     * - Touches the newly created stock type.
+     * - Returns the ID of the new stock type entity.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
@@ -42,15 +53,12 @@ interface StockFacadeInterface
     public function createStockType(TypeTransfer $stockTypeTransfer);
 
     /**
-     * @api
+     * Specification:
+     * - Persists a new stock product entity in database for the given product and stock type.
+     * - If the product already have stock assigned in the given stock type, then it throws an exception.
+     * - Touches the newly created stock product.
+     * - Returns the ID of the new stock product entity.
      *
-     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
-     *
-     * @return int
-     */
-    public function updateStockType(TypeTransfer $stockTypeTransfer);
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
@@ -60,6 +68,11 @@ interface StockFacadeInterface
     public function createStockProduct(StockProductTransfer $transferStockProduct);
 
     /**
+     * Specification:
+     * - Updates an existing stock product entity with the provided stock data.
+     * - Touches the stock product.
+     * - Returns the ID of the stock product entity.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
@@ -69,6 +82,10 @@ interface StockFacadeInterface
     public function updateStockProduct(StockProductTransfer $stockProductTransfer);
 
     /**
+     * Specification:
+     * - Decrements stock amount of the given concrete product for the given stock type.
+     * - Touches the stock product.
+     *
      * @api
      *
      * @param string $sku
@@ -80,6 +97,10 @@ interface StockFacadeInterface
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
 
     /**
+     * Specification:
+     * - Increments stock amount of the given concrete product for the given stock type.
+     * - Touches the stock product.
+     *
      * @api
      *
      * @param string $sku
@@ -91,6 +112,9 @@ interface StockFacadeInterface
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
 
     /**
+     * Specification:
+     * - Checks if the given concrete product for the given stock type has positive amount.
+     *
      * @api
      *
      * @param string $sku
@@ -99,16 +123,6 @@ interface StockFacadeInterface
      * @return bool
      */
     public function hasStockProduct($sku, $stockType);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $stockType
-     *
-     * @return int
-     */
-    public function getIdStockProduct($sku, $stockType);
 
     /**
      * Specification:

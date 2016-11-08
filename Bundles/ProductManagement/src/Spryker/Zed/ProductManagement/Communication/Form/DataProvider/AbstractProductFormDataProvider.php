@@ -145,7 +145,7 @@ class AbstractProductFormDataProvider
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
-        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         $localizedAttributeOptions = [];
         foreach ($localeCollection as $localeTransfer) {
@@ -260,8 +260,8 @@ class AbstractProductFormDataProvider
 
         foreach ($imageSetTransfer->getProductImages() as $imageTransfer) {
             $image = $imageTransfer->toArray();
-            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_SMALL];
-            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL] = $this->imageUrlPrefix . $image[ImageCollectionForm::FIELD_IMAGE_LARGE];
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW] = $this->getImageUrl($image[ImageCollectionForm::FIELD_IMAGE_SMALL]);
+            $image[ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL] = $this->getImageUrl($image[ImageCollectionForm::FIELD_IMAGE_LARGE]);
             $image[ImageCollectionForm::FIELD_FK_IMAGE_SET_ID] = $imageSetTransfer->getIdProductImageSet();
             $itemImages[] = $image;
         }
@@ -705,6 +705,22 @@ class AbstractProductFormDataProvider
 
         $transfer = $this->attributeTransferCollection->get($keyToLocalize);
         return $transfer->getKey();
+    }
+
+    /**
+     * @param string $baseUrl
+     *
+     * @return string
+     */
+    protected function getImageUrl($baseUrl)
+    {
+        $url = $baseUrl;
+
+        if (strpos($url, '/') === 0) {
+            $url = $this->imageUrlPrefix . $url;
+        }
+
+        return $url;
     }
 
 }

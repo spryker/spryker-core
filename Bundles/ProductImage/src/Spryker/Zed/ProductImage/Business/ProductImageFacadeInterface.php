@@ -16,24 +16,36 @@ interface ProductImageFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Creates a new product image entity or updates an existing one if the ID is provided and the entity already exists.
+     * - Returns a ProductImageTransfer with the ID of the persisted entity.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function persistProductImage(ProductImageTransfer $productImageTransfer);
+    public function saveProductImage(ProductImageTransfer $productImageTransfer);
 
     /**
+     * Specification:
+     * - Creates a new product image set entity or updates an existing one if the ID is provided and the entity already exists.
+     * - Creates new product image entities or update existing ones if their ID is provided and the entities already exists.
+     * - Returns a ProductImageSetTransfer with the IDs of the persisted entities.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
     /**
+     * Specification:
+     * - Returns all product image sets from database for the given abstract product id.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -43,6 +55,9 @@ interface ProductImageFacadeInterface
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
 
     /**
+     * Specification:
+     * - Returns all product image sets from database for the given concrete product id.
+     *
      * @api
      *
      * @param int $idProduct
@@ -54,6 +69,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
+     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -66,6 +82,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given abstract product.
+     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -90,6 +107,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given concrete product.
+     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *
@@ -102,6 +120,7 @@ interface ProductImageFacadeInterface
     /**
      * Specification:
      * - Persists all provided image sets to database for the given concrete product.
+     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
      *
      * @api
      *

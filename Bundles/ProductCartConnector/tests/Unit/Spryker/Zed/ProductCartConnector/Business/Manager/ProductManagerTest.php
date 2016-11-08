@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -32,7 +32,6 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     const ID_PRODUCT_CONCRETE = 'id product concrete';
     const ID_PRODUCT_ABSTRACT = 'id product abstract';
     const PRODUCT_NAME = 'product name';
-    const TAX_SET_NAME = 'tax set name';
 
     /**
      * @return void
@@ -110,7 +109,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $returnValue
      * @param string $localizedName
      *
-     * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager
+     * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander
      */
     public function getProductManager(ProductConcreteTransfer $returnValue, $localizedName)
     {
@@ -129,7 +128,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
             ->method('getCurrentLocale')
             ->will($this->returnValue(new LocaleTransfer()));
 
-        return new ProductManager($mockLocaleFacade, $mockProductFacade);
+        return new ProductExpander($mockLocaleFacade, $mockProductFacade);
     }
 
     /**

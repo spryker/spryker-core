@@ -23,7 +23,7 @@
                             <div class="row">
                                 {% for image in imageSet.product_images %}
                                     <div class="col-lg-3">
-                                        <img src="{{ imageUrlPrefix ~ image.external_url_small }}">
+                                        <img src="{{ image.image_preview }}" style="max-width: 100px; max-height: 100px">
                                     </div>
                                 {% endfor %}
                             </div>

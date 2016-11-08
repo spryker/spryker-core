@@ -20,6 +20,7 @@ interface ProductAbstractAssertionInterface
     public function assertSkuIsUnique($sku);
 
     /**
+     * @param int $idProductAbstract
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException

@@ -18,7 +18,6 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
@@ -140,26 +139,6 @@ class StockFacadeTest extends Test
             ->count() > 0;
 
         $this->assertTrue($exists);
-    }
-
-    /**
-     * TODO: Impossible to update stock type, the only field we can change it the name, and it's used in the query to locate the entity
-     *
-     * @return void
-     */
-    public function SKIP_testUpdateStockType()
-    {
-        $stockTypeTransfer = (new TypeTransfer())
-            ->setIdStock($this->stockEntity1->getIdStock())
-            ->setName('Foo');
-
-        $idStock = $this->stockFacade->updateStockType($stockTypeTransfer);
-
-        $stockEntity = SpyStockQuery::create()
-                ->filterByIdStock($idStock)
-                ->findOne();
-
-        $this->assertEquals('Foo', $stockEntity->getName());
     }
 
     /**
@@ -294,35 +273,6 @@ class StockFacadeTest extends Test
         );
 
         $this->assertFalse($exists);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetIdStockProduct()
-    {
-        $idStockProduct = $this->stockFacade->getIdStockProduct(
-            self::CONCRETE_SKU,
-            $this->stockEntity1->getName()
-        );
-
-        $this->assertEquals(
-            $this->productStockEntity1->getIdStockProduct(),
-            $idStockProduct
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetIdStockProductShouldThrowException()
-    {
-        $this->expectException(StockProductNotFoundException::class);
-
-        $idStockProduct = $this->stockFacade->getIdStockProduct(
-            'INVALIDSKU',
-            $this->stockEntity1->getName()
-        );
     }
 
     /**

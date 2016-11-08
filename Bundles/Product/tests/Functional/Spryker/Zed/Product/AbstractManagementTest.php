@@ -82,7 +82,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     public function testGetProductAbstractIdBySku()
     {
         $expectedId = $this->createNewProductAbstractAndAssertNoTouchExists();
-        $idProductAbstract = $this->productFacade->getProductAbstractIdBySku(self::ABSTRACT_SKU);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku(self::ABSTRACT_SKU);
 
         $this->assertEquals(
             $expectedId,
@@ -95,7 +95,7 @@ class AbstractManagementTest extends FacadeTestAbstract
      */
     public function testGetProductAbstractIdBySkuShouldReturnNull()
     {
-        $idProductAbstract = $this->productFacade->getProductAbstractIdBySku('INVALIDSKU');
+        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku('INVALIDSKU');
 
         $this->assertNull($idProductAbstract);
     }
@@ -106,7 +106,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     public function testGetProductAbstractById()
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
-        $productAbstract = $this->productFacade->getProductAbstractById($idProductAbstract);
+        $productAbstract = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         $this->assertInstanceOf(ProductAbstractTransfer::class, $productAbstract);
         $this->assertEquals(self::ABSTRACT_SKU, $productAbstract->getSku());
@@ -117,7 +117,7 @@ class AbstractManagementTest extends FacadeTestAbstract
      */
     public function testGetProductAbstractByIdShouldReturnNull()
     {
-        $productAbstract = $this->productFacade->getProductAbstractById(1010001);
+        $productAbstract = $this->productFacade->findProductAbstractById(1010001);
 
         $this->assertNull($productAbstract);
     }

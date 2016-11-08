@@ -20,7 +20,7 @@ interface WriterInterface
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return int
      */
     public function createPriceType($name);
 

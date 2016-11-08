@@ -43,14 +43,14 @@ interface ProductAbstractManagerInterface
      *
      * @return int|null
      */
-    public function getProductAbstractIdBySku($sku);
+    public function findProductAbstractIdBySku($sku);
 
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractById($idProductAbstract);
+    public function findProductAbstractById($idProductAbstract);
 
     /**
      * @param string $sku

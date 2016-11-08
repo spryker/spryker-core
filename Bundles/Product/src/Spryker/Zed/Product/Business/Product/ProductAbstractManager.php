@@ -170,7 +170,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      *
      * @return int|null
      */
-    public function getProductAbstractIdBySku($sku)
+    public function findProductAbstractIdBySku($sku)
     {
         $productAbstract = $this->productQueryContainer
             ->queryProductAbstractBySku($sku)
@@ -188,7 +188,7 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractById($idProductAbstract)
+    public function findProductAbstractById($idProductAbstract)
     {
         $productAbstractEntity = $this->productQueryContainer
             ->queryProductAbstract()
@@ -310,9 +310,13 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
             ->filterByIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->findOneOrCreate();
 
-        $productAbstractEntity
-            ->setAttributes($jsonAttributes)
-            ->setSku($productAbstractTransfer->getSku());
+        $productAbstractData = $productAbstractTransfer->modifiedToArray();
+        if (isset($productAbstractData[ProductAbstractTransfer::ATTRIBUTES])) {
+            unset($productAbstractData[ProductAbstractTransfer::ATTRIBUTES]);
+        }
+
+        $productAbstractEntity->fromArray($productAbstractData);
+        $productAbstractEntity->setAttributes($jsonAttributes);
 
         $productAbstractEntity->save();
 
@@ -333,8 +337,13 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
         foreach ($productAttributeCollection as $attributeEntity) {
             $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
 
+            $localizedAttributesData = $attributeEntity->toArray();
+            if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
+                unset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES]);
+            }
+
             $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-                ->fromArray($attributeEntity->toArray(), true)
+                ->fromArray($localizedAttributesData, true)
                 ->setAttributes($this->attributeEncoder->decodeAttributes($attributeEntity->getAttributes()))
                 ->setLocale($localeTransfer);
 

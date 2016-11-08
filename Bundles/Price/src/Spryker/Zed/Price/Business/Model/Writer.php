@@ -65,14 +65,14 @@ class Writer implements WriterInterface
     /**
      * @param string $name
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return int
      */
     public function createPriceType($name)
     {
         $priceTypeEntity = $this->queryContainer->queryPriceType($name)->findOneOrCreate();
         $priceTypeEntity->setName($name)->save();
 
-        return $priceTypeEntity;
+        return $priceTypeEntity->getIdPriceType();
     }
 
     /**

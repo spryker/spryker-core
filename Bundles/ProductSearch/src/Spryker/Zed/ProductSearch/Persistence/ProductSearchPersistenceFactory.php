@@ -12,7 +12,6 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
@@ -20,14 +19,6 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
  */
 class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected function getProductQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery

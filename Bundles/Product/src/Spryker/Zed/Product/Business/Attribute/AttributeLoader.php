@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Client\Catalog\Model\Exception\ProductNotFoundException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AttributeLoader implements AttributeLoaderInterface
@@ -27,12 +27,12 @@ class AttributeLoader implements AttributeLoaderInterface
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeMergerInterface
      */
-    private $attributeMerger;
+    protected $attributeMerger;
 
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
-    private $attributeEncoder;
+    protected $attributeEncoder;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -173,7 +173,7 @@ class AttributeLoader implements AttributeLoaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws \Spryker\Client\Catalog\Model\Exception\ProductNotFoundException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
@@ -186,7 +186,7 @@ class AttributeLoader implements AttributeLoaderInterface
             ->findOneByIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
         if (!$productAbstractEntity) {
-            throw new ProductNotFoundException(sprintf(
+            throw new MissingProductException(sprintf(
                 'Abstract product %d not found!',
                 $productAbstractTransfer->getIdProductAbstract()
             ));
@@ -198,7 +198,7 @@ class AttributeLoader implements AttributeLoaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @throws \Spryker\Client\Catalog\Model\Exception\ProductNotFoundException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -211,7 +211,7 @@ class AttributeLoader implements AttributeLoaderInterface
             ->findOneByIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         if (!$productEntity) {
-            throw new ProductNotFoundException(sprintf(
+            throw new MissingProductException(sprintf(
                 'Concrete product %d not found!',
                 $productConcreteTransfer->getIdProductConcrete()
             ));

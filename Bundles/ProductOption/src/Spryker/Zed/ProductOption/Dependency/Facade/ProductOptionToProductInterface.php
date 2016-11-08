@@ -15,9 +15,9 @@ interface ProductOptionToProductInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return int
+     * @return int|null
      */
-    public function getProductConcreteIdBySku($sku);
+    public function findProductConcreteIdBySku($sku);
 
     /**
      * @param string $sku

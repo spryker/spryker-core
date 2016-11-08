@@ -43,9 +43,9 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getProductAttributeKey($key)
+    public function findProductAttributeKey($key)
     {
-        return $this->productFacade->getProductAttributeKey($key);
+        return $this->productFacade->findProductAttributeKey($key);
     }
 
     /**
@@ -115,9 +115,9 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractById($idProductAbstract)
+    public function findProductAbstractById($idProductAbstract)
     {
-        return $this->productFacade->getProductAbstractById($idProductAbstract);
+        return $this->productFacade->findProductAbstractById($idProductAbstract);
     }
 
     /**
@@ -125,9 +125,9 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductConcreteById($idProduct)
+    public function findProductConcreteById($idProduct)
     {
-        return $this->productFacade->getProductConcreteById($idProduct);
+        return $this->productFacade->findProductConcreteById($idProduct);
     }
 
     /**

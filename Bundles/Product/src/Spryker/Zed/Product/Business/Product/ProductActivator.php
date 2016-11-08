@@ -52,10 +52,10 @@ class ProductActivator implements ProductActivatorInterface
      */
     public function activateProductConcrete($idProductConcrete)
     {
-        $productConcrete = $this->productConcreteManager->getProductConcreteById($idProductConcrete);
+        $productConcrete = $this->productConcreteManager->findProductConcreteById($idProductConcrete);
         $this->assertProductConcrete($idProductConcrete, $productConcrete);
 
-        $productAbstract = $this->productAbstractManager->getProductAbstractById(
+        $productAbstract = $this->productAbstractManager->findProductAbstractById(
             $productConcrete->getFkProductAbstract()
         );
         $this->assertProductAbstract($idProductConcrete, $productAbstract);
@@ -76,10 +76,10 @@ class ProductActivator implements ProductActivatorInterface
      */
     public function deactivateProductConcrete($idProductConcrete)
     {
-        $productConcrete = $this->productConcreteManager->getProductConcreteById($idProductConcrete);
+        $productConcrete = $this->productConcreteManager->findProductConcreteById($idProductConcrete);
         $this->assertProductConcrete($idProductConcrete, $productConcrete);
 
-        $productAbstract = $this->productAbstractManager->getProductAbstractById(
+        $productAbstract = $this->productAbstractManager->findProductAbstractById(
             $productConcrete->getFkProductAbstract()
         );
         $this->assertProductAbstract($idProductConcrete, $productAbstract);

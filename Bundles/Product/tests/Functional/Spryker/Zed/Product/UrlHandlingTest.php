@@ -7,13 +7,10 @@
 
 namespace Functional\Spryker\Zed\Product;
 
-use ArrayObject;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
@@ -43,9 +40,8 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $productUrl = $this->productFacade->createProductUrl($this->productAbstractTransfer);
 
-        $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
-        $this->assertUrlTransfer($expectedENUrl, $this->locales['en_US']);
-        $this->assertUrlTransfer($expectedDEUrl, $this->locales['de_DE']);
+        $this->assertProductUrl($productUrl, $expectedENUrl);
+        $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
     /**
@@ -70,9 +66,8 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $productUrl = $this->productFacade->updateProductUrl($this->productAbstractTransfer);
 
-        $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
-        $this->assertUrlTransfer($expectedENUrl, $this->locales['en_US']);
-        $this->assertUrlTransfer($expectedDEUrl, $this->locales['de_DE']);
+        $this->assertProductUrl($productUrl, $expectedENUrl);
+        $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
     /**
@@ -157,6 +152,7 @@ class UrlHandlingTest extends FacadeTestAbstract
     public function testGetProductUrl()
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
 
         $expectedENUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['en_US'])
@@ -168,7 +164,8 @@ class UrlHandlingTest extends FacadeTestAbstract
         $productUrl = $this->productFacade->getProductUrl($this->productAbstractTransfer);
 
         $this->assertInstanceOf(ProductUrlTransfer::class, $productUrl);
-        $this->assertProductUrl($productUrl, $expectedENUrl, $expectedDEUrl);
+        $this->assertProductUrl($productUrl, $expectedENUrl);
+        $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
     /**
@@ -225,45 +222,21 @@ class UrlHandlingTest extends FacadeTestAbstract
 
     /**
      * @param \Generated\Shared\Transfer\ProductUrlTransfer $productUrl
-     * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedENUrl
-     * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedDEUrl
-     *
-     * @return void
-     */
-    protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedENUrl, LocalizedUrlTransfer $expectedDEUrl)
-    {
-        $urlCollection = new ArrayObject([$expectedENUrl, $expectedDEUrl]);
-
-        $productUrlExpected = (new ProductUrlTransfer())
-            ->setAbstractSku(
-                $this->productAbstractTransfer->getSku()
-            )
-            ->setUrls(
-                $urlCollection
-            );
-
-        $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
-        $this->assertEquals($urlCollection, $productUrlExpected->getUrls());
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedUrl
      *
      * @return void
      */
-    protected function assertUrlTransfer(LocalizedUrlTransfer $expectedUrl, LocaleTransfer $expectedLocale)
+    protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl)
     {
-        $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-            $this->productAbstractTransfer->getIdProductAbstract(),
-            $expectedLocale->getIdLocale()
-        );
+        $this->assertEquals($productUrl->getAbstractSku(), $productUrl->getAbstractSku());
 
-        $this->assertEquals($expectedUrl->getUrl(), $urlTransfer->getUrl());
-        $this->assertEquals($expectedUrl->getLocale()->getIdLocale(), $urlTransfer->getFkLocale());
+        $urls = [];
+        foreach ($productUrl->getUrls() as $actualUrlTransfer) {
+            $urls[$actualUrlTransfer->getLocale()->getLocaleName()] = $actualUrlTransfer->getUrl();
+        }
 
-        $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $urlTransfer->getFkProductAbstract());
-        $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $urlTransfer->getResourceId());
-        $this->assertEquals(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $urlTransfer->getResourceType());
+        $this->assertArrayHasKey($expectedUrl->getLocale()->getLocaleName(), $urls);
+        $this->assertSame($expectedUrl->getUrl(), $urls[$expectedUrl->getLocale()->getLocaleName()]);
     }
 
     /**

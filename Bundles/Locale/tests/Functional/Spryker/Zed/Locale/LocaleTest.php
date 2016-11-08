@@ -8,6 +8,8 @@
 namespace Functional\Spryker\Zed\Locale;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
@@ -70,6 +72,21 @@ class LocaleTest extends Test
         $this->assertTrue($localeQuery->findOne()->getIsActive());
         $this->localeFacade->deleteLocale('ab_xy');
         $this->assertFalse($localeQuery->findOne()->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetLocaleByIdReturnsValidLocaleTransfer()
+    {
+        $localeEntity = new SpyLocale();
+        $localeEntity->setLocaleName('aa_AA');
+        $localeEntity->save();
+
+        $localeTransfer = $this->localeFacade->getLocaleById($localeEntity->getIdLocale());
+
+        $this->assertInstanceOf(LocaleTransfer::class, $localeTransfer);
+        $this->assertSame($localeEntity->getLocaleName(), $localeTransfer->getLocaleName());
     }
 
 }

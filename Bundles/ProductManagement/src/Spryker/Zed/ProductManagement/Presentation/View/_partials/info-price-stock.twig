@@ -2,7 +2,7 @@
     {% block widget_content %}
 
         <div class="row">
-            <div class="col-xs-2"><b>Price</b></div>
+            <div class="col-xs-2"><b>{{ 'Price' | trans }}</b></div>
             <div class="col-xs-10">{{ currentProduct.price.price | currency }}</div>
         </div>
 
@@ -10,16 +10,16 @@
 
         <div class="row">
             <div class="col-xs-4">
-                <b>Stock Type</b>
+                <b>{{ 'Stock Type' | trans }}</b>
             </div>
             <div class="col-xs-4">
-                <b>Quantity</b>
+                <b>{{ 'Quantity' | trans }}</b>
             </div>
             <div class="col-xs-4">
-                <b>Never out of stock</b>
+                <b>{{ 'Never out of stock' | trans }}</b>
             </div>
 
-            {% for stock in currentProduct.stock %}
+            {% for stock in currentProduct.stocks %}
                 {% set is_never_out_of_stock = 'No' %}
                 {%  if stock.is_never_out_of_stock %}
                     {% set is_never_out_of_stock = 'Yes' %}
@@ -32,7 +32,7 @@
                     {{ stock.quantity }}
                 </div>
                 <div class="col-xs-4">
-                    {{ is_never_out_of_stock }}
+                    {{ is_never_out_of_stock | trans }}
                 </div>
             {% endfor %}
 

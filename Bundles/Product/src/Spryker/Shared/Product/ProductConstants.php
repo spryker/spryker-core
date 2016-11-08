@@ -15,7 +15,6 @@ interface ProductConstants
     const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
     const RESOURCE_TYPE_PRODUCT_CONCRETE = 'product_concrete';
     const RESOURCE_TYPE_ATTRIBUTE_MAP = 'attribute_map';
-    const RESOURCE_TYPE_URL = 'url'; //TODO this should come from the Url / collector / touch bundle
 
     const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
 

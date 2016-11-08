@@ -18,14 +18,14 @@ interface ProductManagementToProductImageInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function persistProductImage(ProductImageTransfer $productImageTransfer);
+    public function saveProductImage(ProductImageTransfer $productImageTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function persistProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
 
     /**
      * @param int $idProductAbstract

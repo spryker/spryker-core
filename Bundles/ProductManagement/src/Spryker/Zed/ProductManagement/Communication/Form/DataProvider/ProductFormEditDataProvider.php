@@ -26,7 +26,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     public function getData($idProductAbstract)
     {
         $formData = $this->getDefaultFormFields();
-        $productAbstractTransfer = $this->productFacade->getProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         if ($productAbstractTransfer) {
             $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);
@@ -84,7 +84,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
     {
         $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
 
-        $priceTransfer = $this->priceFacade->getProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
+        $priceTransfer = $this->priceFacade->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
         if ($priceTransfer) {
             $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
         }

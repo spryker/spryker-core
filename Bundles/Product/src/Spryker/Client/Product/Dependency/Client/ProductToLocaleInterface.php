@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearch\Dependency\Facade;
+namespace Spryker\Client\Product\Dependency\Client;
 
-interface ProductSearchToCollectorInterface
+interface ProductToLocaleInterface
 {
 
     /**
      * @return string
      */
-    public function getSearchIndexName();
-
-    /**
-     * @return string
-     */
-    public function getSearchDocumentType();
+    public function getCurrentLocale();
 
 }

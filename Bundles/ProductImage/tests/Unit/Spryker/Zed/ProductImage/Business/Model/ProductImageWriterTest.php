@@ -64,7 +64,7 @@ class ProductImageWriterTest extends Test
             ->setExternalUrlSmall('small');
 
         $imageTransfer = $this->writer
-            ->persistProductImage($imageTransfer);
+            ->saveProductImage($imageTransfer);
 
         $this->assertInstanceOf(ProductImageTransfer::class, $imageTransfer);
 
@@ -84,12 +84,11 @@ class ProductImageWriterTest extends Test
         $imageSetTransfer = new ProductImageSetTransfer();
         $imageSetTransfer
             ->setIdProductAbstract(1)
-            ->setLocale(null)
             ->setName('Foo')
             ->setProductImages($imageCollection);
 
         $imageSetTransfer = $this->writer
-            ->persistProductImageSet($imageSetTransfer);
+            ->saveProductImageSet($imageSetTransfer);
 
         $this->assertInstanceOf(ProductImageSetTransfer::class, $imageSetTransfer);
         $this->assertInstanceOf(ProductImageTransfer::class, $imageSetTransfer->getProductImages()[0]);

@@ -29,9 +29,9 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductAbstractPrice($idAbstractProduct, $priceType = null)
+    public function findProductAbstractPrice($idAbstractProduct, $priceType = null)
     {
-        return $this->priceFacade->getProductAbstractPrice($idAbstractProduct, $priceType);
+        return $this->priceFacade->findProductAbstractPrice($idAbstractProduct, $priceType);
     }
 
     /**
@@ -40,9 +40,9 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductConcretePrice($idProduct, $priceType = null)
+    public function findProductConcretePrice($idProduct, $priceType = null)
     {
-        return $this->priceFacade->getProductConcretePrice($idProduct, $priceType);
+        return $this->priceFacade->findProductConcretePrice($idProduct, $priceType);
     }
 
 }

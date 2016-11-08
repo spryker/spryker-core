@@ -24,7 +24,7 @@ interface AttributeKeyManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getAttributeKey($key);
+    public function findAttributeKey($key);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $attributeKeyTransfer

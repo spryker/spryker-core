@@ -55,9 +55,9 @@ class Functional extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
-     *
      * @apram $fail
+     *
+     * @param \Codeception\TestCase $test
      *
      * @return void
      */

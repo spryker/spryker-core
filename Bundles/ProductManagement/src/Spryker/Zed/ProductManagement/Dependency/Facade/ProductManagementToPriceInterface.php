@@ -16,7 +16,7 @@ interface ProductManagementToPriceInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductAbstractPrice($idAbstractProduct, $priceType = null);
+    public function findProductAbstractPrice($idAbstractProduct, $priceType = null);
 
     /**
      * @param int $idProduct
@@ -24,6 +24,6 @@ interface ProductManagementToPriceInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function getProductConcretePrice($idProduct, $priceType = null);
+    public function findProductConcretePrice($idProduct, $priceType = null);
 
 }

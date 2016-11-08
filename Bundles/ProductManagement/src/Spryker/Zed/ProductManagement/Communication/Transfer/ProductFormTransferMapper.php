@@ -21,6 +21,7 @@ use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
@@ -150,8 +151,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($idProduct);
-        // TODO: fix broken/missing concrete attributes mapping
-        $productConcreteTransfer->setAttributes([]);
+        $productConcreteTransfer->setAttributes($this->getAttributes($form));
         $productConcreteTransfer->setSku($sku);
         $productConcreteTransfer->setIsActive(false);
         $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
@@ -347,8 +347,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
             $imageSetCollection = $form->get($formName);
             foreach ($imageSetCollection as $imageSet) {
+                $imageSetData = array_filter($imageSet->getData());
+
                 $imageSetTransfer = (new ProductImageSetTransfer())
-                    ->fromArray($imageSet->getData(), true);
+                    ->fromArray($imageSetData, true);
 
                 if ($this->localeFacade->hasLocale($localeTransfer->getLocaleName())) {
                     $imageSetTransfer->setLocale($localeTransfer);
@@ -430,6 +432,29 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    protected function getAttributes(FormInterface $form)
+    {
+        $attributes = [];
+
+        $defaultName = ProductFormAdd::getLocalizedPrefixName(
+            ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT,
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+        );
+
+        foreach ($form->get($defaultName)->getData() as $attributeKey => $attributeData) {
+            if ($attributeData[AttributeAbstractForm::FIELD_VALUE] !== null) {
+                $attributes[$attributeKey] = $attributeData[AttributeAbstractForm::FIELD_VALUE];
+            }
+        }
+
+        return $attributes;
     }
 
 }

@@ -23,8 +23,6 @@ class UrlManager implements UrlManagerInterface
 
     const ITEM_TYPE_URL = 'url';
 
-    const PRODUCT_ABSTRACT = 'product_abstract';
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -404,8 +402,8 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @deprecated This method will be removed with next major release because of invalid dependency direction. Product
-     * bundle can internally read the necessary urls through the UrlQueryContainer.
+     * @deprecated This method will be removed with next major release because of invalid dependency direction.
+     * Use ProductFacade::getProductUrl() instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -422,12 +420,7 @@ class UrlManager implements UrlManagerInterface
 
         $urlTransfer = new UrlTransfer();
         if ($urlEntity) {
-            $urlTransfer = $this->convertUrlEntityToTransfer($urlEntity);
-        } else {
-            $urlTransfer->setFkProductAbstract($idProductAbstract);
-            $urlTransfer->setFkLocale($idLocale);
-            $urlTransfer->setResourceId($idProductAbstract);
-            $urlTransfer->setResourceType(self::PRODUCT_ABSTRACT);
+            $urlTransfer->fromArray($urlEntity->toArray(), true);
         }
 
         return $urlTransfer;

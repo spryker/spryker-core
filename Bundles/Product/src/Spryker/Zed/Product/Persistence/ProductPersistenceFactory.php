@@ -63,7 +63,7 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
+     * @return \Spryker\Zed\Product\Dependency\QueryContainer\ProductToUrlInterface
      */
     public function getUrlQueryContainer()
     {

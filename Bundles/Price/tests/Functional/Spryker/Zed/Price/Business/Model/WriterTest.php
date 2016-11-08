@@ -66,10 +66,12 @@ class WriterTest extends Test
      */
     public function testCreatePriceType()
     {
-        $priceTypeEntity = $this->priceFacade->createPriceType(self::PRICE_TYPE_1);
-        $priceTypeQuery = SpyPriceTypeQuery::create()->filterByName($priceTypeEntity->getName())->findOne();
+        $idPriceType = $this->priceFacade->createPriceType(self::PRICE_TYPE_1);
+        $priceTypeEntity = SpyPriceTypeQuery::create()
+            ->filterByName(self::PRICE_TYPE_1)
+            ->findOne();
 
-        $this->assertNotEmpty($priceTypeQuery);
+        $this->assertEquals($idPriceType, $priceTypeEntity->getIdPriceType());
     }
 
     /**

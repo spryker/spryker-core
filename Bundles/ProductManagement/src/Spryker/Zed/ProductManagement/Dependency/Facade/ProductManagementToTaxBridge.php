@@ -39,4 +39,14 @@ class ProductManagementToTaxBridge implements ProductManagementToTaxInterface
         return $this->taxFacade->getTaxSets();
     }
 
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
+    public function getTaxSet($idTaxSet)
+    {
+        return $this->taxFacade->getTaxSet($idTaxSet);
+    }
+
 }

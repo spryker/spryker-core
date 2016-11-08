@@ -93,7 +93,7 @@ class PluginConcreteManager implements PluginConcreteManagerInterface
      */
     public function triggerBeforeUpdatePlugins(ProductConcreteTransfer $productConcreteTransfer)
     {
-        foreach ($this->afterUpdateCollection as $plugin) {
+        foreach ($this->beforeUpdateCollection as $plugin) {
             $productConcreteTransfer = $plugin->update($productConcreteTransfer);
         }
 

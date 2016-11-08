@@ -36,7 +36,7 @@ interface ProductClientInterface
      *
      * @return array
      */
-    public function getAttributeMapByIdProductAbstractForCurrectLocale($idProductAbstract);
+    public function getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract);
 
     /**
      * @api

@@ -146,7 +146,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     {
         $this->setupDefaultProducts();
 
-        $productConcreteTransfer = $this->productFacade->getProductConcreteById(
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById(
             $this->productConcreteTransfer->getIdProductConcrete()
         );
 
@@ -159,7 +159,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
      */
     public function testGetProductConcreteByIdShouldReturnNull()
     {
-        $productConcreteTransfer = $this->productFacade->getProductConcreteById(101001);
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById(101001);
 
         $this->assertNull($productConcreteTransfer);
     }
@@ -171,7 +171,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     {
         $this->setupDefaultProducts();
 
-        $id = $this->productFacade->getProductConcreteIdBySku($this->productConcreteTransfer->getSku());
+        $id = $this->productFacade->findProductConcreteIdBySku($this->productConcreteTransfer->getSku());
 
         $this->assertEquals($this->productConcreteTransfer->getIdProductConcrete(), $id);
     }
@@ -181,7 +181,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
      */
     public function testGetProductConcreteIdBySkuShouldReturnNull()
     {
-        $id = $this->productFacade->getProductConcreteIdBySku('INVALIDSKU');
+        $id = $this->productFacade->findProductConcreteIdBySku('INVALIDSKU');
 
         $this->assertNull($id);
     }

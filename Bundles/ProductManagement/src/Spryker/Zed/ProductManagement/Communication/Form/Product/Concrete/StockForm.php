@@ -21,7 +21,6 @@ class StockForm extends AbstractType
     const FIELD_QUANTITY = 'quantity';
     const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
-
     /**
      * @return string
      */
