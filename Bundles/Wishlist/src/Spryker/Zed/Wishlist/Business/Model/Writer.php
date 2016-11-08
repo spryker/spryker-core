@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
