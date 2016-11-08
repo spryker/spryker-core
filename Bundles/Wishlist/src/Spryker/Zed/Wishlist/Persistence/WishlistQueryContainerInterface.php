@@ -19,7 +19,6 @@ interface WishlistQueryContainerInterface extends QueryContainerInterface
      */
     public function queryWishlist();
 
-
     /**
      * @api
      *

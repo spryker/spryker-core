@@ -10,9 +10,7 @@ namespace Spryker\Client\Wishlist;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartBridge;
-use Spryker\Client\Wishlist\Dependency\Client\WishlistToCustomerBridge;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
-use Spryker\Client\Wishlist\Dependency\Client\WishlistToStorageBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {

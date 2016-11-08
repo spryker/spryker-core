@@ -8,11 +8,9 @@
 namespace Functional\Spryker\Zed\Wishlist;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistItemUpdateRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
-use Generated\Shared\Transfer\WishlistPaginationTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -502,7 +500,7 @@ class WishlistFacadeTest extends Test
         $itemsPerPage = 10;
         $orderBy = SpyWishlistItemTableMap::COL_CREATED_AT;
         $orderDirection = Criteria::DESC;
-        $itemsTotal =  $this->wishlistQueryContainer
+        $itemsTotal = $this->wishlistQueryContainer
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
             ->count();
 
