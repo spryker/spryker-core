@@ -1,14 +1,9 @@
 {
   "name": "spryker/dummy-payment",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "spryker/checkout": "^2.1.0",
     "spryker/kernel": "^2.4.3",
-    "spryker/library": "^2.0.0",
+    "spryker/money": "^1.0.0",
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/payment": "^2.0.0",
     "spryker/refund": "^3.0.0",
@@ -19,7 +14,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/propel": "^2.2.0"
   },
   "description": "DummyPayment bundle",
   "license": "proprietary",
@@ -33,10 +29,27 @@
   "config": {
     "sort-packages": true
   },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }
