@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery;
-use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -355,7 +354,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $queryPaymentLogMock->method('getData')->willReturn([]);
         $queryContainer->method('queryPaymentLog')->willReturn($queryPaymentLogMock);
 
-
         $paymentRatepayItemQuery = $this->getMock(SpyPaymentRatepayItemQuery::class, ['findOne']);
         $paymentRatepayItemQuery->method('findOne')->willReturn(null);
 
@@ -371,13 +369,13 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     protected function testBasketAndItems()
     {
         //Basket
-        $this->assertContains($this->requestTransfer->getShoppingBasket()->getAmount(), ['54.00', '18.00']);
+        $this->assertContains($this->requestTransfer->getShoppingBasket()->getAmount(), ['58.00', '18.00']);
         $this->assertEquals('iso3', $this->requestTransfer->getShoppingBasket()->getCurrency());
         $this->assertEquals(0, (float)$this->requestTransfer->getShoppingBasket()->getShippingUnitPrice());
         $this->assertEquals(0, (float)$this->requestTransfer->getShoppingBasket()->getShippingTaxRate());
         $this->assertEquals('Shipping costs', $this->requestTransfer->getShoppingBasket()->getShippingTitle());
-        $this->assertEquals(0, $this->requestTransfer->getShoppingBasket()->getDiscountTaxRate());
-        $this->assertEquals(0, $this->requestTransfer->getShoppingBasket()->getDiscountUnitPrice());
+        $this->assertEquals(19, $this->requestTransfer->getShoppingBasket()->getDiscountTaxRate());
+        $this->assertContains($this->requestTransfer->getShoppingBasket()->getDiscountUnitPrice(), [0, -2]);
         $this->assertEquals('Discount', $this->requestTransfer->getShoppingBasket()->getDiscountTitle());
 
         $this->assertArrayHasKey(0, $this->requestTransfer->getShoppingBasket()->getItems());
