@@ -64,7 +64,6 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1,  $updated);
     }
 
-
     /**
      * @return void
      */
@@ -234,7 +233,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -242,7 +241,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryMock()
     {
-        return $this->getMock(SpyDiscountQuery::class);
+        return $this->getMockBuilder(SpyDiscountQuery::class)->getMock();
     }
 
     /**
@@ -250,7 +249,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountVoucherMock()
     {
-        $discountVoucherEntity = $this->getMock(SpyDiscountVoucher::class);
+        $discountVoucherEntity = $this->getMockBuilder(SpyDiscountVoucher::class)->getMock();
 
         return $discountVoucherEntity;
     }

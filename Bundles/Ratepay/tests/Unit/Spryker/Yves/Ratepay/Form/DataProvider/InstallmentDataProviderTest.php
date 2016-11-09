@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Yves\Ratepay\Form\DataProvider;
 
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -75,7 +74,7 @@ class InstallmentDataProviderTest extends AbstractDataProviderTest
      */
     protected function getRatepayClientMock()
     {
-        return $this->getMock(RatepayClientInterface::class);
+        return $this->getMockBuilder(RatepayClientInterface::class)->getMock();
     }
 
     /**
@@ -83,7 +82,7 @@ class InstallmentDataProviderTest extends AbstractDataProviderTest
      */
     protected function getSessionClientMock()
     {
-        return $this->getMock(SessionClientInterface::class);
+        return $this->getMockBuilder(SessionClientInterface::class)->getMock();
     }
 
 }

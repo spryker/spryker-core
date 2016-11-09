@@ -64,7 +64,7 @@ class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPostgreSqlDatabaseCreatorMock(array $methods = [])
     {
-        return $this->getMock(PostgreSqlDatabaseCreator::class, $methods);
+        return $this->getMockBuilder(PostgreSqlDatabaseCreator::class)->setMethods($methods)->getMock();
     }
 
 }

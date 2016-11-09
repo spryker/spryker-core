@@ -36,7 +36,7 @@ class PrepaymentSaverTest extends AbstractSaverTest
     }
 
     /**
-     * @return mixed
+     * @return \Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer
      */
     protected function getPaymentTransferFromQuote()
     {

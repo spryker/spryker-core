@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <statemachine
+        xmlns="spryker:oms"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="process.xsd">
+        xsi:schemaLocation="spryker:oms http://static.spryker.com/oms-01.xsd">
 
     <process name="RatepayElv01" main="true">
         <subprocesses>
@@ -74,4 +75,5 @@
     <process name="RatepayShipment" file="RatepaySubProcesses/RatepayShipment.xml"/>
     <process name="RatepayRefund" file="RatepaySubProcesses/RatepayRefund.xml"/>
     <process name="RatepayCancel" file="RatepaySubProcesses/RatepayCancel.xml"/>
+
 </statemachine>

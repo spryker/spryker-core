@@ -41,7 +41,7 @@ abstract class AbstractOptInHandler
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
-     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber|null
      */
     protected function findSubscriberEntity(NewsletterSubscriberTransfer $subscriberTransfer)
     {

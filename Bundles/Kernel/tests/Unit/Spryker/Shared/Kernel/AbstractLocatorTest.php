@@ -24,7 +24,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateInstanceShouldThrowExceptionIfApplicationNotDefined()
     {
-        $this->setExpectedException('\Exception');
+        $this->expectException('\Exception');
 
         new MissingPropertyLocator();
     }
@@ -34,7 +34,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanCreateShouldThrowException()
     {
-        $this->setExpectedException('\Exception');
+        $this->expectException('\Exception');
 
         new MissingPropertyLocator();
     }

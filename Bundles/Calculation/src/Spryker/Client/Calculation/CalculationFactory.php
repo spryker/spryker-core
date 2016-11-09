@@ -18,7 +18,7 @@ class CalculationFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        return new CalculationStub($this->createZedRequestClient());
+        return new CalculationStub($this->getZedRequestClient());
     }
 
 }

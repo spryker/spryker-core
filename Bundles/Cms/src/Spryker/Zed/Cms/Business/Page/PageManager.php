@@ -84,9 +84,9 @@ class PageManager implements PageManagerInterface
 
         if ($pageTransfer->getIdCmsPage() === null) {
             return $this->createPage($pageTransfer);
-        } else {
-            return $this->updatePage($pageTransfer);
         }
+
+        return $this->updatePage($pageTransfer);
     }
 
     /**
@@ -204,7 +204,7 @@ class PageManager implements PageManagerInterface
             $this->glossaryFacade->touchTranslationForKeyId($pageMapping->getFkGlossaryKey(), $localeTransfer);
         }
 
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage(), true);
     }
 
     /**

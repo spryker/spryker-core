@@ -13,7 +13,7 @@ interface TokenGeneratorInterface
     const DEFAULT_ALGORITHM = 'sha256';
 
     /**
-     * @return mixed
+     * @return string
      */
     public function generateToken();
 

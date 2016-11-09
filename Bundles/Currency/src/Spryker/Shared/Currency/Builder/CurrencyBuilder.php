@@ -8,15 +8,15 @@
 namespace Spryker\Shared\Currency\Builder;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface;
+use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface;
 
 class CurrencyBuilder implements CurrencyBuilderInterface
 {
 
     /**
-     * @var \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface
+     * @var \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
-    protected $currencyBundle;
+    protected $currencyRepository;
 
     /**
      * @var string
@@ -24,12 +24,12 @@ class CurrencyBuilder implements CurrencyBuilderInterface
     protected $defaultIsoCode;
 
     /**
-     * @param \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface $currencyBundle
+     * @param \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface $currencyRepository
      * @param string $defaultIsoCode
      */
-    public function __construct(CurrencyBundleInterface $currencyBundle, $defaultIsoCode)
+    public function __construct(CurrencyToInternationalizationInterface $currencyRepository, $defaultIsoCode)
     {
-        $this->currencyBundle = $currencyBundle;
+        $this->currencyRepository = $currencyRepository;
         $this->defaultIsoCode = $defaultIsoCode;
     }
 
@@ -42,8 +42,8 @@ class CurrencyBuilder implements CurrencyBuilderInterface
     {
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode($isoCode);
-        $currencyTransfer->setName($this->currencyBundle->getCurrencyName($isoCode));
-        $currencyTransfer->setSymbol($this->currencyBundle->getCurrencySymbol($isoCode));
+        $currencyTransfer->setName($this->currencyRepository->getNameByIsoCode($isoCode));
+        $currencyTransfer->setSymbol($this->currencyRepository->getSymbolByIsoCode($isoCode));
         $currencyTransfer->setIsDefault($isoCode === $this->defaultIsoCode);
 
         return $currencyTransfer;

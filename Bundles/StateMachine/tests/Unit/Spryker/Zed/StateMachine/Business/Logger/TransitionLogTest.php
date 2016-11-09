@@ -88,8 +88,6 @@ class TransitionLogTest extends StateMachineMocks
         $this->assertEquals('two=2', $storedParams[1]);
     }
 
-
-
     /**
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock
      *
@@ -97,11 +95,10 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock)
     {
-        $partialTransitionLogMock = $this->getMock(
-            TransitionLog::class,
-            ['createStateMachineTransitionLogEntity'],
-            [$this->createPathFinderMock()]
-        );
+        $partialTransitionLogMock = $this->getMockBuilder(TransitionLog::class)
+            ->setMethods(['createStateMachineTransitionLogEntity'])
+            ->setConstructorArgs([$this->createPathFinderMock()])
+            ->getMock();
 
         $partialTransitionLogMock->method('createStateMachineTransitionLogEntity')
             ->willReturn($stateMachineTransitionLogEntityMock);
@@ -114,7 +111,7 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createPathFinderMock()
     {
-        return $this->getMock(PathFinderInterface::class);
+        return $this->getMockBuilder(PathFinderInterface::class)->getMock();
     }
 
     /**
@@ -122,7 +119,7 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createTransitionLogEntityMock()
     {
-        return $this->getMock(SpyStateMachineTransitionLog::class, ['save']);
+        return $this->getMockBuilder(SpyStateMachineTransitionLog::class)->setMethods(['save'])->getMock();
     }
 
     /**

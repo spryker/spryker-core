@@ -13,6 +13,8 @@ interface CollectorPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -23,12 +25,16 @@ interface CollectorPluginInterface
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName();
 
     /**
      * Data types used by this field. (string, integer, list)
+     *
+     * @api
      *
      * @return array|string[]
      */

@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
@@ -84,10 +83,8 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
         $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
-        $this->setExpectedException(
-            CheckoutPluginNotFoundException::class,
-            'Could not find any plugin for "unknown" provider. You need to add the needed plugins within your DependencyInjector.'
-        );
+        $this->expectException(CheckoutPluginNotFoundException::class);
+        $this->expectExceptionMessage('Could not find any plugin for "unknown" provider. You need to add the needed plugins within your DependencyInjector.');
 
         $checkoutPluginCollection->get('unknown', self::PLUGIN_TYPE);
     }
@@ -100,10 +97,8 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
         $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
-        $this->setExpectedException(
-            CheckoutPluginNotFoundException::class,
-            'Could not find "unknown" plugin type for "provider" provider. You need to add the needed plugins within your DependencyInjector.'
-        );
+        $this->expectException(CheckoutPluginNotFoundException::class);
+        $this->expectExceptionMessage('Could not find "unknown" plugin type for "provider" provider. You need to add the needed plugins within your DependencyInjector.');
 
         $checkoutPluginCollection->get(self::PROVIDER, 'unknown');
     }
@@ -113,7 +108,7 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getPluginMock()
     {
-        return $this->getMock(CheckoutPluginInterface::class);
+        return $this->getMockBuilder(CheckoutPluginInterface::class)->getMock();
     }
 
 }

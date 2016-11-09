@@ -7,9 +7,10 @@
 
 namespace Spryker\Yves\Money\Plugin;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Money\MoneyConstants;
-use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
@@ -62,7 +63,7 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function formatWithSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITH_SYMBOL);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyFormatterCollection::FORMATTER_WITH_SYMBOL);
     }
 
     /**
@@ -76,7 +77,22 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyConstants::FORMATTER_WITHOUT_SYMBOL);
+        return $this->getFactory()->createMoneyFormatter()->format($moneyTransfer, MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL);
+    }
+
+    /**
+     * This money will return a MoneyTransfer parsed from the given value.
+     *
+     * E.g. `$value = 10,00 €` `CurrencyTransfer::$code = EUR` will return `MoneyTransfer::$amount(1000)`
+     *
+     * @param string $value
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function parse($value, CurrencyTransfer $currencyTransfer)
+    {
+        return $this->getFactory()->createMoneyParser()->parse($value, $currencyTransfer);
     }
 
     /**

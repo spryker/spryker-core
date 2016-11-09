@@ -31,13 +31,13 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
-     * @param int $value
+     * @param float $value
      *
      * @return int
      */
     public function transformForPersistence($value)
     {
-        return $value * 100;
+        return (int)round($value * 100);
     }
 
     /**
@@ -47,7 +47,7 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
      */
     public function transformFromPersistence($value)
     {
-        return $value / 100;
+        return (int)round($value / 100);
     }
 
     /**
@@ -67,12 +67,12 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     {
         return [
             new Regex([
-                'pattern' => '/[0-9\.\,]+/'
+                'pattern' => '/[0-9\.\,]+/',
             ]),
             new Range([
                 'min' => 1,
-                'max' => 100
-            ])
+                'max' => 100,
+            ]),
         ];
     }
 

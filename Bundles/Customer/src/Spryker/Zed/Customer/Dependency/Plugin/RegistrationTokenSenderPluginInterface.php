@@ -11,6 +11,8 @@ interface RegistrationTokenSenderPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $token
      *

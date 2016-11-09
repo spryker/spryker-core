@@ -19,6 +19,8 @@ interface CollectorPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
@@ -40,6 +42,8 @@ interface CollectorPluginInterface
     );
 
     /**
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

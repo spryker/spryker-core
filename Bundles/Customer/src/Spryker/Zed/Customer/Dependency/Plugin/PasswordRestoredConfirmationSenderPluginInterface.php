@@ -11,6 +11,8 @@ interface PasswordRestoredConfirmationSenderPluginInterface
 {
 
     /**
+     * @api
+     *
      * @param string $email
      *
      * @return bool

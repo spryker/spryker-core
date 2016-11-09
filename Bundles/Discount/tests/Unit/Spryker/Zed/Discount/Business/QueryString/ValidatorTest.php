@@ -60,7 +60,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $messages);
     }
 
-
     /**
      * @return void
      */
@@ -130,7 +129,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($queryStringException, $messages[0]);
     }
 
-
     /**
      * @return void
      */
@@ -183,7 +181,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRuleSpecificationMock()
     {
-        return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
 
 }

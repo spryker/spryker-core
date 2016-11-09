@@ -83,7 +83,6 @@ class FormEventSubscriber implements EventSubscriberInterface
         $this->translationDomain = $translationDomain;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormEvent $event
      *

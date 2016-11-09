@@ -81,7 +81,7 @@ class DependencyInjectorResolverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getResolverMock(array $methods)
     {
-        $dependencyInjectorResolverMock = $this->getMock(DependencyInjectorResolver::class, $methods);
+        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods($methods)->getMock();
 
         return $dependencyInjectorResolverMock;
     }

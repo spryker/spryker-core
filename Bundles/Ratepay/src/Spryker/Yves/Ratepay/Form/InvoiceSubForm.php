@@ -32,7 +32,6 @@ class InvoiceSubForm extends SubFormAbstract
         ]);
     }
 
-
     /**
      * @return string
      */

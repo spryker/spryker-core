@@ -11,12 +11,12 @@ abstract class AbstractClientProvider
 {
 
     /**
-     * @var mixed
+     * @var object
      */
     protected $client;
 
     /**
-     * @return mixed
+     * @return object
      */
     public function getInstance()
     {
@@ -28,7 +28,7 @@ abstract class AbstractClientProvider
     }
 
     /**
-     * @return mixed
+     * @return object
      */
     abstract protected function createZedClient();
 

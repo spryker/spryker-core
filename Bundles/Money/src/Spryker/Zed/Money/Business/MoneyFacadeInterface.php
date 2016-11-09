@@ -6,6 +6,7 @@
  */
 namespace Spryker\Zed\Money\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 
 /**
@@ -79,6 +80,19 @@ interface MoneyFacadeInterface
      * @return string
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
+
+    /**
+     * Specification:
+     * - Parses a formatted string representation to MoneyTransfer
+     *
+     * @api
+     *
+     * @param string $value
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function parse($value, CurrencyTransfer $currencyTransfer);
 
     /**
      * Specification

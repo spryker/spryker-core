@@ -6,7 +6,7 @@
     "phpdocumentor/graphviz": "~1.0.4",
     "paragonie/random_compat": "~1.2.1",
     "everon/criteria-builder": "^1.1.0",
-    "mathiasverraes/money": "~3.0.0-beta2"
+    "moneyphp/money": "~3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
@@ -131,13 +131,13 @@
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
 
+      "Spryker\\Client\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Zed\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Yves\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Shared\\Currency\\": "Bundles/Currency/src",
+      "Functional\\Client\\Currency\\": "Bundles/Currency/tests",
       "Functional\\Zed\\Currency\\": "Bundles/Currency/tests",
       "Functional\\Yves\\Currency\\": "Bundles/Currency/tests",
-      "Unit\\Yves\\Currency\\": "Bundles/Currency/tests",
-      "Unit\\Zed\\Currency\\": "Bundles/Currency/tests",
       "Unit\\Shared\\Currency\\": "Bundles/Currency/tests",
 
       "Spryker\\Shared\\CustomerMailConnector\\": "Bundles/CustomerMailConnector/src",
@@ -252,9 +252,11 @@
       "Spryker\\Zed\\Messenger\\": "Bundles/Messenger/src",
       "Unit\\Spryker\\Zed\\Messenger\\": "Bundles/Messenger/tests",
 
+      "Spryker\\Client\\Money\\": "Bundles/Money/src",
       "Spryker\\Shared\\Money\\": "Bundles/Money/src",
       "Spryker\\Yves\\Money\\": "Bundles/Money/src",
       "Spryker\\Zed\\Money\\": "Bundles/Money/src",
+      "Unit\\Spryker\\Client\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Shared\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Yves\\Money\\": "Bundles/Money/tests",
       "Unit\\Spryker\\Zed\\Money\\": "Bundles/Money/tests",

@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Collector\Business\Fixture;
 
-use Pyz\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\CollectorConfig;
 
 class CollectorConfigWithNotDefinedDbEngineFake extends CollectorConfig
 {

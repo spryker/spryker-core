@@ -9,8 +9,10 @@ namespace ClientUnit\Spryker\Client\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Session\QuoteSessionInterface;
 use Spryker\Client\Cart\Zed\CartStubInterface;
+use Spryker\Client\Kernel\AbstractFactory;
 
 /**
  * @group Spryker
@@ -112,7 +114,6 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\QuoteTransfer', $quoteTransfer);
     }
 
-
     /**
      * @return void
      */
@@ -196,13 +197,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         QuoteSessionInterface $cartSession = null,
         CartStubInterface $cartStub = null
     ) {
-        $factoryMock = $this->getMock(
-            'Spryker\Client\Kernel\AbstractFactory',
-            ['createSession', 'createZedStub'],
-            [],
-            '',
-            false
-        );
+        $factoryMock = $this->getMockBuilder(AbstractFactory::class)->setMethods(['createSession', 'createZedStub'])->disableOriginalConstructor()->getMock();
 
         if ($cartSession !== null) {
             $factoryMock->expects($this->any())
@@ -225,13 +220,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      */
     private function getCartClientMock($factoryMock)
     {
-        $cartClientMock = $this->getMock(
-            'Spryker\Client\Cart\CartClient',
-            ['getFactory'],
-            [],
-            '',
-            false
-        );
+        $cartClientMock = $this->getMockBuilder(CartClient::class)->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
 
         $cartClientMock->expects($this->any())
             ->method('getFactory')
@@ -245,13 +234,13 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      */
     private function getSessionMock()
     {
-        $sessionMock = $this->getMock('Spryker\Client\Cart\Session\QuoteSessionInterface', [
+        $sessionMock = $this->getMockBuilder(QuoteSessionInterface::class)->setMethods([
             'getQuote',
             'setQuote',
             'getItemCount',
             'setItemCount',
             'clearQuote',
-        ]);
+        ])->getMock();
 
         return $sessionMock;
     }
@@ -261,11 +250,11 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      */
     private function getStubMock()
     {
-        return $this->getMock('Spryker\Client\Cart\Zed\CartStubInterface', [
+        return $this->getMockBuilder(CartStubInterface::class)->setMethods([
             'addItem',
             'removeItem',
             'storeQuote',
-        ]);
+        ])->getMock();
     }
 
 }

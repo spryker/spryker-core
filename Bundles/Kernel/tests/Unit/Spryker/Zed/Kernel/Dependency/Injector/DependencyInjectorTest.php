@@ -86,7 +86,7 @@ class DependencyInjectorTest extends \PHPUnit_Framework_TestCase
      */
     private function getAbstractDependencyInjectorMock()
     {
-        return $this->getMock(AbstractDependencyInjector::class);
+        return $this->getMockBuilder(AbstractDependencyInjector::class)->getMock();
     }
 
 }

@@ -155,7 +155,7 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $key
      *
-     * @return array
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryByKey($key);
 
@@ -168,5 +168,14 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales);
+
+    /**
+     * @api
+     *
+     * @param string $value
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationByValue($value);
 
 }

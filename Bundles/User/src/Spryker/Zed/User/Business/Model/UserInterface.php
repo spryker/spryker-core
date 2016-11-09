@@ -99,7 +99,7 @@ interface UserInterface
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return mixed
      */
     public function setCurrentUser(UserTransfer $user);
 

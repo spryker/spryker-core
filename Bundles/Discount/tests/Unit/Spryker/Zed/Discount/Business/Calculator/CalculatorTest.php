@@ -138,7 +138,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($collectedDiscounts);
     }
 
-
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -205,7 +204,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSpecificationBuilderMock()
     {
-        return $this->getMock(SpecificationBuilderInterface::class);
+        return $this->getMockBuilder(SpecificationBuilderInterface::class)->getMock();
     }
 
     /**
@@ -225,7 +224,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMessengerFacadeBridgeMock()
     {
-        return $this->getMock(DiscountToMessengerInterface::class);
+        return $this->getMockBuilder(DiscountToMessengerInterface::class)->getMock();
     }
 
     /**
@@ -233,7 +232,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCalculatorPluginMock()
     {
-        return $this->getMock(DiscountCalculatorPluginInterface::class);
+        return $this->getMockBuilder(DiscountCalculatorPluginInterface::class)->getMock();
     }
 
     /**
@@ -241,7 +240,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDistributorMock()
     {
-        return $this->getMock(DistributorInterface::class);
+        return $this->getMockBuilder(DistributorInterface::class)->getMock();
     }
 
     /**
@@ -249,7 +248,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function collectorSpecificationMock()
     {
-        return $this->getMock(CollectorSpecificationInterface::class);
+        return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
 
     /**

@@ -227,7 +227,6 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
         $specificationBuilder->buildFromQueryString('(sku = 123');
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $createComparatorOperatorsMock
@@ -266,7 +265,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMetaDataProviderMock()
     {
-        return $this->getMock(MetaDataProviderInterface::class);
+        return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
 
     /**
@@ -274,7 +273,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createClauseValidatorMock()
     {
-        return $this->getMock(ClauseValidatorInterface::class);
+        return $this->getMockBuilder(ClauseValidatorInterface::class)->getMock();
     }
 
     /**
@@ -290,20 +289,19 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorOperatorsMock()
     {
-        $createComparatorOperatorsMock = $this->getMock(ComparatorOperatorsInterface::class);
+        $createComparatorOperatorsMock = $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
 
         $createComparatorOperatorsMock->method('getCompoundComparatorExpressions')->willReturn(['is', 'in']);
 
         return $createComparatorOperatorsMock;
     }
 
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface
      */
     protected function createSpecificationProviderMock()
     {
-        $specificationProviderMock = $this->getMock(SpecificationProviderInterface::class);
+        $specificationProviderMock = $this->getMockBuilder(SpecificationProviderInterface::class)->getMock();
 
         return $specificationProviderMock;
     }
@@ -323,7 +321,7 @@ class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRuleSpecificationMock()
     {
-        return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
 
 }

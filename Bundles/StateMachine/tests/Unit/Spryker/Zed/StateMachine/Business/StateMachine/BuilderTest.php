@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Unit\Spryker\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -169,7 +168,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createStateMachineConfig()
     {
-        $stateMachineConfigMock = $this->getMock(StateMachineConfig::class);
+        $stateMachineConfigMock = $this->getMockBuilder(StateMachineConfig::class)->getMock();
 
         $pathToStateMachineFixtures = realpath(__DIR__ . '/../../../../../../Fixtures/StateMachine');
         $stateMachineConfigMock->method('getPathToStateMachineXmlFiles')->willReturn($pathToStateMachineFixtures);

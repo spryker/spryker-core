@@ -115,7 +115,7 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCollectorPluginMock()
     {
-        return $this->getMock(CollectorPluginInterface::class);
+        return $this->getMockBuilder(CollectorPluginInterface::class)->getMock();
     }
 
     /**
@@ -123,7 +123,7 @@ class CollectorProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCollectorSpecificationMock()
     {
-        return $this->getMock(CollectorSpecificationInterface::class);
+        return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
 
 }

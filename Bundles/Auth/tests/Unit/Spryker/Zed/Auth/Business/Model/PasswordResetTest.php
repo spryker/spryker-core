@@ -56,11 +56,7 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFacadeUser()
     {
-        $userFacade = $this->getMock(
-            AuthToUserBridge::class,
-            ['getUserByUsername'],
-            [new UserFacade()]
-        );
+        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods(['getUserByUsername'])->setConstructorArgs([new UserFacade()])->getMock();
 
         return $userFacade;
     }
@@ -74,11 +70,7 @@ class PasswordResetTest extends \PHPUnit_Framework_TestCase
      */
     protected function createPasswordReset($authQueryContainer, $userFacade, $authConfig)
     {
-        $passwordReset = $this->getMock(
-            PasswordReset::class,
-            ['persistResetPassword'],
-            [$authQueryContainer, $userFacade, $authConfig]
-        );
+        $passwordReset = $this->getMockBuilder(PasswordReset::class)->setMethods(['persistResetPassword'])->setConstructorArgs([$authQueryContainer, $userFacade, $authConfig])->getMock();
 
         return $passwordReset;
     }

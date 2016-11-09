@@ -74,7 +74,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return mixed[]
+     * @return array
      */
     protected function getSenderPlugins(Container $container)
     {

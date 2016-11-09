@@ -437,7 +437,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
             ->validateByType($type, $queryString);
     }
 
-
     /**
      * Specification:
      * - Hydrate discount entity from DiscountConfiguratorTransfer and persist it.
@@ -514,7 +513,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
             ->createDiscountPersist()
             ->toggleDiscountVisibility($idDiscount, $isActive);
     }
-
 
     /**
      * Specification:

@@ -33,11 +33,11 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
-        return $this->getMock(MessengerInterface::class);
+        return $this->getMockBuilder(MessengerInterface::class)->getMock();
     }
 
     /**
@@ -63,6 +63,18 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
         $finder->in($this->getConfig()->getClassTargetDirectory())->name('*Transfer.php');
 
         $this->assertTrue($finder->count() > 0);
+    }
+
+    /**
+     * @depends testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects
+     *
+     * @return void
+     */
+    public function testValidateTransferObjectsShouldValidateTransferObjects()
+    {
+        $result = $this->getFacade()->validateTransferObjects($this->getMessenger(), ['bundle' => false, 'verbose' => false]);
+
+        $this->assertTrue($result);
     }
 
     /**

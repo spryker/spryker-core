@@ -320,7 +320,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorMock()
     {
-        return $this->getMock(ComparatorInterface::class);
+        return $this->getMockBuilder(ComparatorInterface::class)->getMock();
     }
 
 }

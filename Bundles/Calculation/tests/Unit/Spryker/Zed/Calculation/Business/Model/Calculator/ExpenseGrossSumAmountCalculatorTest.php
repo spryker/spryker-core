@@ -49,7 +49,7 @@ class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCalculatorWhenUnitGrossPriceNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $expenseGrossSumAmountCalculator = $this->createExpenseGrossSumAmountCalculator();
         $quoteTransfer = $this->createQuoteTransferWithFixtureData(null, self::ITEM_QUANTITY);
@@ -61,7 +61,7 @@ class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCalculatorWhenItemQuantityIsNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $expenseGrossSumAmountCalculator = $this->createExpenseGrossSumAmountCalculator();
         $quoteTransfer = $this->createQuoteTransferWithFixtureData(self::UNIT_GROSS_PRICE, null);
