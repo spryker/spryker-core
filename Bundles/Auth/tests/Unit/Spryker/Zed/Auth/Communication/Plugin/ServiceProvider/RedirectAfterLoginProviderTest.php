@@ -34,10 +34,20 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function setUp()
+    {
+        Request::setTrustedHosts([]);
+        Request::setTrustedProxies([]);
+    }
+
+    /**
+     * @return void
+     */
     public function testOnKernelResponseShouldSetRefererWhenRedirectingToLogin()
     {
         $kernel = $this->getHttpKernel();
         $request = new Request();
+
         $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 

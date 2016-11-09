@@ -28,7 +28,7 @@ class SystemUnderTestBootstrap
     const APPLICATION_YVES = 'Yves';
     const APPLICATION_SHARED = 'Shared';
     const APPLICATION_CLIENT = 'Client';
-    const TEST_ENVIRONMENT = 'test';
+    const TEST_ENVIRONMENT = 'devtest';
 
     /**
      * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap

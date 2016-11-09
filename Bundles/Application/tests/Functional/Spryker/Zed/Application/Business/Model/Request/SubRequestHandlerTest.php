@@ -34,6 +34,17 @@ class SubRequestHandlerTest extends WebTestCase
     /**
      * @return void
      */
+    public function setUp()
+    {
+        Request::setTrustedHosts([]);
+        Request::setTrustedProxies([]);
+
+        parent::setUp();
+    }
+
+    /**
+     * @return void
+     */
     public function testHandleSubRequestWithGetParams()
     {
         $client = $this->createClient();

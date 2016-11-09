@@ -42,7 +42,7 @@ class Zed extends Infrastructure
      */
     public function amZed()
     {
-        $url = 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI);
+        $url = Config::get(ApplicationConstants::HOST_ZED_GUI);
 
         $this->getWebDriver()->_reconfigure(['url' => $url]);
 
