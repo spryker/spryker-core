@@ -14,7 +14,7 @@ interface SpecificationProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return mixed
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
     public function getSpecificationContext(ClauseTransfer $clauseTransfer);
 
@@ -22,7 +22,7 @@ interface SpecificationProviderInterface
      * @param mixed $leftNode
      * @param mixed $rightNode
      *
-     * @return mixed
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     public function createAnd($leftNode, $rightNode);
 
@@ -30,7 +30,7 @@ interface SpecificationProviderInterface
      * @param mixed $leftNode
      * @param mixed $rightNode
      *
-     * @return mixed
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     public function createOr($leftNode, $rightNode);
 

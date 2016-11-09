@@ -47,7 +47,7 @@ class JenkinsController extends AbstractController
      * @param string $url
      * @param string $body
      *
-     * @return mixed
+     * @return string
      */
     private function callJenkins($url, $body = '')
     {

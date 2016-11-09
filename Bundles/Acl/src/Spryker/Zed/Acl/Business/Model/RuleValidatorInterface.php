@@ -16,14 +16,14 @@ interface RuleValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\RulesTransfer $rules
      *
-     * @return mixed
+     * @return $this
      */
     public function setRules(RulesTransfer $rules);
 
     /**
      * @param \Generated\Shared\Transfer\RuleTransfer $rule
      *
-     * @return mixed
+     * @return void
      */
     public function addRule(RuleTransfer $rule);
 

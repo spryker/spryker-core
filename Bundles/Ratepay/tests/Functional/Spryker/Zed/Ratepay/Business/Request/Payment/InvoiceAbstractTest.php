@@ -37,7 +37,7 @@ abstract class InvoiceAbstractTest extends AbstractFacadeTest
     }
 
     /**
-     * @return mixed
+     * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer
      */
     protected function getPaymentTransferFromQuote()
     {

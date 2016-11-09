@@ -41,7 +41,7 @@ class Event implements EventInterface
     protected $manual;
 
     /**
-     * @param mixed $manual
+     * @param bool $manual
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isManual()
     {
@@ -59,7 +59,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param mixed $command
+     * @param string $command
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCommand()
     {
@@ -157,7 +157,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param mixed $timeout
+     * @param int $timeout
      *
      * @return void
      */
@@ -167,7 +167,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getTimeout()
     {
