@@ -203,11 +203,9 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
      */
     private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
     {
-        $discountSaverMock = $this->getMock(
-            DiscountOrderSaver::class,
-            $discountSaverMethods,
-            [$this->getDiscountQueryContainerMock($queryContainerMethods), $this->getVoucherCodeMock()]
-        );
+        $discountSaverMock = $this->getMockBuilder(DiscountOrderSaver::class)->setMethods($discountSaverMethods)
+            ->setConstructorArgs([$this->getDiscountQueryContainerMock($queryContainerMethods), $this->getVoucherCodeMock()])
+            ->getMock();
 
         return $discountSaverMock;
     }

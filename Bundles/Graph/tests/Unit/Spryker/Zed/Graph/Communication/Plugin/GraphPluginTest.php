@@ -53,7 +53,7 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
         $factoryMock = $this->getMockBuilder(GraphCommunicationFactory::class)->getMock();
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
-        $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
+        $pluginMock = $this->getMockBuilder(GraphPlugin::class)->setMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
         $pluginMock->method('getFactory')->willReturn($factoryMock);
 
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->init(self::GRAPH_NAME));
@@ -134,7 +134,7 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
         $factoryMock = $this->getMockBuilder(GraphCommunicationFactory::class)->getMock();
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
-        $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
+        $pluginMock = $this->getMockBuilder(GraphPlugin::class)->setMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
         $pluginMock->method('getFactory')->willReturn($factoryMock);
 
         return $pluginMock->init(self::GRAPH_NAME);

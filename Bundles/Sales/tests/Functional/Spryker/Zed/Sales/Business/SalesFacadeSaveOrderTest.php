@@ -65,9 +65,8 @@ class SalesFacadeSaveOrderTest extends Test
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $omsFacadeMock = $this->getMock(
-            SalesToOmsInterface::class,
-            [
+        $omsFacadeMock = $this->getMockBuilder(SalesToOmsInterface::class)
+            ->setMethods([
                 'selectProcess',
                 'getInitialStateEntity',
                 'getProcessEntity',
@@ -76,8 +75,8 @@ class SalesFacadeSaveOrderTest extends Test
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
                 'getOrderItemMatrix'
-            ]
-        );
+            ])
+            ->getMock();
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 

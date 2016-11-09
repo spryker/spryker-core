@@ -150,7 +150,7 @@ class SearchClientTest extends \PHPUnit_Framework_TestCase
         $queryExpanderMock
             ->expects($this->once())
             ->method('expandQuery')
-            ->willReturn($this->getMock(QueryInterface::class));
+            ->willReturn($this->getMockBuilder(QueryInterface::class)->getMock());
 
         $queryExpanders = [
             $queryExpanderMock

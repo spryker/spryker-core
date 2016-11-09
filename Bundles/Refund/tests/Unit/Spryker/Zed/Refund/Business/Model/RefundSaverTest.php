@@ -141,7 +141,10 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)->setMethods(['buildRefundEntity'])->setConstructorArgs([$salesQueryContainerMock])->getMock();
             $refundSaverMock->expects($this->once())->method('buildRefundEntity')->willReturn($refundEntity);
         } else {
-            $refundSaverMock = $this->getMock(RefundSaver::class, ['saveRefundEntity', 'updateOrderItems', 'updateExpenses'], [$this->getSalesQueryContainerMock()]);
+            $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
+                ->setMethods(['saveRefundEntity', 'updateOrderItems', 'updateExpenses'])
+                ->setConstructorArgs([$this->getSalesQueryContainerMock()])
+                ->getMock();
             $refundSaverMock->expects($this->once())->method('saveRefundEntity');
         }
 

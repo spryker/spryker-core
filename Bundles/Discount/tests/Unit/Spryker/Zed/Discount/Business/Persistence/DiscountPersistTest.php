@@ -242,11 +242,11 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
             $voucherEngineMock = $this->createVoucherEngineMock();
         }
 
-        $discountPersistMock = $this->getMock(
-            DiscountPersist::class,
-            ['createDiscountEntity', 'createVoucherPoolEntity'],
-            [$voucherEngineMock, $discountQueryContainerMock]
-        );
+        $discountPersistMock = $this->getMockBuilder(DiscountPersist::class)
+            ->setMethods(['createDiscountEntity', 'createVoucherPoolEntity'])
+            ->setConstructorArgs([$voucherEngineMock, $discountQueryContainerMock])
+            ->getMock();
+
         return $discountPersistMock;
     }
 

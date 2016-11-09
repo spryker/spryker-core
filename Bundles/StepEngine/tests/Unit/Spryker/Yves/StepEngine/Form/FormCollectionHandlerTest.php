@@ -207,7 +207,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
             $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
         }
 
-        $formCollectionHandlerMock = $this->getMock(FormCollectionHandler::class, $formCollectionHandlerMethods, $arguments);
+        $formCollectionHandlerMock = $this->getMockBuilder(FormCollectionHandler::class)->setMethods($formCollectionHandlerMethods)->setConstructorArgs($arguments)->getMock();
 
         return $formCollectionHandlerMock;
     }

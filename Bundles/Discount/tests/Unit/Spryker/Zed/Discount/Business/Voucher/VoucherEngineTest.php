@@ -217,14 +217,13 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
-        $voucherEngineMock = $this->getMock(
-            VoucherEngine::class,
-            ['createDiscountVoucherEntity'],
-            [
+        $voucherEngineMock = $this->getMockBuilder(VoucherEngine::class)
+            ->setMethods(['createDiscountVoucherEntity'])
+            ->setConstructorArgs([
                 $discountConfigMock,
                 $discountQueryContainerMock
-            ]
-        );
+            ])
+            ->getMock();
 
         $voucherEngineMock->method('createDiscountVoucherEntity')
             ->willReturn($discountVoucherEntity);
@@ -296,15 +295,14 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountVoucherQueryMock()
     {
-        return $this->getMock(
-            SpyDiscountVoucherQuery::class,
-            [
+        return $this->getMockBuilder(SpyDiscountVoucherQuery::class)
+            ->setMethods([
                 'orderByVoucherBatch',
                 'filterByFkDiscountVoucherPool',
                 'findOne',
                 'findOneByCode'
-            ]
-        );
+            ])
+            ->getMock();
     }
 
     /**

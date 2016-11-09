@@ -95,11 +95,10 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock)
     {
-        $partialTransitionLogMock = $this->getMock(
-            TransitionLog::class,
-            ['createStateMachineTransitionLogEntity'],
-            [$this->createPathFinderMock()]
-        );
+        $partialTransitionLogMock = $this->getMockBuilder(TransitionLog::class)
+            ->setMethods(['createStateMachineTransitionLogEntity'])
+            ->setConstructorArgs([$this->createPathFinderMock()])
+            ->getMock();
 
         $partialTransitionLogMock->method('createStateMachineTransitionLogEntity')
             ->willReturn($stateMachineTransitionLogEntityMock);

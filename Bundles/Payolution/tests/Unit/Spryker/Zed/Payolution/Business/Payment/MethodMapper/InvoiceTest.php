@@ -15,9 +15,12 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Library\Generator\StringGenerator;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
+use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
  * @group Unit
@@ -197,13 +200,9 @@ class InvoiceTest extends Test
      */
     private function getBundleConfigMock()
     {
-        return $this->getMock(
-            'Spryker\Zed\Payolution\PayolutionConfig',
-            [],
-            [],
-            '',
-            false
-        );
+        return $this->getMockBuilder(PayolutionConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
@@ -211,18 +210,15 @@ class InvoiceTest extends Test
      */
     private function getPaymentEntityMock()
     {
-        $orderEntityMock = $this->getMock(
-            'Orm\Zed\Sales\Persistence\SpySalesOrder',
-            []
-        );
+        $orderEntityMock = $this->getMockBuilder(SpySalesOrder::class)->getMock();
 
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock*/
-        $paymentEntityMock = $this->getMock(
-            'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
-            [
+        $paymentEntityMock = $this->getMockBuilder(SpyPaymentPayolution::class)
+            ->setMethods([
                 'getSpySalesOrder',
-            ]
-        );
+            ])
+            ->getMock();
+
         $paymentEntityMock
             ->expects($this->any())
             ->method('getSpySalesOrder')

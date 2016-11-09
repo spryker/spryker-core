@@ -70,10 +70,13 @@ class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createShipmentTaxRateCalculator()
     {
-        return $productItemTaxRateCalculatorMock = $this->getMock(ShipmentTaxRateCalculator::class, ['findTaxSetByIdShipmentMethod'], [
-            $this->createQueryContainerMock(),
-            $this->createProductOptionToTaxBridgeMock(),
-        ]);
+        return  $this->getMockBuilder(ShipmentTaxRateCalculator::class)
+            ->setMethods(['findTaxSetByIdShipmentMethod'])
+            ->setConstructorArgs([
+                $this->createQueryContainerMock(),
+                $this->createProductOptionToTaxBridgeMock(),
+            ])
+            ->getMock();
     }
 
     /**

@@ -129,10 +129,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
-        $sessionClient = $this->getMock(
-            SessionClient::class,
-            ['get', 'set']
-        );
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set'])->getMock();
 
         return $sessionClient;
     }

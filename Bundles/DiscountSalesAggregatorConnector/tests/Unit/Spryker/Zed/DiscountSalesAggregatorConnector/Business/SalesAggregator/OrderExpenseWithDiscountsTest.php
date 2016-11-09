@@ -76,11 +76,10 @@ class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
-        $orderExpensesWithDiscountsMock = $this->getMock(
-            OrderExpensesWithDiscounts::class,
-            ['getSalesOrderDiscounts'],
-            [$discountQueryContainerMock]
-        );
+        $orderExpensesWithDiscountsMock = $this->getMockBuilder(OrderExpensesWithDiscounts::class)
+            ->setMethods(['getSalesOrderDiscounts'])
+            ->setConstructorArgs([$discountQueryContainerMock])
+            ->getMock();
 
         $objectCollection = new ObjectCollection($salesDiscounts);
 

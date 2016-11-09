@@ -38,9 +38,9 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
 
         $redirectedManager = new RedirectManager(
             $queryContainer,
-            $this->getMock(UrlManagerInterface::class),
-            $this->getMock(UrlToTouchInterface::class),
-            $this->getMock(ConnectionInterface::class)
+            $this->getMockBuilder(UrlManagerInterface::class)->getMock(),
+            $this->getMockBuilder(UrlToTouchInterface::class)->getMock(),
+            $this->getMockBuilder(ConnectionInterface::class)->getMock()
         );
 
         $redirectedManager->deleteUrlRedirect(new RedirectTransfer());
