@@ -255,7 +255,7 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -263,7 +263,7 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryMock()
     {
-        return $this->getMock(SpyDiscountQuery::class, ['findOneByIdDiscount']);
+        return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
     }
 
     /**
@@ -271,7 +271,7 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
      */
     protected function createVoucherEngineMock()
     {
-        return $this->getMock(VoucherEngineInterface::class);
+        return $this->getMockBuilder(VoucherEngineInterface::class)->getMock();
     }
 
     /**
@@ -279,7 +279,7 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountEntityMock()
     {
-        $discountEntity = $this->getMock(SpyDiscount::class);
+        $discountEntity = $this->getMockBuilder(SpyDiscount::class)->getMock();
         $discountEntity->expects($this->once())
             ->method('save')
             ->willReturn(true);
@@ -292,7 +292,7 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
      */
     protected function createVoucherPoolEntity()
     {
-        $discountVoucherPoolEntity = $this->getMock(SpyDiscountVoucherPool::class);
+        $discountVoucherPoolEntity = $this->getMockBuilder(SpyDiscountVoucherPool::class)->getMock();
         $discountVoucherPoolEntity
             ->method('save')
             ->willReturn(true);

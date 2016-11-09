@@ -138,7 +138,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getEventMock()
     {
-        return $this->getMock(EventInterface::class);
+        return $this->getMockBuilder(EventInterface::class)->getMock();
     }
 
     /**
@@ -146,7 +146,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getStateMock()
     {
-        return $this->getMock(StateInterface::class);
+        return $this->getMockBuilder(StateInterface::class)->getMock();
     }
 
     /**
@@ -154,7 +154,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransitionMock()
     {
-        return $this->getMock(TransitionInterface::class);
+        return $this->getMockBuilder(TransitionInterface::class)->getMock();
     }
 
     /**
@@ -172,7 +172,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getDrawerMock()
     {
-        return $this->getMock(DrawerInterface::class);
+        return $this->getMockBuilder(DrawerInterface::class)->getMock();
     }
 
     /**

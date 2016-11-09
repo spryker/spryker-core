@@ -108,7 +108,7 @@ class CommandCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommandMock()
     {
-        return $this->getMock(CommandInterface::class);
+        return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
 
 }

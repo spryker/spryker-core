@@ -108,7 +108,7 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getPluginMock()
     {
-        return $this->getMock(CheckoutPluginInterface::class);
+        return $this->getMockBuilder(CheckoutPluginInterface::class)->getMock();
     }
 
 }

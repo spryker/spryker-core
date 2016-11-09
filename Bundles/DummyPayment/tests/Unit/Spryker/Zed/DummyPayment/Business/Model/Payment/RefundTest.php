@@ -56,7 +56,7 @@ class RefundTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRefundFacadeMock(RefundTransfer $refundTransfer)
     {
-        $refundFacadeMock = $this->getMock(DummyPaymentToRefundInterface::class);
+        $refundFacadeMock = $this->getMockBuilder(DummyPaymentToRefundInterface::class)->getMock();
         $refundFacadeMock->method('calculateRefund')->willReturn($refundTransfer);
         if ($refundTransfer->getAmount() > 0) {
             $refundFacadeMock->expects($this->once())->method('saveRefund');

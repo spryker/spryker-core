@@ -80,7 +80,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(QueryContainerNotFoundException::class);
 
-        $queryContainerResolverMock = $this->getMock(QueryContainerResolver::class, ['canResolve', 'getClassInfo']);
+        $queryContainerResolverMock = $this->getMockBuilder(QueryContainerResolver::class)->setMethods(['canResolve', 'getClassInfo'])->getMock();
         $queryContainerResolverMock->method('canResolve')->willReturn(false);
 
         $classInfo = new ClassInfo();
@@ -117,7 +117,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPluginMock(array $methods)
     {
-        $pluginMock = $this->getMock(FooPlugin::class, $methods);
+        $pluginMock = $this->getMockBuilder(FooPlugin::class)->setMethods($methods)->getMock();
 
         return $pluginMock;
     }

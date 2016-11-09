@@ -81,7 +81,7 @@ class PayolutionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getPayolutionClientMock()
     {
-        return $this->getMock(PayolutionClientInterface::class);
+        return $this->getMockBuilder(PayolutionClientInterface::class)->getMock();
     }
 
 }

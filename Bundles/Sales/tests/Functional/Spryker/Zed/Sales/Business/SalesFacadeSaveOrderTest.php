@@ -59,7 +59,7 @@ class SalesFacadeSaveOrderTest extends Test
     {
         parent::setUp();
 
-        $countryFacadeMock = $this->getMock(SalesToCountryInterface::class, ['getIdCountryByIso2Code', 'getAvailableCountries']);
+        $countryFacadeMock = $this->getMockBuilder(SalesToCountryInterface::class)->setMethods(['getIdCountryByIso2Code', 'getAvailableCountries'])->getMock();
         $countryFacadeMock->method('getIdCountryByIso2Code')
             ->will($this->returnValue(1));
 
@@ -101,7 +101,7 @@ class SalesFacadeSaveOrderTest extends Test
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
-        $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn('');
         $businessFactory->setConfig($salesConfigMock);
         $businessFactory->setContainer($container);

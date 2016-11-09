@@ -87,7 +87,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getConfigMock($return)
     {
-        $configMock = $this->getMock(GraphConfig::class, ['getGraphAdapterName']);
+        $configMock = $this->getMockBuilder(GraphConfig::class)->setMethods(['getGraphAdapterName'])->getMock();
         $configMock->method('getGraphAdapterName')->willReturn($return);
 
         return $configMock;

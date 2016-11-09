@@ -200,7 +200,7 @@ class AbstractPlaceOrderStepTest extends \PHPUnit_Framework_TestCase
      */
     private function getCheckoutClientMock()
     {
-        return $this->getMock(CheckoutClientInterface::class);
+        return $this->getMockBuilder(CheckoutClientInterface::class)->getMock();
     }
 
     /**

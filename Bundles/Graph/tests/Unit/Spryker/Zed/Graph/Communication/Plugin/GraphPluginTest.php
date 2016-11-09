@@ -47,10 +47,10 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testInit()
     {
-        $graphMock = $this->getMock(GraphInterface::class, ['create', 'addNode', 'addEdge', 'addCluster', 'render']);
+        $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');
 
-        $factoryMock = $this->getMock(GraphCommunicationFactory::class);
+        $factoryMock = $this->getMockBuilder(GraphCommunicationFactory::class)->getMock();
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
         $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
@@ -128,10 +128,10 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPluginMock()
     {
-        $graphMock = $this->getMock(GraphInterface::class, ['create', 'addNode', 'addEdge', 'addCluster', 'render']);
+        $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');
 
-        $factoryMock = $this->getMock(GraphCommunicationFactory::class);
+        $factoryMock = $this->getMockBuilder(GraphCommunicationFactory::class)->getMock();
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
         $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);

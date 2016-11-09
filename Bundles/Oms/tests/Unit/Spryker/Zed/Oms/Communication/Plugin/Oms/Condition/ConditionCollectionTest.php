@@ -108,7 +108,7 @@ class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getConditionMock()
     {
-        return $this->getMock(ConditionInterface::class);
+        return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
 
 }

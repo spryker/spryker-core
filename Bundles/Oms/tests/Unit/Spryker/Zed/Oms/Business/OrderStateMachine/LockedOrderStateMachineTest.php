@@ -320,7 +320,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createOmsQueryMock()
     {
-        $this->omsQueryMock = $this->getMock(SpyOmsStateMachineLockQuery::class, ['count', 'delete']);
+        $this->omsQueryMock = $this->getMockBuilder(SpyOmsStateMachineLockQuery::class)->setMethods(['count', 'delete'])->getMock();
         return $this->omsQueryMock;
     }
 

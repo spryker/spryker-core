@@ -178,7 +178,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
      */
     private function getDiscountQueryContainerMock(array $methods = [])
     {
-        $discountQueryContainerMock = $this->getMock('Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface', $methods);
+        $discountQueryContainerMock = $this->getMockBuilder('Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface')->setMethods($methods)->getMock();
 
         return $discountQueryContainerMock;
     }

@@ -115,7 +115,7 @@ class ItemLockTest extends StateMachineMocks
      */
     protected function createStateMachineItemLockEntityMock()
     {
-        $stateMachineLockEntityMock = $this->getMock(SpyStateMachineLock::class);
+        $stateMachineLockEntityMock = $this->getMockBuilder(SpyStateMachineLock::class)->getMock();
 
         return $stateMachineLockEntityMock;
     }
@@ -125,7 +125,7 @@ class ItemLockTest extends StateMachineMocks
      */
     protected function createStateMachineQueryMock()
     {
-        return $this->getMock(SpyStateMachineLockQuery::class);
+        return $this->getMockBuilder(SpyStateMachineLockQuery::class)->getMock();
     }
 
 }

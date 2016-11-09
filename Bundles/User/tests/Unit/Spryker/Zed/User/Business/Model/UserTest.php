@@ -142,7 +142,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function createQueryContainer()
     {
-        $queryContainer = $this->getMock(UserQueryContainerInterface::class);
+        $queryContainer = $this->getMockBuilder(UserQueryContainerInterface::class)->getMock();
 
         return $queryContainer;
     }

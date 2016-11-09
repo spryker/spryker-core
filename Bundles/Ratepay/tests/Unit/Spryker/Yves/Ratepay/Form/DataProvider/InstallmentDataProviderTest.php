@@ -74,7 +74,7 @@ class InstallmentDataProviderTest extends AbstractDataProviderTest
      */
     protected function getRatepayClientMock()
     {
-        return $this->getMock(RatepayClientInterface::class);
+        return $this->getMockBuilder(RatepayClientInterface::class)->getMock();
     }
 
     /**
@@ -82,7 +82,7 @@ class InstallmentDataProviderTest extends AbstractDataProviderTest
      */
     protected function getSessionClientMock()
     {
-        return $this->getMock(SessionClientInterface::class);
+        return $this->getMockBuilder(SessionClientInterface::class)->getMock();
     }
 
 }

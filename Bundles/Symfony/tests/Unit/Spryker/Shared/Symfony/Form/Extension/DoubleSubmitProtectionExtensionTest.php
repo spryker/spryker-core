@@ -71,7 +71,7 @@ class DoubleSubmitProtectionExtensionTest extends Test
             StorageInterface::class,
             ['getToken', 'setToken', 'deleteToken', 'checkTokenEquals']
         );
-        $this->translator = $this->getMock(TranslatorInterface::class);
+        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
 
         $this->formFactory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getFormExtensions())

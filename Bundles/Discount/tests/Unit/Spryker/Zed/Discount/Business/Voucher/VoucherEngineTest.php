@@ -272,7 +272,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountConfigMock()
     {
-        return $this->getMock(DiscountConfig::class);
+        return $this->getMockBuilder(DiscountConfig::class)->getMock();
     }
 
     /**
@@ -280,7 +280,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -312,7 +312,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConnectionMock()
     {
-        return $this->getMock(ConnectionInterface::class);
+        return $this->getMockBuilder(ConnectionInterface::class)->getMock();
     }
 
     /**

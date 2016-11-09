@@ -331,8 +331,8 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
      */
     protected function getQueryContainerMock()
     {
-        $queryContainer = $this->getMock(RatepayQueryContainerInterface::class);
-        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst']);
+        $queryContainer = $this->getMockBuilder(RatepayQueryContainerInterface::class)->getMock();
+        $queryPaymentsMock = $this->getMockBuilder(SpyPaymentRatepayQuery::class)->setMethods(['findByFkSalesOrder', 'getFirst'])->getMock();
 
         $ratepayPaymentEntity = new SpyPaymentRatepay();
         $this->setRatepayPaymentEntityData($ratepayPaymentEntity);

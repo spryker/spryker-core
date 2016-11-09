@@ -31,7 +31,7 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testDisabledHstsServiceProviderMustNotReturnHeader()
     {
         $eventMock = $this->getMock(FilterResponseEvent::class, ['isMasterRequest', 'getResponse'], [], '', false);
-        $hstsMock = $this->getMock(ZedHstsServiceProvider::class, ['getIsHstsEnabled', 'getHstsConfig']);
+        $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
 
         $eventMock->expects($this->once())
             ->method('isMasterRequest')
@@ -53,9 +53,9 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testHstsServiceProviderGeneratesHeader()
     {
         $eventMock = $this->getMock(FilterResponseEvent::class, ['isMasterRequest', 'getResponse'], [], '', false);
-        $hstsMock = $this->getMock(ZedHstsServiceProvider::class, ['getIsHstsEnabled', 'getHstsConfig']);
-        $responseMock = $this->getMock(Response::class);
-        $headersMock = $this->getMock(ResponseHeaderBag::class, ['set']);
+        $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
+        $responseMock = $this->getMockBuilder(Response::class)->getMock();
+        $headersMock = $this->getMockBuilder(ResponseHeaderBag::class)->setMethods(['set'])->getMock();
 
         $responseMock->headers = $headersMock;
 

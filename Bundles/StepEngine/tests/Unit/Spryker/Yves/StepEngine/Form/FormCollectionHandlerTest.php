@@ -227,7 +227,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getDataProviderMock()
     {
-        $dataProviderMock = $this->getMock(StepEngineFormDataProviderInterface::class);
+        $dataProviderMock = $this->getMockBuilder(StepEngineFormDataProviderInterface::class)->getMock();
         $dataProviderMock->method('getData')->willReturnArgument(0);
 
         return $dataProviderMock;
