@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<transfers xmlns="http://xsd.spryker.com"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd" >
+<transfers xmlns="spryker:transfer"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="DataTables">
         <property name="draw" type="int"/>
@@ -23,6 +23,20 @@
     <transfer name="DataTablesOrder">
         <property name="column" type="int"/>
         <property name="dir" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab" />
+        <property name="activeTabName" type="string"/>
+        <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
 </transfers>

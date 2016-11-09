@@ -30,7 +30,8 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     public function getCommandPlugins()
     {
         return [
-            'Test/Command' => new TestCommandPlugin(),
+            'Test/CreateInvoice' => new TestCommandPlugin(),
+            'Test/SendInvoice' => new TestCommandPlugin(),
         ];
     }
 
@@ -42,6 +43,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     public function getConditionPlugins()
     {
         return [
+            'Test/IsInvoiceSent' => new TestConditionPlugin(),
             'Test/Condition' => new TestConditionPlugin(),
         ];
     }
@@ -115,6 +117,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemsByStateIds
+     *
      * @return void
      */
     public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds)

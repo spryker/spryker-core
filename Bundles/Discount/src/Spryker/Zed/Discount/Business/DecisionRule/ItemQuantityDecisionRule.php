@@ -33,7 +33,6 @@ class ItemQuantityDecisionRule implements DecisionRuleInterface
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
-     *
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,

@@ -7,12 +7,17 @@
 
 namespace Functional\Spryker\Zed\Braintree\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Braintree\Result\Successful;
+use Braintree\Transaction;
+use Braintree\Transaction\StatusDetails;
+use DateTime;
+use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Braintree\BraintreeConfig;
-use Spryker\Zed\Braintree\Business\BraintreeBusinessFactory;
-use Spryker\Zed\Braintree\Business\BraintreeFacade;
-use Spryker\Zed\Braintree\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer;
+use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Braintree\Business\Payment\Transaction\RefundTransaction;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyBridge;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface;
+use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundInterface;
 
 /**
  * @group Functional
@@ -30,56 +35,128 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
      */
     public function testRefundPaymentWithSuccessResponse()
     {
-        $orderTransfer = $this->createOrderTransfer();
+        $factoryMock = $this->getFactoryMock(['createRefundTransaction', 'getRefundFacade']);
+        $factoryMock->method('createRefundTransaction')->willReturn(
+            $this->getRefundTransactionMock()
+        );
+        $factoryMock->method('getRefundFacade')->willReturn(
+            $this->getRefundFacadeMock()
+        );
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
+        $response = $braintreeFacade->refundPayment([], $this->getOrderEntity());
 
-        $idPayment = $this->getPaymentEntity()->getIdPaymentBraintree();
-        $facade = $this->getFacadeMockRefund($orderTransfer);
-
-        $response = $facade->refundPayment($orderTransfer, $idPayment);
         $this->assertTrue($response->getIsSuccess());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\BraintreeFacade
+     * @return void
      */
-    private function getFacadeMockRefund(OrderTransfer $orderTransfer)
+    public function testRefundPaymentWithFailureResponse()
     {
-        $facade = new BraintreeFacade();
+        $factoryMock = $this->getFactoryMock(['createRefundTransaction', 'getRefundFacade']);
+        $factoryMock->method('createRefundTransaction')->willReturn(
+            $this->getRefundTransactionMock(false)
+        );
+        $factoryMock->method('getRefundFacade')->willReturn(
+            $this->getRefundFacadeMock(false)
+        );
+        $braintreeFacade = $this->getBraintreeFacade($factoryMock);
+        $response = $braintreeFacade->refundPayment([], $this->getOrderEntity());
 
-        $factoryMock = $this->getMock(BraintreeBusinessFactory::class, ['createPaymentTransactionHandler']);
+        $this->assertFalse($response->getIsSuccess());
+    }
 
-        $queryContainer = new BraintreeQueryContainer();
-        $config = new BraintreeConfig();
-        $transactionMock = $this->getMock(Transaction::class, ['refund'], [$queryContainer, $config]);
+    /**
+     * @param bool $success
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Business\Payment\Transaction\RefundTransaction
+     */
+    protected function getRefundTransactionMock($success = true)
+    {
+        $moneyFacadeMock = $this->getMoneyFacadeMock();
+        $refundTransactionMockBuilder = $this->getMockBuilder(RefundTransaction::class);
+        $refundTransactionMockBuilder->setMethods(['refund', 'initializeBraintree']);
+        $refundTransactionMockBuilder->setConstructorArgs([
+            new BraintreeConfig(),
+            new BraintreeToMoneyBridge($moneyFacadeMock)
+        ]);
 
-        $factoryMock->expects($this->once())
-            ->method('createPaymentTransactionHandler')
-            ->willReturn($transactionMock);
+        if ($success) {
+            $response = $this->getSuccessResponse();
+        } else {
+            $response = $this->getErrorResponse();
+        }
 
-        $response = new \Braintree\Result\Successful();
-        $response->transaction = \Braintree\Transaction::factory([
+        $refundTransactionMock = $refundTransactionMockBuilder->getMock();
+        $refundTransactionMock->expects($this->once())
+            ->method('refund')
+            ->willReturn($response);
+
+        return $refundTransactionMock;
+    }
+
+    /**
+     * @return \Braintree\Result\Successful
+     */
+    protected function getSuccessResponse()
+    {
+        $transaction = $this->getTransaction(ApiConstants::STATUS_CODE_CAPTURE_SUBMITTED);
+        $response = new Successful([$transaction]);
+
+        return $response;
+    }
+
+    /**
+     * @param bool $success
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundInterface
+     */
+    protected function getRefundFacadeMock($success = true)
+    {
+        $refundFacadeMock = $this->getMockBuilder(BraintreeToRefundInterface::class)->setMethods(['calculateRefund', 'saveRefund'])->getMock();
+        $refundFacadeMock->expects($this->any())->method('calculateRefund')->willReturn(new RefundTransfer());
+        if ($success) {
+            $refundFacadeMock->expects($this->once())->method('saveRefund');
+        } else {
+            $refundFacadeMock->expects($this->never())->method('saveRefund');
+        }
+
+        return $refundFacadeMock;
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return \Braintree\Transaction
+     */
+    protected function getTransaction($status)
+    {
+        $transaction = Transaction::factory([
+            'id' => 123,
             'processorResponseCode' => 1000,
             'processorResponseText' => 'Approved',
-            'createdAt' => new \DateTime(),
-            'status' => 'settling',
+            'createdAt' => new DateTime(),
+            'status' => $status,
             'type' => 'refund',
-            'amount' => $orderTransfer->getTotals()->getGrandTotal() / 100,
+            'amount' => 10.00,
             'merchantAccountId' => 'abc',
-            'statusHistory' => new \Braintree\Transaction\StatusDetails([
-                'timestamp' => new \DateTime(),
+            'statusHistory' => new StatusDetails([
+                'timestamp' => new DateTime(),
                 'status' => 'settling'
             ])
         ]);
 
-        $transactionMock->expects($this->once())
-            ->method('refund')
-            ->willReturn($response);
+        return $transaction;
+    }
 
-        $facade->setFactory($factoryMock);
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getMoneyFacadeMock()
+    {
+        $moneyFacadeMock = $this->getMockBuilder(BraintreeToMoneyInterface::class)->getMock();
 
-        return $facade;
+        return $moneyFacadeMock;
     }
 
 }

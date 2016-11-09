@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
@@ -113,6 +114,8 @@ class PageController extends AbstractController
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
             $localeTransfer = $this->getLocaleTransfer($idPage);
 
+            $this->createTranslationsForLocale($idPage, $localeTransfer);
+
             $this->getFacade()->touchPageActive($pageTransfer, $localeTransfer);
 
             if ((int)$data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int)$data[CmsPageForm::FIELD_FK_TEMPLATE]) {
@@ -185,11 +188,12 @@ class PageController extends AbstractController
      */
     protected function createPageTransfer(array $data)
     {
-        $pageTransfer = new PageTransfer();
-        $pageTransfer->fromArray($data, true);
-
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($data, true);
+        unset($data['url']);
+
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->fromArray($data, true);
 
         $pageTransfer->setUrl($urlTransfer);
 
@@ -233,6 +237,7 @@ class PageController extends AbstractController
         $data[CmsPageForm::FIELD_IS_ACTIVE] = $isActive;
 
         $pageTransfer = $this->createPageTransfer($data);
+
         $localeTransfer = $this->getLocaleTransfer($idPage);
 
         $this->getFacade()->savePage($pageTransfer);
@@ -258,6 +263,31 @@ class PageController extends AbstractController
         }
 
         return $localeTransfer;
+    }
+
+    /**
+     * Finds all glossary keys and creates missing translations as empty to be able to touch the page.
+     *
+     * @param int $idPage
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function createTranslationsForLocale($idPage, LocaleTransfer $localeTransfer)
+    {
+        $glossaryKeyCollection = $this->getQueryContainer()->queryGlossaryKeyMappingsByPageId($idPage)
+            ->innerJoinGlossaryKey()
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'glossaryKey')
+            ->find();
+        foreach ($glossaryKeyCollection as $glossaryKeyEntity) {
+            $key = $glossaryKeyEntity->getGlossaryKey()->getKey();
+            $translation = $this->getQueryContainer()->queryKeyWithTranslationByKeyAndLocale($key, $localeTransfer->getIdLocale())->findOne();
+            if ($translation !== null) {
+                continue;
+            }
+
+            $this->getFactory()->getGlossaryFacade()->createAndTouchTranslation($key, $localeTransfer, '');
+        }
     }
 
 }

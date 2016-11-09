@@ -87,6 +87,7 @@ class GlossaryController extends AbstractController
             'title' => $title,
             'type' => $type,
             'forms' => $formViews,
+            'localeTransfer' => $localeTransfer
         ];
     }
 
@@ -111,6 +112,7 @@ class GlossaryController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
@@ -197,7 +199,8 @@ class GlossaryController extends AbstractController
                 ->find();
 
             return $searchedItems;
-        } elseif ($key !== null) {
+        }
+        if ($key !== null) {
             $searchedItems = $this->getQueryContainer()
                 ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
                 ->limit(self::SEARCH_LIMIT)
@@ -283,7 +286,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param array $forms
+     * @param \Symfony\Component\Form\FormInterface[] $forms
      * @param int $idForm
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -302,13 +305,13 @@ class GlossaryController extends AbstractController
                 'glossaryKeyName' => $this->glossaryKeyName,
                 'data' => $data,
             ]);
-        } else {
-            return $this->jsonResponse([
-                'success' => 'false',
-                'errorMessages' => $forms[$idForm]->getErrors()
-                    ->__toString(),
-            ]);
         }
+
+        return $this->jsonResponse([
+            'success' => 'false',
+            'errorMessages' => $forms[$idForm]->getErrors()
+                ->__toString(),
+        ]);
     }
 
     /**

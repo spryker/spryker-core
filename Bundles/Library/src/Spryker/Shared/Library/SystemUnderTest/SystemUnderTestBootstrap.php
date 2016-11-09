@@ -22,6 +22,9 @@ use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
+/**
+ * @deprecated Use Testify bundle instead
+ */
 class SystemUnderTestBootstrap
 {
 

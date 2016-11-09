@@ -72,9 +72,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     *
      * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     private function createDefaultCatalogSearchQueryExpanderPlugins()
     {
@@ -95,9 +95,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
-     *
      * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     private function createDefaultCatalogSearchResultFormatterPlugins()
     {

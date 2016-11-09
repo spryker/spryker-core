@@ -108,7 +108,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
-     *
      */
     protected function findItem($sku, $groupKey = null)
     {
@@ -136,7 +135,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
-     *
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {

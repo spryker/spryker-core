@@ -1,27 +1,34 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
 var SprykerAjax = require('./legacy/SprykerAjax');
 var editor = require('ZedGuiEditorConfiguration');
+var TabsNavigation = require('./libs/tabs-navigation');
+var TranslationCopyFields = require('./libs/translation-copy-fields');
 
 $(document).ready(function() {
     // editor
     $('.html-editor').summernote(editor.getConfig());
 
-    /** Draw data tables */
-    $('.gui-table-data').dataTable();
-
-    /** Draw data tables without search */
-    $('.gui-table-data-no-search').dataTable({
-        bFilter: false,
-        bInfo: false
+    /* Draw data tables */
+    $('.gui-table-data').dataTable({
+        scrollX: 'auto',
+        autoWidth: false
     });
 
-    /** all elements with the same class will have the same height */
+    /* Draw data tables without search */
+    $('.gui-table-data-no-search').dataTable({
+        bFilter: false,
+        bInfo: false,
+        scrollX: 'auto',
+        autoWidth: false
+    });
+
+    /* All elements with the same class will have the same height */
     $('.fix-height').sprykerFixHeight();
 
     $('.spryker-form-autocomplete').each(function(key, value) {
@@ -35,7 +42,7 @@ $(document).ready(function() {
         });
     });
 
-    /** trigger change status active|inactive with an ajax call when click on checkbox */
+    /* Trigger change status active|inactive with an ajax call when click on checkbox */
     $('.gui-table-data').on('click', '.active-checkbox', function() {
         var elementId = $(this).attr('id').replace('active-', '');
         spyAj.setUrl('/discount/voucher/status').changeActiveStatus(elementId);
@@ -62,4 +69,12 @@ $(document).ready(function() {
 
     $('.dropdown-toggle').dropdown();
     $('.spryker-form-select2combobox').select2();
+
+    /* Navigable tabs */
+    $('.tabs-container.tabs-navigable').each(function(index, item){
+        new TabsNavigation(item);
+    });
+
+    /* Init translation copy fields */
+    new TranslationCopyFields();
 });

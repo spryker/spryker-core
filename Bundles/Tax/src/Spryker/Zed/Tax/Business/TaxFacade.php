@@ -246,7 +246,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param int $id
      *
      * @return void
-     *
      */
     public function deleteTaxSet($id)
     {
@@ -322,7 +321,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
             ->createExpenseTaxCalculator()
             ->recalculate($quoteTransfer);
     }
-
 
     /**
      * Specification:

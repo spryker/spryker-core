@@ -56,7 +56,6 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         return new Guzzle($gatewayUrl);
     }
 
-
     /**
      * @return \Spryker\Zed\Ratepay\Business\Request\Service\Handler\Transaction\ProfileTransaction
      */
@@ -373,8 +372,16 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     public function createProductExpander()
     {
         return new ProductExpander(
-            $this->getProvidedDependency(RatepayDependencyProvider::FACADE_PRODUCT)
+            $this->getProductFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

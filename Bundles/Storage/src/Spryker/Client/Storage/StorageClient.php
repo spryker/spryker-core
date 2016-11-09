@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Client\Storage\StorageFactory getFactory()
@@ -143,49 +144,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @return void
-     */
-    public static function persistCache()
-    {
-        $cacheKey = self::generateCacheKey();
-        if (!empty($cacheKey) && is_array(self::$cachedKeys)) {
-            $updateCache = false;
-            foreach (self::$cachedKeys as $key => $status) {
-                if ($status === self::KEY_INIT) {
-                    unset(self::$cachedKeys[$key]);
-                }
-
-                if ($status !== self::KEY_USED) {
-                    $updateCache = true;
-                    break;
-                }
-            }
-
-            if ($updateCache) {
-                $ttl = 86400; // TTL = 1 day to avoid artifacts in Storage
-                self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
-            }
-        }
-    }
-
-    /**
-     * @return string
-     */
-    protected static function generateCacheKey()
-    {
-        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
-        $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-
-        if ($requestUri === null || $serverName === null) {
-            return '';
-        }
-
-        return 'StorageClient_' . $serverName . $requestUri;
-    }
-
-    /**
-     * @api
-     *
      * @param array $keys
      *
      * @return array
@@ -295,6 +253,72 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public function getKeys($pattern = '*')
     {
         return $this->getService()->getKeys($pattern);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    public function persistCacheForRequest(Request $request)
+    {
+        static::persistCache($request);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use persistRequestCache() instead.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     *
+     * @return void
+     */
+    public static function persistCache(Request $request = null)
+    {
+        $cacheKey = static::generateCacheKey($request);
+        if (!empty($cacheKey) && is_array(self::$cachedKeys)) {
+            $updateCache = false;
+            foreach (self::$cachedKeys as $key => $status) {
+                if ($status === self::KEY_INIT) {
+                    unset(self::$cachedKeys[$key]);
+                }
+
+                if ($status !== self::KEY_USED) {
+                    $updateCache = true;
+                    break;
+                }
+            }
+
+            if ($updateCache) {
+                $ttl = 86400; // TTL = 1 day to avoid artifacts in Storage
+                self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
+            }
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     *
+     * @return string
+     */
+    protected static function generateCacheKey(Request $request = null)
+    {
+        if ($request) {
+            $requestUri = $request->getRequestUri();
+            $serverName = $request->server->get('SERVER_NAME');
+        } else {
+            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+            $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
+        }
+
+        if ($requestUri === null || $serverName === null) {
+            return '';
+        }
+
+        return 'StorageClient_' . $serverName . $requestUri;
     }
 
     /**

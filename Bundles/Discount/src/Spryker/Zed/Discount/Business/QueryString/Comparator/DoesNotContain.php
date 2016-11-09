@@ -18,7 +18,6 @@ class DoesNotContain implements ComparatorInterface
      * @param string $withValue
      *
      * @return bool
-     *
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -62,7 +61,6 @@ class DoesNotContain implements ComparatorInterface
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isValidValue($withValue)
     {

@@ -11,6 +11,10 @@
     "spryker/oms": "^2.0.0 || ^3.0.0",
     "spryker/sales": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "OmsDiscountConnector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -22,5 +26,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

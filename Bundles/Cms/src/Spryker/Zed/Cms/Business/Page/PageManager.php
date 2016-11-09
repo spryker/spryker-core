@@ -84,9 +84,9 @@ class PageManager implements PageManagerInterface
 
         if ($pageTransfer->getIdCmsPage() === null) {
             return $this->createPage($pageTransfer);
-        } else {
-            return $this->updatePage($pageTransfer);
         }
+
+        return $this->updatePage($pageTransfer);
     }
 
     /**
@@ -194,8 +194,6 @@ class PageManager implements PageManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
-     *
      * @return void
      */
     public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
@@ -206,7 +204,7 @@ class PageManager implements PageManagerInterface
             $this->glossaryFacade->touchTranslationForKeyId($pageMapping->getFkGlossaryKey(), $localeTransfer);
         }
 
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage(), true);
     }
 
     /**
@@ -302,6 +300,7 @@ class PageManager implements PageManagerInterface
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getLocaleTransfer($idLocale)

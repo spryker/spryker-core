@@ -52,7 +52,6 @@ class ConfigurationInstallmentAdapterMock extends AbstractAdapterMock
                 </response>';
     }
 
-
     /**
      * @return string
      */

@@ -9,6 +9,9 @@ namespace Spryker\Shared\EventJournal\Model\Collector;
 
 use Spryker\Shared\Library\System;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 class ServerDataCollector extends AbstractDataCollector
 {
 

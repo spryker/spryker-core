@@ -271,6 +271,21 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testCompareWhenValueIsNumericZeroProvidedShouldReturnTrue()
+    {
+        $comparatorOperators = $this->createComparatorOperators([]);
+
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue(ComparatorOperators::MATCH_ALL_IDENTIFIER);
+
+        $isValid = $comparatorOperators->compare($clauseTransfer, 0);
+
+        $this->assertTrue($isValid);
+    }
+
+    /**
+     * @return void
+     */
     public function testWhenNoneOfComparatorsAcceptsClauseShouldThrowException()
     {
         $this->expectException(ComparatorException::class);

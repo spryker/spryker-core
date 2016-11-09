@@ -2,16 +2,19 @@
   "name": "spryker/discount-sales-aggregator-connector",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
-    "spryker/discount": "^3.0.0",
+    "spryker/discount": "^3.2.1",
     "spryker/kernel": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/tax": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "DiscountSalesAggregatorConnector bundle",
   "license": "proprietary",
@@ -24,5 +27,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Propel;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
 /**
@@ -30,7 +31,7 @@ class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
         $filterCriteria = new PropelFilterCriteria($filterTransfer);
         $propelCriteria = $filterCriteria->toCriteria();
 
-        $this->assertInstanceOf('Propel\Runtime\ActiveQuery\Criteria', $propelCriteria);
+        $this->assertInstanceOf(Criteria::class, $propelCriteria);
         $this->assertEquals(-1, $propelCriteria->getLimit());
         $this->assertEquals(0, $propelCriteria->getOffset());
         $this->assertEquals([], $propelCriteria->getOrderByColumns());
@@ -50,7 +51,7 @@ class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
         $filterCriteria = new PropelFilterCriteria($filterTransfer);
         $propelCriteria = $filterCriteria->toCriteria();
 
-        $this->assertInstanceOf('Propel\Runtime\ActiveQuery\Criteria', $propelCriteria);
+        $this->assertInstanceOf(Criteria::class, $propelCriteria);
         $this->assertEquals(10, $propelCriteria->getLimit());
         $this->assertEquals(0, $propelCriteria->getOffset());
         $this->assertEquals(['foobar DESC'], $propelCriteria->getOrderByColumns());

@@ -2,11 +2,17 @@
   "name": "spryker/transfer",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
       "Functional": "tests/",
       "Unit": "tests/"
     },
     "psr-4": {
+      "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
       "Transfer\\Module\\": "tests/_support/Module"
     }
   },
@@ -22,6 +28,10 @@
     "spryker/twig": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Transfer bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -33,5 +43,11 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

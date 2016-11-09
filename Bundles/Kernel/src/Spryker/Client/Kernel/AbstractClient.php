@@ -62,6 +62,7 @@ abstract class AbstractClient
 
     /**
      * @throws \BadMethodCallException
+     *
      * @return \Spryker\Client\ZedRequest\Stub\BaseStub
      */
     protected function getZedStub()
@@ -73,7 +74,7 @@ abstract class AbstractClient
             );
         }
 
-        return $this->getFactory()->createZedStub();
+        return $factory->createZedStub();
     }
 
     /**

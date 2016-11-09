@@ -202,7 +202,6 @@ class Condition implements ConditionInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
 
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
-     *
      */
     protected function getItemsByStatesAndProcessName(
         $stateMachineName,
@@ -297,7 +296,6 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      *
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface
-     *
      */
     protected function getConditionPlugin($conditionString, $stateMachineName)
     {

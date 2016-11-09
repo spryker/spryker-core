@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <statemachine
+        xmlns="spryker:oms"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../process.xsd"
->
+        xsi:schemaLocation="spryker:oms http://static.spryker.com/oms-01.xsd">
+
     <process name="RatepayRefund">
         <transitions>
             <transition condition="Ratepay/IsRefunded">
@@ -26,8 +27,10 @@
                 <event>item returned</event>
             </transition>
         </transitions>
+
         <events>
             <event name="refund payment" manual="true" command="Ratepay/Refund"/>
         </events>
     </process>
+
 </statemachine>

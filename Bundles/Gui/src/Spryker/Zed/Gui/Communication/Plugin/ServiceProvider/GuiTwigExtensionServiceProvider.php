@@ -39,6 +39,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @param \Twig_Environment $twig
+     *
      * @return void
      */
     protected function registerTwigFunctions(Twig_Environment $twig)
@@ -50,6 +51,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @param \Twig_Environment $twig
+     *
      * @return void
      */
     protected function registerTwigFilters(Twig_Environment $twig)

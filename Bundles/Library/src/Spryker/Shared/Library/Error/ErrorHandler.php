@@ -13,6 +13,9 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
 
+/**
+ * @deprecated Use ErrorHandler bundle instead.
+ */
 class ErrorHandler
 {
 

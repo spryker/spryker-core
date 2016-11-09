@@ -104,11 +104,11 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return void
+     * @return bool
      */
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createSubscriptionRequestHandler()
             ->assignCustomerToExistingSubscriber($newsletterSubscriber);
     }

@@ -20,7 +20,6 @@ class IsIn implements ComparatorInterface
      * @param string $withValue
      *
      * @return bool
-     *
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
@@ -61,14 +60,12 @@ class IsIn implements ComparatorInterface
         ];
     }
 
-
     /**
      * @param string $withValue
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
-     *
      */
     public function isValidValue($withValue)
     {

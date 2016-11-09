@@ -15,6 +15,8 @@ interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInter
 {
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Transfer\AbstractTransfer $dataTransfer
      *
@@ -23,6 +25,8 @@ interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInter
     public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
 
     /**
+     * @api
+     *
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      *
      * @return $this

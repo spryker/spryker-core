@@ -358,7 +358,6 @@ abstract class AbstractBusinessTest extends Test
         return $orderEntity;
     }
 
-
     /**
      * @param int $idSalesOrder
      *

@@ -187,6 +187,7 @@ class CustomerForm extends AbstractType
     {
         $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [
             'label' => 'Send password token through email',
+            'required' => false,
         ]);
 
         return $this;

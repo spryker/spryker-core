@@ -1,18 +1,16 @@
 {
   "name": "spryker/money",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
-  },
   "require": {
-    "mathiasverraes/money": "~3.0.0-beta2",
-    "spryker/currency": "^0.1.0",
+    "moneyphp/money": "~3.0.0",
+    "spryker/currency": "^1.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/twig": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "^2.0.0",
+    "spryker/testify": "*"
   },
   "description": "Money bundle",
   "license": "proprietary",
@@ -25,5 +23,27 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
+      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

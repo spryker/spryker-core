@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Business\CmsFacadeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -39,14 +39,14 @@ class CmsGlossaryForm extends AbstractType
     const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
-     * @var \Spryker\Zed\Cms\Business\CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
     protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
+     * @param \Spryker\Zed\Cms\Business\CmsFacadeInterface $cmsFacade
      */
-    public function __construct(CmsFacade $cmsFacade)
+    public function __construct(CmsFacadeInterface $cmsFacade)
     {
         $this->cmsFacade = $cmsFacade;
     }

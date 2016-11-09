@@ -23,6 +23,7 @@ class Invoice extends AbstractMethod
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer
      */
     public function getPaymentData(QuoteTransfer $quoteTransfer)

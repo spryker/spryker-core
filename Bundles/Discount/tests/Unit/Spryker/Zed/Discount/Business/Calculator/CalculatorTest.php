@@ -138,7 +138,6 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($collectedDiscounts);
     }
 
-
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -155,10 +154,10 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $specificationBuilderMock
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacadeMock
-     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributorMock
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPluginMock
+     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface|null $specificationBuilderMock
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|null $messengerFacadeMock
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface|null $distributorMock
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|null $calculatorPluginMock
      *
      * @return \Spryker\Zed\Discount\Business\Calculator\Calculator
      */

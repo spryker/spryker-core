@@ -150,6 +150,7 @@ class TestOrderCreator
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
      * @return void
      */
     protected function createSalesExpense(SpySalesOrder $salesOrderEntity)

@@ -298,7 +298,6 @@ class OrderSaver implements OrderSaverInterface
         return $saveOrderTransfer;
     }
 
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */

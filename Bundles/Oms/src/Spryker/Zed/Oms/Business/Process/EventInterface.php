@@ -11,26 +11,26 @@ interface EventInterface
 {
 
     /**
-     * @param mixed $manual
+     * @param bool $manual
      *
      * @return void
      */
     public function setManual($manual);
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isManual();
 
     /**
-     * @param mixed $command
+     * @param string $command
      *
      * @return void
      */
     public function setCommand($command);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCommand();
 
@@ -83,14 +83,14 @@ interface EventInterface
     public function getTransitions();
 
     /**
-     * @param mixed $timeout
+     * @param int $timeout
      *
      * @return void
      */
     public function setTimeout($timeout);
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getTimeout();
 

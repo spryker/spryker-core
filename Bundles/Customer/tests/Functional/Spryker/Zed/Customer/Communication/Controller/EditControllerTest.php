@@ -141,7 +141,7 @@ class EditControllerTest extends Test
         $customerData = $this->getFormData();
         $customerData[CustomerForm::FIELD_FIRST_NAME] = self::NEW_FIRST_NAME;
         $data = [
-            'customer' => $customerData
+            'customer' => $customerData,
         ];
 
         $request = Request::create('/customer/edit?id-customer=' . $this->customer->getIdCustomer(), 'POST', $data);

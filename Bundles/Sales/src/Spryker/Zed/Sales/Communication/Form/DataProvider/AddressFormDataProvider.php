@@ -32,7 +32,6 @@ class AddressFormDataProvider extends AbstractSalesFormDataProvider
         $this->countryFacade = $countryFacade;
     }
 
-
     /**
      * @param int $idOrderAddress
      *

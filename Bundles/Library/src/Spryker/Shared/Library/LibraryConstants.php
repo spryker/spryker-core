@@ -42,31 +42,49 @@ interface LibraryConstants
     const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = ApplicationConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED;
     const TRANSFER_DEBUG_SESSION_NAME = ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME;
 
+    /**
+     * @deprecated Use ErrorHandlerConstants::YVES_ERROR_PAGE instead.
+     */
     const YVES_ERROR_PAGE = ApplicationConstants::YVES_ERROR_PAGE;
+
+    /**
+     * @deprecated Use ErrorHandlerConstants::ERROR_RENDERER to choose renderer.
+     */
     const YVES_SHOW_EXCEPTION_STACK_TRACE = ApplicationConstants::YVES_SHOW_EXCEPTION_STACK_TRACE;
 
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_HOST = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_PERSISTENT_CONNECTION = ApplicationConstants::YVES_STORAGE_SESSION_PERSISTENT_CONNECTION;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PORT = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PROTOCOL = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL;
+
     /**
      * @deprecated Use Session bundle SessionConstants class constant.
      */
     const YVES_STORAGE_SESSION_REDIS_PASSWORD = ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD;
 
+    /**
+     * @deprecated Use ErrorHandlerConstants::ZED_ERROR_PAGE instead.
+     */
     const ZED_ERROR_PAGE = ApplicationConstants::ZED_ERROR_PAGE;
+
+    /**
+     * @deprecated Use ErrorHandlerConstants::ERROR_RENDERER to choose renderer.
+     */
     const ZED_SHOW_EXCEPTION_STACK_TRACE = ApplicationConstants::ZED_SHOW_EXCEPTION_STACK_TRACE;
 
 }

@@ -33,7 +33,6 @@ class CollectorContext implements CollectorSpecificationInterface
         $this->clauseTransfer = $clauseTransfer;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

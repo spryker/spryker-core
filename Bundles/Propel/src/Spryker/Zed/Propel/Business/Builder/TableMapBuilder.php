@@ -36,7 +36,7 @@ class TableMapBuilder extends PropelTableMapBuilder
     /**
      * @throws \Exception
      *
-     * @return mixed
+     * @return string
      */
     protected function getBundleName()
     {

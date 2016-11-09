@@ -166,7 +166,8 @@ abstract class AbstractController
      * @param string $role
      *
      * @throws \LogicException
-     * @return mixed
+     *
+     * @return bool
      */
     protected function isGranted($role)
     {
@@ -231,6 +232,7 @@ abstract class AbstractController
 
     /**
      * @throws \LogicException
+     *
      * @return mixed
      */
     protected function getUser()

@@ -12,8 +12,8 @@ use LogicException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Library\Generator\StringGenerator;
@@ -103,14 +103,14 @@ abstract class AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     abstract protected function configure(TableConfiguration $config);
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     abstract protected function prepareData(TableConfiguration $config);
 
@@ -135,12 +135,11 @@ abstract class AbstractTable
     /**
      * @return $this
      */
-    private function init()
+    protected function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;
-            $this->request = (new Pimple())
-                ->getApplication()['request'];
+            $this->request = $this->getRequest();
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
@@ -148,6 +147,15 @@ abstract class AbstractTable
         }
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest()
+    {
+        return (new Pimple())
+            ->getApplication()['request'];
     }
 
     /**
@@ -161,11 +169,11 @@ abstract class AbstractTable
     /**
      * @todo CD-412 find a better solution (remove it)
      *
+     * @deprecated this method should not be needed.
+     *
      * @param string $name
      *
      * @return string
-     *
-     * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
     {
@@ -514,6 +522,7 @@ abstract class AbstractTable
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param array $order
+     *
      * @return string
      */
     protected function getOrderByColumn(ModelCriteria $query, TableConfiguration $config, array $order)
@@ -535,6 +544,7 @@ abstract class AbstractTable
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
      * @return array
      */
     protected function getColumnsList(ModelCriteria $query, TableConfiguration $config)
@@ -581,7 +591,7 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(ApplicationConstants::ZED_DB_ENGINE);
+                $sqlDriver = Config::getInstance()->get(PropelConstants::ZED_DB_ENGINE);
                 // @todo fix this in CD-412
                 if ($sqlDriver === 'pgsql') {
                     $filter = '::TEXT';

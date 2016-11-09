@@ -2,10 +2,7 @@
   "name": "spryker/refund",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -18,6 +15,10 @@
     "spryker/sales-aggregator": "^1.0.0 || ^2.0.0",
     "spryker/symfony": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Refund bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -29,5 +30,12 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

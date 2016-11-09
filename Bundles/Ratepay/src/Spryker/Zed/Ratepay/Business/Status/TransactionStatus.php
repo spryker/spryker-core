@@ -21,7 +21,6 @@ class TransactionStatus implements TransactionStatusInterface
 
     /**
      * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
-     *
      */
     public function __construct(
         RatepayQueryContainerInterface $queryContainer

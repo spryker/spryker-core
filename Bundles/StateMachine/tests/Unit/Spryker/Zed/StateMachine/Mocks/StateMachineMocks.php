@@ -118,7 +118,6 @@ class StateMachineMocks extends \PHPUnit_Framework_TestCase
         return $builderMock;
     }
 
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface
      */

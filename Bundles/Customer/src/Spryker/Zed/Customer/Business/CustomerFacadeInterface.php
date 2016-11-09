@@ -43,11 +43,11 @@ interface CustomerFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use sendPasswordRestoreMail() instead
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     *
-     * @deprecated Use sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer);
 

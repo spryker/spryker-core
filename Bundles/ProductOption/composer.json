@@ -2,12 +2,7 @@
   "name": "spryker/product-option",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -18,6 +13,10 @@
     "spryker/sales": "^2.0.0",
     "spryker/tax": "^2.0.0 || ^3.0.0",
     "spryker/touch": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "description": "ProductOption bundle",
   "license": "proprietary",
@@ -30,5 +29,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

@@ -9,6 +9,9 @@ namespace Spryker\Shared\EventJournal\Model\Filter;
 
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 interface FilterInterface
 {
 

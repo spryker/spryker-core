@@ -49,6 +49,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
+     *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer)

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Refund\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -26,7 +25,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefunds()
     {
-        return $this->getFactory()->createRefundQuery()->orderByIdRefund(Criteria::DESC);
+        return $this->getFactory()->createRefundQuery();
     }
 
 }

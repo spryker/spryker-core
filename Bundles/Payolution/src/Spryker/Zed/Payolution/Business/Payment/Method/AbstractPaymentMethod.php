@@ -173,9 +173,9 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
-     *
      * @todo: use currency/money bundle #989
+     *
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
      */
     protected function getCurrencyManager()
     {

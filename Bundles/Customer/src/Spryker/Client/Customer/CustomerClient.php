@@ -221,11 +221,11 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @api
      *
-     * @return mixed
+     * @return void
      */
     public function logout()
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createSessionCustomerSession()
             ->logout();
     }

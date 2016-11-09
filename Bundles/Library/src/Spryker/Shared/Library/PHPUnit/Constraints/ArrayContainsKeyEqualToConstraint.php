@@ -41,6 +41,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
      * @param bool $returnResult
      *
      * @throws \PHPUnit_Framework_ExpectationFailedException
+     *
      * @return bool
      */
     public function evaluate($other, $description = '', $returnResult = false)

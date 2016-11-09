@@ -2,8 +2,7 @@
   "name": "spryker/heartbeat",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "ZedUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -17,6 +16,10 @@
     "spryker/storage": "^2.1.4",
     "spryker/symfony": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Heartbeat bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -28,5 +31,10 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
   }
 }

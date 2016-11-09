@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\EventJournal\Model\Filter;
 
+/**
+ * @deprecated Use Log bundle instead
+ */
 abstract class AbstractFilter implements FilterInterface
 {
 

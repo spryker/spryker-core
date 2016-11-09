@@ -61,7 +61,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @param string $itemType
      * @param string $itemId
-     * @param string $itemEvent|null
+     * @param string|null $itemEvent|null
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
@@ -116,8 +116,9 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
-     * @deprecated Use `queryTouchEntriesByItemTypeAndItemIds` instead
      * @api
+     *
+     * @deprecated Use `queryTouchEntriesByItemTypeAndItemIds` instead
      *
      * @param string $itemType
      * @param string $itemEvent

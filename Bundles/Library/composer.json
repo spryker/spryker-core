@@ -2,12 +2,7 @@
   "name": "spryker/library",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Integration": "tests/",
-      "Unit": "tests/",
-      "YvesUnit": "tests/"
+      "Spryker": "src/"
     }
   },
   "require": {
@@ -15,6 +10,7 @@
     "spryker/application": "^2.3.0",
     "spryker/config": "^2.2.1",
     "spryker/elastica": "^2.0.0 || ^3.0.0",
+    "spryker/error-handler": "^1.0.0",
     "spryker/event-journal": "^2.0.0",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^2.0.0",
@@ -31,6 +27,10 @@
     "spryker/zed-request": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
   "description": "Library bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -42,5 +42,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

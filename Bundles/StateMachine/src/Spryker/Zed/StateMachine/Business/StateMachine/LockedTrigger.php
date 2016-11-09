@@ -37,7 +37,6 @@ class LockedTrigger implements TriggerInterface
      * @param int $identifier
      *
      * @return int
-     *
      */
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier)
     {
@@ -90,7 +89,6 @@ class LockedTrigger implements TriggerInterface
     {
         return $this->stateMachineTrigger->triggerConditionsWithoutEvent($stateMachineName);
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems

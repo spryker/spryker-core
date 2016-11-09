@@ -19,6 +19,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunct
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -55,6 +56,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
             new FormatPriceFunction(),
             new AssetsPathFunction(),
             new UrlFunction(),
+            new TabsFunction(),
             // navigation buttons
             new BackActionButtonFunction(),
             new CreateActionButtonFunction(),

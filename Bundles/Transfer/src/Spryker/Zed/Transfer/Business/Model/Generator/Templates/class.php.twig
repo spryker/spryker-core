@@ -8,9 +8,6 @@
 namespace Generated\Shared\Transfer;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-{% for use in uses %}
-use {{ use }};
-{% endfor %}
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -20,8 +17,8 @@ class {{ className }} extends AbstractTransfer
 {
 
 {% for constant in constants %}
-{{ macro.addConstant(constant) }}
-{% endfor -%}
+{{ macro.addConstant(constant) -}}
+{% endfor %}
 
 {% for property in properties %}
 {{ macro.addProperty(property) }}

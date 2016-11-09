@@ -107,7 +107,6 @@ class VoucherValidator implements VoucherValidatorInterface
         $this->messengerFacade->addErrorMessage($messageTransfer);
     }
 
-
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *

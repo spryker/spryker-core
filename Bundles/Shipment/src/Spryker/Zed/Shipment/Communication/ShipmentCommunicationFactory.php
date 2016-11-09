@@ -51,13 +51,22 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
             $this->getTaxFacade(),
-            $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
+            $this->getPlugins()
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
     }
 
     /**
      * @param array $data
      * @param array $options
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createMethodForm(array $data, array $options = [])

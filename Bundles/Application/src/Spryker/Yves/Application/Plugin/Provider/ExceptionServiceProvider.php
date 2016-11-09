@@ -35,8 +35,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
         $app['dispatcher'] = $app->share(
             $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) use ($app) {
                 $exceptionListener = new ExceptionListener(
-                    'controller.service.error:dispatch',
-                    $app['logger']
+                    'controller.service.error:dispatch'
                 );
                 $dispatcher->addSubscriber($exceptionListener);
 

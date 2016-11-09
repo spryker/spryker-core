@@ -2,10 +2,7 @@
   "name": "spryker/oms",
   "autoload": {
     "psr-0": {
-      "Spryker": "src/",
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "Acceptance": "tests/"
+      "Spryker": "src/"
     },
     "psr-4": {
       "Oms\\Module\\": "tests/_support/Module"
@@ -26,7 +23,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "^2.1.0",
-    "spryker/testify": "^2.0.0"
+    "spryker/testify": "*"
   },
   "description": "Oms bundle",
   "license": "proprietary",
@@ -45,5 +42,12 @@
   ],
   "config": {
     "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
   }
 }

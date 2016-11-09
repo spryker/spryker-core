@@ -149,7 +149,6 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($isValid);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|null $messengerFacadeMock

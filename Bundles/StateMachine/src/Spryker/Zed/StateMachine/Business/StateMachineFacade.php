@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Spryker\Zed\StateMachine\Business;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -35,7 +34,6 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      * @param int $identifier - this is id of foreign entity you want to track in state machine, it's stored in history table.
      *
      * @return int
-     *
      */
     public function triggerForNewStateMachineItem(
         StateMachineProcessTransfer $stateMachineProcessTransfer,
@@ -157,9 +155,9 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $highlightState
-     * @param string $format
-     * @param int $fontSize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return string
      */

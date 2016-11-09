@@ -64,7 +64,6 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1,  $updated);
     }
 
-
     /**
      * @return void
      */
@@ -214,7 +213,7 @@ class VoucherCodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      *
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherCode
      */

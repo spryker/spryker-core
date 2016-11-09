@@ -63,7 +63,7 @@ class OrderExpenseWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $salesDiscounts
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      *
      * @return \Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpenseTaxWithDiscounts
      */

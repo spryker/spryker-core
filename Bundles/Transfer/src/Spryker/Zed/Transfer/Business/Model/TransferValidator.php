@@ -37,7 +37,7 @@ class TransferValidator implements TransferValidatorInterface
         'boolean' => 'bool',
         'string' => 'string',
         'float' => 'float',
-        'array' => 'array'
+        'array' => 'array',
     ];
 
     /**
@@ -72,7 +72,7 @@ class TransferValidator implements TransferValidatorInterface
             $result = $result & $this->validateDefinition($bundle, $definition, $options);
         }
 
-        return $result;
+        return (bool)$result;
     }
 
     /**

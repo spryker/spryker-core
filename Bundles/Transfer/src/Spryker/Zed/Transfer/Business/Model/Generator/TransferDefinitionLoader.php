@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Zend\Config\Factory;
+use Zend\Filter\FilterChain;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
@@ -34,8 +36,13 @@ class TransferDefinitionLoader implements LoaderInterface
     private $transferDefinitions = [];
 
     /**
+     * @var \Zend\Filter\FilterChain
+     */
+    private static $filter;
+
+    /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer $normalizer
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface $normalizer
      */
     public function __construct(FinderInterface $finder, DefinitionNormalizerInterface $normalizer)
     {
@@ -108,6 +115,8 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
+                $this->assertCasing($transfer, $bundle);
+
                 $transfer[self::KEY_BUNDLE] = $bundle;
                 $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
 
@@ -115,10 +124,54 @@ class TransferDefinitionLoader implements LoaderInterface
             }
         } else {
             $transfer = $definition[self::KEY_TRANSFER];
+            $this->assertCasing($transfer, $bundle);
+
             $transfer[self::KEY_BUNDLE] = $bundle;
             $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $this->transferDefinitions[] = $transfer;
         }
+    }
+
+    /**
+     * @param array $transfer
+     * @param string $bundle
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    private function assertCasing(array $transfer, $bundle)
+    {
+        $name = $transfer['name'];
+
+        $filteredName = $this->getFilter()->filter($name);
+
+        if ($name !== $filteredName) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Transfer name `%s` does not match expected name `%s` for bundle `%s`',
+                    $name,
+                    $filteredName,
+                    $bundle
+                )
+            );
+        }
+    }
+
+    /**
+     * @return \Zend\Filter\FilterChain
+     */
+    private function getFilter()
+    {
+        if (self::$filter === null) {
+            $filter = new FilterChain();
+            $filter->attach(new CamelCaseToUnderscore());
+            $filter->attach(new UnderscoreToCamelCase());
+
+            self::$filter = $filter;
+        }
+
+        return self::$filter;
     }
 
 }

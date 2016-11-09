@@ -30,7 +30,7 @@ interface PayolutionSessionInterface
     public function getInstallmentPayments();
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function removeInstallmentPayments();
 

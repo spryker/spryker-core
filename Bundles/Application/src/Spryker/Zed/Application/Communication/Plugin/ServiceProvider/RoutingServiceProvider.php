@@ -35,7 +35,7 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
         });
 
         $app['routers'] = $app->share(function () use ($app) {
-            return new ChainRouter($app['logger']);
+            return new ChainRouter();
         });
     }
 

@@ -57,11 +57,11 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
-     * @return mixed
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
-        return $this->getFactory()->createWriterModel()->setPriceForProduct($transferPriceProduct);
+        $this->getFactory()->createWriterModel()->setPriceForProduct($transferPriceProduct);
     }
 
     /**

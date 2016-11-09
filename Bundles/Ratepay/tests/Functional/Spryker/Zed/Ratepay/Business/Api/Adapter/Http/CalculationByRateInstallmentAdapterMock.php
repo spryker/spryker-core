@@ -46,7 +46,6 @@ class CalculationByRateInstallmentAdapterMock extends AbstractAdapterMock
             </response>';
     }
 
-
     /**
      * @return string
      */

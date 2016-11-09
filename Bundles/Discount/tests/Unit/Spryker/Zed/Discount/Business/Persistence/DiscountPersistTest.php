@@ -99,7 +99,6 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
         $discountPersist->update($discountConfiguratorTransfer);
     }
 
-
     /**
      * @return void
      */
@@ -178,7 +177,6 @@ class DiscountPersistTest extends \PHPUnit_Framework_TestCase
         $discountVoucherTransfer->setIdDiscount(123);
         $discountPersist->toggleDiscountVisibility(1, true);
     }
-
 
     /**
      * @return void

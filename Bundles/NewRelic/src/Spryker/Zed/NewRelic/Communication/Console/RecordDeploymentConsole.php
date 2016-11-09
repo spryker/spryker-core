@@ -93,7 +93,7 @@ class RecordDeploymentConsole extends Console
         $arguments = $input->getArguments();
         unset($arguments['command']);
 
-        $newRelicApi = $this->getFactory()->createNewRelicApi();
+        $newRelicApi = $this->getFactory()->getNewRelicApi();
         $newRelicApi->recordDeployment($arguments);
 
         return 0;

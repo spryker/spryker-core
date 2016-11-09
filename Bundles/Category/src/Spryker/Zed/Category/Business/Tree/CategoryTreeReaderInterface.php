@@ -74,12 +74,12 @@ interface CategoryTreeReaderInterface
     public function getGroupedPaths($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
+     * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
-     *
-     * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
      *
      * @return array
      */

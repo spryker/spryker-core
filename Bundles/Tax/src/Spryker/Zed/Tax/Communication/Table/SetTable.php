@@ -43,7 +43,7 @@ class SetTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -78,7 +78,7 @@ class SetTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -133,7 +133,6 @@ class SetTable extends AbstractTable
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
      *
      * @return string
-     *
      */
     protected function createViewButton(SpyTaxSet $taxSetEntity)
     {

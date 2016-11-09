@@ -135,14 +135,14 @@ class StateUpdaterTest extends StateMachineMocks
         $stateMachineItemTransfer->setProcessName('Test');
         $stateMachineItemTransfer->setIdentifier(1);
         $stateMachineItemTransfer->setStateName('target');
-        $stateMachineItemTransfer->setStateMachineName(self::TEST_STATE_MACHINE_NAME);
+        $stateMachineItemTransfer->setStateMachineName(static::TEST_STATE_MACHINE_NAME);
         $items[] = $stateMachineItemTransfer;
 
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setProcessName('Test');
         $stateMachineItemTransfer->setIdentifier(2);
         $stateMachineItemTransfer->setStateName('target');
-        $stateMachineItemTransfer->setStateMachineName(self::TEST_STATE_MACHINE_NAME);
+        $stateMachineItemTransfer->setStateMachineName(static::TEST_STATE_MACHINE_NAME);
         $items[] = $stateMachineItemTransfer;
 
         return $items;
@@ -178,7 +178,7 @@ class StateUpdaterTest extends StateMachineMocks
     /**
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\TimeoutInterface|null $timeoutMock
      * @param \Spryker\Zed\StateMachine\Business\StateMachine\HandlerResolverInterface|null $handlerResolverMock
-     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface $stateMachinePersistenceMock
+     * @param \Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface|null $stateMachinePersistenceMock
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $propelConnectionMock
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater

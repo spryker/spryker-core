@@ -13,7 +13,7 @@ interface DependencyTreeWriterInterface
     /**
      * @param array $dependencyTree
      *
-     * @return mixed
+     * @return void
      */
     public function write(array $dependencyTree);
 

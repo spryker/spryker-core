@@ -88,11 +88,11 @@ class SilexRouter implements RouterInterface
      * If the matcher can not find information, it must throw one of the exceptions documented
      * below.
      *
+     * @api
+     *
      * @param string $pathinfo The path info to be parsed (raw format, i.e. not urldecoded)
      *
      * @return array An array of parameters
-     *
-     * @api
      */
     public function match($pathinfo)
     {

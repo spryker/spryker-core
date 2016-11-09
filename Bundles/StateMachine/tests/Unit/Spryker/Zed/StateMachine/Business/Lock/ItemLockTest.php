@@ -83,8 +83,8 @@ class ItemLockTest extends StateMachineMocks
     }
 
     /**
-     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineLock
-     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface $stateMachineQueryContainerMock
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineLock|null
+     * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface|null $stateMachineQueryContainerMock
      *
      * @return \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
      */

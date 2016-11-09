@@ -120,7 +120,6 @@ class ElvSubForm extends SubFormAbstract
         return $this;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *

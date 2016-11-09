@@ -118,7 +118,6 @@ class Response
         </response>';
     }
 
-
     /**
      * @return string
      */

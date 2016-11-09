@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Auth\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,10 +40,10 @@ class LoginController extends AbstractController
             );
 
             if ($isLogged) {
-                return $this->redirectResponse('/');
-            } else {
-                $this->addErrorMessage('Authentication failed!');
+                return $this->redirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
             }
+
+            $this->addErrorMessage('Authentication failed!');
         }
 
         return $this->viewResponse([

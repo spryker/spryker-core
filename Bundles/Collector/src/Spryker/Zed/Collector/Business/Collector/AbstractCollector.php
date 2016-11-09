@@ -258,6 +258,7 @@ abstract class AbstractCollector
 
     /**
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException
+     *
      * @return void
      */
     protected function validateDependencies()

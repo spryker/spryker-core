@@ -159,6 +159,7 @@ class Install extends AbstractInstaller
      * @param array $countries
      *
      * @throws \Exception
+     *
      * @return array
      */
     protected function addIso3Code(array $countries)
@@ -186,6 +187,7 @@ class Install extends AbstractInstaller
      * @param array $countries
      *
      * @throws \Exception
+     *
      * @return array
      */
     protected function addPostalCodeData(array $countries)
