@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
@@ -34,6 +35,14 @@ class MapperFactory extends AbstractBusinessFactory
     public function __construct(RatepayRequestTransfer $requestTransfer)
     {
         $this->requestTransfer = $requestTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_MONEY);
     }
 
     /**
@@ -154,7 +163,8 @@ class MapperFactory extends AbstractBusinessFactory
     ) {
         return new BasketItemMapper(
             $itemTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
@@ -168,7 +178,8 @@ class MapperFactory extends AbstractBusinessFactory
     ) {
         return new BasketMapper(
             $ratepayPaymentRequestTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
@@ -178,7 +189,7 @@ class MapperFactory extends AbstractBusinessFactory
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param bool $needToSendShipping
      * @param int $discountTotal
-     * @param float $discountTaxRate
+     * @param float|int $discountTaxRate
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PartialBasketMapper
      */
@@ -197,7 +208,8 @@ class MapperFactory extends AbstractBusinessFactory
             $needToSendShipping,
             $discountTotal,
             $discountTaxRate,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
@@ -225,7 +237,8 @@ class MapperFactory extends AbstractBusinessFactory
     ) {
         return new PaymentMapper(
             $ratepayPaymentRequestTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
@@ -242,7 +255,8 @@ class MapperFactory extends AbstractBusinessFactory
         return new InstallmentCalculationMapper(
             $quoteTransfer,
             $ratepayPaymentTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
@@ -256,7 +270,8 @@ class MapperFactory extends AbstractBusinessFactory
     ) {
         return new InstallmentDetailMapper(
             $ratepayPaymentRequestTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 
@@ -270,7 +285,8 @@ class MapperFactory extends AbstractBusinessFactory
     ) {
         return new InstallmentPaymentMapper(
             $ratepayPaymentRequestTransfer,
-            $this->requestTransfer
+            $this->requestTransfer,
+            $this->getMoneyFacade()
         );
     }
 

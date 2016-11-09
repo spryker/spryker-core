@@ -25,6 +25,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Spryker\Shared\Ratepay\RatepayConstants;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
@@ -39,6 +40,7 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
 
@@ -115,7 +117,8 @@ class BasePaymentTest extends Test
                 ->willReturn($return);
         }
 
-        $converterFactory = new ConverterFactory();
+        $ratepayToMoneyBridge = new RatepayToMoneyBridge(new MoneyFacade());
+        $converterFactory = new ConverterFactory($ratepayToMoneyBridge);
 
         $transactionHandler = $this->getMockBuilder($className)
             ->setConstructorArgs([

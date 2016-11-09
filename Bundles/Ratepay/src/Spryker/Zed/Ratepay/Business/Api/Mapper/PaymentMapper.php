@@ -9,6 +9,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestPaymentTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class PaymentMapper extends BaseMapper
 {
@@ -24,16 +25,23 @@ class PaymentMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
-
         $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -41,7 +49,7 @@ class PaymentMapper extends BaseMapper
      */
     public function map()
     {
-        $grandTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->getGrandTotal());
+        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getGrandTotal());
 
         $this->requestTransfer->setPayment(new RatepayRequestPaymentTransfer())->getPayment()
             ->setCurrency($this->ratepayPaymentRequestTransfer->getCurrencyIso3())

@@ -13,9 +13,11 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\BaseResponse;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 
 /**
  * @group Functional
@@ -56,7 +58,8 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
     {
         parent::setUp();
 
-        $this->converterFactory = new ConverterFactory();
+        $ratepayToMoneyBridge = new RatepayToMoneyBridge(new MoneyFacade());
+        $this->converterFactory = new ConverterFactory($ratepayToMoneyBridge);
     }
 
     /**

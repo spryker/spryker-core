@@ -10,6 +10,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketMapper extends BaseMapper
 {
@@ -34,15 +35,23 @@ class BasketMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
         $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -50,9 +59,9 @@ class BasketMapper extends BaseMapper
      */
     public function map()
     {
-        $shippingUnitPrice = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
-        $grandTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
-        $discountTotal = $this->centsToDecimal($this->ratepayPaymentRequestTransfer->requireDiscountTotal()->getDiscountTotal());
+        $shippingUnitPrice = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
+        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
+        $discountTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireDiscountTotal()->getDiscountTotal());
 
         $this->requestTransfer
             ->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()

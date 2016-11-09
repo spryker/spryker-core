@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
 use Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
+use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
@@ -18,6 +19,7 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\BaseResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ConfigurationResponse;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyBridge;
 use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
 
 /**
@@ -48,7 +50,9 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->requestTransfer = new RatepayRequestTransfer();
-        $this->converterFactory = new ConverterFactory();
+
+        $ratepayToMoneyBridge = new RatepayToMoneyBridge(new MoneyFacade());
+        $this->converterFactory = new ConverterFactory($ratepayToMoneyBridge);
     }
 
     public function testConverterData()

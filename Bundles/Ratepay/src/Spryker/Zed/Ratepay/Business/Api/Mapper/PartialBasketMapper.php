@@ -8,6 +8,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class PartialBasketMapper extends BaseMapper
 {
@@ -48,6 +49,11 @@ class PartialBasketMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
@@ -55,6 +61,7 @@ class PartialBasketMapper extends BaseMapper
      * @param int $discountTotal
      * @param float $discountTaxRate
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
         $quoteTransfer,
@@ -63,9 +70,9 @@ class PartialBasketMapper extends BaseMapper
         $needToSendShipping,
         $discountTotal,
         $discountTaxRate,
-        RatepayRequestTransfer $requestTransfer
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
-
         $this->quoteTransfer = $quoteTransfer;
         $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
         $this->basketItems = $basketItems;
@@ -73,6 +80,7 @@ class PartialBasketMapper extends BaseMapper
         $this->discountTotal = $discountTotal;
         $this->discountTaxRate = $discountTaxRate;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -90,10 +98,10 @@ class PartialBasketMapper extends BaseMapper
         $shoppingBasket = $this->requestTransfer->getShoppingBasket();
         $shoppingBasket
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
-
             ->setDiscountTitle(BasketMapper::DEFAULT_DISCOUNT_NODE_VALUE)
-            ->setDiscountUnitPrice($this->centsToDecimal($this->discountTotal) * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
+            ->setDiscountUnitPrice($this->moneyFacade->convertIntegerToDecimal((int)$this->discountTotal) * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate($this->discountTaxRate);
+
         $grandTotal -= $this->discountTotal;
 
         if ($this->needToSendShipping) {
@@ -102,11 +110,11 @@ class PartialBasketMapper extends BaseMapper
             $grandTotal += $shippingUnitPrice;
 
             $shoppingBasket
-                ->setShippingUnitPrice($this->centsToDecimal($shippingUnitPrice))
+                ->setShippingUnitPrice($this->moneyFacade->convertIntegerToDecimal((int)$shippingUnitPrice))
                 ->setShippingTitle(BasketMapper::DEFAULT_SHIPPING_NODE_VALUE)
                 ->setShippingTaxRate(BasketMapper::DEFAULT_SHIPPING_TAX_RATE);
         }
-        $shoppingBasket->setAmount($this->centsToDecimal($grandTotal));
+        $shoppingBasket->setAmount($this->moneyFacade->convertIntegerToDecimal((int)$grandTotal));
 
         if (count($this->quoteTransfer->getExpenses())) {
             $this->requestTransfer->getShoppingBasket()
