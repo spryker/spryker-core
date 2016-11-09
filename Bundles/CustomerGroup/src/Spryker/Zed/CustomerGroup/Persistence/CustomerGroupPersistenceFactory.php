@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\CustomerGroup\Persistence;
+
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+
+/**
+ * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainer getQueryContainer()
+ */
+class CustomerGroupPersistenceFactory extends AbstractPersistenceFactory
+{
+
+    /**
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
+     */
+    public function createSpyCustomerGroupQuery()
+    {
+        return SpyCustomerGroupQuery::create();
+    }
+
+}
