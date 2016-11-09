@@ -171,7 +171,7 @@ class IndexController extends AbstractController
     protected function stockTypeExist($availabilityStockTransfer, $type)
     {
         foreach ($availabilityStockTransfer->getStocks() as $stockProduct) {
-            if ($stockProduct->getStockType() === $type->getName()) {
+            if ($stockProduct->getStockType() === $type) {
                 return true;
             }
         }
