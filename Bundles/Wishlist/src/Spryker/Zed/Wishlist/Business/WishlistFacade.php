@@ -21,6 +21,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Creates wishlist for a specific customer with given name
+     *  - Required values of WishlistTransfer: name, fkCustomer.
      *
      * @api
      *
@@ -38,6 +39,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Updates wishlist
+     *  - Required values of WishlistTransfer: idWishlist.
      *
      * @api
      *
@@ -55,6 +57,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes wishlist and its items
+     *  - Required values of WishlistTransfer: idWishlist.
      *
      * @api
      *
@@ -71,7 +74,9 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Adds collection of wishlist items to a wishlist
+     *  - Adds collection of items to a wishlist
+     *  - Required values of WishlistTransfer: fkCustomer, name.
+     *  - Required values of WishlistItemTransfer: fkProduct.
      *
      * @api
      *
@@ -90,6 +95,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes all wishlist items
+     *  - Required values: idWishlist.
      *
      * @api
      *
@@ -107,6 +113,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Adds item to wishlist
+     *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
+     *    In case wishlist name is not provided the default value will be used.
      *
      * @api
      *
@@ -124,6 +132,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes item from wishlist
+     *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
+     *    In case wishlist name is not provided the default value will be used.
      *
      * @api
      *
@@ -141,6 +151,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Returns wishlist by specific name for a given customer
+     *  - Required values: fkCustomer, name
      *
      * @api
      *
@@ -158,6 +169,9 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * Specification:
      *  - Returns wishlist by specific name for a given customer, with paginated items.
+     *  - Pagination is controlled with page, itemsPerPage, orderBy and orderDirection values of WishlistOverviewRequestTransfer.
+     *  - Required values of WishlistTransfer: fkCustomer, name.
+     *  - Required values of WishlistOverviewRequestTransfer: WishlistTransfer.
      *
      * @api
      *
