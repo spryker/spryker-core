@@ -194,9 +194,7 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity->fromArray($categoryNodeTransfer->toArray());
         $categoryNodeEntity->setIsMain(true);
         $categoryNodeEntity->setFkCategory($categoryTransfer->requireIdCategory()->getIdCategory());
-        $categoryNodeEntity->setFkParentCategoryNode(
-            $parentCategoryNodeTransfer->requireIdCategoryNode()->getIdCategoryNode()
-        );
+        $categoryNodeEntity->setFkParentCategoryNode($parentCategoryNodeTransfer->getIdCategoryNode());
 
         return $categoryNodeEntity;
     }
