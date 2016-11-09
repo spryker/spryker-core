@@ -38,7 +38,7 @@ class VoucherController extends AbstractController
 
         $affectedRows = $this->getQueryContainer()
             ->queryVouchersByIdVoucherPool($idPool)
-            ->deleteAll();
+            ->delete();
 
         if ($affectedRows > 0) {
             $this->addSuccessMessage(
@@ -93,7 +93,6 @@ class VoucherController extends AbstractController
 
         return $this->generateCsvFromVouchers($idPool);
     }
-
 
     /**
      * @param int $idPool

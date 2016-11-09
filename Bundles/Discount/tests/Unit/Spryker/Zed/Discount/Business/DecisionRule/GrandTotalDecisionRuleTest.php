@@ -93,7 +93,6 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $this->assertFalse($isSatisfied);
     }
 
-
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
      * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface|null $currencyManagerMock

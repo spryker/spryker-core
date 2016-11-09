@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Spryker\Zed\StateMachine\Dependency\Plugin;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -15,6 +14,8 @@ interface CommandPluginInterface
 
     /**
      * This method is called when event have concrete command assigned.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *

@@ -52,10 +52,4 @@
         <property name="taxRate" type="float" />
     </transfer>
 
-    <transfer name="calculatedDiscount">
-        <property name="unitGrossAmount" type="int" />
-        <property name="sumGrossAmount" type="int" />
-        <property name="quantity" type="int" />
-    </transfer>
-
 </transfers>

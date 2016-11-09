@@ -47,8 +47,6 @@ class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProvid
         ];
     }
 
-
-
     /**
      * @return array
      */

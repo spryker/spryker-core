@@ -10,6 +10,7 @@ namespace Spryker\Shared\Testify;
 // This is the only place where Project namespace is allowed
 use Exception;
 use Propel\Runtime\Propel;
+use Pyz\Yves\Application\Plugin\Provider\SessionServiceProvider;
 use Pyz\Yves\Application\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
@@ -110,10 +111,13 @@ class SystemUnderTestBootstrap
         $application = new ZedBootstrap();
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
-        $application->boot();
+        $application = $application->boot();
 
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
+
+        $sessionServiceProvider = new SessionServiceProvider();
+        $sessionServiceProvider->boot($application);
     }
 
     /**
@@ -128,7 +132,10 @@ class SystemUnderTestBootstrap
         $locator = Locator::getInstance();
         $this->resetLocator($locator);
 
-        $application->boot();
+        $application = $application->boot();
+
+        $sessionServiceProvider = new SessionServiceProvider();
+        $sessionServiceProvider->boot($application);
     }
 
     /**

@@ -54,6 +54,10 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function getLastResponseInfoMessages()
     {
+        if (!$this->getClient()->hasLastResponse()) {
+            return [];
+        }
+
         return $this->getClient()->getLastResponse()->getInfoMessages();
     }
 
@@ -64,6 +68,10 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function getLastResponseErrorMessages()
     {
+        if (!$this->getClient()->hasLastResponse()) {
+            return [];
+        }
+
         return $this->getClient()->getLastResponse()->getErrorMessages();
     }
 
@@ -74,6 +82,10 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function getLastResponseSuccessMessages()
     {
+        if (!$this->getClient()->hasLastResponse()) {
+            return [];
+        }
+
         return $this->getClient()->getLastResponse()->getSuccessMessages();
     }
 

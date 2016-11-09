@@ -132,7 +132,6 @@ class TaxRateForm extends AbstractType
         return $this;
     }
 
-
     /**
      * Returns the name of this type.
      *

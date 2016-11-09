@@ -260,7 +260,6 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
             ->willReturn($queryMock);
     }
 
-
     /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine
      */

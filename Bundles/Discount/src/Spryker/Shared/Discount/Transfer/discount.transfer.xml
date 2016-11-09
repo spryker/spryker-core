@@ -20,7 +20,7 @@
         <property name="decisionRuleQueryString" type="string" />
     </transfer>
 
-    <transfer name="calculatedDiscount">
+    <transfer name="CalculatedDiscount">
         <property name="idDiscount" type="int" />
         <property name="displayName" type="string" />
         <property name="description" type="string" />

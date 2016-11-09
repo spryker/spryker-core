@@ -7,17 +7,15 @@
 
 namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
-use Exception;
-
 class CliErrorRenderer implements ErrorRendererInterface
 {
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      *
      * @return string
      */
-    public function render(Exception $exception)
+    public function render($exception)
     {
         $errorMessageTemplate = '%2$s - Exception: %3$s %1$s'
             . 'in %4$s (%5$d)%1$s%1$s'

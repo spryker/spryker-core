@@ -7,7 +7,6 @@
 
 require('ZedGui');
 var SqlFactory = require('./libs/sql-factory');
-var DiscountNavigation = require('./libs/navigation');
 
 require('../../sass/main.scss');
 
@@ -23,8 +22,6 @@ function setDiscountAmountSymbol() {
 }
 
 $(document).ready(function() {
-
-    new DiscountNavigation();
 
     var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
     var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition', true);

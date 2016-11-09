@@ -39,21 +39,19 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
-     * @param int $value
+     * @param float $value
      *
-     * @return float
+     * @return int
      */
     public function transformForPersistence($value)
     {
-        return $this->getCurrencyManager()->convertDecimalToCent(
-            str_replace(',', '.', $value)
-        );
+        return (int)round($this->getCurrencyManager()->convertDecimalToCent($value));
     }
 
     /**
      * @param int $value
      *
-     * @return int
+     * @return string
      */
     public function transformFromPersistence($value)
     {
@@ -80,7 +78,7 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     {
         return [
             new Regex([
-                'pattern' => '/[0-9\.\,]+/'
+                'pattern' => '/[0-9\.\,]+/',
             ]),
         ];
     }

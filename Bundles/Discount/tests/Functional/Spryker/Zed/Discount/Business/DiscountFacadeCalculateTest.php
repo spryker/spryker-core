@@ -4,7 +4,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Functional\Spryker\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;

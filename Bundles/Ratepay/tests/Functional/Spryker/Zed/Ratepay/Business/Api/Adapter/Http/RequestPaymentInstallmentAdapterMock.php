@@ -52,7 +52,6 @@ class RequestPaymentInstallmentAdapterMock extends AbstractAdapterMock
         </response>';
     }
 
-
     /**
      * @return array
      */

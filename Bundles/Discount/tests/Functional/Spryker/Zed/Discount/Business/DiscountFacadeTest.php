@@ -622,7 +622,6 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, $released);
     }
 
-
     /**
      * @return void
      */
@@ -659,7 +658,6 @@ class DiscountFacadeTest extends Test
 
         $this->assertEquals(1, $voucherCodeEntity->getNumberOfUses());
     }
-
 
     /**
      * @return \Spryker\Zed\Discount\Business\DiscountFacade

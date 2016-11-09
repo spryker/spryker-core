@@ -74,7 +74,7 @@ abstract class AbstractClient
             );
         }
 
-        return $this->getFactory()->createZedStub();
+        return $factory->createZedStub();
     }
 
     /**

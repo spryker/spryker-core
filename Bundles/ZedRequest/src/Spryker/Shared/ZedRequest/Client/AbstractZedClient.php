@@ -85,13 +85,21 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasLastResponse()
+    {
+        return self::$lastResponse !== null;
+    }
+
+    /**
      * @throws \BadMethodCallException
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function getLastResponse()
     {
-        if (self::$lastResponse === null) {
+        if (!$this->hasLastResponse()) {
             throw new BadMethodCallException('There is no response received from zed.');
         }
 

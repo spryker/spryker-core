@@ -49,10 +49,10 @@ class PackageNameHydrator implements DependencyHydratorInterface
                 }
 
             } while (count($pathParts) > 0);
-
-            return false;
         } catch (\Exception $e) {
         }
+
+        return false;
     }
 
 }

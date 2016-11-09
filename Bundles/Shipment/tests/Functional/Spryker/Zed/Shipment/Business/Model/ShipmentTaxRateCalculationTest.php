@@ -83,7 +83,6 @@ class ShipmentTaxRateCalculationTest extends Test
         $this->assertEquals('20.00', $shipmentMethodTransfer->getTaxRate());
     }
 
-
     /**
      * @param int $taxRate
      * @param string $iso2Code

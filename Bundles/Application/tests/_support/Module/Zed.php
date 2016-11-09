@@ -9,6 +9,8 @@ namespace Application\Module;
 
 use Codeception\TestCase;
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 use Propel\Runtime\Propel;
 use \Silex\Application;
 
@@ -40,7 +42,9 @@ class Zed extends Infrastructure
      */
     public function amZed()
     {
-        $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.test']);
+        $url = 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI);
+
+        $this->getWebDriver()->_reconfigure(['url' => $url]);
 
         return $this;
     }

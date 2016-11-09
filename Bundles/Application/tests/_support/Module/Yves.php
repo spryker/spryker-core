@@ -7,7 +7,11 @@
 
 namespace Application\Module;
 
-class Yves extends Infrastructure
+use Codeception\Module;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
+
+class Yves extends Module
 {
 
     /**
@@ -15,7 +19,9 @@ class Yves extends Infrastructure
      */
     public function amYves()
     {
-        $this->getModule('WebDriver')->_reconfigure(['url' => 'http://www.de.spryker.test']);
+        $url = 'http://' . Config::get(ApplicationConstants::HOST_YVES);
+
+        $this->getModule('WebDriver')->_reconfigure(['url' => $url]);
 
         return $this;
     }

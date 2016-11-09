@@ -11,6 +11,8 @@ interface QueryInterface
 {
 
     /**
+     * @api
+     *
      * @return mixed
      */
     public function getSearchQuery();

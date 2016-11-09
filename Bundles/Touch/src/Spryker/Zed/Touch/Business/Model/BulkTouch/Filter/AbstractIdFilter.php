@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 abstract class AbstractIdFilter implements FilterInterface
@@ -23,6 +24,19 @@ abstract class AbstractIdFilter implements FilterInterface
     public function __construct(TouchQueryContainerInterface $touchQueryContainer)
     {
         $this->touchQueryContainer = $touchQueryContainer;
+    }
+
+    /**
+     * @param string $itemType
+     * @param array $itemIdChunk
+     *
+     * @return array
+     */
+    protected function getIdCollection($itemType, array $itemIdChunk)
+    {
+        $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
+
+        return $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
     }
 
 }

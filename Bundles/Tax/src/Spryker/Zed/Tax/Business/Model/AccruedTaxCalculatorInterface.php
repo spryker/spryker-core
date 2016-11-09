@@ -16,7 +16,6 @@ interface AccruedTaxCalculatorInterface
      */
     public function getTaxValueFromPrice($price, $taxRate);
 
-
     /**
      * @return void
      */
