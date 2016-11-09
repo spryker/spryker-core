@@ -121,31 +121,31 @@ class DiscountFacadeCalculateTest extends Test
              DiscountConstants::TYPE_VOUCHER
          );
 
-         $code1 = 'code1';
-         $code2 = 'code2';
-         $code3 = 'code3';
+        $code1 = 'code1';
+        $code2 = 'code2';
+        $code3 = 'code3';
 
-         $this->createVoucherCode($code1, $discountEntity);
-         $this->createVoucherCode($code2, $discountEntity);
-         $this->createVoucherCode($code3, $discountEntity);
+        $this->createVoucherCode($code1, $discountEntity);
+        $this->createVoucherCode($code2, $discountEntity);
+        $this->createVoucherCode($code3, $discountEntity);
 
-         $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->createQuoteTransfer();
 
-         $discountTransfer = new DiscountTransfer();
-         $discountTransfer->setVoucherCode($code1);
-         $quoteTransfer->addVoucherDiscount($discountTransfer);
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setVoucherCode($code1);
+        $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-         $discountTransfer = new DiscountTransfer();
-         $discountTransfer->setVoucherCode($code2);
-         $quoteTransfer->addVoucherDiscount($discountTransfer);
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setVoucherCode($code2);
+        $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-         $discountFacade = new DiscountFacade();
-         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
+        $discountFacade = new DiscountFacade();
+        $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
-         $discountTransfer = $quoteTransfer->getVoucherDiscounts()[0];
+        $discountTransfer = $quoteTransfer->getVoucherDiscounts()[0];
 
-         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
-         $this->assertEquals($code1, $discountTransfer->getVoucherCode());
+        $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
+        $this->assertEquals($code1, $discountTransfer->getVoucherCode());
     }
 
     /**
