@@ -7,7 +7,9 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator;
 
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
 
 /**
  * @group Unit
@@ -29,20 +31,14 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfCacheIsNotEnabledGetNavigationMustReturnNavigationFromCollector()
     {
-        $navigationCacheMock = $this->getMock(
-            'Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface',
-            ['isEnabled', 'setNavigation', 'getNavigation']
-        );
+        $navigationCacheMock = $this->getMockBuilder(NavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
         $navigationCacheMock->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
         $navigationCacheMock->expects($this->never())
             ->method('getNavigation');
 
-        $navigationCollectorMock = $this->getMock(
-            'Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface',
-            ['getNavigation']
-        );
+        $navigationCollectorMock = $this->getMockBuilder(NavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
         $navigationCollectorMock->expects($this->once())
             ->method('getNavigation')
             ->will($this->returnValue([]));
@@ -60,10 +56,7 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfCacheIsEnabledGetNavigationMustReturnNavigationFromCache()
     {
-        $navigationCacheMock = $this->getMock(
-            'Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface',
-            ['isEnabled', 'setNavigation', 'getNavigation']
-        );
+        $navigationCacheMock = $this->getMockBuilder(NavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
         $navigationCacheMock->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
@@ -71,10 +64,7 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
             ->method('getNavigation')
             ->will($this->returnValue([]));
 
-        $navigationCollectorMock = $this->getMock(
-            'Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface',
-            ['getNavigation']
-        );
+        $navigationCollectorMock = $this->getMockBuilder(NavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
         $navigationCollectorMock->expects($this->never())
             ->method('getNavigation');
 
