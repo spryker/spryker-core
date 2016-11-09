@@ -111,7 +111,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
-        $this->setExpectedException(InvalidFormHandleRequest::class);
+        $this->expectException(InvalidFormHandleRequest::class);
 
         $formCollectionHandler->handleRequest(Request::createFromGlobals(), $this->getDataTransferMock());
     }

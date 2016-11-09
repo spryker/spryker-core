@@ -32,7 +32,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGraphAdapterWithObjectFromConfigMustThrowException()
     {
-        $this->setExpectedException(GraphAdapterNameIsAnObjectException::class);
+        $this->expectException(GraphAdapterNameIsAnObjectException::class);
 
         $factory = new GraphCommunicationFactory();
         $configMock = $this->getConfigMock($factory);
@@ -46,7 +46,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGraphAdapterWithInvalidAdapterNameFromConfigMustThrowException()
     {
-        $this->setExpectedException(InvalidGraphAdapterNameException::class);
+        $this->expectException(InvalidGraphAdapterNameException::class);
 
         $factory = new GraphCommunicationFactory();
         $configMock = $this->getConfigMock('not a class name');
@@ -60,7 +60,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateGraphAdapterWithInvalidAdapterInstanceMustThrowException()
     {
-        $this->setExpectedException(InvalidGraphAdapterException::class);
+        $this->expectException(InvalidGraphAdapterException::class);
 
         $factory = new GraphCommunicationFactory();
         $configMock = $this->getConfigMock(get_class($factory));

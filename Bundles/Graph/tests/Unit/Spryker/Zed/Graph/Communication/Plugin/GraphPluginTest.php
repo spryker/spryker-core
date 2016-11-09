@@ -36,7 +36,7 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGraphMustThrowExceptionIfGraphWasNotInitialized()
     {
-        $this->setExpectedException(GraphNotInitializedException::class);
+        $this->expectException(GraphNotInitializedException::class);
 
         $graphPlugin = new GraphPlugin();
         $this->assertInstanceOf(GraphPlugin::class, $graphPlugin->addNode(self::NODE_A));

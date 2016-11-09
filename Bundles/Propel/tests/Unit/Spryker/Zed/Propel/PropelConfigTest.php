@@ -92,7 +92,7 @@ class PropelConfigTest extends \PHPUnit_Framework_TestCase
     {
         $propelConfigMock = $this->getPropelConfigMock();
 
-        $this->setExpectedException(UnSupportedDatabaseEngineException::class);
+        $this->expectException(UnSupportedDatabaseEngineException::class);
         $propelConfigMock->getCurrentDatabaseEngineName();
     }
 

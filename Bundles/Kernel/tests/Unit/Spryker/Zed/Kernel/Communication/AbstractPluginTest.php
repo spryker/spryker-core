@@ -50,7 +50,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
     {
-        $this->setExpectedException(FacadeNotFoundException::class);
+        $this->expectException(FacadeNotFoundException::class);
 
         $plugin = new FooPlugin();
         $plugin->getFacade();
@@ -78,7 +78,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
     {
-        $this->setExpectedException(QueryContainerNotFoundException::class);
+        $this->expectException(QueryContainerNotFoundException::class);
 
         $queryContainerResolverMock = $this->getMock(QueryContainerResolver::class, ['canResolve', 'getClassInfo']);
         $queryContainerResolverMock->method('canResolve')->willReturn(false);

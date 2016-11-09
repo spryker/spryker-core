@@ -83,10 +83,8 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
         $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
-        $this->setExpectedException(
-            CheckoutPluginNotFoundException::class,
-            'Could not find any plugin for "unknown" provider. You need to add the needed plugins within your DependencyInjector.'
-        );
+        $this->expectException(CheckoutPluginNotFoundException::class);
+        $this->expectExceptionMessage('Could not find any plugin for "unknown" provider. You need to add the needed plugins within your DependencyInjector.');
 
         $checkoutPluginCollection->get('unknown', self::PLUGIN_TYPE);
     }
@@ -99,10 +97,8 @@ class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
         $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
-        $this->setExpectedException(
-            CheckoutPluginNotFoundException::class,
-            'Could not find "unknown" plugin type for "provider" provider. You need to add the needed plugins within your DependencyInjector.'
-        );
+        $this->expectException(CheckoutPluginNotFoundException::class);
+        $this->expectExceptionMessage('Could not find "unknown" plugin type for "provider" provider. You need to add the needed plugins within your DependencyInjector.');
 
         $checkoutPluginCollection->get(self::PROVIDER, 'unknown');
     }

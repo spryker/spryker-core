@@ -55,7 +55,7 @@ class PropelDatabaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateIfNotExistsThrowsException()
     {
-        $this->setExpectedException(DatabaseCreatorNotFoundException::class);
+        $this->expectException(DatabaseCreatorNotFoundException::class);
 
         $databaseCreatorCollectionMock = $this->getMock(DatabaseCreatorCollectionInterface::class);
         $propelDatabase = new PropelDatabase($databaseCreatorCollectionMock);

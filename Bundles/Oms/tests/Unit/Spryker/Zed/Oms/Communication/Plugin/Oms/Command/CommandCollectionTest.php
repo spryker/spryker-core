@@ -80,7 +80,7 @@ class CommandCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $commandCollection = new CommandCollection();
 
-        $this->setExpectedException(CommandNotFoundException::class);
+        $this->expectException(CommandNotFoundException::class);
 
         $commandCollection->get(self::COMMAND_NAME);
     }

@@ -91,7 +91,7 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $factory = new ConcreteFactory();
         $factory->setContainer($container);
-        $this->setExpectedException(ContainerKeyNotFoundException::class);
+        $this->expectException(ContainerKeyNotFoundException::class);
 
         $factory->getProvidedDependency(self::TEST_KEY);
     }

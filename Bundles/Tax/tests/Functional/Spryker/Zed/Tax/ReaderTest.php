@@ -115,7 +115,7 @@ class ReaderTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
     {
-        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
     }
 
@@ -124,7 +124,7 @@ class ReaderTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
     {
-        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 

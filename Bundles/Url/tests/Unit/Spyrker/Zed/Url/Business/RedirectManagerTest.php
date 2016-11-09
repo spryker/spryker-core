@@ -31,7 +31,7 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteUrlRedirectMustThrowExceptionIfUrlRedirectNotFound()
     {
-        $this->setExpectedException(MissingRedirectException::class);
+        $this->expectException(MissingRedirectException::class);
 
         $queryContainer = new UrlQueryContainer();
         $queryContainer->setFactory(new UrlPersistenceFactory());
