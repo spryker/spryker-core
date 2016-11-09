@@ -45,7 +45,6 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface $modelFactory
      * @param \Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory $mapperFactory
      * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
-     *
      */
     public function __construct(
         RequestModelFactoryInterface $modelFactory,
@@ -88,7 +87,6 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Confirm

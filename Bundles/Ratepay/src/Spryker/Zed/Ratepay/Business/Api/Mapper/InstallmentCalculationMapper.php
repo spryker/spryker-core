@@ -57,12 +57,10 @@ class InstallmentCalculationMapper extends BaseMapper
      */
     public function map()
     {
-        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)
-            $this->quoteTransfer->requireTotals()
+        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->quoteTransfer->requireTotals()
                 ->getTotals()
                 ->requireGrandTotal()
-                ->getGrandTotal()
-        );
+                ->getGrandTotal());
         $this->requestTransfer->setInstallmentCalculation(new RatepayRequestInstallmentCalculationTransfer())->getInstallmentCalculation()
             ->setSubType($this->ratepayPaymentTransfer->getInstallmentCalculationType())
             ->setAmount($grandTotal)
