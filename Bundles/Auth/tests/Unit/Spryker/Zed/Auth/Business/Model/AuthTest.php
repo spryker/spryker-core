@@ -175,7 +175,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
-        $sessionClient = $this->getMockBuilder(SessionClient::class),['get', 'set', 'migrate']);
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'migrate'])->getMock();
 
         return $sessionClient;
     }
@@ -185,9 +185,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createStaticTokenClient()
     {
-        $staticTokenClient = $this->getMock(
-            StaticToken::class
-        );
+        $staticTokenClient = $this->getMockBuilder(StaticToken::class)->getMock();
 
         return $staticTokenClient;
     }
