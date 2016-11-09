@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Form;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,11 +31,18 @@ class CustomerGroupForm extends AbstractType
     protected $customerGroupQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerGroupQueryContainer
+     * @var int|null
      */
-    public function __construct(CustomerGroupQueryContainerInterface $customerGroupQueryContainer)
+    private $idCustomerGroup;
+
+    /**
+     * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerGroupQueryContainer
+     * @param int|null $idCustomerGroup
+     */
+    public function __construct(CustomerGroupQueryContainerInterface $customerGroupQueryContainer, $idCustomerGroup)
     {
         $this->customerGroupQueryContainer = $customerGroupQueryContainer;
+        $this->idCustomerGroup = $idCustomerGroup;
     }
 
     /**
@@ -125,6 +133,9 @@ class CustomerGroupForm extends AbstractType
         ];
 
         $customerGroupQuery = $this->customerGroupQueryContainer->queryCustomerGroups();
+        if ($this->idCustomerGroup) {
+            $customerGroupQuery->filterByIdCustomerGroup($this->idCustomerGroup, Criteria::NOT_EQUAL);
+        }
 
         $constraints[] = new Callback([
             'methods' => [

@@ -21,9 +21,9 @@ class CustomerGroupTable extends AbstractTable
     const ACTIONS = 'Actions';
 
     const COL_ID_CUSTOMER_GROUP = 'id_customer_group';
-    const COL_CREATED_AT = 'created_at';
     const COL_NAME = 'name';
     const COL_DESCRIPTION = 'description';
+    const COL_CREATED_AT = 'created_at';
 
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
@@ -41,7 +41,7 @@ class CustomerGroupTable extends AbstractTable
      */
     public function __construct(CustomerGroupQueryContainerInterface $customerQueryContainer, DateFormatterInterface $dateFormatter)
     {
-        $this->customerQueryContainer = $customerQueryContainer;
+        $this->customerGroupQueryContainer = $customerQueryContainer;
         $this->dateFormatter = $dateFormatter;
     }
 
@@ -54,9 +54,9 @@ class CustomerGroupTable extends AbstractTable
     {
         $config->setHeader([
             self::COL_ID_CUSTOMER_GROUP => '#',
-            self::COL_CREATED_AT => 'Created',
             self::COL_NAME => 'Name',
             self::COL_DESCRIPTION => 'Description',
+            self::COL_CREATED_AT => 'Created',
             self::ACTIONS => self::ACTIONS,
         ]);
 
@@ -110,9 +110,8 @@ class CustomerGroupTable extends AbstractTable
         }
 
         $buttons = [];
-        $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customerGroup->getIdCustomerGroup(), 'View');
-        $buttons[] = $this->generateEditButton('/customer/edit?id-customer=' . $customerGroup->getIdCustomerGroup(), 'Edit');
-        $buttons[] = $this->generateViewButton('/customer/address?id-customer=' . $customerGroup->getIdCustomerGroup(), 'Manage Addresses');
+        $buttons[] = $this->generateViewButton('/customer-group/view?id-customer-group=' . $customerGroup->getIdCustomerGroup(), 'View');
+        $buttons[] = $this->generateEditButton('/customer-group/edit?id-customer-group=' . $customerGroup->getIdCustomerGroup(), 'Edit');
 
         return implode(' ', $buttons);
     }

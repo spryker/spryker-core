@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Business;
 
+use Spryker\Zed\CustomerGroup\Business\Model\CustomerGroup;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -15,4 +16,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CustomerGroupBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Business\Model\CustomerGroup
+     */
+    public function createCustomerGroup()
+    {
+        return new CustomerGroup($this->getQueryContainer());
+    }
+
 }

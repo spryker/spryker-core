@@ -8,9 +8,7 @@
 namespace Spryker\Zed\CustomerGroup\Communication;
 
 use Spryker\Zed\CustomerGroup\Communication\Form\CustomerGroupForm;
-use Spryker\Zed\CustomerGroup\Communication\Form\CustomerUpdateForm;
-use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerFormDataProvider;
-use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
+use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable;
 use Spryker\Zed\CustomerGroup\CustomerGroupDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -41,38 +39,19 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerGroupForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerGroupForm($this->getQueryContainer());
+        $idCustomerGroup = !empty($data['id_customer_group']) ? $data['id_customer_group'] : null;
+
+        $customerFormType = new CustomerGroupForm($this->getQueryContainer(), $idCustomerGroup);
 
         return $this->getFormFactory()->create($customerFormType, $data, $options);
     }
 
     /**
-     * @return \Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerFormDataProvider
+     * @return \Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider
      */
-    public function createCustomerFormDataProvider()
+    public function createCustomerGroupFormDataProvider()
     {
-        return new CustomerFormDataProvider($this->getQueryContainer());
-    }
-
-    /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createCustomerUpdateForm(array $data = [], array $options = [])
-    {
-        $customerFormType = new CustomerUpdateForm($this->getQueryContainer());
-
-        return $this->getFormFactory()->create($customerFormType, $data, $options);
-    }
-
-    /**
-     * @return \Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerUpdateFormDataProvider
-     */
-    public function createCustomerUpdateFormDataProvider()
-    {
-        return new CustomerUpdateFormDataProvider($this->getQueryContainer());
+        return new CustomerGroupFormDataProvider($this->getQueryContainer());
     }
 
 }

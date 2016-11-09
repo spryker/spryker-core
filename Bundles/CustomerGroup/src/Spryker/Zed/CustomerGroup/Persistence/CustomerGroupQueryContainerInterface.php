@@ -19,4 +19,13 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
      */
     public function queryCustomerGroups();
 
+    /**
+     * @api
+     *
+     * @param int $idCustomerGroup
+     *
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
+     */
+    public function queryCustomerGroupById($idCustomerGroup);
+
 }

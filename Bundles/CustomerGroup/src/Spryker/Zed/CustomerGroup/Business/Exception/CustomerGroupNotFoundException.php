@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CustomerGroup;
+namespace Spryker\Zed\CustomerGroup\Business\Exception;
 
-interface CustomerGroupConstants
+use Exception;
+
+class CustomerGroupNotFoundException extends Exception
 {
 }

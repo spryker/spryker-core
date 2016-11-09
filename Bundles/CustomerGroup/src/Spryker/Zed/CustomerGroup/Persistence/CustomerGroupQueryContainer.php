@@ -26,4 +26,17 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
             ->createSpyCustomerGroupQuery();
     }
 
+    /**
+     * @api
+     *
+     * @param int $idCustomerGroup
+     *
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
+     */
+    public function queryCustomerGroupById($idCustomerGroup)
+    {
+        return $this->queryCustomerGroups()
+            ->filterByIdCustomerGroup($idCustomerGroup);
+    }
+
 }

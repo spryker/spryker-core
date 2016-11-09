@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Business;
 
+use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,61 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeInterface
 {
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
+     */
+    public function add(CustomerGroupTransfer $customerGroupTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomerGroup()
+            ->add($customerGroupTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     */
+    public function get(CustomerGroupTransfer $customerGroupTransfer)
+    {
+        return $this->getFactory()
+            ->createCustomerGroup()
+            ->get($customerGroupTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return void
+     */
+    public function update(CustomerGroupTransfer $customerGroupTransfer)
+    {
+        $this->getFactory()
+            ->createCustomerGroup()
+            ->update($customerGroupTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return void
+     */
+    public function delete(CustomerGroupTransfer $customerGroupTransfer)
+    {
+        $this->getFactory()
+            ->createCustomerGroup()
+            ->delete($customerGroupTransfer);
+    }
+
 }
