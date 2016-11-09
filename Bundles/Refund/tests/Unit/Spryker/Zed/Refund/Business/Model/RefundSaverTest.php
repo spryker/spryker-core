@@ -177,7 +177,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesOrderItemEntityMock()
     {
-        $salesOrderItemEntityMock = $this->getMock(SpySalesOrderItem::class, ['save', 'setCanceledAmount'], [], '', false);
+        $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)->setMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
         $salesOrderItemEntityMock->method('save')->willReturn(1);
         $salesOrderItemEntityMock->expects($this->once())->method('setCanceledAmount');
 
@@ -189,7 +189,7 @@ class RefundSaverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesExpenseEntityMock()
     {
-        $salesExpenseEntityMock = $this->getMock(SpySalesExpense::class, ['save', 'setCanceledAmount'], [], '', false);
+        $salesExpenseEntityMock = $this->getMockBuilder(SpySalesExpense::class)->setMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
         $salesExpenseEntityMock->method('save')->willReturn(1);
         $salesExpenseEntityMock->expects($this->once())->method('setCanceledAmount');
 

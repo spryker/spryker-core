@@ -54,7 +54,7 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
         $entityMock = $this->getMockBuilder(SpyUrlRedirect::class)->setMethods(['delete'])->getMock();
         $entityMock->expects($this->once())->method('delete');
 
-        $redirectedManager = $this->getMock(RedirectManager::class, ['getRedirectById', 'touchDeleted'], [], '', false);
+        $redirectedManager = $this->getMockBuilder(RedirectManager::class)->setMethods(['getRedirectById', 'touchDeleted'])->disableOriginalConstructor()->getMock();
         $redirectedManager->method('getRedirectById')->willReturn($entityMock);
         $redirectedManager->expects($this->once())->method('touchDeleted');
 

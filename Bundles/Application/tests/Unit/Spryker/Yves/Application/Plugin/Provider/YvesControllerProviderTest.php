@@ -105,7 +105,7 @@ class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getControllerMock($methodName, $callTimes)
     {
-        $controllerMock = $this->getMock(Controller::class, [], [], '', false);
+        $controllerMock = $this->getMockBuilder(Controller::class)->disableOriginalConstructor()->getMock();
         $controllerMock
             ->expects($callTimes)
             ->method('__call')

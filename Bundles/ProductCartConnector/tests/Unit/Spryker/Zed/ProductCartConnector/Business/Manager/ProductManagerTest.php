@@ -153,7 +153,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockProductFacade()
     {
-        return $this->getMock(ProductCartConnectorToProductInterface::class, ['getProductConcrete'], [], '', false);
+        return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)->setMethods(['getProductConcrete'])->disableOriginalConstructor()->getMock();
     }
 
 }

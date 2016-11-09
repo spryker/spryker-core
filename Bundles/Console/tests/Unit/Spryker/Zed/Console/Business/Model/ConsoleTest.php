@@ -89,7 +89,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getFacadeMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Business\AbstractFacade', [], [], '', false);
+        return $this->getMockBuilder('Spryker\Zed\Kernel\Business\AbstractFacade')->disableOriginalConstructor()->getMock();
     }
 
     /**
@@ -97,7 +97,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryContainerMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer', [], [], '', false);
+        return $this->getMockBuilder('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer')->disableOriginalConstructor()->getMock();
     }
 
     /**
