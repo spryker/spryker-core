@@ -59,15 +59,14 @@ class SalesFacadeSaveOrderTest extends Test
     {
         parent::setUp();
 
-        $countryFacadeMock = $this->getMock(SalesToCountryInterface::class, ['getIdCountryByIso2Code', 'getAvailableCountries']);
+        $countryFacadeMock = $this->getMockBuilder(SalesToCountryInterface::class)->setMethods(['getIdCountryByIso2Code', 'getAvailableCountries'])->getMock();
         $countryFacadeMock->method('getIdCountryByIso2Code')
             ->will($this->returnValue(1));
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $omsFacadeMock = $this->getMock(
-            SalesToOmsInterface::class,
-            [
+        $omsFacadeMock = $this->getMockBuilder(SalesToOmsInterface::class)
+            ->setMethods([
                 'selectProcess',
                 'getInitialStateEntity',
                 'getProcessEntity',
@@ -76,8 +75,8 @@ class SalesFacadeSaveOrderTest extends Test
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
                 'getOrderItemMatrix'
-            ]
-        );
+            ])
+            ->getMock();
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 
@@ -101,7 +100,7 @@ class SalesFacadeSaveOrderTest extends Test
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
-        $salesConfigMock = $this->getMock(SalesConfig::class, ['determineProcessForOrderItem']);
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn('');
         $businessFactory->setConfig($salesConfigMock);
         $businessFactory->setContainer($container);

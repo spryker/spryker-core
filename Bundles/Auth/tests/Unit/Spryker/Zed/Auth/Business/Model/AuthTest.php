@@ -161,11 +161,11 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFacadeUser()
     {
-        $userFacade = $this->getMock(
-            AuthToUserBridge::class,
-            ['getUserByUsername', 'hasActiveUserByUsername', 'isValidPassword', 'updateUser'],
+        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods(
+            ['getUserByUsername', 'hasActiveUserByUsername', 'isValidPassword', 'updateUser']
+        )->setConstructorArgs(
             [new UserFacade()]
-        );
+        )->getMock();
 
         return $userFacade;
     }
@@ -175,10 +175,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
-        $sessionClient = $this->getMock(
-            SessionClient::class,
-            ['get', 'set', 'migrate']
-        );
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'migrate'])->getMock();
 
         return $sessionClient;
     }
@@ -188,9 +185,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createStaticTokenClient()
     {
-        $staticTokenClient = $this->getMock(
-            StaticToken::class
-        );
+        $staticTokenClient = $this->getMockBuilder(StaticToken::class)->getMock();
 
         return $staticTokenClient;
     }

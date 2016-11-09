@@ -74,7 +74,7 @@ class SubFormPluginCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getSubFormPlugin()
     {
-        return $this->getMock(SubFormPluginInterface::class);
+        return $this->getMockBuilder(SubFormPluginInterface::class)->getMock();
     }
 
 }

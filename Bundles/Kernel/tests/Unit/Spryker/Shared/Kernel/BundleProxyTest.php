@@ -39,7 +39,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddLocatorShouldThrowExceptionIfNoMatcherCanBeCreated()
     {
-        $this->setExpectedException('\LogicException');
+        $this->expectException('\LogicException');
 
         $bundleProxy = new BundleProxy();
         $bundleProxy->addLocator(new LocatorWithoutMatcher());
@@ -72,7 +72,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testCallShouldThrowExceptionIfNoLocatorCanBeMatchedToCalledMethod()
     {
-        $this->setExpectedException('\LogicException');
+        $this->expectException('\LogicException');
 
         $bundleProxy = new BundleProxy();
         $bundleProxy->addLocator(new LocatorWithMatcher('Foo'));

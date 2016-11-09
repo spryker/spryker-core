@@ -55,7 +55,7 @@ class ConfigResolverTest extends AbstractResolverTest
      */
     protected function getResolverMock(array $methods)
     {
-        $resolverMock = $this->getMock(BundleConfigResolver::class, $methods);
+        $resolverMock = $this->getMockBuilder(BundleConfigResolver::class)->setMethods($methods)->getMock();
 
         return $resolverMock;
     }

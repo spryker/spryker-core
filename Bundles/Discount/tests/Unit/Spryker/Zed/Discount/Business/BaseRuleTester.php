@@ -20,7 +20,7 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorMock()
     {
-        return $this->getMock(ComparatorOperatorsInterface::class);
+        return $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
     }
 
     /**
@@ -28,7 +28,7 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
      */
     protected function createCurrencyCoverterMock()
     {
-        return $this->getMock(MoneyValueConverterInterface::class);
+        return $this->getMockBuilder(MoneyValueConverterInterface::class)->getMock();
     }
 
     /**

@@ -176,7 +176,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -184,7 +184,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMessengerFacadeMock()
     {
-        return $this->getMock(DiscountToMessengerInterface::class);
+        return $this->getMockBuilder(DiscountToMessengerInterface::class)->getMock();
     }
 
     /**
@@ -200,7 +200,7 @@ class VoucherValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountVoucherQueryMock()
     {
-        return $this->getMock(SpyDiscountVoucherQuery::class);
+        return $this->getMockBuilder(SpyDiscountVoucherQuery::class)->getMock();
     }
 
     /**

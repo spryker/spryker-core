@@ -92,7 +92,7 @@ class PropelConfigTest extends \PHPUnit_Framework_TestCase
     {
         $propelConfigMock = $this->getPropelConfigMock();
 
-        $this->setExpectedException(UnSupportedDatabaseEngineException::class);
+        $this->expectException(UnSupportedDatabaseEngineException::class);
         $propelConfigMock->getCurrentDatabaseEngineName();
     }
 
@@ -101,7 +101,7 @@ class PropelConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPropelConfigMock()
     {
-        $propelConfigMock = $this->getMock(PropelConfig::class, ['getCurrentDatabaseEngine']);
+        $propelConfigMock = $this->getMockBuilder(PropelConfig::class)->setMethods(['getCurrentDatabaseEngine'])->getMock();
         $propelConfigMock->expects($this->once())->method('getCurrentDatabaseEngine')->willReturn('Un supported database engine');
         return $propelConfigMock;
     }

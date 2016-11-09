@@ -71,7 +71,7 @@ class YvesFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFragmentControllerProvider(Request $request)
     {
-        $controllerResolverMock = $this->getMock(YvesFragmentControllerResolver::class, ['resolveController', 'getCurrentRequest'], [], '', false);
+        $controllerResolverMock = $this->getMockBuilder(YvesFragmentControllerResolver::class)->setMethods(['resolveController', 'getCurrentRequest'])->disableOriginalConstructor()->getMock();
         $controllerResolverMock->method('resolveController')->willReturn($this);
         $controllerResolverMock->method('getCurrentRequest')->willReturn($request);
 

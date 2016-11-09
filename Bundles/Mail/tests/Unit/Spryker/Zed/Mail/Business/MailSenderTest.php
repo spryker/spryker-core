@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\SendMailResponseTransfer;
 use Spryker\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
+use Spryker\Zed\Mail\Business\InclusionHandlerInterface;
 use Spryker\Zed\Mail\Business\MandrillMailSender;
 
 /**
@@ -62,11 +63,11 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->mandrillMock = $this->getMock('\\Mandrill', [], ['MOCK_API_KEY']);
-        $mandrillMessengerMock = $this->getMock('\\Mandrill_Messages', [], [$this->mandrillMock]);
+        $this->mandrillMock = $this->getMockBuilder('\\Mandrill')->setConstructorArgs(['MOCK_API_KEY'])->getMock();
+        $mandrillMessengerMock = $this->getMockBuilder('\\Mandrill_Messages')->setConstructorArgs([$this->mandrillMock])->getMock();
         $this->mandrillMock->messages = $mandrillMessengerMock;
 
-        $this->inclusionHandler = $this->getMock('\\Spryker\\Zed\\Mail\\Business\\InclusionHandlerInterface');
+        $this->inclusionHandler = $this->getMockBuilder(InclusionHandlerInterface::class)->getMock();
 
         $this->mailSender = new MandrillMailSender($this->mandrillMock, $this->inclusionHandler);
     }

@@ -77,7 +77,7 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveMustThrowExceptionIfClassCanNotBeResolved()
     {
-        $this->setExpectedException($this->expectedExceptionClass);
+        $this->expectException($this->expectedExceptionClass);
 
         $resolverMock = $this->getResolverMock(['canResolve']);
         $resolverMock->method('canResolve')

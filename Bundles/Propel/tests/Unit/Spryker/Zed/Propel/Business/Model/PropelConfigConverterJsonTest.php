@@ -87,7 +87,7 @@ class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitializationThrowsExceptionWhenDataIsMissing()
     {
-        $this->setExpectedException(ConfigMissingPropertyException::class);
+        $this->expectException(ConfigMissingPropertyException::class);
         new PropelConfigConverterJson([]);
     }
 
@@ -123,10 +123,10 @@ class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
-        $propelConfigConverterJsonMock = $this->getMock(PropelConfigConverterJson::class, ['writeToFile'], [$this->getTestConfiguration()]);
+        $propelConfigConverterJsonMock = $this->getMockBuilder(PropelConfigConverterJson::class)->setMethods(['writeToFile'])->setConstructorArgs([$this->getTestConfiguration()])->getMock();
         $propelConfigConverterJsonMock->expects($this->once())->method('writeToFile');
 
-        $this->setExpectedException(ConfigFileNotCreatedException::class);
+        $this->expectException(ConfigFileNotCreatedException::class);
         $propelConfigConverterJsonMock->convertConfig();
     }
 
