@@ -482,9 +482,10 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
             'bundles' => $property['bundles'],
+            'typeHint' => null,
         ];
         $method = $this->addTypeHint($property, $method);
-        $method = $this->addDefaultNull(null, $property, $method);
+        $method = $this->addDefaultNull($method['typeHint'], $property, $method);
 
         $this->methods[$methodName] = $method;
     }
