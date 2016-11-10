@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -83,7 +83,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 ->setUrl($url->getUrl())
                 ->setFkLocale($url->getLocale()->getIdLocale())
                 ->setResourceId($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract())
-                ->setResourceType(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+                ->setResourceType(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
 
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
@@ -114,7 +114,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 ->setUrl($url->getUrl())
                 ->setFkLocale($url->getLocale()->getIdLocale())
                 ->setResourceId($productAbstractTransfer->getIdProductAbstract())
-                ->setResourceType(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+                ->setResourceType(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
 
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }

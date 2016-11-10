@@ -10,7 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -258,8 +258,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
     }
@@ -273,8 +273,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-        $this->touchFacade->touchInactive(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
     }
@@ -288,8 +288,8 @@ class ProductAbstractManager implements ProductAbstractManagerInterface
     {
         $this->productQueryContainer->getConnection()->beginTransaction();
 
-        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
 
         $this->productQueryContainer->getConnection()->commit();
     }
