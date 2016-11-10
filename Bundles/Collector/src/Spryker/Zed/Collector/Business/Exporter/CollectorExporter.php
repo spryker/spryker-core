@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
-use Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -36,26 +35,18 @@ class CollectorExporter
     protected $localeFacade;
 
     /**
-     * @var array
-     */
-    protected $availableCollectorTypes;
-
-    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
-     * @param array $availableCollectorTypes
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
-        ExporterInterface $exporter,
-        array $availableCollectorTypes
+        ExporterInterface $exporter
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
-        $this->availableCollectorTypes = $availableCollectorTypes;
     }
 
     /**
@@ -68,7 +59,7 @@ class CollectorExporter
     {
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
-        $availableTypes = $this->getAvailableCollectorTypes();
+        $availableTypes = $this->getAvailableCollectorTypes($types);
 
         $output->writeln('');
         $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));
@@ -181,22 +172,17 @@ class CollectorExporter
     }
 
     /**
-     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException
+     * @param array $types
      *
      * @return array
      */
-    protected function getAvailableCollectorTypes()
+    protected function getAvailableCollectorTypes(array $types)
     {
-        if (empty($this->availableCollectorTypes)) {
-            throw new UndefinedCollectorTypesException();
-        }
+        $availableTypes = $this->touchQueryContainer
+            ->queryExportTypes()
+            ->find();
 
-        $availableTypes = $this->touchQueryContainer->queryExportTypes()->find();
-        if (empty($availableTypes)) {
-            $availableTypes = $this->availableCollectorTypes;
-        }
-
-        return $availableTypes;
+        return array_unique(array_merge($types, $availableTypes));
     }
 
 }

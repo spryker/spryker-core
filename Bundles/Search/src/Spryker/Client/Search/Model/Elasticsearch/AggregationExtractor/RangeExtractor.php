@@ -35,29 +35,64 @@ class RangeExtractor implements AggregationExtractorInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
-        $fieldName = $this->facetConfigTransfer->getFieldName();
-
-        list($min, $max) = $this->extractRangeData($aggregations, $parameterName, $fieldName);
-
         $rangeResultTransfer = new RangeSearchResultTransfer();
         $rangeResultTransfer
-            ->setName($parameterName)
-            ->setMin($min)
-            ->setMax($max);
+            ->setName($this->facetConfigTransfer->getParameterName())
+            ->setConfig(clone $this->facetConfigTransfer);
+
+        $rangeResultTransfer = $this->setRangeResultValues($rangeResultTransfer, $aggregations, $requestParameters);
 
         return $rangeResultTransfer;
     }
 
     /**
-     * @param array $aggregation
-     * @param string $parameterName
-     * @param string $fieldName
+     * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeResultTransfer
+     * @param array $aggregations
+     * @param array $requestParameters
+     *
+     * @return \Generated\Shared\Transfer\RangeSearchResultTransfer
+     */
+    protected function setRangeResultValues(RangeSearchResultTransfer $rangeResultTransfer, array $aggregations, array $requestParameters)
+    {
+        list($min, $max) = $this->extractRangeData($aggregations);
+        list($activeMin, $activeMax) = $this->getActiveRangeData($requestParameters, $min, $max);
+
+        $rangeResultTransfer
+            ->setMin(min($min, $activeMin))
+            ->setMax(max($max, $activeMax))
+            ->setActiveMin($activeMin)
+            ->setActiveMax($activeMax);
+
+        return $rangeResultTransfer;
+    }
+
+    /**
+     * @param array $requestParameters
+     * @param float $min
+     * @param float $max
      *
      * @return array
      */
-    protected function extractRangeData(array $aggregation, $parameterName, $fieldName)
+    protected function getActiveRangeData(array $requestParameters, $min, $max)
     {
+        $parameterName = $this->facetConfigTransfer->getParameterName();
+
+        $activeMin = (isset($requestParameters[$parameterName]['min']) ? $requestParameters[$parameterName]['min'] : $min);
+        $activeMax = (isset($requestParameters[$parameterName]['max']) ? $requestParameters[$parameterName]['max'] : $max);
+
+        return [$activeMin, $activeMax];
+    }
+
+    /**
+     * @param array $aggregation
+     *
+     * @return array
+     */
+    protected function extractRangeData(array $aggregation)
+    {
+        $parameterName = $this->facetConfigTransfer->getParameterName();
+        $fieldName = $this->facetConfigTransfer->getFieldName();
+
         foreach ($aggregation[$fieldName . NumericFacetAggregation::NAME_SUFFIX]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;

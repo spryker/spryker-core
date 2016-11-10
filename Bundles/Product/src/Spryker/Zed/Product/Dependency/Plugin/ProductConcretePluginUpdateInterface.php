@@ -18,6 +18,8 @@ interface ProductConcretePluginUpdateInterface
      * - Can be used for persisting other concrete product related information to database or execute any other logic.
      * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

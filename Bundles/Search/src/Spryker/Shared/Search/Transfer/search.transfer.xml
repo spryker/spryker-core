@@ -34,6 +34,7 @@
 
     <transfer name="PageMap">
         <property name="searchResultData" type="SearchResultDataMap[]" />
+        <property name="type" type="string" />
         <property name="store" type="string" />
         <property name="locale" type="string" />
         <property name="fullText" type="array" />
@@ -54,12 +55,12 @@
 
     <transfer name="StringFacetMap">
         <property name="name" type="string" />
-        <property name="value" type="string" />
+        <property name="value" type="array" />
     </transfer>
 
     <transfer name="IntegerFacetMap">
         <property name="name" type="string" />
-        <property name="value" type="int" />
+        <property name="value" type="array" />
     </transfer>
 
     <transfer name="StringSortMap">
@@ -81,6 +82,7 @@
         <property name="name" type="string" />
         <property name="values" type="FacetSearchResultValue[]" singular="value" />
         <property name="activeValue" type="string" />
+        <property name="config" type="FacetConfig" />
     </transfer>
 
     <transfer name="FacetSearchResultValue">
@@ -92,6 +94,9 @@
         <property name="name" type="string" />
         <property name="min" type="float" />
         <property name="max" type="float" />
+        <property name="activeMin" type="float" />
+        <property name="activeMax" type="float" />
+        <property name="config" type="FacetConfig" />
     </transfer>
 
     <transfer name="PaginationSearchResult">
@@ -99,6 +104,7 @@
         <property name="currentPage" type="int" />
         <property name="maxPage" type="int" />
         <property name="currentItemsPerPage" type="int" />
+        <property name="config" type="PaginationConfig" />
     </transfer>
 
     <transfer name="SortSearchResult">
@@ -107,7 +113,7 @@
         <property name="currentSortOrder" type="string" />
     </transfer>
 
-    <transfer name="SearchConfigCache">
+    <transfer name="SearchConfigExtension">
         <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig" />
         <property name="sortConfigs" type="SortConfig[]" singular="sortConfig" />
     </transfer>

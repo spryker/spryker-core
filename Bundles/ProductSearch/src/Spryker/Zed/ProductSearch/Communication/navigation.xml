@@ -5,10 +5,7 @@
         <label>Search and Filters</label>
         <title>Search and Filters</title>
         <bundle>product-search</bundle>
-        <controller>filters</controller>
-        <action>index</action>
         <icon>fa-search</icon>
-        <visible>0</visible><!-- These features are incomplete, so they are not published yet -->
         <pages>
             <search-preferences>
                 <label>Search Preferences</label>

@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class SearchPreferencesForm extends AbstractType
+class SearchPreferencesForm extends AbstractAttributeKeyForm
 {
 
-    const FIELD_ATTRIBUTE_NAME = 'attributeName';
+    const FIELD_ID_PRODUCT_ATTRIBUTE_KEY = 'idProductAttributeKey';
     const FIELD_FULL_TEXT = 'fullText';
     const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
     const FIELD_SUGGESTION_TERMS = 'suggestionTerms';
@@ -25,7 +24,7 @@ class SearchPreferencesForm extends AbstractType
      */
     public function getName()
     {
-        return 'filterPreferences';
+        return 'searchPreferences';
     }
 
     /**
@@ -37,7 +36,8 @@ class SearchPreferencesForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addAttributeName($builder)
+            ->addIdProductAttributeKeyField($builder)
+            ->addKeyField($builder, $options)
             ->addFullTextField($builder)
             ->addFullTextBoostedField($builder)
             ->addSuggestionTermsField($builder)
@@ -49,13 +49,44 @@ class SearchPreferencesForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeName(FormBuilderInterface $builder)
+    protected function addIdProductAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ATTRIBUTE_NAME, 'text', [
-            'disabled' => true,
+        $builder->add(self::FIELD_ID_PRODUCT_ATTRIBUTE_KEY, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addKeyField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_KEY, 'text', [
+            'label' => 'Attribute key *',
+            'constraints' => $this->createAttributeKeyFieldConstraints(),
+            'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function isUniqueKey($key)
+    {
+        $keyCount = $this->productSearchQueryContainer
+            ->queryProductAttributeKey()
+            ->joinSpyProductSearchAttributeMap()
+            ->filterByKey($key)
+            ->count();
+
+        return ($keyCount === 0);
     }
 
     /**

@@ -23,15 +23,6 @@ class CollectorConfig extends AbstractBundleConfig
     const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
     const COLLECTOR_SEARCH_KEY = 'collector_search_key';
 
-    const COLLECTOR_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
-    const COLLECTOR_TYPE_CATEGORYNODE = 'categorynode';
-    const COLLECTOR_TYPE_NAVIGATION = 'navigation';
-    const COLLECTOR_TYPE_TRANSLATION = 'translation';
-    const COLLECTOR_TYPE_PAGE = 'page';
-    const COLLECTOR_TYPE_BLOCK = 'block';
-    const COLLECTOR_TYPE_REDIRECT = 'redirect';
-    const COLLECTOR_TYPE_URL = 'url';
-
     const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
     const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
@@ -89,23 +80,6 @@ class CollectorConfig extends AbstractBundleConfig
     public function getChunkSizeTypeMap()
     {
         return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableCollectorTypes()
-    {
-        return [
-            self::COLLECTOR_TYPE_PRODUCT_ABSTRACT,
-            self::COLLECTOR_TYPE_CATEGORYNODE,
-            self::COLLECTOR_TYPE_NAVIGATION,
-            self::COLLECTOR_TYPE_TRANSLATION,
-            self::COLLECTOR_TYPE_PAGE,
-            self::COLLECTOR_TYPE_BLOCK,
-            self::COLLECTOR_TYPE_REDIRECT,
-            self::COLLECTOR_TYPE_URL,
-        ];
     }
 
     /**

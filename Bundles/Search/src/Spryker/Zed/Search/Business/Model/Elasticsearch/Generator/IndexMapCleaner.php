@@ -9,7 +9,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class IndexMapCleaner
+class IndexMapCleaner implements IndexMapCleanerInterface
 {
 
     /**

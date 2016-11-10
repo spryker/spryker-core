@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
-use Spryker\Shared\Library\Json;
+use Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -33,15 +33,22 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $storePrefixes;
 
     /**
+     * @var \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface
+     */
+    protected $utilEncodingFacade;
+
+    /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
      * @param array $stores
+     * @param \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface $utilEncodingFacade
      */
-    public function __construct(array $sourceDirectories, IndexDefinitionMergerInterface $definitionMerger, array $stores)
+    public function __construct(array $sourceDirectories, IndexDefinitionMergerInterface $definitionMerger, array $stores, SearchToUtilEncodingInterface $utilEncodingFacade)
     {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
         $this->storePrefixes = $this->getStorePrefixes($stores);
+        $this->utilEncodingFacade = $utilEncodingFacade;
     }
 
     /**
@@ -53,7 +60,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 
         $jsonFiles = $this->getJsonFiles();
         foreach ($jsonFiles as $jsonFile) {
-            $definitionData = Json::decode($jsonFile->getContents(), true);
+            $definitionData = $this->decodeJson($jsonFile->getContents());
             $indexDefinitions = $this->getDefinitionByStores($jsonFile, $indexDefinitions, $definitionData);
         }
 
@@ -183,6 +190,17 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $jsonValue
+     *
+     * @return array
+     */
+    protected function decodeJson($jsonValue)
+    {
+        return $this->utilEncodingFacade
+            ->decodeJson($jsonValue, true);
     }
 
 }

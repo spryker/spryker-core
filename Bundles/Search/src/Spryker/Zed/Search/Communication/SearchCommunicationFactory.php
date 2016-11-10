@@ -19,19 +19,11 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Storage\Communication\Table\StorageTable
+     * @return \Spryker\Zed\Search\Communication\Table\SearchTable
      */
     public function createSearchTable()
     {
         return new SearchTable($this->getFacade());
-    }
-
-    /**
-     * @return \Spryker\Client\Search\SearchClient
-     */
-    public function getSearchClient()
-    {
-        return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH);
     }
 
     /**

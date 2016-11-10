@@ -1,0 +1,54 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set action_name = (app.request.query.get('id') > 0) ? 'Edit filter' : 'Create filter' %}
+
+{% block section_title action_name | trans %}
+{% block head_title action_name | trans %}
+
+{% block action %}
+    {{ backActionButton('/product-search/filter-preferences', 'List of filters' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: action_name | trans } %}
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+
+            <div class="form-group {% if form.key.vars.errors|length %}has-error{% endif %}">
+                {{ form_label(form.key) }}
+                {{ form_widget(form.key) }}
+                {{ form_errors(form.key) }}
+            </div>
+
+            {{ form_row(form.filter_type) }}
+
+            <h4>{{ 'Translations' | trans }}</h4>
+            <div class="form-group">
+                {% for locale,localizedAttribute in form.translations %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale, 'collapsed': (not loop.first), 'hasError': (not localizedAttribute.vars.valid) } %}
+                        {% block content %}
+                            <div class="form-group {% if localizedAttribute.key_translation.vars.errors|length %}has-error{% endif %}">
+                                {{ form_label(localizedAttribute.key_translation) }}
+                                {{ form_widget(localizedAttribute.key_translation, {'attr': {'class': 'name-translation', 'data-translation-key': localizedAttribute.key_translation.vars.name}}) }}
+                                {{ form_errors(localizedAttribute.key_translation) }}
+                            </div>
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
+
+            <input id="{{ form.vars.name }}_submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }} " />
+
+            {{ form_end(form) }}
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productsearch-filter-preferences.js"></script>
+{% endblock %}
