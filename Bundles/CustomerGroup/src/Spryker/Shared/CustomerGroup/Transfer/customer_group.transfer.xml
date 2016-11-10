@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer"
+<transfers
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer http://static.spryker.com/transfer-01.xsd">
+    xsi:noNamespaceSchemaLocation="http://static.spryker.com/transfer-02.xsd">
 
     <transfer name="CustomerGroup">
         <property name="idCustomerGroup" type="int" />
@@ -10,12 +10,5 @@
 
         <property name="customers" singular="customer" type="CustomerGroupToCustomer[]" />
     </transfer>
-
-    <transfer name="CustomerGroupToCustomer">
-        <property name="idCustomerGroupToCustomer" type="int" />
-        <property name="fkCustomerGroup" type="int" />
-        <property name="fkCustomer" type="int" />
-    </transfer>
-
 </transfers>
 

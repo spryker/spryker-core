@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
@@ -17,7 +18,7 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
      */
-    public function queryCustomerGroups();
+    public function queryCustomerGroup();
 
     /**
      * @api
@@ -27,5 +28,12 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
      */
     public function queryCustomerGroupById($idCustomerGroup);
+
+    /**
+     * @api
+     *
+     * @return SpyCustomerGroupToCustomerQuery
+     */
+    public function queryCustomerGroupToCustomerByIdCustomerGroup();
 
 }

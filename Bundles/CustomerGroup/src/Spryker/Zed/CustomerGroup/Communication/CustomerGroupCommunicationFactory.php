@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerGroup\Communication;
 use Spryker\Zed\CustomerGroup\Communication\Form\CustomerGroupForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable;
+use Spryker\Zed\CustomerGroup\Communication\Table\CustomerTable;
 use Spryker\Zed\CustomerGroup\CustomerGroupDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -28,6 +29,15 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
         return new CustomerGroupTable(
             $this->getQueryContainer(),
             $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_DATE_FORMATTER)
+        );
+    }
+
+
+    public function createCustomerTable($customerGroupTransfer)
+    {
+        return new CustomerTable(
+            $this->getQueryContainer(),
+            $customerGroupTransfer
         );
     }
 

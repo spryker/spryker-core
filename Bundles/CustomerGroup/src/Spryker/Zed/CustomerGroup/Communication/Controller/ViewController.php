@@ -37,10 +37,14 @@ class ViewController extends AbstractController
 
         $customerGroupArray = $customerGroupTransfer->toArray();
 
+        $customerTable = $this->getFactory()
+            ->createCustomerTable($customerGroupTransfer);
+
         return $this->viewResponse([
             'customerGroup' => $customerGroupArray,
             //'customers' => $customers,
             'idCustomerGroup' => $idCustomerGroup,
+            'customerTable' => $customerTable->render(),
         ]);
     }
 

@@ -132,7 +132,7 @@ class CustomerGroupForm extends AbstractType
             new Length(['max' => 70]),
         ];
 
-        $customerGroupQuery = $this->customerGroupQueryContainer->queryCustomerGroups();
+        $customerGroupQuery = $this->customerGroupQueryContainer->queryCustomerGroup();
         if ($this->idCustomerGroup) {
             $customerGroupQuery->filterByIdCustomerGroup($this->idCustomerGroup, Criteria::NOT_EQUAL);
         }

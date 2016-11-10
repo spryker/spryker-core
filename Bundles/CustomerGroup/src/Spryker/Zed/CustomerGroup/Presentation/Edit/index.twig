@@ -7,8 +7,8 @@
 
 {% block action %}
     {{ backActionButton('/customer-group', 'Back to Customer Groups' | trans) }}
-    {{ viewActionButton('/customer-groups/view?id-customer-group=' ~ idCustomerGroup, 'View Customer Group' | trans) }}
-    {{ removeActionButton('/customer-groups/delete?id-customer-group=' ~ idCustomerGroup, 'Delete Customer Group' | trans) }}
+    {{ viewActionButton('/customer-group/view?id-customer-group=' ~ idCustomerGroup, 'View Customer Group' | trans) }}
+    {{ removeActionButton('/customer-group/delete?id-customer-group=' ~ idCustomerGroup, 'Delete Customer Group' | trans) }}
 {% endblock %}
 
 {% block content %}

@@ -21,9 +21,9 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+
         $table = $this->getFactory()
             ->createCustomerGroupTable();
-
         return $this->viewResponse([
             'customerGroupTable' => $table->render(),
         ]);
