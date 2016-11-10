@@ -28,4 +28,16 @@ interface ProductOptionToTaxInterface
      */
     public function getDefaultTaxRate();
 
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSets();
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
+    public function getTaxSet($id);
+
 }

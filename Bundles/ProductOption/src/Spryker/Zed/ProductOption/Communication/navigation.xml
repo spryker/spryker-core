@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <label>Products</label>
+        <title>Products</title>
+        <uri>/product</uri>
+        <icon>fa-database</icon>
+        <pages>
+            <product>
+                <label>Product List</label>
+                <title>Product List</title>
+                <bundle>product</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <order>1</order>
+                <visible>1</visible>
+            </product>
+            <product_options>
+                <label>Product Options</label>
+                <title>Product Options</title>
+                <bundle>product-option</bundle>
+                <controller>list</controller>
+                <action>index</action>
+                <visible>2</visible>
+            </product_options>
+        </pages>
+    </product>
+</config>

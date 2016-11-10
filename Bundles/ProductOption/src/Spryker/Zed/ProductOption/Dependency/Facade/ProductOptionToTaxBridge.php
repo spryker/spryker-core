@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -48,6 +47,24 @@ class ProductOptionToTaxBridge implements ProductOptionToTaxInterface
     public function getDefaultTaxRate()
     {
         return $this->taxFacade->getDefaultTaxRate();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSets()
+    {
+        return $this->taxFacade->getTaxSets();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
+     */
+    public function getTaxSet($id)
+    {
+        return $this->taxFacade->getTaxSet($id);
     }
 
 }
