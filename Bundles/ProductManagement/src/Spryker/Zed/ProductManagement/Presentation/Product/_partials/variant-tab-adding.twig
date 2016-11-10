@@ -1,0 +1,15 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Manage product variants</h3>
+        <p>For the creation of product variants, start by selecting attributes and value that define the difference between your variations.</p>
+        <p><i>Note: Editing generated variants by adding or removing attributes, leads to the creation of new variants. Current configurations must be recreated.</i></p>
+    {% endfilter %}
+</div>
+
+{% for inputGroup in form.attribute_super %}
+    {% include '@ProductManagement/Product/_partials/input-group.twig' %}
+{% else %}
+    <div class="alert alert-warning">
+        {{ ('There is no super attribute defined. <a href="%url%">Define super attributes</a> in order to be able to create variants.' | trans({'%url%': url('/product-management/attribute')})) | raw }}
+    </div>
+{% endfor %}

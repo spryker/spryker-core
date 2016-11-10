@@ -9,17 +9,14 @@ namespace Spryker\Zed\ProductSearch;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_COLLECTOR = 'collector facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_TOUCH = 'touch facade';
-    const QUERY_CONTAINER_PRODUCT = 'product query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,7 +27,6 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $this->provideLocaleFacade($container);
         $this->provideTouchFacade($container);
-        $this->provideCollectorFacade($container);
 
         return $container;
     }
@@ -42,8 +38,6 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $this->provideProductQueryContainer($container);
-
         return $container;
     }
 
@@ -68,30 +62,6 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new ProductSearchToTouchBridge($container->getLocator()->touch()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function provideCollectorFacade(Container $container)
-    {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return new ProductSearchToCollectorBridge($container->getLocator()->collector()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function provideProductQueryContainer(Container $container)
-    {
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
         };
     }
 

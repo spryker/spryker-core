@@ -17,7 +17,7 @@ interface PriceToProductInterface
      *
      * @return int
      */
-    public function getProductAbstractIdBySku($sku);
+    public function findProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku

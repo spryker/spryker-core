@@ -32,11 +32,11 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getAvailableLocales()
+    public function getLocaleCollection()
     {
-        return $this->localeFacade->getAvailableLocales();
+        return $this->localeFacade->getLocaleCollection();
     }
 
     /**
@@ -47,6 +47,16 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     public function getLocale($localeName)
     {
         return $this->localeFacade->getLocale($localeName);
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale)
+    {
+        return $this->localeFacade->getLocaleById($idLocale);
     }
 
 }

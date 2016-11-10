@@ -14,16 +14,17 @@
         </foreign-key>
         <id-method-parameter value="spy_product_search_pk_seq"/>
     </table>
+
     <table name="spy_product_search_attribute_map">
-        <column name="fk_product_attributes_metadata" type="INTEGER" required="true" primaryKey="true"/>
+        <column name="fk_product_attribute_key" type="INTEGER" required="true" primaryKey="true"/>
         <column name="target_field" type="VARCHAR" required="true" primaryKey="true"/>
 
-        <index name="spy_product_search_attribute_map-k_product_attributes_metadata">
-            <index-column name="fk_product_attributes_metadata"/>
+        <index name="spy_product_search_attribute_map-fk_product_attribute_key">
+            <index-column name="fk_product_attribute_key"/>
         </index>
 
-        <foreign-key name="spy_product_search_attribute_map-source_attribute_id" foreignTable="spy_product_attributes_metadata" onDelete="cascade">
-            <reference local="fk_product_attributes_metadata" foreign="id_product_attributes_metadata"/>
+        <foreign-key name="spy_product_search_attribute_map-fk_product_attribute_key" foreignTable="spy_product_attribute_key" onDelete="cascade">
+            <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>
         </foreign-key>
     </table>
 </database>

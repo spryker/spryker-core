@@ -1,0 +1,19 @@
+{% set form_group_errors_css = '' %}
+
+{% if inputGroup.value.vars.errors|length %}
+    {% set form_group_errors_css = 'has-error' %}
+{% endif %}
+
+<div class='col-sm-12 col-lg-6 attribute_metadata_row  {{ form_group_errors_css }}'>
+    <label>{{ inputGroup.name.vars.label }}</label>
+    <div class='form-group input-group'>
+        <span class="input-group-addon">{{ form_widget(inputGroup.name, {no_label: 'true'}) }}</span>
+        {% if localeName is defined %}
+            {{ form_widget(inputGroup.value, { 'attr': {'locale_code': localeName }}) }}
+        {% else %}
+            {{ form_widget(inputGroup.value) }}
+        {% endif %}
+        {{ form_widget(inputGroup.value_hidden_id) }}
+    </div>
+    {{ form_errors(inputGroup.name) }} {{ form_errors(inputGroup.value) }}
+</div>

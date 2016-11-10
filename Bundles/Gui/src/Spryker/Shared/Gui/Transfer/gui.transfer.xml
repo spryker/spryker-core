@@ -37,6 +37,7 @@
         <property name="activeTabName" type="string"/>
         <property name="footerTemplate" type="string"/>
         <property name="isNavigable" type="bool"/>
+        <property name="autoErrors" type="bool"/>
     </transfer>
 
 </transfers>

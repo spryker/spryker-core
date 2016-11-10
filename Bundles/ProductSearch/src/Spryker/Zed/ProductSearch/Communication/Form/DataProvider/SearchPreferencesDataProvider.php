@@ -27,25 +27,24 @@ class SearchPreferencesDataProvider
     }
 
     /**
-     * @param int $idProductAttributesMetadata
+     * @param int $idProductAttributeKey
      *
      * @return array
      */
-    public function getData($idProductAttributesMetadata)
+    public function getData($idProductAttributeKey)
     {
-        $productAttributesMetadataEntity = $this
+        $productAttributeKeyEntity = $this
             ->productSearchQueryContainer
             ->querySearchPreferencesTable()
-            ->filterByIdProductAttributesMetadata($idProductAttributesMetadata)
+            ->filterByIdProductAttributeKey($idProductAttributeKey)
             ->findOne();
 
         return [
-            SearchPreferencesForm::FIELD_ATTRIBUTE_NAME => $productAttributesMetadataEntity->getKey(),
-            SearchPreferencesForm::FIELD_ATTRIBUTE_TYPE => $productAttributesMetadataEntity->getSpyProductAttributeType()->getName(),
-            SearchPreferencesForm::FIELD_FULL_TEXT => $productAttributesMetadataEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT),
-            SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED => $productAttributesMetadataEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED),
-            SearchPreferencesForm::FIELD_SUGGESTION_TERMS => $productAttributesMetadataEntity->getVirtualColumn(SearchPreferencesForm::FIELD_SUGGESTION_TERMS),
-            SearchPreferencesForm::FIELD_COMPLETION_TERMS => $productAttributesMetadataEntity->getVirtualColumn(SearchPreferencesForm::FIELD_COMPLETION_TERMS),
+            SearchPreferencesForm::FIELD_ATTRIBUTE_NAME => $productAttributeKeyEntity->getKey(),
+            SearchPreferencesForm::FIELD_FULL_TEXT => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT),
+            SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED),
+            SearchPreferencesForm::FIELD_SUGGESTION_TERMS => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_SUGGESTION_TERMS),
+            SearchPreferencesForm::FIELD_COMPLETION_TERMS => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_COMPLETION_TERMS),
         ];
     }
 

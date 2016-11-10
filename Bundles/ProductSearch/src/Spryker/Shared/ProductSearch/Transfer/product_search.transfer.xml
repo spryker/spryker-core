@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="ProductSearchPreferences">
-        <property name="idProductAttributesMetadata" type="int" />
+        <property name="idProductAttributeKey" type="int" />
         <property name="attributeType" type="string" />
         <property name="fullText" type="bool" />
         <property name="fullTextBoosted" type="bool" />

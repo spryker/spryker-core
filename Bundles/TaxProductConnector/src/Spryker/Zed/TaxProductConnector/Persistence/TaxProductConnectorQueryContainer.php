@@ -65,4 +65,34 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
             ]);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractById($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductAbstractQuery()
+            ->filterByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     */
+    public function queryTaxSetForProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createTaxSetQuery()
+            ->useSpyProductAbstractQuery()
+                ->filterByIdProductAbstract($idProductAbstract)
+            ->endUse();
+    }
+
 }

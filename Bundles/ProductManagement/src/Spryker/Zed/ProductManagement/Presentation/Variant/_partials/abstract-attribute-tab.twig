@@ -1,0 +1,30 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Configurable Product Attributes</h3>
+        <p>Select attributes and corresponding values.</p>
+    {% endfilter %}
+</div>
+
+{% for localeTransfer in attributeLocaleCollection %}
+    {% set formKey = 'attribute_abstract_' ~ localeTransfer.localeName %}
+
+    {% if form[formKey] is defined %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+            {% block title %}
+                {% if localeName == 'default' %}
+                    {{ 'Default' | trans }}
+                {% else %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+
+            {% block content %}
+                <div class='row'>
+                    {% for inputGroup in form[formKey] %}
+                        {% include '@ProductManagement/Product/_partials/input-group.twig' %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

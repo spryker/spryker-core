@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 
@@ -19,13 +20,6 @@ interface WriterInterface
      * @return int
      */
     public function createStockType(TypeTransfer $stockTypeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
-     *
-     * @return int
-     */
-    public function updateStockType(TypeTransfer $stockTypeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
@@ -58,5 +52,12 @@ interface WriterInterface
      * @return int
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer);
 
 }

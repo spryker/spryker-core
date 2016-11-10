@@ -345,6 +345,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated This method will be removed with next major release because of invalid dependency direction.
+     * Use ProductFacade::getProductUrl() instead.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *

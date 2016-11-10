@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,13 +17,37 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
 {
 
     /**
+     * Specification:
+     * - Save tax set id to product abstract table
+     *
      * @api
      *
-     * @return \Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function getTaxChangeTouchPlugin()
+    public function saveTaxSetToProductAbstract(ProductAbstractTransfer $productConcreteTransfer)
     {
-        return $this->getFactory()->createTaxChangeTouchPlugin();
+        return $this->getFactory()
+            ->createProductAbstractTaxWriter()
+            ->saveTaxSetToProductAbstract($productConcreteTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Read tax set from database and sets PriceProductTransfer on ProductAbstractTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapTaxSet(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createProductAbstractTaxSetMapper()
+            ->mapTaxSet($productAbstractTransfer);
     }
 
 }

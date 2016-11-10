@@ -9,8 +9,10 @@ namespace Unit\Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 /**
@@ -30,7 +32,6 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     const ID_PRODUCT_CONCRETE = 'id product concrete';
     const ID_PRODUCT_ABSTRACT = 'id product abstract';
     const PRODUCT_NAME = 'product name';
-    const TAX_SET_NAME = 'tax set name';
 
     /**
      * @return void
@@ -40,9 +41,11 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->getChangeTransfer();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setIdProductConcrete(self::ID_PRODUCT_CONCRETE);
+        $productConcreteTransfer->setSku(self::CONCRETE_SKU);
+        $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
+        $productConcreteTransfer->setFkProductAbstract(1);
 
-        $productManager = $this->getProductManager($productConcreteTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
@@ -57,13 +60,16 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->getChangeTransfer();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setProductAbstractSku(self::ABSTRACT_SKU);
+        $productConcreteTransfer->setSku(self::CONCRETE_SKU);
+        $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
 
-        $productManager = $this->getProductManager($productConcreteTransfer);
+        $productConcreteTransfer->setFkProductAbstract(1);
+
+        $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($productConcreteTransfer->getProductAbstractSku(), $changedItemTransfer->getAbstractSku());
+        $this->assertSame($productConcreteTransfer->getAbstractSku(), $changedItemTransfer->getAbstractSku());
     }
 
     /**
@@ -74,48 +80,16 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->getChangeTransfer();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $productConcreteTransfer->setSku(self::CONCRETE_SKU);
+        $productConcreteTransfer->setIdProductConcrete(self::ID_PRODUCT_ABSTRACT);
+        $productConcreteTransfer->setFkProductAbstract(1);
+        $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
 
-        $productManager = $this->getProductManager($productConcreteTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($productConcreteTransfer->getIdProductAbstract(), $changedItemTransfer->getIdProductAbstract());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandItemsMustAddProductNameToCartItems()
-    {
-        $changeTransfer = $this->getChangeTransfer();
-
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setName(self::PRODUCT_NAME);
-
-        $productManager = $this->getProductManager($productConcreteTransfer);
-        $result = $productManager->expandItems($changeTransfer);
-
-        $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($productConcreteTransfer->getName(), $changedItemTransfer->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandItemsMustAddTaxSetToAllCartItemsIfPRoductHasTaxSet()
-    {
-        $changeTransfer = $this->getChangeTransfer();
-
-        $productTaxRate = 19;
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setTaxRate($productTaxRate);
-
-        $productManager = $this->getProductManager($productConcreteTransfer);
-        $result = $productManager->expandItems($changeTransfer);
-
-        $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($productConcreteTransfer->getTaxRate(), $changedItemTransfer->getTaxRate());
+        $this->assertSame($productConcreteTransfer->getFkProductAbstract(), $changedItemTransfer->getIdProductAbstract());
     }
 
     /**
@@ -133,27 +107,44 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $returnValue
+     * @param string $localizedName
      *
-     * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager
+     * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander
      */
-    public function getProductManager(ProductConcreteTransfer $returnValue)
+    public function getProductManager(ProductConcreteTransfer $returnValue, $localizedName)
     {
         $mockProductFacade = $this->getMockProductFacade();
+
         $mockProductFacade->expects($this->once())
             ->method('getProductConcrete')
             ->will($this->returnValue($returnValue));
 
-        $productManager = new ProductManager($mockProductFacade);
+        $mockProductFacade->expects($this->once())
+            ->method('getLocalizedProductConcreteName')
+            ->will($this->returnValue($localizedName));
 
-        return $productManager;
+        $mockLocaleFacade = $this->getMockLocaleFacade();
+        $mockLocaleFacade->expects($this->once())
+            ->method('getCurrentLocale')
+            ->will($this->returnValue(new LocaleTransfer()));
+
+        return new ProductExpander($mockLocaleFacade, $mockProductFacade);
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\ProductFacade|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockProductFacade()
     {
-        return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)->setMethods(['getProductConcrete'])->disableOriginalConstructor()->getMock();
+        return $this->getMock(ProductCartConnectorToProductInterface::class, ['getProductConcrete', 'getLocalizedProductConcreteName'], [], '', false);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getMockLocaleFacade()
+    {
+        return $this->getMock(ProductCartConnectorToLocaleInterface::class, ['getCurrentLocale'], [], '', false);
     }
 
 }

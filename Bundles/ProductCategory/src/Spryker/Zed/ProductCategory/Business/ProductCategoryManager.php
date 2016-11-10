@@ -113,7 +113,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
-        $idProductAbstract = $this->productFacade->getProductAbstractIdBySku($sku);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($sku);
         $idCategory = $this->categoryFacade->getCategoryIdentifier($categoryName, $locale);
 
         $mappingEntity = new SpyProductCategory();

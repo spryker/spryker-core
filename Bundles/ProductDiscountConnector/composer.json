@@ -8,10 +8,12 @@
   "require": {
     "spryker/discount": "^3.0.0",
     "spryker/kernel": "^2.0.0",
+    "spryker/locale": "^2.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/tax": "^3.0.0",
     "spryker/testify": "*"
   },
   "description": "ProductDiscountConnector bundle",
