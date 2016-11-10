@@ -197,7 +197,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param $sku
+     * @param string $sku
      *
      * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
      *

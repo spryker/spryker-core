@@ -20,9 +20,8 @@ class AvailabilityAbstractTable extends AbstractTable
 
     const TABLE_COL_ACTION = 'Actions';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
-    const AVAILABLE = 'available';
-    const NOT_AVAILABLE = 'not available';
-
+    const AVAILABLE = 'Available';
+    const NOT_AVAILABLE = 'Not available';
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -154,7 +153,7 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($reservationItems as $item) {
             $value = explode(':', $item);
 
-            if(count($value) > 1) {
+            if (count($value) > 1) {
                 $reservation += $value[1];
             }
         }

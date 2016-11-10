@@ -23,7 +23,7 @@ class OmsToUtilSanitizeBridge implements OmsToUtilSanitizeInterface
     }
 
     /**
-     * @param $text
+     * @param string $text
      * @param bool $double
      *
      * @return string

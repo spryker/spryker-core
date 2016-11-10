@@ -5,7 +5,6 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-
 namespace Acceptance\Availability\Zed;
 
 use Acceptance\Availability\Zed\PageObject\AvailabilityPage;

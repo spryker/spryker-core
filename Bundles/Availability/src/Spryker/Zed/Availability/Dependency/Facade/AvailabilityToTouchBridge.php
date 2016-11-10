@@ -32,7 +32,7 @@ class AvailabilityToTouchBridge implements AvailabilityToTouchInterface
      */
     public function touchActive($itemType, $idItem, $keyChange = false)
     {
-        return $this->touchFacade->touchActive($itemType,$idItem, $keyChange);
+        return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }
 
 }

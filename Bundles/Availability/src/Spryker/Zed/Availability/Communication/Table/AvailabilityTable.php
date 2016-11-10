@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Availability\Communication\Table;
 
+use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -34,7 +35,7 @@ class AvailabilityTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailability
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      */
     public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailability, $idProductAbstract)
     {
@@ -99,7 +100,7 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?: 0 ,
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?: 0,
                 self::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
@@ -112,7 +113,7 @@ class AvailabilityTable extends AbstractTable
      *
      * @return string
      */
-    protected function createEditButton($productAbstractEntity)
+    protected function createEditButton(SpyAvailability $productAbstractEntity)
     {
         $viewTaxSetUrl = Url::generate(
             '/availability/index/edit',

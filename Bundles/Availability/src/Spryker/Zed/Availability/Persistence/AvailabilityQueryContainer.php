@@ -106,7 +106,10 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     {
         return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
             ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
-            ->withColumn("" . self::GROUP_CONCAT . "(" . self::CONCAT . "(" . SpyProductTableMap::COL_ID_PRODUCT . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . "))", self::RESERVATION_QUANTITY)
+            ->withColumn(
+                "" . self::GROUP_CONCAT . "(" . self::CONCAT . "(" . SpyProductTableMap::COL_ID_PRODUCT . ",':'," . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . "))",
+                self::RESERVATION_QUANTITY
+            )
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
 
@@ -121,7 +124,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     {
         return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
-            ->addJoin(SpyProductTableMap::COL_SKU, SpyAvailabilityTableMap::COL_SKU,Criteria::INNER_JOIN)
+            ->addJoin(SpyProductTableMap::COL_SKU, SpyAvailabilityTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addAnd(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale);
     }
 
@@ -164,7 +167,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
-            ->addJoin(SpyProductAbstractTableMap::COL_SKU, SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU ,Criteria::INNER_JOIN)
+            ->addJoin(SpyProductAbstractTableMap::COL_SKU, SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::LEFT_JOIN);
     }
 

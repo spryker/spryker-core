@@ -73,4 +73,19 @@ interface AvailabilityFacadeInterface
      */
     public function updateAvailability($sku);
 
+    /**
+     *
+     * Specification:
+     *  - Reads product availability data from persistense, stock, reservation, availability.
+     *  - Returns data for selected abstract product
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale);
+
 }

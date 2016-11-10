@@ -13,14 +13,14 @@
         {% block widget_content %}
             <div class="row">
                 <div class="col-lg-2">
-                    <p><b>{{ 'SKU' | trans }}</b></p><p> {{ productAbstractInfo.sku }}</p>
+                    <p><b>{{ 'SKU' | trans }}</b></p><p> {{ productAbstractAvailability.sku }}</p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Name' | trans }}:</b></p><p> {{ productAbstractInfo.productName }}</p>
+                    <p><b>{{ 'Name' | trans }}:</b></p><p> {{ productAbstractAvailability.productName }}</p>
                 </div>
                 <div class="col-lg-2">
                     <p><b>{{ 'Availability' | trans }}:</b></p><p>
-                        {% if productAbstractInfo.availability > 0 %}
+                        {% if productAbstractAvailability.availability > 0 %}
                             <span class="label label-info"> {{ "Available" | trans }}</span>
                         {% else  %}
                             <span class="label label-info"> {{ "Not available" | trans }}</span>
@@ -28,10 +28,10 @@
                     </p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractInfo.stockQuantity }}</p>
+                    <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractAvailability.stockQuantity }}</p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractInfo.reservationQuantity }}</p>
+                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity }}</p>
                 </div>
             </div>
 

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Availability\Communication;
 
-use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
@@ -49,17 +48,21 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider $availabilityStockFormDataProvider
+     *
+     * @param int $idProduct
+     * @param string $sku
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAvailabilityStockForm(AvailabilityStockFormDataProvider $availabilityStockFormDataProvider)
+    public function createAvailabilityStockForm($idProduct, $sku)
     {
         $availabilityForm = new AvailabilityStockForm();
 
+        $availabilityStockFormDataProvider = $this->createAvailabilityStockFormDataProvider();
+
         return $this->getFormFactory()->create(
             $availabilityForm,
-            $availabilityStockFormDataProvider->getData(),
+            $availabilityStockFormDataProvider->getData($idProduct, $sku),
             [
                 AvailabilityStockFormDataProvider::DATA_CLASS => $availabilityStockFormDataProvider->getOptions()[AvailabilityStockFormDataProvider::DATA_CLASS]
             ]
@@ -67,13 +70,12 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
      * @return \Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
      */
-    public function createAvailabilityStockFormDataProvider(AvailabilityStockTransfer $availabilityStockTransfer)
+    public function createAvailabilityStockFormDataProvider()
     {
-        return new AvailabilityStockFormDataProvider($availabilityStockTransfer);
+        return new AvailabilityStockFormDataProvider($this->getStockFacade());
     }
 
     /**

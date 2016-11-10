@@ -59,7 +59,6 @@ class OmsFacadeTest extends Test
         $this->assertSame('', $matrix[0]['COL_STATE']);
     }
 
-
     /**
      * @return \Spryker\Zed\Oms\Business\OmsFacade
      */

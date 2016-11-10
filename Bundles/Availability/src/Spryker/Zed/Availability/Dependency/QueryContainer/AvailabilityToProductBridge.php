@@ -24,8 +24,6 @@ class AvailabilityToProductBridge implements AvailabilityToProductInterface
     }
 
     /**
-     * @api
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductAbstract()

@@ -14,5 +14,13 @@
         <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
     </transfer>
 
+    <transfer name="ProductAbstractAvailability">
+        <property name="availability" type="int" />
+        <property name="productName" type="string" />
+        <property name="reservationQuantity" type="int" />
+        <property name="sku" type="string" />
+        <property name="stockQuantity" type="int" />
+    </transfer>
+
 </transfers>
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
+use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -43,6 +44,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Model\ProductReservationReaderInterface
+     */
+    public function createProductReservationReader()
+    {
+        return new ProductReservationReader($this->getQueryContainer());
     }
 
     /**

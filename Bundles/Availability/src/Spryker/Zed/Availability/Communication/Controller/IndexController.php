@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Availability\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstract;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\Availability\Communication\Table\AvailabilityTable;
@@ -45,12 +43,14 @@ class IndexController extends AbstractController
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract);
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
-        $productAbstractEntity = $this->getQueryContainer()
-            ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $localeTransfer->getIdLocale())
-            ->findOne();
+        $productAbstractAvailabilityTransfer = $this->getFacade()
+            ->getProductAbstractAvailability(
+                $idProductAbstract,
+                $localeTransfer->getIdLocale()
+            );
 
         return [
-            'productAbstractInfo' => $this->getOverviewData($productAbstractEntity),
+            'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render()
         ];
     }
@@ -66,16 +66,14 @@ class IndexController extends AbstractController
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
         $sku = $request->query->get(AvailabilityTable::URL_PARAM_SKU);
 
-        $availabilityStockFormDataProvider = $this->createAvailabilityStockFormProvider($idProduct, $sku);
-
-        $availabilityStockForm = $this->getFactory()->createAvailabilityStockForm($availabilityStockFormDataProvider);
+        $availabilityStockForm = $this->getFactory()->createAvailabilityStockForm($idProduct, $sku);
         $availabilityStockForm->handleRequest($request);
 
         if ($availabilityStockForm->isValid()) {
             $data = $availabilityStockForm->getData();
-            if ($this->saveData($data)) {
+            if ($this->saveAvailabilityStock($data)) {
                 $this->addSuccessMessage('Stock successfully updated');
-            } else  {
+            } else {
                 $this->addErrorMessage('Failed to update stock');
             }
         }
@@ -113,7 +111,6 @@ class IndexController extends AbstractController
         );
     }
 
-
     /**
      * @return \Spryker\Zed\Availability\Communication\Table\AvailabilityAbstractTable
      */
@@ -146,149 +143,31 @@ class IndexController extends AbstractController
         return $this->getFactory()->createAvailabilityTable($idProductAbstract, $localeTransfer->getIdLocale());
     }
 
-    /**
-     * @param $productAbstractEntity
-     *
-     * @return array
-     */
-    protected function getOverviewData(SpyProductAbstract $productAbstractEntity)
-    {
-        return [
-            'sku' => $productAbstractEntity->getSku(),
-            'productName' => $productAbstractEntity->getProductName(),
-            'availability' => $productAbstractEntity->getAvailabilityQuantity(),
-            'stockQuantity' => $productAbstractEntity->getStockQuantity(),
-            'reservationQuantity' => $this->calculateReservation($productAbstractEntity->getReservationQuantity())
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $type
-     *
-     * @return bool
-     */
-    protected function stockTypeExist($availabilityStockTransfer, $type)
-    {
-        foreach ($availabilityStockTransfer->getStocks() as $stockProduct) {
-            if ($stockProduct->getStockType() === $type) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $sku
-     * @param array|\Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
-     *
-     * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
-     */
-    protected function loadAvailabilityStockTransfer($sku, array $stockProducts)
-    {
-        $availabilityStockTransfer = new AvailabilityStockTransfer();
-        $availabilityStockTransfer->setSku($sku);
-
-        foreach ($stockProducts as $stockProductTransfer) {
-            $availabilityStockTransfer->addStockProduct($stockProductTransfer);
-        }
-
-        return $availabilityStockTransfer;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
-     * @return void
-     */
-    protected function addEmptyStockType($availabilityStockTransfer)
-    {
-        $allStockType = $this->getFactory()->getStockFacade()->getAvailableStockTypes();
-
-        foreach ($allStockType as $type) {
-            if ($this->stockTypeExist($availabilityStockTransfer, $type)) {
-                continue;
-            }
-            $stockProductTransfer = new StockProductTransfer();
-            $stockProductTransfer->setStockType($type);
-            $stockProductTransfer->setQuantity(0);
-
-            $availabilityStockTransfer->addStockProduct($stockProductTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $data
-     *
      * @return bool
      */
-    protected function saveData(AvailabilityStockTransfer $data)
+    protected function saveAvailabilityStock(AvailabilityStockTransfer $availabilityStockTransfer)
     {
-        $updated = false;
-        foreach ($data->getStocks() as $stockProductTransfer) {
+        $isAnyItemsUpdated = false;
+        foreach ($availabilityStockTransfer->getStocks() as $stockProductTransfer) {
             if ($stockProductTransfer->getIdStockProduct() !== null) {
-                $this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer);
-                $updated = true;
+                if ($this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer) > 0) {
+                    $isAnyItemsUpdated = true;
+                }
             }
 
             if ($stockProductTransfer->getIdStockProduct() === null && (int)$stockProductTransfer->getQuantity() !== 0) {
-                $stockProductTransfer->setSku($data->getSku());
-                $this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer);
-                $updated = true;
+                $stockProductTransfer->setSku($availabilityStockTransfer->getSku());
+                if ($this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer) > 0) {
+                    $isAnyItemsUpdated = true;
+                }
             }
         }
 
-        return $updated;
-    }
-
-    /**
-     * @param int $idProduct
-     * @param string $sku
-     *
-     * @return \Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
-     */
-    protected function createAvailabilityStockFormProvider($idProduct, $sku)
-    {
-        $stockProducts = $this->getFactory()->getStockFacade()->getStockProductsByIdProduct($idProduct);
-        $availabilityStockTransfer = $this->loadAvailabilityStockTransfer($sku, $stockProducts);
-        $this->addEmptyStockType($availabilityStockTransfer);
-
-        $availabilityStockFormDataProvider = $this->getFactory()->createAvailabilityStockFormDataProvider($availabilityStockTransfer);
-
-        return $availabilityStockFormDataProvider;
-    }
-
-    /**
-     * @param string $reservationQuantity
-     *
-     * @return int
-     */
-    protected function calculateReservation($reservationQuantity)
-    {
-        $reservationItems = explode(',', $reservationQuantity);
-        $reservationItems = array_unique($reservationItems);
-
-        return $this->getReservationUniqueValue($reservationItems);
-    }
-
-    /**
-     * @param array $reservationItems
-     *
-     * @return int
-     */
-    protected function getReservationUniqueValue($reservationItems)
-    {
-        $reservation = 0;
-        foreach ($reservationItems as $item) {
-            $value = explode(':', $item);
-
-            if(count($value) > 1) {
-                $reservation += $value[1];
-            }
-        }
-
-        return $reservation;
+        return $isAnyItemsUpdated;
     }
 
 }

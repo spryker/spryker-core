@@ -33,7 +33,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     const PRODUCT_SKU = 'sku-123-321';
 
     /**
-     * @return voi
+     * @return void
      */
     public function testUpdateAvailabilityShouldTouchWhenStockUpdated()
     {
@@ -56,7 +56,7 @@ class AvailabilityHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return voi
+     * @return void
      */
     public function testUpdateAvailabilityShouldTouchAndUpdateNewStock()
     {

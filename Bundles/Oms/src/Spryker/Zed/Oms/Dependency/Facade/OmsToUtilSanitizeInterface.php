@@ -9,7 +9,7 @@ interface OmsToUtilSanitizeInterface
 {
 
     /**
-     * @param $text
+     * @param string $text
      * @param bool $double
      *
      * @return string

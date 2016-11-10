@@ -10,6 +10,9 @@ interface StockUpdateHandlerPluginInterface
 {
 
     /**
+     *
+     * @api
+     *
      * This plugin handles all necessary events related to stock updates, like Availability.
      *
      * @param string $sku

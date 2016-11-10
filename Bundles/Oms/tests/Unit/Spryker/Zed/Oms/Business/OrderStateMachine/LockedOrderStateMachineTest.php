@@ -198,7 +198,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function expectStateMachineLockSaveSuccess($expectedIdentifier)
     {
-        $stateMachineLock = $this->createSpyOmsStateMachineLockMock();
+        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
         $stateMachineLock->expects($this->once())
             ->method('setIdentifier')
@@ -224,7 +224,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function expectStateMachineLockSaveFails($expectedIdentifier)
     {
-        $stateMachineLock = $this->createSpyOmsStateMachineLockMock();
+        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
         $stateMachineLock->expects($this->once())
             ->method('setIdentifier')
@@ -327,7 +327,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createSpyOmsStateMachineLockMock()
+    protected function createOmsStateMachineLockEntityMock()
     {
         $this->omsStateMachineLockMock = $this->getMock(
             SpyOmsStateMachineLock::class,

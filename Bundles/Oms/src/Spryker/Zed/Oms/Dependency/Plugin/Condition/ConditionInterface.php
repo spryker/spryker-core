@@ -13,6 +13,9 @@ interface ConditionInterface
 {
 
     /**
+     *
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool

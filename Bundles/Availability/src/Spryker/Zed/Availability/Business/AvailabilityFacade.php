@@ -89,7 +89,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      *
-     * @throw ProductNotFoundException
+     * @throw \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
      *
      * @return void
      */
@@ -98,6 +98,27 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         $this->getFactory()
             ->createAvailabilityHandler()
             ->updateAvailability($sku);
+    }
+
+    /**
+     *
+     * Specification:
+     *  - Reads product availability data from persistense, stock, reservation, availability.
+     *  - Returns data for selected abstract product
+     *
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductReservationReader()
+            ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
 }
