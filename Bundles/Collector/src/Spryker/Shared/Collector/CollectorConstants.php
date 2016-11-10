@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Collector;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Propel\PropelConstants;
 
 interface CollectorConstants

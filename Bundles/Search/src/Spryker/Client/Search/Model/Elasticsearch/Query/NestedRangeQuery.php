@@ -99,7 +99,7 @@ class NestedRangeQuery extends AbstractNestedQuery
         $this->maxValue = $this->minValue;
 
         if (count($values) > 1) {
-            $this->maxValue =$values[1];
+            $this->maxValue = $values[1];
         }
 
         $this->convertMinMaxValues();

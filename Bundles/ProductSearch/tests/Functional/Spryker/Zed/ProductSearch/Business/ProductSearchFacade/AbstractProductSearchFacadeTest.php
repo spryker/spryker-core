@@ -14,8 +14,8 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
+use Spryker\Zed\Product\Business\ProductFacade;
 
 /**
  * @group Functional
@@ -109,7 +109,5 @@ abstract class AbstractProductSearchFacadeTest extends Test
 
         return $productAbstractEntity;
     }
-
-
 
 }

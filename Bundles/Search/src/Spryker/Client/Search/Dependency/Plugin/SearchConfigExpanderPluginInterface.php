@@ -11,6 +11,8 @@ interface SearchConfigExpanderPluginInterface
 {
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SearchConfigExtensionTransfer
      */
     public function getSearchConfigExtension();
