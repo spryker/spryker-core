@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductSearch\Business\Collector\Storage;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\ProductSearch\ProductSearchConfig;
+use Spryker\Shared\ProductSearch\ProductSearchConfig as SharedProductSearchConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface;
 use Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException;
@@ -90,7 +90,7 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
      */
     protected function collectResourceType()
     {
-        return ProductSearchConfig::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION;
+        return SharedProductSearchConfig::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION;
     }
 
     /**

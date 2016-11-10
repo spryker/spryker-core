@@ -96,18 +96,18 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     {
         $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
         if (!$productOptionGroupEntity) {
-            throw new ProductOptionGroupNotFoundException(
-                'Product option group with id "%d" not found.',
+            throw new ProductOptionGroupNotFoundException(sprintf(
+                'Product option group with id "%s" not found.',
                 $idProductOptionGroup
-            );
+            ));
         }
 
         $productAbstractEntity = $this->getProductAbstractBySku($abstractSku);
         if (!$productAbstractEntity) {
-            throw new AbstractProductNotFoundException(
-                'Abstract product with sku "%d" not found.',
+            throw new AbstractProductNotFoundException(sprintf(
+                'Abstract product with sku "%s" not found.',
                 $abstractSku
-            );
+            ));
         }
 
         $productOptionGroupEntity->addSpyProductAbstract($productAbstractEntity);
