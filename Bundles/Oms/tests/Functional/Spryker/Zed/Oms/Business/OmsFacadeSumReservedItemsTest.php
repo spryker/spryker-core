@@ -114,7 +114,10 @@ class OmsFacadeSumReservedItemsTest extends Test
     protected function createOmsOrderItemState()
     {
         $omsStateEntity = SpyOmsOrderItemStateQuery::create()
-            ->findOneByName(self::RESERVER_ITEM_STATE);
+            ->filterByName(self::RESERVER_ITEM_STATE)
+            ->findOneOrCreate();
+
+        $omsStateEntity->save();
 
         return $omsStateEntity;
     }
