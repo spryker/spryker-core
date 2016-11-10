@@ -76,7 +76,7 @@ interface RatepayConstants
      * User Agent of Spryker client.
      */
     const CLIENT_VERSION = '1.0';
-    const CLIENT_NAME = 'Spryker Connector';
+    const CLIENT_NAME = 'Spryker_RP_DE';
 
     /**
      * Ratepay request configuration.
