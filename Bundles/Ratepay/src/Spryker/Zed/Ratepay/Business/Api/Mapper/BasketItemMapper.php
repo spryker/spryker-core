@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketItemTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketItemMapper extends BaseMapper
 {
@@ -25,15 +26,23 @@ class BasketItemMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
         ItemTransfer $itemTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
         $this->itemTransfer = $itemTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -44,7 +53,7 @@ class BasketItemMapper extends BaseMapper
         $itemPrice = $this->itemTransfer
             ->requireUnitGrossPriceWithProductOptions()
             ->getUnitGrossPriceWithProductOptions();
-        $itemPrice = $this->centsToDecimal($itemPrice);
+        $itemPrice = $this->moneyFacade->convertIntegerToDecimal((int)$itemPrice);
 
         $itemTransfer = (new RatepayRequestShoppingBasketItemTransfer())
             ->setItemName($this->itemTransfer->requireName()->getName())
@@ -80,7 +89,7 @@ class BasketItemMapper extends BaseMapper
     protected function getBasketItemDiscount()
     {
         $itemDiscount = $this->itemTransfer->getUnitTotalDiscountAmountWithProductOption();
-        $itemDiscount = $this->centsToDecimal($itemDiscount);
+        $itemDiscount = $this->moneyFacade->convertIntegerToDecimal((int)$itemDiscount);
 
         return $itemDiscount;
     }

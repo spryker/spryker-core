@@ -155,7 +155,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
     private function doTest($value, $isValid, $method)
     {
         if (!$isValid) {
-            $this->setExpectedException(InvalidArgumentException::class);
+            $this->expectException(InvalidArgumentException::class);
         }
 
         $assertion = new Assertion();

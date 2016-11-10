@@ -142,6 +142,7 @@ class OrderPaymentRequestMapper extends BaseMapper
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $addressEntity
+     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getAddressTransfer(SpySalesOrderAddress $addressEntity)

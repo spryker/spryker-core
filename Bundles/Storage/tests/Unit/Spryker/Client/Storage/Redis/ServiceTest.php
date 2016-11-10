@@ -37,9 +37,8 @@ class ServiceTest extends Test
      */
     protected function _before()
     {
-        $this->clientMock = $this->getMock(
-            ClientInterface::class,
-            [
+        $this->clientMock = $this->getMockBuilder(ClientInterface::class)
+            ->setMethods([
                 'keys',
                 'getProfile',
                 'getOptions',
@@ -49,8 +48,8 @@ class ServiceTest extends Test
                 'executeCommand',
                 'getConnection',
                 '__call',
-            ]
-        );
+            ])
+            ->getMock();
 
         $this->redisService = new Service(
             $this->clientMock

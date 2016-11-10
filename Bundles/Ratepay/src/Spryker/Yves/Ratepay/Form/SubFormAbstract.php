@@ -81,6 +81,7 @@ abstract class SubFormAbstract extends AbstractSubFormType implements SubFormInt
 
     /**
      * @param null $groups
+     *
      * @return \Symfony\Component\Validator\Constraint
      */
     protected function createNotBlankConstraint($groups = null)

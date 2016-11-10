@@ -9,6 +9,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayRequestInstallmentCalculationTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class InstallmentCalculationMapper extends BaseMapper
 {
@@ -29,19 +30,26 @@ class InstallmentCalculationMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @param $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
         QuoteTransfer $quoteTransfer,
         $ratepayPaymentTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
-
         $this->quoteTransfer = $quoteTransfer;
         $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -49,12 +57,10 @@ class InstallmentCalculationMapper extends BaseMapper
      */
     public function map()
     {
-        $grandTotal = $this->centsToDecimal(
-            $this->quoteTransfer->requireTotals()
+        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->quoteTransfer->requireTotals()
                 ->getTotals()
                 ->requireGrandTotal()
-                ->getGrandTotal()
-        );
+                ->getGrandTotal());
         $this->requestTransfer->setInstallmentCalculation(new RatepayRequestInstallmentCalculationTransfer())->getInstallmentCalculation()
             ->setSubType($this->ratepayPaymentTransfer->getInstallmentCalculationType())
             ->setAmount($grandTotal)

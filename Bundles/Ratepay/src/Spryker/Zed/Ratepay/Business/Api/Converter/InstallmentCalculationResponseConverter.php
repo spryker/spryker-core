@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Ratepay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Ratepay\Business\Api\Constants;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class InstallmentCalculationResponseConverter extends BaseConverter
 {
@@ -27,17 +27,17 @@ class InstallmentCalculationResponseConverter extends BaseConverter
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse $response
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Ratepay\Business\Api\Converter\TransferObjectConverter $responseTransfer
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation $request
      */
     public function __construct(
         CalculationResponse $response,
-        CurrencyManager $currencyManager,
+        RatepayToMoneyInterface $moneyFacade,
         TransferObjectConverter $responseTransfer,
         Calculation $request
     ) {
-        parent::__construct($response, $currencyManager);
+        parent::__construct($response, $moneyFacade);
 
         $this->responseTransfer = $responseTransfer;
         $this->request = $request;

@@ -69,7 +69,7 @@ class CollectorAndSpecificationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCollectorSpecificationMock()
     {
-        return $this->getMock(CollectorSpecificationInterface::class);
+        return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
 
 }

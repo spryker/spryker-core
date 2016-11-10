@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -139,7 +140,7 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer $paymentData
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer|null $paymentData
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
@@ -161,8 +162,6 @@ abstract class AbstractBusinessTest extends Test
 
         return $ratepayPaymentRequestTransfer;
     }
-
-
 
     protected function getTotalsTransfer()
     {
@@ -201,11 +200,11 @@ abstract class AbstractBusinessTest extends Test
             ->setName($itemPrefix . 'test')
             ->setSku($itemPrefix . '33333')
             ->setGroupKey($itemPrefix . '33333333333')
-            ->setQuantity($itemPrefix . '2')
-            ->setUnitGrossPrice($itemPrefix . '1')
-            ->setTaxRate($itemPrefix . '9')
-            ->setUnitTotalDiscountAmountWithProductOption($itemPrefix . '9')
-            ->setUnitGrossPriceWithProductOptions($itemPrefix . '55555');
+            ->setQuantity((int)$itemPrefix . '2')
+            ->setUnitGrossPrice((int)$itemPrefix . '1')
+            ->setTaxRate((int)$itemPrefix . '9')
+            ->setUnitTotalDiscountAmountWithProductOption((int)$itemPrefix . '9')
+            ->setUnitGrossPriceWithProductOptions((int)$itemPrefix . '55555');
 
         return $itemTransfer;
     }

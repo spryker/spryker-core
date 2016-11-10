@@ -151,7 +151,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRulePluginMock()
     {
-        return $this->getMock(DecisionRulePluginInterface::class);
+        return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
 
     /**
@@ -169,7 +169,7 @@ class MetaDataProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createLogicalComparatorsMock()
     {
-        return $this->getMock(LogicalComparators::class);
+        return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
 
 }

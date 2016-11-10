@@ -29,7 +29,7 @@ class PropelDatabaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitialization()
     {
-        $databaseCreatorCollectionMock = $this->getMock(DatabaseCreatorCollectionInterface::class);
+        $databaseCreatorCollectionMock = $this->getMockBuilder(DatabaseCreatorCollectionInterface::class)->getMock();
 
         $this->assertInstanceOf(PropelDatabase::class, new PropelDatabase($databaseCreatorCollectionMock));
     }
@@ -39,10 +39,10 @@ class PropelDatabaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateIfNotExists()
     {
-        $databaseCreatorMock = $this->getMock(DatabaseCreatorInterface::class, ['createIfNotExists', 'getEngine']);
+        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['createIfNotExists', 'getEngine'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('createIfNotExists');
 
-        $databaseCreatorCollectionMock = $this->getMock(DatabaseCreatorCollectionInterface::class, ['has', 'get', 'add']);
+        $databaseCreatorCollectionMock = $this->getMockBuilder(DatabaseCreatorCollectionInterface::class)->setMethods(['has', 'get', 'add'])->getMock();
         $databaseCreatorCollectionMock->expects($this->once())->method('has')->willReturn(true);
         $databaseCreatorCollectionMock->expects($this->once())->method('get')->willReturn($databaseCreatorMock);
 
@@ -55,9 +55,9 @@ class PropelDatabaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateIfNotExistsThrowsException()
     {
-        $this->setExpectedException(DatabaseCreatorNotFoundException::class);
+        $this->expectException(DatabaseCreatorNotFoundException::class);
 
-        $databaseCreatorCollectionMock = $this->getMock(DatabaseCreatorCollectionInterface::class);
+        $databaseCreatorCollectionMock = $this->getMockBuilder(DatabaseCreatorCollectionInterface::class)->getMock();
         $propelDatabase = new PropelDatabase($databaseCreatorCollectionMock);
         $propelDatabase->createDatabaseIfNotExists();
     }

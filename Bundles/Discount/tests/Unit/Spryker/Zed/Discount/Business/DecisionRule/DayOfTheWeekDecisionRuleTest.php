@@ -55,12 +55,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
         ComparatorOperatorsInterface $comparatorMock,
         \DateTime $currentDateTime
     ) {
-
-        $calendarWeekDecisionRule = $this->getMock(
-            DayOfWeekDecisionRule::class,
-            ['getCurrentDateTime'],
-            [$comparatorMock]
-        );
+        $calendarWeekDecisionRule = $this->getMockBuilder(DayOfWeekDecisionRule::class)->setMethods(['getCurrentDateTime'])->setConstructorArgs([$comparatorMock])->getMock();
 
         $calendarWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
 

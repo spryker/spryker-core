@@ -60,7 +60,7 @@ class StepFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function getUrlGeneratorMock()
     {
-        return $this->getMock(UrlGeneratorInterface::class);
+        return $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
     }
 
     /**
@@ -68,7 +68,7 @@ class StepFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function getDataContainerMock()
     {
-        return $this->getMock(DataContainerInterface::class);
+        return $this->getMockBuilder(DataContainerInterface::class)->getMock();
     }
 
 }

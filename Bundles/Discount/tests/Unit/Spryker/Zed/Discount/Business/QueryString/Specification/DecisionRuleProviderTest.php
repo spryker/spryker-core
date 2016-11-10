@@ -116,7 +116,7 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRulePluginMock()
     {
-        return $this->getMock(DecisionRulePluginInterface::class);
+        return $this->getMockBuilder(DecisionRulePluginInterface::class)->getMock();
     }
 
     /**
@@ -124,7 +124,7 @@ class DecisionRuleProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRuleSpecificationMock()
     {
-        return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
 
 }

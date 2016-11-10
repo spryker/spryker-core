@@ -274,7 +274,17 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
      */
     protected function createConverterFactory()
     {
-        return new ConverterFactory();
+        return new ConverterFactory(
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_MONEY);
     }
 
     /**
