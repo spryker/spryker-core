@@ -49,14 +49,15 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
     protected function createJsonIndexDefinitionLoader()
     {
         return new JsonIndexDefinitionLoader(
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
             $this->createJsonIndexDefinitionMerger(),
-            Store::getInstance()->getAllowedStores()
+            Store::getInstance()->getAllowedStores(),
+            $this->getUtilEncodingFacade()
         );
     }
 
@@ -103,7 +104,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface
      */
     protected function createElasticsearchIndexMapGenerator()
     {
@@ -111,7 +112,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface
      */
     protected function createElasticsearchIndexMapCleaner()
     {
@@ -184,6 +185,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function createPageMapBuilder()
     {
         return new PageMapBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface
+     */
+    protected function getUtilEncodingFacade()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_UTIL_ENCODING);
     }
 
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search;
 
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Search\SearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SearchConfig extends AbstractBundleConfig
@@ -18,7 +18,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getElasticaDocumentType()
     {
-        return $this->get(ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
     /**
@@ -27,7 +27,7 @@ class SearchConfig extends AbstractBundleConfig
     public function getJsonIndexDefinitionDirectories()
     {
         $directories = [
-            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/IndexMap/',
+            $this->getSprykerRootDir() . '/*/src/*/Shared/*/IndexMap/',
         ];
 
         $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/IndexMap/';
@@ -44,6 +44,14 @@ class SearchConfig extends AbstractBundleConfig
     public function getClassTargetDirectory()
     {
         return APPLICATION_SOURCE_DIR . '/Generated/Shared/Search/';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSprykerRootDir()
+    {
+        return realpath(__DIR__ . '/../../../../../');
     }
 
 }

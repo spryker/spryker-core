@@ -24,7 +24,7 @@ interface ProductSearchToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getProductAttributeKey($key);
+    public function findProductAttributeKey($key);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer

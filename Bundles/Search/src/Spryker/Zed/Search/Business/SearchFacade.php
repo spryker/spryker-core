@@ -142,6 +142,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
+     *
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer)

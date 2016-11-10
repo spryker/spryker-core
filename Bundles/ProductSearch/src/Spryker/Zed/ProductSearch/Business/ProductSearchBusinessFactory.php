@@ -136,14 +136,6 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
-     */
-    public function getSearchClient()
-    {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_SEARCH);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface
      */
     public function createAttributeReader()

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Marker;
 
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
+use Spryker\Shared\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 
 class ProductSearchConfigExtensionMarker implements ProductSearchConfigExtensionMarkerInterface
@@ -32,8 +32,8 @@ class ProductSearchConfigExtensionMarker implements ProductSearchConfigExtension
     public function touchProductSearchConfigExtension()
     {
         $this->touchFacade->touchActive(
-            ProductSearchConstants::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION,
-            ProductSearchConstants::PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID
+            ProductSearchConfig::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION,
+            ProductSearchConfig::PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID
         );
     }
 

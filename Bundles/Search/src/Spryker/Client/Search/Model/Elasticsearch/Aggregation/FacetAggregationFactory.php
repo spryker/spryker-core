@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Exception\MissingFacetAggregationException;
 use Spryker\Shared\Search\IndexMapInterface;
-use Spryker\Shared\Search\SearchConstants;
+use Spryker\Shared\Search\SearchConfig;
 
 class FacetAggregationFactory implements FacetAggregationFactoryInterface
 {
@@ -53,7 +53,7 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer)
     {
         switch ($facetConfigTransfer->getType()) {
-            case SearchConstants::FACET_TYPE_CATEGORY:
+            case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryFacetAggregation($facetConfigTransfer);
 
             default:

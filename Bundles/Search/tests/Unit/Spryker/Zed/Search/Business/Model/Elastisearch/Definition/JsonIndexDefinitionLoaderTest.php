@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Definition;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
+use Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface;
 
 /**
  * @group Search
@@ -28,7 +29,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/EmptyIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores()
+            $this->getStores(),
+            $this->getUtilEncodingMock()
         );
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
@@ -49,7 +51,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores()
+            $this->getStores(),
+            $this->getUtilEncodingMock()
         );
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
@@ -65,7 +68,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores()
+            $this->getStores(),
+            $this->getUtilEncodingMock()
         );
 
         $expectedSettings = [
@@ -98,7 +102,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores()
+            $this->getStores(),
+            $this->getUtilEncodingMock()
         );
 
         $expectedMappings = [
@@ -129,7 +134,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/MultipleIndex'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores()
+            $this->getStores(),
+            $this->getUtilEncodingMock()
         );
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
@@ -175,7 +181,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/Merge/*/'],
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStores()
+            $this->getStores(),
+            $this->getUtilEncodingMock()
         );
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
@@ -194,7 +201,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
         $jsonIndexDefinitionLoader = new JsonIndexDefinitionLoader(
             [__DIR__ . '/Fixtures/Stores/Core/'],
             $this->createJsonIndexDefinitionMerger(),
-            $stores
+            $stores,
+            $this->getUtilEncodingMock()
         );
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
@@ -217,7 +225,8 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
                 __DIR__ . '/Fixtures/Stores/Project/',
             ],
             $this->createJsonIndexDefinitionMerger(),
-            $stores
+            $stores,
+            $this->getUtilEncodingMock()
         );
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
@@ -274,6 +283,25 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     protected function getStores()
     {
         return ['DE'];
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getUtilEncodingMock()
+    {
+        $utilEncodingMock = $this->getMockBuilder(SearchToUtilEncodingInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['decodeJson'])
+            ->getMock();
+
+        $utilEncodingMock
+            ->method('decodeJson')
+            ->willReturnCallback(function($json, $assoc){
+                return json_decode($json, $assoc);
+            });
+
+        return $utilEncodingMock;
     }
 
 }

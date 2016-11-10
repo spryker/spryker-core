@@ -8,13 +8,13 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class NestedPriceRangeQuery extends NestedRangeQuery
 {
 
     /**
-     * @var \Spryker\Shared\Money\Plugin\MoneyPluginInterface
+     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
     protected $moneyPlugin;
 
@@ -22,7 +22,7 @@ class NestedPriceRangeQuery extends NestedRangeQuery
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param array|string $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
-     * @param \Spryker\Shared\Money\Plugin\MoneyPluginInterface $moneyPlugin
+     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      */
     public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, MoneyPluginInterface $moneyPlugin)
     {

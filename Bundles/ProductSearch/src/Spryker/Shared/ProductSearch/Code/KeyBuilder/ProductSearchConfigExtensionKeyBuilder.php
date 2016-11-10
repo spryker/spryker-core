@@ -9,7 +9,7 @@ namespace Spryker\Shared\ProductSearch\Code\KeyBuilder;
 
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
+use Spryker\Shared\ProductSearch\ProductSearchConfig;
 
 class ProductSearchConfigExtensionKeyBuilder implements KeyBuilderInterface
 {
@@ -23,7 +23,7 @@ class ProductSearchConfigExtensionKeyBuilder implements KeyBuilderInterface
      */
     protected function buildKey($data)
     {
-        return ProductSearchConstants::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION;
+        return ProductSearchConfig::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION;
     }
 
     /**

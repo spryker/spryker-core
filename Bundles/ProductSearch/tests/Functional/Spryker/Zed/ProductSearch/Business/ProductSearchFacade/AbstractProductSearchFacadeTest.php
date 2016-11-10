@@ -14,7 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Spryker\Shared\Library\Json;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
 /**
@@ -35,6 +35,11 @@ abstract class AbstractProductSearchFacadeTest extends Test
     protected $productSearchFacade;
 
     /**
+     * @var \Spryker\Zed\Product\Business\ProductFacade
+     */
+    protected $productFacade;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -42,6 +47,7 @@ abstract class AbstractProductSearchFacadeTest extends Test
         parent::setUp();
 
         $this->productSearchFacade = new ProductSearchFacade();
+        $this->productFacade = new ProductFacade();
     }
 
     /**
@@ -71,13 +77,13 @@ abstract class AbstractProductSearchFacadeTest extends Test
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity
             ->setSku('touchProductAbstractByAsynchronousAttributesOnCreate')
-            ->setAttributes(Json::encode($abstractAttrs))
+            ->setAttributes($this->productFacade->encodeProductAttributes($abstractAttrs))
             ->save();
 
         $productConcreteEntity = new SpyProduct();
         $productConcreteEntity
             ->setSku('touchProductAbstractByAsynchronousAttributesOnCreate-1')
-            ->setAttributes(Json::encode($concreteAttrs))
+            ->setAttributes($this->productFacade->encodeProductAttributes($concreteAttrs))
             ->setFkProductAbstract($productAbstractEntity->getIdProductAbstract())
             ->save();
 
@@ -88,7 +94,7 @@ abstract class AbstractProductSearchFacadeTest extends Test
         $localizedProductAbstractEntity = new SpyProductAbstractLocalizedAttributes();
         $localizedProductAbstractEntity
             ->setName('touchProductAbstractByAsynchronousAttributesOnCreate')
-            ->setAttributes(Json::encode($abstractLocalizedAttrs))
+            ->setAttributes($this->productFacade->encodeProductAttributes($abstractLocalizedAttrs))
             ->setFkLocale($localeEntity->getIdLocale())
             ->setFkProductAbstract($productAbstractEntity->getIdProductAbstract())
             ->save();
@@ -96,12 +102,14 @@ abstract class AbstractProductSearchFacadeTest extends Test
         $localizedProductEntity = new SpyProductLocalizedAttributes();
         $localizedProductEntity
             ->setName('touchProductAbstractByAsynchronousAttributesOnCreate-1')
-            ->setAttributes(Json::encode($concreteLocalizedAttrs))
+            ->setAttributes($this->productFacade->encodeProductAttributes($concreteLocalizedAttrs))
             ->setFkLocale($localeEntity->getIdLocale())
             ->setFkProduct($productConcreteEntity->getIdProduct())
             ->save();
 
         return $productAbstractEntity;
     }
+
+
 
 }

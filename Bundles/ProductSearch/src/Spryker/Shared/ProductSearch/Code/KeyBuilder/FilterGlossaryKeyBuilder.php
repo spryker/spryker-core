@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ProductSearch\Code\KeyBuilder;
 
-use Spryker\Shared\ProductSearch\ProductSearchConstants;
+use Spryker\Shared\ProductSearch\ProductSearchConfig;
 
 class FilterGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
 {
@@ -19,7 +19,7 @@ class FilterGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
      */
     public function buildGlossaryKey($attributeKey)
     {
-        return ProductSearchConstants::PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX . $attributeKey;
+        return ProductSearchConfig::PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX . $attributeKey;
     }
 
 }

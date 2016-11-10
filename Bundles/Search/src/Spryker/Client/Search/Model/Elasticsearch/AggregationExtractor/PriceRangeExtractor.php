@@ -8,19 +8,19 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Money\Plugin\MoneyPluginInterface;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class PriceRangeExtractor extends RangeExtractor
 {
 
     /**
-     * @var \Spryker\Shared\Money\Plugin\MoneyPluginInterface
+     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
     protected $moneyPlugin;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param \Spryker\Shared\Money\Plugin\MoneyPluginInterface $moneyPlugin
+     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      */
     public function __construct(FacetConfigTransfer $facetConfigTransfer, MoneyPluginInterface $moneyPlugin)
     {

@@ -146,7 +146,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
     protected function findOrCreateProductAttributeKey(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer)
     {
         if ($this->productFacade->hasProductAttributeKey($productSearchPreferencesTransfer->getKey())) {
-            $productAttributeKeyTransfer = $this->productFacade->getProductAttributeKey($productSearchPreferencesTransfer->getKey());
+            $productAttributeKeyTransfer = $this->productFacade->findProductAttributeKey($productSearchPreferencesTransfer->getKey());
 
             return $productAttributeKeyTransfer;
         }

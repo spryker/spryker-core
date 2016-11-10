@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
-use Spryker\Shared\Search\SearchConstants;
+use Spryker\Shared\Search\SearchConfig;
 
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
@@ -32,13 +32,13 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     protected function createByType(FacetConfigTransfer $facetConfigTransfer)
     {
         switch ($facetConfigTransfer->getType()) {
-            case SearchConstants::FACET_TYPE_RANGE:
+            case SearchConfig::FACET_TYPE_RANGE:
                 return $this->createRangeExtractor($facetConfigTransfer);
 
-            case SearchConstants::FACET_TYPE_PRICE_RANGE:
+            case SearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createPriceRangeExtractor($facetConfigTransfer);
 
-            case SearchConstants::FACET_TYPE_CATEGORY:
+            case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryExtractor($facetConfigTransfer);
 
             default:
@@ -87,7 +87,7 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     }
 
     /**
-     * @return \Spryker\Shared\Money\Plugin\MoneyPluginInterface
+     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
     protected function createMoneyPlugin()
     {

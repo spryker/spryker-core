@@ -55,12 +55,12 @@
 
     <transfer name="StringFacetMap">
         <property name="name" type="string" />
-        <property name="value" type="string" />
+        <property name="value" type="array" />
     </transfer>
 
     <transfer name="IntegerFacetMap">
         <property name="name" type="string" />
-        <property name="value" type="int" />
+        <property name="value" type="array" />
     </transfer>
 
     <transfer name="StringSortMap">

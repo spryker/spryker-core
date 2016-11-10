@@ -205,7 +205,7 @@ class AttributeWriter implements AttributeWriterInterface
     protected function findOrCreateProductAttributeKey(ProductSearchAttributeTransfer $productSearchAttributeTransfer)
     {
         if ($this->productFacade->hasProductAttributeKey($productSearchAttributeTransfer->getKey())) {
-            $productAttributeKeyTransfer = $this->productFacade->getProductAttributeKey($productSearchAttributeTransfer->getKey());
+            $productAttributeKeyTransfer = $this->productFacade->findProductAttributeKey($productSearchAttributeTransfer->getKey());
 
             return $productAttributeKeyTransfer;
         }

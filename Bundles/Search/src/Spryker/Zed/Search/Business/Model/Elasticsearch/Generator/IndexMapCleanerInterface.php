@@ -5,8 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Exception;
+namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
-class InvalidIndexDefinitionException extends \Exception
+interface IndexMapCleanerInterface
 {
+
+    /**
+     * @return void
+     */
+    public function cleanDirectory();
+
 }

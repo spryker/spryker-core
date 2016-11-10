@@ -20,7 +20,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/library": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "ProductSearch bundle",

@@ -38,6 +38,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $attributes
      *
+     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
+     *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes)

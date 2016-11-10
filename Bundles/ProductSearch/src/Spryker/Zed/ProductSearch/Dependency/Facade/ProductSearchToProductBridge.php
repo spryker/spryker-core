@@ -40,9 +40,9 @@ class ProductSearchToProductBridge implements ProductSearchToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function getProductAttributeKey($key)
+    public function findProductAttributeKey($key)
     {
-        return $this->productFacade->getProductAttributeKey($key);
+        return $this->productFacade->findProductAttributeKey($key);
     }
 
     /**

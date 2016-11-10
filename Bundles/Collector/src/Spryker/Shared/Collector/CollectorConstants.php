@@ -13,8 +13,8 @@ use Spryker\Shared\Propel\PropelConstants;
 interface CollectorConstants
 {
 
-    const ELASTICA_PARAMETER__DOCUMENT_TYPE = ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE;
-    const ELASTICA_PARAMETER__INDEX_NAME = ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME;
+    const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
+    const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     const ZED_DB_ENGINE = PropelConstants::ZED_DB_ENGINE;
     const ZED_DB_ENGINE_MYSQL = PropelConstants::ZED_DB_ENGINE_MYSQL;

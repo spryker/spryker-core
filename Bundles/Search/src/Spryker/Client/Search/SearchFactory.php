@@ -150,7 +150,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
      */
     public function createQueryBuilder()
     {
