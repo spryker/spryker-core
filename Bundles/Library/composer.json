@@ -25,7 +25,10 @@
     "spryker/transfer": "^2.0.0",
     "spryker/twig": "^2.1.0",
     "spryker/zed-request": "^2.0.0",
-    "spryker/zend": "^2.0.0"
+    "spryker/zend": "^2.0.0",
+    "spryker/util-network": "^1.0.0",
+    "spryker/util-sanitize": "^1.0.0",
+    "spryker/util-text": "^1.0.0"s
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

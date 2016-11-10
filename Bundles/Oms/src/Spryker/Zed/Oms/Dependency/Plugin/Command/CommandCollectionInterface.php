@@ -11,6 +11,11 @@ interface CommandCollectionInterface
 {
 
     /**
+     *
+     * Add new command to list of commands
+     *
+     * @api
+     *
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
      * @param string $name
      *
@@ -19,6 +24,11 @@ interface CommandCollectionInterface
     public function add(CommandInterface $command, $name);
 
     /**
+     *
+     * Return command from list of commands
+     *
+     * @api
+     *
      * @param string $name
      *
      * @throws \Spryker\Zed\Oms\Exception\CommandNotFoundException

@@ -15,7 +15,7 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\AvailabilityCartConnector\Business\Cart\CheckCartAvailability
+     * @return \Spryker\Zed\AvailabilityCartConnector\Business\Cart\CheckCartAvailabilityInterface
      */
     public function createCartCheckAvailability()
     {

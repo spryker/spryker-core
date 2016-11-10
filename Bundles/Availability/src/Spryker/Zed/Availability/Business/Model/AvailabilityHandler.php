@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
-use Spryker\Shared\Availability\AvailabilityConstants;
+use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
@@ -70,33 +70,33 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        $oldQuantity = $this->findOldPhysicalQuantity($sku);
-        $newQuantity = $this->getNewPhysicalQuantity($this->sellable->calculateStockForProduct($sku));
+        $currentQuantity = $this->findCurrentPhysicalQuantity($sku);
+        $quantityWithReservedItems = $this->getQuantity($this->sellable->calculateStockForProduct($sku));
 
-        $savedAvailabilityEntity = $this->saveCurrentAvailability($sku, $newQuantity);
+        $savedAvailabilityEntity = $this->saveCurrentAvailability($sku, $quantityWithReservedItems);
 
-        if ($this->isAvailabilityStatusChanged($oldQuantity, $newQuantity)) {
+        if ($this->isAvailabilityStatusChanged($currentQuantity, $quantityWithReservedItems)) {
             $this->touchAvailabilityAbstract($savedAvailabilityEntity->getFkAvailabilityAbstract());
         }
     }
 
     /**
-     * @param int $oldQuantity
-     * @param int $newQuantity
+     * @param int $currentQuantity
+     * @param int $quantityWithReservedItems
      *
      * @return bool
      */
-    protected function isAvailabilityStatusChanged($oldQuantity, $newQuantity)
+    protected function isAvailabilityStatusChanged($currentQuantity, $quantityWithReservedItems)
     {
-        if ($oldQuantity === null) {
+        if ($currentQuantity === null && $quantityWithReservedItems !== null) {
             return true;
         }
 
-        if ($oldQuantity === 0 && $newQuantity > $oldQuantity) {
+        if ($currentQuantity === 0 && $quantityWithReservedItems > $currentQuantity) {
             return true;
         }
 
-        if ($oldQuantity !== 0 && $newQuantity === 0) {
+        if ($currentQuantity !== 0 && $quantityWithReservedItems === 0) {
             return true;
         }
 
@@ -146,7 +146,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function touchAvailabilityAbstract($idAvailabilityAbstract)
     {
-        $this->touchFacade->touchActive(AvailabilityConstants::RESOURCE_TYPE_AVAILABILITY_ABSTRACT, $idAvailabilityAbstract);
+        $this->touchFacade->touchActive(AvailabilityConfig::RESOURCE_TYPE_AVAILABILITY_ABSTRACT, $idAvailabilityAbstract);
     }
 
     /**
@@ -154,7 +154,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return int
      */
-    protected function getNewPhysicalQuantity($quantity)
+    protected function getQuantity($quantity)
     {
         return $quantity > 0 ? $quantity : 0;
     }
@@ -164,7 +164,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return int|null
      */
-    protected function findOldPhysicalQuantity($sku)
+    protected function findCurrentPhysicalQuantity($sku)
     {
         $oldQuantity = null;
         $availabilityEntity = $this->querySpyAvailabilityBySku($sku)

@@ -14,4 +14,5 @@ interface AvailabilityToProductInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductAbstract();
+
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
 
-class CheckCartAvailability
+class CheckCartAvailability implements CheckCartAvailabilityInterface
 {
 
     const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';

@@ -13,6 +13,7 @@ class AvailabilityConfig extends AbstractBundleConfig
 {
 
     const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
+    const RESOURCE_TYPE_AVAILABILITY_ABSTRACT = 'availability_abstract';
 
     /**
      * @return string

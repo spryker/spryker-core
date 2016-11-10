@@ -9,8 +9,6 @@ interface AvailabilityToProductInterface
 {
 
     /**
-     * @api
-     *
      * @param string $productConcreteSku
      *
      * @return int

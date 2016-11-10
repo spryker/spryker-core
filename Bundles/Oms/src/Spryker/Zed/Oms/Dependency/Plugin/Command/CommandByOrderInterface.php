@@ -13,6 +13,11 @@ interface CommandByOrderInterface extends CommandInterface
 {
 
     /**
+     *
+     * Command which is executed per order basis
+     *
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data

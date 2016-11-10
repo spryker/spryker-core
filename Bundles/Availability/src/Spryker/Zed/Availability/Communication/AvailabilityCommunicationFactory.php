@@ -15,7 +15,6 @@ use Spryker\Zed\Availability\Communication\Table\AvailabilityTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer getQueryContainer()
  */
@@ -29,7 +28,8 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAvailabilityAbstractTable($idLocale)
     {
-        $queryProductAbstractAvailability = $this->getQueryContainer()->queryAvailabilityAbstractWithStockByIdLocale($idLocale);
+        $queryProductAbstractAvailability = $this->getQueryContainer()
+            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale);
 
         return new AvailabilityAbstractTable($queryProductAbstractAvailability);
     }
@@ -42,7 +42,8 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAvailabilityTable($idProductAbstract, $idLocale)
     {
-        $queryProductAbstractAvailability = $this->getQueryContainer()->queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+        $queryProductAbstractAvailability = $this->getQueryContainer()
+            ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
         return new AvailabilityTable($queryProductAbstractAvailability, $idProductAbstract);
     }
@@ -60,7 +61,7 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
             $availabilityForm,
             $availabilityStockFormDataProvider->getData(),
             [
-                'data_class' => AvailabilityStockTransfer::class,
+                AvailabilityStockFormDataProvider::DATA_CLASS => $availabilityStockFormDataProvider->getOptions()[AvailabilityStockFormDataProvider::DATA_CLASS]
             ]
         );
     }

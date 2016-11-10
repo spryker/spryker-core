@@ -167,18 +167,6 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param string $sku
-     *
-     * @deprecated Use Reservation::sumReservedProductQuantitiesForSku() instead
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function countReservedOrderItemsForSku($sku)
-    {
-        return $this->countOrderItemsForSku($this->retrieveReservedStates(), $sku, false);
-    }
-
-    /**
      * @param array $states
      * @param string $sku
      * @param bool $returnTest

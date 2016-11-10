@@ -353,29 +353,13 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param string $sku
      *
-         * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku)
     {
         return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getReservedOrderItemsForSku($sku);
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated Use sumReservedProductQuantitiesForSku() instead
-     *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function countReservedOrderItemsForSku($sku)
-    {
-        return $this->getFactory()
-            ->createOrderStateMachineFinder()
-            ->countReservedOrderItemsForSku($sku);
     }
 
     /**
@@ -570,7 +554,6 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *  - Reads all order states
      *  - Counts orders in each state and puts into corresponding state
      *  - Return matrix
-     *
      *
      * @api
      *

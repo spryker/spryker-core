@@ -17,8 +17,8 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
 
     /**
      *
-     * Specification
-     *  - Read product availability data for current locale, from current Yves storage provider
+     * Specification:
+     *  - Reads product availability data for current locale, from current Yves storage provider
      *
      * @api
      *
@@ -30,9 +30,7 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
     {
         $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
         $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
-        $availability = $availabilityStorage->getProductAvailability($idProductAbstract);
-
-        return $availability;
+        return $availabilityStorage->getProductAvailability($idProductAbstract);
     }
 
 }

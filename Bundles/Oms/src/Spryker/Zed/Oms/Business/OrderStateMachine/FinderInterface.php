@@ -44,15 +44,6 @@ interface FinderInterface
     public function getReservedOrderItemsForSku($sku);
 
     /**
-     * @param string $sku
-     *
-     * @deprecated Use Reservation::sumReservedProductQuantitiesForSku() instead
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function countReservedOrderItemsForSku($sku);
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array

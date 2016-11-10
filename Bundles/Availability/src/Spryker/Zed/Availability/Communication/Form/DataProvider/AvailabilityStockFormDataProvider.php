@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\AvailabilityStockTransfer;
 class AvailabilityStockFormDataProvider
 {
 
+    const DATA_CLASS = 'data_class';
+
     /**
      * @var \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
@@ -30,6 +32,16 @@ class AvailabilityStockFormDataProvider
     public function getData()
     {
         return $this->availabilityStockTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return [
+            static::DATA_CLASS => AvailabilityStockTransfer::class,
+        ];
     }
 
 }

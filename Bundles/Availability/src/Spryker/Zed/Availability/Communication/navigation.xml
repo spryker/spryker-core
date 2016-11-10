@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <product>
-        <label>Products</label>
-        <title>Products</title>
-        <bundle>Product</bundle>
-        <icon>fa-files-o</icon>
         <pages>
             <availability>
                 <label>Availability</label>

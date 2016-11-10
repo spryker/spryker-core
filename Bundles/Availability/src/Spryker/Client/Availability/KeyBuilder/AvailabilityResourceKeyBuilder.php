@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Availability\KeyBuilder;
 
-use Spryker\Shared\Availability\AvailabilityConstants;
+use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 class AvailabilityResourceKeyBuilder extends SharedResourceKeyBuilder
@@ -18,7 +18,7 @@ class AvailabilityResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return AvailabilityConstants::RESOURCE_TYPE_AVAILABILITY_ABSTRACT;
+        return AvailabilityConfig::RESOURCE_TYPE_AVAILABILITY_ABSTRACT;
     }
 
 }

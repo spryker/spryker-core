@@ -273,17 +273,6 @@ interface OmsFacadeInterface
     public function getReservedOrderItemsForSku($sku);
 
     /**
-     * @api
-     *
-     * @deprecated Use sumReservedProductQuantitiesForSku() instead
-     *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    public function countReservedOrderItemsForSku($sku);
-
-    /**
      * Specification:
      *  - Count orders with items with given sku which are in state with flag reserved
      *
@@ -386,7 +375,6 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
-     *
      *
      * @api
      *

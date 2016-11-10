@@ -38,8 +38,6 @@ class Html
     }
 
     /**
-     * @var \Spryker\Shared\UtilSanitize\Html
-     *
      * @return \Spryker\Shared\UtilSanitize\Html
      */
     protected static function createUtilSanitizeHtml()

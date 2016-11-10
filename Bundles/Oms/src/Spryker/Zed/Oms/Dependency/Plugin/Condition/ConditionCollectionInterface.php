@@ -10,6 +10,11 @@ interface ConditionCollectionInterface
 {
 
     /**
+     *
+     * Add new condition to list of conditions
+     *
+     * @api
+     *
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface $condition
      * @param string $name
      *
@@ -18,6 +23,11 @@ interface ConditionCollectionInterface
     public function add(ConditionInterface $condition, $name);
 
     /**
+     *
+     * Return condition from list of conditions
+     *
+     * @api
+     *
      * @param string $name
      *
      * @throws \Spryker\Zed\Oms\Exception\ConditionNotFoundException
