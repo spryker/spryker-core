@@ -118,7 +118,8 @@ class AvailabilityStockFormDataProvider
      */
     protected function sortProducts(array $stockProducts)
     {
-        usort($stockProducts,
+        usort(
+            $stockProducts,
             function (StockProductTransfer $stockProductLeftTransfer, StockProductTransfer $stockProductRightTransfer) {
                 return strcmp($stockProductLeftTransfer->getStockType(), $stockProductRightTransfer->getStockType());
             }

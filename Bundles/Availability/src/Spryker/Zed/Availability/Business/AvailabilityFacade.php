@@ -106,7 +106,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *  - Reads product availability data from persistense, stock, reservation, availability.
      *  - Returns data for selected abstract product
      *
-     *
      * @api
      *
      * @param int $idProductAbstract
