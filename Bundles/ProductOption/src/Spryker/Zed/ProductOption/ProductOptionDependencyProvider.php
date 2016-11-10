@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
+use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesBridge;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
@@ -27,6 +28,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
 
     /**
@@ -64,6 +66,10 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return new ProductOptionToSalesBridge($container->getLocator()->sales()->queryContainer());
+        };
+
+        $container[self::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
+            return new ProductOptionToCountryBridge($container->getLocator()->country()->queryContainer());
         };
 
         return $container;

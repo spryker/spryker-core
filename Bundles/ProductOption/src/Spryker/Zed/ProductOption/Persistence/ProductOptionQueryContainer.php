@@ -189,7 +189,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer)
     {
-        $query = $this->getFactory()->createProductAbstractQuery();
+        $query = $this->getFactory()
+            ->createProductAbstractQuery();
 
         $query->addJoin(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
@@ -245,7 +246,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionGroupWithValues()
     {
-        return $this->getFactory()->createProductOptionGroupQuery()
+        return $this->getFactory()
+            ->createProductOptionGroupQuery()
             ->leftJoinSpyProductOptionValue()
             ->groupByIdProductOptionGroup();
     }
@@ -260,6 +262,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code)
     {
+        $countryEntity = $this->queryCountryByIso2Code($countryIso2Code)
+            ->findOne();
+
         return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($allIdOptionValueUsages, Criteria::IN)
             ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, self::COL_ID_PRODUCT_OPTION_VALUE)
@@ -268,19 +273,30 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->useSpyTaxSetQuery()
                     ->useSpyTaxSetTaxQuery()
                         ->useSpyTaxRateQuery()
-                            ->useCountryQuery()
-                                ->filterByIso2Code($countryIso2Code)
-                            ->endUse()
+                              ->filterByFkCountry($countryEntity->getIdCountry())
                             ->_or()
                                ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
-                            ->endUse()
                         ->endUse()
+                    ->endUse()
                     ->withColumn(SpyTaxSetTableMap::COL_NAME)
                     ->groupBy(SpyTaxSetTableMap::COL_NAME)
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
             ->endUse()
             ->select([self::COL_MAX_TAX_RATE]);
+    }
+
+    /**
+     * @param string $countryIso2Code
+     *
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    protected function queryCountryByIso2Code($countryIso2Code)
+    {
+        return $this->getFactory()
+            ->getCountryQueryContainer()
+            ->queryCountries()
+            ->filterByIso2Code($countryIso2Code);
     }
 
 }

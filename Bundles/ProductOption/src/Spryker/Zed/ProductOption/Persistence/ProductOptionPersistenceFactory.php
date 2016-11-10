@@ -61,4 +61,12 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
         return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryInterface
+     */
+    public function getCountryQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_COUNTRY);
+    }
+
 }
