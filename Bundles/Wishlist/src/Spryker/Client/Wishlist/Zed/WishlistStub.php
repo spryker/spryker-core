@@ -59,23 +59,23 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function addItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemUpdateRequestTransfer);
+        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistItemTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(WishlistItemTransfer $wishlistItemUpdateRequestTransfer)
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemUpdateRequestTransfer);
+        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistItemTransfer);
     }
 
     /**

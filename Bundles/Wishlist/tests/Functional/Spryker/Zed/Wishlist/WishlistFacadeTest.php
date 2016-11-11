@@ -114,12 +114,6 @@ class WishlistFacadeTest extends Test
      */
     protected function setupProduct()
     {
-/*        $productAbstractQuery = new SpyProductAbstractQuery();
-        $this->productAbstract = $productAbstractQuery
-            ->filterBySku('abstract_sku')
-            ->filterByAttributes('{}')
-            ->findOneOrCreate();*/
-
         $this->productAbstract = (new SpyProductAbstract())
             ->setSku('abstract_sku')
             ->setAttributes('{}');
@@ -139,15 +133,6 @@ class WishlistFacadeTest extends Test
      */
     protected function createProduct($sku, $idProductAbstract)
     {
-/*        $productQuery = new SpyProductQuery();
-        $productEntity = $productQuery
-            ->filterBySku($sku)
-            ->filterByAttributes('{}')
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->findOneOrCreate();
-        $productEntity->save();
-*/
-
         $productEntity = (new SpyProduct())
             ->setSku($sku)
             ->setAttributes('{}')
@@ -177,14 +162,6 @@ class WishlistFacadeTest extends Test
      */
     protected function createWishlistItem($idWishlist, $idProduct)
     {
-/*        $wishlistItemQuery = new SpyWishlistItemQuery();
-        $wishlistItemEntity = $wishlistItemQuery
-            ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($idProduct)
-            ->findOneOrCreate();
-
-        $wishlistItemEntity->save();*/
-
         $wishlistItemEntity = (new SpyWishlistItem())
             ->setFkWishlist($idWishlist)
             ->setFkProduct($idProduct);
@@ -199,14 +176,6 @@ class WishlistFacadeTest extends Test
      */
     protected function setupWishlist()
     {
-/*        $wishlistQuery = new SpyWishlistQuery();
-        $this->wishlist = $wishlistQuery
-            ->filterByFkCustomer($this->customer->getIdCustomer())
-            ->filterByName(self::DEFAULT_NAME)
-            ->findOneOrCreate();
-
-        $this->wishlist->setName(self::DEFAULT_NAME);*/
-
         $this->wishlist = (new SpyWishlist())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setName(self::DEFAULT_NAME);

@@ -18,6 +18,7 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Creates wishlist for a specific customer with given name
      *  - Required values of WishlistTransfer: name, fkCustomer.
+     *  - Returns WishlistTransfer
      *
      * @api
      *
@@ -31,6 +32,7 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Updates wishlist
      *  - Required values of WishlistTransfer: idWishlist.
+     *  - Returns WishlistTransfer
      *
      * @api
      *
@@ -43,7 +45,8 @@ interface WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes wishlist and its items
-     *  - Required values of WishlistTransfer: idWishlist.
+     *  - Required values of WishlistTransfer: idWishlist
+     *  - Returns WishlistTransfer
      *
      * @api
      *
@@ -56,8 +59,8 @@ interface WishlistFacadeInterface
     /**
      * Specification:
      *  - Adds collection of items to a wishlist
-     *  - Required values of WishlistTransfer: fkCustomer, name.
-     *  - Required values of WishlistItemTransfer: fkProduct.
+     *  - Required values of WishlistTransfer: fkCustomer, name
+     *  - Required values of WishlistItemTransfer: fkProduct
      *
      * @api
      *
@@ -71,7 +74,8 @@ interface WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes all wishlist items
-     *  - Required values: idWishlist.
+     *  - Required values: idWishlist
+     *  - Returns WishlistTransfer
      *
      * @api
      *
@@ -85,7 +89,8 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Adds item to wishlist
      *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used.
+     *    In case wishlist name is not provided the default value will be used
+     *  - Returns WishlistItemTransfer
      *
      * @api
      *
@@ -99,7 +104,8 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Removes item from wishlist
      *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used.
+     *    In case wishlist name is not provided the default value will be used
+     *  - Returns WishlistItemTransfer
      *
      * @api
      *
@@ -113,6 +119,7 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Returns wishlist by specific name for a given customer
      *  - Required values: fkCustomer, name
+     *  - Returns WishlistItemTransfer
      *
      * @api
      *
@@ -128,6 +135,7 @@ interface WishlistFacadeInterface
      *  - Pagination is controlled with page, itemsPerPage, orderBy and orderDirection values of WishlistOverviewRequestTransfer.
      *  - Required values of WishlistTransfer: fkCustomer, name.
      *  - Required values of WishlistOverviewRequestTransfer: WishlistTransfer.
+     *  - Returns WishlistOverviewResponseTransfer
      *
      * @api
      *
