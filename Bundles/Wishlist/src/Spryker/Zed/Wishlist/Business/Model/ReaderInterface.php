@@ -14,8 +14,6 @@ interface ReaderInterface
 {
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer

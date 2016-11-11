@@ -19,8 +19,6 @@ use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
-use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
 use Spryker\Zed\Wishlist\Business\WishlistFacade;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
@@ -94,12 +92,6 @@ class WishlistFacadeTest extends Test
      */
     protected function setupCustomer()
     {
-/*        $customerQuery = new SpyCustomerQuery();
-        $customerEntity = $customerQuery
-            ->filterByCustomerReference('customer_reference')
-            ->filterByEmail('email')
-            ->findOneOrCreate();*/
-
         $customerEntity = (new SpyCustomer())
             ->setCustomerReference('customer_reference')
             ->setEmail('email');
@@ -184,26 +176,6 @@ class WishlistFacadeTest extends Test
 
         $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getIdProduct());
         $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_2->getIdProduct());
-    }
-
-    /**
-     * TODO no rollback on exception
-     *
-     * @return void
-     */
-    public function SKIP_testGetWishListShouldThrowException()
-    {
-        $this->expectException(MissingWishlistException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Wishlist: INVALIDNAME for customer with id: %d not found',
-            $this->customer->getIdCustomer()
-        ));
-
-        $wishlistTransfer = (new WishlistTransfer())
-            ->setFkCustomer($this->customer->getIdCustomer())
-            ->setName('INVALIDNAME');
-
-        $wishlistTransfer = $this->wishlistFacade->getWishlistByName($wishlistTransfer);
     }
 
     /**
@@ -350,36 +322,6 @@ class WishlistFacadeTest extends Test
     }
 
     /**
-     * TODO no rollback on exception
-     *
-     * @return void
-     */
-    public function SKIP_testUpdateWishlistShouldCheckUniqueName()
-    {
-        $this->expectException(WishlistExistsException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Wishlist with name: Default2 for customer: %d already exists',
-            $this->customer->getIdCustomer()
-        ));
-
-        $wishlist = new SpyWishlist();
-        $wishlist->fromArray([
-            'fk_customer' => $this->customer->getIdCustomer(),
-            'name' => 'Default2'
-        ]);
-        $wishlist->save();
-
-        $wishlistTransfer = new WishlistTransfer();
-        $wishlistTransfer->fromArray(
-            $this->wishlist->toArray(),
-            true
-        );
-        $wishlistTransfer->setName('Default2');
-
-        $wishlistTransfer = $this->wishlistFacade->updateWishlist($wishlistTransfer);
-    }
-
-    /**
      * @return void
      */
     public function testRemoveWishlistShouldRemoveItemsAsWell()
@@ -411,26 +353,6 @@ class WishlistFacadeTest extends Test
 
         $this->assertWishlistCount(1);
         $this->assertWishlistItemCount(0);
-    }
-
-    /**
-     * TODO fix rollback when exception is thrown
-     *
-     * @return void
-     */
-    public function SKIP_testUpdateWishlistShouldThrowException()
-    {
-        $this->expectException(MissingWishlistException::class);
-
-        $wishlistTransfer = new WishlistTransfer();
-        $wishlistTransfer->fromArray(
-            $this->wishlist->toArray(),
-            true
-        );
-
-        $wishlistTransfer->setIdWishlist(1231231);
-
-        $wishlistTransfer = $this->wishlistFacade->updateWishlist($wishlistTransfer);
     }
 
     /**
