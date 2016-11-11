@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -19,6 +20,8 @@ use \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 {
+
+    const METHOD = null;
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface
@@ -53,6 +56,14 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $this->modelFactory = $modelFactory;
         $this->mapperFactory = $mapperFactory;
         $this->queryContainer = $queryContainer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethodName()
+    {
+        return static::METHOD;
     }
 
     /**

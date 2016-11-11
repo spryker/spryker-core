@@ -18,7 +18,7 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
      *
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay
      */
-    protected function getPaymentMethodByIrderId($orderId)
+    protected function getPaymentMethodByOrderId($orderId)
     {
         return $this->queryContainer
             ->queryPayments()
@@ -32,7 +32,7 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
      */
     protected function getPaymentMethod(OrderTransfer $orderTransfer)
     {
-        return $this->getPaymentMethodByIrderId($orderTransfer->requireIdSalesOrder()->getIdSalesOrder());
+        return $this->getPaymentMethodByOrderId($orderTransfer->requireIdSalesOrder()->getIdSalesOrder());
     }
 
     /**

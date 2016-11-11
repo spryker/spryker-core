@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Ratepay\Business\Request\Payment\Method;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -14,12 +15,9 @@ class Invoice extends AbstractMethod
 {
 
     /**
-     * @return string
+     * @const Payment method code.
      */
-    public function getMethodName()
-    {
-        return RatepayConstants::INVOICE;
-    }
+    const METHOD = RatepayConstants::INVOICE;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

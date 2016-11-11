@@ -222,7 +222,7 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RatepayProfileResponseTransfer
+     * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
     public function requestProfile();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -22,14 +23,6 @@ class Installment extends AbstractMethod
      * @const Payment method code.
      */
     const METHOD = RatepayConstants::METHOD_INSTALLMENT;
-
-    /**
-     * @return string
-     */
-    public function getMethodName()
-    {
-        return static::METHOD;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
