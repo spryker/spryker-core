@@ -146,31 +146,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
         $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
         $productStorage = $this->getFactory()->createProductConcreteStorage($locale);
 
-        $jsonData = $productStorage->getProductConcreteCollection($idProductConcreteCollection);
-        $jsonUtil = new Json();
-
-        $result = [];
-        foreach ($jsonData as $key => $json) {
-            $data = $jsonUtil->decode($json, true);
-            $result[] = $this->mapStorageProduct($data);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
-     */
-    protected function mapStorageProduct($data)
-    {
-        $storageProduct = new StorageProductTransfer();
-        if (is_array($data)) {
-            $storageProduct->fromArray($data);
-        }
-
-        return $storageProduct;
+        return $productStorage->getProductConcreteCollection($idProductConcreteCollection);
     }
 
 }

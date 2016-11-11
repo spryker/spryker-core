@@ -6,8 +6,10 @@
 
 namespace Spryker\Client\Product\Storage;
 
+use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Product\Dependency\Client\ProductToStorageInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\UtilEncoding\Json;
 
 class ProductConcreteStorage implements ProductConcreteStorageInterface
 {
@@ -55,7 +57,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     /**
      * @param array $idProductConcreteCollection
      *
-     * @return array
+     * @return array|\Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection)
     {
@@ -65,7 +67,32 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
             $keyCollection[] = $key;
         }
 
-        return $this->storage->getMulti($keyCollection);
+        $jsonData = $this->storage->getMulti($keyCollection);
+        $jsonUtil = new Json();
+
+        $result = [];
+        foreach ($jsonData as $key => $json) {
+            $data = $jsonUtil->decode($json, true);
+            $result[] = $this->mapStorageProduct($data);
+        }
+
+        return $result;
     }
+
+    /**
+     * @param mixed $data
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    protected function mapStorageProduct($data)
+    {
+        $storageProduct = new StorageProductTransfer();
+        if (is_array($data)) {
+            $storageProduct->fromArray($data, true);
+        }
+
+        return $storageProduct;
+    }
+
 
 }
