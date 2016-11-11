@@ -20,7 +20,7 @@ interface ProductConcreteStorageInterface
     /**
      * @param array $idProductConcreteCollection
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
 
