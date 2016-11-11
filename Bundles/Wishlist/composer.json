@@ -11,7 +11,6 @@
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.0.0",
-    "spryker/storage": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
   "require-dev": {
