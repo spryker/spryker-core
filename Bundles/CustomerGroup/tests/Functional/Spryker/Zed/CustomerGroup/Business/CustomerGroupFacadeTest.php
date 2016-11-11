@@ -10,7 +10,6 @@ namespace Unit\Spryker\Zed\CustomerGroup\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
-use Spryker\Zed\CustomerGroup\Business\CustomerGroupBusinessFactory;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
 
 /**

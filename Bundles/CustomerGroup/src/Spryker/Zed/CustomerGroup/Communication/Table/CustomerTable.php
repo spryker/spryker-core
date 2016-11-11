@@ -10,10 +10,7 @@ namespace Spryker\Zed\CustomerGroup\Communication\Table;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
-use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -34,13 +31,13 @@ class CustomerTable extends AbstractTable
     protected $customerGroupQueryContainer;
 
     /**
-     * @var CustomerGroupTransfer
+     * @var \Generated\Shared\Transfer\CustomerGroupTransfer
      */
     protected $customerGroupTransfer;
 
     /**
      * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerQueryContainer
-     * @param CustomerGroupTransfer $customerGroupTransfer
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
      */
     public function __construct(CustomerGroupQueryContainerInterface $customerQueryContainer, CustomerGroupTransfer $customerGroupTransfer)
     {

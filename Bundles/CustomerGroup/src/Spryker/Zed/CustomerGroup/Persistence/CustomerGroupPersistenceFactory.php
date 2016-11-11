@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerGroup\Persistence;
 
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -32,6 +33,14 @@ class CustomerGroupPersistenceFactory extends AbstractPersistenceFactory
     public function createCustomerGroupToCustomerQuery()
     {
         return SpyCustomerGroupToCustomerQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function createCustomerQuery()
+    {
+        return SpyCustomerQuery::create();
     }
 
 }

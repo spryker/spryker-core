@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
-use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
-use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomersQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -44,12 +42,23 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
     /**
      * @api
      *
-     * @return SpyCustomerGroupToCustomerQuery
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery
      */
     public function queryCustomerGroupToCustomerByIdCustomerGroup()
     {
         return $this->getFactory()
             ->createCustomerGroupToCustomerQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function queryCustomer()
+    {
+        return $this->getFactory()
+            ->createCustomerQuery();
     }
 
 }
