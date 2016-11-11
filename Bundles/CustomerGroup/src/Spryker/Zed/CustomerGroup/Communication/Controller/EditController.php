@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Controller;
 
-use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,7 +40,12 @@ class EditController extends AbstractController
 
         if ($form->isValid()) {
             $customerGroupTransfer = new CustomerGroupTransfer();
-            $customerGroupTransfer->fromArray($form->getData(), true);
+            $data = $form->getData();
+            $customers = $data['customers'];
+            unset($data['customers']);
+
+            $customerGroupTransfer->fromArray($data, true);
+            $this->addCustomers($customerGroupTransfer, $customers);
 
             $this->getFacade()->update($customerGroupTransfer);
 
@@ -57,79 +61,18 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function createCustomerTransfer()
-    {
-        return new CustomerTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function createAddressTransfer()
-    {
-        return new AddressTransfer();
-    }
-
-    /**
-     * @param int $idCustomer
-     * @param int $defaultBillingAddress
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     * @param array $idCustomers
      *
      * @return void
      */
-    protected function updateBillingAddress($idCustomer, $defaultBillingAddress)
+    protected function addCustomers(CustomerGroupTransfer $customerGroupTransfer, array $idCustomers)
     {
-        $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultBillingAddress);
-
-        if ($this->isValidAddressTransfer($addressTransfer) === false) {
-            return;
+        foreach ($idCustomers as $idCustomer) {
+            $customerTransfer = new CustomerGroupToCustomerTransfer();
+            $customerTransfer->setFkCustomer($idCustomer);
+            $customerGroupTransfer->addCustomer($customerTransfer);
         }
-
-        $this->getFacade()->setDefaultBillingAddress($addressTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return bool
-     */
-    protected function isValidAddressTransfer(AddressTransfer $addressTransfer)
-    {
-        return (empty($addressTransfer->getIdCustomerAddress()) === false && $addressTransfer->getFkCustomer() !== null);
-    }
-
-    /**
-     * @param int $idCustomer
-     * @param int $defaultShippingAddress
-     *
-     * @return void
-     */
-    protected function updateShippingAddress($idCustomer, $defaultShippingAddress)
-    {
-        $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultShippingAddress);
-
-        if ($this->isValidAddressTransfer($addressTransfer) === false) {
-            return;
-        }
-
-        $this->getFacade()->setDefaultShippingAddress($addressTransfer);
-    }
-
-    /**
-     * @param int $idCustomer
-     * @param int $billingAddress
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function createCustomAddressTransfer($idCustomer, $billingAddress)
-    {
-        $addressTransfer = $this->createAddressTransfer();
-
-        $addressTransfer->setIdCustomerAddress($billingAddress);
-        $addressTransfer->setFkCustomer($idCustomer);
-
-        return $addressTransfer;
     }
 
 }

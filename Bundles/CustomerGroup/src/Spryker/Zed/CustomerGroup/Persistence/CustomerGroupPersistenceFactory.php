@@ -28,7 +28,7 @@ class CustomerGroupPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery
      */
     public function createCustomerGroupToCustomerQuery()
     {

@@ -8,9 +8,11 @@
 namespace Spryker\Zed\CustomerGroup\Communication\Table;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -20,7 +22,7 @@ class CustomerTable extends AbstractTable
 
     const ACTIONS = 'Actions';
 
-    const COL_ID_CUSTOMER = 'id_customer';
+    const COL_FK_CUSTOMER = 'fk_customer';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
     const COL_GENDER = 'gender';
@@ -53,7 +55,7 @@ class CustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            self::COL_ID_CUSTOMER => '#',
+            self::COL_FK_CUSTOMER => '#',
             self::COL_FIRST_NAME => 'First Name',
             self::COL_LAST_NAME => 'Last Name',
             self::COL_GENDER => 'Gender',
@@ -63,17 +65,17 @@ class CustomerTable extends AbstractTable
         $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
-            self::COL_ID_CUSTOMER,
+            self::COL_FK_CUSTOMER,
             self::COL_FIRST_NAME,
             self::COL_LAST_NAME,
             self::COL_GENDER,
         ]);
 
-        $config->setUrl('table');
+        $config->setUrl('table?id-customer-group=' . $this->customerGroupTransfer->getIdCustomerGroup());
 
         $config->setSearchable([
-            SpyCustomerTableMap::COL_ID_CUSTOMER,
-            //SpyCustomerTableMap::COL_EMAIL,
+            SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER,
+            SpyCustomerTableMap::COL_EMAIL,
             SpyCustomerTableMap::COL_FIRST_NAME,
             SpyCustomerTableMap::COL_LAST_NAME,
             SpyCustomerTableMap::COL_GENDER,
@@ -101,15 +103,20 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
+     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $customerGroupToCustomer
      *
      * @return string
      */
-    protected function buildLinks(SpyCustomer $customer)
+    protected function buildLinks(SpyCustomerGroupToCustomer $customerGroupToCustomer)
     {
         $buttons = [];
-        $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customer->getIdCustomer(), 'View');
-        $buttons[] = $this->generateRemoveButton('/customer-group/delete/customer?id-customer=' . $customer->getIdCustomer(), 'Edit');
+        $buttons[] = $this->generateViewButton('/customer/view?id-customer=' . $customerGroupToCustomer->getFkCustomer(), 'View');
+
+        $url = Url::generate('/customer-group/delete/customer', [
+            'id-customer-group' => $customerGroupToCustomer->getFkCustomerGroup(),
+            'id-customer' => $customerGroupToCustomer->getFkCustomer()
+        ]);
+        $buttons[] = $this->generateRemoveButton($url, 'Remove');
 
         return implode(' ', $buttons);
     }
@@ -131,15 +138,15 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
+     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $customerGroupToCustomer
      *
      * @return array
      */
-    protected function hydrateCustomerListRow(SpyCustomer $customer)
+    protected function hydrateCustomerListRow(SpyCustomerGroupToCustomer $customerGroupToCustomer)
     {
-        $customerRow = $customer->toArray();
+        $customerRow = $customerGroupToCustomer->toArray();
 
-        $customerRow[self::ACTIONS] = $this->buildLinks($customer);
+        $customerRow[self::ACTIONS] = $this->buildLinks($customerGroupToCustomer);
 
         return $customerRow;
     }
@@ -149,8 +156,13 @@ class CustomerTable extends AbstractTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerGroupQueryContainer->queryCustomerGroupToCustomerByIdCustomerGroup()
-            ->filterByFkCustomer($this->customerGroupTransfer->getIdCustomerGroup());
+        $query = $this->customerGroupQueryContainer
+            ->queryCustomerGroupToCustomerByFkCustomerGroup($this->customerGroupTransfer->getIdCustomerGroup())
+            ->leftJoinCustomer()
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, 'first_name')
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, 'last_name')
+            ->withColumn(SpyCustomerTableMap::COL_EMAIL, 'email')
+            ->withColumn(SpyCustomerTableMap::COL_GENDER, 'gender');
 
         return $query;
     }

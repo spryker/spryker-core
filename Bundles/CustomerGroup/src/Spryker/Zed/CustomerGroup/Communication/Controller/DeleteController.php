@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends EditController
 {
+
+    const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,6 +38,28 @@ class DeleteController extends EditController
         );
 
         return $this->redirectResponse('/customer-group');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function customerAction(Request $request)
+    {
+        $idCustomerGroup = $this->castId($request->get(static::PARAM_ID_CUSTOMER_GROUP));
+        $idCustomer = $this->castId($request->get(static::PARAM_ID_CUSTOMER));
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->setIdCustomerGroup($idCustomerGroup);
+
+        $customer = new CustomerGroupToCustomerTransfer();
+        $customer->setFkCustomer($idCustomer);
+        $customerGroupTransfer->addCustomer($customer);
+
+        $this->getFacade()->removeCustomersFromGroup($customerGroupTransfer);
+
+        return $this->redirectResponse('/customer-group/view?id-customer-group=' . $idCustomerGroup);
     }
 
 }

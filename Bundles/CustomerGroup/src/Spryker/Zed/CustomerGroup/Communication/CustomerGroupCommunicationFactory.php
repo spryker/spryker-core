@@ -32,7 +32,6 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-
     public function createCustomerTable($customerGroupTransfer)
     {
         return new CustomerTable(

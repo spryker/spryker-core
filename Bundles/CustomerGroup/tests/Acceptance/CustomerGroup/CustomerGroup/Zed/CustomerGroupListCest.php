@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\CustomerGroup\Customer\Zed;
+namespace Acceptance\CustomerGroup\CustomerGroup\Zed;
 
 use Acceptance\CustomerGroup\CustomerGroup\Zed\PageObject\CustomerGroupListPage;
 use Acceptance\CustomerGroup\CustomerGroup\Zed\Tester\CustomerGroupTester;

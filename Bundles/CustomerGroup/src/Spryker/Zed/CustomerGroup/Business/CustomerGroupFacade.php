@@ -72,4 +72,18 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
             ->delete($customerGroupTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return void
+     */
+    public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer)
+    {
+        $this->getFactory()
+            ->createCustomerGroup()
+            ->removeCustomersFromGroup($customerGroupTransfer);
+    }
+
 }

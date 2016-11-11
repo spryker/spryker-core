@@ -42,10 +42,27 @@ class ViewController extends AbstractController
 
         return $this->viewResponse([
             'customerGroup' => $customerGroupArray,
-            //'customers' => $customers,
             'idCustomerGroup' => $idCustomerGroup,
             'customerTable' => $customerTable->render(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        $idCustomerGroup = $this->castId($request->query->getInt(static::PARAM_ID_CUSTOMER_GROUP));
+
+        $customerGroupTransfer = $this->createCustomerGroupTransfer();
+        $customerGroupTransfer->setIdCustomerGroup($idCustomerGroup);
+
+        $table = $this->getFactory()
+            ->createCustomerTable($customerGroupTransfer);
+
+        return $this->jsonResponse($table->fetchData());
     }
 
     /**

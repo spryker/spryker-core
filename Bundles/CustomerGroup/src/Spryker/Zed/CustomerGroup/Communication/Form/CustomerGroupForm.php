@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerGroup\Communication\Form;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,6 +25,7 @@ class CustomerGroupForm extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_ID_CUSTOMER_GROUP = 'id_customer_group';
+    const FIELD_CUSTOMERS = 'customers';
 
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
@@ -76,7 +78,8 @@ class CustomerGroupForm extends AbstractType
         $this
             ->addIdCustomerGroupField($builder)
             ->addNameField($builder)
-            ->addDescriptionField($builder);
+            ->addDescriptionField($builder)
+            ->addCustomersField($builder);
     }
 
     /**
@@ -116,6 +119,34 @@ class CustomerGroupForm extends AbstractType
         $builder->add(self::FIELD_DESCRIPTION, 'textarea', [
             'label' => 'Description',
             'required' => false
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCustomersField(FormBuilderInterface $builder)
+    {
+        $customerCollection = $this->customerGroupQueryContainer->queryCustomer()
+            ->select(['id_customer', 'first_name', 'last_name', 'email'])
+            ->find();
+        $choices = [];
+        foreach ($customerCollection as $customer) {
+            $choices[$customer['id_customer']] = sprintf('%s %s (%s)', $customer['first_name'], $customer['last_name'], $customer['email']);
+        }
+
+        $builder->add(self::FIELD_CUSTOMERS, new Select2ComboBoxType(), [
+            'label' => 'Assigned Users',
+            'empty_value' => false,
+            'multiple' => true,
+            'choices' => $choices,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\CustomerGroup\Business;
+namespace Functional\Spryker\Zed\CustomerGroup\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
@@ -13,7 +13,7 @@ use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
 
 /**
- * @group Unit
+ * @group Functional
  * @group Spryker
  * @group Zed
  * @group CustomerGroup

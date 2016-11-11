@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerGroup\Business\Model;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Spryker\Zed\CustomerGroup\Business\Exception\CustomerGroupNotFoundException;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 
@@ -38,7 +39,7 @@ class CustomerGroup
         $customerGroupEntity = $this->getCustomerGroup($customerGroupTransfer);
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
-        $customers = $customerGroupEntity->getSpyCustomerGroupToCustomerss();
+        $customers = $customerGroupEntity->getSpyCustomerGroupToCustomers();
         if ($customers) {
             //$customerGroupTransfer->setAddresses($this->entityCollectionToTransferCollection($customers, $customerGroupEntity));
         }
@@ -83,10 +84,14 @@ class CustomerGroup
 
         $this->queryContainer->getConnection()->beginTransaction();
 
-        $customerGroupEntity->save();
+        $this->queryContainer->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())->deleteAll();
 
-        foreach ($customerGroupTransfer->getCustomers() as $customer) {
+        foreach ($customerGroupTransfer->getCustomers() as $customerTransfer) {
+            $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
+            $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+            $customerGroupToCustomerEntity->setFkCustomer($customerTransfer->getFkCustomer());
 
+            $customerGroupToCustomerEntity->save();
         }
 
         $this->queryContainer->getConnection()->commit();
@@ -127,6 +132,28 @@ class CustomerGroup
         }
 
         return $customerEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return void
+     */
+    public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer)
+    {
+        $customerGroupTransfer->requireIdCustomerGroup();
+        $customerGroupTransfer->requireCustomers();
+
+        foreach ($customerGroupTransfer->getCustomers() as $customer) {
+            $customerEntity = $this->queryContainer
+                ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupTransfer->getIdCustomerGroup())
+                ->filterByFkCustomer($customer->getFkCustomer())->findOne();
+            if (!$customerEntity) {
+                continue;
+            }
+
+            $customerEntity->delete();
+        }
     }
 
     /**
