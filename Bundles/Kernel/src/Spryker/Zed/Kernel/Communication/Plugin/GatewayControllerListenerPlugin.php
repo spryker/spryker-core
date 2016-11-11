@@ -9,6 +9,7 @@ namespace Spryker\Zed\Kernel\Communication\Plugin;
 
 use LogicException;
 use ReflectionObject;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Message;
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Spryker\Zed\Messenger\MessengerConfig;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -47,6 +49,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);
 
+            $this->setCustomersLocaleIfPresent($requestTransfer);
+
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
 
@@ -56,6 +60,31 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         };
 
         $event->setController($newController);
+    }
+
+    /**
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
+     *
+     * @return void
+     */
+    protected function setCustomersLocaleIfPresent(Request $request)
+    {
+        $localeTransfer = $this->getLocaleMetaTransfer($request);
+        if ($localeTransfer) {
+            Store::getInstance()->setCurrentLocale($localeTransfer->getLocaleName());
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
+     *
+     * @return null|\Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocaleMetaTransfer(Request $request)
+    {
+        $localeTransfer = $request->getMetaTransfer('locale');
+
+        return $localeTransfer;
     }
 
     /**

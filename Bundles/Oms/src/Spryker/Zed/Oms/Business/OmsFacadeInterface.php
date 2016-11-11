@@ -438,4 +438,28 @@ interface OmsFacadeInterface
      */
     public function clearLocks();
 
+    /**
+     * Specification:
+     * - Sends the order confirmation mail
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    public function sendOrderConfirmationMail(SpySalesOrder $salesOrderEntity);
+
+    /**
+     * Specification:
+     * - Sends the order shipped mail
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity);
+
 }

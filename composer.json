@@ -512,7 +512,10 @@
       "Spryker\\Zed\\Transfer\\": "Bundles/Transfer/src",
       "Unit\\Spryker\\Zed\\Transfer\\": "Bundles/Transfer/tests",
       "Functional\\Spryker\\Zed\\Transfer\\": "Bundles/Transfer/tests",
+
       "Spryker\\Shared\\Twig\\": "Bundles/Twig/src",
+      "Spryker\\Zed\\Twig\\": "Bundles/Twig/src",
+
       "Spryker\\Shared\\Url\\": "Bundles/Url/src",
       "Unit\\Spryker\\Shared\\Url\\": "Bundles/Url/tests",
       "Functional\\Spryker\\Shared\\Url\\": "Bundles/Url/tests",

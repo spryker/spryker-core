@@ -9,6 +9,7 @@
         <property name="email" type="string" />
         <property name="subscriberKey" type="string" />
         <property name="isConfirmed" type="bool" />
+        <property name="locale" type="Locale" />
     </transfer>
 
     <transfer name="NewsletterType">
@@ -34,6 +35,11 @@
     <transfer name="NewsletterSubscriptionApprovalResult">
         <property name="isSuccess" type="bool" default="true" />
         <property name="errorMessage" type="string" />
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="newsletterSubscriber" type="NewsletterSubscriber" />
+        <property name="newsletterType" type="NewsletterType" />
     </transfer>
 
 </transfers>
