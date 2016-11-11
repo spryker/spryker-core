@@ -13,7 +13,7 @@ interface CustomerSessionInterface
 {
 
     /**
-     * @return mixed
+     * @return void
      */
     public function logout();
 

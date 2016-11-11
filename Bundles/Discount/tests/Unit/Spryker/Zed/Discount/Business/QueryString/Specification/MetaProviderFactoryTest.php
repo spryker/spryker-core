@@ -98,7 +98,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountBusinessFactoryMock()
     {
-        return $this->getMock(DiscountBusinessFactory::class);
+        return $this->getMockBuilder(DiscountBusinessFactory::class)->getMock();
     }
 
     /**
@@ -116,7 +116,7 @@ class MetaProviderFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function createLogicalComparatorsMock()
     {
-        return $this->getMock(LogicalComparators::class);
+        return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
 
 }

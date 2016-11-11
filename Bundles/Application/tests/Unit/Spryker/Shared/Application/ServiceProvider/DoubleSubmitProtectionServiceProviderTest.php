@@ -51,7 +51,7 @@ class DoubleSubmitProtectionServiceProviderTest extends Test
         $application['form.extensions'] = $application->share(
             function ($app) {}
         );
-        $application['session'] = $this->getMock(SessionInterface::class);
+        $application['session'] = $this->getMockBuilder(SessionInterface::class)->getMock();
 
         return $application;
     }

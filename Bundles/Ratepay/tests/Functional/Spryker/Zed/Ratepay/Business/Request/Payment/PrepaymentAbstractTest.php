@@ -37,7 +37,7 @@ abstract class PrepaymentAbstractTest extends AbstractFacadeTest
     }
 
     /**
-     * @return mixed
+     * @return \Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer
      */
     protected function getPaymentTransferFromQuote()
     {

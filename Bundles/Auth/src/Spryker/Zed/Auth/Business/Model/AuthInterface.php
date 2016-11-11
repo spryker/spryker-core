@@ -63,7 +63,7 @@ interface AuthInterface
      *
      * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser($token);
 

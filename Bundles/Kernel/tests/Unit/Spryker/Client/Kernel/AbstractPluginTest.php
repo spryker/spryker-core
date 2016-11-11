@@ -32,7 +32,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
-        $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractFactory::class, null, [], '', false));
+        $communicationFactoryProperty->setValue($plugin, $this->getMockBuilder(AbstractFactory::class)->disableOriginalConstructor()->getMock());
 
         $factory = $plugin->getFactory();
 
@@ -49,7 +49,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('client');
         $communicationFactoryProperty->setAccessible(true);
-        $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractClient::class, null, [], '', false));
+        $communicationFactoryProperty->setValue($plugin, $this->getMockBuilder(AbstractClient::class)->disableOriginalConstructor()->getMock());
 
         $client = $plugin->getClient();
 

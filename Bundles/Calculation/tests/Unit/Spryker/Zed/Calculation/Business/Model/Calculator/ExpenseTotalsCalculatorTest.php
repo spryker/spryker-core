@@ -62,7 +62,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowAssertionExceptionWhenTotalsNotPresent()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
         $quoteTransfer = $this->createQuoteTransfer();
@@ -74,7 +74,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowAssertionExceptionWhenExpenseSumGrossPriceNotPresent()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
 

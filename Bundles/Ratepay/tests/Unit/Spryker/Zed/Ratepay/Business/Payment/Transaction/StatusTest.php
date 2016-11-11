@@ -143,8 +143,8 @@ class StatusTest extends \PHPUnit_Framework_TestCase
      */
     protected function getQueryContainerMock($paymentResultCode)
     {
-        $queryContainer = $this->getMock(RatepayQueryContainerInterface::class);
-        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst']);
+        $queryContainer = $this->getMockBuilder(RatepayQueryContainerInterface::class)->getMock();
+        $queryPaymentsMock = $this->getMockBuilder(SpyPaymentRatepayQuery::class)->setMethods(['findByFkSalesOrder', 'getFirst'])->getMock();
 
         $ratepayPaymentEntity = new SpyPaymentRatepay();
 

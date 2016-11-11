@@ -80,7 +80,7 @@ class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $conditionCollection = new ConditionCollection();
 
-        $this->setExpectedException(ConditionNotFoundException::class);
+        $this->expectException(ConditionNotFoundException::class);
 
         $conditionCollection->get(self::CONDITION_NAME);
     }
@@ -108,7 +108,7 @@ class ConditionCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getConditionMock()
     {
-        return $this->getMock(ConditionInterface::class);
+        return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
 
 }

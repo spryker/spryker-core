@@ -16,7 +16,7 @@ interface AuthPasswordResetSenderInterface
      * @param string $email
      * @param string $token
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function send($email, $token);
 

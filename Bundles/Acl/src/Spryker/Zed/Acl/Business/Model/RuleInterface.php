@@ -20,7 +20,7 @@ interface RuleInterface
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function addRule(RuleTransfer $ruleTransfer);
 

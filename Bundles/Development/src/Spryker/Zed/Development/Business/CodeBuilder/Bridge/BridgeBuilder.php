@@ -101,7 +101,7 @@ class BridgeBuilder
      * @param string $toBundle
      * @param string $templateContent
      *
-     * @return mixed
+     * @return string
      */
     protected function replacePlaceHolder($bundle, $toBundle, $templateContent)
     {

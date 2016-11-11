@@ -119,7 +119,7 @@ abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function getStepWithExternalRedirectUrl()
     {
-        $stepMock = $this->getMock(StepWithExternalRedirectInterface::class);
+        $stepMock = $this->getMockBuilder(StepWithExternalRedirectInterface::class)->getMock();
         $stepMock->method('getExternalRedirectUrl')->willReturn(self::EXTERNAL_URL);
 
         return $stepMock;

@@ -120,6 +120,9 @@ abstract class AbstractBusinessTest extends Test
         return $orderTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
     protected function getTotalsTransfer()
     {
         $totalsTransfer = new TotalsTransfer();
@@ -132,6 +135,11 @@ abstract class AbstractBusinessTest extends Test
         return $totalsTransfer;
     }
 
+    /**
+     * @param string $itemPrefix
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
     protected function getAddressTransfer($itemPrefix)
     {
         $addressTransfer = new AddressTransfer();
@@ -150,6 +158,11 @@ abstract class AbstractBusinessTest extends Test
         return $addressTransfer;
     }
 
+    /**
+     * @param string $itemPrefix
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
     protected function getItemTransfer($itemPrefix)
     {
         $itemTransfer = new ItemTransfer();
@@ -166,6 +179,9 @@ abstract class AbstractBusinessTest extends Test
         return $itemTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
     protected function getCustomerTransfer()
     {
         $customerTransfer = new CustomerTransfer();
@@ -220,10 +236,13 @@ abstract class AbstractBusinessTest extends Test
     abstract protected function getRatepayPaymentMethodTransfer();
 
     /**
-     * @return mixed
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     abstract protected function getPaymentTransferFromQuote();
 
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Order\MethodMapper\PaymentMethodMapperInterface
+     */
     protected function getPaymentMapper()
     {
         return $this->getRatepayBusinessBusinessFactory()

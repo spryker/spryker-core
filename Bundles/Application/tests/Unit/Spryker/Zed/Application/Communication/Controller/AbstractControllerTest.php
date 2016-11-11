@@ -38,7 +38,7 @@ class AbstractControllerTest extends \PHPUnit_Framework_TestCase
         $controller = new MockController();
 
         if (!$isValid) {
-            $this->setExpectedException(InvalidArgumentException::class);
+            $this->expectException(InvalidArgumentException::class);
         }
 
         $result = $controller->indexAction($input);

@@ -9,7 +9,6 @@ namespace Spryker\Yves\DummyPayment\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Yves\DummyPayment\Exception\PaymentMethodNotFoundException;
 use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
@@ -25,27 +24,6 @@ class DummyPaymentHandler
         DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'invoice',
         DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'credit card',
     ];
-
-    /**
-     * @var array
-     */
-    protected static $dummyPaymentGenderMapper = [
-        'Mr' => 'Male',
-        'Mrs' => 'Female',
-    ];
-
-    /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManagerInterface
-     */
-    protected $currencyManager;
-
-    /**
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface $currencyManager
-     */
-    public function __construct(CurrencyManagerInterface $currencyManager)
-    {
-        $this->currencyManager = $currencyManager;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

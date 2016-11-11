@@ -217,14 +217,13 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
-        $voucherEngineMock = $this->getMock(
-            VoucherEngine::class,
-            ['createDiscountVoucherEntity'],
-            [
+        $voucherEngineMock = $this->getMockBuilder(VoucherEngine::class)
+            ->setMethods(['createDiscountVoucherEntity'])
+            ->setConstructorArgs([
                 $discountConfigMock,
                 $discountQueryContainerMock
-            ]
-        );
+            ])
+            ->getMock();
 
         $voucherEngineMock->method('createDiscountVoucherEntity')
             ->willReturn($discountVoucherEntity);
@@ -272,7 +271,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountConfigMock()
     {
-        return $this->getMock(DiscountConfig::class);
+        return $this->getMockBuilder(DiscountConfig::class)->getMock();
     }
 
     /**
@@ -280,7 +279,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -296,15 +295,14 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountVoucherQueryMock()
     {
-        return $this->getMock(
-            SpyDiscountVoucherQuery::class,
-            [
+        return $this->getMockBuilder(SpyDiscountVoucherQuery::class)
+            ->setMethods([
                 'orderByVoucherBatch',
                 'filterByFkDiscountVoucherPool',
                 'findOne',
                 'findOneByCode'
-            ]
-        );
+            ])
+            ->getMock();
     }
 
     /**
@@ -312,7 +310,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
      */
     protected function createConnectionMock()
     {
-        return $this->getMock(ConnectionInterface::class);
+        return $this->getMockBuilder(ConnectionInterface::class)->getMock();
     }
 
     /**

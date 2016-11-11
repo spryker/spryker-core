@@ -41,7 +41,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $mainRequest->request->add(self::POST_PARAMS);
         $subRequest = new Request();
 
-        $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
+        $httpKernelMock = $this->getMockBuilder(HttpKernelInterface::class)->setMethods(['handle'])->getMock();
         $httpKernelMock
             ->expects($this->once())
             ->method('handle')
@@ -69,7 +69,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
         $mainRequest = new Request();
         $subRequest = new Request();
 
-        $httpKernelMock = $this->getMock(HttpKernelInterface::class, ['handle']);
+        $httpKernelMock = $this->getMockBuilder(HttpKernelInterface::class)->setMethods(['handle'])->getMock();
 
         $subRequestHandlerPartialMock = $this->getRequestHandlerPartialMock($httpKernelMock);
         $subRequestHandlerPartialMock
@@ -88,7 +88,7 @@ class SubRequestHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getRequestHandlerPartialMock(PHPUnit_Framework_MockObject_MockObject $kernelMock)
     {
-        return $this->getMock(SubRequestHandler::class, ['createRequestObject'], [$kernelMock]);
+        return $this->getMockBuilder(SubRequestHandler::class)->setMethods(['createRequestObject'])->setConstructorArgs([$kernelMock])->getMock();
     }
 
 }

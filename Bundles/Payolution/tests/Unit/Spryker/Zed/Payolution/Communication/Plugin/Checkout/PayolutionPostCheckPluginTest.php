@@ -86,7 +86,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryContainerMock(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $queryContainerMock = $this->getMock(PayolutionQueryContainer::class);
+        $queryContainerMock = $this->getMockBuilder(PayolutionQueryContainer::class)->getMock();
         $transactionStatusLogQueryMock = $this->getTransactionStatusLogQueryMock($transactionStatusLogEntity);
         $queryContainerMock->expects($this->once())->method('queryTransactionStatusLogBySalesOrderId')->willReturn($transactionStatusLogQueryMock);
 
@@ -100,7 +100,7 @@ class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransactionStatusLogQueryMock(SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity)
     {
-        $transactionStatusLogQueryMock = $this->getMock(SpyPaymentPayolutionTransactionStatusLogQuery::class);
+        $transactionStatusLogQueryMock = $this->getMockBuilder(SpyPaymentPayolutionTransactionStatusLogQuery::class)->getMock();
         $transactionStatusLogQueryMock->method('findOne')->willReturn($transactionStatusLogEntity);
 
         return $transactionStatusLogQueryMock;

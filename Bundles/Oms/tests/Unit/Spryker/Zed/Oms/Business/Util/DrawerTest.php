@@ -123,7 +123,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
      */
     private function getConditionMock()
     {
-        return $this->getMock(ConditionInterface::class);
+        return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
 
     /**
@@ -131,7 +131,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommandMock()
     {
-        return $this->getMock(CommandInterface::class);
+        return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
 
     /**
@@ -139,7 +139,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
      */
     private function getGraphMock()
     {
-        return $this->getMock(GraphInterface::class);
+        return $this->getMockBuilder(GraphInterface::class)->getMock();
     }
 
     /**

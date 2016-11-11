@@ -65,7 +65,7 @@ class FactoryResolverTest extends AbstractResolverTest
      */
     protected function getResolverMock(array $methods)
     {
-        $resolverMock = $this->getMock(FactoryResolver::class, $methods);
+        $resolverMock = $this->getMockBuilder(FactoryResolver::class)->setMethods($methods)->getMock();
 
         return $resolverMock;
     }
