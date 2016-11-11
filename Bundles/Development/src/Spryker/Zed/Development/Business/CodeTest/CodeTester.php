@@ -19,6 +19,8 @@ class CodeTester
 
     const OPTION_GROUP = 'group';
 
+    const OPTION_TYPE_EXCLUDE = 'exclude';
+
     /**
      * @var string
      */
@@ -118,6 +120,10 @@ class CodeTester
 
         if ($options[self::OPTION_GROUP]) {
             $config .= ' -g ' . $options[self::OPTION_GROUP];
+        }
+
+        if ($options[self::OPTION_TYPE_EXCLUDE]) {
+            $config .= ' -x ' . $options[self::OPTION_TYPE_EXCLUDE];
         }
 
         if ($options[self::OPTION_VERBOSE]) {
