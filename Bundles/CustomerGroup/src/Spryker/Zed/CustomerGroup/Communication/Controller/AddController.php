@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +35,7 @@ class AddController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $customerGroupTransfer = new CustomerGroupTransfer();
-            $customerGroupTransfer->fromArray($form->getData(), true);
+            $customerGroupTransfer = $dataProvider->prepareDataAsTransfer($form->getData());
 
             $this->getFacade()->add($customerGroupTransfer);
 

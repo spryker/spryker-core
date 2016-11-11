@@ -61,9 +61,7 @@ class CustomerGroup
 
         $customerGroupEntity->save();
 
-        foreach ($customerGroupTransfer->getCustomers() as $customer) {
-
-        }
+        $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
 
         $this->queryContainer->getConnection()->commit();
 
@@ -84,8 +82,23 @@ class CustomerGroup
 
         $this->queryContainer->getConnection()->beginTransaction();
 
-        $this->queryContainer->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())->deleteAll();
+        $this->queryContainer
+            ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())
+            ->deleteAll();
 
+        $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
+
+        $this->queryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup $customerGroupEntity
+     *
+     * @return void
+     */
+    protected function saveCustomers(CustomerGroupTransfer $customerGroupTransfer, SpyCustomerGroup $customerGroupEntity)
+    {
         foreach ($customerGroupTransfer->getCustomers() as $customerTransfer) {
             $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
             $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
@@ -93,8 +106,6 @@ class CustomerGroup
 
             $customerGroupToCustomerEntity->save();
         }
-
-        $this->queryContainer->getConnection()->commit();
     }
 
     /**

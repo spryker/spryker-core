@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
-use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,13 +37,7 @@ class EditController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $customerGroupTransfer = new CustomerGroupTransfer();
-            $data = $form->getData();
-            $customers = $data['customers'];
-            unset($data['customers']);
-
-            $customerGroupTransfer->fromArray($data, true);
-            $this->addCustomers($customerGroupTransfer, $customers);
+            $customerGroupTransfer = $dataProvider->prepareDataAsTransfer($form->getData());
 
             $this->getFacade()->update($customerGroupTransfer);
 
@@ -58,21 +50,6 @@ class EditController extends AbstractController
             'form' => $form->createView(),
             'idCustomerGroup' => $idCustomerGroup,
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
-     * @param array $idCustomers
-     *
-     * @return void
-     */
-    protected function addCustomers(CustomerGroupTransfer $customerGroupTransfer, array $idCustomers)
-    {
-        foreach ($idCustomers as $idCustomer) {
-            $customerTransfer = new CustomerGroupToCustomerTransfer();
-            $customerTransfer->setFkCustomer($idCustomer);
-            $customerGroupTransfer->addCustomer($customerTransfer);
-        }
     }
 
 }

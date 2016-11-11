@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
+use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
+
 class CustomerGroupFormDataProvider
 {
 
@@ -39,31 +43,59 @@ class CustomerGroupFormDataProvider
             ->queryCustomerGroupById($idCustomerGroup)
             ->findOne();
 
-        return $customerGroupEntity->toArray();
+        $data = $customerGroupEntity->toArray();
+
+        $customersArray = $this
+            ->customerGroupQueryContainer
+            ->queryCustomerGroupToCustomerByFkCustomerGroup($idCustomerGroup)
+            ->select(SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER)
+            ->find()->toArray();
+
+        $data['customers'] = $customersArray;
+
+        return $data;
     }
 
     /**
+     * @param int|null $idCustomerGroup
+     *
      * @return array
      */
-    public function getOptions($id = null)
+    public function getOptions($idCustomerGroup = null)
     {
         return [];
     }
 
     /**
-     * @return array
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
      */
-    public function getAssignedUsers()
+    public function prepareDataAsTransfer(array $data)
     {
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customers = $data['customers'];
+        unset($data['customers']);
 
+        $customerGroupTransfer->fromArray($data, true);
+        $this->addCustomers($customerGroupTransfer, $customers);
+
+        return $customerGroupTransfer;
     }
 
     /**
-     * @return array
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     * @param array $idCustomers
+     *
+     * @return void
      */
-    public function getAssignableUsers()
+    protected function addCustomers(CustomerGroupTransfer $customerGroupTransfer, array $idCustomers)
     {
-
+        foreach ($idCustomers as $idCustomer) {
+            $customerTransfer = new CustomerGroupToCustomerTransfer();
+            $customerTransfer->setFkCustomer($idCustomer);
+            $customerGroupTransfer->addCustomer($customerTransfer);
+        }
     }
 
 }
