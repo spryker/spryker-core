@@ -7,7 +7,7 @@
 namespace Spryker\Client\Product\KeyBuilder;
 
 use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Product\ProductConfig;
 
 class ProductConcreteResourceKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -17,7 +17,7 @@ class ProductConcreteResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return ProductConstants::RESOURCE_TYPE_PRODUCT_CONCRETE;
+        return ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE;
     }
 
 }

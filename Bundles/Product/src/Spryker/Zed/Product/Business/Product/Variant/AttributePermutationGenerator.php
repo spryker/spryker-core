@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Product\Business\Product\Variant;
 
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Product\ProductConfig;
 
 class AttributePermutationGenerator implements AttributePermutationGeneratorInterface
 {
@@ -37,7 +37,7 @@ class AttributePermutationGenerator implements AttributePermutationGeneratorInte
     {
         if (empty($superAttributes)) {
             return [
-                ProductConstants::VARIANT_LEAF_NODE_ID => $idProductConcrete //set leaf node to id of concrete product
+                ProductConfig::VARIANT_LEAF_NODE_ID => $idProductConcrete //set leaf node to id of concrete product
             ];
         }
 
@@ -55,7 +55,7 @@ class AttributePermutationGenerator implements AttributePermutationGeneratorInte
                 $recurseResult = array_merge($result, $recurseResult);
             }
 
-            $result[$key . ProductConstants::ATTRIBUTE_MAP_PATH_DELIMITER . $value] = $recurseResult;
+            $result[$key . ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER . $value] = $recurseResult;
         }
 
         return $result;

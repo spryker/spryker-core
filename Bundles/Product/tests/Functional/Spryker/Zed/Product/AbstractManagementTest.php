@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 /**
@@ -177,8 +177,8 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductActive($idProductAbstract);
 
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
     }
 
     /**
@@ -189,12 +189,12 @@ class AbstractManagementTest extends FacadeTestAbstract
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
 
         $this->productFacade->touchProductActive($idProductAbstract);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
 
         $this->productFacade->touchProductInactive($idProductAbstract);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE);
     }
 
     /**
@@ -206,8 +206,8 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductDeleted($idProductAbstract);
 
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
-        $this->assertTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
     }
 
     /**
@@ -217,8 +217,8 @@ class AbstractManagementTest extends FacadeTestAbstract
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
 
-        $this->assertNoTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT);
-        $this->assertNoTouchEntry($idProductAbstract, ProductConstants::RESOURCE_TYPE_ATTRIBUTE_MAP);
+        $this->assertNoTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+        $this->assertNoTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP);
 
         return $idProductAbstract;
     }

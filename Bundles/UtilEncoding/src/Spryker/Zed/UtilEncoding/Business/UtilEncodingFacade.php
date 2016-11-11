@@ -42,8 +42,8 @@ class UtilEncodingFacade extends AbstractFacade implements UtilEncodingFacadeInt
      *
      * @param string $jsonValue
      * @param bool $assoc
-     * @param null $depth
-     * @param null $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @return array
      */
