@@ -109,17 +109,17 @@ class AvailabilityTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $productAbstractEntity
+     * @param array $productAbstract
      *
      * @return string
      */
-    protected function createEditButton(SpyAvailability $productAbstractEntity)
+    protected function createEditButton(array $productAbstract)
     {
         $viewTaxSetUrl = Url::generate(
             '/availability/index/edit',
             [
-                self::URL_PARAM_ID_PRODUCT => $productAbstractEntity[AvailabilityQueryContainer::ID_PRODUCT],
-                self::URL_PARAM_SKU => $productAbstractEntity[AvailabilityQueryContainer::CONCRETE_SKU],
+                self::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                self::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
                 self::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract
             ]
         );
