@@ -69,7 +69,6 @@ class SellableTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($isSellable);
     }
 
-
     /**
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface|null $omsFacadeMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacadeMock

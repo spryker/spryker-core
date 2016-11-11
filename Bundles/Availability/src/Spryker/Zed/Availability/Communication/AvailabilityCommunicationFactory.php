@@ -48,7 +48,6 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @param int $idProduct
      * @param string $sku
      *
@@ -70,7 +69,6 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @return \Spryker\Zed\Availability\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
      */
     public function createAvailabilityStockFormDataProvider()

@@ -16,7 +16,6 @@ interface ReservationInterface
      */
     public function updateReservationQuantity($sku);
 
-
     /**
      * @param string $sku
      *

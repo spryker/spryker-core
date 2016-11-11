@@ -12,10 +12,11 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 class ProductReservationReader implements ProductReservationReaderInterface
 {
+
     /**
-     * @var AvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
-     protected $availabilityQueryContainer;
+    protected $availabilityQueryContainer;
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
@@ -41,7 +42,6 @@ class ProductReservationReader implements ProductReservationReaderInterface
             ->findOne();
 
         return $this->mapAbstractProductAvailabilityEntityToTransfer($productAbstractEntity);
-
     }
 
     /**
@@ -77,7 +77,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param SpyProductAbstract $productAbstractEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
@@ -92,8 +92,5 @@ class ProductReservationReader implements ProductReservationReaderInterface
 
         return $productAbstractAvailabilityTransfer;
     }
-
-
-
 
 }

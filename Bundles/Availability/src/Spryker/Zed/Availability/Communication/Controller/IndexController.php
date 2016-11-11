@@ -143,7 +143,6 @@ class IndexController extends AbstractController
         return $this->getFactory()->createAvailabilityTable($idProductAbstract, $localeTransfer->getIdLocale());
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
