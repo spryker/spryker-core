@@ -282,7 +282,6 @@ abstract class AbstractBusinessTest extends Test
      */
     abstract protected function getRatepayPaymentMethodTransfer();
 
-
     /**
      * @return mixed
      */

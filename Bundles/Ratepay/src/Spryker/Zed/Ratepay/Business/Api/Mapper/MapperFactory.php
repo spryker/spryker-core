@@ -244,7 +244,7 @@ class MapperFactory extends AbstractBusinessFactory
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\InstallmentCalculationMapper
      */

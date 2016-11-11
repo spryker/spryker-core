@@ -36,7 +36,7 @@ class InstallmentCalculationMapper extends BaseMapper
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */

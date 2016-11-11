@@ -72,8 +72,8 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer $paymentData
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer|null $paymentData
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */

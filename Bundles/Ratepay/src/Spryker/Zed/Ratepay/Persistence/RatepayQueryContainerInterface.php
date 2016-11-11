@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Ratepay\Persistence;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface RatepayQueryContainerInterface extends QueryContainerInterface

@@ -70,7 +70,7 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
 
             'payment_method' => $method,
             'request_type' => static::TRANSACTION_TYPE,
-            'request_transaction_id' =>(isset($headData['transaction-id'])) ? $headData['transaction-id'] : null,
+            'request_transaction_id' => (isset($headData['transaction-id'])) ? $headData['transaction-id'] : null,
             'request_transaction_short_id' => (isset($headData['transaction-short-id'])) ? $headData['transaction-short-id'] : null,
             'request_body' => (string)$request,
 
