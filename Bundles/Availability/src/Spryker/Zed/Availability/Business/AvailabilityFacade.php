@@ -89,7 +89,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      *
-     * @throw \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
      *
      * @return void
      */
