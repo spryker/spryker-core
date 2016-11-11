@@ -81,6 +81,7 @@ class CustomerGroup
         $customerGroupEntity->fromArray($customerGroupTransfer->toArray());
 
         $this->queryContainer->getConnection()->beginTransaction();
+        $customerGroupEntity->save();
 
         $this->queryContainer
             ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())
