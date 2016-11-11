@@ -44,7 +44,6 @@ class Installment extends AbstractMapper
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
         $payment
             ->setBankAccountBic($paymentTransfer->getBankAccountBic())
-//            ->setBankAccountHolder($paymentTransfer->getBankAccountHolder())
             ->setBankAccountIban($paymentTransfer->getBankAccountIban())
 
             ->setDebitPayType($paymentTransfer->getDebitPayType())

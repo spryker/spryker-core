@@ -71,7 +71,6 @@ class ElvSubForm extends SubFormAbstract
     {
         parent::buildForm($builder, $options);
         $this
-//            ->addBankAccountHolder($builder)
             ->addBankAccountBic($builder)
             ->addBankAccountIban($builder);
     }

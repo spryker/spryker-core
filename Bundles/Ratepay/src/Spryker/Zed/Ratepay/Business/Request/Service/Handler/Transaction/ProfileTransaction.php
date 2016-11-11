@@ -57,7 +57,7 @@ class ProfileTransaction extends TransactionHandlerAbstract implements Transacti
      */
     protected function logInfo($request, $response, $method, $entityId = null)
     {
-        //todo: implement logging.
+
     }
 
 }

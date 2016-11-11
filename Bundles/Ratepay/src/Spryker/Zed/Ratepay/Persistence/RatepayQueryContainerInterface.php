@@ -58,32 +58,6 @@ interface RatepayQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
-     *
-     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
-     */
-    public function addPaymentItem(ItemTransfer $orderItem);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
-     */
-    public function queryPaymentItem();
-
-    /**
-     * @api
-     *
-     * @param int $idSalesOrder
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
-     */
-    public function queryPaymentItemByOrderIdAndSku($idSalesOrder, $sku);
-
-    /**
-     * @api
-     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery

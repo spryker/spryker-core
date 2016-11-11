@@ -25,7 +25,7 @@ class InitPaymentTransaction extends BaseTransaction implements PaymentInitTrans
         $paymentMethodName = $ratepayPaymentInitTransfer->getPaymentMethodName();
 
         $paymentMethod = $this->getMethodMapper($paymentMethodName);
-        // skip request if have transactionId ?
+
         $request = $paymentMethod
             ->paymentInit($ratepayPaymentInitTransfer);
         $response = $this->sendRequest((string)$request);

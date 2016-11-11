@@ -93,7 +93,6 @@ class InstallmentSubForm extends SubFormAbstract
         $this
             ->addDebitPayType($builder, $options)
             ->addCalculationType($builder, $options)
-//            ->addBankAccountHolder($builder)
             ->addBankAccountBic($builder)
             ->addBankAccountIban($builder)
             ->addAllowedMonth($builder, $options)
@@ -194,9 +193,7 @@ class InstallmentSubForm extends SubFormAbstract
             'text',
             [
                 'label' => false,
-            //                'required' => true,
                 'constraints' => [
-            //                    $this->createNotBlankConstraint(),
                 ],
                 'attr' => [
                 ]

@@ -44,7 +44,6 @@ class Elv extends AbstractMapper
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
         $payment
             ->setBankAccountBic($paymentTransfer->requireBankAccountBic()->getBankAccountBic())
-//            ->setBankAccountHolder($paymentTransfer->requireBankAccountHolder()->getBankAccountHolder())
             ->setBankAccountIban($paymentTransfer->requireBankAccountIban()->getBankAccountIban());
     }
 

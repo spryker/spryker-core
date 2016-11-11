@@ -38,7 +38,6 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
     protected function injectPaymentPlugins(Container $container)
     {
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
-//            $pluginCollection->add(new RatepayPreCheckPlugin(), RatepayConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
             $pluginCollection->add(new RatepaySaveOrderPlugin(), RatepayConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
             $pluginCollection->add(new RatepayPostCheckPlugin(), RatepayConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
 

@@ -88,7 +88,6 @@ class OrderPaymentRequestMapper extends BaseMapper
                 ->setIpAddress($paymentRatepayEntity->getIpAddress())
                 ->setCustomerAllowCreditInquiry($paymentRatepayEntity->getCustomerAllowCreditInquiry())
 
-//                ->setBankAccountHolder($paymentRatepayEntity->getBankAccountHolder())
                 ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName())
                 ->setBankAccountBic($paymentRatepayEntity->getBankAccountBic())
                 ->setBankAccountIban($paymentRatepayEntity->getBankAccountIban())

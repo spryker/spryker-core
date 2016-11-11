@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Ratepay\Persistence;
 
-use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -25,14 +24,6 @@ class RatepayPersistenceFactory extends AbstractPersistenceFactory
     public function createPaymentRatepayQuery()
     {
         return SpyPaymentRatepayQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery
-     */
-    public function createPaymentRatepayItemQuery()
-    {
-        return SpyPaymentRatepayItemQuery::create();
     }
 
     /**

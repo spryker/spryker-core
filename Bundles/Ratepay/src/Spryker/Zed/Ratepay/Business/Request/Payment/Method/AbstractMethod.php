@@ -387,28 +387,4 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         return $query->getData();
     }
 
-    /**
-     * @param int $orderId
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
-     */
-    protected function loadOrderPaymentItemByOrderIdAndSku($orderId, $sku)
-    {
-        return $this->queryContainer
-            ->queryPaymentItemByOrderIdAndSku($orderId, $sku)
-            ->findOne();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
-     *
-     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItem
-     */
-    protected function addOrderPaymentItem(ItemTransfer $orderItem)
-    {
-        return $this->queryContainer
-            ->addPaymentItem($orderItem);
-    }
-
 }

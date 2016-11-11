@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
-use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayItemQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -351,12 +350,6 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         $queryPaymentLogMock->method('filterByMessage')->willReturnSelf();
         $queryPaymentLogMock->method('getData')->willReturn([]);
         $queryContainer->method('queryPaymentLog')->willReturn($queryPaymentLogMock);
-
-        $paymentRatepayItemQuery = $this->getMock(SpyPaymentRatepayItemQuery::class, ['findOne']);
-        $paymentRatepayItemQuery->method('findOne')->willReturn(null);
-
-        $queryContainer->method('queryPaymentItemByOrderIdAndSku')->willReturn($paymentRatepayItemQuery);
-        $queryContainer->method('addPaymentItem')->willReturnSelf();
 
         return $queryContainer;
     }
