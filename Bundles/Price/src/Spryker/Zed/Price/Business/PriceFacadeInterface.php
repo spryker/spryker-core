@@ -44,7 +44,7 @@ interface PriceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
-     * @return mixed
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
 

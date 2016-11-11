@@ -74,7 +74,7 @@ class DatabaseCreatorCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getDatabaseCreatorMock()
     {
-        $databaseCreatorMock = $this->getMock(DatabaseCreatorInterface::class, ['getEngine', 'createIfNotExists']);
+        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['getEngine', 'createIfNotExists'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(self::TEST_ENGINE);
 
         return $databaseCreatorMock;

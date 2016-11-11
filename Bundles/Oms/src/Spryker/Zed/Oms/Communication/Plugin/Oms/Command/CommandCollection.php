@@ -45,7 +45,7 @@ class CommandCollection implements CommandCollectionInterface, \ArrayAccess
      *
      * @throws \Spryker\Zed\Oms\Exception\CommandNotFoundException
      *
-     * @return mixed
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
      */
     public function get($name)
     {

@@ -74,7 +74,7 @@ class StepHandlerPluginCollectionTest extends \PHPUnit_Framework_TestCase
      */
     private function getStepHandlerPlugin()
     {
-        return $this->getMock(StepHandlerPluginInterface::class);
+        return $this->getMockBuilder(StepHandlerPluginInterface::class)->getMock();
     }
 
 }

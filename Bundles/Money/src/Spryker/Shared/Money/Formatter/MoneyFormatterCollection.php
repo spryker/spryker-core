@@ -12,6 +12,9 @@ use Spryker\Shared\Money\Exception\FormatterNotFoundException;
 class MoneyFormatterCollection implements MoneyFormatterCollectionInterface
 {
 
+    const FORMATTER_WITH_SYMBOL = 'FORMATTER_WITH_CURRENCY';
+    const FORMATTER_WITHOUT_SYMBOL = 'FORMATTER_WITHOUT_CURRENCY';
+
     /**
      * @var array
      */

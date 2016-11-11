@@ -25,7 +25,7 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,

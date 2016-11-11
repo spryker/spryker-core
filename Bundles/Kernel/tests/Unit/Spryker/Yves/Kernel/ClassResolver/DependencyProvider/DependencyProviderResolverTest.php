@@ -50,7 +50,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
      */
     protected function getResolverMock(array $methods)
     {
-        $resolverMock = $this->getMock(DependencyProviderResolver::class, $methods);
+        $resolverMock = $this->getMockBuilder(DependencyProviderResolver::class)->setMethods($methods)->getMock();
 
         return $resolverMock;
     }

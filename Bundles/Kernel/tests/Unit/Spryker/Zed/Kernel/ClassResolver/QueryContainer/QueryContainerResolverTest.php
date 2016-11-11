@@ -55,7 +55,7 @@ class QueryContainerResolverTest extends AbstractResolverTest
      */
     protected function getResolverMock(array $methods)
     {
-        $resolverMock = $this->getMock(QueryContainerResolver::class, $methods);
+        $resolverMock = $this->getMockBuilder(QueryContainerResolver::class)->setMethods($methods)->getMock();
 
         return $resolverMock;
     }

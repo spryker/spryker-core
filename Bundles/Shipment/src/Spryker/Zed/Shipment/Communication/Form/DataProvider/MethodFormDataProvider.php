@@ -42,8 +42,8 @@ class MethodFormDataProvider
         array $plugins
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
-        $this->plugins = $plugins;
         $this->taxFacade = $taxFacade;
+        $this->plugins = $plugins;
     }
 
     /**

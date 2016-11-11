@@ -41,10 +41,10 @@ class DummyPaymentFacadeTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFactoryMock()
     {
-        $refundMock = $this->getMock(RefundInterface::class);
+        $refundMock = $this->getMockBuilder(RefundInterface::class)->getMock();
         $refundMock->expects($this->once())->method('refund');
 
-        $dummyPaymentFactoryMock = $this->getMock(DummyPaymentBusinessFactory::class);
+        $dummyPaymentFactoryMock = $this->getMockBuilder(DummyPaymentBusinessFactory::class)->getMock();
         $dummyPaymentFactoryMock->method('createRefund')->willReturn($refundMock);
 
         return $dummyPaymentFactoryMock;

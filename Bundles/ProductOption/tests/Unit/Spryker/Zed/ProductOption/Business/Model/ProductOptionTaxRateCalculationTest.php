@@ -69,10 +69,13 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createProductItemTaxRateCalculator()
     {
-        return $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueUsageAndCountryIso2Code'], [
-            $this->createQueryContainerMock(),
-            $this->createProductOptionToTaxBridgeMock()
-        ]);
+        return $this->getMockBuilder(ProductOptionTaxRateCalculator::class)
+            ->setMethods(['findTaxRatesByIdOptionValueUsageAndCountryIso2Code'])
+            ->setConstructorArgs([
+                $this->createQueryContainerMock(),
+                $this->createProductOptionToTaxBridgeMock()
+            ])
+            ->getMock();
     }
 
     /**

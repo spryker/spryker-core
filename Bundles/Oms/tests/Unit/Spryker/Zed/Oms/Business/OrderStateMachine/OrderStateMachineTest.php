@@ -138,7 +138,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryContainerMock()
     {
-        return $this->getMock(OmsQueryContainerInterface::class);
+        return $this->getMockBuilder(OmsQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -146,7 +146,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     private function getBuilderMock()
     {
-        return $this->getMock(BuilderInterface::class);
+        return $this->getMockBuilder(BuilderInterface::class)->getMock();
     }
 
     /**
@@ -154,7 +154,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransitionLogMock()
     {
-        return $this->getMock(TransitionLogInterface::class);
+        return $this->getMockBuilder(TransitionLogInterface::class)->getMock();
     }
 
     /**
@@ -162,7 +162,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     private function getTimeoutMock()
     {
-        return $this->getMock(TimeoutInterface::class);
+        return $this->getMockBuilder(TimeoutInterface::class)->getMock();
     }
 
     /**
@@ -170,7 +170,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     private function getConditionMock()
     {
-        return $this->getMock(ConditionInterface::class);
+        return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
 
     /**
@@ -178,7 +178,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     private function getCommandMock()
     {
-        return $this->getMock(CommandInterface::class);
+        return $this->getMockBuilder(CommandInterface::class)->getMock();
     }
 
 }

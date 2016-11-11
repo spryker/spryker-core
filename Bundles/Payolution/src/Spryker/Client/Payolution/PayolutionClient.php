@@ -77,7 +77,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     /**
      * @api
      *
-     * @return mixed
+     * @return bool
      */
     public function removeInstallmentPaymentsFromSession()
     {

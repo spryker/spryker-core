@@ -26,7 +26,7 @@ class DataDirectory
      *
      * @param string|null $relativePath relative path in data directory
      *
-     * @return mixed
+     * @return string
      */
     public static function getLocalCommonPath($relativePath = null)
     {
@@ -42,7 +42,7 @@ class DataDirectory
      *
      * @param string|null $relativePath relative path in data directory
      *
-     * @return mixed
+     * @return string
      */
     public static function getLocalStoreSpecificPath($relativePath = null)
     {
@@ -57,7 +57,7 @@ class DataDirectory
      *
      * @param string|null $relativePath relative path in data directory
      *
-     * @return mixed
+     * @return string
      */
     public static function getSharedCommonPath($relativePath = null)
     {
@@ -77,7 +77,7 @@ class DataDirectory
      *
      * @param string|null $relativePath relative path in data directory
      *
-     * @return mixed
+     * @return string
      */
     public static function getSharedStoreSpecificPath($relativePath = null)
     {

@@ -7,10 +7,9 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use StdClass;
+use stdClass;
 
 class GatewayController extends AbstractGatewayController
 {
@@ -29,16 +28,6 @@ class GatewayController extends AbstractGatewayController
      * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function goodAction(TransferInterface $foo)
-    {
-        return $foo;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $foo
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function good2Action(QuoteTransfer $foo)
     {
         return $foo;
     }
@@ -73,11 +62,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \StdClass $foo
+     * @param \stdClass $foo
      *
-     * @return \StdClass
+     * @return \stdClass
      */
-    public function notTransferAction(StdClass $foo)
+    public function notTransferAction(stdClass $foo)
     {
         return $foo;
     }

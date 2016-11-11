@@ -112,7 +112,7 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMustThrowExceptionIfCacheEnabledButCacheFileDoesNotExists()
     {
-        $this->setExpectedException(NavigationCacheFileDoesNotExistException::class);
+        $this->expectException(NavigationCacheFileDoesNotExistException::class);
 
         $isEnabled = true;
         $navigationCache = new NavigationCache('', $isEnabled);
@@ -124,7 +124,7 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMustThrowExceptionIfCacheEnabledCacheFileGivenButEmpty()
     {
-        $this->setExpectedException(NavigationCacheEmptyException::class);
+        $this->expectException(NavigationCacheEmptyException::class);
 
         $cacheFile = $this->getCacheFile();
         $isEnabled = true;

@@ -54,7 +54,7 @@ class AbstractSubFormTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function getFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->getMockBuilder(FormInterface::class)->getMock();
     }
 
 }

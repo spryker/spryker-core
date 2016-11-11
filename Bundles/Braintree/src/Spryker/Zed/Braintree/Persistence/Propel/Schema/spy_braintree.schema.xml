@@ -3,8 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     name="zed"
     defaultIdMethod="native"
-    defaultPhpNamingMethod="underscore"
-    xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+    xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
     namespace="Orm\Zed\Braintree\Persistence"
     package="src.Orm.Zed.Braintree.Persistence"
 >

@@ -30,7 +30,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return array
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {

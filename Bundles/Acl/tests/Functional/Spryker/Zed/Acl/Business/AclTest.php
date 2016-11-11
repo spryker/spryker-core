@@ -77,7 +77,7 @@ class AclTest extends Test
      * @param string $type
      * @param int $idRole
      *
-     * @return mixed
+     * @return array
      */
     private function mockRuleData($type, $idRole)
     {

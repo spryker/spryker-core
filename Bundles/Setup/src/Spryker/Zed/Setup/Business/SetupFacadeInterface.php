@@ -18,7 +18,7 @@ interface SetupFacadeInterface
      *
      * @param array $roles
      *
-     * @return mixed
+     * @return string
      */
     public function generateCronjobs(array $roles);
 

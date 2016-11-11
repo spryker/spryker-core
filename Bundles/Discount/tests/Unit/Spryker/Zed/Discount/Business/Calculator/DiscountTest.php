@@ -359,7 +359,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryContainerMock()
     {
-        return $this->getMock(DiscountQueryContainerInterface::class);
+        return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -367,7 +367,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCalculatorMock()
     {
-        return $this->getMock(CalculatorInterface::class);
+        return $this->getMockBuilder(CalculatorInterface::class)->getMock();
     }
 
     /**
@@ -375,7 +375,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSpecificationBuilderMock()
     {
-        return $this->getMock(SpecificationBuilderInterface::class);
+        return $this->getMockBuilder(SpecificationBuilderInterface::class)->getMock();
     }
 
     /**
@@ -383,7 +383,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createVoucherValidatorMock()
     {
-        return $this->getMock(VoucherValidatorInterface::class);
+        return $this->getMockBuilder(VoucherValidatorInterface::class)->getMock();
     }
 
     /**
@@ -391,7 +391,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountQueryMock()
     {
-        return $this->getMock(SpyDiscountQuery::class);
+        return $this->getMockBuilder(SpyDiscountQuery::class)->getMock();
     }
 
     /**
@@ -399,7 +399,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDecisionRuleSpecificationMock()
     {
-        return $this->getMock(DecisionRuleSpecificationInterface::class);
+        return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
 
     /**

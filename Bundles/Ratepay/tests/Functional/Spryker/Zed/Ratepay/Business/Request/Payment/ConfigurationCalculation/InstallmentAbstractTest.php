@@ -52,7 +52,7 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
     }
 
     /**
-     * @return mixed
+     * @return \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
      */
     protected function getPaymentTransferFromQuote()
     {

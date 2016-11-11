@@ -30,7 +30,7 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\PaginationSearchResultTransfer
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
