@@ -7,16 +7,14 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
-use Exception;
-
 interface ErrorLoggerInterface
 {
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      *
      * @return void
      */
-    public function log(Exception $exception);
+    public function log($exception);
 
 }

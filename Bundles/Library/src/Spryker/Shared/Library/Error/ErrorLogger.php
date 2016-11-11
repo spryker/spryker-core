@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Library\Error;
 
-use Exception;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Shared\EventJournal\Model\EventJournalInterface;
@@ -24,11 +23,11 @@ class ErrorLogger
 {
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      *
      * @return void
      */
-    public static function log(Exception $exception)
+    public static function log($exception)
     {
         $newRelicApi = new Api();
 
@@ -38,7 +37,7 @@ class ErrorLogger
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param bool $ignoreInternalExceptions
@@ -46,7 +45,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToEventJournal(
-        Exception $exception,
+        $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
         $ignoreInternalExceptions = false
@@ -69,7 +68,7 @@ class ErrorLogger
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param bool $ignoreInternalExceptions
@@ -77,7 +76,7 @@ class ErrorLogger
      * @return void
      */
     protected static function sendExceptionToNewRelic(
-        Exception $exception,
+        $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
         $ignoreInternalExceptions = false
@@ -93,14 +92,14 @@ class ErrorLogger
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
      * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      *
      * @return void
      */
     protected static function sendExceptionToFile(
-        Exception $exception,
+        $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi
     ) {

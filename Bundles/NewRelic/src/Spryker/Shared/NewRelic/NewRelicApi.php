@@ -41,14 +41,14 @@ class NewRelicApi implements NewRelicApiInterface
      * Report an error at this line of code, with a complete stack trace.
      *
      * @param string $message
-     * @param \Exception $e
+     * @param \Exception|\Throwable $exception
      *
      * @return $this
      */
-    public function noticeError($message, \Exception $e)
+    public function noticeError($message, $exception)
     {
         if ($this->active) {
-            newrelic_notice_error($message, $e);
+            newrelic_notice_error($message, $exception);
         }
 
         return $this;
