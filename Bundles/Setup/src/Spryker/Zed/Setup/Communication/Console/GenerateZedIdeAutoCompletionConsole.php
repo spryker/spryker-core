@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\FacadeMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\QueryContainerMethodTagBuilder;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ServiceMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,7 +33,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('This Command will generate the bundle ide auto completion interface for Yves.');
         $this->setDescription('Generate zed ide auto completion files');
     }
 
@@ -95,7 +95,8 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new FacadeMethodTagBuilder())
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
-            ->addMethodTagBuilder(new ClientMethodTagBuilder());
+            ->addMethodTagBuilder(new ClientMethodTagBuilder())
+            ->addMethodTagBuilder(new ServiceMethodTagBuilder());
 
         $generator->create();
 

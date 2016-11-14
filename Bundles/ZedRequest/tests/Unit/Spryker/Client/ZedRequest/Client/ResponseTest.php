@@ -10,6 +10,7 @@ namespace Unit\Spryker\Client\ZedRequest\Client;
 use Spryker\Client\ZedRequest\Client\Response;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Message;
+use Spryker\Zed\Acl\Business\Exception\TransferNotFoundException;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
@@ -53,10 +54,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testDefaultTransferIsNull()
+    public function testDefaultTransferThrowsException()
     {
         $response = new Response();
-        $this->assertEquals(null, $response->getTransfer());
+
+        $this->expectException(TransferNotFoundException::class);
+
+        $response->getTransfer();
     }
 
     /**

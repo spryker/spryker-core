@@ -19,11 +19,11 @@ interface NewRelicApiInterface extends ApiInterface
      * Report an error at this line of code, with a complete stack trace.
      *
      * @param string $message
-     * @param \Exception $e
+     * @param \Exception|\Throwable $exception
      *
      * @return $this
      */
-    public function noticeError($message, \Exception $e);
+    public function noticeError($message, $exception);
 
     /**
      * Sets the name of the application to string. The string uses the same format as newrelic.appname and can set

@@ -206,6 +206,10 @@
       "Spryker\\Shared\\Invoice\\": "Bundles/Invoice/src",
       "Unit\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
       "Functional\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
+
+      "Spryker\\Service\\Kernel\\": "Bundles/Kernel/src",
+      "Unit\\Spryker\\Service\\Kernel\\": "Bundles/Kernel/tests",
+      "Functional\\Spryker\\Service\\Kernel\\": "Bundles/Kernel/tests",
       "Spryker\\Client\\Kernel\\": "Bundles/Kernel/src",
       "Unit\\Spryker\\Client\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Client\\Kernel\\": "Bundles/Kernel/tests",
@@ -218,6 +222,7 @@
       "Spryker\\Zed\\Kernel\\": "Bundles/Kernel/src",
       "Unit\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
+
       "Spryker\\Shared\\Library\\": "Bundles/Library/src",
       "Unit\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
       "Functional\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",

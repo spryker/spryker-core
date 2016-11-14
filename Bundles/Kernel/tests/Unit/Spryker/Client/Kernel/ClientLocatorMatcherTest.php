@@ -43,12 +43,4 @@ class ClientLocatorMatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorClient'));
     }
 
-    /**
-     * @return void
-     */
-    public function testFilterShouldReturnClassName()
-    {
-        $this->assertSame('Foo', (new ClientLocatorMatcher())->filter('clientFoo'));
-    }
-
 }

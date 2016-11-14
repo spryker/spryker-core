@@ -8,6 +8,7 @@
 namespace Spryker\Shared\ZedRequest\Client;
 
 use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Acl\Business\Exception\TransferNotFoundException;
 
 abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
 {
@@ -228,12 +229,13 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return \Spryker\Shared\Transfer\TransferInterface|null
+     * @throws \Spryker\Zed\Acl\Business\Exception\TransferNotFoundException
+     *
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer()
     {
-        if (!empty($this->values[ResponseInterface::TRANSFER_CLASSNAME]) &&
-            !empty($this->values[ResponseInterface::TRANSFER])) {
+        if (!empty($this->values[ResponseInterface::TRANSFER_CLASSNAME])) {
             $transfer = $this->createTransferObject(
                 $this->values[ResponseInterface::TRANSFER_CLASSNAME]
             );
@@ -242,7 +244,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
             return $transfer;
         }
 
-        return null;
+        throw new TransferNotFoundException('No class name given for Transfer generation.');
     }
 
     /**

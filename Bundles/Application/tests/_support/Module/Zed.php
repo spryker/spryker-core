@@ -9,6 +9,8 @@ namespace Application\Module;
 
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
 use Codeception\Module;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config\Config;
 
 class Zed extends Module
 {
@@ -20,7 +22,9 @@ class Zed extends Module
      */
     public function amZed()
     {
-        $this->getWebDriver()->_reconfigure(['url' => 'http://zed.de.spryker.dev']);
+        $url = 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI);
+
+        $this->getWebDriver()->_reconfigure(['url' => $url]);
 
         return $this;
     }

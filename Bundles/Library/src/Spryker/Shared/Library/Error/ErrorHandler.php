@@ -12,6 +12,7 @@ use Exception;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\LibraryConstants;
+use Throwable;
 
 /**
  * @deprecated Use ErrorHandler bundle instead.
@@ -54,13 +55,13 @@ class ErrorHandler
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param bool $output
      * @param bool $exit
      *
      * @return void
      */
-    public function handleException(Exception $exception, $output = true, $exit = true)
+    public function handleException($exception, $output = true, $exit = true)
     {
         ErrorLogger::log($exception);
 
@@ -78,7 +79,9 @@ class ErrorHandler
                     $this->showErrorPage();
                 }
             }
-        } catch (\Exception $internalException) {
+        } catch (Throwable $internalException) {
+            ErrorLogger::log($internalException);
+        } catch (Exception $internalException) {
             ErrorLogger::log($internalException);
         }
 
@@ -123,12 +126,12 @@ class ErrorHandler
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param bool $output
      *
      * @return void
      */
-    protected function echoOutput(Exception $exception, $output)
+    protected function echoOutput($exception, $output)
     {
         if ($output) {
             $message = ErrorRenderer::renderException($exception);

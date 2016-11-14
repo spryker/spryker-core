@@ -27,8 +27,7 @@ class SalesListCest
      */
     public function testOrderListShouldContainOrders(SalesListTester $i)
     {
-        $idSalesOrder = $i->createOrder();
-        $i->createSalesOrderItemForOrder($idSalesOrder);
+        $i->createOrderWithOneItem();
         $i->seeListOfOrders();
     }
 
@@ -39,6 +38,8 @@ class SalesListCest
      */
     public function testICanGoToLatestOrderDetailsPage(SalesListTester $i)
     {
+        $i->createOrderWithOneItem();
+
         $latestOrderId = $i->grabLatestOrderId();
         $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
 

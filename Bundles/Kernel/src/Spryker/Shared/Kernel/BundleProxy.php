@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel;
 
 use LogicException;
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
+use Spryker\Shared\Kernel\Locator\LocatorMatcherFilterInterface;
 
 class BundleProxy
 {
@@ -93,7 +94,7 @@ class BundleProxy
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
             if ($matcher->match($method)) {
-                return $locator->locate($this->bundle, $matcher->filter($method));
+                return $locator->locate($this->bundle);
             }
         }
 
