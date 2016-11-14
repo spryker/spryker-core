@@ -8,8 +8,9 @@
 namespace Spryker\Service\UtilSanitize;
 
 use Spryker\Service\UtilSanitize\Model\Html;
+use Spryker\Service\Kernel\AbstractServiceFactory;
 
-class UtilSanitizeServiceFactory
+class UtilSanitizeServiceFactory extends AbstractServiceFactory
 {
 
     /**

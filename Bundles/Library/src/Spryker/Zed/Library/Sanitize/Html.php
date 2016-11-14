@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Library\Sanitize;
 
-use Spryker\Shared\UtilSanitize\Html AS UtilSanitizeHtml;
+use Spryker\Service\UtilSanitize\Model\Html AS UtilSanitizeHtml;
 
 /**
- * @deprecated use \Spryker\Zed\UtilSanitize\Business\UtilSanitizeFacade instead
+ * @deprecated use \Spryker\Service\UtilSanitize\UtilSanitizeService instead
  */
 class Html
 {
 
     /**
-     * @var \Spryker\Shared\UtilSanitize\Html
+     * @var \Spryker\Service\UtilSanitize\Model\Html
      */
     protected static $utilSanitizeHtml;
 
@@ -38,7 +38,7 @@ class Html
     }
 
     /**
-     * @return \Spryker\Shared\UtilSanitize\Html
+     * @return \Spryker\Service\UtilSanitize\Model\Html
      */
     protected static function createUtilSanitizeHtml()
     {

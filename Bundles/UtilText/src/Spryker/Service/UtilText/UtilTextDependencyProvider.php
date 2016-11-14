@@ -4,11 +4,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilSanitize;
+namespace Spryker\Service\UtilText;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
-class UtilSanitizeDependencyProvider extends AbstractBundleDependencyProvider
+class UtilTextDependencyProvider extends AbstractBundleDependencyProvider
 {
 
 }

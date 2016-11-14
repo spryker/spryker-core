@@ -3,12 +3,14 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+namespace Spryker\Zed\Oms\Dependency\Service;
 
-namespace Spryker\Service\UtilSanitize;
-
-use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
-
-class UtilSanitizeDependencyProvider extends AbstractBundleDependencyProvider
+interface OmsToUtilNetworkInterface
 {
+
+    /**
+     * @return string
+     */
+    public function getHostName();
 
 }

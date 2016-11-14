@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Library\Generator;
 
-use Spryker\Shared\UtilText\StringGenerator AS UtilStringGenerator;
+use Spryker\Service\UtilText\Model\StringGenerator AS UtilStringGenerator;
 
 /**
- * @deprecated use \Spryker\Zed\UtilText\Business\UtilTextFacade instead
+ * @deprecated use \Spryker\Service\UtilText\UtilTextService instead
  */
 class StringGenerator
 {
 
     /**
-     * @var \Spryker\Shared\UtilText\StringGenerator
+     * @var \Spryker\Service\UtilText\Model\StringGenerator
      */
     protected static $utilStringGenerator = null;
 
@@ -46,9 +46,9 @@ class StringGenerator
     }
 
     /**
-     * @var \Spryker\Shared\UtilText\StringGenerator
+     * @var \Spryker\Service\UtilText\Model\StringGenerator
      *
-     * @return \Spryker\Shared\UtilText\StringGenerator
+     * @return \Spryker\Service\UtilText\Model\StringGenerator
      */
     protected static function createUtilStringGenerator()
     {

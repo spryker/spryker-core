@@ -7,16 +7,16 @@
 
 namespace Spryker\Shared\Library;
 
-use Spryker\Shared\UtilNetwork\Host AS UtilNetworkHost;
+use Spryker\Service\UtilNetwork\Model\Host AS UtilNetworkHost;
 
 /**
- * @deprecated use \Spryker\Zed\UtilNetwork\Business\UtilNetworkFacade instead
+ * @deprecated use \Spryker\Service\UtilNetwork\UtilNetworkService instead
  */
 class System
 {
 
     /**
-     * @var \Spryker\Shared\UtilNetwork\Host
+     * @var \Spryker\Service\UtilNetwork\Model\Host
      */
     protected static $utilNetworkHost;
 
@@ -29,7 +29,7 @@ class System
     }
 
     /**
-     * @return \Spryker\Shared\UtilNetwork\Host
+     * @return \Spryker\Service\UtilNetwork\Model\Host
      */
     protected static function createUtilNetworkHost()
     {

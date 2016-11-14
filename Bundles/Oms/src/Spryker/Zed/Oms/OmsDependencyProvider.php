@@ -13,10 +13,10 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkBridge;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilSanitizeBridge;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge AS PersistenceOmsToSalesBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -31,8 +31,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_SALES = 'FACADE_SALES';
     const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
-    const FACADE_UTIL_SANITIZE = 'FACADE_UTIL_SANITIZE';
-    const FACADE_UTIL_NETWORK = 'FACADE_UTIL_NETWORK';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,15 +54,15 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_UTIL_TEXT] = function (Container $container) {
-            return new OmsToUtilTextBridge($container->getLocator()->utilText()->facade());
+            return new OmsToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
-        $container[self::FACADE_UTIL_SANITIZE] = function (Container $container) {
-            return new OmsToUtilSanitizeBridge($container->getLocator()->utilSanitize()->facade());
+        $container[self::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new OmsToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
         };
 
-        $container[self::FACADE_UTIL_NETWORK] = function (Container $container) {
-            return new OmsToUtilNetworkBridge($container->getLocator()->utilNetwork()->facade());
+        $container[self::SERVICE_UTIL_NETWORK] = function (Container $container) {
+            return new OmsToUtilNetworkBridge($container->getLocator()->utilNetwork()->service());
         };
 
         $container[self::PLUGIN_GRAPH] = function (Container $container) {

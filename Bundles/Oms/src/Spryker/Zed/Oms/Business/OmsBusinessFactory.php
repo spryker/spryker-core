@@ -281,7 +281,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getUtilNetworkFacade()
     {
-        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_NETWORK);
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_NETWORK);
     }
 
     /**
@@ -289,7 +289,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getUtilSanitizeFacade()
     {
-        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_SANITIZE);
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
 }

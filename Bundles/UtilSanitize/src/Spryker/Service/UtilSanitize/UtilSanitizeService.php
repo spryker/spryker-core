@@ -7,10 +7,12 @@
 
 namespace Spryker\Service\UtilSanitize;
 
+use Spryker\Service\Kernel\AbstractService;
+
 /**
  * @method \Spryker\Service\UtilSanitize\UtilSanitizeServiceFactory getFactory()
  */
-class UtilSanitizeService implements UtilSanitizeServiceInterface
+class UtilSanitizeService extends AbstractService implements UtilSanitizeServiceInterface
 {
 
     /**
