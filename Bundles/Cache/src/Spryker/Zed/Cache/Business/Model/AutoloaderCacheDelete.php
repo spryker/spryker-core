@@ -37,7 +37,10 @@ class AutoloaderCacheDelete
         $stores = $this->config->getAllowedStores();
         $dirs = [];
         foreach ($stores as $store) {
-            $dirs[] = str_replace('{STORE}', $store, $rootDirectory);
+            $directory = str_replace('{STORE}', $store, $rootDirectory);
+            if (is_dir($directory)) {
+                $dirs[] = $directory;
+            }
         }
         $filesystem = new Filesystem();
         $filesystem->remove($dirs);
