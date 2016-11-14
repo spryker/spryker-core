@@ -25,7 +25,7 @@ class TaxSetForm extends AbstractType
     protected $taxSetFormDataProvider;
 
     /**
-     * TaxSetForm constructor.
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider $taxSetFormDataProvider
      */
     public function __construct(TaxSetFormDataProvider $taxSetFormDataProvider)
     {

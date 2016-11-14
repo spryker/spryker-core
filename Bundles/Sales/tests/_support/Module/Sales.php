@@ -44,6 +44,16 @@ class Sales extends Module
     }
 
     /**
+     * @return void
+     */
+    public function createOrderWithOneItem()
+    {
+        $i = $this;
+        $idSalesOrder = $i->createOrder();
+        $i->createSalesOrderItemForOrder($idSalesOrder);
+    }
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return void

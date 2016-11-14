@@ -54,8 +54,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             'cookie_httponly' => true,
             'use_only_cookies' => true,
         ];
-
-        $this->client->setContainer($app['session']);
     }
 
     /**
@@ -68,6 +66,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         if (PHP_SAPI === 'cli') {
             return;
         }
+
+        $this->client->setContainer($app['session']);
 
         $saveHandler = Config::get(SessionConstants::ZED_SESSION_SAVE_HANDLER);
         $savePath = $this->getSavePath($saveHandler);

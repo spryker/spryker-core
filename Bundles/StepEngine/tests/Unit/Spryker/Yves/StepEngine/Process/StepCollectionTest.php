@@ -147,7 +147,7 @@ class StepCollectionTest extends AbstractStepEngineTest
         }
 
         $nextStep = $stepCollection->getNextStep($currentStep);
-        $this->assertSame($expectedStep, $nextStep);
+        $this->assertSame(get_class($expectedStep), get_class($nextStep));
     }
 
     /**
