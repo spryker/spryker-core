@@ -43,4 +43,10 @@ class Constants
         self::REQUEST_MODEL_PAYMENT_CANCEL => 403,
     ];
 
+    /**
+     * User Agent of Spryker client.
+     */
+    const CLIENT_VERSION = '1.0';
+    const CLIENT_NAME = 'Spryker_RP_DE';
+
 }

@@ -103,7 +103,7 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
             ->filterByEmail('john@doe.com')
             ->filterByDateOfBirth('1970-01-01')
             ->filterByGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->filterByCustomerReference('payolution-pre-authorization-test')
+            ->filterByCustomerReference('ratepay-pre-authorization-test')
             ->findOneOrCreate();
         $customer->save();
 

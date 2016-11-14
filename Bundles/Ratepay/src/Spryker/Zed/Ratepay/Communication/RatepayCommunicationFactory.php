@@ -54,17 +54,11 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Ratepay\Business\Service\PaymentMethodExtractor
+     * @return \Spryker\Zed\Ratepay\Business\Service\PaymentMethodExtractorInterface
      */
     protected function createPaymentMethodExtractor()
     {
-        $paymentMethodsMap = [
-            RatepayConstants::METHOD_INVOICE => 'ratepayInvoice',
-            RatepayConstants::METHOD_ELV => 'ratepayElv',
-            RatepayConstants::METHOD_INSTALLMENT => 'ratepayInstallment',
-            RatepayConstants::METHOD_PREPAYMENT => 'ratepayPrepayment',
-        ];
-        return new PaymentMethodExtractor($paymentMethodsMap);
+        return new PaymentMethodExtractor(RatepayConstants::PAYMENT_METHODS_MAP);
     }
 
     /**
@@ -77,12 +71,19 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
         RatepayPaymentInitTransfer $ratepayPaymentInitTransfer,
         QuoteTransfer $quoteTransfer
     ) {
-
         return new QuotePaymentInitMapper(
             $ratepayPaymentInitTransfer,
             $quoteTransfer,
             $this->getPaymentMethodExtractor()
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RatepayPaymentInitTransfer
+     */
+    public function createPaymentInitTransfer()
+    {
+        return new RatepayPaymentInitTransfer();
     }
 
     /**

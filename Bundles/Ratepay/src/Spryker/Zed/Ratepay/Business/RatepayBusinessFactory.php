@@ -21,6 +21,7 @@ use Spryker\Zed\Ratepay\Business\Expander\ProductExpander;
 use Spryker\Zed\Ratepay\Business\Internal\Install;
 use Spryker\Zed\Ratepay\Business\Order\MethodMapperFactory;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
+use Spryker\Zed\Ratepay\Business\Payment\PaymentSaver;
 use Spryker\Zed\Ratepay\Business\Payment\PostSaveHook;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\CancelPaymentTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\ConfirmDeliveryTransaction;
@@ -102,6 +103,18 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         $this->registerAllMethodMappers($transactionHandler);
 
         return $transactionHandler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Payment\PaymentSaverInterface
+     */
+    public function createPaymentMethodSaver()
+    {
+        $paymentSaver = new PaymentSaver(
+            $this->getQueryContainer()
+        );
+
+        return $paymentSaver;
     }
 
     /**

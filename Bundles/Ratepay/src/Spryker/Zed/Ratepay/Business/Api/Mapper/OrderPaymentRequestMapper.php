@@ -69,74 +69,17 @@ class OrderPaymentRequestMapper extends BaseMapper
      */
     public function map()
     {
-        $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
-        $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
-        $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
-        $expenses = $this->orderTransfer->getExpenses();
-
-        if ($this->orderEntity->getSpyPaymentRatepays() &&
-            count($this->orderEntity->getSpyPaymentRatepays()->getData())
-        ) {
-            /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $paymentRatepayEntity */
-            $paymentRatepayEntity = $this->orderEntity->getSpyPaymentRatepays()->getData()[0];
-            $this->ratepayPaymentRequestTransfer
-                ->setPaymentType($paymentRatepayEntity->getPaymentType())
-                ->setCurrencyIso3($paymentRatepayEntity->getCurrencyIso3())
-                ->setCustomerPhone($paymentRatepayEntity->getPhone())
-                ->setGender($paymentRatepayEntity->getGender())
-                ->setDateOfBirth($paymentRatepayEntity->getDateOfBirth("Y-m-d"))
-                ->setIpAddress($paymentRatepayEntity->getIpAddress())
-                ->setCustomerAllowCreditInquiry($paymentRatepayEntity->getCustomerAllowCreditInquiry())
-
-                ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName())
-                ->setBankAccountBic($paymentRatepayEntity->getBankAccountBic())
-                ->setBankAccountIban($paymentRatepayEntity->getBankAccountIban())
-
-                ->setDebitPayType($paymentRatepayEntity->getDebitPayType())
-                ->setInstallmentGrandTotalAmount($paymentRatepayEntity->getInstallmentTotalAmount())
-                ->setInstallmentNumberRates($paymentRatepayEntity->getInstallmentNumberRates())
-                ->setInstallmentRate($paymentRatepayEntity->getInstallmentRate())
-                ->setInstallmentLastRate($paymentRatepayEntity->getInstallmentLastRate())
-                ->setInstallmentInterestRate($paymentRatepayEntity->getInstallmentInterestRate())
-                ->setInstallmentPaymentFirstDay($paymentRatepayEntity->getInstallmentPaymentFirstDay());
-        }
+        $this->mapPaymentRatepayEntity();
+        $this->mapAddresses();
 
         $this->ratepayPaymentRequestTransfer
             ->setOrderId($this->orderEntity->getIdSalesOrder())
             ->setRatepayPaymentInit($this->ratepayPaymentInitTransfer)
-            ->setGrandTotal($totalsTransfer->requireGrandTotal()->getGrandTotal())
-            ->setExpenseTotal($totalsTransfer->requireExpenseTotal()->getExpenseTotal())
+            ->setCustomerEmail($this->orderTransfer->getEmail());
 
-            ->setCustomerEmail($this->orderTransfer->getEmail())
-
-            ->setBillingAddress($billingAddress)
-            ->setShippingAddress($shippingAddress);
-        if (count($expenses)) {
-            $this->ratepayPaymentRequestTransfer
-                ->setShippingTaxRate($expenses[0]->getTaxRate());
-        }
-        $basketItems = $this->orderTransfer->requireItems()->getItems();
-        $grouppedItems = [];
-        $discountTotal = 0;
-        $discountTaxRate = 0;
-        foreach ($basketItems as $basketItem) {
-            if (isset($grouppedItems[$basketItem->getGroupKey()])) {
-                $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
-            } else {
-                $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
-            }
-            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
-            if ($discountTaxRate < $basketItem->getTaxRate()) { // take max taxRate
-                $discountTaxRate = $basketItem->getTaxRate();
-            }
-        }
-        $this->ratepayPaymentRequestTransfer
-            ->setDiscountTotal($discountTotal)
-            ->setDiscountTaxRate($discountTaxRate);
-
-        foreach ($grouppedItems as $basketItem) {
-            $this->ratepayPaymentRequestTransfer->addItem($basketItem);
-        }
+        $this->mapTotals();
+        $this->mapExpenses();
+        $this->mapBasketItems();
     }
 
     /**
@@ -163,6 +106,90 @@ class OrderPaymentRequestMapper extends BaseMapper
             ->setEmail($addressEntity->getEmail());
 
         return $addressTransfer;
+    }
+
+    protected function mapAddresses()
+    {
+        $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
+        $shippingAddress = $this->getAddressTransfer($this->orderEntity->getShippingAddress());
+
+        $this->ratepayPaymentRequestTransfer
+            ->setBillingAddress($billingAddress)
+            ->setShippingAddress($shippingAddress)
+            ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName());
+    }
+
+    protected function mapPaymentRatepayEntity()
+    {
+        if ($this->orderEntity->getSpyPaymentRatepays() &&
+            count($this->orderEntity->getSpyPaymentRatepays()->getData())
+        ) {
+            /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $paymentRatepayEntity */
+            $paymentRatepayEntity = $this->orderEntity->getSpyPaymentRatepays()->getData()[0];
+            $this->ratepayPaymentRequestTransfer
+                ->setPaymentType($paymentRatepayEntity->getPaymentType())
+                ->setCurrencyIso3($paymentRatepayEntity->getCurrencyIso3())
+                ->setCustomerPhone($paymentRatepayEntity->getPhone())
+                ->setGender($paymentRatepayEntity->getGender())
+                ->setDateOfBirth($paymentRatepayEntity->getDateOfBirth("Y-m-d"))
+                ->setIpAddress($paymentRatepayEntity->getIpAddress())
+                ->setCustomerAllowCreditInquiry($paymentRatepayEntity->getCustomerAllowCreditInquiry())
+
+                ->setBankAccountBic($paymentRatepayEntity->getBankAccountBic())
+                ->setBankAccountIban($paymentRatepayEntity->getBankAccountIban())
+
+                ->setDebitPayType($paymentRatepayEntity->getDebitPayType())
+                ->setInstallmentGrandTotalAmount($paymentRatepayEntity->getInstallmentTotalAmount())
+                ->setInstallmentNumberRates($paymentRatepayEntity->getInstallmentNumberRates())
+                ->setInstallmentRate($paymentRatepayEntity->getInstallmentRate())
+                ->setInstallmentLastRate($paymentRatepayEntity->getInstallmentLastRate())
+                ->setInstallmentInterestRate($paymentRatepayEntity->getInstallmentInterestRate())
+                ->setInstallmentPaymentFirstDay($paymentRatepayEntity->getInstallmentPaymentFirstDay());
+        }
+    }
+
+    protected function mapExpenses()
+    {
+        $expenses = $this->orderTransfer->getExpenses();
+        if (count($expenses)) {
+            $this->ratepayPaymentRequestTransfer
+                ->setShippingTaxRate($expenses[0]->getTaxRate());
+        }
+    }
+
+    protected function mapTotals()
+    {
+        $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
+
+        $this->ratepayPaymentRequestTransfer
+            ->setGrandTotal($totalsTransfer->requireGrandTotal()->getGrandTotal())
+            ->setExpenseTotal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
+    }
+
+    protected function mapBasketItems()
+    {
+        $basketItems = $this->orderTransfer->requireItems()->getItems();
+        $grouppedItems = [];
+        $discountTotal = 0;
+        $discountTaxRate = 0;
+        foreach ($basketItems as $basketItem) {
+            if (isset($grouppedItems[$basketItem->getGroupKey()])) {
+                $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
+            } else {
+                $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
+            }
+            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
+            if ($discountTaxRate < $basketItem->getTaxRate()) { // take max taxRate
+                $discountTaxRate = $basketItem->getTaxRate();
+            }
+        }
+        $this->ratepayPaymentRequestTransfer
+            ->setDiscountTotal($discountTotal)
+            ->setDiscountTaxRate($discountTaxRate);
+
+        foreach ($grouppedItems as $basketItem) {
+            $this->ratepayPaymentRequestTransfer->addItem($basketItem);
+        }
     }
 
 }

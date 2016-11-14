@@ -339,7 +339,7 @@ abstract class AbstractBusinessTest extends Test
             ->setEmail('john@doe.com')
             ->setDateOfBirth('1970-01-01')
             ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setCustomerReference('payolution-pre-authorization-test');
+            ->setCustomerReference('ratepay-pre-authorization-test');
         $customer->save();
 
         $orderEntity = (new SpySalesOrder())

@@ -8,6 +8,7 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestBankAccountTransfer;
+use Generated\Shared\Transfer\RatepayRequestTransfer;
 
 class BankAccountMapper extends BaseMapper
 {
@@ -28,7 +29,7 @@ class BankAccountMapper extends BaseMapper
      */
     public function __construct(
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
-        $requestTransfer
+        RatepayRequestTransfer $requestTransfer
     ) {
 
         $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;

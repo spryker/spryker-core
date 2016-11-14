@@ -10,7 +10,7 @@ namespace Spryker\Zed\Ratepay\Business\Service;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Ratepay\Business\Exception\NoPaymentMethodException;
 
-class PaymentMethodExtractor
+class PaymentMethodExtractor implements PaymentMethodExtractorInterface
 {
 
     /**
@@ -21,7 +21,7 @@ class PaymentMethodExtractor
     /**
      * @param array $paymentMethodsMap
      */
-    public function __construct($paymentMethodsMap)
+    public function __construct(array $paymentMethodsMap)
     {
         $this->paymentMethodsMap = $paymentMethodsMap;
     }

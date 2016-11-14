@@ -57,10 +57,20 @@ interface RatepayQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idSalesOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery
      */
-    public function queryPaymentLogQueryBySalesOrderId($idSalesOrder);
+    public function queryPaymentLogQueryBySalesOrderId($idOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idOrder
+     * @param string $message
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog
+     */
+    public function getLastLogRecordBySalesOrderIdAndMessage($idOrder, $message);
 
 }

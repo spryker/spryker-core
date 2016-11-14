@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
@@ -56,6 +57,19 @@ interface RatepayFacadeInterface
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
     public function requestPayment(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer);
+
+    /**
+     * Specification:
+     * - Updates paymentMethod in dataBase according response from paymentRequest
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RatepayResponseTransfer $ratepayPaymentResponseTransfer
+     * @param int $orderId
+     *
+     * @return void
+     */
+    public function updatePaymentMethodByPaymentResponse(RatepayResponseTransfer $ratepayPaymentResponseTransfer, $orderId);
 
     /**
      * Specification:

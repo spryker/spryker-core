@@ -49,22 +49,13 @@ class TransactionStatus implements TransactionStatusInterface
      */
     public function isPaymentRequestSuccess(OrderTransfer $orderTransfer)
     {
-        /** @var \Orm\Zed\Ratepay\Persistence\Base\SpyPaymentRatepayLog $paymentLog */
         $paymentLog = $this->queryContainer
-            ->queryPaymentLogQueryBySalesOrderId($orderTransfer->requireIdSalesOrder()->getIdSalesOrder())
-            ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST)
-            ->find()
-            ->getLast();
+            ->getLastLogRecordBySalesOrderIdAndMessage($orderTransfer->requireIdSalesOrder()->getIdSalesOrder(), ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST);
         if (!$paymentLog) {
             return false;
         }
 
-        return in_array(
-            $paymentLog->getResponseResultCode(),
-            [
-                ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST],
-            ]
-        );
+        return ($paymentLog->getResponseResultCode() == ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST]);
     }
 
     /**

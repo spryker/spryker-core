@@ -10,7 +10,6 @@ namespace Spryker\Zed\Ratepay\Communication\Plugin\Checkout;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -44,7 +43,7 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $ratepayPaymentInitTransfer = new RatepayPaymentInitTransfer();
+        $ratepayPaymentInitTransfer = $this->getFactory()->createPaymentInitTransfer();
         $quotePaymentInitMapper = $this->getFactory()->createPaymentInitMapperByQuote(
             $ratepayPaymentInitTransfer,
             $quoteTransfer
@@ -71,6 +70,7 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
         $quotePaymentInitMapper->map();
 
         $ratepayResponseTransfer = $this->getFacade()->requestPayment($ratepayPaymentRequestTransfer);
+        $this->getFacade()->updatePaymentMethodByPaymentResponse($ratepayResponseTransfer, $ratepayPaymentRequestTransfer->getOrderId());
         $this->checkForErrors($ratepayResponseTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;

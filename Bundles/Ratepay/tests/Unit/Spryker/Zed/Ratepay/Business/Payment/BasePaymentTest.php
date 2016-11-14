@@ -332,7 +332,7 @@ class BasePaymentTest extends Test
     /**
      * @param string $payment
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment
      */
     protected function mockMethodInstallment($payment)
     {

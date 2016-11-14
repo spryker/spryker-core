@@ -39,23 +39,23 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     protected $mapperFactory;
 
     /**
-     * @var \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $ratepayQueryContainer
      */
-    protected $queryContainer;
+    protected $ratepayQueryContainer;
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\RequestModelFactoryInterface $modelFactory
      * @param \Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory $mapperFactory
-     * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $ratepayQueryContainer
      */
     public function __construct(
         RequestModelFactoryInterface $modelFactory,
         MapperFactory $mapperFactory,
-        RatepayQueryContainerInterface $queryContainer
+        RatepayQueryContainerInterface $ratepayQueryContainer
     ) {
         $this->modelFactory = $modelFactory;
         $this->mapperFactory = $mapperFactory;
-        $this->queryContainer = $queryContainer;
+        $this->ratepayQueryContainer = $ratepayQueryContainer;
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_REFUND);
         $paymentData = $this->getTransferObjectFromPayment($payment);
         $refundedItemsCount = count($orderItems);
-        /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
+
         foreach ($paymentLogs as $paymentLog) {
             if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_REFUND] == $paymentLog->getResponseResultCode()) {
                 $refundedItemsCount += $paymentLog->getItemsNumber();
@@ -197,10 +197,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         }
         $needToSendShipping = (count($allOrderItems) == $refundedItemsCount);
 
-        /**
-         * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
-         */
-        $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REFUND);
+        $request = $this->buildRequest();
 
         $this->mapOrderHeadData($orderTransfer, $payment);
         $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
@@ -368,7 +365,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      */
     protected function loadOrderPayment(OrderTransfer $orderTransfer)
     {
-        return $this->queryContainer
+        return $this->ratepayQueryContainer
             ->queryPayments()
             ->findByFkSalesOrder(
                 $orderTransfer->requireIdSalesOrder()->getIdSalesOrder()
@@ -379,20 +376,28 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string|null $type
      *
-     * @return array \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog[]
      */
     protected function loadOrderPaymentLogs(OrderTransfer $orderTransfer, $type = null)
     {
-        $query = $this->queryContainer
+        $query = $this->ratepayQueryContainer
             ->queryPaymentLog();
         if ($type !== null) {
             $query = $query->filterByMessage($type);
         }
-        $query = $query->findByFkSalesOrder(
+        $paymentLogCollection = $query->findByFkSalesOrder(
             $orderTransfer->requireIdSalesOrder()->getIdSalesOrder()
         );
 
-        return $query->getData();
+        return $paymentLogCollection;
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
+     */
+    protected function buildRequest()
+    {
+        return $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REFUND);
     }
 
 }

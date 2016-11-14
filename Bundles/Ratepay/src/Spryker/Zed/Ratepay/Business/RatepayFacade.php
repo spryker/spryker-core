@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -88,6 +89,25 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
             ->getFactory()
             ->createRequestPaymentTransactionHandler()
             ->request($ratepayPaymentRequestTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Updates paymentMethod in dataBase according response from paymentRequest
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RatepayResponseTransfer $ratepayPaymentResponseTransfer
+     * @param int $orderId
+     *
+     * @return void
+     */
+    public function updatePaymentMethodByPaymentResponse(RatepayResponseTransfer $ratepayPaymentResponseTransfer, $orderId)
+    {
+        $this
+            ->getFactory()
+            ->createPaymentMethodSaver()
+            ->updatePaymentMethodByPaymentResponse($ratepayPaymentResponseTransfer, $orderId);
     }
 
     /**

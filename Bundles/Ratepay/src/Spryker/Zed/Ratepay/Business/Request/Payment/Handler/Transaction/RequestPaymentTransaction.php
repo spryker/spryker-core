@@ -35,13 +35,6 @@ class RequestPaymentTransaction extends BaseTransaction
             ->getTransferObjectConverter($response)
             ->convert();
         $this->fixResponseTransferTransactionId($responseTransfer, $responseTransfer->getTransactionId(), $responseTransfer->getTransactionShortId());
-        $paymentMethod = $this->getPaymentMethodByOrderId($ratepayPaymentRequestTransfer->getOrderId());
-        if ($paymentMethod) {
-            $paymentMethod->setTransactionId($responseTransfer->getTransactionId());
-            $paymentMethod->setTransactionShortId($responseTransfer->getTransactionShortId());
-            $paymentMethod->setResultCode($responseTransfer->getResultCode());
-            $paymentMethod->save();
-        }
 
         return $responseTransfer;
     }

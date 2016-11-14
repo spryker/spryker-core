@@ -28,7 +28,6 @@ class ProfileTransaction extends TransactionHandlerAbstract implements Transacti
             ->profile();
 
         $response = $this->sendRequest((string)$request);
-        $this->logInfo($request, $response, Service::METHOD);
 
         $profileResponseTransfer = $this->converterFactory
             ->getProfileResponseConverter($response)
@@ -45,19 +44,6 @@ class ProfileTransaction extends TransactionHandlerAbstract implements Transacti
     protected function sendRequest($request)
     {
         return new ProfileResponse($this->executionAdapter->sendRequest($request));
-    }
-
-    /**
-     * @param \Spryker\Zed\Ratepay\Business\Api\Model\Base $request
-     * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
-     * @param string $method
-     * @param int|null $entityId
-     *
-     * @return void
-     */
-    protected function logInfo($request, $response, $method, $entityId = null)
-    {
-
     }
 
 }

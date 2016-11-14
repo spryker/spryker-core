@@ -10,12 +10,12 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Payment\Handler\Transaction;
 use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
 use Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
-use Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InitPaymentTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InstallmentCalculationTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\InstallmentConfigurationTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\RequestPaymentTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Elv;
+use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Installment;
 
 /**
  * @group Unit

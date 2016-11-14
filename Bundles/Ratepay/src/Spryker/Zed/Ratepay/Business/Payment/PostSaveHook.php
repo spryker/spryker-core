@@ -36,12 +36,21 @@ class PostSaveHook implements PostSaveHookInterface
      */
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
+        $checkoutResponse = $this->checkPaymentRequestLogs($checkoutResponse);
+        $checkoutResponse = $this->checkPaymentConfirmLogs($checkoutResponse);
+
+        return $checkoutResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function checkPaymentRequestLogs(CheckoutResponseTransfer $checkoutResponse)
+    {
         $logRecord = $this->queryContainer
-            ->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder())
-            ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST)
-            ->find()
-            ->getLast();
+            ->getLastLogRecordBySalesOrderIdAndMessage($checkoutResponse->getSaveOrder()->getIdSalesOrder(), ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST);
         if ($logRecord
             && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST]
         ) {
@@ -53,11 +62,18 @@ class PostSaveHook implements PostSaveHookInterface
             $checkoutResponse->addError($error);
         }
 
+        return $checkoutResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function checkPaymentConfirmLogs(CheckoutResponseTransfer $checkoutResponse)
+    {
         $logRecord = $this->queryContainer
-            ->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder())
-            ->filterByMessage(ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM)
-            ->find()
-            ->getLast();
+            ->getLastLogRecordBySalesOrderIdAndMessage($checkoutResponse->getSaveOrder()->getIdSalesOrder(), ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM);
         if ($logRecord
             && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM]
         ) {
