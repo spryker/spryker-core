@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\Currency;
 
+use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORE = 'store';
+    const INTERNATIONALIZATION = 'internationalization';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,6 +27,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addStore($container);
+        $container = $this->addInternationalization($container);
 
         return $container;
     }
@@ -37,6 +41,24 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::STORE] = function () {
             return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addInternationalization(Container $container)
+    {
+        $container[static::INTERNATIONALIZATION] = function () {
+            $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
+                Intl::getCurrencyBundle()
+            );
+
+            return $currencyToInternationalizationBridge;
         };
 
         return $container;

@@ -43,7 +43,7 @@ class RefundPluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function getDummyPaymentFacadeMock()
     {
-        $dummyPaymentFacadeMock = $this->getMock(DummyPaymentFacade::class);
+        $dummyPaymentFacadeMock = $this->getMockBuilder(DummyPaymentFacade::class)->getMock();
         $dummyPaymentFacadeMock->expects($this->once())->method('refund');
 
         return $dummyPaymentFacadeMock;

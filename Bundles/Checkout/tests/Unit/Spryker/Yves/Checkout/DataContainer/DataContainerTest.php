@@ -65,7 +65,7 @@ class DataContainerTest extends \PHPUnit_Framework_TestCase
      */
     private function getCartClientMock()
     {
-        return $this->getMock(CartClientInterface::class);
+        return $this->getMockBuilder(CartClientInterface::class)->getMock();
     }
 
 }

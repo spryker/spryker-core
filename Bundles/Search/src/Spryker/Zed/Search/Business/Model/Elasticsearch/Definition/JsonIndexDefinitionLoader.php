@@ -135,7 +135,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      * @param \Symfony\Component\Finder\SplFileInfo $jsonFile
      * @param string $storePrefix
      *
-     * @return mixed
+     * @return string
      */
     protected function getIndexName(SplFileInfo $jsonFile, $storePrefix)
     {

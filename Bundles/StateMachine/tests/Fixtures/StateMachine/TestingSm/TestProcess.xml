@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<statemachine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0"?>
+<statemachine
+        xmlns="spryker:state-machine-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd">
 
     <process name="TestProcess" main="true">
         <subprocesses>
             <process>TestSubProcess</process>
         </subprocesses>
 
-
         <states>
-            <state name="new" reserved="true"/>
+            <state name="new"/>
             <state name="invoice created">
                 <flag>Flag1</flag>
             </state>

@@ -192,7 +192,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     /**
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
-     * @return mixed
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function getTransferObjectFromPayment($payment)
     {
@@ -205,7 +205,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     /**
      * @param \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $payment
      *
-     * @return mixed
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     abstract protected function getPaymentTransferObject($payment);
 

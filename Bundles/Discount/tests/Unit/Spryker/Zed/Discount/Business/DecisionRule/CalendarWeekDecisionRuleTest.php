@@ -57,11 +57,7 @@ class CalendarWeekDecisionRuleTest extends BaseRuleTester
         \DateTime $currentDateTime
     ) {
 
-        $calendarWeekDecisionRule = $this->getMock(
-            CalendarWeekDecisionRule::class,
-            ['getCurrentDateTime'],
-            [$comparatorMock]
-        );
+        $calendarWeekDecisionRule = $this->getMockBuilder(CalendarWeekDecisionRule::class)->setMethods(['getCurrentDateTime'])->setConstructorArgs([$comparatorMock])->getMock();
 
         $calendarWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
 

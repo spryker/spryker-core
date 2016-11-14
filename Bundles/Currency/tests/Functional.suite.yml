@@ -1,5 +1,7 @@
 class_name: FunctionalTester
 modules:
     enabled:
-    - Filesystem
-    - \Currency\Module\Functional
+      - \Testify\Module\Environment
+      - \Config\Module\ConfigInit
+      - \Transfer\Module\TransferGenerate
+      - \Currency\Module\Functional

@@ -63,6 +63,18 @@ class CmsToUrlBridge implements CmsToUrlInterface
     }
 
     /**
+     * @api
+     *
+     * @param int $idUrl
+     *
+     * @return void
+     */
+    public function touchUrlDeleted($idUrl)
+    {
+        $this->urlFacade->touchUrlDeleted($idUrl);
+    }
+
+    /**
      * @param string $url
      *
      * @return bool

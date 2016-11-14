@@ -38,7 +38,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     protected $clientType;
 
     /**
-     * @return mixed
+     * @return object
      */
     protected function createZedClient()
     {

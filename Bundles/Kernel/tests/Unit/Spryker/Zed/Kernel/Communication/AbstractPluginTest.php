@@ -38,7 +38,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
-        $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractCommunicationFactory::class, null, [], '', false));
+        $communicationFactoryProperty->setValue($plugin, $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock());
 
         $communicationFactory = $plugin->getFactory();
 
@@ -50,7 +50,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
     {
-        $this->setExpectedException(FacadeNotFoundException::class);
+        $this->expectException(FacadeNotFoundException::class);
 
         $plugin = new FooPlugin();
         $plugin->getFacade();
@@ -66,7 +66,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $facadeProperty = $pluginReflection->getParentClass()->getProperty('facade');
         $facadeProperty->setAccessible(true);
-        $facadeProperty->setValue($plugin, $this->getMock(AbstractFacade::class, null, [], '', false));
+        $facadeProperty->setValue($plugin, $this->getMockBuilder(AbstractFacade::class)->disableOriginalConstructor()->getMock());
 
         $facade = $plugin->getFacade();
 
@@ -78,9 +78,9 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
     {
-        $this->setExpectedException(QueryContainerNotFoundException::class);
+        $this->expectException(QueryContainerNotFoundException::class);
 
-        $queryContainerResolverMock = $this->getMock(QueryContainerResolver::class, ['canResolve', 'getClassInfo']);
+        $queryContainerResolverMock = $this->getMockBuilder(QueryContainerResolver::class)->setMethods(['canResolve', 'getClassInfo'])->getMock();
         $queryContainerResolverMock->method('canResolve')->willReturn(false);
 
         $classInfo = new ClassInfo();
@@ -103,7 +103,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
         $pluginReflection = new ReflectionClass($plugin);
         $queryContainerProperty = $pluginReflection->getParentClass()->getProperty('queryContainer');
         $queryContainerProperty->setAccessible(true);
-        $queryContainerProperty->setValue($plugin, $this->getMock(AbstractQueryContainer::class, null, [], '', false));
+        $queryContainerProperty->setValue($plugin, $this->getMockBuilder(AbstractQueryContainer::class)->disableOriginalConstructor()->getMock());
 
         $queryContainer = $plugin->getQueryContainer();
 
@@ -117,7 +117,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function getPluginMock(array $methods)
     {
-        $pluginMock = $this->getMock(FooPlugin::class, $methods);
+        $pluginMock = $this->getMockBuilder(FooPlugin::class)->setMethods($methods)->getMock();
 
         return $pluginMock;
     }

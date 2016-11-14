@@ -10,7 +10,6 @@ namespace Spryker\Zed\Currency\Business;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Zed\Currency\CurrencyDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Symfony\Component\Intl\Intl;
 
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
@@ -21,7 +20,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     public function createCurrencyBuilder()
     {
         return new CurrencyBuilder(
-            Intl::getCurrencyBundle(),
+            $this->getInternationalization(),
             $this->getStore()->getCurrencyIsoCode()
         );
     }
@@ -32,6 +31,14 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
+     */
+    protected function getInternationalization()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
     }
 
 }

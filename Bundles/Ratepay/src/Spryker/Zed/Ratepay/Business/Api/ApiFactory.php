@@ -30,8 +30,6 @@ class ApiFactory extends AbstractBusinessFactory
     protected $builderFactory;
 
     /**
-     * ApiFactory constructor.
-     *
      * @param \Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory $builderFactory
      */
     public function __construct(BuilderFactory $builderFactory)

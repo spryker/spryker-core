@@ -67,7 +67,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     abstract protected function getClassNamePattern();
 

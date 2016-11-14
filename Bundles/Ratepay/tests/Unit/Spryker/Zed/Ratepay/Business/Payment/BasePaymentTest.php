@@ -144,8 +144,8 @@ class BasePaymentTest extends Test
      */
     protected function mockRatepayQueryContainer()
     {
-        $queryContainer = $this->getMock(RatepayQueryContainerInterface::class);
-        $queryPaymentsMock = $this->getMock(SpyPaymentRatepayQuery::class, ['findByFkSalesOrder', 'getFirst']);
+        $queryContainer = $this->getMockBuilder(RatepayQueryContainerInterface::class)->getMock();
+        $queryPaymentsMock = $this->getMockBuilder(SpyPaymentRatepayQuery::class)->setMethods(['findByFkSalesOrder', 'getFirst'])->getMock();
 
         $queryPaymentsMock->method('findByFkSalesOrder')->willReturnSelf();
         $queryPaymentsMock->method('getFirst')->willReturn($this->mockPaymentRatepay());

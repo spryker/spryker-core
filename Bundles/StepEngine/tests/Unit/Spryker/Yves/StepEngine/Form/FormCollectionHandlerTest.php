@@ -111,7 +111,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
-        $this->setExpectedException(InvalidFormHandleRequest::class);
+        $this->expectException(InvalidFormHandleRequest::class);
 
         $formCollectionHandler->handleRequest(Request::createFromGlobals(), $this->getDataTransferMock());
     }
@@ -207,7 +207,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
             $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
         }
 
-        $formCollectionHandlerMock = $this->getMock(FormCollectionHandler::class, $formCollectionHandlerMethods, $arguments);
+        $formCollectionHandlerMock = $this->getMockBuilder(FormCollectionHandler::class)->setMethods($formCollectionHandlerMethods)->setConstructorArgs($arguments)->getMock();
 
         return $formCollectionHandlerMock;
     }
@@ -227,7 +227,7 @@ class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getDataProviderMock()
     {
-        $dataProviderMock = $this->getMock(StepEngineFormDataProviderInterface::class);
+        $dataProviderMock = $this->getMockBuilder(StepEngineFormDataProviderInterface::class)->getMock();
         $dataProviderMock->method('getData')->willReturnArgument(0);
 
         return $dataProviderMock;

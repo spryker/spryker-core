@@ -121,7 +121,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createComparatorOperatorsMock()
     {
-        return $this->getMock(ComparatorOperatorsInterface::class);
+        return $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
     }
 
     /**
@@ -129,7 +129,7 @@ class ClauseValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMetaDataProviderMock()
     {
-        return $this->getMock(MetaDataProviderInterface::class);
+        return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
 
     /**

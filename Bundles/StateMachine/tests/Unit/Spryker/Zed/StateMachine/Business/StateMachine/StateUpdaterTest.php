@@ -230,7 +230,7 @@ class StateUpdaterTest extends StateMachineMocks
      */
     protected function createQueryContainerMock()
     {
-        return $this->getMock(StateMachineQueryContainerInterface::class);
+        return $this->getMockBuilder(StateMachineQueryContainerInterface::class)->getMock();
     }
 
     /**
@@ -238,7 +238,7 @@ class StateUpdaterTest extends StateMachineMocks
      */
     protected function createStateMachineHistoryQueryMock()
     {
-        return $this->getMock(SpyStateMachineItemStateHistory::class);
+        return $this->getMockBuilder(SpyStateMachineItemStateHistory::class)->getMock();
     }
 
 }

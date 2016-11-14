@@ -38,8 +38,8 @@ class CheckoutWorkflowTest extends Test
      */
     public function testWorkflowCallsAllPreConditions()
     {
-        $mock1 = $this->getMock(CheckoutPreConditionInterface::class);
-        $mock2 = $this->getMock(CheckoutPreConditionInterface::class);
+        $mock1 = $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
+        $mock2 = $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
 
         $mock1->expects($this->once())->method('checkCondition')->with(
             $this->isInstanceOf(QuoteTransfer::class),
@@ -51,7 +51,7 @@ class CheckoutWorkflowTest extends Test
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $omsMock = $this->getMock('Spryker\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
+        $omsMock = $this->getMockBuilder('Spryker\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface')->getMock();
         $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], [], $omsMock);
 
         $quoteTransfer = new QuoteTransfer();
@@ -63,8 +63,8 @@ class CheckoutWorkflowTest extends Test
      */
     public function testWorkflowCallsAllOrderSavers()
     {
-        $mock1 = $this->getMock(CheckoutSaveOrderInterface::class);
-        $mock2 = $this->getMock(CheckoutSaveOrderInterface::class);
+        $mock1 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
+        $mock2 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -78,7 +78,7 @@ class CheckoutWorkflowTest extends Test
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $omsMock = $this->getMock(CheckoutToOmsInterface::class);
+        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
         $checkoutWorkflow = new CheckoutWorkflow([], [$mock1, $mock2], [], $omsMock);
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -89,8 +89,8 @@ class CheckoutWorkflowTest extends Test
      */
     public function testWorkflowCallsAllPostHooks()
     {
-        $mock1 = $this->getMock(CheckoutPostSaveHookInterface::class);
-        $mock2 = $this->getMock(CheckoutPostSaveHookInterface::class);
+        $mock1 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
+        $mock2 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -104,7 +104,7 @@ class CheckoutWorkflowTest extends Test
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $omsMock = $this->getMock(CheckoutToOmsInterface::class);
+        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
         $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2], $omsMock);
 
         $checkoutWorkflow->placeOrder($quoteTransfer);
@@ -121,11 +121,11 @@ class CheckoutWorkflowTest extends Test
             ->setRedirectUrl('anUrl');
 
         $mock1 = new ResponseManipulatorPreCondition($checkoutResponse);
-        $mock2 = $this->getMock(CheckoutSaveOrderInterface::class);
+        $mock2 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
 
         $quoteTransfer = new QuoteTransfer();
 
-        $omsMock = $this->getMock(CheckoutToOmsInterface::class);
+        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
         $checkoutWorkflow = new CheckoutWorkflow([$mock1], [$mock2], [], $omsMock);
 
         $mock2->expects($this->once())->method('saveOrder')->with(
@@ -149,9 +149,9 @@ class CheckoutWorkflowTest extends Test
             ->setIsSuccess(false);
 
         $mock1 = new MockOrderSaver($checkoutResponse);
-        $mock2 = $this->getMock(CheckoutPostSaveHookInterface::class);
+        $mock2 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
 
-        $omsMock = $this->getMock(CheckoutToOmsInterface::class);
+        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
         $checkoutWorkflow = new CheckoutWorkflow([], [$mock1], [$mock2], $omsMock);
         $quoteTransfer = new QuoteTransfer();
 
@@ -174,7 +174,7 @@ class CheckoutWorkflowTest extends Test
 
         $mock = new MockPostHook($checkoutResponse);
 
-        $omsMock = $this->getMock(CheckoutToOmsInterface::class);
+        $omsMock = $this->getMockBuilder(CheckoutToOmsInterface::class)->getMock();
         $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock], $omsMock);
         $quoteTransfer = new QuoteTransfer();
 

@@ -37,7 +37,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMock(MessengerInterface::class);
+        return $this->getMockBuilder(MessengerInterface::class)->getMock();
     }
 
     /**

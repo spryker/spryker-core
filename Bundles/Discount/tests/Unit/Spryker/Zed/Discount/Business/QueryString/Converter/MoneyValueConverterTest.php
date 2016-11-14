@@ -103,7 +103,7 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
      */
     protected function createCurrencyMangerMock()
     {
-        return $this->getMock(CurrencyManagerInterface::class);
+        return $this->getMockBuilder(CurrencyManagerInterface::class)->getMock();
     }
 
 }

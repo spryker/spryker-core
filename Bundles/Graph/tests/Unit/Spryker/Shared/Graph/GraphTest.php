@@ -155,7 +155,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
      */
     private function createAdapterMock()
     {
-        $adapterMock = $this->getMock(GraphAdapterInterface::class, ['create', 'addNode', 'addEdge', 'addCluster', 'render']);
+        $adapterMock = $this->getMockBuilder(GraphAdapterInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $adapterMock->method('render')->willReturn('');
 
         return $adapterMock;

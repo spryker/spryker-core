@@ -136,7 +136,7 @@ class TransitionLogTable extends AbstractTable
      * @param array $row
      * @param string $column
      *
-     * @return mixed
+     * @return array
      */
     protected function formatEmptyValues($row, $column)
     {

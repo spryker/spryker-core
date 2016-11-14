@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
-<transfer
-    xmlns="http://xsd.spryker.com"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <!-- properties of the RatepayPaymentInvoice should exist in all other payment methods -->
     <transfer name="RatepayPaymentInvoice">
@@ -348,4 +347,5 @@
         <property name="interestRate" type="float" />
         <property name="paymentFirstday" type="int" />
     </transfer>
-</transfer>
+
+</transfers>

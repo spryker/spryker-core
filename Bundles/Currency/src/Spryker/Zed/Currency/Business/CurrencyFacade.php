@@ -17,7 +17,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 
     /**
      * Specification:
-     * - Return CurrencyTransfer Object for given iso code
+     * - Returns CurrencyTransfer object for given ISO code
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 
     /**
      * Specification:
-     * - Return CurrencyTransfer Object for current iso code
+     * - Returns CurrencyTransfer object for current ISO code
      *
      * @api
      *
