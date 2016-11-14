@@ -17,11 +17,4 @@ interface LocatorMatcherInterface
      */
     public function match($method);
 
-    /**
-     * @param string $method
-     *
-     * @return string
-     */
-    public function filter($method);
-
 }

@@ -5,31 +5,30 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Kernel\ClassResolver\Service;
+namespace Spryker\Service\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
-class ServiceResolver extends AbstractClassResolver
+class DependencyProviderResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sService';
+    const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sDependencyProvider';
 
     /**
      * @param object|string $callerClass
      *
-     * @throws \Spryker\Service\Kernel\ClassResolver\Service\ServiceNotFoundException
+     * @throws \Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
-     * @return \Spryker\Service\Kernel\AbstractService|object
+     * @return \Spryker\Service\Kernel\AbstractBundleDependencyProvider|object
      */
     public function resolve($callerClass)
     {
         $this->setCallerClass($callerClass);
-
         if ($this->canResolve()) {
             return $this->getResolvedClassInstance();
         }
 
-        throw new ServiceNotFoundException($this->getClassInfo());
+        throw new DependencyProviderNotFoundException($this->getClassInfo());
     }
 
     /**

@@ -5,15 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Auth;
+namespace Unit\Spryker\Service\Kernel\Fixtures;
 
 use Spryker\Service\Kernel\AbstractService;
 
-class AuthService extends AbstractService
+class Service extends AbstractService
 {
 
-    public function doSomething()
+    /**
+     * @return \Spryker\Service\Kernel\AbstractServiceFactory
+     */
+    public function getFactory()
     {
-        
+        return parent::getFactory();
     }
+
 }

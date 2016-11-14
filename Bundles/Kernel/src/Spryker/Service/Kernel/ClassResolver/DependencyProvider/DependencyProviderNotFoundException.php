@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Kernel\ClassResolver\Service;
+namespace Spryker\Service\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Exception\Backtrace;
@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Exception;
 
-class ServiceNotFoundException extends Exception
+class DependencyProviderNotFoundException extends Exception
 {
 
     /**
@@ -33,14 +33,14 @@ class ServiceNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sService for your bundle "%1$s"',
+            'Can not resolve %1$sDependencyProvider for your bundle "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing Service to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing DependencyProvider to your bundle.' . PHP_EOL;
 
         $message .= sprintf(
-            'E.g. %s\\Service\\%2$s\\%2$sService',
+            'E.g. %s\\Zed\\%2$s\\%2$sDependencyProvider',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );

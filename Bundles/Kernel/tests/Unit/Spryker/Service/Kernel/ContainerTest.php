@@ -5,25 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Client\Kernel;
+namespace Unit\Spryker\Service\Kernel;
 
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Kernel\Locator;
+use Spryker\Service\Kernel\Container;
+use Spryker\Service\Kernel\Locator;
 
 /**
  * @group Unit
  * @group Spryker
- * @group Client
+ * @group Service
  * @group Kernel
  * @group ContainerTest
  */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
 
+    const TEST_VALUE = 'foo';
+    const TEST_KEY = 'test.value';
+
     /**
      * @return void
      */
-    public function testGetLocatorShouldReturnInstanceOFLocator()
+    public function testGetLocatorShouldReturnInstanceOfLocator()
     {
         $container = new Container();
 

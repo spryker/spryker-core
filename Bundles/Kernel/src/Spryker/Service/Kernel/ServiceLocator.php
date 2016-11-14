@@ -18,17 +18,7 @@ class ServiceLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $bundle = 'Kernel';
-
-    /**
-     * @var string
-     */
     protected $application = 'Service';
-
-    /**
-     * @var string
-     */
-    protected $suffix = 'Factory';
 
     /**
      * @api
@@ -39,10 +29,10 @@ class ServiceLocator extends AbstractLocator
      */
     public function locate($bundle)
     {
-        $facadeResolver = new ServiceResolver();
-        $facade = $facadeResolver->resolve($bundle);
+        $serviceResolver = new ServiceResolver();
+        $service = $serviceResolver->resolve($bundle);
 
-        return $facade;
+        return $service;
     }
 
 }

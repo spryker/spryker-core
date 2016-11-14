@@ -7,21 +7,24 @@
 
 namespace Spryker\Service\Kernel;
 
+use Spryker\Service\Kernel\ClassResolver\Factory\FactoryResolver;
+
 class AbstractService
 {
+
     /**
-     * @var \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
+     * @var \Spryker\Service\Kernel\AbstractServiceFactory
      */
     private $factory;
 
     /**
      * @api
      *
-     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory
+     * @param \Spryker\Service\Kernel\AbstractServiceFactory $factory
      *
      * @return $this
      */
-    public function setFactory(AbstractBusinessFactory $factory)
+    public function setFactory(AbstractServiceFactory $factory)
     {
         $this->factory = $factory;
 
@@ -29,7 +32,7 @@ class AbstractService
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
+     * @return \Spryker\Service\Kernel\AbstractServiceFactory
      */
     protected function getFactory()
     {
@@ -41,7 +44,7 @@ class AbstractService
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Service\Kernel\AbstractServiceFactory
      */
     private function resolveFactory()
     {
@@ -49,7 +52,7 @@ class AbstractService
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Service\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {

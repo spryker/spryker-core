@@ -7,16 +7,83 @@
 
 namespace Spryker\Service\Kernel;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
-abstract class AbstractServiceFactory implements BusinessFactoryInterface
+class AbstractServiceFactory
 {
 
     /**
-     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @var \Spryker\Service\Kernel\Container $container
+     */
+    private $container;
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return $this
+     */
+    public function setContainer(Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return object
+     */
+    public function getProvidedDependency($key)
+    {
+        if ($this->container === null) {
+            $this->container = $this->createContainerWithProvidedDependencies();
+        }
+
+        if ($this->container->offsetExists($key) === false) {
+            throw new ContainerKeyNotFoundException($this, $key);
+        }
+
+        return $this->container[$key];
+    }
+
+    /**
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function createContainerWithProvidedDependencies()
+    {
+        $container = $this->createContainer();
+        $dependencyProvider = $this->resolveDependencyProvider();
+
+        $this->provideExternalDependencies($dependencyProvider, $container);
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function createContainer()
+    {
+        $container = new Container();
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Service\Kernel\AbstractBundleDependencyProvider
+     */
+    protected function resolveDependencyProvider()
+    {
+        return $this->createDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Service\Kernel\Container $container
      *
      * @return void
      */
@@ -24,20 +91,15 @@ abstract class AbstractServiceFactory implements BusinessFactoryInterface
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
-        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideServiceDependencies($container);
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
-    protected function injectExternalDependencies(
-        DependencyInjector $dependencyInjector,
-        Container $container
-    ) {
-        return $dependencyInjector->injectBusinessLayerDependencies($container);
+    protected function createDependencyProviderResolver()
+    {
+        return new DependencyProviderResolver();
     }
 
 }
