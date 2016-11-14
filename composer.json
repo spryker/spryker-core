@@ -544,6 +544,7 @@
       "Spryker\\Yves\\UtilSanitize\\": "Bundles/UtilSanitize/src",
       "Acceptance\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
       "Spryker\\Shared\\UtilSanitize\\": "Bundles/UtilSanitize/src",
+      "Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/src",
       "Unit\\Spryker\\Shared\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
       "Functional\\Spryker\\Shared\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
       "Spryker\\Zed\\UtilSanitize\\": "Bundles/UtilSanitize/src",
