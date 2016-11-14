@@ -26,6 +26,8 @@ class CustomerUpdateForm extends CustomerForm
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(self::OPTION_ADDRESS_CHOICES);
     }
 
