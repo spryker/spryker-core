@@ -10,6 +10,7 @@ namespace Spryker\Yves\DummyPayment\Form;
 use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
@@ -52,17 +53,27 @@ class CreditCardSubForm extends AbstractSubForm
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => DummyPaymentTransfer::class,
+        ])->setRequired(self::OPTIONS_FIELD_NAME);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => DummyPaymentTransfer::class,
-        ])->setRequired(self::OPTIONS_FIELD_NAME);
+        $this->configureOptions($resolver);
     }
 
     /**
