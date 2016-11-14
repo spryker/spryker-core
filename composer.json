@@ -202,6 +202,7 @@
       "Spryker\\Shared\\Invoice\\": "Bundles/Invoice/src",
       "Unit\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
       "Functional\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
+      "Spryker\\Service\\Kernel\\": "Bundles/Kernel/src",
       "Spryker\\Client\\Kernel\\": "Bundles/Kernel/src",
       "Unit\\Spryker\\Client\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Client\\Kernel\\": "Bundles/Kernel/tests",

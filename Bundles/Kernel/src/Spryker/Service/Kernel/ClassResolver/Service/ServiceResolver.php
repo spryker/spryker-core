@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\Facade;
+namespace Spryker\Service\Kernel\ClassResolver\Service;
 
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
-class FacadeResolver extends AbstractClassResolver
+class ServiceResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Business\\%2$sFacade';
+    const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sService';
 
     /**
      * @param object|string $callerClass
      *
-     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
+     * @throws \Spryker\Service\Kernel\ClassResolver\Service\ServiceNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|object
+     * @return \Spryker\Service\Kernel\AbstractService|object
      */
     public function resolve($callerClass)
     {
@@ -28,7 +28,7 @@ class FacadeResolver extends AbstractClassResolver
             return $this->getResolvedClassInstance();
         }
 
-        throw new FacadeNotFoundException($this->getClassInfo());
+        throw new ServiceNotFoundException($this->getClassInfo());
     }
 
     /**

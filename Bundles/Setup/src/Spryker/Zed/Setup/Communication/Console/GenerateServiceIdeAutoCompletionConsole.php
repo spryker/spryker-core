@@ -13,19 +13,16 @@ use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\BundleNameFinder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\FacadeMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\QueryContainerMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ServiceMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateZedIdeAutoCompletionConsole extends Console
+class GenerateServiceIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:generate-zed-ide-auto-completion';
-    const APPLICATION_ZED = 'Zed';
+    const COMMAND_NAME = 'setup:generate-service-ide-auto-completion';
+    const APPLICATION_SERVICE = 'Service';
 
     /**
      * @return void
@@ -33,7 +30,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate zed ide auto completion files');
+        $this->setDescription('Generate service ide auto completion files');
     }
 
     /**
@@ -44,16 +41,16 @@ class GenerateZedIdeAutoCompletionConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->generateZedInterface();
-        $this->generateZedBundleInterface();
+        $this->generateServiceInterface();
+        $this->generateServiceBundleInterface();
     }
 
     /**
      * @return void
      */
-    protected function generateZedInterface()
+    protected function generateServiceInterface()
     {
-        $options = $this->getZedDefaultOptions();
+        $options = $this->getServiceDefaultOptions();
 
         $generator = new IdeAutoCompletionGenerator($options, $this);
         $generator
@@ -61,22 +58,22 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 
         $generator->create();
 
-        $this->info('Generated Zed IdeAutoCompletion file');
+        $this->info('Generated Service IdeAutoCompletion file');
     }
 
     /**
      * @return array
      */
-    protected function getZedDefaultOptions()
+    protected function getServiceDefaultOptions()
     {
         $bundleNameFinder = new BundleNameFinder([
             BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => Config::get(ApplicationConstants::PROJECT_NAMESPACE) . DIRECTORY_SEPARATOR,
-            BundleNameFinder::OPTION_KEY_APPLICATION => self::APPLICATION_ZED,
+            BundleNameFinder::OPTION_KEY_APPLICATION => self::APPLICATION_SERVICE,
         ]);
 
         $options = [
-            IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide',
-            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/',
+            IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Service\Ide',
+            IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Service/Ide/',
             IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => $bundleNameFinder,
         ];
 
@@ -86,21 +83,18 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     /**
      * @return void
      */
-    protected function generateZedBundleInterface()
+    protected function generateServiceBundleInterface()
     {
-        $options = $this->getZedDefaultOptions();
+        $options = $this->getServiceDefaultOptions();
         $options[IdeBundleAutoCompletionGenerator::OPTION_KEY_INTERFACE_NAME] = 'BundleAutoCompletion';
 
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
-            ->addMethodTagBuilder(new FacadeMethodTagBuilder())
-            ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
-            ->addMethodTagBuilder(new ClientMethodTagBuilder())
             ->addMethodTagBuilder(new ServiceMethodTagBuilder());
 
         $generator->create();
 
-        $this->info('Generated Zed IdeBundleAutoCompletion file');
+        $this->info('Generated Service IdeBundleAutoCompletion file');
     }
 
 }
