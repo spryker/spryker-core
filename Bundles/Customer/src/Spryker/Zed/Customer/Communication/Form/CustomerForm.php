@@ -105,7 +105,7 @@ class CustomerForm extends AbstractType
     {
         $builder->add(self::FIELD_EMAIL, 'email', [
             'label' => 'Email',
-            'constraints' => $this->createEmailConstraints(),
+            'constraints' => $this->createEmailConstraints()
         ]);
 
         return $this;
@@ -123,6 +123,7 @@ class CustomerForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => $choices,
+            'required' => false
         ]);
 
         return $this;
@@ -173,6 +174,7 @@ class CustomerForm extends AbstractType
             'constraints' => [
                 new Required(),
             ],
+            'required' => false
         ]);
 
         return $this;
@@ -188,6 +190,7 @@ class CustomerForm extends AbstractType
         $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [
             'label' => 'Send password token through email',
             'required' => false,
+            'required' => false
         ]);
 
         return $this;
