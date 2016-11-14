@@ -65,6 +65,7 @@ class CategoryFormEdit extends CategoryFormAdd
         $builder
             ->add(self::FIELD_META_TITLE, 'text', [
                 'label' => 'Meta Title',
+                'required' => false,
             ]);
 
         return $this;
@@ -80,6 +81,7 @@ class CategoryFormEdit extends CategoryFormAdd
         $builder
             ->add(self::FIELD_META_DESCRIPTION, 'textarea', [
                 'label' => 'Meta Description',
+                'required' => false,
             ]);
 
         return $this;
@@ -95,6 +97,7 @@ class CategoryFormEdit extends CategoryFormAdd
         $builder
             ->add(self::FIELD_META_KEYWORDS, 'textarea', [
                 'label' => 'Meta Keywords',
+                'required' => false,
             ]);
 
         return $this;
@@ -157,7 +160,8 @@ class CategoryFormEdit extends CategoryFormAdd
             ->add(self::EXTRA_PARENTS, new Select2ComboBoxType(), [
                 'label' => 'Additional Parents',
                 'choices' => $choices,
-                'multiple' => true
+                'multiple' => true,
+                'required' => false,
             ]);
 
         return $this;
