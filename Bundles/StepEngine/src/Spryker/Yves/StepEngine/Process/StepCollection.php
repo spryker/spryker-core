@@ -131,7 +131,7 @@ class StepCollection implements StepCollectionInterface
 
         foreach ($this->steps as $position => $step) {
             if ($step->getStepRoute() === $currentStep->getStepRoute() && $position !== count($this->steps) - 1) {
-                $nextStep = current($this->steps);
+                $nextStep = $this->steps[$position + 1];
             }
         }
 

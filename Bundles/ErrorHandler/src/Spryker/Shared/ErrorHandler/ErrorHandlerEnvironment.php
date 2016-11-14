@@ -8,7 +8,6 @@
 namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
-use Exception;
 use Spryker\Shared\Config\Config;
 
 class ErrorHandlerEnvironment
@@ -68,7 +67,7 @@ class ErrorHandlerEnvironment
      */
     protected function setExceptionHandler()
     {
-        $exceptionHandler = function (Exception $exception) {
+        $exceptionHandler = function ($exception) {
             $errorHandler = $this->getErrorHandler();
             $errorHandler()->handleException($exception);
         };

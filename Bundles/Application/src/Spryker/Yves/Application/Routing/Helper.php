@@ -45,7 +45,7 @@ class Helper
         } else {
             throw new LogicException('Cannot parse destination');
         }
-        list(, , $bundle, , $controllerName) = explode('\\', $controllerNamespaceName);
+        list($namespace, $application, $bundle, $layer, $controllerName) = explode('\\', $controllerNamespaceName);
 
         $filter = new CamelCaseToSeparatorFilter('-');
 
