@@ -24,10 +24,6 @@
         <column name="fk_wishlist" required="true" type="INTEGER"/>
         <column name="fk_product" required="true" type="INTEGER"/>
 
-        <unique name="spy_wishlist_item-unique-fk_wishlist-fk_product">
-            <unique-column name="fk_wishlist"/>
-            <unique-column name="fk_product"/>
-        </unique>
         <foreign-key name="spy_wishlist_item-fk_wishlist" foreignTable="spy_wishlist">
             <reference local="fk_wishlist" foreign="id_wishlist"/>
         </foreign-key>
