@@ -46,14 +46,6 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
-    protected function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
-     */
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
