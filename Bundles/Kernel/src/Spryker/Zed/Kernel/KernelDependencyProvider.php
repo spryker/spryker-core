@@ -21,8 +21,6 @@ class KernelDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = parent::provideCommunicationLayerDependencies($container);
-
         $container[self::FACADE_MESSENGER] = function (Container $container) {
             return new KernelToMessengerBridge($container->getLocator()->messenger()->facade());
         };
