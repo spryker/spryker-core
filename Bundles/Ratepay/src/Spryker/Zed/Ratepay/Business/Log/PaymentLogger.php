@@ -141,7 +141,7 @@ class PaymentLogger implements LoggerInterface
         $paymentLogEntity->setResponseStatusCode($context['response_status_code']);
         $paymentLogEntity->setResponseStatusText($context['response_status_text']);
         $paymentLogEntity->setResponseCustomerMessage($context['response_customer_message']);
-        $paymentLogEntity->setItemsNumber($context['items_number']);
+        $paymentLogEntity->setItemCount($context['item_count']);
 
         $paymentLogEntity->save();
     }

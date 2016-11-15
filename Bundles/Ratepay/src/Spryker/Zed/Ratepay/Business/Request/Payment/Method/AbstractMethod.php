@@ -150,7 +150,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog $paymentLog */
         foreach ($paymentLogs as $paymentLog) {
             if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_CANCEL] == $paymentLog->getResponseResultCode()) {
-                $canceledItemsCount += $paymentLog->getItemsNumber();
+                $canceledItemsCount += $paymentLog->getItemCount();
             }
         }
         $needToSendShipping = (count($allOrderItems) == $canceledItemsCount);
@@ -182,7 +182,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 
         foreach ($paymentLogs as $paymentLog) {
             if (Constants::REQUEST_CODE_SUCCESS_MATRIX[Constants::REQUEST_MODEL_PAYMENT_REFUND] == $paymentLog->getResponseResultCode()) {
-                $refundedItemsCount += $paymentLog->getItemsNumber();
+                $refundedItemsCount += $paymentLog->getItemCount();
             }
         }
         $needToSendShipping = (count($allOrderItems) == $refundedItemsCount);

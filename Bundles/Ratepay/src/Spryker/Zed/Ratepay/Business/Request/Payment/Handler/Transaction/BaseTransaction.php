@@ -85,7 +85,7 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
             'response_status_text' => $response->getStatusText(),
             'response_customer_message' => $response->getCustomerMessage(),
 
-            'items_number' => count($orderItems),
+            'item_count' => count($orderItems),
         ];
 
         $this->getLogger()->info(static::TRANSACTION_TYPE, $context);
