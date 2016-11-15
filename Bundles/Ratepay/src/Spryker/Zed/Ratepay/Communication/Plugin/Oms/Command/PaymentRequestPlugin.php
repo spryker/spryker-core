@@ -47,7 +47,8 @@ class PaymentRequestPlugin extends BaseCommandPlugin implements CommandByOrderIn
         );
         $quotePaymentRequestMapper->map();
 
-        $this->getFacade()->requestPayment($ratepayPaymentRequestTransfer);
+        $ratepayResponseTransfer = $this->getFacade()->requestPayment($ratepayPaymentRequestTransfer);
+        $this->getFacade()->updatePaymentMethodByPaymentResponse($ratepayResponseTransfer, $ratepayPaymentRequestTransfer->getOrderId());
 
         return [];
     }
