@@ -203,7 +203,7 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setFkProduct($this->product_3->getIdProduct());
+            ->setIdProduct($this->product_3->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
 
@@ -219,7 +219,7 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setFkProduct($this->product_1->getIdProduct());
+            ->setIdProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
 
@@ -234,13 +234,13 @@ class WishlistFacadeTest extends Test
     {
         $this->wishlistQueryContainer
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
-            ->filterByFkProduct($this->product_1->getIdProduct())
+            ->filterByIdProduct($this->product_1->getIdProduct())
             ->delete();
 
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setFkProduct($this->product_1->getIdProduct());
+            ->setIdProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
@@ -260,7 +260,7 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setFkProduct($this->product_1->getIdProduct());
+            ->setIdProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
@@ -276,7 +276,7 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setFkProduct($this->product_1->getIdProduct());
+            ->setIdProduct($this->product_1->getIdProduct());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
@@ -365,15 +365,15 @@ class WishlistFacadeTest extends Test
 
         $wishlistItemTransfer_1 = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
-            ->setFkProduct($this->product_1->getIdProduct());
+            ->setIdProduct($this->product_1->getIdProduct());
 
         $wishlistItemTransfer_2 = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
-            ->setFkProduct($this->product_2->getIdProduct());
+            ->setIdProduct($this->product_2->getIdProduct());
 
         $wishlistItemTransfer_3 = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
-            ->setFkProduct($this->product_3->getIdProduct());
+            ->setIdProduct($this->product_3->getIdProduct());
 
         $this->wishlistFacade->addItemCollection($wishlistTransfer, [$wishlistItemTransfer_1, $wishlistItemTransfer_2, $wishlistItemTransfer_3]);
 

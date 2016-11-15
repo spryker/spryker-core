@@ -38,7 +38,7 @@ class ProductStorage implements ProductStorageInterface
 
         $ids = [];
         foreach ($wishlistResponseTransfer->getItems() as $wishlistItem) {
-            $ids[] = $wishlistItem->getFkProduct();
+            $ids[] = $wishlistItem->getIdProduct();
         }
 
         if (empty($ids)) {
@@ -51,7 +51,7 @@ class ProductStorage implements ProductStorageInterface
 
         foreach ($storageProductCollection as $storageProduct) {
             $wishlistItem = (new WishlistItemTransfer())
-                ->setFkProduct($storageProduct->getId())
+                ->setIdProduct($storageProduct->getId())
                 ->setFkWishlist($wishlistResponseTransfer->getWishlist()->getIdWishlist())
                 ->setProduct($storageProduct);
 

@@ -151,7 +151,7 @@ class Writer implements WriterInterface
 
         $entity = $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
+            ->filterByIdProduct($wishlistItemTransfer->getIdProduct())
             ->findOneOrCreate();
 
         $entity->save();
@@ -175,7 +175,7 @@ class Writer implements WriterInterface
 
         $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($wishlistItemTransfer->getFkProduct())
+            ->filterByIdProduct($wishlistItemTransfer->getIdProduct())
             ->delete();
 
         return $wishlistItemTransfer;
@@ -215,7 +215,7 @@ class Writer implements WriterInterface
     protected function assertWishlistItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         $wishlistItemTransfer->requireFkWishlist();
-        $wishlistItemTransfer->requireFkProduct();
+        $wishlistItemTransfer->requireIdProduct();
     }
 
     /**
@@ -226,7 +226,7 @@ class Writer implements WriterInterface
     protected function assertWishlistItemUpdateRequest(WishlistItemTransfer $wishlistItemTransfer)
     {
         $wishlistItemTransfer->requireFkCustomer();
-        $wishlistItemTransfer->requireFkProduct();
+        $wishlistItemTransfer->requireIdProduct();
         $wishlistItemTransfer->requireWishlistName();
     }
 
