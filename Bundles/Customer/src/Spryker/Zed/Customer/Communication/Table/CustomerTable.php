@@ -71,8 +71,6 @@ class CustomerTable extends AbstractTable
 
         $config->addRawColumn(self::ACTIONS);
 
-        $config->addRawColumn(self::ACTIONS);
-
         $config->setSortable([
             self::COL_ID_CUSTOMER,
             self::COL_CREATED_AT,
@@ -101,7 +99,7 @@ class CustomerTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|array
      */
     protected function prepareData(TableConfiguration $config)
     {
