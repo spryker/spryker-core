@@ -52,7 +52,7 @@ class Writer implements WriterInterface
         $this->assertWishlistUniqueName($wishlistTransfer);
 
         $wishlistEntity = new SpyWishlist();
-        $wishlistEntity->fromArray($wishlistTransfer->toArray(), true);
+        $wishlistEntity->fromArray($wishlistTransfer->toArray());
         $wishlistEntity->save();
 
         $wishlistTransfer->setIdWishlist($wishlistEntity->getIdWishlist());
@@ -75,7 +75,7 @@ class Writer implements WriterInterface
         $wishListEntity = $this->reader->getWishlistEntityById($wishlistTransfer->getIdWishlist());
         $this->assertWishlistUniqueNameWhenUpdating($wishlistTransfer);
 
-        $wishListEntity->fromArray($wishlistTransfer->toArray(), true);
+        $wishListEntity->fromArray($wishlistTransfer->toArray());
         $wishListEntity->save();
 
         $this->queryContainer->getConnection()->commit();

@@ -156,7 +156,7 @@ class WishlistFacadeTest extends Test
     {
         $wishlistItemEntity = (new SpyWishlistItem())
             ->setFkWishlist($idWishlist)
-            ->setFkProduct($idProduct);
+            ->setIdProduct($idProduct);
 
         $wishlistItemEntity->save();
 
