@@ -152,7 +152,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         $queryContainer = $this->getQueryContainer();
 
-        return new TransitionLog($queryContainer, $logContext, $this->getUtilNetworkFacade());
+        return new TransitionLog($queryContainer, $logContext, $this->getUtilNetworkService());
     }
 
     /**
@@ -204,7 +204,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
-            $this->getUtilTextFacade()
+            $this->getUtilTextService()
         );
     }
 
@@ -224,7 +224,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderItemMatrix(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->getUtilSanitizeFacade()
+            $this->getUtilSanitizeService()
         );
     }
 
@@ -269,25 +269,25 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
      */
-    protected function getUtilTextFacade()
+    protected function getUtilTextService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_TEXT);
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface
      */
-    protected function getUtilNetworkFacade()
+    protected function getUtilNetworkService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_NETWORK);
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilSanitizeInterface
+     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface
      */
-    protected function getUtilSanitizeFacade()
+    protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_SANITIZE);
     }

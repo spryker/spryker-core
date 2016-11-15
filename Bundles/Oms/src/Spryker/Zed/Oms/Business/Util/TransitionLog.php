@@ -11,7 +11,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -40,24 +40,24 @@ class TransitionLog implements TransitionLogInterface
     protected $logEntities;
 
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface
+     * @var \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface
      */
-    protected $utilNetworkFacade;
+    protected $utilNetworkService;
 
     /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param array $logContext
-     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilNetworkInterface $utilNetworkFacade
+     * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface $utilNetworkService
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
         array $logContext,
-        OmsToUtilNetworkInterface $utilNetworkFacade
+        OmsToUtilNetworkInterface $utilNetworkService
     ) {
 
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;
-        $this->utilNetworkFacade = $utilNetworkFacade;
+        $this->utilNetworkService = $utilNetworkService;
     }
 
     /**
@@ -173,7 +173,7 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setQuantity($salesOrderItem->getQuantity());
         $logEntity->setFkSalesOrder($salesOrderItem->getFkSalesOrder());
         $logEntity->setFkOmsOrderProcess($salesOrderItem->getFkOmsOrderProcess());
-        $logEntity->setHostname($this->utilNetworkFacade->getHostName());
+        $logEntity->setHostname($this->utilNetworkService->getHostName());
 
         if (PHP_SAPI === self::SAPI_CLI) {
             $path = self::SAPI_CLI;

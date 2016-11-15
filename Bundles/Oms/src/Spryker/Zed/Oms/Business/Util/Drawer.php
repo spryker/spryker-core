@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
@@ -94,27 +94,27 @@ class Drawer implements DrawerInterface
     protected $graph;
 
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface
+     * @var \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
      */
-    protected $utilTextFacade;
+    protected $utilTextService;
 
     /**
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Shared\Graph\GraphInterface $graph
-     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToUtilTextInterface $utilTextFacade
+     * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface $utilTextService
      */
     public function __construct(
         $commands,
         $conditions,
         GraphInterface $graph,
-        OmsToUtilTextInterface $utilTextFacade
+        OmsToUtilTextInterface $utilTextService
     ) {
         $this->setCommands($commands);
         $this->setConditions($conditions);
 
         $this->graph = $graph;
-        $this->utilTextFacade = $utilTextFacade;
+        $this->utilTextService = $utilTextService;
     }
 
     /**
@@ -216,7 +216,7 @@ class Drawer implements DrawerInterface
      */
     protected function getDiamondId()
     {
-        return $this->utilTextFacade->generateRandomString(32);
+        return $this->utilTextService->generateRandomString(32);
     }
 
     /**
