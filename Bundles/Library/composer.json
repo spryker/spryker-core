@@ -28,7 +28,7 @@
     "spryker/zend": "^2.0.0",
     "spryker/util-network": "^1.0.0",
     "spryker/util-sanitize": "^1.0.0",
-    "spryker/util-text": "^1.0.0"s
+    "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
