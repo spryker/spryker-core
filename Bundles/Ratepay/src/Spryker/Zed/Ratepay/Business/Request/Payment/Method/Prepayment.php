@@ -23,6 +23,14 @@ class Prepayment extends AbstractMethod
     const METHOD = RatepayConstants::PREPAYMENT;
 
     /**
+     * @return string
+     */
+    public function getMethodName()
+    {
+        return static::METHOD;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer

@@ -24,6 +24,14 @@ class Elv extends AbstractMethod
     const METHOD = RatepayConstants::METHOD_ELV;
 
     /**
+     * @return string
+     */
+    public function getMethodName()
+    {
+        return static::METHOD;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayPaymentElvTransfer

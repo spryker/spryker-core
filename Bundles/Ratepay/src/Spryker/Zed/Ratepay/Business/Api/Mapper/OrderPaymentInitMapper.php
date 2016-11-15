@@ -13,6 +13,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 class OrderPaymentInitMapper extends BaseMapper
 {
 
+    const NO_CUSTOMER_ID = 0;
+
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -52,7 +54,7 @@ class OrderPaymentInitMapper extends BaseMapper
                 ->setDeviceFingerprint($paymentRatepayEntity->getDeviceFingerprint());
         }
 
-        $customerId = $this->orderEntity->getCustomer() ? $this->orderEntity->getCustomer()->getIdCustomer() : 0;
+        $customerId = $this->orderEntity->getCustomer() ? $this->orderEntity->getCustomer()->getIdCustomer() : self::NO_CUSTOMER_ID;
         $this->ratepayPaymentInitTransfer
             ->setCustomerId($customerId);
     }

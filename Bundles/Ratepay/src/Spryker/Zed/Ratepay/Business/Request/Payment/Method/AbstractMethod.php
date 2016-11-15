@@ -21,8 +21,6 @@ use \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 {
 
-    const METHOD = null;
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface
      */
@@ -56,14 +54,6 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $this->modelFactory = $modelFactory;
         $this->mapperFactory = $mapperFactory;
         $this->ratepayQueryContainer = $ratepayQueryContainer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMethodName()
-    {
-        return static::METHOD;
     }
 
     /**
@@ -312,7 +302,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 
         $discountTaxRate = 0;
         foreach ($dataTransfer->getItems() as $basketItem) {
-            if ($discountTaxRate < $basketItem->getTaxRate()) { // take max taxRate from all the Items
+            if ($discountTaxRate < $basketItem->getTaxRate()) {
                 $discountTaxRate = $basketItem->getTaxRate();
             }
         }

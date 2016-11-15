@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Ratepay\Form;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
@@ -42,7 +43,8 @@ class InstallmentSubForm extends SubFormAbstract
             'data_class' => RatepayPaymentInstallmentTransfer::class,
             SubFormInterface::OPTIONS_FIELD_NAME => [],
             'validation_groups' => function (FormInterface $form) {
-                if ($form->getParent()['paymentSelection']->getData() != $this->getPropertyPath()) {
+
+                if ($form->getParent()[PaymentTransfer::PAYMENT_SELECTION]->getData() != $this->getPropertyPath()) {
                     return;
                 }
                 $data = $form->getData();

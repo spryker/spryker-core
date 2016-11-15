@@ -151,9 +151,13 @@ class OrderPaymentRequestMapper extends BaseMapper
     protected function mapExpenses()
     {
         $expenses = $this->orderTransfer->getExpenses();
-        if (count($expenses)) {
+        $maxTaxRate = 0;
+        foreach ($expenses as $expense) {
+            $maxTaxRate = ($expense->getTaxRate() > $maxTaxRate) ? $expense->getTaxRate() : $maxTaxRate;
+        }
+        if ($maxTaxRate) {
             $this->ratepayPaymentRequestTransfer
-                ->setShippingTaxRate($expenses[0]->getTaxRate());
+                ->setShippingTaxRate($maxTaxRate);
         }
     }
 
@@ -174,12 +178,12 @@ class OrderPaymentRequestMapper extends BaseMapper
         $discountTaxRate = 0;
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
-                $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
+                $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + $basketItem->getQuantity());
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
             $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
-            if ($discountTaxRate < $basketItem->getTaxRate()) { // take max taxRate
+            if ($discountTaxRate < $basketItem->getTaxRate()) {
                 $discountTaxRate = $basketItem->getTaxRate();
             }
         }
