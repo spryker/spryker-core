@@ -8,7 +8,6 @@
 namespace Unit\Spryker\Service\Kernel;
 
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\Kernel\Locator;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 /**
