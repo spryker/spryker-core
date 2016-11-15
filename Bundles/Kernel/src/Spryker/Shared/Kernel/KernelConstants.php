@@ -34,4 +34,9 @@ interface KernelConstants
     const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
     const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
 
+    /**
+     * @deprecated Use `$this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)` to get the form factory.
+     */
+    const FORM_FACTORY = 'FORM_FACTORY';
+
 }
