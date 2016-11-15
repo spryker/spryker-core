@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Service\Kernel;
 
-use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Service\Kernel\Locator;
+use Spryker\Shared\Kernel\BundleProxy;
 
 /**
  * @group Unit

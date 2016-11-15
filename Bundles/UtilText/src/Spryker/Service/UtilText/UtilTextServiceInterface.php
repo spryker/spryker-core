@@ -32,4 +32,5 @@ interface UtilTextServiceInterface
      * @return string
      */
     public function generateRandomString($length);
+
 }

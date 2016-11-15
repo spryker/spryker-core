@@ -17,7 +17,6 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
  * @group UtilSanitize
  * @group UtilSanitizeServiceTest
  */
-
 class UtilSanitizeServiceTest extends Test
 {
 
@@ -31,7 +30,6 @@ class UtilSanitizeServiceTest extends Test
         $escapedHtml = $utilSanitizeService->escapeHtml('<b></b>');
 
         $this->assertEquals('&lt;b&gt;&lt;/b&gt;', $escapedHtml);
-
     }
 
     /**
@@ -41,4 +39,5 @@ class UtilSanitizeServiceTest extends Test
     {
         return new UtilSanitizeService();
     }
+
 }

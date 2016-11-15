@@ -10,7 +10,6 @@ namespace Unit\Spryker\Service\Kernel;
 use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Unit\Spryker\Service\Kernel\Fixtures\Service;
-use Unit\Spryker\Service\Kernel\Fixtures\ServiceMock;
 
 /**
  * @group Unit

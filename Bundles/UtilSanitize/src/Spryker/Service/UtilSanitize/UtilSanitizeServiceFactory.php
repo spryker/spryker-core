@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\UtilSanitize;
 
-use Spryker\Service\UtilSanitize\Model\Html;
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\UtilSanitize\Model\Html;
 
 class UtilSanitizeServiceFactory extends AbstractServiceFactory
 {
@@ -20,4 +20,5 @@ class UtilSanitizeServiceFactory extends AbstractServiceFactory
     {
         return new Html();
     }
+
 }

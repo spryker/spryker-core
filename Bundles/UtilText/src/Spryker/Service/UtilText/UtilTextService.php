@@ -49,4 +49,5 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
             ->createStringGenerator()
             ->generateRandomString($length);
     }
+
 }

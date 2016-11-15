@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Kernel;
 
-use Spryker\Shared\Kernel\AbstractLocator;
 use Spryker\Service\Kernel\ClassResolver\Service\ServiceResolver;
+use Spryker\Shared\Kernel\AbstractLocator;
 
 class ServiceLocator extends AbstractLocator
 {

@@ -11,9 +11,9 @@ use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface

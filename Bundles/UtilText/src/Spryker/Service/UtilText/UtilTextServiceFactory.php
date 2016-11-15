@@ -29,4 +29,5 @@ class UtilTextServiceFactory extends AbstractServiceFactory
     {
         return new StringGenerator();
     }
+
 }

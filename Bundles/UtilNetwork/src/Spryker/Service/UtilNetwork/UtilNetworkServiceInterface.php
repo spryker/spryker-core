@@ -18,4 +18,5 @@ interface UtilNetworkServiceInterface
      * @return string
      */
     public function getHostName();
+
 }

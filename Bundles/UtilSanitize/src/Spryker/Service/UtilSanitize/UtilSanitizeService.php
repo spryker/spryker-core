@@ -34,4 +34,5 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
             ->createHtml()
             ->escape($text, $double, $charset);
     }
+
 }

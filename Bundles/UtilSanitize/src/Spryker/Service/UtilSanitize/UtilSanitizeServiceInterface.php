@@ -22,4 +22,5 @@ interface UtilSanitizeServiceInterface
      * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null);
+
 }

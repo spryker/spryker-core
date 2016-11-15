@@ -7,11 +7,11 @@
 
 namespace Spryker\Service\Kernel\ClassResolver\Service;
 
+use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
-use Exception;
 
 class ServiceNotFoundException extends Exception
 {

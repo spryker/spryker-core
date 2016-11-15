@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel;
 
 use LogicException;
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
-use Spryker\Shared\Kernel\Locator\LocatorMatcherFilterInterface;
 
 class BundleProxy
 {

@@ -10,5 +10,4 @@ use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
 class UtilNetworkDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

@@ -26,4 +26,5 @@ class Host implements HostInterface
 
         return self::$hostname;
     }
+
 }

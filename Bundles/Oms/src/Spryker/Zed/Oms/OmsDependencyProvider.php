@@ -13,10 +13,10 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
-use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge AS PersistenceOmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {

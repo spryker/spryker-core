@@ -19,4 +19,5 @@ class UtilNetworkServiceFactory extends AbstractServiceFactory
     {
         return new Host();
     }
+
 }

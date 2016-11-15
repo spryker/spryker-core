@@ -14,7 +14,7 @@ use Unit\Spryker\Service\Kernel\ClassResolver\AbstractResolverTest;
 /**
  * @group Unit
  * @group Spryker
- * @group Yves
+ * @group Service
  * @group Kernel
  * @group ClassResolver
  * @group DependencyProvider

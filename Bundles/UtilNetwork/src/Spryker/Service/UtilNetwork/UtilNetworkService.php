@@ -30,4 +30,5 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
             ->createHost()
             ->getHostname();
     }
+
 }

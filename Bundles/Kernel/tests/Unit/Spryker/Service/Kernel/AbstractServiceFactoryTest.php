@@ -7,7 +7,6 @@
 
 namespace Unit\Spryker\Service\Kernel;
 
-use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 use Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Unit\Spryker\Service\Kernel\Fixtures\ServiceFactory;
@@ -17,7 +16,7 @@ use Unit\Spryker\Service\Kernel\Fixtures\ServiceFactory;
  * @group Spryker
  * @group Service
  * @group Kernel
- * @group AbstractFactoryTest
+ * @group AbstractServiceFactoryTest
  */
 class AbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {

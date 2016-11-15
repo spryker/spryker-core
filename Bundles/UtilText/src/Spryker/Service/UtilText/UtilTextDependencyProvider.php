@@ -10,5 +10,4 @@ use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
 class UtilTextDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }
