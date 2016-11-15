@@ -71,7 +71,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     {
         $bundleNameFinder = new BundleNameFinder([
             BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => Config::get(ApplicationConstants::PROJECT_NAMESPACE) . DIRECTORY_SEPARATOR,
-            BundleNameFinder::OPTION_KEY_APPLICATION => '*',//self::APPLICATION_ZED,
+            BundleNameFinder::OPTION_KEY_APPLICATION => '*',
         ]);
 
         $options = [
