@@ -99,7 +99,7 @@ class CustomerTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|array
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
