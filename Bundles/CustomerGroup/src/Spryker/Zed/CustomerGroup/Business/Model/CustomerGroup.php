@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\CustomerGroup\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerGroup\Business\Exception\CustomerGroupNotFoundException;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 
@@ -41,10 +44,30 @@ class CustomerGroup
 
         $customers = $customerGroupEntity->getSpyCustomerGroupToCustomers();
         if ($customers) {
-            //$customerGroupTransfer->setAddresses($this->entityCollectionToTransferCollection($customers, $customerGroupEntity));
+            $customerGroupTransfer->setCustomers($this->entityCollectionToTransferCollection($customers));
         }
 
         return $customerGroupTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer[]
+     */
+    protected function entityCollectionToTransferCollection(ObjectCollection $entities)
+    {
+        $customerArray = new ArrayObject();
+
+        /** @var \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer $entity */
+        foreach ($entities->getData() as $entity) {
+            $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
+            $customerGroupToCustomerTransfer->fromArray($entity->toArray(), true);
+
+            $customerArray[] = $customerGroupToCustomerTransfer;
+        }
+
+        return $customerArray;
     }
 
     /**

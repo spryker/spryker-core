@@ -8,8 +8,13 @@
 namespace Functional\Spryker\Zed\CustomerGroup\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
 
 /**
@@ -32,6 +37,11 @@ class CustomerGroupFacadeTest extends Test
         $customerGroupEntity->setName('Test' . time());
         $customerGroupEntity->save();
 
+        $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
+        $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+        $customerGroupToCustomerEntity->setFkCustomer(1);
+        $customerGroupToCustomerEntity->save();
+
         $customerGroupFacade = new CustomerGroupFacade();
 
         $customerGroupTransfer = new CustomerGroupTransfer();
@@ -39,6 +49,11 @@ class CustomerGroupFacadeTest extends Test
 
         $resultTransfer = $customerGroupFacade->get($customerGroupTransfer);
         $this->assertSame($customerGroupEntity->getName(), $resultTransfer->getName());
+
+        $customers = $resultTransfer->getCustomers();
+        foreach ($customers as $customer) {
+            $this->assertSame(1, $customer->getFkCustomer());
+        }
     }
 
     /**
@@ -48,12 +63,173 @@ class CustomerGroupFacadeTest extends Test
     {
         $customerGroupFacade = new CustomerGroupFacade();
 
+        $customerEntityOne = $this->createCustomer();
+        $customerEntityTwo = $this->createCustomer('two@second.de', 'Second', 'Two', 'two');
+
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setName('Foo');
         $customerGroupTransfer->setDescription('Descr');
 
+        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
+        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityOne->getIdCustomer());
+        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+
+        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
+        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityTwo->getIdCustomer());
+        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+
         $resultTransfer = $customerGroupFacade->add($customerGroupTransfer);
         $this->assertNotEmpty($resultTransfer->getIdCustomerGroup());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateValid()
+    {
+        $customerGroupFacade = new CustomerGroupFacade();
+
+        $customerGroup = [
+            'name' => 'Test' . time(),
+            'description' => 'Test' . time(),
+        ];
+
+        $customerGroupEntity = new SpyCustomerGroup();
+        $customerGroupEntity->fromArray($customerGroup);
+        $customerGroupEntity->save();
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+
+        $customerGroupTransfer->setName('Foo');
+        $customerGroupTransfer->setDescription('Descr');
+
+        $customerGroupFacade->update($customerGroupTransfer);
+
+        $customerGroupQuery = SpyCustomerGroupQuery::create();
+        $updatedCustomerGroupEntity = $customerGroupQuery->filterByIdCustomerGroup($customerGroupEntity->getIdCustomerGroup())->findOne();
+
+        $this->assertSame('Foo', $updatedCustomerGroupEntity->getName());
+        $this->assertSame('Descr', $updatedCustomerGroupEntity->getDescription());
+    }
+
+    /**
+     * We remove one customer and add another one.
+     *
+     * @return void
+     */
+    public function testUpdateCustomersValid()
+    {
+        $customerGroupFacade = new CustomerGroupFacade();
+
+        $customerGroup = [
+            'name' => 'Test' . time(),
+        ];
+
+        $customerGroupEntity = new SpyCustomerGroup();
+        $customerGroupEntity->fromArray($customerGroup);
+        $customerGroupEntity->save();
+
+        $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
+        $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+        $customerGroupToCustomerEntity->setFkCustomer(1);
+        $customerGroupToCustomerEntity->save();
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+
+        $customerEntityOne = $this->createCustomer();
+        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
+        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityOne->getIdCustomer());
+        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+
+        $customerGroupTransfer->setName('Foo');
+        $customerGroupTransfer->setDescription('Descr');
+
+        $customerGroupFacade->update($customerGroupTransfer);
+
+        $customerGroupToCustomerQuery = SpyCustomerGroupToCustomerQuery::create();
+        $customerGroupToCustomerArray = $customerGroupToCustomerQuery->filterByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())->find()->toArray();
+
+        $this->assertCount(1, $customerGroupToCustomerArray);
+        $this->assertSame($customerEntityOne->getIdCustomer(), $customerGroupToCustomerArray[0]['FkCustomer']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteValid()
+    {
+        $customerGroupFacade = new CustomerGroupFacade();
+
+        $customerGroupEntity = new SpyCustomerGroup();
+        $customerGroupEntity->setName('Test' . time());
+        $customerGroupEntity->save();
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+
+        $customerGroupFacade->delete($customerGroupTransfer);
+
+        $customerGroupQuery = SpyCustomerGroupQuery::create();
+        $customerGroupEntity = $customerGroupQuery->filterByIdCustomerGroup($customerGroupEntity->getIdCustomerGroup())->findOne();
+
+        $this->assertNull($customerGroupEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCustomersFromGroupValid()
+    {
+        $customerGroupFacade = new CustomerGroupFacade();
+
+        $customerGroupEntity = new SpyCustomerGroup();
+        $customerGroupEntity->setName('Test' . time());
+        $customerGroupEntity->save();
+
+        $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
+        $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+        $customerGroupToCustomerEntity->setFkCustomer(1);
+        $customerGroupToCustomerEntity->save();
+
+        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
+        $customerGroupToCustomerTransfer->setFkCustomer(1);
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+
+        $customerGroupFacade->removeCustomersFromGroup($customerGroupTransfer);
+
+        $customerGroupToCustomerQuery = SpyCustomerGroupToCustomerQuery::create();
+        $customerEntity = $customerGroupToCustomerQuery
+            ->filterByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())
+            ->filterByFkCustomer(1)
+            ->findOne();
+
+        $this->assertNull($customerEntity);
+    }
+
+    /**
+     * @param string $email
+     * @param string $lastName
+     * @param string $firstName
+     * @param string $reference
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected function createCustomer($email = 'one@first.de', $lastName = 'First', $firstName = 'One', $reference = 'one')
+    {
+        $customerEntity = new SpyCustomer();
+        $customerEntity->setFirstName($firstName);
+        $customerEntity->setFirstName($lastName);
+        $customerEntity->setCustomerReference($reference);
+        $customerEntity->setEmail($email);
+
+        $customerEntity->save();
+
+        return $customerEntity;
     }
 
 }
