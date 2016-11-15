@@ -14,8 +14,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "^2.2.0"
+    "spryker/propel": "^2.2.0",
+    "spryker/testify": "*"
   },
   "description": "DummyPayment bundle",
   "license": "proprietary",
