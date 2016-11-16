@@ -41,6 +41,7 @@ class CategoryFormDelete extends CategoryFormEdit
         $builder
             ->add(self::DELETE_CHILDREN, 'checkbox', [
                 'label' => 'Delete subcategories',
+                'required' => false,
             ]);
 
         return $this;
@@ -59,6 +60,7 @@ class CategoryFormDelete extends CategoryFormEdit
                 'label' => 'Or move them to category',
                 'choices' => $choices,
                 'multiple' => false,
+                'required' => false,
                 'constraints' => [
                     new CategoryFieldNotBlank([
                         'categoryFieldName' => self::FIELD_FK_PARENT_CATEGORY_NODE,
