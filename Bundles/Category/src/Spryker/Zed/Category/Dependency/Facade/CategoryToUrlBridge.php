@@ -90,6 +90,8 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -101,6 +103,8 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -112,6 +116,8 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]

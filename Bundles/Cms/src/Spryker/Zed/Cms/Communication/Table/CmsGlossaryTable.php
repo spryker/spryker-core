@@ -158,7 +158,11 @@ class CmsGlossaryTable extends AbstractTable
      */
     protected function buildPlaceholderLinks($placeholder)
     {
-        return '<a href="/cms/glossary/add/?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage . '&placeholder=' . $placeholder . '" class="btn btn-xs btn-white">Add Glossary</a>';
+        $url = Url::generate('/cms/glossary/add', [
+            CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+            'placeholder' => $placeholder
+        ]);
+        return '<a href="' . $url . '" class="btn btn-xs btn-white">Add Glossary</a>';
     }
 
     /**

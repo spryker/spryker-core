@@ -18,6 +18,8 @@ interface ProductCategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -34,6 +36,8 @@ interface ProductCategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -44,6 +48,8 @@ interface ProductCategoryFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -88,6 +94,8 @@ interface ProductCategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param array $productPreConfig
      *
@@ -98,6 +106,8 @@ interface ProductCategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -107,6 +117,8 @@ interface ProductCategoryFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
@@ -119,6 +131,8 @@ interface ProductCategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -130,6 +144,8 @@ interface ProductCategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
@@ -138,5 +154,24 @@ interface ProductCategoryFacadeInterface
      * @return void
      */
     public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeAllProductMappingsForCategory($idCategory);
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer);
 
 }

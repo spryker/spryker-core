@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Tree;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class CategoryTreeFormat
 {
 

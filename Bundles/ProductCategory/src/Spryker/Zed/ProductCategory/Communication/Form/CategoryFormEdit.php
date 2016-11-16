@@ -9,7 +9,11 @@ namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormEdit extends CategoryFormAdd
 {
 
@@ -17,16 +21,15 @@ class CategoryFormEdit extends CategoryFormAdd
     const FIELD_META_DESCRIPTION = 'meta_description';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
-    const FIELD_CATEGORY_ROBOTS = 'robots';
-    const FIELD_CATEGORY_CANONICAL = 'canonical';
-    const FIELD_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
 
-    const CATEGORY_IS_ACTIVE = 'is_active';
-    const CATEGORY_IS_IN_MENU = 'is_in_menu';
-    const CATEGORY_IS_CLICKABLE = 'is_clickable';
-    const CATEGORY_NODE_IS_MAIN = 'is_main';
+    const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_IS_IN_MENU = 'is_in_menu';
+    const FIELD_IS_CLICKABLE = 'is_clickable';
+    const FIELD_IS_MAIN = 'is_main';
+    const FIELD_NODE_ORDER = 'node_order';
 
-    const EXTRA_PARENTS = 'extra_parents';
+    const FIELD_EXTRA_PARENTS = 'extra_parents';
+    const LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -37,11 +40,7 @@ class CategoryFormEdit extends CategoryFormAdd
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addNameField($builder)
             ->addCategoryKeyField($builder)
-            ->addMetaTitleField($builder)
-            ->addMetaDescriptionField($builder)
-            ->addMetaKeywordsField($builder)
             ->addCategoryIsActiveField($builder)
             ->addCategoryIsInMenuField($builder)
             ->addCategoryIsClickableField($builder)
@@ -52,7 +51,8 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addProductsToBeAssignedField($builder)
             ->addProductsToBeDeassignedField($builder)
             ->addProductsOrderField($builder)
-            ->addProductCategoryPreconfigField($builder);
+            ->addProductCategoryPreconfigField($builder)
+            ->addLocalizedAttributesForm($builder);
     }
 
     /**
@@ -111,7 +111,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsActiveField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_ACTIVE, 'checkbox', [
+            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ]);
 
@@ -126,7 +126,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsInMenuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_IN_MENU, 'checkbox', [
+            ->add(self::FIELD_IS_IN_MENU, 'checkbox', [
                 'label' => 'Show in Menu',
             ]);
 
@@ -141,7 +141,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addCategoryIsClickableField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::CATEGORY_IS_CLICKABLE, 'hidden', [
+            ->add(self::FIELD_IS_CLICKABLE, 'hidden', [
                 'label' => 'Clickable',
             ]);
 
@@ -157,7 +157,7 @@ class CategoryFormEdit extends CategoryFormAdd
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::EXTRA_PARENTS, new Select2ComboBoxType(), [
+            ->add(self::FIELD_EXTRA_PARENTS, new Select2ComboBoxType(), [
                 'label' => 'Additional Parents',
                 'choices' => $choices,
                 'multiple' => true,
@@ -242,6 +242,70 @@ class CategoryFormEdit extends CategoryFormAdd
                 'attr' => [
                     'id' => 'product_category_preconfig',
                 ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCategoryKeyField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_CATEGORY_KEY, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addCategoryNodeField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder
+            ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
+                'label' => 'Parent',
+                'choices' => $choices,
+                'constraints' => [
+                    new NotBlank(),
+                ]
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPkCategoryNodeField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_PK_CATEGORY_NODE, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::LOCALIZED_ATTRIBUTES, 'collection', [
+                'type' => new CategoryAttributeLocalizedForm()
             ]);
 
         return $this;

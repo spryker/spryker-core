@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class CategoryNameExists extends Constraint
 {
 

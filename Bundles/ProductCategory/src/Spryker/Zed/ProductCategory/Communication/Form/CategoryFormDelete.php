@@ -11,6 +11,9 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormDelete extends CategoryFormEdit
 {
 

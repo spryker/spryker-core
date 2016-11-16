@@ -21,20 +21,25 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function hasCategoryNode($categoryName, LocaleTransfer $locale)
+    public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->hasCategoryNode($categoryName, $locale);
+            ->hasCategoryNode($categoryName, $localeTransfer);
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      *
@@ -42,11 +47,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNodeById($idNode)
     {
-        $nodeEntity = $this->getFactory()
+        $nodeEntity = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getNodeById($idNode);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNode($nodeEntity);
     }
@@ -54,34 +61,44 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
-    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale)
+    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->getCategoryNodeIdentifier($categoryName, $locale);
+            ->getCategoryNodeIdentifier($categoryName, $localeTransfer);
     }
 
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
-    public function getCategoryIdentifier($categoryName, LocaleTransfer $locale)
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->getCategoryIdentifier($categoryName, $locale);
+            ->getCategoryIdentifier($categoryName, $localeTransfer);
     }
 
     /**
+     * Specification:
+     *  - Finds all category-node entities for idCategory
+     *  - Returns hydrated NodeTransfer collection
+     *
      * @api
      *
      * @param int $idCategory
@@ -90,17 +107,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getFactory()
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getAllNodesByIdCategory($idCategory);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      *
@@ -108,17 +129,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getMainNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getFactory()
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getMainNodesByIdCategory($idCategory);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      *
@@ -126,62 +151,178 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getFactory()
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getNotMainNodesByIdCategory($idCategory);
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
+     * Specification:
+     *  - Reads entity for idCategory from persistence
+     *  - Hydrates data from entities to CategoryTransfer
+     *  - Returns CategoryTransfer
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function read($idCategory)
+    {
+        return $this
+            ->getFactory()
+            ->createCategory()
+            ->read($idCategory);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $category, LocaleTransfer $locale)
+    public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryWriter()
-            ->create($category, $locale);
+            ->create($categoryTransfer, $localeTransfer);
     }
 
     /**
+     * Specification:
+     *  - Hydrates category entity from CategoryTransfer and persists it
+     *  - Hydrates category-node entity from nested NodeTransfer and persists it
+     *  - Hydrates category-attribute entities from nested CategoryLocalizedAttributesTransfer (for all given locals) and persists them
+     *  - Hydrates extra-parent category-node entities from nested NodeTransfer and persists them
+     *  - Generates urls from category names for all given locales (names are part of the attributes)
+     *  - Hydrates url entities from generated urls and persists them
+     *  - Hydrates persisted entity identifiers into CategoryTransfer (and nested transfers)
+     *  - Touches created category-node entities active (via TouchFacade)
+     *  - Touches navigation (via TouchFacade)
+     *  - Touches created url entities active (via TouchFacade)
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $category, LocaleTransfer $locale)
+    public function create(CategoryTransfer $categoryTransfer)
     {
-        $this->getFactory()
-            ->createCategoryWriter()
-            ->update($category, $locale);
+        $this
+            ->getFactory()
+            ->createCategory()
+            ->create($categoryTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $category
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
+    public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryWriter()
-            ->addCategoryAttribute($category, $locale);
+            ->update($categoryTransfer, $localeTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Finds category entity, hydrates it from CategoryTransfer, and persists it
+     *  - Finds category-node entity, hydrates it from CategoryTransfer, and persists it
+     *  - Finds category-attribute entities (for all given locals), hydrates them from CategoryTransfer, and persists them
+     *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
+     *  - Generates urls from category names for all given locales (names are part of the attributes)
+     *  - Finds url entities, hydrates them with generated URLs, and persists them
+     *  - Touches modified category-node entities active (via TouchFacade)
+     *  - Touches modified url entities active (via TouchFacade)
+     *  - Touches navigation active (via TouchFacade)
+     *
+     *  - If parentCategoryNode changes:
+     *   - Finds existing url entities for existing parent path and removes them from persistence
+     *   - Re-generates urls for new path, hydrates url entities with generated urls, and persists them
+     *   - Touches modified category-node entities active
+     *   - Touches all category-node entities in path active
+     *   - Touches modified URL entities active (via TouchFacade)
+     *   - Touches removed URL entities deleted (via TouchFacade)
+     *   - Touches navigation active (via TouchFacade)
+     *
+     *  - If existing extra-parent category-nodes entities are missing from CategoryTransfer:
+     *   - Finds related extra-parent category-node entities and removes them from persistence
+     *   - Finds related url entities and removes them from persistence
+     *   - Finds sub-trees for all extra-parent category-nodes and moves them to the next higher node in the tree
+     *   - Updates all category-node entities of all sub-trees that are moved
+     *   - Touches removed category-node entities deleted (via TouchFacade)
+     *   - Touches all category-node entities in path active (via TouchFacade)
+     *   - Touches removed URL entities deleted (via TouchFacade)
+     *   - Touches navigation active (via TouchFacade)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     *
+     * @return void
+     */
+    public function update(CategoryTransfer $categoryTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createCategory()
+            ->update($categoryTransfer);
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    {
+        $this
+            ->getFactory()
+            ->createCategoryWriter()
+            ->addCategoryAttribute($categoryTransfer, $localeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      *
@@ -189,66 +330,130 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function deleteCategory($idCategory)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryWriter()
+            ->delete($idCategory);
+    }
+
+    /**
+     * Specification:
+     *  - Finds category entity and removes them from persistence
+     *  - Finds category-node entity (main path) and removes it from persistence
+     *  - Finds category-attribute entities and removes them from persistence
+     *  - Finds extra-parent category-nodes and removes them from persistence
+     *  - Finds url entities and removes them from persistence
+     *  - Finds sub-trees for all category-nodes to be deleted and moves them to the next higher node in the tree
+     *  - Updates all category-node entities of all sub-trees that are moved
+     *  - Touches all deleted category-node entities deleted (via TouchFacade)
+     *  - Touches all deleted url entities deleted (via TouchFacade)
+     *  - Touches navigation active (via TouchFacade)
+     *  - Calls all registered CategoryRelationDeletePluginInterface-plugins directly before removing the category entity
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *
+     * @return void
+     */
+    public function delete($idCategory)
+    {
+        $this
+            ->getFactory()
+            ->createCategory()
             ->delete($idCategory);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $createUrlPath
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true)
+    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeWriter()
-            ->createCategoryNode($categoryNode, $locale, $createUrlPath);
+            ->createCategoryNode($nodeTransfer, $localeTransfer, $createUrlPath);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createCategoryTreeWriter()
-            ->updateNode($categoryNode, $locale);
+            ->updateNode($categoryNodeTransfer, $localeTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Finds category-node entity, updates node_order field, and persists it
+     *  - Touches category-node entity active
+     *  - Touches navigation active
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateCategoryNodeOrder($idCategoryNode, $position)
+    {
+        $this
+            ->getFactory()
+            ->createNodeWriter()
+            ->updateOrder($idCategoryNode, $position);
     }
 
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param bool $deleteChildren
      *
      * @return int
      */
-    public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
+    public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeWriter()
-            ->deleteNode($idNode, $locale, $deleteChildren);
+            ->deleteNode($idNode, $localeTransfer, $deleteChildren);
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @return bool
      */
     public function renderCategoryTreeVisual()
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeRenderer()
             ->render();
     }
@@ -256,15 +461,19 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getRootNodes()
     {
-        $rootNodes = $this->getFactory()
+        $rootNodes = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getRootNodes();
 
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($rootNodes);
     }
@@ -272,78 +481,121 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function getTree($idCategory, LocaleTransfer $locale)
+    public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->getTree($idCategory, $locale);
+            ->getTree($idCategory, $localeTransfer);
     }
 
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function getChildren($idNode, LocaleTransfer $locale)
+    public function getChildren($idNode, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->getChildren($idNode, $locale);
+            ->getChildren($idNode, $localeTransfer);
     }
 
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param bool $excludeStartNode
      *
      * @return array
      */
-    public function getParents($idNode, LocaleTransfer $locale, $excludeStartNode = true)
+    public function getParents($idNode, LocaleTransfer $localeTransfer, $excludeStartNode = true)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->getParents($idNode, $locale, $excludeStartNode);
+            ->getParents($idNode, $localeTransfer, $excludeStartNode);
     }
 
     /**
+     * Specification:
+     *  - Finds first category-node for idCategory and finds all of its children
+     *  - Formats all child category-nodes as a nested array structure
+     *  - Returns array representation of sub-tree
+     *
      * @api
      *
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $locale)
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
-            ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $locale);
+            ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
     }
 
     /**
+     * Specification:
+     *  - Finds all category-nodes that are children of idCategoryNode
+     *  - Formats all child category-nodes as a nested array structure
+     *  - Return array representation of ub-tree
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        return $this
+            ->getFactory()
+            ->createCategoryTreeReader()
+            ->getSubTree($idCategoryNode, $localeTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Removes circular relations from closure table
+     *  - Finds all category-node entities, removes them, and re-creates them in closure table
+     *
      * @api
      *
      * @return void
      */
     public function rebuildClosureTable()
     {
-        $this->getFactory()
-            ->createCategoryTreeWriter()
-            ->rebuildClosureTable();
+        $this
+            ->getFactory()
+            ->createClosureTableWriter()
+            ->rebuildCategoryNodes();
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param array $pathTokens
      *
@@ -351,13 +603,16 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function generatePath(array $pathTokens)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createUrlPathGenerator()
             ->generate($pathTokens);
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param array $categoryKey
      * @param int $idLocale
@@ -366,9 +621,29 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getCategoryByKey($categoryKey, $idLocale)
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getCategoryByKey($categoryKey, $idLocale);
+    }
+
+    /**
+     * Specification:
+     *  - Finds all category-node entities for idCategory
+     *  - Touches all nodes active
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function touchCategoryActive($idCategory)
+    {
+        $this
+            ->getFactory()
+            ->createCategoryToucher()
+            ->touchCategoryActive($idCategory);
     }
 
 }

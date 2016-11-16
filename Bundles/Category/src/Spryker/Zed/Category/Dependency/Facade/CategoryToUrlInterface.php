@@ -63,6 +63,8 @@ interface CategoryToUrlInterface
     public function getUrlByPath($urlString);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -71,6 +73,8 @@ interface CategoryToUrlInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -79,6 +83,8 @@ interface CategoryToUrlInterface
     public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
