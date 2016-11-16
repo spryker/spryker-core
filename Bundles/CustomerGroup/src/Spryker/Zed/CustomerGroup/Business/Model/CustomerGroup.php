@@ -108,7 +108,7 @@ class CustomerGroup
 
         $this->queryContainer
             ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())
-            ->deleteAll();
+            ->delete();
 
         $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
 
