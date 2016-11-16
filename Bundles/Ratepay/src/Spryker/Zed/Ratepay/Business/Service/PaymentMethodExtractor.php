@@ -16,14 +16,14 @@ class PaymentMethodExtractor implements PaymentMethodExtractorInterface
     /**
      * @var array
      */
-    protected $paymentMethodsMap;
+    protected $paymentMethodsMapping;
 
     /**
-     * @param array $paymentMethodsMap
+     * @param array $paymentMethodsMapping
      */
-    public function __construct(array $paymentMethodsMap)
+    public function __construct(array $paymentMethodsMapping)
     {
-        $this->paymentMethodsMap = $paymentMethodsMap;
+        $this->paymentMethodsMapping = $paymentMethodsMapping;
     }
 
     /**
@@ -40,10 +40,10 @@ class PaymentMethodExtractor implements PaymentMethodExtractorInterface
         }
         $payment = $quoteTransfer->getPayment();
         $paymentMethodName = $payment->getPaymentMethod();
-        if (!isset($this->paymentMethodsMap[$paymentMethodName])) {
+        if (!isset($this->paymentMethodsMapping[$paymentMethodName])) {
             throw new NoPaymentMethodException();
         }
-        $paymentMethodGet = 'get' . ucfirst($this->paymentMethodsMap[$paymentMethodName]);
+        $paymentMethodGet = 'get' . ucfirst($this->paymentMethodsMapping[$paymentMethodName]);
 
         return $payment->$paymentMethodGet();
     }

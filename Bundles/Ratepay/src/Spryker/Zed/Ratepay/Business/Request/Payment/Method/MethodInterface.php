@@ -72,18 +72,4 @@ interface MethodInterface
      */
     public function paymentRefund(OrderTransfer $orderTransfer, array $orderItems);
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
-     */
-    public function configurationRequest(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
-     */
-    public function calculationRequest(QuoteTransfer $quoteTransfer);
-
 }
