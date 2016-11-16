@@ -7,7 +7,7 @@
   },
   "require": {
     "spryker/application": "^2.0.0",
-    "spryker/category": "^2.0.0",
+    "spryker/category": "^2.2.0",
     "spryker/cms": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
