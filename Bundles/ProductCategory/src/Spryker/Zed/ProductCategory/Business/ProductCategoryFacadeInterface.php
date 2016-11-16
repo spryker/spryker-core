@@ -16,9 +16,9 @@ interface ProductCategoryFacadeInterface
 {
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $sku
      * @param string $categoryName
@@ -34,9 +34,9 @@ interface ProductCategoryFacadeInterface
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $sku
      * @param string $categoryName
@@ -47,9 +47,9 @@ interface ProductCategoryFacadeInterface
     public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -92,9 +92,9 @@ interface ProductCategoryFacadeInterface
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param array $productPreConfig
@@ -104,9 +104,9 @@ interface ProductCategoryFacadeInterface
     public function updateProductCategoryPreConfig($idCategory, array $productPreConfig);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -116,9 +116,9 @@ interface ProductCategoryFacadeInterface
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
@@ -129,9 +129,9 @@ interface ProductCategoryFacadeInterface
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
@@ -142,9 +142,9 @@ interface ProductCategoryFacadeInterface
     public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode

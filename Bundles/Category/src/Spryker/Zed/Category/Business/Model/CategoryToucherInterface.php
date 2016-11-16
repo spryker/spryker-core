@@ -45,4 +45,3 @@ interface CategoryToucherInterface
     public function touchCategoryActive($idCategory);
 
 }
-

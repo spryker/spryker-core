@@ -20,9 +20,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
 {
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $sku
      * @param string $categoryName
@@ -38,9 +38,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param string $sku
      * @param string $categoryName
@@ -56,9 +56,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -121,9 +121,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param array $productPreConfig
@@ -138,9 +138,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -155,9 +155,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
@@ -173,9 +173,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
@@ -191,9 +191,9 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode

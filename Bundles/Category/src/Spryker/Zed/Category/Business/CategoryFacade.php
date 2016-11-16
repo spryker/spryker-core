@@ -170,10 +170,10 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
+     * @param int $idCategory
+     *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     *
-     * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
@@ -284,12 +284,12 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
      * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
@@ -352,9 +352,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
      * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return void
      */

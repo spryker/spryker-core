@@ -18,6 +18,7 @@ use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     /**
      * @deprecated Will be removed with next major release
      */
