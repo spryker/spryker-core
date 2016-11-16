@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Orm\Zed\Oms\Persistence\Base\SpyOmsProductReservationQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
@@ -46,19 +47,27 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function createSalesOrderItemQuery()
-    {
-        return SpySalesOrderItemQuery::create();
-    }
-
-    /**
      * @return \Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
      */
     public function createOmsStateMachineLockQuery()
     {
         return SpyOmsStateMachineLockQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function createOmsProductReservationQuery()
+    {
+        return SpyOmsProductReservationQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesInterface
+     */
+    public function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
 }

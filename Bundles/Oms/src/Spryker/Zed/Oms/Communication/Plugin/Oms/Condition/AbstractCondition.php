@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()

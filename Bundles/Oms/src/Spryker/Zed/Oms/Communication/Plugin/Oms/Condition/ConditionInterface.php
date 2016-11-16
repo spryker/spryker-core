@@ -7,16 +7,11 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface AS DependencyConditionInterface;
 
-interface ConditionInterface
+/**
+ * Deprecated use instead Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+ */
+interface ConditionInterface extends DependencyConditionInterface
 {
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
-     *
-     * @return bool
-     */
-    public function check(SpySalesOrderItem $orderItem);
-
 }

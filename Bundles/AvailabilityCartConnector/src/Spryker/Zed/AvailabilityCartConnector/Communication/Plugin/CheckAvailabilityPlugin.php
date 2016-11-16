@@ -7,33 +7,25 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @method \Spryker\Zed\AvailabilityCartConnector\Business\AvailabilityCartConnectorFacade getFacade()
  * @method \Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorCommunicationFactory getFactory()
  */
-class CheckAvailabilityPlugin extends AbstractPlugin
+class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
 
     /**
-     * @param string $sku
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function isProductSellable($sku, $quantity)
+    public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku)
-    {
-        return $this->getFactory()->getAvailabilityFacade()->calculateStockForProduct($sku);
+        return $this->getFacade()->checkCartAvailability($cartChangeTransfer);
     }
 
 }

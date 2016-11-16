@@ -9,9 +9,9 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\Availability\AvailabilityConfig;
 
-class ProductsAvailableCheckoutPreCondition
+class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
 
     /**
@@ -20,11 +20,17 @@ class ProductsAvailableCheckoutPreCondition
     protected $sellable;
 
     /**
+     * @var \Spryker\Zed\Availability\AvailabilityConfig
+     */
+    protected $availabilityConfig;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      */
-    public function __construct(SellableInterface $sellable)
+    public function __construct(SellableInterface $sellable, AvailabilityConfig $availabilityConfig)
     {
         $this->sellable = $sellable;
+        $this->availabilityConfig = $availabilityConfig;
     }
 
     /**
@@ -38,16 +44,10 @@ class ProductsAvailableCheckoutPreCondition
         $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
-            if (!$this->isProductSellable($sku, $quantity)) {
-                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
-                $checkoutErrorTransfer
-                    ->setErrorCode(CheckoutConstants::ERROR_CODE_PRODUCT_UNAVAILABLE)
-                    ->setMessage('product.unavailable');
-
-                $checkoutResponse
-                    ->addError($checkoutErrorTransfer)
-                    ->setIsSuccess(false);
+            if ($this->isProductSellable($sku, $quantity) === true) {
+                continue;
             }
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse);
         }
     }
 
@@ -71,13 +71,13 @@ class ProductsAvailableCheckoutPreCondition
     {
         $result = [];
 
-        foreach ($items as $item) {
-            $sku = $item->getSku();
+        foreach ($items as $itemTransfer) {
+            $sku = $itemTransfer->getSku();
 
             if (!isset($result[$sku])) {
                 $result[$sku] = 0;
             }
-            $result[$sku] += $item->getQuantity();
+            $result[$sku] += $itemTransfer->getQuantity();
         }
 
         return $result;
@@ -89,6 +89,23 @@ class ProductsAvailableCheckoutPreCondition
     protected function createCheckoutErrorTransfer()
     {
         return new CheckoutErrorTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse)
+    {
+        $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
+        $checkoutErrorTransfer
+            ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
+            ->setMessage('product.unavailable');
+
+        $checkoutResponse
+            ->addError($checkoutErrorTransfer)
+            ->setIsSuccess(false);
     }
 
 }

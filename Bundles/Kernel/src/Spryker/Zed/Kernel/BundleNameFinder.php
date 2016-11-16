@@ -47,12 +47,16 @@ class BundleNameFinder extends AbstractBundle
             . $this->options[self::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN]
             . $this->options[self::OPTION_KEY_APPLICATION];
 
-        $dirs = [
-            $projectBundlePathPattern,
-            $vendorBundlePathPattern,
-        ];
+        $directories = [];
 
-        return $dirs;
+        if (glob($projectBundlePathPattern)) {
+            $directories[] = $projectBundlePathPattern;
+        }
+        if (glob($vendorBundlePathPattern)) {
+            $directories[] = $vendorBundlePathPattern;
+        }
+
+        return $directories;
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Shared\Library\Log;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 class DecreaseStock implements CommandByItemInterface
@@ -22,9 +21,6 @@ class DecreaseStock implements CommandByItemInterface
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data)
     {
-        $message = sprintf('Command DecreaseStock by Item for Item %s (quantity %s)', $orderItem->getIdSalesOrderItem(), $orderItem->getQuantity());
-        Log::log($message, 'statemachine.log');
-
         return [];
     }
 

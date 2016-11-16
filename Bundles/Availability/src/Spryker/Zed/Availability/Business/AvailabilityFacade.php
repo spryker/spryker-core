@@ -18,6 +18,11 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 {
 
     /**
+     * Specification:
+     *  - Checks if product is never out of stock
+     *  - Checks if product have stock in productStock table
+     *  - Checks if have placed orders where items have statemachine state flagged as reserved
+     *
      * @api
      *
      * @param string $sku
@@ -27,10 +32,17 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getFactory()->createSellableModel()->isProductSellable($sku, $quantity);
+        return $this->getFactory()
+            ->createSellableModel()
+            ->isProductSellable($sku, $quantity);
     }
 
     /**
+     * Specification:
+     *  - Checks if product have stock in productStock table
+     *  - Checks if have placed orders where items have statemachine state flagged as reserved
+     *  - Returns integer value which is Product stock - reserved state machine items.
+     *
      * @api
      *
      * @param string $sku
@@ -39,10 +51,16 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getFactory()->createSellableModel()->calculateStockForProduct($sku);
+        return $this->getFactory()
+            ->createSellableModel()
+            ->calculateStockForProduct($sku);
     }
 
     /**
+     * Specification:
+     *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
+     *  - Writes error message into CheckoutResponseTransfer
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -57,6 +75,47 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         $this->getFactory()
             ->createProductsAvailablePreCondition()
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     *
+     * Specification:
+     *  - Calculates current item stock, take into account reserved items
+     *  - Stores new stock for concrete product
+     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Touches availability abstract collector
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateAvailability($sku)
+    {
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->updateAvailability($sku);
+    }
+
+    /**
+     *
+     * Specification:
+     *  - Reads product availability data from persistense, stock, reservation, availability.
+     *  - Returns data for selected abstract product
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductReservationReader()
+            ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
 }

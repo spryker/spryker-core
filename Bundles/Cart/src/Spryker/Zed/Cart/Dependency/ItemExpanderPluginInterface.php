@@ -13,6 +13,12 @@ interface ItemExpanderPluginInterface
 {
 
     /**
+     * Specification:
+     * - This plugin is executed before cart add/remove items to persistence,
+     *   normally you would want to add more data (expand current cart) with details from zed persistence (price, product details, options)
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer

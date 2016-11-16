@@ -17,6 +17,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT = 'facade product';
+    const PLUGINS_STOCK_UPDATE = 'stock update plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +34,21 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
             return new StockToProductBridge($container->getLocator()->product()->facade());
         };
 
+        $container[self::PLUGINS_STOCK_UPDATE] = function (Container $container) {
+            return $this->getStockUpdateHandlerPlugins($container);
+        };
+
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     */
+    protected function getStockUpdateHandlerPlugins($container)
+    {
+        return [];
     }
 
 }
