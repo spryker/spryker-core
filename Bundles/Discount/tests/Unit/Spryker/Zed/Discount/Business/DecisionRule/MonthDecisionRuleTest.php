@@ -55,12 +55,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
         ComparatorOperatorsInterface $comparatorMock,
         \DateTime $currentDateTime
     ) {
-
-        $calendarWeekDecisionRule = $this->getMock(
-            MonthDecisionRule::class,
-            ['getCurrentDateTime'],
-            [$comparatorMock]
-        );
+        $calendarWeekDecisionRule = $this->getMockBuilder(MonthDecisionRule::class)->setMethods(['getCurrentDateTime'])->setConstructorArgs([$comparatorMock])->getMock();
 
         $calendarWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
 

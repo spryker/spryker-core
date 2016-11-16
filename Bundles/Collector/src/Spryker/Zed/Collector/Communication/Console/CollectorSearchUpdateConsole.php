@@ -39,10 +39,12 @@ class CollectorSearchUpdateConsole extends AbstractCollectorConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        $exportResults = $this->getFacade()->updateSearchByLocale($locale, $output);
+        $exportResults = $this->getFacade()->updateSearch($output);
 
-        $this->info($this->buildSummary($exportResults));
+        $message = $this->buildNestedSummary($exportResults);
+        $message = '<info>' . $message . '</info>';
+
+        $output->write($message);
     }
 
 }

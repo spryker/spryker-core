@@ -103,7 +103,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     /**
      * @param array $params
      *
-     * @return mixed
+     * @return array
      */
     protected function generateUrlArray(array $params)
     {

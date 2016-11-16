@@ -8,8 +8,8 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Client\Money\Plugin\MoneyPlugin;
+use Spryker\Shared\Search\SearchConfig;
 
 class QueryFactory implements QueryFactoryInterface
 {
@@ -55,13 +55,13 @@ class QueryFactory implements QueryFactoryInterface
     protected function createByFacetType(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
         switch ($facetConfigTransfer->getType()) {
-            case FacetConfigBuilder::TYPE_RANGE:
+            case SearchConfig::FACET_TYPE_RANGE:
                 return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
-            case FacetConfigBuilder::TYPE_PRICE_RANGE:
+            case SearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
 
-            case FacetConfigBuilder::TYPE_CATEGORY:
+            case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createTermQuery($facetConfigTransfer, $filterValue);
 
             default:
@@ -103,7 +103,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     protected function createNestedPriceRangeQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue)
     {
-        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->createCurrencyManager());
+        return new NestedPriceRangeQuery($facetConfigTransfer, $filterValue, $this->queryBuilder, $this->createMoneyPlugin());
     }
 
     /**
@@ -142,11 +142,11 @@ class QueryFactory implements QueryFactoryInterface
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    protected function createCurrencyManager()
+    protected function createMoneyPlugin()
     {
-        return CurrencyManager::getInstance();
+        return new MoneyPlugin();
     }
 
 }

@@ -54,7 +54,7 @@ interface SearchClientInterface
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return array
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
 
@@ -62,7 +62,7 @@ interface SearchClientInterface
      * Specification:
      * - Returns a statically cached instance (for performance reasons) of the search configuration
      * - The result is the union of the hard-coded and the dynamic configurations
-     * - Dynamic configuration is read from the storage cache
+     * - Dynamic configuration is provided by \Spryker\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins()
      *
      * @api
      *

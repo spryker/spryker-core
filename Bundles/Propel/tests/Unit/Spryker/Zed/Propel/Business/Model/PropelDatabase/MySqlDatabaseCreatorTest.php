@@ -48,7 +48,7 @@ class MySqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMySqlDatabaseCreatorMock()
     {
-        $mySqlDatabaseCreatorMock = $this->getMock(MySqlDatabaseCreator::class, ['getConnection']);
+        $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)->setMethods(['getConnection'])->getMock();
         $pdo = new \PDO('sqlite::memory:');
         $mySqlDatabaseCreatorMock->expects($this->once())->method('getConnection')->willReturn($pdo);
 

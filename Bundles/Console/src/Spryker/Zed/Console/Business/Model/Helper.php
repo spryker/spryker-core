@@ -172,7 +172,7 @@ trait Helper
      * @param string $question
      * @param string|null $default
      *
-     * @return mixed
+     * @return string|null
      */
     public function ask($question, $default = null)
     {

@@ -25,6 +25,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
      *
      * @param int $idSalesOrder
      *
+     * @throw \Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException
+     *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalsByIdSalesOrder($idSalesOrder)
@@ -40,6 +42,8 @@ class SalesAggregatorFacade extends AbstractFacade implements SalesAggregatorFac
      * @api
      *
      * @param int $idSalesOrderItem
+     *
+     * @throw \Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

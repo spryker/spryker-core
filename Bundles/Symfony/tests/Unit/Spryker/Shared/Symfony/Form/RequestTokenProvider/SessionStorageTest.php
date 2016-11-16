@@ -40,7 +40,7 @@ class SessionStorageTest extends Test
     {
         parent::setUp();
 
-        $this->sessionMock = $this->getMock(SessionInterface::class);
+        $this->sessionMock = $this->getMockBuilder(SessionInterface::class)->getMock();
         $this->sessionStorage = new SessionStorage($this->sessionMock);
     }
 

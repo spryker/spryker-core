@@ -45,21 +45,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createStorageExporter(),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createStorageExporter()
         );
-    }
-
-    /**
-     * @deprecated Use getTouchQueryContainer() instead
-     *
-     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
-     */
-    protected function createTouchQueryContainer()
-    {
-        trigger_error('Deprecated, use getTouchQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getTouchQueryContainer();
     }
 
     /**
@@ -188,8 +175,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($searchWriter),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createElasticsearchExporter($searchWriter)
         );
     }
 
@@ -201,8 +187,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($this->createSearchUpdateWriter()),
-            $this->getConfig()->getAvailableCollectorTypes()
+            $this->createElasticsearchExporter($this->createSearchUpdateWriter())
         );
     }
 

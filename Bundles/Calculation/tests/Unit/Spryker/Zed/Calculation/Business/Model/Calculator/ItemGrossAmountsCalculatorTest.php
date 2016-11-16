@@ -48,7 +48,7 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenItemQuantityIsNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $itemGrossAmountsCalculator = $this->createItemGrossAmountsCalculator();
 
@@ -61,7 +61,7 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenItemUnitPriceIsNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException(RequiredTransferPropertyException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         $itemGrossAmountsCalculator = $this->createItemGrossAmountsCalculator();
 

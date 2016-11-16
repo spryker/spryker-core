@@ -51,7 +51,7 @@ class CountryFacadeTest extends Test
      */
     protected function getMockLogger()
     {
-        return $this->getMock(MessengerInterface::class);
+        return $this->getMockBuilder(MessengerInterface::class)->getMock();
     }
 
     /**

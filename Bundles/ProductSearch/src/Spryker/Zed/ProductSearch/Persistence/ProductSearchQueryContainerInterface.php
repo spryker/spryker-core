@@ -56,4 +56,73 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      */
     public function querySearchPreferencesTable();
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryFilterPreferencesTable();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKey();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryProductSearchAttribute();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys();
+
+    /**
+     * @api
+     *
+     * @param bool $synced
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function queryProductSearchAttributeBySynced($synced);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
+     */
+    public function queryProductSearchAttributeArchive();
+
+    /**
+     * @api
+     *
+     * @param bool $synced
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
+     */
+    public function queryProductSearchAttributeMapBySynced($synced);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
+     */
+    public function queryProductSearchAttributeMapArchive();
+
+    /**
+     * @api
+     *
+     * @param array $attributeNames
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractByAttributeName(array $attributeNames);
+
 }

@@ -9,5 +9,4 @@ namespace Spryker\Shared\Product;
 
 interface ProductConstants
 {
-
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
-use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 
@@ -30,11 +29,11 @@ class WebHtmlErrorRenderer implements ErrorRendererInterface
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      *
      * @return string
      */
-    public function render(Exception $exception)
+    public function render($exception)
     {
         $errorPage = $this->getErrorPageForApplication();
 

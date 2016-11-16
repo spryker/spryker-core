@@ -33,7 +33,7 @@ interface PageMapBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
@@ -41,7 +41,7 @@ interface PageMapBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
@@ -49,7 +49,7 @@ interface PageMapBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
@@ -57,7 +57,7 @@ interface PageMapBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
@@ -66,7 +66,7 @@ interface PageMapBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $name
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
@@ -75,7 +75,7 @@ interface PageMapBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $name
-     * @param int $value
+     * @param int|array $value
      *
      * @return $this
      */

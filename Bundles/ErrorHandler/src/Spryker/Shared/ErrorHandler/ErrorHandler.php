@@ -10,6 +10,7 @@ namespace Spryker\Shared\ErrorHandler;
 use ErrorException;
 use Exception;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
+use Throwable;
 
 class ErrorHandler
 {
@@ -38,12 +39,12 @@ class ErrorHandler
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param bool $exit
      *
      * @return void
      */
-    public function handleException(Exception $exception, $exit = true)
+    public function handleException($exception, $exit = true)
     {
         $this->errorLogger->log($exception);
 
@@ -51,6 +52,8 @@ class ErrorHandler
             $this->send500Header();
             $this->cleanOutputBuffer();
             echo $this->errorRenderer->render($exception);
+        } catch (Throwable $internalException) {
+            $this->errorLogger->log($internalException);
         } catch (Exception $internalException) {
             $this->errorLogger->log($internalException);
         }

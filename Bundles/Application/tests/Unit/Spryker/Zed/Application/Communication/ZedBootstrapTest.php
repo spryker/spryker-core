@@ -76,13 +76,13 @@ class ZedBootstrapTest extends \PHPUnit_Framework_TestCase
      */
     protected function createZedBootstrapMock()
     {
-        return $this->getMock(ZedBootstrap::class, [
-                self::REGISTER_SERVICE_PROVIDER,
-                self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST,
-                self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST_WITH_AUTHENTICATION,
-                self::ADD_VARIABLES_TO_TWIG,
-                self::IS_AUTHENTICATION_ENABLED
-            ]);
+        return $this->getMockBuilder(ZedBootstrap::class)->setMethods([
+            self::REGISTER_SERVICE_PROVIDER,
+            self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST,
+            self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST_WITH_AUTHENTICATION,
+            self::ADD_VARIABLES_TO_TWIG,
+            self::IS_AUTHENTICATION_ENABLED
+        ])->getMock();
     }
 
 }

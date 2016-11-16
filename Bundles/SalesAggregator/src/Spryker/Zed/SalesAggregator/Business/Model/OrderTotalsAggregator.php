@@ -13,7 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class OrderTotalsAggregator
+class OrderTotalsAggregator implements OrderTotalsAggregatorInterface
 {
 
     /**

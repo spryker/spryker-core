@@ -63,7 +63,7 @@ class EditControllerTest extends Test
         $customerFacade = new CustomerFacade();
         $customerFacade->setFactory($customerBusinessFactory);
 
-        $controllerMock = $this->getMock(EditController::class, ['getFactory', 'getFacade']);
+        $controllerMock = $this->getMockBuilder(EditController::class)->setMethods(['getFactory', 'getFacade'])->getMock();
         $controllerMock->method('getFactory')->willReturn(new CustomerCommunicationFactory());
         $controllerMock->method('getFacade')->willReturn($customerFacade);
 

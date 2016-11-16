@@ -1,0 +1,33 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+
+.form-product-option-row, .form-product-option-translation-row {
+  .form-group {
+    vertical-align: top;
+    margin-top:5px;
+    margin-bottom:5px;
+  }
+
+}
+
+.select-all-btn {
+  .active {
+    font-weight: bold;
+  }
+}
+
+table.dataTable.gui-table-data {
+  width: 100% !important;
+}
+
+.copy-language {
+  display:block;
+}
+
+
+
+
+

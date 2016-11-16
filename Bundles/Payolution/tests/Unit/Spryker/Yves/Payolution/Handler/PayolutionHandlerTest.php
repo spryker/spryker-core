@@ -71,7 +71,7 @@ class PayolutionHandlerTest extends \PHPUnit_Framework_TestCase
         $paymentTransfer->setPaymentSelection('payolutionInvoice');
         $quoteTransfer->setPayment($paymentTransfer);
 
-        $this->setExpectedException(PaymentMethodNotFoundException::class);
+        $this->expectException(PaymentMethodNotFoundException::class);
 
         $paymentHandler->addPaymentToQuote($request, $quoteTransfer);
     }
@@ -81,7 +81,7 @@ class PayolutionHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function getPayolutionClientMock()
     {
-        return $this->getMock(PayolutionClientInterface::class);
+        return $this->getMockBuilder(PayolutionClientInterface::class)->getMock();
     }
 
 }

@@ -95,7 +95,8 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setNumFound(100)
             ->setCurrentPage(1)
             ->setMaxPage(10)
-            ->setCurrentItemsPerPage(10);
+            ->setCurrentItemsPerPage(10)
+            ->setConfig($searchConfig->getPaginationConfigBuilder()->get());
 
         return [$searchConfig, $totalHits, $requestParameters, $expectedResult];
     }
@@ -115,7 +116,8 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setNumFound(0)
             ->setCurrentPage(0)
             ->setMaxPage(0)
-            ->setCurrentItemsPerPage(10);
+            ->setCurrentItemsPerPage(10)
+            ->setConfig($searchConfig->getPaginationConfigBuilder()->get());
 
         return [$searchConfig, $totalHits, $requestParameters, $expectedResult];
     }
@@ -137,7 +139,8 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setNumFound(100)
             ->setCurrentPage(1)
             ->setMaxPage(10)
-            ->setCurrentItemsPerPage(10);
+            ->setCurrentItemsPerPage(10)
+            ->setConfig($searchConfig->getPaginationConfigBuilder()->get());
 
         return [$searchConfig, $totalHits, $requestParameters, $expectedResult];
     }
@@ -162,7 +165,8 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setNumFound(100)
             ->setCurrentPage($expectedPage)
             ->setMaxPage(10)
-            ->setCurrentItemsPerPage(10);
+            ->setCurrentItemsPerPage(10)
+            ->setConfig($searchConfig->getPaginationConfigBuilder()->get());
 
         return [$searchConfig, $totalHits, $requestParameters, $expectedResult];
     }
@@ -184,7 +188,8 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setNumFound(100)
             ->setCurrentPage(1)
             ->setMaxPage(2)
-            ->setCurrentItemsPerPage(50);
+            ->setCurrentItemsPerPage(50)
+            ->setConfig($searchConfig->getPaginationConfigBuilder()->get());
 
         return [$searchConfig, $totalHits, $requestParameters, $expectedResult];
     }
@@ -206,7 +211,8 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setNumFound(100)
             ->setCurrentPage(1)
             ->setMaxPage(10)
-            ->setCurrentItemsPerPage(10);
+            ->setCurrentItemsPerPage(10)
+            ->setConfig($searchConfig->getPaginationConfigBuilder()->get());
 
         return [$searchConfig, $totalHits, $requestParameters, $expectedResult];
     }

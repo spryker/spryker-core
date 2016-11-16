@@ -157,7 +157,7 @@ class StepEngineTest extends AbstractStepEngineTest
      */
     protected function getFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->getMockBuilder(FormInterface::class)->getMock();
     }
 
     /**
@@ -165,7 +165,7 @@ class StepEngineTest extends AbstractStepEngineTest
      */
     protected function getFormCollectionHandlerMock()
     {
-        return $this->getMock(FormCollectionHandlerInterface::class);
+        return $this->getMockBuilder(FormCollectionHandlerInterface::class)->getMock();
     }
 
     /**

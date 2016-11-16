@@ -13,7 +13,7 @@ interface QueryInterface
     /**
      * @api
      *
-     * @return mixed
+     * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery();
 

@@ -269,7 +269,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransferMock()
     {
-        $transfer = $this->getMock(TransferInterface::class);
+        $transfer = $this->getMockBuilder(TransferInterface::class)->getMock();
 
         return $transfer;
     }

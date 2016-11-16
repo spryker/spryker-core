@@ -8,25 +8,25 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class NestedPriceRangeQuery extends NestedRangeQuery
 {
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    protected $currencyManager;
+    protected $moneyPlugin;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param array|string $rangeValues
      * @param \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface $queryBuilder
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, CurrencyManager $currencyManager)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, MoneyPluginInterface $moneyPlugin)
     {
-        $this->currencyManager = $currencyManager;
+        $this->moneyPlugin = $moneyPlugin;
 
         parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);
     }
@@ -40,8 +40,8 @@ class NestedPriceRangeQuery extends NestedRangeQuery
     {
         parent::setMinMaxValues($rangeValues);
 
-        $this->minValue = $this->currencyManager->convertDecimalToCent($this->minValue);
-        $this->maxValue = $this->currencyManager->convertDecimalToCent($this->maxValue);
+        $this->minValue = $this->moneyPlugin->convertDecimalToInteger((float)$this->minValue);
+        $this->maxValue = $this->moneyPlugin->convertDecimalToInteger((float)$this->maxValue);
     }
 
 }

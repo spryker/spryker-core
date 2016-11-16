@@ -19,6 +19,11 @@ interface AbstractZedClientInterface
     public function addMetaTransfer($name, $metaTransfer);
 
     /**
+     * @return bool
+     */
+    public function hasLastResponse();
+
+    /**
      * @throws \BadMethodCallException
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface

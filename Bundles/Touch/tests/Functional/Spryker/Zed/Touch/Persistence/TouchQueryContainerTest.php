@@ -90,7 +90,7 @@ class TouchQueryContainerTest extends Test
         $touchQueryContainer = new TouchQueryContainer();
         $touchQueryContainer->queryTouchEntries(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, [self::ITEM_ID_1, self::ITEM_ID_2])->find();
 
-        $this->setExpectedException(PropelException::class);
+        $this->expectException(PropelException::class);
         $touchQueryContainer->queryTouchEntries(self::ITEM_TYPE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, [self::ITEM_ID_1])->find();
     }
 

@@ -69,7 +69,7 @@ class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getSalesAggregatorMock()
     {
-        $salesAggregatorFacadeMock = $this->getMock(RefundToSalesAggregatorInterface::class);
+        $salesAggregatorFacadeMock = $this->getMockBuilder(RefundToSalesAggregatorInterface::class)->getMock();
         $salesAggregatorFacadeMock->method('getOrderTotalsByIdSalesOrder')->willReturn(new OrderTransfer());
 
         return $salesAggregatorFacadeMock;
@@ -80,7 +80,7 @@ class RefundCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRefundCalculationPlugin()
     {
-        $refundCalculatorPluginMock = $this->getMock(RefundCalculatorPluginInterface::class);
+        $refundCalculatorPluginMock = $this->getMockBuilder(RefundCalculatorPluginInterface::class)->getMock();
         $refundCalculatorPluginMock->expects($this->once())->method('calculateRefund')->willReturnArgument(0);
 
         return $refundCalculatorPluginMock;

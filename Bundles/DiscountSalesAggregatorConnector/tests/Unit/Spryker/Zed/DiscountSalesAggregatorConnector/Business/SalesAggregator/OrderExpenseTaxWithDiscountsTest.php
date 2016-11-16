@@ -82,7 +82,7 @@ class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountTaxBridgeMock()
     {
-        return $this->getMock(DiscountSalesAggregatorConnectorToTaxInterface::class);
+        return $this->getMockBuilder(DiscountSalesAggregatorConnectorToTaxInterface::class)->getMock();
     }
 
 }

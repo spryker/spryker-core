@@ -27,12 +27,16 @@ class SearchPreferencesDataProvider
     }
 
     /**
-     * @param int $idProductAttributeKey
+     * @param int|null $idProductAttributeKey
      *
      * @return array
      */
-    public function getData($idProductAttributeKey)
+    public function getData($idProductAttributeKey = null)
     {
+        if (!$idProductAttributeKey) {
+            return [];
+        }
+
         $productAttributeKeyEntity = $this
             ->productSearchQueryContainer
             ->querySearchPreferencesTable()
@@ -40,7 +44,8 @@ class SearchPreferencesDataProvider
             ->findOne();
 
         return [
-            SearchPreferencesForm::FIELD_ATTRIBUTE_NAME => $productAttributeKeyEntity->getKey(),
+            SearchPreferencesForm::FIELD_ID_PRODUCT_ATTRIBUTE_KEY => $idProductAttributeKey,
+            SearchPreferencesForm::FIELD_KEY => $productAttributeKeyEntity->getKey(),
             SearchPreferencesForm::FIELD_FULL_TEXT => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT),
             SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_FULL_TEXT_BOOSTED),
             SearchPreferencesForm::FIELD_SUGGESTION_TERMS => $productAttributeKeyEntity->getVirtualColumn(SearchPreferencesForm::FIELD_SUGGESTION_TERMS),
@@ -49,11 +54,17 @@ class SearchPreferencesDataProvider
     }
 
     /**
+     * @param int|null $idProductAttributeKey
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($idProductAttributeKey = null)
     {
-        return [];
+        $options = [
+            SearchPreferencesForm::OPTION_IS_UPDATE => ($idProductAttributeKey > 0),
+        ];
+
+        return $options;
     }
 
 }
