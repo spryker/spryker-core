@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
+use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -26,19 +27,27 @@ class Reader implements ReaderInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface
+     */
+    protected $productQueryContainer;
+
+    /**
      * @var \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface
      */
     protected $transferMapper;
 
     /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface $productQueryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
+        WishlistToProductInterface $productQueryContainer,
         WishlistTransferMapperInterface $transferMapper
     ) {
         $this->queryContainer = $queryContainer;
+        $this->productQueryContainer = $productQueryContainer;
         $this->transferMapper = $transferMapper;
     }
 
@@ -101,6 +110,8 @@ class Reader implements ReaderInterface
             $itemPaginationModel->getResults()
         );
 
+        $items = $this->expandProductId($items);
+
         $responseTransfer
             ->setWishlist($wishlistTransfer)
             ->setPagination($paginationTransfer)
@@ -156,6 +167,34 @@ class Reader implements ReaderInterface
         );
 
         return $itemsQuery->paginate($page, $maxPerPage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     */
+    protected function expandProductId(array $itemCollection)
+    {
+        $skuCollection = [];
+        foreach ($itemCollection as $itemTransfer) {
+            $skuCollection[] = $itemTransfer->getSku();
+        }
+
+        $productCollection = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku_In($skuCollection);
+
+        /* @var \Orm\Zed\Product\Persistence\SpyProduct $productEntity */
+        foreach ($productCollection as $productEntity) {
+            foreach ($itemCollection as $itemTransfer) {
+                if (strcasecmp($itemTransfer->getSku(), $productEntity->getSku()) === 0) {
+                    $itemTransfer->setIdProduct($productEntity->getIdProduct());
+                }
+            }
+        }
+
+        return $itemCollection;
     }
 
     /**

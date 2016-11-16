@@ -151,7 +151,7 @@ class Writer implements WriterInterface
 
         $entity = $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
-            ->filterByIdProduct($wishlistItemTransfer->getIdProduct())
+            ->filterBySku($wishlistItemTransfer->getSku())
             ->findOneOrCreate();
 
         $entity->save();
@@ -175,7 +175,7 @@ class Writer implements WriterInterface
 
         $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
-            ->filterByIdProduct($wishlistItemTransfer->getIdProduct())
+            ->filterBySku($wishlistItemTransfer->getSku())
             ->delete();
 
         return $wishlistItemTransfer;

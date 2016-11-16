@@ -9,12 +9,14 @@ namespace Spryker\Zed\Wishlist;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge as FacadeWishlistToProductBridge;
+use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductBridge as QueryContainerWishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +26,11 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new WishlistToProductBridge($container->getLocator()->product()->facade());
+            return new FacadeWishlistToProductBridge($container->getLocator()->product()->facade());
+        };
+
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return new QueryContainerWishlistToProductBridge($container->getLocator()->product()->queryContainer());
         };
 
         return $container;

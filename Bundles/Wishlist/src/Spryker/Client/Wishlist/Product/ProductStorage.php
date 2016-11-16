@@ -51,7 +51,7 @@ class ProductStorage implements ProductStorageInterface
 
         foreach ($storageProductCollection as $storageProduct) {
             $wishlistItem = (new WishlistItemTransfer())
-                ->setIdProduct($storageProduct->getId())
+                ->setIdProduct($storageProduct->getIdProductConcrete())
                 ->setFkWishlist($wishlistResponseTransfer->getWishlist()->getIdWishlist())
                 ->setProduct($storageProduct);
 

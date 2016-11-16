@@ -22,13 +22,13 @@
     <table name="spy_wishlist_item" phpName="SpyWishlistItem">
         <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_wishlist" required="true" type="INTEGER"/>
-        <column name="id_product" required="true" type="INTEGER"/>
+        <column name="sku" required="true" type="VARCHAR" size="255"/>
 
         <foreign-key name="spy_wishlist_item-fk_wishlist" foreignTable="spy_wishlist">
             <reference local="fk_wishlist" foreign="id_wishlist"/>
         </foreign-key>
-        <foreign-key name="spy_wishlist_item-id_product" foreignTable="spy_product">
-            <reference local="id_product" foreign="id_product"/>
+        <foreign-key name="spy_wishlist_item-sku" foreignTable="spy_product">
+            <reference local="sku" foreign="sku"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
