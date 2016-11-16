@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Collection\ObjectCollection;
 
+/**
+ * @deprecated Class will be removed with next major release
+ */
 class TransferGenerator implements TransferGeneratorInterface
 {
 

@@ -6,3 +6,4 @@
 'use strict';
 
 require('./modules/main');
+require('../scss/main.scss');

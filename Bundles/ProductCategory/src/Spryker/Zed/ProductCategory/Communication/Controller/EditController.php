@@ -13,10 +13,13 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated This controller has been replaced by \Spryker\Zed\Category\Communication\Controller\EditController
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
@@ -39,13 +42,12 @@ class EditController extends AddController
             ->findOne();
 
         if (!$currentCategory) {
-            $this->addErrorMessage(sprintf('The category you are trying to edit %s does not exist.', $idCategory));
+            $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));
 
             return new RedirectResponse('/category');
         }
 
-        $locale = $this->getFactory()
-            ->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getCurrentLocale();
 
         $dataProvider = $this->getFactory()->createCategoryFormEditDataProvider();
         $form = $this
@@ -57,46 +59,22 @@ class EditController extends AddController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $connection = $this->getFactory()
-                ->getPropelConnection();
+            if ($this->updateCategoryData($form->getData())) {
+                $this->addSuccessMessage('The category was saved successfully.');
 
-            $connection->beginTransaction();
-
-            $data = $form->getData();
-
-            $currentCategoryTransfer = $this->updateCategory($locale, $data);
-            $currentCategoryNodeTransfer = $this->updateCategoryNode($locale, $data);
-            $this->updateProductCategoryMappings($currentCategoryTransfer, $data);
-
-            $parentIdList = $data['extra_parents'];
-            foreach ($parentIdList as $parentNodeId) {
-                $data['fk_parent_category_node'] = $parentNodeId;
-                $data['fk_category'] = $currentCategoryTransfer->getIdCategory();
-
-                $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
+                return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
             }
-            $this->updateProductOrder($currentCategoryTransfer, (array)json_decode($data['product_order'], true));
+        }
 
-            $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
-            $parentIdList = array_flip($parentIdList);
-            $this->removeDeselectedCategoryAdditionalParents(
-                $currentCategoryTransfer,
-                $locale,
-                $parentIdList
-            );
-
-            $this->addSuccessMessage('The category was saved successfully.');
-
-            $connection->commit();
-
-            return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorMessage('Please make sure required fields are properly filled in');
         }
 
         $productCategories = $this->getFactory()
-            ->createProductCategoryTable($locale, $idCategory);
+            ->createProductCategoryTable($localeTransfer, $idCategory);
 
         $products = $this->getFactory()
-            ->createProductTable($locale, $idCategory);
+            ->createProductTable($localeTransfer, $idCategory);
 
         return $this->viewResponse([
             'idCategory' => $idCategory,
@@ -105,69 +83,74 @@ class EditController extends AddController
             'productsTable' => $products->render(),
             'showProducts' => true,
             'currentCategory' => $currentCategory->toArray(),
+            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'errors' => $dataProvider->getErrorMessages($form)
         ]);
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $existingCategoryNode
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
-    protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
+    protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $nodeTransfer, LocaleTransfer $locale)
     {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $existingCategoryNode */
+        /* @var \Orm\Zed\Category\Persistence\SpyCategoryNode $existingCategoryNode */
         if ($existingCategoryNode) {
-            $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
+            $nodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
 
             $this->getFactory()
                 ->getCategoryFacade()
-                ->updateCategoryNode($categoryNodeTransfer, $locale);
+                ->updateCategoryNode($nodeTransfer, $locale);
         } else {
-            $newData = $categoryNodeTransfer->toArray();
+            $newData = $nodeTransfer->toArray();
             unset($newData['id_category_node']);
 
-            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($newData);
+            $nodeTransfer = (new NodeTransfer())
+                ->fromArray($newData);
 
             $this->getFactory()
                 ->getCategoryFacade()
-                ->createCategoryNode($categoryNodeTransfer, $locale);
+                ->createCategoryNode($nodeTransfer, $locale);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param int $idCategory
+     * @param array $localeCollection
      * @param array $parentIdList
      *
      * @return void
      */
     protected function removeDeselectedCategoryAdditionalParents(
-        CategoryTransfer $categoryTransfer,
-        LocaleTransfer $locale,
+        $idCategory,
+        array $localeCollection,
         array $parentIdList
     ) {
         $existingParents = $this->getFactory()
             ->getCategoryFacade()
-            ->getNotMainNodesByIdCategory($categoryTransfer->getIdCategory());
+            ->getNotMainNodesByIdCategory($idCategory);
 
         foreach ($existingParents as $parent) {
             if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
-                $this->getFactory()
-                    ->getCategoryFacade()
-                    ->deleteNode($parent->getIdCategoryNode(), $locale);
+                foreach ($localeCollection as $locale) {
+                    $this->getFactory()
+                        ->getCategoryFacade()
+                        ->deleteNode($parent->getIdCategoryNode(), $locale);
+                }
             }
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $idCategory
      * @param array $data
      *
      * @return void
      */
-    protected function updateProductCategoryMappings(CategoryTransfer $categoryTransfer, array $data)
+    protected function updateProductCategoryMappings($idCategory, array $data)
     {
         $addProductsMappingCollection = [];
         $removeProductMappingCollection = [];
@@ -181,29 +164,29 @@ class EditController extends AddController
 
         if (!empty($removeProductMappingCollection)) {
             $this->getFacade()->removeProductCategoryMappings(
-                $categoryTransfer->getIdCategory(),
+                $idCategory,
                 $removeProductMappingCollection
             );
         }
 
         if (!empty($addProductsMappingCollection)) {
             $this->getFacade()->createProductCategoryMappings(
-                $categoryTransfer->getIdCategory(),
+                $idCategory,
                 $addProductsMappingCollection
             );
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $idCategory
      * @param array $productOrder
      *
      * @return void
      */
-    protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $productOrder)
+    protected function updateProductOrder($idCategory, array $productOrder)
     {
         $this->getFacade()
-            ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $productOrder);
+            ->updateProductMappingsOrder($idCategory, $productOrder);
     }
 
     /**
@@ -215,6 +198,69 @@ class EditController extends AddController
     protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreConfig)
     {
         $this->getFacade()->updateProductCategoryPreConfig($categoryTransfer->getIdCategory(), $productPreConfig);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function updateCategoryData(array $data)
+    {
+        $this->getFactory()->getPropelConnection()->beginTransaction();
+
+        $categoryKey = $data['category_key'];
+        $idCategory = $data['id_category'];
+
+        $entity = $this->getFactory()->getCategoryQueryContainer()
+            ->queryCategoryByKey($categoryKey)
+            ->findOne();
+
+        if ($entity) {
+            if ((int)$entity->getIdCategory() !== (int)$idCategory) {
+                $this->addErrorMessage(sprintf(
+                    'Category with key "%s" already exists',
+                    $categoryKey
+                ));
+
+                return false;
+            }
+        }
+
+        $locales = [];
+        $nodeTransfer = new NodeTransfer();
+        $attributes = $data[CategoryFormEdit::LOCALIZED_ATTRIBUTES];
+
+        foreach ($attributes as $localeCode => $localizedAttributes) {
+            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($localeCode);
+            $locales[] = $localeTransfer;
+
+            $categoryData = array_merge($attributes[$localeCode], $data);
+            $this->updateCategory($localeTransfer, $categoryData);
+
+            $nodeTransfer = $this->updateCategoryNode($localeTransfer, $data);
+        }
+
+        $this->updateProductCategoryMappings($idCategory, $data);
+
+        $parentIdList = $data['extra_parents'];
+        foreach ($parentIdList as $parentNodeId) {
+            $this->updateExtraParent($nodeTransfer, $locales, $parentNodeId);
+        }
+
+        $this->updateProductOrder($idCategory, (array)json_decode($data['product_order'], true));
+
+        $parentIdList[] = $data['fk_parent_category_node'];
+        $parentIdList = array_flip($parentIdList);
+        $this->removeDeselectedCategoryAdditionalParents(
+            $idCategory,
+            $locales,
+            $parentIdList
+        );
+
+        $this->getFactory()->getPropelConnection()->commit();
+
+        return true;
     }
 
     /**
@@ -242,42 +288,48 @@ class EditController extends AddController
      */
     protected function updateCategoryNode(LocaleTransfer $locale, array $data)
     {
-        $currentCategoryNodeTransfer = $this->createCategoryNodeTransferFromData($data);
-
-        $currentCategoryNodeTransfer->setIsMain(true);
+        $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
+        $nodeTransfer->setIsMain(true);
 
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getFactory()
             ->getCategoryQueryContainer()
-            ->queryNodeById($currentCategoryNodeTransfer->getIdCategoryNode())
-            ->findOne();
-
-        $this->createOrUpdateCategoryNode($existingCategoryNode, $currentCategoryNodeTransfer, $locale);
-
-        return $currentCategoryNodeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
-    {
-        $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
-
-        $nodeTransfer->setIsMain(false);
-
-        $existingCategoryNode = $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode())
+            ->queryNodeById($nodeTransfer->requireIdCategoryNode()->getIdCategoryNode())
             ->findOne();
 
         $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
 
         return $nodeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $mainNodeTransfer
+     * @param array $localeCollection
+     * @param int $extraParentNodeId
+     *
+     * @return void
+     */
+    protected function updateExtraParent(NodeTransfer $mainNodeTransfer, array $localeCollection, $extraParentNodeId)
+    {
+        if ((int)$extraParentNodeId === (int)$mainNodeTransfer->getIdCategoryNode()) {
+            return;
+        }
+
+        $nodeTransfer = (new NodeTransfer())
+            ->setFkCategory($mainNodeTransfer->getFkCategory())
+            ->setFkParentCategoryNode($extraParentNodeId)
+            ->setIsMain(false)
+            ->setIsRoot(false);
+
+        foreach ($localeCollection as $localeTransfer) {
+            $existingCategoryNode = $this->getFactory()
+                ->getCategoryQueryContainer()
+                ->queryNotMainNodesByCategoryId($mainNodeTransfer->getFkCategory())
+                ->filterByFkParentCategoryNode($extraParentNodeId)
+                ->findOne();
+
+            $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $localeTransfer);
+        }
     }
 
     /**

@@ -21,6 +21,8 @@ interface CategoryTreeReaderInterface
     public function getChildren($idNode, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -30,6 +32,8 @@ interface CategoryTreeReaderInterface
     public function getParents($idNode, LocaleTransfer $locale, $excludeRootNode = true);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      *
      * @return bool
@@ -37,6 +41,8 @@ interface CategoryTreeReaderInterface
     public function hasChildren($idNode);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -47,6 +53,8 @@ interface CategoryTreeReaderInterface
     public function getPath($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idParentNode
      * @param bool $excludeRoot
      *
@@ -55,6 +63,8 @@ interface CategoryTreeReaderInterface
     public function getPathChildren($idParentNode, $excludeRoot = true);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idChildNode
      * @param int $idLocale
      * @param bool $excludeRoot
@@ -64,6 +74,8 @@ interface CategoryTreeReaderInterface
     public function getPathParents($idChildNode, $idLocale, $excludeRoot = true);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -75,6 +87,8 @@ interface CategoryTreeReaderInterface
 
     /**
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -94,6 +108,8 @@ interface CategoryTreeReaderInterface
     public function hasCategoryNode($categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryKey
      * @param int $idLocale
      *
@@ -102,6 +118,8 @@ interface CategoryTreeReaderInterface
     public function getCategoryByKey($categoryKey, $idLocale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -112,6 +130,8 @@ interface CategoryTreeReaderInterface
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -136,6 +156,8 @@ interface CategoryTreeReaderInterface
     public function getAllNodesByIdCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
@@ -143,6 +165,8 @@ interface CategoryTreeReaderInterface
     public function getMainNodesByIdCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
@@ -150,6 +174,8 @@ interface CategoryTreeReaderInterface
     public function getNotMainNodesByIdCategory($idCategory);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idParentNode
      * @param int $idLocale
      *
@@ -185,5 +211,13 @@ interface CategoryTreeReaderInterface
      * @return array
      */
     public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $locale);
+
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer);
 
 }

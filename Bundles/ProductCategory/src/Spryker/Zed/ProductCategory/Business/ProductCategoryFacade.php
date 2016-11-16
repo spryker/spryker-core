@@ -22,6 +22,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -38,6 +40,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -53,6 +57,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -117,6 +123,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param array $productPreConfig
      *
@@ -132,6 +140,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -146,6 +156,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
@@ -163,6 +175,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -179,6 +193,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
@@ -191,6 +207,37 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
         $this->getFactory()
             ->createProductCategoryManager()
             ->deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, $localeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeAllProductMappingsForCategory($idCategory)
+    {
+        $this
+            ->getFactory()
+            ->createProductCategoryManager()
+            ->removeMappings($idCategory);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer)
+    {
+        return $this
+            ->getFactory()
+            ->createProductCategoryManager()
+            ->getAbstractProductTransferCollectionByCategory($idCategory, $localeTransfer);
     }
 
 }

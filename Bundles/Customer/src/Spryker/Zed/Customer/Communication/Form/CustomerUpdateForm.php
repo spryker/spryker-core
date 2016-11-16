@@ -73,6 +73,7 @@ class CustomerUpdateForm extends CustomerForm
             'label' => 'Billing Address',
             'placeholder' => 'Select one',
             'choices' => $choices,
+            'required' => false,
         ]);
 
         return $this;
@@ -90,6 +91,7 @@ class CustomerUpdateForm extends CustomerForm
             'label' => 'Shipping Address',
             'placeholder' => 'Select one',
             'choices' => $choices,
+            'required' => false,
         ]);
 
         return $this;

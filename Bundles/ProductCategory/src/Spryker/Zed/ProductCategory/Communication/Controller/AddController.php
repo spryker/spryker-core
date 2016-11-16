@@ -15,6 +15,8 @@ use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated This controller has been replaced by \Spryker\Zed\Category\Communication\Controller\CreateController
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
@@ -43,17 +45,17 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
-            $localeTransfer = $this->getFactory()
-                ->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getCurrentLocale();
 
+        if ($form->isValid()) {
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
-            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
+            $nodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
+            $nodeTransfer->setIsMain(true);
 
             try {
                 $idCategory = $this
                     ->getFacade()
-                    ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
+                    ->addCategory($categoryTransfer, $nodeTransfer, $localeTransfer);
 
                 $this->addSuccessMessage('The category was added successfully.');
 
@@ -65,6 +67,7 @@ class AddController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'currentLocale' => $localeTransfer,
             'showProducts' => false,
         ]);
     }
@@ -126,7 +129,8 @@ class AddController extends AbstractController
     protected function createCategoryNodeTransferFromData(array $data)
     {
         return (new NodeTransfer())
-            ->fromArray($data, true);
+            ->fromArray($data, true)
+            ->setIsRoot(false);
     }
 
 }

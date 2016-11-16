@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface ProductCategoryToLocaleInterface
 {
 
@@ -14,5 +17,17 @@ interface ProductCategoryToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
+
+    /**
+     * @return array
+     */
+    public function getAvailableLocales();
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale($localeName);
 
 }

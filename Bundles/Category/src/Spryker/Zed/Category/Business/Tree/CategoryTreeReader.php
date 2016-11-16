@@ -62,6 +62,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -74,6 +76,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -89,6 +93,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idParentNode
      * @param bool $excludeRoot
      *
@@ -102,6 +108,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idChildNode
      * @param int $idLocale
      * @param bool $excludeRoot
@@ -116,6 +124,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -145,6 +155,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
@@ -172,6 +184,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return string
      */
     protected function getNodeDescendantColumnName()
@@ -185,6 +199,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      *
      * @return bool
@@ -199,6 +215,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -212,6 +230,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryKey
      * @param int $idLocale
      *
@@ -229,6 +249,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -255,6 +277,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -293,6 +317,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param int $idParentNode
      *
@@ -328,6 +354,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
@@ -340,6 +368,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
@@ -352,6 +382,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idParentNode
      * @param int $idLocale
      *
@@ -453,6 +485,21 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         $categories = $this->getTreeNodeChildren($idCategory, $locale);
 
         $this->treeFormatter->setupCategories($categories);
+
+        return $this->treeFormatter->getCategoryTree();
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        $categoryNodeEntity = $this->getNodeById($idCategoryNode);
+        $subTreeCategories = $this->getTreeNodesRecursively($localeTransfer, $categoryNodeEntity, true);
+        $this->treeFormatter->setupCategories($subTreeCategories);
 
         return $this->treeFormatter->getCategoryTree();
     }

@@ -134,7 +134,7 @@ abstract class AbstractClassResolver
     /**
      * @return array
      */
-    private function getProjectNamespaces()
+    protected function getProjectNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACES);
     }
@@ -142,7 +142,7 @@ abstract class AbstractClassResolver
     /**
      * @return array
      */
-    private function getCoreNamespaces()
+    protected function getCoreNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
     }

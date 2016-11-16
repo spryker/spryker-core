@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
@@ -26,6 +27,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
@@ -36,6 +39,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $productCategoryQueryContainer;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected $productFacade;
@@ -51,11 +56,15 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $touchFacade;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     protected $cmsFacade;
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
@@ -88,6 +97,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -103,6 +114,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -127,6 +140,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -151,6 +166,35 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getAbstractProductTransferCollectionByCategory(
+        $idCategory,
+        LocaleTransfer $localeTransfer
+    ) {
+        $productCollection = $this->getProductsByCategory($idCategory, $localeTransfer);
+        $productTransferCollection = [];
+
+        foreach ($productCollection as $productEntity) {
+            $abstractProductTransfer = (new ProductAbstractTransfer())->fromArray($productEntity->toArray(), true);
+
+            $localizedAttributesData = json_decode($productEntity->getVirtualColumn('abstract_localized_attributes'), true);
+            $localizedAttributesTransfer = new LocalizedAttributesTransfer();
+            $localizedAttributesTransfer->setName($productEntity->getVirtualColumn('name'));
+            $localizedAttributesTransfer->setLocale($localeTransfer);
+            $localizedAttributesTransfer->setAttributes($localizedAttributesData);
+            $abstractProductTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+
+            $productTransferCollection[] = $abstractProductTransfer;
+        }
+
+        return $productTransferCollection;
+    }
+
+    /**
+     * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
@@ -164,6 +208,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
@@ -209,6 +255,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             //it's just a change to the mappings and not an actual product abstract
             $this->touchProductAbstractActive($idProduct);
         }
+
+        $this->touchCategoryActive($idCategory);
     }
 
     /**
@@ -233,6 +281,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             $this->touchProductAbstractActive($idProduct);
         }
+
+        $this->touchCategoryActive($idCategory);
     }
 
     /**
@@ -258,9 +308,13 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             $this->touchProductAbstractActive($idProduct);
         }
+
+        $this->touchCategoryActive($idCategory);
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param array $productPreConfigList
      *
@@ -305,6 +359,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -322,6 +378,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -344,6 +402,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -361,6 +421,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -388,6 +450,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
@@ -421,6 +485,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -466,7 +532,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      *
      * @return void
      */
-    protected function removeMappings($idCategory)
+    public function removeMappings($idCategory)
     {
         $assignedProducts = $this->productCategoryQueryContainer
             ->queryProductCategoryMappingsByCategoryId($idCategory)
@@ -490,6 +556,18 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    protected function touchCategoryActive($idCategory)
+    {
+        $this->categoryFacade->touchCategoryActive($idCategory);
+    }
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idProductAbstract
      *
      * @return void

@@ -93,9 +93,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
     {
         $this->createClass($this->projectClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolved = $resolverMock->resolve($this->className);
         $this->assertInstanceOf($this->projectClass, $resolved);
@@ -109,9 +109,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $this->createClass($this->projectClass);
         $this->createClass($this->storeClass);
 
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn($this->classPattern);
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['ProjectNamespace']);
 
         $resolved = $resolverMock->resolve($this->className);
         $this->assertInstanceOf($this->storeClass, $resolved);

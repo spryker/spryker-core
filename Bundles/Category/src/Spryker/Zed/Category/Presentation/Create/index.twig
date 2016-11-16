@@ -1,0 +1,61 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Create category' | trans %}
+{% endif %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/category/root', 'List of categories' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+
+            {{ form_start(categoryForm) }}
+                {{ form_row(categoryForm.category_key) }}
+                {{ form_row(categoryForm.is_active) }}
+                {{ form_row(categoryForm.is_in_menu) }}
+                {{ form_row(categoryForm.is_clickable) }}
+                {{ form_row(categoryForm.parent_category_node) }}
+                {{ form_row(categoryForm.extra_parents) }}
+
+                <hr />
+                <p><strong>{{ 'Translations' | trans }}</strong></p>
+
+                {% for localizedAttributes in categoryForm.localized_attributes %}
+                    {% set localeName = localizedAttributes.vars.value.locale.localeName %}
+
+                    {% embed '@Gui/Partials/localized-ibox.twig' with {
+                        localeName: localeName,
+                        collapsed: false
+                    } %}
+                        {% block content %}
+                            {{ form_widget(localizedAttributes) }}
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+
+                <hr />
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}"/>
+            {{ form_end(categoryForm) }}
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productcategory-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productcategory-main.js"></script>
+{% endblock %}
+

@@ -7,11 +7,11 @@
 
 - Bundles to release:
 
-   Bundle       | Expected Release Type | Constraints
+   Bundle       | Expected Release Type | Constraints |
    :----------- | :------------         | :------------
-   BundleA      | major or new          | 
-   BundleB      | minor                 | BundleA: new major
-   BundleC      | patch                 | BundleD: 2.2.0
+   BundleA      | major or new          |                    |
+   BundleB      | minor                 | BundleA: new major |
+   BundleC      | patch                 | BundleD: 2.2.0     |
 
    `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 

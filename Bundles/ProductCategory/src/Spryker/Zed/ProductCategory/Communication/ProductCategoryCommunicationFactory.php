@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductCategory\Communication\Form\AssignForm;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
@@ -36,6 +37,18 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     public function getProductFacade()
@@ -44,6 +57,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     public function getCategoryFacade()
@@ -52,6 +67,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     public function getCmsFacade()
@@ -68,6 +85,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     public function getProductQueryContainer()
@@ -76,6 +95,8 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -89,17 +110,21 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormAddDataProvider
      */
     public function createCategoryFormAddDataProvider()
     {
         return new CategoryFormAddDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -113,17 +138,21 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider
      */
     public function createCategoryFormEditDataProvider()
     {
         return new CategoryFormEditDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -137,13 +166,15 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed with the next major release
+     *
      * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDeleteDataProvider
      */
     public function createCategoryFormDeleteDataProvider()
     {
         return new CategoryFormDeleteDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getLocaleFacade()
         );
     }
 
@@ -178,11 +209,15 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
+     * @param array $data
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getLocaleFacade()
+    public function createAssignForm(array $data)
     {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
+        $formType = new AssignForm();
+
+        return $this->getFormFactory()->create($formType, $data, []);
     }
 
 }
