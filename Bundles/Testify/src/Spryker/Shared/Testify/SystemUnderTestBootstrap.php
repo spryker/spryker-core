@@ -9,7 +9,6 @@ namespace Spryker\Shared\Testify;
 
 use Exception;
 use Propel\Runtime\Propel;
-use Pyz\Yves\Application\Plugin\Provider\SessionServiceProvider;
 use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Config\Config;
@@ -107,13 +106,10 @@ class SystemUnderTestBootstrap
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
-        $application = $application->boot();
+        $application->boot();
 
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
-
-        $sessionServiceProvider = new SessionServiceProvider();
-        $sessionServiceProvider->boot($application);
     }
 
     /**
@@ -126,10 +122,7 @@ class SystemUnderTestBootstrap
         $locator = Locator::getInstance();
         $this->resetLocator($locator);
 
-        $application = $application->boot();
-
-        $sessionServiceProvider = new SessionServiceProvider();
-        $sessionServiceProvider->boot($application);
+        $application->boot();
     }
 
     /**

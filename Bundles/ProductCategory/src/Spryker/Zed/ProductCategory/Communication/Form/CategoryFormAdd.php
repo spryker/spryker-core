@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormAdd extends AbstractType
 {
 
@@ -85,9 +88,9 @@ class CategoryFormAdd extends AbstractType
     {
         $builder
             ->add(self::FIELD_CATEGORY_KEY, 'text', [
-            'constraints' => [
-                new NotBlank(),
-            ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]);
 
         return $this;
@@ -105,9 +108,7 @@ class CategoryFormAdd extends AbstractType
             ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
                 'label' => 'Parent',
                 'choices' => $choices,
-                'constraints' => [
-                    new NotBlank(),
-                ]
+                'required' => false,
             ]);
 
         return $this;

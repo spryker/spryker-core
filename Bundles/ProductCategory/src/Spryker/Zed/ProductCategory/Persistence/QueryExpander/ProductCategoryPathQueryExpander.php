@@ -16,6 +16,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class ProductCategoryPathQueryExpander
 {
 

@@ -123,6 +123,7 @@ class CustomerForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => $choices,
+            'required' => false,
         ]);
 
         return $this;
@@ -173,6 +174,7 @@ class CustomerForm extends AbstractType
             'constraints' => [
                 new Required(),
             ],
+            'required' => false,
         ]);
 
         return $this;

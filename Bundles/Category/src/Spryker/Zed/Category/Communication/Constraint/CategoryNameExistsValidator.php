@@ -10,6 +10,9 @@ namespace Spryker\Zed\Category\Communication\Constraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class CategoryNameExistsValidator extends ConstraintValidator
 {
 

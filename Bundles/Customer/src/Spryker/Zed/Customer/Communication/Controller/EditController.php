@@ -54,7 +54,7 @@ class EditController extends AbstractController
             }
 
             return $this->redirectResponse(
-                sprintf('/customer/view/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
         }
 

@@ -19,6 +19,8 @@ interface ProductCategoryToTouchInterface
     public function touchActive($itemType, $itemId);
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $itemType
      * @param int $itemId
      *

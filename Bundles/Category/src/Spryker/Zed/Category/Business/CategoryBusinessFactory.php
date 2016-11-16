@@ -9,7 +9,15 @@ namespace Spryker\Zed\Category\Business;
 
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
+use Spryker\Zed\Category\Business\Model\Category;
+use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
+use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
+use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryToucher;
+use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTree;
+use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrl;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
+use Spryker\Zed\Category\Business\Model\Category\Category as CategoryEntityModel;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
@@ -27,6 +35,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Category\Business\Tree\CategoryTreeWriter
      */
     public function createCategoryTreeWriter()
@@ -67,11 +77,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createCategoryTreeRenderer()
     {
-        $locale = $this->getLocaleFacade()->getCurrentLocale();
-
         return new CategoryTreeRenderer(
             $this->getQueryContainer(),
-            $locale,
+            $this->getLocaleFacade()->getCurrentLocale(),
             $this->getGraph()->init('Category Tree')
         );
     }
@@ -85,6 +93,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Category\Business\Model\CategoryWriterInterface
      */
     public function createCategoryWriter()
@@ -95,23 +105,120 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Category\Business\Model\Category
+     */
+    public function createCategory()
+    {
+        return new Category(
+            $this->createCategoryCategory(),
+            $this->createCategoryNode(),
+            $this->createCategoryAttribute(),
+            $this->createCategoryUrl(),
+            $this->createCategoryExtraParents(),
+            $this->getQueryContainer(),
+            $this->getRelationDeletePluginStack()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\Category\CategoryInterface
+     */
+    protected function createCategoryCategory()
+    {
+        return new CategoryEntityModel($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface
+     */
+    protected function createCategoryNode()
+    {
+        return new CategoryNode(
+            $this->createClosureTableWriter(),
+            $this->getQueryContainer(),
+            $this->createCategoryTransferGenerator(),
+            $this->createCategoryToucher(),
+            $this->createCategoryTree()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
+     */
+    public function createCategoryToucher()
+    {
+        return new CategoryToucher($this->getTouchFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface
+     */
+    protected function createCategoryTree()
+    {
+        return new CategoryTree($this->getQueryContainer(), $this->createFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
+     */
+    protected function createFacade()
+    {
+        return new CategoryFacade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface
+     */
+    protected function createCategoryAttribute()
+    {
+        return new CategoryAttribute($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface
+     */
+    protected function createCategoryUrl()
+    {
+        return new CategoryUrl($this->getQueryContainer(), $this->getUrlFacade(), $this->createUrlPathGenerator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface
+     */
+    protected function createCategoryExtraParents()
+    {
+        return new CategoryExtraParents(
+            $this->getQueryContainer(),
+            $this->createClosureTableWriter(),
+            $this->createCategoryToucher(),
+            $this->createCategoryTree(),
+            $this->createCategoryUrl(),
+            $this->createCategoryTransferGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+     */
+    protected function getRelationDeletePluginStack()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_DELETE);
+    }
+
+    /**
      * @return \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
      */
     public function createNodeWriter()
     {
-        return new NodeWriter(
-            $this->getQueryContainer()
-        );
+        return new NodeWriter($this->getQueryContainer(), $this->createCategoryToucher());
     }
 
     /**
      * @return \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
-    protected function createClosureTableWriter()
+    public function createClosureTableWriter()
     {
-        return new ClosureTableWriter(
-            $this->getQueryContainer()
-        );
+        return new ClosureTableWriter($this->getQueryContainer());
     }
 
     /**

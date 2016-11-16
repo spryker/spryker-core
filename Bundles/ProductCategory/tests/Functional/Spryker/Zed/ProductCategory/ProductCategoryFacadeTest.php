@@ -8,7 +8,9 @@
 namespace Functional\Spryker\Zed\ProductCategory;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -89,31 +91,17 @@ class ProductCategoryFacadeTest extends Test
 
         $locale = $this->localeFacade->createLocale($localeName);
 
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku($abstractSku);
-        $productAbstractTransfer->setAttributes([]);
-        $localizedAttributes = new LocalizedAttributesTransfer();
-        $localizedAttributes->setAttributes([]);
-        $localizedAttributes->setLocale($locale);
-        $localizedAttributes->setName($abstractName);
-        $productAbstractTransfer->addLocalizedAttributes($localizedAttributes);
+        $localizedAttributesTransfer = $this->buildLocalizedAttributesTransfer($locale, $abstractName);
+        $productAbstractTransfer = $this->buildProductAbstractTransfer($abstractSku, $localizedAttributesTransfer);
         $idProductAbstract = $this->productFacade->createProductAbstract($productAbstractTransfer);
 
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setSku($concreteSku);
-        $productConcreteTransfer->setAttributes([]);
-        $productConcreteTransfer->addLocalizedAttributes($localizedAttributes);
-        $productConcreteTransfer->setIsActive(true);
+        $productConcreteTransfer = $this->buildProductConcreteTransfer($concreteSku, $localizedAttributesTransfer);
         $this->productFacade->createProductConcrete($productConcreteTransfer, $idProductAbstract);
 
-        $categoryTransfer = new CategoryTransfer();
-        $categoryTransfer->setName($categoryName);
-        $categoryTransfer->setCategoryKey($categoryKey);
+        $categoryTransfer = $this->buildCategoryTransfer($categoryKey, $categoryName, $locale);
         $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $locale);
 
-        $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->setFkCategory($idCategory);
-        $categoryNodeTransfer->setIsRoot(true);
+        $categoryNodeTransfer = $this->buildCategoryNodeTransfer($idCategory);
         $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale, false);
         $this->productCategoryFacade->createProductCategoryMapping($abstractSku, $categoryName, $locale);
 
@@ -203,6 +191,89 @@ class ProductCategoryFacadeTest extends Test
         $idNode = $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale, false);
 
         return [$idCategory, $idNode];
+    }
+
+    /**
+     * @param string $categoryKey
+     * @param string $categoryName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function buildCategoryTransfer($categoryKey, $categoryName, LocaleTransfer $localeTransfer)
+    {
+        $categoryTransfer = new CategoryTransfer();
+        $categoryTransfer->setCategoryKey($categoryKey);
+
+        $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
+        $categoryLocalizedAttributesTransfer->setName($categoryName);
+        $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
+        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function buildProductConcreteTransfer($concreteSku, LocalizedAttributesTransfer $localizedAttributesTransfer)
+    {
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($concreteSku);
+        $productConcreteTransfer->setAttributes([]);
+        $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        $productConcreteTransfer->setIsActive(true);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $abstractName
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    protected function buildLocalizedAttributesTransfer(LocaleTransfer $localeTransfer, $abstractName)
+    {
+        $localizedAttributes = new LocalizedAttributesTransfer();
+        $localizedAttributes->setAttributes([]);
+        $localizedAttributes->setLocale($localeTransfer);
+        $localizedAttributes->setName($abstractName);
+
+        return $localizedAttributes;
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function buildProductAbstractTransfer($abstractSku, LocalizedAttributesTransfer $localizedAttributesTransfer)
+    {
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku($abstractSku);
+        $productAbstractTransfer->setAttributes([]);
+        $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function buildCategoryNodeTransfer($idCategory)
+    {
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->setFkCategory($idCategory);
+        $categoryNodeTransfer->setIsRoot(true);
+
+        return $categoryNodeTransfer;
     }
 
 }

@@ -7,11 +7,15 @@
 
 namespace Spryker\Shared\Category\Code\Storage;
 
-use Spryker\Shared\Library\Storage\StorageKeyGenerator as BaseStorageKeyGenerator;
+use Spryker\Shared\Kernel\Store;
 
-class StorageKeyGenerator extends BaseStorageKeyGenerator
+/**
+ * @deprecated Will be removed with next major release
+ */
+class StorageKeyGenerator
 {
 
+    const KEY_SEPARATOR = '.';
     const KEY_NAMESPACE = 'category';
 
     /**
@@ -46,6 +50,30 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
         $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'url', $url]);
 
         return self::prependStoreName(self::escapeKey($key));
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected static function escapeKey($key)
+    {
+        $charsToReplace = ['"', "'", ' ', "\0", "\n", "\r"];
+
+        return str_replace($charsToReplace, '-', mb_strtolower(trim($key)));
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected static function prependStoreName($key)
+    {
+        $storeName = Store::getInstance()->getStoreName();
+
+        return $storeName . self::KEY_SEPARATOR . $key;
     }
 
 }

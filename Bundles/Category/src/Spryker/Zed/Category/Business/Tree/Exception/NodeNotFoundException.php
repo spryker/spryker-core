@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Tree\Exception;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class NodeNotFoundException extends \Exception
 {
 }

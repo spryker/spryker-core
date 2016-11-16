@@ -56,7 +56,13 @@ class ErrorHandlerEnvironment
     {
         $errorLevel = error_reporting();
         $errorHandler = function ($severity, $message, $file, $line) {
-            throw new ErrorException($message, 0, $severity, $file, $line);
+            $exception = new ErrorException($message, 0, $severity, $file, $line);
+            if ($severity !== E_USER_DEPRECATED) {
+                throw $exception;
+            }
+
+            $errorLogger = new ErrorLogger();
+            $errorLogger->log($exception);
         };
 
         set_error_handler($errorHandler, $errorLevel);
