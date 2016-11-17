@@ -4,7 +4,7 @@
     "spryker/checkout": "^2.1.0",
     "spryker/kernel": "^2.4.3",
     "spryker/money": "^1.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
+    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/payment": "^2.0.0",
     "spryker/refund": "^3.0.0",
     "spryker/sales": "^2.2.5",

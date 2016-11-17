@@ -15,6 +15,7 @@ use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
+use Spryker\Zed\Setup\Communication\Console\GenerateServiceIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\InstallConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsDisableConsole;
@@ -77,6 +78,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
             $this->createGenerateIdeAutoCompletionConsole(),
             $this->createGenerateZedIdeAutoCompletionConsole(),
             $this->createGenerateClientIdeAutoCompletionConsole(),
+            $this->createGenerateServiceIdeAutoCompletionConsole(),
             $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
@@ -109,6 +111,14 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     protected function createGenerateClientIdeAutoCompletionConsole()
     {
         return new GenerateClientIdeAutoCompletionConsole();
+    }
+
+    /**
+     * @return \Spryker\Zed\Setup\Communication\Console\GenerateServiceIdeAutoCompletionConsole
+     */
+    protected function createGenerateServiceIdeAutoCompletionConsole()
+    {
+        return new GenerateServiceIdeAutoCompletionConsole();
     }
 
     /**

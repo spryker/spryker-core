@@ -57,7 +57,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
             $this->createJsonIndexDefinitionMerger(),
             Store::getInstance()->getAllowedStores(),
-            $this->getUtilEncodingFacade()
+            $this->getUtilEncodingService()
         );
     }
 
@@ -188,11 +188,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface
+     * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
      */
-    protected function getUtilEncodingFacade()
+    protected function getUtilEncodingService()
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_UTIL_ENCODING);
+        return $this->getProvidedDependency(SearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }

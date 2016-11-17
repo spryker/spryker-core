@@ -8,7 +8,6 @@
 namespace Functional\Spryker\Zed\ProductImage\Business\Model;
 
 use Codeception\TestCase\Test;
-use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
@@ -44,11 +43,6 @@ class ProductImageFacadeTest extends Test
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
     protected $productImageFacade;
-
-    /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
-    protected $localeFacade;
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstract
@@ -107,7 +101,6 @@ class ProductImageFacadeTest extends Test
     {
         $this->queryContainer = new ProductImageQueryContainer();
         $this->productImageFacade = new ProductImageFacade();
-        $this->localeFacade = new LocaleFacade();
 
         $this->setupProducts();
         $this->setupImages();

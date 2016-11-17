@@ -44,12 +44,4 @@ class FacadeLocatorMatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse((new FacadeLocatorMatcher())->match('locatorFacade'));
     }
 
-    /**
-     * @return void
-     */
-    public function testFilterShouldReturnClassName()
-    {
-        $this->assertSame('Foo', (new FacadeLocatorMatcher())->filter('facadeFoo'));
-    }
-
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface;
+use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 
 class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
@@ -28,23 +28,23 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface
+     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
      */
-    protected $utilTextFacade;
+    protected $utilTextService;
 
     /**
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface $utilTextFacade
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
      */
     public function __construct(
         ProductAbstractManagerInterface $productAbstractManager,
         ProductToLocaleInterface $localeFacade,
-        ProductToUtilTextInterface $utilTextFacade
+        ProductToUtilTextInterface $utilTextService
     ) {
         $this->productAbstractManager = $productAbstractManager;
         $this->localeFacade = $localeFacade;
-        $this->utilTextFacade = $utilTextFacade;
+        $this->utilTextService = $utilTextService;
     }
 
     /**
@@ -80,7 +80,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
      */
     protected function generateUrlByLocale(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
     {
-        $productName = $this->utilTextFacade->generateSlug(
+        $productName = $this->utilTextService->generateSlug(
             $this->productAbstractManager->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer)
         );
 

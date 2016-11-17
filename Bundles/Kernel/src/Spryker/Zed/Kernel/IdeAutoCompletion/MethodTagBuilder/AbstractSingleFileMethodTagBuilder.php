@@ -156,7 +156,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     {
         $className = $this->replaceProjectPath($file->getPathname());
         $className = $this->replaceVendorPath($className);
-        $className = str_replace(['/', '.php'], ['\\', ''], $className);
+        $className = str_replace(['//', '/', '.php'], ['/', '\\', ''], $className);
 
         return ' * ' . str_replace(
             self::PLACEHOLDER_CLASS_NAME,

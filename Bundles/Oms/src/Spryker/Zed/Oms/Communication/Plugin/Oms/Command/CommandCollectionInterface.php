@@ -7,24 +7,8 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-interface CommandCollectionInterface
+use \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface AS DependencyCommandCollectionInterface;
+
+interface CommandCollectionInterface extends DependencyCommandCollectionInterface
 {
-
-    /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function add(CommandInterface $command, $name);
-
-    /**
-     * @param string $name
-     *
-     * @throws \Spryker\Zed\Oms\Exception\CommandNotFoundException
-     *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
-     */
-    public function get($name);
-
 }

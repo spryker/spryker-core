@@ -7,8 +7,18 @@
 
 namespace Spryker\Zed\Library\Generator;
 
+use Spryker\Service\UtilText\Model\StringGenerator AS UtilStringGenerator;
+
+/**
+ * @deprecated use \Spryker\Service\UtilText\UtilTextService instead
+ */
 class StringGenerator
 {
+
+    /**
+     * @var \Spryker\Service\UtilText\Model\StringGenerator
+     */
+    protected static $utilStringGenerator = null;
 
     /**
      * @var int
@@ -32,14 +42,21 @@ class StringGenerator
      */
     public function generateRandomString()
     {
-        $length = $this->length / 2;
-        $token = bin2hex(random_bytes($length));
+        return static::createUtilStringGenerator()->generateRandomString($this->length);
+    }
 
-        if (strlen($token) !== $this->length) {
-            $token = str_pad($token, $this->length, '0');
+    /**
+     * @var \Spryker\Service\UtilText\Model\StringGenerator
+     *
+     * @return \Spryker\Service\UtilText\Model\StringGenerator
+     */
+    protected static function createUtilStringGenerator()
+    {
+        if (static::$utilStringGenerator === null) {
+            static::$utilStringGenerator = new UtilStringGenerator();
         }
 
-        return $token;
+        return static::$utilStringGenerator;
     }
 
 }

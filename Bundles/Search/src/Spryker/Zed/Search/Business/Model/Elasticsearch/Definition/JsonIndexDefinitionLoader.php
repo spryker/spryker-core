@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
-use Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface;
+use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -33,22 +33,26 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $storePrefixes;
 
     /**
-     * @var \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface
+     * @var \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
      */
-    protected $utilEncodingFacade;
+    protected $utilEncodingService;
 
     /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
      * @param array $stores
-     * @param \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface $utilEncodingFacade
+     * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
      */
-    public function __construct(array $sourceDirectories, IndexDefinitionMergerInterface $definitionMerger, array $stores, SearchToUtilEncodingInterface $utilEncodingFacade)
-    {
+    public function __construct(
+        array $sourceDirectories,
+        IndexDefinitionMergerInterface $definitionMerger,
+        array $stores,
+        SearchToUtilEncodingInterface $utilEncodingService
+    ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
         $this->storePrefixes = $this->getStorePrefixes($stores);
-        $this->utilEncodingFacade = $utilEncodingFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -199,7 +203,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function decodeJson($jsonValue)
     {
-        return $this->utilEncodingFacade
+        return $this->utilEncodingService
             ->decodeJson($jsonValue, true);
     }
 

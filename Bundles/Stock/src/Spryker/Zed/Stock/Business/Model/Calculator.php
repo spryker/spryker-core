@@ -13,14 +13,14 @@ class Calculator implements CalculatorInterface
     /**
      * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
      */
-    protected $readerInterface;
+    protected $reader;
 
     /**
-     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
+     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $reader
      */
-    public function __construct(ReaderInterface $readerInterface)
+    public function __construct(ReaderInterface $reader)
     {
-        $this->readerInterface = $readerInterface;
+        $this->reader = $reader;
     }
 
     /**
@@ -30,7 +30,7 @@ class Calculator implements CalculatorInterface
      */
     public function calculateStockForProduct($sku)
     {
-        $productEntities = $this->readerInterface->getStocksProduct($sku);
+        $productEntities = $this->reader->getStocksProduct($sku);
         $quantity = 0;
 
         foreach ($productEntities as $productEntity) {

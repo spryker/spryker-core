@@ -51,7 +51,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getQueryContainer(),
             $this->createReaderModel(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getStockUpdateHandlerPlugins()
         );
     }
 
@@ -77,6 +78,14 @@ class StockBusinessFactory extends AbstractBusinessFactory
     protected function getTouchFacade()
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     */
+    protected function getStockUpdateHandlerPlugins()
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_UPDATE);
     }
 
 }
