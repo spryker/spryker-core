@@ -16,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerGroup\Business\Exception\CustomerGroupNotFoundException;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 
-class CustomerGroup
+class CustomerGroup implements CustomerGroupInterface
 {
 
     /**
@@ -189,33 +189,6 @@ class CustomerGroup
 
             $customerEntity->delete();
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
-     *
-     * @return bool
-     */
-    protected function hasCustomer(CustomerGroupTransfer $customerGroupTransfer)
-    {
-        $result = false;
-        $customerEntity = null;
-
-        if ($customerGroupTransfer->getIdCustomer()) {
-            $customerEntity = $this->queryContainer
-                ->queryCustomerById($customerGroupTransfer->getIdCustomer())
-                ->findOne();
-        } elseif ($customerGroupTransfer->getEmail()) {
-            $customerEntity = $this->queryContainer
-                ->queryCustomerByEmail($customerGroupTransfer->getEmail())
-                ->findOne();
-        }
-
-        if ($customerEntity !== null) {
-            $result = true;
-        }
-
-        return $result;
     }
 
 }

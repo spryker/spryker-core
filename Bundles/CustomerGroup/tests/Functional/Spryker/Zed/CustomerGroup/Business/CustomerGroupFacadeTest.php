@@ -37,9 +37,11 @@ class CustomerGroupFacadeTest extends Test
         $customerGroupEntity->setName('Test' . time());
         $customerGroupEntity->save();
 
+        $customerEntity = $this->createCustomer();
+
         $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
         $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
-        $customerGroupToCustomerEntity->setFkCustomer(1);
+        $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
         $customerGroupFacade = new CustomerGroupFacade();
@@ -52,7 +54,7 @@ class CustomerGroupFacadeTest extends Test
 
         $customers = $resultTransfer->getCustomers();
         foreach ($customers as $customer) {
-            $this->assertSame(1, $customer->getFkCustomer());
+            $this->assertSame($customerEntity->getIdCustomer(), $customer->getFkCustomer());
         }
     }
 
@@ -130,17 +132,19 @@ class CustomerGroupFacadeTest extends Test
         $customerGroupEntity->fromArray($customerGroup);
         $customerGroupEntity->save();
 
+        $customerEntityOne = $this->createCustomer();
+
         $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
         $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
-        $customerGroupToCustomerEntity->setFkCustomer(1);
+        $customerGroupToCustomerEntity->setFkCustomer($customerEntityOne->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
-        $customerEntityOne = $this->createCustomer();
+        $customerEntityTwo = $this->createCustomer('two@second.de', 'Second', 'Two', 'two');
         $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityOne->getIdCustomer());
+        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityTwo->getIdCustomer());
         $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
 
         $customerGroupTransfer->setName('Foo');
@@ -152,7 +156,7 @@ class CustomerGroupFacadeTest extends Test
         $customerGroupToCustomerArray = $customerGroupToCustomerQuery->filterByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())->find()->toArray();
 
         $this->assertCount(1, $customerGroupToCustomerArray);
-        $this->assertSame($customerEntityOne->getIdCustomer(), $customerGroupToCustomerArray[0]['FkCustomer']);
+        $this->assertSame($customerEntityTwo->getIdCustomer(), $customerGroupToCustomerArray[0]['FkCustomer']);
     }
 
     /**
@@ -188,13 +192,15 @@ class CustomerGroupFacadeTest extends Test
         $customerGroupEntity->setName('Test' . time());
         $customerGroupEntity->save();
 
+        $customerEntity = $this->createCustomer();
+
         $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
         $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
-        $customerGroupToCustomerEntity->setFkCustomer(1);
+        $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
         $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-        $customerGroupToCustomerTransfer->setFkCustomer(1);
+        $customerGroupToCustomerTransfer->setFkCustomer($customerEntity->getIdCustomer());
 
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
@@ -205,7 +211,7 @@ class CustomerGroupFacadeTest extends Test
         $customerGroupToCustomerQuery = SpyCustomerGroupToCustomerQuery::create();
         $customerEntity = $customerGroupToCustomerQuery
             ->filterByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())
-            ->filterByFkCustomer(1)
+            ->filterByFkCustomer($customerEntity->getIdCustomer())
             ->findOne();
 
         $this->assertNull($customerEntity);
