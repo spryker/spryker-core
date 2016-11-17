@@ -10,6 +10,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use InvalidArgumentException;
 use Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
@@ -18,7 +19,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 /**
  * @group Functional
@@ -97,7 +97,7 @@ class AvailabilityFacadeTest extends Test
      */
     public function testCalculateStockWhenProductDoesNotExistsShouldThrowException()
     {
-        $this->expectException(MissingProductException::class);
+        $this->expectException(InvalidArgumentException::class);
         $availabilityFacade = $this->createAvailabilityFacade();
         $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
     }
