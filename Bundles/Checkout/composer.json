@@ -11,7 +11,7 @@
     "spryker/country": "^2.0.0",
     "spryker/customer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
+    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",

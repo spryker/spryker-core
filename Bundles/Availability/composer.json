@@ -11,7 +11,7 @@
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/locale": "^2.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
+    "spryker/oms": "^4.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/stock": "^2.0.0",
