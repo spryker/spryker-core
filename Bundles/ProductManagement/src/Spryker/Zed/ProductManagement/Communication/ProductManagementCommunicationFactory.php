@@ -328,32 +328,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createReadOnlyAttributeForm(array $data = [], array $options = [])
-    {
-        $readOnlyAttributeFormType = $this->createReadOnlyAttributeFormType();
-
-        return $this->getFormFactory()->create($readOnlyAttributeFormType, $data, $options);
-    }
-
-    /**
      * @return \Symfony\Component\Form\AbstractType
      */
     protected function createAttributeFormType()
     {
         return new AttributeForm($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    protected function createReadOnlyAttributeFormType()
-    {
-        return new ReadOnlyAttributeForm($this->getQueryContainer());
     }
 
     /**
@@ -378,32 +357,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createReadOnlyAttributeTranslationFormCollection(array $data = [], array $options = [])
-    {
-        $attributeTranslationFormCollectionType = $this->createReadOnlyAttributeTranslationFormCollectionType();
-
-        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
-    }
-
-    /**
      * @return \Symfony\Component\Form\AbstractType
      */
     public function createAttributeTranslationFormCollectionType()
     {
         return new AttributeTranslationCollectionForm();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    public function createReadOnlyAttributeTranslationFormCollectionType()
-    {
-        return new ReadOnlyAttributeTranslationCollectionForm();
     }
 
     /**
