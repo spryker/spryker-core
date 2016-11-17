@@ -25,7 +25,7 @@ class CustomerGroupListCest
      *
      * @return void
      */
-    public function showListOfCustomer(CustomerGroupTester $i)
+    public function showListOfCustomerGroup(CustomerGroupTester $i)
     {
         $i->amOnPage(CustomerGroupListPage::URL);
         $i->seeElement(CustomerGroupListPage::SELECTOR_TABLE);
