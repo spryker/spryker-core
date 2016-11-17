@@ -21,7 +21,7 @@
     </table>
 
     <table name="spy_customer_group_to_customer" idMethod="native">
-        <column name="id_customer_group_to_customers" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="id_customer_group_to_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer_group" type="INTEGER" required="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
 
