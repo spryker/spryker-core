@@ -10,7 +10,7 @@ namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Definition;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
-use Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface;
+use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 
 /**
  * @group Search
@@ -286,7 +286,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getUtilEncodingMock()
     {

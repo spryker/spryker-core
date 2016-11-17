@@ -30,7 +30,7 @@
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/money": "^1.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
+    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/payment": "^2.0.0",
     "spryker/propel": "^2.3.1",
     "spryker/refund": "^3.0.0",

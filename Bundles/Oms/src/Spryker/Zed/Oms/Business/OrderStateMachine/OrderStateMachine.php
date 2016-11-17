@@ -16,14 +16,15 @@ use Propel\Runtime\Propel;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
@@ -80,14 +81,19 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $activeProcesses;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface
      */
     protected $conditions;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface
      */
     protected $commands;
+
+    /**
+     * @var \Spryker\Zed\Oms\Business\Util\ReservationInterface
+     */
+    protected $reservation;
 
     /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
@@ -95,8 +101,9 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLog
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface $timeout
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Business\Util\ReservationInterface $reservation
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -105,7 +112,8 @@ class OrderStateMachine implements OrderStateMachineInterface
         TimeoutInterface $timeout,
         ReadOnlyArrayObject $activeProcesses,
         $conditions,
-        $commands
+        $commands,
+        ReservationInterface $reservation
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -114,12 +122,13 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->activeProcesses = $activeProcesses;
         $this->setConditions($conditions);
         $this->setCommands($commands);
+        $this->reservation = $reservation;
     }
 
     /**
      * Converts array to collection for BC
      *
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface|array $conditions
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      *
      * @return void
      */
@@ -142,7 +151,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * Converts array to collection for BC
      *
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface|array $commands
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      *
      * @return void
      */
@@ -449,7 +458,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
      *
      * @throws \LogicException
      *
@@ -662,6 +671,10 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $sourceState = $process->getStateFromAllProcesses($orderItem->getState()->getName());
             }
 
+            if ($sourceState === $targetState && $targetState->isReserved()) {
+                $this->reservation->updateReservationQuantity($orderItem->getSku());
+            }
+
             if ($sourceState !== $targetState->getName()
                 && $targetState->hasOnEnterEvent()
             ) {
@@ -783,10 +796,9 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
             }
 
-            if ($orderItem->isModified()) {
-                $orderItem->save();
-                $log->save($orderItem);
-            }
+            $orderItem->save();
+            $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
+            $log->save($orderItem);
         }
 
         $connection->commit();
@@ -795,7 +807,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $command
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     protected function getCommand($command)
     {
@@ -805,7 +817,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $condition
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     protected function getCondition($condition)
     {
@@ -837,6 +849,24 @@ class OrderStateMachine implements OrderStateMachineInterface
         foreach ($orderItems as $orderItem) {
             $stateName = $orderItem->getState()->getName();
             $log->addSourceState($orderItem, $stateName);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param string $sourceStateId
+     * @param string $targetStateId
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function updateReservation(ProcessInterface $process, $sourceStateId, $targetStateId, $sku)
+    {
+        $sourceStateIsReserved = $process->getState($sourceStateId)->isReserved();
+        $targetStateIsReserved = $process->getState($targetStateId)->isReserved();
+
+        if ($sourceStateIsReserved !== $targetStateIsReserved) {
+            $this->reservation->updateReservationQuantity($sku);
         }
     }
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Library\Log;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 class SendOrderConfirmation implements CommandByOrderInterface
@@ -23,9 +22,6 @@ class SendOrderConfirmation implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $message = sprintf('Command SendOrderConfirmation by Order for Order %s (%s items)', $orderEntity->getIdSalesOrder(), count($orderItems));
-        Log::log($message, 'statemachine.log');
-
         return [];
     }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Kernel;
 
 use Spryker\Client\Kernel\ClientLocator;
+use Spryker\Service\Kernel\ServiceLocator;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Business\FacadeLocator;
@@ -27,6 +28,7 @@ class Locator extends AbstractLocatorLocator
                 new FacadeLocator(),
                 new QueryContainerLocator(),
                 new ClientLocator(),
+                new ServiceLocator(),
             ];
         }
         $bundleProxy->setLocator($this->locator);

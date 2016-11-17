@@ -115,7 +115,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductUrlGenerator(
             $this->createProductAbstractManager(),
             $this->getLocaleFacade(),
-            $this->getUtilTextFacade()
+            $this->getUtilTextService()
         );
     }
 
@@ -135,7 +135,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSkuGenerator()
     {
-        return new SkuGenerator($this->getUtilTextFacade());
+        return new SkuGenerator($this->getUtilTextService());
     }
 
     /**
@@ -159,7 +159,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createAttributeEncoder()
     {
-        return new AttributeEncoder($this->getUtilEncodingFacade());
+        return new AttributeEncoder($this->getUtilEncodingService());
     }
 
     /**
@@ -215,19 +215,19 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
      */
-    protected function getUtilTextFacade()
+    protected function getUtilTextService()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_TEXT);
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
-    protected function getUtilEncodingFacade()
+    protected function getUtilEncodingService()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_ENCODING);
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

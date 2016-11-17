@@ -11,6 +11,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
@@ -47,7 +48,8 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             $this->getTimeoutMock(),
             new ReadOnlyArrayObject(),
             [self::CONDITION_NAME => $this->getConditionMock()],
-            []
+            [],
+            $this->getReservationMock()
         );
         $reflection = new \ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -73,7 +75,8 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             $this->getTimeoutMock(),
             new ReadOnlyArrayObject(),
             $conditionCollection,
-            []
+            [],
+            $this->getReservationMock()
         );
         $reflection = new \ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -96,7 +99,8 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             $this->getTimeoutMock(),
             new ReadOnlyArrayObject(),
             [],
-            [self::COMMAND_NAME => $this->getCommandMock()]
+            [self::COMMAND_NAME => $this->getCommandMock()],
+            $this->getReservationMock()
         );
         $reflection = new \ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -122,7 +126,8 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             $this->getTimeoutMock(),
             new ReadOnlyArrayObject(),
             [],
-            $commandCollection
+            $commandCollection,
+            $this->getReservationMock()
         );
         $reflection = new \ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -166,7 +171,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     private function getConditionMock()
     {
@@ -174,11 +179,20 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     private function getCommandMock()
     {
         return $this->getMockBuilder(CommandInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\Util\ReservationInterface
+     */
+    private function getReservationMock()
+    {
+        return $this->getMockBuilder(ReservationInterface::class)
+            ->getMock();
     }
 
 }

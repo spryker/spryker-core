@@ -10,14 +10,14 @@ namespace Spryker\Zed\Search;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Search\Dependency\Facade\SearchToCollectorBridge;
-use Spryker\Zed\Search\Dependency\Facade\SearchToUtilEncodingBridge;
+use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
 
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CLIENT_SEARCH = 'search client';
     const FACADE_COLLECTOR = 'collector facade';
-    const FACADE_UTIL_ENCODING = 'util encoding facade';
+    const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -75,8 +75,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingFacade(Container $container)
     {
-        $container[self::FACADE_UTIL_ENCODING] = function (Container $container) {
-            return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->facade());
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
     }
 

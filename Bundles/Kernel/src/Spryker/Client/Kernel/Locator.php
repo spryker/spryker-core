@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Kernel;
 
+use Spryker\Service\Kernel\ServiceLocator;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
@@ -75,6 +76,7 @@ class Locator implements LocatorLocatorInterface
         if ($this->locator === null) {
             $this->locator = [
                 new ClientLocator(),
+                new ServiceLocator(),
             ];
         }
         $bundleProxy->setLocator($this->locator);

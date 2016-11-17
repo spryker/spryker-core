@@ -6,7 +6,8 @@
  */
 
 namespace Spryker\Shared\Library;
-use \Spryker\Shared\UtilEncoding\Json AS JsonEncoder;
+
+use \Spryker\Service\UtilEncoding\Model\Json AS JsonEncoder;
 
 /**
  * @deprecated use \Spryker\Zed\UtilEncoding\Business\UtilEncodingFacade insted
@@ -18,7 +19,7 @@ class Json
     const DEFAULT_DEPTH = 512;
 
     /**
-     * @var \Spryker\Shared\UtilEncoding\Json
+     * @var \Spryker\Service\UtilEncoding\Model\Json
      */
     protected static $utilJsonEncoder = null;
 
@@ -52,7 +53,7 @@ class Json
     }
 
     /**
-     * @return \Spryker\Shared\UtilEncoding\Json
+     * @return \Spryker\Service\UtilEncoding\Model\Json
      */
     protected static function createUtilJsonEncoder()
     {

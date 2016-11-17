@@ -15,6 +15,11 @@ interface OmsFacadeInterface
 {
 
     /**
+     *
+     * Specification:
+     *  - Reads all manual event for given order.
+     *  - Returns list of manuals events
+     *
      * @api
      *
      * @param int $idOrderItem
@@ -24,6 +29,11 @@ interface OmsFacadeInterface
     public function getManualEvents($idOrderItem);
 
     /**
+     *
+     * Specification:
+     *  - Checks if order item is in state with givent flag
+     *  - Returns true if current state have flag
+     *
      * @api
      *
      * @param int $idOrder
@@ -34,6 +44,11 @@ interface OmsFacadeInterface
     public function isOrderFlagged($idOrder, $flag);
 
     /**
+     *
+     * Specification:
+     *  - Checks if all order items is in state with givent flag
+     *  - Returns true if all order items have flag in state
+     *
      * @api
      *
      * @param int $idOrder
@@ -44,6 +59,19 @@ interface OmsFacadeInterface
     public function isOrderFlaggedAll($idOrder, $flag);
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -55,6 +83,20 @@ interface OmsFacadeInterface
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Initialises correct state machine, sets initial state
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param array $orderItemIds
@@ -65,6 +107,19 @@ interface OmsFacadeInterface
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = []);
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -76,6 +131,11 @@ interface OmsFacadeInterface
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = []);
 
     /**
+     *
+     * Specification:
+     *  - Reads all active state machine processes, which defined in spryker configuration OmsConstants::ACTIVE_PROCESSES
+     *  - Returns array of Process objects
+     *
      * @api
      *
      * @return \Spryker\Zed\Oms\Business\Process\Process[]
@@ -83,6 +143,10 @@ interface OmsFacadeInterface
     public function getProcesses();
 
     /**
+     *
+     * Specification:
+     *  - Returns list of active processes, which defined in spryker configuration OmsConstants::ACTIVE_PROCESSES
+     *
      * @api
      *
      * @return array
@@ -90,6 +154,13 @@ interface OmsFacadeInterface
     public function getProcessList();
 
     /**
+     *
+     * Specification:
+     *  - Reads all transitions without event.
+     *  - Reads from database items with those transitions
+     *  - Executes each transition
+     *  - Returns number of affected items
+     *
      * @api
      *
      * @param array $logContext
@@ -99,6 +170,12 @@ interface OmsFacadeInterface
     public function checkConditions(array $logContext = []);
 
     /**
+     *
+     * Specification:
+     *  - Reads all expired timeout events
+     *  - Execute events
+     *  - Returns number of affected items
+     *
      * @api
      *
      * @param array $logContext
@@ -108,6 +185,11 @@ interface OmsFacadeInterface
     public function checkTimeouts(array $logContext = []);
 
     /**
+     *
+     * Specification:
+     *  - Draws state machine process using internal graphic library
+     *  - Returns html to display in presentation
+     *
      * @api
      *
      * @param string $processName
@@ -120,6 +202,12 @@ interface OmsFacadeInterface
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null);
 
     /**
+     *
+     * Specification:
+     *  - Gets all events for order item with source state having manual event
+     *  - Gets all events for whole order state having manual event
+     *  - Returns array of order manual events
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -129,6 +217,10 @@ interface OmsFacadeInterface
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order);
 
     /**
+     *
+     *  Specification:
+     *  - Gets all order items which have state with given flag
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -139,6 +231,10 @@ interface OmsFacadeInterface
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
     /**
+     *
+     * Specification:
+     *  - Gets all order items which does not have state with given flag
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -149,6 +245,11 @@ interface OmsFacadeInterface
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag);
 
     /**
+     *
+     * Specification:
+     *  - Reads all logged state machine operations for givent order
+     *  - Returns TransitionLog entity list
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -159,6 +260,10 @@ interface OmsFacadeInterface
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
     /**
+     *
+     * Specification:
+     *  - Reads all order items having state with reserved attribute for given concrete product
+     *
      * @api
      *
      * @param string $sku
@@ -168,15 +273,22 @@ interface OmsFacadeInterface
     public function getReservedOrderItemsForSku($sku);
 
     /**
+     * Specification:
+     *  - Count orders with items with given sku which are in state with flag reserved
+     *
      * @api
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return int
      */
-    public function countReservedOrderItemsForSku($sku);
+    public function sumReservedProductQuantitiesForSku($sku);
 
     /**
+     *
+     * Specification:
+     *  - Gets state entity by state name from persistence
+     *
      * @api
      *
      * @param string $stateName
@@ -186,6 +298,10 @@ interface OmsFacadeInterface
     public function getStateEntity($stateName);
 
     /**
+     *
+     * Specification:
+     *  - Gets process entity by process name from persistence
+     *
      * @api
      *
      * @param string $processName
@@ -195,6 +311,11 @@ interface OmsFacadeInterface
     public function getProcessEntity($processName);
 
     /**
+     *
+     * Specification:
+     *  - Gets inital state entity for new order state machine process
+     *  - Inital state name is set in OmsConstants
+     *
      * @api
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
@@ -202,6 +323,12 @@ interface OmsFacadeInterface
     public function getInitialStateEntity();
 
     /**
+     *
+     * Specification:
+     *  - Gets current state machine process for give order item
+     *  - Reads state display name from xml definition
+     *  - Returns display name
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
@@ -211,6 +338,19 @@ interface OmsFacadeInterface
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -223,6 +363,19 @@ interface OmsFacadeInterface
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = []);
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
@@ -234,6 +387,19 @@ interface OmsFacadeInterface
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = []);
 
     /**
+     *
+     * Specification:
+     *  - Trigers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Locks state machine trigger from concurrent access
+     *  - Logs state machine transitions
+     *  - Executes state machine for each order item following their definitions
+     *  - Calls command plugins
+     *  - Calls condition plugins
+     *  - Sets timeouts for timeout events
+     *  - Triggers item reservation plugins
+     *  - Unlocks state machine trigger
+     *  - Returns data which was aggregated from state machine plugins
+     *
      * @api
      *
      * @param string $eventId
@@ -246,6 +412,12 @@ interface OmsFacadeInterface
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = []);
 
     /**
+     *
+     * Specification:
+     *  - Reads all order states
+     *  - Counts orders in each state and puts into corresponding state
+     *  - Return matrix
+     *
      * @api
      *
      * @return array
@@ -253,6 +425,11 @@ interface OmsFacadeInterface
     public function getOrderItemMatrix();
 
     /**
+     *
+     * Specification:
+     *  - Read all order manual event from persistence
+     *  - Return array of manual events
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -262,6 +439,10 @@ interface OmsFacadeInterface
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
     /**
+     *
+     * Specification:
+     *  - Clear state machine lock table, which used when items are locked. This is garbage collection call
+     *
      * @api
      *
      * @return void
