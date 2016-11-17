@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Dependency\Facade;
+namespace Spryker\Zed\ProductManagement\Dependency\Service;
 
 class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextInterface
 {
@@ -13,14 +13,14 @@ class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextIn
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
-    protected $utilTextFacade;
+    protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\UtilText\Business\UtilTextFacadeInterface $utilTextFacade
+     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      */
-    public function __construct($utilTextFacade)
+    public function __construct($utilTextService)
     {
-        $this->utilTextFacade = $utilTextFacade;
+        $this->utilTextService = $utilTextService;
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductManagementToUtilTextBridge implements ProductManagementToUtilTextIn
      */
     public function generateSlug($value)
     {
-        return $this->utilTextFacade->generateSlug($value);
+        return $this->utilTextService->generateSlug($value);
     }
 
 }

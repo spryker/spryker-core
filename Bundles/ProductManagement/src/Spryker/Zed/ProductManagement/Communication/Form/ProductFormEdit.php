@@ -62,7 +62,7 @@ class ProductFormEdit extends ProductFormAdd
                             function ($sku, ExecutionContextInterface $context) {
                                 $form = $context->getRoot();
                                 $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                                $sku = $this->utilTextFacade->generateSlug($sku);
+                                $sku = $this->utilTextService->generateSlug($sku);
 
                                 $skuCount = $this->productQueryContainer
                                     ->queryProduct()

@@ -20,7 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUrlBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextBridge;
+use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -31,12 +31,13 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_URL = 'FACADE_URL';
-    const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     const FACADE_STOCK = 'FACADE_STOCK';
     const FACADE_MONEY = 'FACADE_MONEY';
+
+    const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
@@ -70,8 +71,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
         };
 
-        $container[self::FACADE_UTIL_TEXT] = function (Container $container) {
-            return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->facade());
+        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
         $container[self::FACADE_TAX] = function (Container $container) {
@@ -140,8 +141,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToUrlBridge($container->getLocator()->url()->facade());
         };
 
-        $container[self::FACADE_UTIL_TEXT] = function (Container $container) {
-            return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->facade());
+        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
         $container[self::FACADE_TAX] = function (Container $container) {
