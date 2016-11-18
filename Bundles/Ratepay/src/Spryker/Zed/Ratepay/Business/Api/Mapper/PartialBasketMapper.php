@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,17 +7,24 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class PartialBasketMapper extends BaseMapper
 {
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer|\Generated\Shared\Transfer\OrderTransfer
+     * @var \Generated\Shared\Transfer\OrderTransfer
      */
-    protected $quoteTransfer;
+    protected $orderTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected $partialOrderTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
@@ -24,19 +32,9 @@ class PartialBasketMapper extends BaseMapper
     protected $ratepayPaymentTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected $basketItems;
-
-    /**
      * @var bool
      */
     protected $needToSendShipping;
-
-    /**
-     * @var int
-     */
-    protected $discountTotal;
 
     /**
      * @var float
@@ -54,30 +52,27 @@ class PartialBasketMapper extends BaseMapper
     protected $moneyFacade;
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
      * @param bool $needToSendShipping
-     * @param int $discountTotal
      * @param float $discountTaxRate
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
-        $quoteTransfer,
-        $ratepayPaymentTransfer,
-        array $basketItems,
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        TransferInterface $ratepayPaymentTransfer,
         $needToSendShipping,
-        $discountTotal,
         $discountTaxRate,
         RatepayRequestTransfer $requestTransfer,
         RatepayToMoneyInterface $moneyFacade
     ) {
-        $this->quoteTransfer = $quoteTransfer;
+        $this->orderTransfer = $orderTransfer;
+        $this->partialOrderTransfer = $partialOrderTransfer;
         $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
-        $this->basketItems = $basketItems;
         $this->needToSendShipping = $needToSendShipping;
-        $this->discountTotal = $discountTotal;
         $this->discountTaxRate = $discountTaxRate;
         $this->requestTransfer = $requestTransfer;
         $this->moneyFacade = $moneyFacade;
@@ -88,24 +83,20 @@ class PartialBasketMapper extends BaseMapper
      */
     public function map()
     {
-        $grandTotal = 0;
-        foreach ($this->basketItems as $basketItem) {
-            $grandTotal += $basketItem->getUnitGrossPriceWithProductOptions() * $basketItem->getQuantity();
-        }
-        if (!$this->requestTransfer->getShoppingBasket()) {
-            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
-        }
+        $partialOrderTotals = $this->partialOrderTransfer->getTotals();
+
+        $this->initBasketIfEmpty();
         $shoppingBasket = $this->requestTransfer->getShoppingBasket();
         $shoppingBasket
             ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
             ->setDiscountTitle(BasketMapper::DEFAULT_DISCOUNT_NODE_VALUE)
-            ->setDiscountUnitPrice($this->moneyFacade->convertIntegerToDecimal((int)$this->discountTotal) * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
+            ->setDiscountUnitPrice($this->moneyFacade->convertIntegerToDecimal((int)$partialOrderTotals->getDiscountTotal()) * BasketMapper::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate($this->discountTaxRate);
 
-        $grandTotal -= $this->discountTotal;
+        $grandTotal = $partialOrderTotals->getGrandTotal();
 
         if ($this->needToSendShipping) {
-            $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
+            $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
             $shippingUnitPrice = $totalsTransfer->requireExpenseTotal()->getExpenseTotal();
             $grandTotal += $shippingUnitPrice;
 
@@ -116,9 +107,16 @@ class PartialBasketMapper extends BaseMapper
         }
         $shoppingBasket->setAmount($this->moneyFacade->convertIntegerToDecimal((int)$grandTotal));
 
-        if (count($this->quoteTransfer->getExpenses())) {
+        if (count($this->orderTransfer->getExpenses())) {
             $this->requestTransfer->getShoppingBasket()
-                ->setShippingTaxRate($this->quoteTransfer->getExpenses()[0]->getTaxRate());
+                ->setShippingTaxRate($this->orderTransfer->getExpenses()[0]->getTaxRate());
+        }
+    }
+
+    protected function initBasketIfEmpty()
+    {
+        if (!$this->requestTransfer->getShoppingBasket()) {
+            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
         }
     }
 

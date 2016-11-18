@@ -105,12 +105,16 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function deliveryConfirm(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function deliveryConfirm(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         $payment = $this->loadOrderPayment($orderTransfer);
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_DELIVER_CONFIRM);
         $paymentData = $this->getTransferObjectFromPayment($payment);
@@ -128,19 +132,29 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_DELIVER_CONFIRM);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
+        $this->mapPartialShoppingBasketAndItems(
+            $orderTransfer,
+            $partialOrderTransfer,
+            $paymentData,
+            $orderItems,
+            $needToSendShipping
+        );
 
         return $request;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function paymentCancel(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function paymentCancel(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         $payment = $this->loadOrderPayment($orderTransfer);
         $allOrderItems = $payment->getSpySalesOrder()->getItems();
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_CANCEL);
@@ -160,19 +174,29 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_CANCEL);
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
+        $this->mapPartialShoppingBasketAndItems(
+            $orderTransfer,
+            $partialOrderTransfer,
+            $paymentData,
+            $orderItems,
+            $needToSendShipping
+        );
 
         return $request;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function paymentRefund(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function paymentRefund(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         $payment = $this->loadOrderPayment($orderTransfer);
         $allOrderItems = $payment->getSpySalesOrder()->getItems();
         $paymentLogs = $this->loadOrderPaymentLogs($orderTransfer, Constants::REQUEST_MODEL_PAYMENT_REFUND);
@@ -189,7 +213,13 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         $request = $this->buildRequest();
 
         $this->mapOrderHeadData($orderTransfer, $payment);
-        $this->mapPartialShoppingBasketAndItems($orderTransfer, $paymentData, $orderItems, $needToSendShipping);
+        $this->mapPartialShoppingBasketAndItems(
+            $orderTransfer,
+            $partialOrderTransfer,
+            $paymentData,
+            $orderItems,
+            $needToSendShipping
+        );
 
         return $request;
     }
@@ -259,28 +289,32 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Spryker\Shared\Transfer\TransferInterface $paymentData
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      * @param bool $needToSendShipping
      *
      * @return void
      */
-    protected function mapPartialShoppingBasketAndItems($dataTransfer, $paymentData, array $orderItems, $needToSendShipping = false)
-    {
+    protected function mapPartialShoppingBasketAndItems(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        $paymentData,
+        array $orderItems,
+        $needToSendShipping = false
+    ) {
         $grouppedItems = [];
-        $discountTotal = 0;
         foreach ($orderItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
                 $grouppedItems[$basketItem->getGroupKey()]->setQuantity($grouppedItems[$basketItem->getGroupKey()]->getQuantity() + 1);
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
-            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
         }
 
         $discountTaxRate = 0;
-        foreach ($dataTransfer->getItems() as $basketItem) {
+        foreach ($orderTransfer->getItems() as $basketItem) {
             if ($discountTaxRate < $basketItem->getTaxRate()) {
                 $discountTaxRate = $basketItem->getTaxRate();
             }
@@ -293,7 +327,13 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         }
 
         $this->mapperFactory
-            ->getPartialBasketMapper($dataTransfer, $paymentData, $grouppedItems, $needToSendShipping, $discountTotal, $discountTaxRate)
+            ->getPartialBasketMapper(
+                $orderTransfer,
+                $partialOrderTransfer,
+                $paymentData,
+                $needToSendShipping,
+                $discountTaxRate
+            )
             ->map();
     }
 

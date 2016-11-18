@@ -135,16 +135,20 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function confirmDelivery(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function confirmDelivery(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         return $this
             ->getFactory()
             ->createConfirmDeliveryTransactionHandler()
-            ->request($orderTransfer, $orderItems);
+            ->request($orderTransfer, $partialOrderTransfer, $orderItems);
     }
 
     /**
@@ -154,16 +158,20 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function cancelPayment(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function cancelPayment(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         return $this
             ->getFactory()
             ->createCancelPaymentTransactionHandler()
-            ->request($orderTransfer, $orderItems);
+            ->request($orderTransfer, $partialOrderTransfer, $orderItems);
     }
 
     /**
@@ -173,16 +181,20 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function refundPayment(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function refundPayment(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         return $this
             ->getFactory()
             ->createRefundPaymentTransactionHandler()
-            ->request($orderTransfer, $orderItems);
+            ->request($orderTransfer, $partialOrderTransfer, $orderItems);
     }
 
     /**

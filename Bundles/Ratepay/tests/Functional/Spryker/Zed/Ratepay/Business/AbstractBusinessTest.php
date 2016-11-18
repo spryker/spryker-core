@@ -64,6 +64,11 @@ abstract class AbstractBusinessTest extends Test
     protected $orderTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected $orderPartialTransfer;
+
+    /**
      * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected $checkoutResponseTransfer;
@@ -78,6 +83,7 @@ abstract class AbstractBusinessTest extends Test
         $this->checkoutResponseTransfer = $this->createCheckoutResponse();
         $this->quoteTransfer = $this->getQuoteTransfer();
         $this->orderTransfer = $this->getOrderTransfer();
+        $this->orderPartialTransfer = $this->getPartialOrderTransfer();
 
         $orderEntity = $this->createOrderEntity();
         $this->checkoutResponseTransfer->getSaveOrder()->setIdSalesOrder($orderEntity->getIdSalesOrder());
@@ -126,6 +132,21 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getPartialOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total);
+
+        return $orderTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\RatepayPaymentInitTransfer
      */
     protected function mockRatepayPaymentInitTransfer()
@@ -156,6 +177,7 @@ abstract class AbstractBusinessTest extends Test
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $this->getQuoteTransfer(),
+            $this->getPartialOrderTransfer(),
             $paymentData
         );
         $quotePaymentRequestMapper->map();

@@ -60,11 +60,15 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
                 ->setTransactionShortId($ratepayResponseTransfer->getTransactionShortId())
                 ->setResultCode($ratepayResponseTransfer->getStatusCode());
         }
+
+        $partialOrderTransfer = $this->getPartialOrderTransferByBasketItems($quoteTransfer->getItems());
+
         $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
         $quotePaymentInitMapper = $this->getFactory()->createPaymentRequestMapperByQuote(
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $quoteTransfer,
+            $partialOrderTransfer,
             $paymentData
         );
         $quotePaymentInitMapper->map();
@@ -95,6 +99,23 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
                 ->setMessage($errorMessage);
             $checkoutResponseTransfer->addError($error);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getPartialOrderTransferByBasketItems($basketItems)
+    {
+        $partialOrderTransfer = $this->getFactory()->createOrderTransfer();
+        $items = $this->getFactory()->createOrderTransferItemsByBasketItems($basketItems);
+        $partialOrderTransfer->setItems($items);
+
+        return $this
+            ->getFactory()
+            ->getSalesAggregator()
+            ->getOrderTotalByOrderTransfer($partialOrderTransfer);
     }
 
 }

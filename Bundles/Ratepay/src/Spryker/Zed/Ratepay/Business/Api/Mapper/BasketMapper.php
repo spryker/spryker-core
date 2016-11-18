@@ -61,7 +61,7 @@ class BasketMapper extends BaseMapper
     {
         $shippingUnitPrice = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
         $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
-        $discountTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireDiscountTotal()->getDiscountTotal());
+        $discountTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getDiscountTotal());
 
         $this->requestTransfer
             ->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()

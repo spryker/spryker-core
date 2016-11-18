@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Ratepay\Communication;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
@@ -107,6 +108,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer $paymentData
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper
@@ -115,6 +117,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayPaymentInitTransfer $ratepayPaymentInitTransfer,
         QuoteTransfer $quoteTransfer,
+        OrderTransfer $partialOrderTransfer,
         $paymentData
     ) {
 
@@ -122,6 +125,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $quoteTransfer,
+            $partialOrderTransfer,
             $paymentData
         );
     }
@@ -130,6 +134,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\OrderPaymentRequestMapper
@@ -138,6 +143,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayPaymentInitTransfer $ratepayPaymentInitTransfer,
         OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
         SpySalesOrder $orderEntity
     ) {
 
@@ -145,9 +151,78 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $orderTransfer,
+            $partialOrderTransfer,
             $orderEntity,
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return \ArrayObject
+     */
+    public function createOrderTransferItems($orderItems)
+    {
+        $items = new \ArrayObject();
+        foreach ($orderItems as $orderItemEntity) {
+            $items[] = $this->createItemTransferByItemEntity($orderItemEntity);
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransferByItemEntity($orderItemEntity)
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setIdSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
+        $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
+        $itemTransfer->setQuantity($orderItemEntity->getQuantity());
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
+     *
+     * @return \ArrayObject
+     */
+    public function createOrderTransferItemsByBasketItems($basketItems)
+    {
+        $items = new \ArrayObject();
+        foreach ($basketItems as $basketItem) {
+            $items[] = $this->createItemTransferByBasketItem($basketItem);
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $basketItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransferByBasketItem($basketItem)
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setIdSalesOrderItem($basketItem->getIdSalesOrderItem());
+        $itemTransfer->setUnitGrossPrice($basketItem->getUnitGrossPrice());
+        $itemTransfer->setQuantity($basketItem->getQuantity());
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderTransfer()
+    {
+        return new OrderTransfer();
     }
 
 }

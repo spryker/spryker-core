@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
@@ -59,7 +60,8 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     {
         $total = new TotalsTransfer();
         $total->setGrandTotal(1800)
-            ->setExpenseTotal(0);
+            ->setExpenseTotal(0)
+            ->setDiscountTotal(200);
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setTotals($total)
@@ -69,6 +71,39 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             ->setPayment(new PaymentTransfer());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function mockOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total)
+            ->setCustomer($this->mockCustomerTransfer())
+            ->setBillingAddress($this->mockAddressTransfer())
+            ->setShippingAddress($this->mockAddressTransfer());
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function mockPartialOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total);
+
+        return $orderTransfer;
     }
 
     /**
@@ -85,6 +120,7 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
         if ($quoteTransfer === null) {
             $quoteTransfer = $this->mockQuoteTransfer();
         }
+        $partialOrderTransfer = $this->mockPartialOrderTransfer();
 
         $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
         $ratepayPaymentInitTransfer = new RatepayPaymentInitTransfer();
@@ -92,9 +128,11 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $quoteTransfer,
+            $partialOrderTransfer,
             $paymentData
         );
         $quotePaymentRequestMapper->map();
+        $ratepayPaymentRequestTransfer->setDiscountTotal(200);
 
         return $ratepayPaymentRequestTransfer;
     }

@@ -29,6 +29,11 @@ class OrderPaymentRequestMapper extends BaseMapper
     protected $orderTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected $partialOrderTransfer;
+
+    /**
      * @var \Generated\Shared\Transfer\QuoteTransfer
      */
     protected $orderEntity;
@@ -47,6 +52,7 @@ class OrderPaymentRequestMapper extends BaseMapper
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
      */
@@ -54,12 +60,14 @@ class OrderPaymentRequestMapper extends BaseMapper
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayPaymentInitTransfer $ratepayPaymentInitTransfer,
         OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
         SpySalesOrder $orderEntity,
         RatepayQueryContainerInterface $queryContainer
     ) {
         $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->ratepayPaymentInitTransfer = $ratepayPaymentInitTransfer;
         $this->orderTransfer = $orderTransfer;
+        $this->partialOrderTransfer = $partialOrderTransfer;
         $this->orderEntity = $orderEntity;
         $this->queryContainer = $queryContainer;
     }
@@ -108,6 +116,9 @@ class OrderPaymentRequestMapper extends BaseMapper
         return $addressTransfer;
     }
 
+    /**
+     * @return void
+     */
     protected function mapAddresses()
     {
         $billingAddress = $this->getAddressTransfer($this->orderEntity->getBillingAddress());
@@ -119,13 +130,15 @@ class OrderPaymentRequestMapper extends BaseMapper
             ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName());
     }
 
+    /**
+     * @return void
+     */
     protected function mapPaymentRatepayEntity()
     {
         if ($this->orderEntity->getSpyPaymentRatepays() &&
             count($this->orderEntity->getSpyPaymentRatepays()->getData())
         ) {
-            /** @var \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay $paymentRatepayEntity */
-            $paymentRatepayEntity = $this->orderEntity->getSpyPaymentRatepays()->getData()[0];
+            $paymentRatepayEntity = $this->orderEntity->getSpyPaymentRatepays()->getFirst();
             $this->ratepayPaymentRequestTransfer
                 ->setPaymentType($paymentRatepayEntity->getPaymentType())
                 ->setCurrencyIso3($paymentRatepayEntity->getCurrencyIso3())
@@ -148,6 +161,9 @@ class OrderPaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapExpenses()
     {
         $expenses = $this->orderTransfer->getExpenses();
@@ -161,6 +177,9 @@ class OrderPaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapTotals()
     {
         $totalsTransfer = $this->orderTransfer->requireTotals()->getTotals();
@@ -170,11 +189,13 @@ class OrderPaymentRequestMapper extends BaseMapper
             ->setExpenseTotal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
     }
 
+    /**
+     * @return void
+     */
     protected function mapBasketItems()
     {
         $basketItems = $this->orderTransfer->requireItems()->getItems();
         $grouppedItems = [];
-        $discountTotal = 0;
         $discountTaxRate = 0;
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
@@ -182,11 +203,11 @@ class OrderPaymentRequestMapper extends BaseMapper
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
-            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
             if ($discountTaxRate < $basketItem->getTaxRate()) {
                 $discountTaxRate = $basketItem->getTaxRate();
             }
         }
+        $discountTotal = $this->partialOrderTransfer->getTotals()->getDiscountTotal();
         $this->ratepayPaymentRequestTransfer
             ->setDiscountTotal($discountTotal)
             ->setDiscountTaxRate($discountTaxRate);

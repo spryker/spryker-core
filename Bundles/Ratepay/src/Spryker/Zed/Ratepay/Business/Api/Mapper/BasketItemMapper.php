@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -72,9 +73,7 @@ class BasketItemMapper extends BaseMapper
 
         $itemTransfer->setProductOptions($productOptions);
 
-        if (!$this->requestTransfer->getShoppingBasket()) {
-            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
-        }
+        $this->initBasketIfEmpty();
         $this->requestTransfer->getShoppingBasket()->addItems($itemTransfer);
     }
 
@@ -87,6 +86,13 @@ class BasketItemMapper extends BaseMapper
         $itemDiscount = $this->moneyFacade->convertIntegerToDecimal((int)$itemDiscount);
 
         return $itemDiscount;
+    }
+
+    protected function initBasketIfEmpty()
+    {
+        if (!$this->requestTransfer->getShoppingBasket()) {
+            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
+        }
     }
 
 }

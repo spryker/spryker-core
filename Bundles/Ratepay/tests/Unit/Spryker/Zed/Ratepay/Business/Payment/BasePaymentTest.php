@@ -251,9 +251,11 @@ class BasePaymentTest extends Test
             $ratepayPaymentRequestTransfer,
             $ratepayPaymentInitTransfer,
             $this->mockQuoteTransfer(),
+            $this->mockPartialOrderTransfer(),
             $paymentData
         );
         $quotePaymentRequestMapper->map();
+        $ratepayPaymentRequestTransfer->setDiscountTotal(200);
 
         return $ratepayPaymentRequestTransfer;
     }
@@ -494,6 +496,21 @@ class BasePaymentTest extends Test
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder(1);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function mockPartialOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total);
 
         return $orderTransfer;
     }

@@ -50,26 +50,41 @@ interface MethodInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function deliveryConfirm(OrderTransfer $orderTransfer, array $orderItems);
+    public function deliveryConfirm(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    );
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function paymentCancel(OrderTransfer $orderTransfer, array $orderItems);
+    public function paymentCancel(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    );
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
      */
-    public function paymentRefund(OrderTransfer $orderTransfer, array $orderItems);
+    public function paymentRefund(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    );
 
 }

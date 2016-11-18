@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
+
 class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterface
 {
 
@@ -31,6 +33,16 @@ class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterfac
     public function getOrderTotalsByIdSalesOrder($idSalesOrder)
     {
         return $this->salesAggregatorFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer)
+    {
+        return $this->salesAggregatorFacade->getOrderTotalByOrderTransfer($orderTransfer);
     }
 
     /**

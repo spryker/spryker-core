@@ -54,7 +54,10 @@ class OrderTransactionTest extends BaseTransactionTest
         $transactionHandler = $this->getTransactionHandlerObject(CancelPaymentTransaction::class);
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
 
-        $responseTransfer = $transactionHandler->request($this->mockOrderTransfer());
+        $responseTransfer = $transactionHandler->request(
+            $this->mockOrderTransfer(),
+            $this->mockPartialOrderTransfer()
+        );
 
         $this->assertInstanceOf(RatepayResponseTransfer::class, $responseTransfer);
 
@@ -72,7 +75,10 @@ class OrderTransactionTest extends BaseTransactionTest
         $transactionHandler = $this->getTransactionHandlerObject(ConfirmDeliveryTransaction::class);
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
 
-        $responseTransfer = $transactionHandler->request($this->mockOrderTransfer());
+        $responseTransfer = $transactionHandler->request(
+            $this->mockOrderTransfer(),
+            $this->mockPartialOrderTransfer()
+        );
 
         $this->assertInstanceOf(RatepayResponseTransfer::class, $responseTransfer);
 
@@ -90,7 +96,10 @@ class OrderTransactionTest extends BaseTransactionTest
         $transactionHandler = $this->getTransactionHandlerObject('\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\RefundPaymentTransaction');
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
 
-        $responseTransfer = $transactionHandler->request($this->mockOrderTransfer());
+        $responseTransfer = $transactionHandler->request(
+            $this->mockOrderTransfer(),
+            $this->mockPartialOrderTransfer()
+        );
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\RatepayResponseTransfer', $responseTransfer);
 

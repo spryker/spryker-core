@@ -202,7 +202,8 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     {
         $paymentMethod = $this->getPaymentMethod();
         $orderTransfer = $this->getOrderTransfer();
-        $request = $paymentMethod->deliveryConfirm($orderTransfer, $orderTransfer->getItems()->getArrayCopy());
+        $partialOrderTransfer = $this->mockPartialOrderTransfer();
+        $request = $paymentMethod->deliveryConfirm($orderTransfer, $partialOrderTransfer, $orderTransfer->getItems()->getArrayCopy());
 
         $this->assertInstanceOf(DeliverConfirm::class, $request);
 
@@ -226,7 +227,8 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     {
         $paymentMethod = $this->getPaymentMethod();
         $orderTransfer = $this->getOrderTransfer();
-        $request = $paymentMethod->paymentCancel($orderTransfer, $orderTransfer->getItems()->getArrayCopy());
+        $partialOrderTransfer = $this->mockPartialOrderTransfer();
+        $request = $paymentMethod->paymentCancel($orderTransfer, $partialOrderTransfer, $orderTransfer->getItems()->getArrayCopy());
 
         $this->assertInstanceOf(Cancel::class, $request);
 
@@ -251,7 +253,8 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
     {
         $paymentMethod = $this->getPaymentMethod();
         $orderTransfer = $this->getOrderTransfer();
-        $request = $paymentMethod->paymentRefund($orderTransfer, $orderTransfer->getItems()->getArrayCopy());
+        $partialOrderTransfer = $this->mockPartialOrderTransfer();
+        $request = $paymentMethod->paymentRefund($orderTransfer, $partialOrderTransfer, $orderTransfer->getItems()->getArrayCopy());
 
         $this->assertInstanceOf(Refund::class, $request);
 

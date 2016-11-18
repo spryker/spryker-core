@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
@@ -25,6 +26,11 @@ class QuotePaymentRequestMapper extends BaseMapper
     protected $quoteTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected $partialOrderTransfer;
+
+    /**
      * @var \Generated\Shared\Transfer\RatepayPaymentInitTransfer
      */
     protected $ratepayPaymentInitTransfer;
@@ -38,17 +44,20 @@ class QuotePaymentRequestMapper extends BaseMapper
      * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer $paymentData
      */
     public function __construct(
         RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         RatepayPaymentInitTransfer $ratepayPaymentInitTransfer,
         QuoteTransfer $quoteTransfer,
+        OrderTransfer $partialOrderTransfer,
         $paymentData
     ) {
         $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->ratepayPaymentInitTransfer = $ratepayPaymentInitTransfer;
         $this->quoteTransfer = $quoteTransfer;
+        $this->partialOrderTransfer = $partialOrderTransfer;
         $this->paymentData = $paymentData;
     }
 
@@ -74,6 +83,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         $this->mapBasketItems();
     }
 
+    /**
+     * @return void
+     */
     protected function mapPaymentInfo()
     {
         $this->ratepayPaymentRequestTransfer
@@ -82,6 +94,9 @@ class QuotePaymentRequestMapper extends BaseMapper
             ->setCurrencyIso3($this->paymentData->getCurrencyIso3());
     }
 
+    /**
+     * @return void
+     */
     protected function mapCustomer()
     {
         $customerTransfer = $this->quoteTransfer->requireCustomer()->getCustomer();
@@ -94,6 +109,9 @@ class QuotePaymentRequestMapper extends BaseMapper
             ->setIpAddress($this->paymentData->getIpAddress());
     }
 
+    /**
+     * @return void
+     */
     protected function mapTotals()
     {
         $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
@@ -102,6 +120,9 @@ class QuotePaymentRequestMapper extends BaseMapper
             ->setExpenseTotal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
     }
 
+    /**
+     * @return void
+     */
     protected function mapAddresses()
     {
         $billingAddress = $this->quoteTransfer->getBillingAddress();
@@ -113,6 +134,9 @@ class QuotePaymentRequestMapper extends BaseMapper
             ->setBankAccountHolder($billingAddress->getFirstName() . " " . $billingAddress->getLastName());
     }
 
+    /**
+     * @return void
+     */
     protected function mapExpenses()
     {
         $expenses = $this->quoteTransfer->getExpenses();
@@ -122,6 +146,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapBankAccountBic()
     {
         if (method_exists($this->paymentData, 'getBankAccountBic')) {
@@ -130,6 +157,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapBankAccountIban()
     {
         if (method_exists($this->paymentData, 'getBankAccountIban')) {
@@ -138,6 +168,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapDebitPayType()
     {
         if (method_exists($this->paymentData, 'getDebitPayType')) {
@@ -146,6 +179,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapInstallmentNumberRates()
     {
         if (method_exists($this->paymentData, 'getInstallmentNumberRates')) {
@@ -154,6 +190,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapInstallmentRate()
     {
         if (method_exists($this->paymentData, 'getInstallmentRate')) {
@@ -162,6 +201,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapInstallmentLastRate()
     {
         if (method_exists($this->paymentData, 'getInstallmentLastRate')) {
@@ -170,6 +212,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapInstallmentInterestRate()
     {
         if (method_exists($this->paymentData, 'getInstallmentInterestRate')) {
@@ -178,6 +223,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapInstallmentPaymentFirstDay()
     {
         if (method_exists($this->paymentData, 'getInstallmentPaymentFirstDay')) {
@@ -186,6 +234,9 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapInstallmentGrandTotalAmount()
     {
         if ($this->quoteTransfer->getPayment()->getRatepayInstallment()) {
@@ -199,11 +250,13 @@ class QuotePaymentRequestMapper extends BaseMapper
         }
     }
 
+    /**
+     * @return void
+     */
     protected function mapBasketItems()
     {
         $basketItems = $this->quoteTransfer->getItems();
         $grouppedItems = [];
-        $discountTotal = 0;
         $discountTaxRate = 0;
         foreach ($basketItems as $basketItem) {
             if (isset($grouppedItems[$basketItem->getGroupKey()])) {
@@ -211,11 +264,11 @@ class QuotePaymentRequestMapper extends BaseMapper
             } else {
                 $grouppedItems[$basketItem->getGroupKey()] = clone $basketItem;
             }
-            $discountTotal += $basketItem->getUnitTotalDiscountAmountWithProductOption();
             if ($discountTaxRate < $basketItem->getTaxRate()) { // take max taxRate
                 $discountTaxRate = $basketItem->getTaxRate();
             }
         }
+        $discountTotal = $this->partialOrderTransfer->getTotals()->getDiscountTotal();
         $this->ratepayPaymentRequestTransfer
             ->setDiscountTotal($discountTotal)
             ->setDiscountTaxRate($discountTaxRate);
