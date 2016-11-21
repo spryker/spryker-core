@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PrepaymentSubForm extends SubFormAbstract
@@ -19,18 +20,28 @@ class PrepaymentSubForm extends SubFormAbstract
     const PAYMENT_METHOD = 'prepayment';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => RatepayPaymentPrepaymentTransfer::class,
+            SubFormInterface::OPTIONS_FIELD_NAME => [],
+        ]);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => RatepayPaymentPrepaymentTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+        $this->configureOptions($resolver);
     }
 
     /**

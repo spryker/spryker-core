@@ -7,24 +7,37 @@
 
 namespace Spryker\Shared\Library;
 
+use Spryker\Service\UtilNetwork\Model\Host AS UtilNetworkHost;
+
+/**
+ * @deprecated use \Spryker\Service\UtilNetwork\UtilNetworkService instead
+ */
 class System
 {
 
     /**
-     * @var string
+     * @var \Spryker\Service\UtilNetwork\Model\Host
      */
-    protected static $hostname;
+    protected static $utilNetworkHost;
 
     /**
      * @return string
      */
     public static function getHostname()
     {
-        if (!isset(self::$hostname)) {
-            self::$hostname = (gethostname()) ?: php_uname('n');
+        return self::createUtilNetworkHost()->getHostname();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilNetwork\Model\Host
+     */
+    protected static function createUtilNetworkHost()
+    {
+        if (static::$utilNetworkHost === null) {
+            static::$utilNetworkHost = new UtilNetworkHost();
         }
 
-        return self::$hostname;
+        return static::$utilNetworkHost;
     }
 
 }

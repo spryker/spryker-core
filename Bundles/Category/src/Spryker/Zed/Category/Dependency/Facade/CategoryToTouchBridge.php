@@ -46,6 +46,8 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -57,6 +59,8 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -68,6 +72,8 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $itemType
      *
      * @return \Generated\Shared\Transfer\TouchTransfer[]

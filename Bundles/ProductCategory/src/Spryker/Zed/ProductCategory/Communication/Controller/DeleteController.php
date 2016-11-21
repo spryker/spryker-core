@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated This controller has been replaced by \Spryker\Zed\Category\Communication\Controller\DeleteController
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
@@ -47,8 +49,8 @@ class DeleteController extends EditController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $localeTransfer = $this->getFactory()
-                ->getCurrentLocale();
+            $localeTransfer = $this->getFactory()->getCurrentLocale();
+
             $this->getFacade()->deleteCategory(
                 $data['id_category_node'],
                 $data['fk_parent_category_node'],

@@ -4,18 +4,18 @@
     "spryker/checkout": "^2.1.0",
     "spryker/kernel": "^2.4.3",
     "spryker/money": "^1.0.0",
-    "spryker/oms": "^2.0.0 || ^3.0.0",
+    "spryker/oms": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/payment": "^2.0.0",
     "spryker/refund": "^3.0.0",
     "spryker/sales": "^2.2.5",
     "spryker/step-engine": "^1.0.0",
-    "spryker/symfony": "^2.0.0",
+    "spryker/symfony": "^2.1.6",
     "spryker/transfer": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "^2.2.0"
+    "spryker/propel": "^2.2.0",
+    "spryker/testify": "*"
   },
   "description": "DummyPayment bundle",
   "license": "proprietary",

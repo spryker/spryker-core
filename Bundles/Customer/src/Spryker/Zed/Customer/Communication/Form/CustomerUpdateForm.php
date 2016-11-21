@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CustomerUpdateForm extends CustomerForm
@@ -19,15 +20,27 @@ class CustomerUpdateForm extends CustomerForm
     const OPTION_ADDRESS_CHOICES = 'address_choices';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_ADDRESS_CHOICES);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_ADDRESS_CHOICES);
+        $this->configureOptions($resolver);
     }
 
     /**
@@ -73,6 +86,7 @@ class CustomerUpdateForm extends CustomerForm
             'label' => 'Billing Address',
             'placeholder' => 'Select one',
             'choices' => $choices,
+            'required' => false,
         ]);
 
         return $this;
@@ -90,6 +104,7 @@ class CustomerUpdateForm extends CustomerForm
             'label' => 'Shipping Address',
             'placeholder' => 'Select one',
             'choices' => $choices,
+            'required' => false,
         ]);
 
         return $this;

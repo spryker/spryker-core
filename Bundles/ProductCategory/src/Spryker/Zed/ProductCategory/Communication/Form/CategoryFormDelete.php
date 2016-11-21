@@ -11,6 +11,9 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormDelete extends CategoryFormEdit
 {
 
@@ -41,6 +44,7 @@ class CategoryFormDelete extends CategoryFormEdit
         $builder
             ->add(self::DELETE_CHILDREN, 'checkbox', [
                 'label' => 'Delete subcategories',
+                'required' => false,
             ]);
 
         return $this;
@@ -59,6 +63,7 @@ class CategoryFormDelete extends CategoryFormEdit
                 'label' => 'Or move them to category',
                 'choices' => $choices,
                 'multiple' => false,
+                'required' => false,
                 'constraints' => [
                     new CategoryFieldNotBlank([
                         'categoryFieldName' => self::FIELD_FK_PARENT_CATEGORY_NODE,

@@ -19,13 +19,29 @@ use Spryker\Zed\Propel\Communication\Plugin\Connection;
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+    /**
+     * @deprecated Will be removed with next major release
+     */
     const FACADE_CMS = 'cms facade'; //TODO: https://spryker.atlassian.net/browse/CD-540
-    const FACADE_TOUCH = 'touch facade';
+
+    /**
+     * @deprecated Will be removed with next major release
+     */
     const FACADE_LOCALE = 'locale facade';
+
+    /**
+     * @deprecated Will be removed with next major release
+     */
     const FACADE_PRODUCT = 'product facade';
-    const FACADE_CATEGORY = 'category facade';
-    const CATEGORY_QUERY_CONTAINER = 'category query container';
+
+    /**
+     * @deprecated Will be removed with next major release
+     */
     const PRODUCT_QUERY_CONTAINER = 'product query container';
+
+    const FACADE_CATEGORY = 'category facade';
+    const FACADE_TOUCH = 'touch facade';
+    const CATEGORY_QUERY_CONTAINER = 'category query container';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**

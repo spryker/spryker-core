@@ -7,23 +7,24 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface AS DependencyConditionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 class ConditionCollection implements ConditionCollectionInterface, \ArrayAccess
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface[]
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface[]
      */
     protected $conditions = [];
 
     /**
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $condition
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface $condition
      * @param string $name
      *
      * @return $this
      */
-    public function add(ConditionInterface $condition, $name)
+    public function add(DependencyConditionInterface $condition, $name)
     {
         $this->conditions[$name] = $condition;
 
@@ -45,7 +46,7 @@ class ConditionCollection implements ConditionCollectionInterface, \ArrayAccess
      *
      * @throws \Spryker\Zed\Oms\Exception\ConditionNotFoundException
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     public function get($name)
     {
@@ -71,7 +72,7 @@ class ConditionCollection implements ConditionCollectionInterface, \ArrayAccess
     /**
      * @param string $offset
      *
-     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     public function offsetGet($offset)
     {
@@ -80,7 +81,7 @@ class ConditionCollection implements ConditionCollectionInterface, \ArrayAccess
 
     /**
      * @param string $offset
-     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $value
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface $value
      *
      * @return void
      */

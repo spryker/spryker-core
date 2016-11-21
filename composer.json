@@ -42,7 +42,11 @@
       "Acceptance\\Auth\\Login\\": "Bundles/Auth/tests",
       "Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/src",
       "Unit\\Spryker\\Zed\\AuthMailConnector\\": "Bundles/AuthMailConnector/tests",
+      "Spryker\\Shared\\Availability\\": "Bundles/Availability/src",
+      "Unit\\Spryker\\Zed\\Availability\\": "Bundles/Availability/tests",
+      "Acceptance\\Availability\\": "Bundles/Availability/tests",
       "Spryker\\Zed\\Availability\\": "Bundles/Availability/src",
+      "Spryker\\Client\\Availability\\": "Bundles/Availability/src",
       "Functional\\Spryker\\Zed\\Availability\\": "Bundles/Availability/tests",
       "Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/src",
       "Unit\\Spryker\\Zed\\AvailabilityCartConnector\\": "Bundles/AvailabilityCartConnector/tests",
@@ -79,12 +83,15 @@
       "Unit\\Spryker\\Client\\Catalog\\": "Bundles/Catalog/tests",
       "Spryker\\Shared\\Catalog\\": "Bundles/Catalog/src",
       "Unit\\Spryker\\Shared\\Catalog\\": "Bundles/Catalog/tests",
+
       "Spryker\\Shared\\Category\\": "Bundles/Category/src",
       "Unit\\Spryker\\Shared\\Category\\": "Bundles/Category/tests",
       "Functional\\Spryker\\Shared\\Category\\": "Bundles/Category/tests",
       "Spryker\\Zed\\Category\\": "Bundles/Category/src",
       "Unit\\Spryker\\Zed\\Category\\": "Bundles/Category/tests",
       "Functional\\Spryker\\Zed\\Category\\": "Bundles/Category/tests",
+      "Acceptance\\Category\\": "Bundles/Category/tests",
+
       "Spryker\\Client\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Shared\\CategoryExporter\\": "Bundles/CategoryExporter/src",
       "Spryker\\Client\\Checkout\\": "Bundles/Checkout/src",
@@ -130,6 +137,14 @@
       "Spryker\\Zed\\Customer\\": "Bundles/Customer/src",
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
+
+      "Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/src",
+      "Unit\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Functional\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Acceptance\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Spryker\\Zed\\CustomerGroup\\": "Bundles/CustomerGroup/src",
+      "Unit\\Spryker\\Zed\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Functional\\Spryker\\Zed\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
 
       "Spryker\\Client\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Zed\\Currency\\": "Bundles/Currency/src",
@@ -202,6 +217,10 @@
       "Spryker\\Shared\\Invoice\\": "Bundles/Invoice/src",
       "Unit\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
       "Functional\\Spryker\\Shared\\Invoice\\": "Bundles/Invoice/tests",
+
+      "Spryker\\Service\\Kernel\\": "Bundles/Kernel/src",
+      "Unit\\Spryker\\Service\\Kernel\\": "Bundles/Kernel/tests",
+      "Functional\\Spryker\\Service\\Kernel\\": "Bundles/Kernel/tests",
       "Spryker\\Client\\Kernel\\": "Bundles/Kernel/src",
       "Unit\\Spryker\\Client\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Client\\Kernel\\": "Bundles/Kernel/tests",
@@ -214,6 +233,7 @@
       "Spryker\\Zed\\Kernel\\": "Bundles/Kernel/src",
       "Unit\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
+
       "Spryker\\Shared\\Library\\": "Bundles/Library/src",
       "Unit\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
       "Functional\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
@@ -334,12 +354,15 @@
       "Spryker\\Zed\\ProductCartConnector\\": "Bundles/ProductCartConnector/src",
       "Unit\\Spryker\\Zed\\ProductCartConnector\\": "Bundles/ProductCartConnector/tests",
       "Functional\\Spryker\\Zed\\ProductCartConnector\\": "Bundles/ProductCartConnector/tests",
+
       "Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/src",
       "Unit\\Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Shared\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/src",
       "Unit\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
       "Functional\\Spryker\\Zed\\ProductCategory\\": "Bundles/ProductCategory/tests",
+      "Acceptance\\ProductCategory\\": "Bundles/ProductCategory/tests",
+
       "Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/src",
       "Unit\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
       "Functional\\Spryker\\Shared\\ProductOption\\": "Bundles/ProductOption/tests",
@@ -525,11 +548,22 @@
       "Spryker\\Shared\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
       "Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/src",
       "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
-      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests"
+      "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
+
+      "Spryker\\Service\\UtilText\\": "Bundles/UtilText/src",
+      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
+
+      "Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/src",
+      "Functional\\Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/tests",
+
+      "Spryker\\Service\\UtilNetwork\\": "Bundles/UtilNetwork/src",
+      "Functional\\Spryker\\Service\\UtilNetwork\\": "Bundles/UtilNetwork/tests"
+
     },
     "psr-4": {
       "Application\\Module\\": "Bundles/Application/tests/_support/Module",
       "Braintree\\Module\\": "Bundles/Braintree/tests/_support/Module",
+      "Catalog\\Module\\": "Bundles/Catalog/tests/_support/Module",
       "Config\\Module\\": "Bundles/Config/tests/_support/Module",
       "Customer\\Module\\": "Bundles/Customer/tests/_support/Module",
       "ErrorHandler\\Module\\": "Bundles/ErrorHandler/tests/_support/Module",

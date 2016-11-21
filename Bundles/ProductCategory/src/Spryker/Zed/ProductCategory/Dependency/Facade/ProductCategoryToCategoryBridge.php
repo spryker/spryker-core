@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 
 class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterface
 {
@@ -22,12 +23,24 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     /**
      * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
      */
-    public function __construct($categoryFacade)
+    public function __construct(CategoryFacadeInterface $categoryFacade)
     {
         $this->categoryFacade = $categoryFacade;
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function touchCategoryActive($idCategory)
+    {
+        $this->categoryFacade->touchCategoryActive($idCategory);
+    }
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -39,6 +52,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryKey
      * @param int $idLocale
      *
@@ -50,6 +65,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -61,6 +78,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -72,6 +91,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -82,6 +103,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -93,6 +116,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
@@ -105,6 +130,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -116,6 +143,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
@@ -128,6 +157,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return void
@@ -138,6 +169,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $category
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -149,6 +182,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
@@ -159,6 +194,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param array $pathTokens
      *
      * @return string

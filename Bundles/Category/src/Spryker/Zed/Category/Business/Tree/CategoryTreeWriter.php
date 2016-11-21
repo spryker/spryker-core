@@ -15,7 +15,10 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 
-class CategoryTreeWriter
+/**
+ * @deprecated Will be removed with next major release
+ */
+class CategoryTreeWriter implements CategoryTreeWriterInterface
 {
 
     /**
@@ -73,28 +76,30 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $createUrlPath
      *
      * @return int
      */
     public function createCategoryNode(
-        NodeTransfer $categoryNode,
-        LocaleTransfer $locale,
+        NodeTransfer $categoryNodeTransfer,
+        LocaleTransfer $localeTransfer = null,
         $createUrlPath = true
     ) {
         $this->connection->beginTransaction();
 
-        $idNode = $this->nodeWriter->create($categoryNode);
-        $this->closureTableWriter->create($categoryNode);
+        $idNode = $this->nodeWriter->create($categoryNodeTransfer);
+        $this->closureTableWriter->create($categoryNodeTransfer);
 
         $this->touchNavigationActive();
 
-        $this->touchCategoryActiveRecursive($categoryNode);
+        $this->touchCategoryActiveRecursive($categoryNodeTransfer);
 
         if ($createUrlPath) {
-            $this->nodeUrlManager->createUrl($categoryNode, $locale);
+            foreach ($categoryNodeTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
+                $this->nodeUrlManager->createUrl($categoryNodeTransfer, $localizedAttributeTransfer->getLocale());
+            }
         }
 
         $this->connection->commit();
@@ -104,17 +109,20 @@ class CategoryTreeWriter
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
-    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
     {
         $this->connection->beginTransaction();
 
         $this->nodeWriter->update($categoryNodeTransfer);
         $this->closureTableWriter->moveNode($categoryNodeTransfer);
-        $this->nodeUrlManager->updateUrl($categoryNodeTransfer, $localeTransfer);
+
+        foreach ($categoryNodeTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $this->nodeUrlManager->updateUrl($categoryNodeTransfer, $localizedAttribute->getLocale());
+        }
 
         $this->touchCategoryActiveRecursive($categoryNodeTransfer);
         $this->touchNavigationActive();
@@ -254,6 +262,10 @@ class CategoryTreeWriter
     protected function removeNodeUrl($idCategoryNode, LocaleTransfer $locale)
     {
         $nodeEntity = $this->categoryTreeReader->getNodeById($idCategoryNode);
+        if (!$nodeEntity) {
+            return;
+        }
+
         $nodeTransfer = (new NodeTransfer())
             ->fromArray($nodeEntity->toArray());
 

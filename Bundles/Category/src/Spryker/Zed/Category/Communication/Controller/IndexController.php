@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * @deprecated This class has been replaced by \Spryker\Zed\Category\Communication\Controller\RootController
+ *
  * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
@@ -51,7 +53,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return array
      */
     public function nodeAction(Request $request)
     {
@@ -125,11 +127,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return void
      */
-    public function rebuildClosureTableAction(Request $request)
+    public function rebuildClosureTableAction()
     {
         $this->getFacade()
             ->rebuildClosureTable();

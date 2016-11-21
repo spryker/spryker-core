@@ -10,9 +10,13 @@ namespace Spryker\Zed\ProductCategory\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @deprecated Will be removed with the next major release
+ */
 class CategoryFormAdd extends AbstractType
 {
 
@@ -33,15 +37,25 @@ class CategoryFormAdd extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(self::OPTION_PARENT_CATEGORY_NODE_CHOICES);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_PARENT_CATEGORY_NODE_CHOICES);
+        $this->configureOptions($resolver);
     }
 
     /**
@@ -85,9 +99,9 @@ class CategoryFormAdd extends AbstractType
     {
         $builder
             ->add(self::FIELD_CATEGORY_KEY, 'text', [
-            'constraints' => [
-                new NotBlank(),
-            ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]);
 
         return $this;
@@ -105,9 +119,7 @@ class CategoryFormAdd extends AbstractType
             ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
                 'label' => 'Parent',
                 'choices' => $choices,
-                'constraints' => [
-                    new NotBlank(),
-                ]
+                'required' => false,
             ]);
 
         return $this;

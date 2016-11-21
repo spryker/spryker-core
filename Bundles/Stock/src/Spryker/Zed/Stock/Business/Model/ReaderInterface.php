@@ -89,4 +89,13 @@ interface ReaderInterface
      */
     public function getStockProductById($idStockProduct);
 
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
+     *
+     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete);
+
 }

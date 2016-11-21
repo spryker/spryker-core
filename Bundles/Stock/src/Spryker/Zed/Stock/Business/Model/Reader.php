@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\StockProductTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
@@ -47,7 +48,10 @@ class Reader implements ReaderInterface
     public function getStockTypes()
     {
         $types = [];
-        $stockTypes = $this->queryContainer->queryAllStockTypes()->find();
+        $stockTypes = $this->queryContainer
+            ->queryAllStockTypes()
+            ->find();
+
         foreach ($stockTypes as $stockType) {
             $types[] = $stockType->getName();
         }
@@ -204,6 +208,33 @@ class Reader implements ReaderInterface
         }
 
         return $stockProductEntity;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
+     *
+     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete)
+    {
+        $stockProducts = $this->queryContainer
+            ->queryStockByIdProduct($idProductConcrete)
+            ->find();
+
+        if (count($stockProducts) === 0) {
+            throw new StockProductNotFoundException();
+        }
+
+        $products = [];
+        foreach ($stockProducts as $stockProductEntity) {
+            $stockProductTransfer = new StockProductTransfer();
+            $stockProductTransfer->fromArray($stockProductEntity->toArray(), true);
+            $products[] = $stockProductTransfer;
+        }
+
+        return $products;
     }
 
     /**

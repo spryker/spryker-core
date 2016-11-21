@@ -61,7 +61,7 @@ class Process implements ProcessInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function draw($highlightState = null, $format = null, $fontSize = null)
     {

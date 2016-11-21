@@ -12,6 +12,9 @@ use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class CategoryAttributeTable extends AbstractTable
 {
 
