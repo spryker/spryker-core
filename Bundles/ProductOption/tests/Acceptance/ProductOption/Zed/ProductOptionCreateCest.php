@@ -45,9 +45,9 @@ class ProductOptionCreateCest
 
         $i->assertSame($translationToCopy, $copiedValue, 'Value Successfully copied to other translation');
 
-        $i->assignProducts([1, 2]);
+        $i->assignProducts();
 
-        $i->unassignProduct(1);
+        $i->unassignProduct();
 
         $i->submitProductGroupForm();
 
