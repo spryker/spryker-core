@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -37,17 +38,27 @@ class AddressForm extends AbstractType
     const FIELD_COMMENT = 'comment';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
+        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setRequired(self::OPTION_PREFERRED_COUNTRY_CHOICES);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
-        $resolver->setRequired(self::OPTION_PREFERRED_COUNTRY_CHOICES);
+        $this->configureOptions($resolver);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -31,15 +32,25 @@ class CustomerForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
+        $this->configureOptions($resolver);
     }
 
     /**
