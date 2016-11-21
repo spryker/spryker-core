@@ -12,7 +12,6 @@ use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -53,18 +52,6 @@ class CustomerGroupForm extends AbstractType
     public function getName()
     {
         return 'customer_group';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-
-        //$resolver->setRequired(self::OPTION_GENDER_CHOICES);
     }
 
     /**
@@ -144,9 +131,7 @@ class CustomerGroupForm extends AbstractType
             'empty_value' => false,
             'multiple' => true,
             'choices' => $choices,
-            'constraints' => [
-                new NotBlank(),
-            ],
+            'required' => false,
         ]);
 
         return $this;

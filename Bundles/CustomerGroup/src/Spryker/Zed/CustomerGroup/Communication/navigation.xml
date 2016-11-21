@@ -14,7 +14,6 @@
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
-                <icon>fa-user</icon>
             </customer>
 
             <group>
@@ -24,7 +23,6 @@
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
-                <icon>fa-users</icon>
             </group>
         </pages>
     </customer>
