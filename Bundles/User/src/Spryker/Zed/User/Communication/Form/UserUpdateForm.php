@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserUpdateForm extends UserForm
@@ -16,15 +17,25 @@ class UserUpdateForm extends UserForm
     const OPTION_STATUS_CHOICES = 'status_choices';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(self::OPTION_STATUS_CHOICES);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_STATUS_CHOICES);
+        $this->configureOptions($resolver);
     }
 
     /**

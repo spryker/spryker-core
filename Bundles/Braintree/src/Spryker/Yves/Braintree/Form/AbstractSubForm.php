@@ -14,6 +14,7 @@ use Spryker\Shared\Braintree\BraintreeConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInterface
@@ -27,18 +28,28 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     protected static $clientToken;
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => BraintreePaymentTransfer::class,
+            SubFormInterface::OPTIONS_FIELD_NAME => []
+        ]);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => BraintreePaymentTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => []
-        ]);
+        $this->configureOptions($resolver);
     }
 
     /**
