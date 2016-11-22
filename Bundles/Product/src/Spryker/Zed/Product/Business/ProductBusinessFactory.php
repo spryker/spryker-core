@@ -17,7 +17,7 @@ use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductActivator;
+use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
@@ -25,6 +25,8 @@ use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
+use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
+use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
@@ -82,14 +84,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductActivatorInterface
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface
      */
-    public function createProductActivator()
+    public function createProductConcreteActivator()
     {
-        return new ProductActivator(
+        return new ProductConcreteActivator(
+            $this->createProductManager(),
             $this->createProductAbstractManager(),
             $this->createProductConcreteManager(),
-            $this->createProductUrlManager()
+            $this->createProductUrlManager(),
+            $this->createProductConcreteTouch(),
+            $this->getQueryContainer()
         );
     }
 
@@ -187,6 +192,30 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createAttributeMerger(),
             $this->createAttributeEncoder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouchInterface
+     */
+    public function createProductAbstractTouch()
+    {
+        return new ProductAbstractTouch(
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createProductManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
+     */
+    public function createProductConcreteTouch()
+    {
+        return new ProductConcreteTouch(
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createProductManager()
         );
     }
 

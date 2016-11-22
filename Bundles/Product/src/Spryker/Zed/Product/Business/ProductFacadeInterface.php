@@ -320,7 +320,21 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product abstract and product attribute map.
+     * - Touches abstract product and all it's variants.
+     * - Touches related "product_abstract", "product_concrete" and "attribute_map" entries.
+     * - Used touch event statuses (active, inactive) depends on the current status of the product and it's variants.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstract($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Touches as active: "product_abstract" and "product_attribute_map".
      *
      * @api
      *
@@ -332,7 +346,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: product abstract and product attribute map.
+     * - Touches as in-active: "product_abstract" and "product_attribute_map".
      *
      * @api
      *
@@ -344,7 +358,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: product abstract and product attribute map.
+     * - Touches as deleted: "product_abstract" and "product_attribute_map".
      *
      * @api
      *
@@ -356,7 +370,21 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product concrete.
+     * - Touches a concrete product.
+     * - Touches related "product_concrete" and "attribute_map" entries.
+     * - Used touch event statuses (active, inactive) depends on the current status of the product.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcrete($idProductConcrete);
+
+    /**
+     * Specification:
+     * - Touches as active: "product_concrete".
      *
      * @api
      *
@@ -368,7 +396,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: product concrete.
+     * - Touches as in-active: "product_concrete".
      *
      * @api
      *
@@ -380,7 +408,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: product concrete.
+     * - Touches as deleted: "product_concrete".
      *
      * @api
      *

@@ -26,67 +26,75 @@ class ProductCategoryAssignCest
      */
     public function testThatICanAssignProducts(ProductCategoryAssignTester $i)
     {
-        $product = ProductCategoryAssignPage::PRODUCTS[ProductCategoryAssignPage::PRODUCT_A];
+        $name = 'my_unique_product_name_' . rand(0,1000);
+
+        $idAbstractProduct = $i->createProductEntity($name)->getIdProductAbstract();
+
+        $i->amOnPage(ProductCategoryAssignPage::URL);
+        $i->searchTableByProductName($name);
+
         $availableProductCheckboxSelector = $this->buildProductSelector(
-            $product,
+            $idAbstractProduct,
             ProductCategoryAssignPage::AVAILABLE_PRODUCT_CHECKBOX_SELECTOR_PREFIX
         );
 
-        $i->amOnPage(ProductCategoryAssignPage::URL);
         $i->waitForElement($availableProductCheckboxSelector);
         $i->checkOption($availableProductCheckboxSelector);
         $i->seeInField(
             ProductCategoryAssignPage::SELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
-            $product[ProductCategoryAssignPage::PRODUCT_ID]
+            $idAbstractProduct
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->canSeeElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
 
         $assignedProductCheckboxSelector = $this->buildProductSelector(
-            $product,
+            $idAbstractProduct,
             ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX
         );
         $i->waitForElement($assignedProductCheckboxSelector);
     }
 
     /**
-     * @after testThatICanAssignProducts
-     *
      * @param \Acceptance\ProductCategory\ProductCategory\Zed\Tester\ProductCategoryAssignTester $i
      *
      * @return void
      */
     public function testThatICanDeassignProducts(ProductCategoryAssignTester $i)
     {
-        $product = ProductCategoryAssignPage::PRODUCTS[ProductCategoryAssignPage::PRODUCT_A];
+        $name = 'my_unique_product_name_' . rand(0,1000);
+        $idAbstractProduct = $i->createProductEntity($name)->getIdProductAbstract();
+        $i->assignProductToCategory(ProductCategoryAssignPage::ID_CATEGORY, $idAbstractProduct);
+
+        $i->amOnPage(ProductCategoryAssignPage::URL);
+        $i->searchTableByProductName($name);
+
         $assignedProductCheckboxSelector = $this->buildProductSelector(
-            $product,
+            $idAbstractProduct,
             ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX
         );
 
-        $i->amOnPage(ProductCategoryAssignPage::URL);
         $i->waitForElement($assignedProductCheckboxSelector);
         $i->uncheckOption($assignedProductCheckboxSelector);
         $i->seeInField(
             ProductCategoryAssignPage::DESELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
-            $product[ProductCategoryAssignPage::PRODUCT_ID]
+            $idAbstractProduct
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->canSeeElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
     }
 
     /**
-     * @param array $product
+     * @param int $idAbstractProduct
      * @param string $selectorPrefix
      *
      * @return string
      */
-    private function buildProductSelector(array $product, $selectorPrefix)
+    private function buildProductSelector($idAbstractProduct, $selectorPrefix)
     {
         return sprintf(
             '%s%s',
             $selectorPrefix,
-            $product[ProductCategoryAssignPage::PRODUCT_ID]
+            $idAbstractProduct
         );
     }
 

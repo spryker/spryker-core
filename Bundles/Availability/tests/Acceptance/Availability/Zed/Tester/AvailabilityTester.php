@@ -15,16 +15,16 @@ class AvailabilityTester extends ZedAcceptanceTester
     /**
      * @return void
      */
-    public function assertTableWithDataExists($numberOfItemsExpected)
+    public function assertTableWithDataExists()
     {
         $showingEntries = $this->grabTextFrom('//*[@class="dataTables_info"]');
         preg_match('/^Showing\s{1}\d+\s{1}to\s{1}(\d+)/', $showingEntries, $matches);
-        $this->assertEquals($numberOfItemsExpected, $matches[1]);
+        $this->assertGreaterThan(0, (int)$matches[1]);
 
         $td = $this->grabTextFrom('//*[@class="dataTables_scrollBody"]/table/tbody');
         $itemListItems = count(explode("\n", $td));
 
-        $this->assertEquals($numberOfItemsExpected, $itemListItems);
+        $this->assertGreaterThan(0, $itemListItems);
     }
 
 }

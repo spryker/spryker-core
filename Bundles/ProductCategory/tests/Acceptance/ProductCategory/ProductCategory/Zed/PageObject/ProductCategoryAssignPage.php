@@ -9,13 +9,15 @@ namespace Acceptance\ProductCategory\ProductCategory\Zed\PageObject;
 class ProductCategoryAssignPage
 {
 
-    const URL = '/product-category/assign?id-category=2';
+    const ID_CATEGORY = '2';
+    const URL = '/product-category/assign?id-category=' . self::ID_CATEGORY;
     const AVAILABLE_PRODUCT_CHECKBOX_SELECTOR_PREFIX = '#all_products_checkbox_';
     const SELECTED_PRODUCTS_CSV_FIELD_SELECTOR = '#assign_form_products_to_be_assigned';
     const FORM_SUBMIT_SELECTOR = 'form[name="assign_form"] input[type="submit"]';
     const SUCCESS_MESSAGE_SELECTOR = '.alert-success';
     const ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX = '#product_category_checkbox_';
     const DESELECTED_PRODUCTS_CSV_FIELD_SELECTOR = '#assign_form_products_to_be_de_assigned';
+    const SELECTOR_TABLE_SEARCH = '.dataTables_filter input[type="search"]';
     const CATEGORY_ID = 'id';
     const PRODUCT_A = 'A';
     const PRODUCT_B = 'B';

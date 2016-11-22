@@ -138,4 +138,18 @@ interface ProductManagementToProductInterface
      */
     public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstract($idProductAbstract);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcrete($idProductConcrete);
+
 }

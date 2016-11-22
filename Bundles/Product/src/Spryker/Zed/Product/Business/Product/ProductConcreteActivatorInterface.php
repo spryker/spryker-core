@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-interface ProductActivatorInterface
+interface ProductConcreteActivatorInterface
 {
 
     /**

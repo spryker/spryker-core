@@ -150,12 +150,12 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setIdProductConcrete($idProduct);
-        $productConcreteTransfer->setAttributes($this->getAttributes($form));
-        $productConcreteTransfer->setSku($sku);
-        $productConcreteTransfer->setIsActive(false);
-        $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
-        $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        $productConcreteTransfer
+            ->setIdProductConcrete($idProduct)
+            ->setAttributes($this->getAttributes($form))
+            ->setSku($sku)
+            ->setAbstractSku($productAbstractTransfer->getSku())
+            ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
 
         $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
