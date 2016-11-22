@@ -128,7 +128,7 @@ class CustomerGroupForm extends AbstractType
 
         $builder->add(self::FIELD_CUSTOMERS, new Select2ComboBoxType(), [
             'label' => 'Assigned Users',
-            'empty_value' => false,
+            'placeholder' => false,
             'multiple' => true,
             'choices' => $choices,
             'required' => false,

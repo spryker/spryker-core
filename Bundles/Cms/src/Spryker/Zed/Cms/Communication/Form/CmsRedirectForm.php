@@ -158,7 +158,6 @@ class CmsRedirectForm extends AbstractType
                 ],
                 'choices' => [201 => 201, 301 => 301, 302 => 302, 303 => 303, 307 => 307, 308 => 308],
                 'placeholder' => 'Please select',
-                'empty_value' => null,
             ]
         );
 
