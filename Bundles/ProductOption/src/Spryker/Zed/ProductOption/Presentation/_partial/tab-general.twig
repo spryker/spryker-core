@@ -1,9 +1,11 @@
 {{ form_errors(generalForm) }}
 
 {{ form_start(generalForm, { attr: { id:'product_option_general'}}) }}
- <div class="form-group">
-    {{ 'Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.' | trans }}
-
+ <div class="well">
+     {% filter trans|raw %}
+         <h3>Add General Information</h3>
+         <p>Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.</p>
+     {% endfilter %}
  </div>
 
 {% set readOnly = {} %}
