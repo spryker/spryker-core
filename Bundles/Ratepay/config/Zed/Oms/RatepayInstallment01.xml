@@ -36,8 +36,8 @@
 
             <transition happy="true">
                 <source>new</source>
-                <target>payment request</target>
-                <event>run payment request</event>
+                <target>payment request initialized</target>
+                <event>init payment request</event>
             </transition>
 
             <transition happy="true" condition="Ratepay/IsPaymentConfirmed">
@@ -72,7 +72,7 @@
         </transitions>
 
         <events>
-            <event name="run payment request" onEnter="true" />
+            <event name="init payment request" onEnter="true" />
             <event name="create payment confirmation" onEnter="true" command="Ratepay/ConfirmPayment" />
             <event name="create delivery confirmation" onEnter="true" command="Ratepay/ConfirmDelivery" />
             <event name="ready for shipment" onEnter="true" />
