@@ -36,7 +36,7 @@ interface ErrorHandlerConstants
 
     /**
      * Specification:
-     * - Sets which PHP error levels are reported. It is not advised to to modify this value.
+     * - Sets which PHP error levels are reported. It is not advised to modify this value.
      *
      * @api
      */
