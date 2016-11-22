@@ -114,7 +114,7 @@ class InstallmentSubForm extends SubFormAbstract
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'empty_value' => false,
+                'placeholder' => false,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
@@ -141,7 +141,7 @@ class InstallmentSubForm extends SubFormAbstract
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'empty_value' => false,
+                'placeholder' => false,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
@@ -168,7 +168,7 @@ class InstallmentSubForm extends SubFormAbstract
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'empty_value' => false,
+                'placeholder' => false,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
