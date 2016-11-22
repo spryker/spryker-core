@@ -57,7 +57,10 @@ class ErrorHandlerEnvironment
         $errorLevel = error_reporting();
         $errorHandler = function ($severity, $message, $file, $line) {
             $exception = new ErrorException($message, 0, $severity, $file, $line);
-            if ($severity !== E_USER_DEPRECATED) {
+
+            $levelsNotThrowingExceptions = Config::get(ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY, 0);
+            $throwException = ($severity & $levelsNotThrowingExceptions) !== 0;
+            if ($throwException) {
                 throw $exception;
             }
 
