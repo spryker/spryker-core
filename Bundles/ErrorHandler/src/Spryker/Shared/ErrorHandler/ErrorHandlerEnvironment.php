@@ -59,8 +59,8 @@ class ErrorHandlerEnvironment
             $exception = new ErrorException($message, 0, $severity, $file, $line);
 
             $levelsNotThrowingExceptions = Config::get(ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY, 0);
-            $throwException = ($severity & $levelsNotThrowingExceptions) === 0;
-            if ($throwException) {
+            $shouldThrowException = ($severity & $levelsNotThrowingExceptions) === 0;
+            if ($shouldThrowException) {
                 throw $exception;
             }
 
