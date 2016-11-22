@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends AbstractPayolutionSubForm
@@ -43,18 +44,28 @@ class InvoiceSubForm extends AbstractPayolutionSubForm
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => PayolutionPaymentTransfer::class,
+            SubFormInterface::OPTIONS_FIELD_NAME => [],
+        ]);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => PayolutionPaymentTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+        $this->configureOptions($resolver);
     }
 
     /**

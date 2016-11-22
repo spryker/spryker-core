@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ElvSubForm extends SubFormAbstract
@@ -23,18 +24,28 @@ class ElvSubForm extends SubFormAbstract
     const FIELD_BUNK_ACCOUNT_IBAN = 'bank_account_iban';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => RatepayPaymentElvTransfer::class,
+            SubFormInterface::OPTIONS_FIELD_NAME => [],
+        ]);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => RatepayPaymentElvTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => [],
-        ]);
+        $this->configureOptions($resolver);
     }
 
     /**

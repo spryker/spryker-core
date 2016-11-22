@@ -11,7 +11,7 @@ interface UtilSanitizeServiceInterface
     /**
      *
      * Specification:
-     *  - Escape html
+     *  - Escapes any string for safe output in HTML.
      *
      * @api
      *

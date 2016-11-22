@@ -138,6 +138,14 @@
       "Unit\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
       "Functional\\Spryker\\Zed\\Customer\\": "Bundles/Customer/tests",
 
+      "Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/src",
+      "Unit\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Functional\\Spryker\\Shared\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Acceptance\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Spryker\\Zed\\CustomerGroup\\": "Bundles/CustomerGroup/src",
+      "Unit\\Spryker\\Zed\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+      "Functional\\Spryker\\Zed\\CustomerGroup\\": "Bundles/CustomerGroup/tests",
+
       "Spryker\\Client\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Zed\\Currency\\": "Bundles/Currency/src",
       "Spryker\\Yves\\Currency\\": "Bundles/Currency/src",
