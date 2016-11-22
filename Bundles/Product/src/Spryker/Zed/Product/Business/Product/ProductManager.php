@@ -107,12 +107,12 @@ class ProductManager implements ProductManagerInterface
      */
     public function isProductActive($idProductAbstract)
     {
-        $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
-            $idProductAbstract
-        );
+        $productConcreteCollection = $this->productQueryContainer
+            ->queryProduct()
+            ->findByFkProductAbstract($idProductAbstract);
 
-        foreach ($productConcreteCollection as $productConcreteTransfer) {
-            if ($productConcreteTransfer->getIsActive()) {
+        foreach ($productConcreteCollection as $productConcreteEntity) {
+            if ($productConcreteEntity->getIsActive()) {
                 return true;
             }
         }
