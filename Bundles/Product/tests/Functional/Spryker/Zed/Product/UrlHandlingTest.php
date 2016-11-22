@@ -81,22 +81,18 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->productFacade->createProductUrl($this->productAbstractTransfer);
         $this->productFacade->deleteProductUrl($this->productAbstractTransfer);
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $this->productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+        $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
 
-            $this->assertNull($urlTransfer->getIdUrl());
+        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+            $this->assertNull($localizedUrlTransfer->getUrl());
         }
     }
 
     /**
-     * TODO rollback on error
-     *
      * @return void
      */
-    public function SKIP_testCreateUrlShouldThrowExceptionWhenUrlExists()
+    public function testCreateUrlShouldThrowExceptionWhenUrlExists()
     {
         $this->expectException(UrlExistsException::class);
 
@@ -120,11 +116,9 @@ class UrlHandlingTest extends FacadeTestAbstract
     }
 
     /**
-     * TODO rollback on error
-     *
      * @return void
      */
-    public function SKIP_testProductUrlShouldBeUnique()
+    public function testProductUrlShouldBeUnique()
     {
         $this->expectException(UrlExistsException::class);
 
@@ -179,11 +173,11 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductAbstractUrlActive($this->productAbstractTransfer);
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $this->productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+        $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
+
+        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+            $urlTransfer = $this->urlFacade->getUrlByPath($localizedUrlTransfer->getUrl());
 
             $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
@@ -205,11 +199,11 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $this->productFacade->touchProductAbstractUrlDeleted($this->productAbstractTransfer);
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $this->productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+        $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
+
+        foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
+            $urlTransfer = $this->urlFacade->getUrlByPath($localizedUrlTransfer->getUrl());
 
             $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 

@@ -88,6 +88,20 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testTouchProductConcreteShouldAlsoTouchItsAbstract()
+    {
+        $this->createNewProductAndAssertNoTouchExists();
+
+        $this->productFacade->touchProductConcrete($this->productConcreteTransfer->getIdProductConcrete());
+
+        $this->assertTouchEntry($this->productConcreteTransfer->getIdProductConcrete(), ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($this->productConcreteTransfer->getFkProductAbstract(), ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($this->productConcreteTransfer->getFkProductAbstract(), ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+    }
+
+    /**
+     * @return void
+     */
     public function testTouchProductActiveShouldTouchActiveLogic()
     {
         $this->createNewProductAndAssertNoTouchExists();

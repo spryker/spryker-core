@@ -291,7 +291,8 @@ class FacadeTestAbstract extends Test
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
-            ->setSku(self::CONCRETE_SKU);
+            ->setSku(self::CONCRETE_SKU)
+            ->setIsActive(true);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute

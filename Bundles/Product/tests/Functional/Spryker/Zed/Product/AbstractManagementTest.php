@@ -171,6 +171,22 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testTouchProductAbstractShouldAlsoTouchItsVariants()
+    {
+        $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
+        $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+        $idProductConcrete = $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
+
+        $this->productFacade->touchProductAbstract($idProductAbstract);
+
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductAbstract, ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+        $this->assertTouchEntry($idProductConcrete, ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
+    }
+
+    /**
+     * @return void
+     */
     public function testTouchProductActiveShouldTouchActiveLogic()
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();

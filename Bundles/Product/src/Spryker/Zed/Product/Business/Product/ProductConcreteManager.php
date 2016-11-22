@@ -358,13 +358,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function persistEntity(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $sku = $productConcreteTransfer
+        $productConcreteTransfer
             ->requireSku()
-            ->getSku();
-
-        $fkProductAbstract = $productConcreteTransfer
-            ->requireFkProductAbstract()
-            ->getFkProductAbstract();
+            ->requireFkProductAbstract();
 
         $encodedAttributes = $this->attributeEncoder->encodeAttributes(
             $productConcreteTransfer->getAttributes()
@@ -375,11 +371,13 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
 
-        $productConcreteEntity
-            ->setSku($sku)
-            ->setFkProductAbstract($fkProductAbstract)
-            ->setAttributes($encodedAttributes)
-            ->setIsActive((bool)$productConcreteTransfer->getIsActive());
+        $productConcreteData = $productConcreteTransfer->modifiedToArray();
+        if (isset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES])) {
+            unset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES]);
+        }
+
+        $productConcreteEntity->fromArray($productConcreteData);
+        $productConcreteEntity->setAttributes($encodedAttributes);
 
         $productConcreteEntity->save();
 
