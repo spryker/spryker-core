@@ -46,10 +46,10 @@ interface ErrorHandlerConstants
      * Specification:
      * - Sets which PHP error levels are not transformed into exceptions but logged only.
      *   This can be useful for production systems to not trigger exceptions for deprecations:
-     *   $config[ErrorHandlerConstants::ERROR_LEVELS_LOG_ONLY] = E_DEPRECATED | E_USER_DEPRECATED;
+     *   $config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEPRECATED;
      *
      * @api
      */
-    const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVELS_LOG_ONLY';
+    const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVEL_LOG_ONLY';
 
 }

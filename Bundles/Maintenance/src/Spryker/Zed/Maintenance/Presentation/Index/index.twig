@@ -1,0 +1,19 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Maintenance' } %}
+
+        {% block widget_content %}
+
+            <p>
+               Error levels to report: {{ errorLevel | raw }}
+            </p>
+            <p>
+               Error levels to log only: {{ errorLevelLogOnly | raw }}
+            </p>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
