@@ -862,8 +862,8 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateReservation(ProcessInterface $process, $sourceStateId, $targetStateId, $sku)
     {
-        $sourceStateIsReserved = $process->getState($sourceStateId)->isReserved();
-        $targetStateIsReserved = $process->getState($targetStateId)->isReserved();
+        $sourceStateIsReserved = $process->getStateFromAllProcesses($sourceStateId)->isReserved();
+        $targetStateIsReserved = $process->getStateFromAllProcesses($targetStateId)->isReserved();
 
         if ($sourceStateIsReserved !== $targetStateIsReserved) {
             $this->reservation->updateReservationQuantity($sku);
