@@ -5,6 +5,9 @@
     xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
 
     <process name="DummyPayment01" main="true">
+        <subprocesses>
+            <process>DummyRefund</process>
+        </subprocesses>
 
         <states>
             <state name="new" reserved="true"/>
@@ -15,8 +18,6 @@
             <state name="exported" reserved="true"/>
             <state name="shipped" reserved="true"/>
             <state name="delivered"/>
-            <state name="returned"/>
-            <state name="refunded"/>
             <state name="closed"/>
         </states>
 
@@ -63,18 +64,6 @@
                 <event>stock-update</event>
             </transition>
 
-            <transition>
-                <source>delivered</source>
-                <target>returned</target>
-                <event>return</event>
-            </transition>
-
-            <transition>
-                <source>returned</source>
-                <target>refunded</target>
-                <event>refund</event>
-            </transition>
-
             <transition happy="true">
                 <source>delivered</source>
                 <target>closed</target>
@@ -89,10 +78,10 @@
             <event name="export" onEnter="true" manual="true"/>
             <event name="ship" manual="true"/>
             <event name="stock-update" manual="true"/>
-            <event name="return" manual="true"/>
-            <event name="refund" manual="true" command="DummyPayment/Refund"/>
             <event name="close" manual="true" timeout="1 hour"/>
         </events>
     </process>
+
+    <process name="DummyRefund" file="DummySubprocess/DummyRefund01.xml"/>
 
 </statemachine>
