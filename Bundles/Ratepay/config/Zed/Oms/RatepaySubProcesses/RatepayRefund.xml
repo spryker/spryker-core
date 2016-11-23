@@ -19,12 +19,12 @@
             <transition happy="true">
                 <source>ready for refund</source>
                 <target>completed</target>
-                <event>item not returned</event>
+                <event>waiting for return</event>
             </transition>
             <transition>
                 <source>refund succeeded</source>
                 <target>completed</target>
-                <event>item returned</event>
+                <event>complete refund</event>
             </transition>
         </transitions>
 

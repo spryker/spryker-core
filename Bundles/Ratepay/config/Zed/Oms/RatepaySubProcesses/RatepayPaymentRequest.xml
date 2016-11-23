@@ -14,7 +14,7 @@
         <transitions>
             <transition happy="true" condition="Ratepay/IsPaymentRequestSuccess">
                 <source>payment request initialized</source>
-                <target>payment confirmation</target>
+                <target>payment confirmation initialized</target>
                 <event>do payment request</event>
             </transition>
 
