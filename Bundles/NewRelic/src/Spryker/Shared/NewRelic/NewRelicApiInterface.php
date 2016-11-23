@@ -166,6 +166,16 @@ interface NewRelicApiInterface extends ApiInterface
     public function disableAutoRUM();
 
     /**
+     * Records a custom event in New Relic insight with the specified attributes.
+     *
+     * @param string $name
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function recordCustomEvent($name, array $attributes = []);
+
+    /**
      * Send information about application deployments to New Relic.
      *
      * @param array $params
