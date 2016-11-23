@@ -11,8 +11,6 @@ use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
