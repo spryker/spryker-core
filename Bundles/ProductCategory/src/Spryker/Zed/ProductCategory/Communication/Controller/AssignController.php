@@ -7,8 +7,8 @@
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AssignController extends AbstractController
 {
 
+    const PARAM_ID_CATEGORY = 'id-category';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,7 +28,7 @@ class AssignController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
+        $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
@@ -127,14 +129,18 @@ class AssignController extends AbstractController
      */
     protected function updateCategoryData(array $data)
     {
-        $this->getFactory()->getPropelConnection()->beginTransaction();
+        $connection = $this->getFactory()
+            ->getQueryContainer()
+            ->getConnection();
+
+        $connection->beginTransaction();
 
         $idCategory = $this->castId($data['id_category']);
 
         $this->updateProductCategoryMappings($idCategory, $data);
         $this->updateProductOrder($idCategory, (array)json_decode($data['product_order'], true));
 
-        $this->getFactory()->getPropelConnection()->commit();
+        $connection->commit();
 
         return true;
     }
@@ -190,7 +196,7 @@ class AssignController extends AbstractController
      */
     public function productCategoryTableAction(Request $request)
     {
-        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
+        $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $productCategoryTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
 
@@ -204,7 +210,7 @@ class AssignController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idCategory = $this->castId($request->get(ProductCategoryConstants::PARAM_ID_CATEGORY));
+        $idCategory = $this->castId($request->get(ProductCategoryTable::PARAM_ID_CATEGORY));
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $productTable = $this->getProductsTable($idCategory, $localeTransfer);
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategory\Dependency\Facade;
+namespace Spryker\Zed\ProductCategory\Dependency\QueryContainer;
 
 interface ProductCategoryToCategoryInterface
 {
@@ -13,8 +13,8 @@ interface ProductCategoryToCategoryInterface
     /**
      * @param int $idCategory
      *
-     * @return void
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function touchCategoryActive($idCategory);
+    public function queryCategoryById($idCategory);
 
 }

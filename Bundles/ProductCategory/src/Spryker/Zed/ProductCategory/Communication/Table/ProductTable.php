@@ -10,10 +10,9 @@ namespace Spryker\Zed\ProductCategory\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Spryker\Shared\Library\Json;
-use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 class ProductTable extends AbstractTable
@@ -28,6 +27,11 @@ class ProductTable extends AbstractTable
     protected $productCategoryQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
@@ -39,15 +43,21 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface $utilEncodingService
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      */
-    public function __construct(ProductCategoryQueryContainerInterface $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
-    {
+    public function __construct(
+        ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
+        ProductCategoryToUtilEncodingInterface $utilEncodingService,
+        LocaleTransfer $locale,
+        $idCategory
+    ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
+        $this->utilEncodingService = $utilEncodingService;
         $this->locale = $locale;
         $this->idCategory = (int)$idCategory;
-        $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConstants::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryTable::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
@@ -99,7 +109,7 @@ class ProductTable extends AbstractTable
             $checkbox_html = sprintf(
                 "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                Json::encode($info)
+                $this->utilEncodingService->encodeJson($info)
             );
 
             $results[] = [

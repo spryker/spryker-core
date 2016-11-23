@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-/**
- * @deprecated Will be removed with next major release
- */
 class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
 {
 
@@ -32,24 +29,6 @@ class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
     public function getCurrentLocale()
     {
         return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableLocales()
-    {
-        return $this->localeFacade->getAvailableLocales();
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName)
-    {
-        return $this->localeFacade->getLocale($localeName);
     }
 
 }
