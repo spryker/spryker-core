@@ -28,9 +28,12 @@ class TouchUpdaterStub extends AbstractTouchUpdater
     protected $touchKeyColumnName = 'touchKeyColumnName_value';
 
     /**
+     * @param string $key
+     * @param int $idLocale
+     *
      * @return null
      */
-    protected function createTouchKeyEntity()
+    protected function findOrCreateTouchKeyEntity($key, $idLocale)
     {
     }
 
