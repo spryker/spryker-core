@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Communication\Form;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -32,15 +33,29 @@ class CategoryLocalizedAttributeType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => CategoryLocalizedAttributesTransfer::class,
+        ]);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults(['data_class' => CategoryLocalizedAttributesTransfer::class]);
+        $this->configureOptions($resolver);
     }
 
     /**
