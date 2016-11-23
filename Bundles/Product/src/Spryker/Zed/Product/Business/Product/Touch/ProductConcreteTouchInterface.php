@@ -17,4 +17,25 @@ interface ProductConcreteTouchInterface
      */
     public function touchProductConcrete($idProductConcrete);
 
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteActive($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteInactive($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteDeleted($idProductConcrete);
+
 }

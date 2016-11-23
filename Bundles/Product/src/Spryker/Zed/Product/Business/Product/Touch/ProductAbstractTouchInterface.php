@@ -17,4 +17,25 @@ interface ProductAbstractTouchInterface
      */
     public function touchProductAbstract($idProductAbstract);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstractActive($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstractInactive($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstractDeleted($idProductAbstract);
+
 }

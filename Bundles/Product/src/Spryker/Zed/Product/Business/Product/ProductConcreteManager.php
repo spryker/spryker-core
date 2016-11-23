@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -174,36 +173,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
         $this->productQueryContainer->getConnection()->commit();
 
         return $idProductConcrete;
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductConcrete)
-    {
-        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductConcrete)
-    {
-        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductConcrete)
-    {
-        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
     }
 
     /**
