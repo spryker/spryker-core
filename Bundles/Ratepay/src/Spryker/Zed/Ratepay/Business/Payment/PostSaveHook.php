@@ -8,7 +8,7 @@ namespace Spryker\Zed\Ratepay\Business\Payment;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Ratepay\Business\Api\Constants;
+use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 class PostSaveHook implements PostSaveHookInterface
@@ -36,10 +36,47 @@ class PostSaveHook implements PostSaveHookInterface
      */
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $queryLog = $this->queryContainer->queryPaymentLogQueryBySalesOrderId($checkoutResponse->getSaveOrder()->getIdSalesOrder());
-        $logRecord = $queryLog->findOne();
+        $checkoutResponse = $this->checkPaymentRequestLogs($checkoutResponse);
+        $checkoutResponse = $this->checkPaymentConfirmLogs($checkoutResponse);
 
-        if ($logRecord && $logRecord->getMessage() != Constants::REQUEST_MODEL_PAYMENT_CONFIRM) {
+        return $checkoutResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function checkPaymentRequestLogs(CheckoutResponseTransfer $checkoutResponse)
+    {
+        $logRecord = $this->queryContainer
+            ->getLastLogRecordBySalesOrderIdAndMessage($checkoutResponse->getSaveOrder()->getIdSalesOrder(), ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST);
+        if ($logRecord
+            && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST]
+        ) {
+            $error = new CheckoutErrorTransfer();
+            $error
+                ->setErrorCode($logRecord->getResponseResultCode())
+                ->setMessage($logRecord->getResponseResultText());
+
+            $checkoutResponse->addError($error);
+        }
+
+        return $checkoutResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function checkPaymentConfirmLogs(CheckoutResponseTransfer $checkoutResponse)
+    {
+        $logRecord = $this->queryContainer
+            ->getLastLogRecordBySalesOrderIdAndMessage($checkoutResponse->getSaveOrder()->getIdSalesOrder(), ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM);
+        if ($logRecord
+            && $logRecord->getResponseResultCode() != ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM]
+        ) {
             $error = new CheckoutErrorTransfer();
             $error
                 ->setErrorCode($logRecord->getResponseResultCode())

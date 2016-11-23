@@ -10,6 +10,7 @@ namespace Spryker\Zed\Ratepay\Communication\Plugin\Checkout;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
@@ -21,7 +22,16 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
 class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
 
-    const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        return $this->checkCondition($quoteTransfer, $checkoutResponse);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,12 +39,42 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function execute(
+    public function checkCondition(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFacade()->initPayment($quoteTransfer);
-        $ratepayResponseTransfer = $this->getFacade()->requestPayment($quoteTransfer);
+        $ratepayPaymentInitTransfer = $this->getFactory()->createPaymentInitTransfer();
+        $quotePaymentInitMapper = $this->getFactory()->createPaymentInitMapperByQuote(
+            $ratepayPaymentInitTransfer,
+            $quoteTransfer
+        );
+        $quotePaymentInitMapper->map();
+
+        $ratepayResponseTransfer = $this->getFacade()->initPayment($ratepayPaymentInitTransfer);
+        $paymentData = $this->getFactory()
+            ->getPaymentMethodExtractor()
+            ->extractPaymentMethod($quoteTransfer);
+        if ($paymentData) {
+            $paymentData
+                ->setTransactionId($ratepayResponseTransfer->getTransactionId())
+                ->setTransactionShortId($ratepayResponseTransfer->getTransactionShortId())
+                ->setResultCode($ratepayResponseTransfer->getStatusCode());
+        }
+
+        $partialOrderTransfer = $this->getPartialOrderTransferByBasketItems($quoteTransfer->getItems());
+
+        $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
+        $quotePaymentInitMapper = $this->getFactory()->createPaymentRequestMapperByQuote(
+            $ratepayPaymentRequestTransfer,
+            $ratepayPaymentInitTransfer,
+            $quoteTransfer,
+            $partialOrderTransfer,
+            $paymentData
+        );
+        $quotePaymentInitMapper->map();
+
+        $ratepayResponseTransfer = $this->getFacade()->requestPayment($ratepayPaymentRequestTransfer);
+        $this->getFacade()->updatePaymentMethodByPaymentResponse($ratepayResponseTransfer, $ratepayPaymentRequestTransfer->getOrderId());
         $this->checkForErrors($ratepayResponseTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
@@ -49,16 +89,33 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
     protected function checkForErrors(RatepayResponseTransfer $ratepayResponseTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if (!$ratepayResponseTransfer->getSuccessful()) {
+
             $errorMessage = $ratepayResponseTransfer->getCustomerMessage() != '' ? $ratepayResponseTransfer->getCustomerMessage() :
                 $ratepayResponseTransfer->getResultText();
 
             $error = new CheckoutErrorTransfer();
             $error
-                ->setErrorCode(self::ERROR_CODE_PAYMENT_FAILED)
+                ->setErrorCode($ratepayResponseTransfer->getResultCode())
                 ->setMessage($errorMessage);
-
             $checkoutResponseTransfer->addError($error);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $basketItems
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getPartialOrderTransferByBasketItems($basketItems)
+    {
+        $partialOrderTransfer = $this->getFactory()->createOrderTransfer();
+        $items = $this->getFactory()->createOrderTransferItemsByBasketItems($basketItems);
+        $partialOrderTransfer->setItems($items);
+
+        return $this
+            ->getFactory()
+            ->getSalesAggregator()
+            ->getOrderTotalByOrderTransfer($partialOrderTransfer);
     }
 
 }

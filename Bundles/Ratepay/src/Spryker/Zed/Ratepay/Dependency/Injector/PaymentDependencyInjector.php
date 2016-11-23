@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepayPostCheckPlugin;
-use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepayPreCheckPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepaySaveOrderPlugin;
 
 class PaymentDependencyInjector extends AbstractDependencyInjector
@@ -39,7 +38,6 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
     protected function injectPaymentPlugins(Container $container)
     {
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
-            $pluginCollection->add(new RatepayPreCheckPlugin(), RatepayConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
             $pluginCollection->add(new RatepaySaveOrderPlugin(), RatepayConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
             $pluginCollection->add(new RatepayPostCheckPlugin(), RatepayConstants::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
 

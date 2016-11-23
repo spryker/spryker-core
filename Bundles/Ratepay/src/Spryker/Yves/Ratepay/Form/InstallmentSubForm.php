@@ -7,10 +7,12 @@
 
 namespace Spryker\Yves\Ratepay\Form;
 
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -24,6 +26,7 @@ class InstallmentSubForm extends SubFormAbstract
     const OPTION_MONTH_ALLOWED = 'interest_month';
 
     const FIELD_INTEREST_RATE = 'interest_rate';
+    const FIELD_INTEREST_RATE_DEFAULT = 'interest_rate_default';
     const FIELD_BANK_ACCOUNT_HOLDER = 'bank_account_holder';
     const FIELD_BANK_ACCOUNT_BIC = 'bank_account_bic';
     const FIELD_BANK_ACCOUNT_IBAN = 'bank_account_iban';
@@ -38,6 +41,19 @@ class InstallmentSubForm extends SubFormAbstract
         $resolver->setDefaults([
             'data_class' => RatepayPaymentInstallmentTransfer::class,
             SubFormInterface::OPTIONS_FIELD_NAME => [],
+            'validation_groups' => function (FormInterface $form) {
+
+                if ($form->getParent()[PaymentTransfer::PAYMENT_SELECTION]->getData() != $this->getPropertyPath()) {
+                    return;
+                }
+                $data = $form->getData();
+
+                if (RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT == $data->getDebitPayType()) {
+                    return [$this->getPropertyPath(), RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT];
+                }
+
+                return [$this->getPropertyPath()];
+            },
         ]);
     }
 
@@ -90,11 +106,11 @@ class InstallmentSubForm extends SubFormAbstract
         $this
             ->addDebitPayType($builder, $options)
             ->addCalculationType($builder, $options)
-            ->addBankAccountHolder($builder)
             ->addBankAccountBic($builder)
             ->addBankAccountIban($builder)
             ->addAllowedMonth($builder, $options)
-            ->addInterestRate($builder);
+            ->addInterestRate($builder)
+            ->addInterestRateDefault($builder);
     }
 
     /**
@@ -190,10 +206,30 @@ class InstallmentSubForm extends SubFormAbstract
             'text',
             [
                 'label' => false,
-                'required' => true,
-                'constraints' => [
-                    $this->createNotBlankConstraint(),
-                ],
+                'constraints' => [],
+                'attr' => []
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    public function addInterestRateDefault($builder)
+    {
+        $builder->add(
+            self::FIELD_INTEREST_RATE_DEFAULT,
+            'text',
+            [
+                'label' => false,
+                'constraints' => [],
+                'attr' => [
+                    'readonly' => 'readonly'
+                ]
             ]
         );
 
@@ -214,7 +250,7 @@ class InstallmentSubForm extends SubFormAbstract
                 'label' => false,
                 'required' => false,
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
+                    $this->createNotBlankConstraint(RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT),
                 ],
             ]
         );
@@ -236,7 +272,7 @@ class InstallmentSubForm extends SubFormAbstract
                 'label' => false,
                 'required' => false,
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
+                    $this->createNotBlankConstraint(RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT),
                 ],
             ]
         );
@@ -258,7 +294,7 @@ class InstallmentSubForm extends SubFormAbstract
                 'label' => false,
                 'required' => false,
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
+                    $this->createNotBlankConstraint(RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT),
                 ],
             ]
         );

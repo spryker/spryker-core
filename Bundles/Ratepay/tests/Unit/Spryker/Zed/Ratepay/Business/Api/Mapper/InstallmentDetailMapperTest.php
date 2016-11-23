@@ -27,8 +27,7 @@ class InstallmentDetailMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getInstallmentDetailMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockRatepayPaymentInstallmentTransfer()
+                $this->mockRatepayPaymentRequestTransfer($this->mockRatepayPaymentInstallmentTransfer())
             )
             ->map();
 

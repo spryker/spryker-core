@@ -27,12 +27,11 @@ class PaymentMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getPaymentMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )
             ->map();
 
-        $this->assertEquals(99, $this->requestTransfer->getPayment()->getAmount());
+        $this->assertEquals(18, $this->requestTransfer->getPayment()->getAmount());
         $this->assertEquals('iso3', $this->requestTransfer->getPayment()->getCurrency());
         $this->assertEquals('invoice', $this->requestTransfer->getPayment()->getMethod());
     }
