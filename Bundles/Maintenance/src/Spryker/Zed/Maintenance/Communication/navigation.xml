@@ -9,7 +9,7 @@
         <icon>fa-wrench</icon>
         <pages>
             <index>
-                <label>Maintenance</label>
+                <label>System Info</label>
                 <title>Maintenance</title>
                 <bundle>maintenance</bundle>
                 <controller>index</controller>
