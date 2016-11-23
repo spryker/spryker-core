@@ -139,11 +139,15 @@ class QuotePaymentRequestMapper extends BaseMapper
      */
     protected function mapExpenses()
     {
+        $maxTaxRate = 0;
         $expenses = $this->quoteTransfer->getExpenses();
-        if (count($expenses)) {
-            $this->ratepayPaymentRequestTransfer
-                ->setShippingTaxRate($expenses[0]->getTaxRate());
+
+        foreach ($expenses as $expense) {
+            $maxTaxRate = ($expense->getTaxRate() > $maxTaxRate) ? $expense->getTaxRate() : $maxTaxRate;
         }
+
+        $this->ratepayPaymentRequestTransfer
+            ->setShippingTaxRate($maxTaxRate);
     }
 
     /**

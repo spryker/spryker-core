@@ -166,15 +166,15 @@ class OrderPaymentRequestMapper extends BaseMapper
      */
     protected function mapExpenses()
     {
-        $expenses = $this->orderTransfer->getExpenses();
         $maxTaxRate = 0;
+        $expenses = $this->orderTransfer->getExpenses();
+
         foreach ($expenses as $expense) {
             $maxTaxRate = ($expense->getTaxRate() > $maxTaxRate) ? $expense->getTaxRate() : $maxTaxRate;
         }
-        if ($maxTaxRate) {
-            $this->ratepayPaymentRequestTransfer
-                ->setShippingTaxRate($maxTaxRate);
-        }
+
+        $this->ratepayPaymentRequestTransfer
+            ->setShippingTaxRate($maxTaxRate);
     }
 
     /**
