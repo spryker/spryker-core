@@ -129,18 +129,10 @@ class AssignController extends AbstractController
      */
     protected function updateCategoryData(array $data)
     {
-        $connection = $this->getFactory()
-            ->getQueryContainer()
-            ->getConnection();
-
-        $connection->beginTransaction();
-
         $idCategory = $this->castId($data['id_category']);
 
         $this->updateProductCategoryMappings($idCategory, $data);
         $this->updateProductOrder($idCategory, (array)json_decode($data['product_order'], true));
-
-        $connection->commit();
 
         return true;
     }
