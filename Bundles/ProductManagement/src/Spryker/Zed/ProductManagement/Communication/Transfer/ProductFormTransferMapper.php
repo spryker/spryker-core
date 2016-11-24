@@ -23,6 +23,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
@@ -247,8 +248,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
-        $localizedAttributesTransfer->setName($form->get(GeneralForm::FIELD_NAME)->getData());
-        $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION)->getData());
+        $localizedAttributesTransfer->setName($form->get(ConcreteGeneralForm::FIELD_NAME)->getData());
+        $localizedAttributesTransfer->setDescription($form->get(ConcreteGeneralForm::FIELD_DESCRIPTION)->getData());
+        $localizedAttributesTransfer->setIsSearchable($form->get(ConcreteGeneralForm::FIELD_IS_SEARCHABLE)->getData());
         $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
 
         return $localizedAttributesTransfer;

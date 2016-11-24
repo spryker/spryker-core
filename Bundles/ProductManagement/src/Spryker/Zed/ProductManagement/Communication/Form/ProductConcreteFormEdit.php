@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
@@ -153,6 +154,14 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm
+     */
+    protected function createGeneralForm()
+    {
+        return new ConcreteGeneralForm();
     }
 
 }
