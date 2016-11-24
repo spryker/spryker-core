@@ -153,13 +153,13 @@ class EditController extends AddController
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);
 
-                $idProductConcrete = $this->getFactory()
+                $this->getFactory()
                     ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
 
                 $this->getFactory()
                     ->getProductFacade()
-                    ->touchProductConcrete($idProductConcrete);
+                    ->touchProductConcrete($idProduct);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
