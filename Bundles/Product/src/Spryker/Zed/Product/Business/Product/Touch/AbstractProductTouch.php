@@ -51,11 +51,9 @@ abstract class AbstractProductTouch
     protected function touchAbstractByStatus($idProductAbstract)
     {
         if ($this->productManager->isProductActive($idProductAbstract)) {
-            $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-            $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+            $this->touchProductAbstractActive($idProductAbstract);
         } else {
-            $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
-            $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+            $this->touchProductAbstractInactive($idProductAbstract);
         }
     }
 
@@ -67,10 +65,85 @@ abstract class AbstractProductTouch
     protected function touchConcreteByStatus(SpyProduct $concreteProductEntity)
     {
         if ($concreteProductEntity->getIsActive()) {
-            $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $concreteProductEntity->getIdProduct());
+            $this->touchProductConcreteActive($concreteProductEntity->getIdProduct());
         } else {
-            $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $concreteProductEntity->getIdProduct());
+            $this->touchProductConcreteInactive($concreteProductEntity->getIdProduct());
         }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstractActive($idProductAbstract)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+
+        $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstractInactive($idProductAbstract)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+
+        $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstractDeleted($idProductAbstract)
+    {
+        $this->productQueryContainer->getConnection()->beginTransaction();
+
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
+
+        $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteActive($idProductConcrete)
+    {
+        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteInactive($idProductConcrete)
+    {
+        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcreteDeleted($idProductConcrete)
+    {
+        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
     }
 
 }

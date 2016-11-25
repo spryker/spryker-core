@@ -21,13 +21,16 @@ use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMapMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchAttributeMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchConfigExtensionMarker;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
+use Spryker\Zed\ProductSearch\Business\Model\ProductAbstractSearchReader;
+use Spryker\Zed\ProductSearch\Business\Model\ProductConcreteSearchReader;
+use Spryker\Zed\ProductSearch\Business\Model\ProductSearchWriter;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductSearch\Persistence\Collector\Propel\ProductSearchConfigExtensionCollectorQuery;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
- * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {
@@ -248,6 +251,39 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductSearchConfigExtensionMarker()
     {
         return new ProductSearchConfigExtensionMarker($this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Model\ProductAbstractSearchReaderInterface
+     */
+    public function createProductAbstractSearchReader()
+    {
+        return new ProductAbstractSearchReader(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Model\ProductConcreteSearchReaderInterface
+     */
+    public function createProductConcreteSearchReader()
+    {
+        return new ProductConcreteSearchReader(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Model\ProductSearchWriterInterface
+     */
+    public function createProductSearchWriter()
+    {
+        return new ProductSearchWriter(
+            $this->createProductSearchMarker(),
+            $this->getQueryContainer()
+        );
     }
 
 }

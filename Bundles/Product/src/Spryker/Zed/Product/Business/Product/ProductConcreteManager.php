@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -177,36 +176,6 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
     }
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductConcrete)
-    {
-        $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductConcrete)
-    {
-        $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductConcrete)
-    {
-        $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
-    }
-
-    /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -358,13 +327,9 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
      */
     protected function persistEntity(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $sku = $productConcreteTransfer
+        $productConcreteTransfer
             ->requireSku()
-            ->getSku();
-
-        $fkProductAbstract = $productConcreteTransfer
-            ->requireFkProductAbstract()
-            ->getFkProductAbstract();
+            ->requireFkProductAbstract();
 
         $encodedAttributes = $this->attributeEncoder->encodeAttributes(
             $productConcreteTransfer->getAttributes()
@@ -375,11 +340,13 @@ class ProductConcreteManager implements ProductConcreteManagerInterface
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
 
-        $productConcreteEntity
-            ->setSku($sku)
-            ->setFkProductAbstract($fkProductAbstract)
-            ->setAttributes($encodedAttributes)
-            ->setIsActive((bool)$productConcreteTransfer->getIsActive());
+        $productConcreteData = $productConcreteTransfer->modifiedToArray();
+        if (isset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES])) {
+            unset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES]);
+        }
+
+        $productConcreteEntity->fromArray($productConcreteData);
+        $productConcreteEntity->setAttributes($encodedAttributes);
 
         $productConcreteEntity->save();
 

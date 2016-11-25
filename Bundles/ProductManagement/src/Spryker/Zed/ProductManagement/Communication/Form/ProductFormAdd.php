@@ -346,7 +346,7 @@ class ProductFormAdd extends AbstractType
     protected function addGeneralForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new GeneralForm(), [
+            ->add($name, $this->createGeneralForm(), [
                 'label' => false,
                 'constraints' => [new Callback([
                     'methods' => [
@@ -632,6 +632,14 @@ class ProductFormAdd extends AbstractType
     public static function getImagesFormName($localeCode)
     {
         return self::getLocalizedPrefixName(self::FORM_IMAGE_SET, $localeCode);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm
+     */
+    protected function createGeneralForm()
+    {
+        return new GeneralForm();
     }
 
 }

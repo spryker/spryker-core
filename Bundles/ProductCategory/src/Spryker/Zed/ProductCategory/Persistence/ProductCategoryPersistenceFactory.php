@@ -7,13 +7,9 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander;
-use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
@@ -21,31 +17,6 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
  */
 class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Spryker\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander
-     */
-    public function createProductCategoryPathQueryExpander(LocaleTransfer $locale)
-    {
-        return new ProductCategoryPathQueryExpander(
-            $this->getCategoryQueryContainer(),
-            $locale
-        );
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    protected function getCategoryQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::CATEGORY_QUERY_CONTAINER);
-    }
 
     /**
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -61,16 +32,6 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractQuery()
     {
         return SpyProductAbstractQuery::create();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function createProductQuery()
-    {
-        return SpyProductQuery::create();
     }
 
 }

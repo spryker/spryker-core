@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
@@ -35,7 +36,6 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
-use Spryker\Service\UtilText\UtilTextService;
 
 /**
  * @group Functional
@@ -291,7 +291,8 @@ class FacadeTestAbstract extends Test
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
-            ->setSku(self::CONCRETE_SKU);
+            ->setSku(self::CONCRETE_SKU)
+            ->setIsActive(true);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute

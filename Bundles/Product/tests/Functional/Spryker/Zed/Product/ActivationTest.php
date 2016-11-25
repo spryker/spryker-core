@@ -25,6 +25,8 @@ class ActivationTest extends FacadeTestAbstract
      */
     public function testProductActivationShouldGenerateUrlAndTouch()
     {
+        $this->productConcreteTransfer->setIsActive(false);
+
         $idProductAbstract = $this->createNewProduct();
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
         $this->assertNotEmpty($productConcreteCollection);
@@ -80,13 +82,11 @@ class ActivationTest extends FacadeTestAbstract
 
         $this->assertTrue($productConcrete->getIsActive());
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $productConcrete->getFkProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+        $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
 
-            $this->assertNotNull($urlTransfer->getIdUrl());
+        foreach ($productUrlTransfer->getUrls() as $urlTransfer) {
+            $this->assertNotNull($urlTransfer->getUrl());
         }
     }
 
@@ -103,13 +103,11 @@ class ActivationTest extends FacadeTestAbstract
 
         $this->assertFalse($productConcrete->getIsActive());
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $urlTransfer = $this->urlFacade->getUrlByIdProductAbstractAndIdLocale(
-                $productConcrete->getFkProductAbstract(),
-                $localeTransfer->getIdLocale()
-            );
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+        $this->assertGreaterThan(0, count($productUrlTransfer->getUrls()));
 
-            $this->assertNull($urlTransfer->getIdUrl());
+        foreach ($productUrlTransfer->getUrls() as $urlTransfer) {
+            $this->assertNull($urlTransfer->getUrl());
         }
     }
 

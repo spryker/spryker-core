@@ -8,9 +8,9 @@ namespace Acceptance\ProductCategory\ProductCategory\Zed\Tester;
 
 use Acceptance\ProductCategory\ProductCategory\Zed\PageObject\ProductCategoryAssignPage;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use ProductCategory\ZedAcceptanceTester;
 
 class ProductCategoryAssignTester extends ZedAcceptanceTester

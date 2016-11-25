@@ -282,6 +282,16 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
+     */
+    public function queryProductSearch()
+    {
+        return $this->getFactory()->createProductSearchQuery();
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param string $attributeName
      *

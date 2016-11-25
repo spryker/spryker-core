@@ -125,4 +125,11 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductAbstractByAttributeName(array $attributeNames);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
+     */
+    public function queryProductSearch();
+
 }

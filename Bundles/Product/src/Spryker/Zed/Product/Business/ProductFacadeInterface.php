@@ -371,7 +371,7 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Touches a concrete product.
-     * - Touches related "product_concrete" and "attribute_map" entries.
+     * - Touches related "product_concrete", "product_abstract" and "attribute_map" entries.
      * - Used touch event statuses (active, inactive) depends on the current status of the product.
      *
      * @api
@@ -446,7 +446,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product URLs based on product abstract localized attributes name.
+     * - Returns localized product URLs for all available locales.
      *
      * @api
      *
