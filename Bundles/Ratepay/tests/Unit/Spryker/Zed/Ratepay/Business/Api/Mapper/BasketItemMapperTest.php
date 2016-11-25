@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -28,8 +29,7 @@ class BasketItemMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getBasketMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )
             ->map();
 
@@ -55,7 +55,6 @@ class BasketItemMapperTest extends AbstractMapperTest
         $this->assertEquals('q4', $this->requestTransfer->getShoppingBasket()->getItems()[0]->getQuantity());
         $this->assertEquals('q5', $this->requestTransfer->getShoppingBasket()->getItems()[0]->getTaxRate());
         $this->assertEquals(12, $this->requestTransfer->getShoppingBasket()->getItems()[0]->getUnitPriceGross());
-        $this->assertEquals(14, $this->requestTransfer->getShoppingBasket()->getItems()[0]->getDiscount());
     }
 
 }

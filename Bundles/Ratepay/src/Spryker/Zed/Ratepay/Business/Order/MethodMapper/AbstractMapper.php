@@ -28,12 +28,11 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     public function mapMethodDataToPayment(QuoteTransfer $quoteTransfer, SpyPaymentRatepay $payment)
     {
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
-        $paymentMethod = $quoteTransfer->requirePayment()->getPayment()->requirePaymentMethod()->getPaymentMethod();
         $payment
-            ->setPaymentType($paymentMethod)
-            ->setTransactionId($paymentTransfer->requireTransactionId()->getTransactionId())
-            ->setTransactionShortId($paymentTransfer->requireTransactionShortId()->getTransactionShortId())
-            ->setResultCode($paymentTransfer->requireResultCode()->getResultCode())
+            ->setPaymentType($quoteTransfer->requirePayment()->getPayment()->requirePaymentMethod()->getPaymentMethod())
+            ->setTransactionId($paymentTransfer->getTransactionId())
+            ->setTransactionShortId($paymentTransfer->getTransactionShortId())
+            ->setResultCode($paymentTransfer->getResultCode())
             ->setDeviceFingerprint($paymentTransfer->getDeviceFingerprint())
 
             ->setGender($paymentTransfer->requireGender()->getGender())

@@ -10,6 +10,9 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
@@ -43,16 +46,16 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function initPayment(QuoteTransfer $quoteTransfer)
+    public function initPayment(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer)
     {
         return $this
             ->getFactory()
             ->createInitPaymentTransactionHandler()
-            ->request($quoteTransfer);
+            ->request($ratepayPaymentInitTransfer);
     }
 
     /**
@@ -76,16 +79,35 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function requestPayment(QuoteTransfer $quoteTransfer)
+    public function requestPayment(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
         return $this
             ->getFactory()
             ->createRequestPaymentTransactionHandler()
-            ->request($quoteTransfer);
+            ->request($ratepayPaymentRequestTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Updates paymentMethod in dataBase according response from paymentRequest
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RatepayResponseTransfer $ratepayPaymentResponseTransfer
+     * @param int $orderId
+     *
+     * @return void
+     */
+    public function updatePaymentMethodByPaymentResponse(RatepayResponseTransfer $ratepayPaymentResponseTransfer, $orderId)
+    {
+        $this
+            ->getFactory()
+            ->createPaymentMethodSaver()
+            ->updatePaymentMethodByPaymentResponse($ratepayPaymentResponseTransfer, $orderId);
     }
 
     /**
@@ -113,16 +135,20 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function confirmDelivery(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function confirmDelivery(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         return $this
             ->getFactory()
             ->createConfirmDeliveryTransactionHandler()
-            ->request($orderTransfer, $orderItems);
+            ->request($orderTransfer, $partialOrderTransfer, $orderItems);
     }
 
     /**
@@ -132,16 +158,20 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function cancelPayment(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function cancelPayment(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         return $this
             ->getFactory()
             ->createCancelPaymentTransactionHandler()
-            ->request($orderTransfer, $orderItems);
+            ->request($orderTransfer, $partialOrderTransfer, $orderItems);
     }
 
     /**
@@ -151,16 +181,20 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function refundPayment(OrderTransfer $orderTransfer, array $orderItems)
-    {
+    public function refundPayment(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    ) {
         return $this
             ->getFactory()
             ->createRefundPaymentTransactionHandler()
-            ->request($orderTransfer, $orderItems);
+            ->request($orderTransfer, $partialOrderTransfer, $orderItems);
     }
 
     /**
@@ -197,6 +231,21 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
             ->getFactory()
             ->createInstallmentCalculationTransactionHandler()
             ->request($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentRequestSuccess(OrderTransfer $orderTransfer)
+    {
+        return $this
+            ->getFactory()
+            ->createStatusTransaction()
+            ->isPaymentRequestSuccess($orderTransfer);
     }
 
     /**
@@ -307,7 +356,7 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RatepayProfileResponseTransfer
+     * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
     public function requestProfile()
     {

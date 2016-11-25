@@ -42,8 +42,8 @@ class Elv extends AbstractMapper
         parent::mapMethodDataToPayment($quoteTransfer, $payment);
 
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
-        $payment->setBankAccountBic($paymentTransfer->requireBankAccountBic()->getBankAccountBic())
-            ->setBankAccountHolder($paymentTransfer->requireBankAccountHolder()->getBankAccountHolder())
+        $payment
+            ->setBankAccountBic($paymentTransfer->requireBankAccountBic()->getBankAccountBic())
             ->setBankAccountIban($paymentTransfer->requireBankAccountIban()->getBankAccountIban());
     }
 

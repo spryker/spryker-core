@@ -29,7 +29,8 @@ class CancelPaymentPlugin extends BaseCommandPlugin implements CommandByOrderInt
     {
         $orderTransfer = $this->getOrderTransfer($orderEntity);
         $orderTransferItems = $this->getOrderItemsTransfer($orderItems);
-        $this->getFacade()->cancelPayment($orderTransfer, $orderTransferItems);
+        $partialOrderTransfer = $this->getPartialOrderTransferByOrderItems($orderItems);
+        $this->getFacade()->cancelPayment($orderTransfer, $partialOrderTransfer, $orderTransferItems);
 
         return [];
     }

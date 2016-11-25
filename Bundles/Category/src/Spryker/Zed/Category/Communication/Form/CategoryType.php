@@ -145,7 +145,7 @@ class CategoryType extends AbstractType
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'group_by' => 'path',
-            'required' => false
+            'required' => true
         ]);
 
         return $this;

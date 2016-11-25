@@ -137,7 +137,7 @@ class GroupForm extends AbstractType
     {
         $builder->add(self::FIELD_ROLES, new Select2ComboBoxType(), [
             'label' => 'Assigned Roles',
-            'empty_value' => false,
+            'placeholder' => false,
             'multiple' => true,
             'choices' => $choices,
             'constraints' => [

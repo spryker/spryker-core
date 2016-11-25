@@ -59,7 +59,7 @@ class PrepaymentTest extends PrepaymentAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->cancelPayment($this->orderTransfer, $this->orderTransfer->getItems()->getArrayCopy());
+        return $facade->cancelPayment($this->orderTransfer, $this->orderPartialTransfer, $this->orderTransfer->getItems()->getArrayCopy());
     }
 
 }
