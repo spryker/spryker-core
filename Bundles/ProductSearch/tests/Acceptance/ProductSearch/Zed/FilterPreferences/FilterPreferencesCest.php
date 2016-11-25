@@ -38,7 +38,7 @@ class FilterPreferencesCest
      */
     public function createEditAndRemoveFilter(FilterPreferencesTester $i)
     {
-        $id = $i->createFilter('foooooo_' . rand(1,1000));
+        $id = $i->createFilter('foooooo_' . rand(1, 1000));
         $i->updateFilter($id);
         $i->deleteFilter($id);
     }
@@ -52,8 +52,8 @@ class FilterPreferencesCest
      */
     public function updateFilterOrder(FilterPreferencesTester $i)
     {
-        $idFoo = $i->createFilter('foooooo_' . rand(1,1000));
-        $idBar = $i->createFilter('baaaaar_' . rand(1,1000));
+        $idFoo = $i->createFilter('foooooo_' . rand(1, 1000));
+        $idBar = $i->createFilter('baaaaar_' . rand(1, 1000));
 
         $i->amOnPage('/product-search/filter-reorder');
 
@@ -83,7 +83,7 @@ class FilterPreferencesCest
      */
     public function synchronizeFilterPreferences(FilterPreferencesTester $i)
     {
-        $i->createFilter('foooooo_' . rand(1,1000));
+        $i->createFilter('foooooo_' . rand(1, 1000));
 
         $i->amOnPage(FilterPreferencesPage::URL_LIST);
 

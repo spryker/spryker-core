@@ -162,7 +162,6 @@ class ProductOptionValueForm extends AbstractType
         return $this;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *

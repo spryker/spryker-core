@@ -63,7 +63,7 @@ class Operation implements OperationInterface
         CartToCalculationInterface $calculationFacade,
         CartToMessengerInterface $messengerFacade,
         array $itemExpanderPlugins,
-        array $postSavePlugins = [],
+        array $postSavePlugins,
         array $preCheckPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;

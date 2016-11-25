@@ -12,4 +12,5 @@ interface ProductOptionToCountryInterface
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountries();
+
 }

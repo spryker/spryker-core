@@ -11,5 +11,4 @@ use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
 class UtilEncodingDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

@@ -196,7 +196,6 @@ class ProductOptionFacadeTest extends Test
         $this->assertEquals($producOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
     }
 
-
     /**
      * @return void
      */

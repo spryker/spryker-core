@@ -19,4 +19,5 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     {
         return new Json();
     }
+
 }

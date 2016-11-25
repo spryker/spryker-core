@@ -17,14 +17,14 @@ class UniqueGroupNameValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
+     * @api
+     *
      * @param mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
-     * @api
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
-     *
-     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      */
     public function validate($value, Constraint $constraint)
     {

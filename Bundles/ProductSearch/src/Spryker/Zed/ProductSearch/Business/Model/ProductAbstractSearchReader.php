@@ -13,7 +13,7 @@ class ProductAbstractSearchReader extends AbstractProductSearchReader implements
 {
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool

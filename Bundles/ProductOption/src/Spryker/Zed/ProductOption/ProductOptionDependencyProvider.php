@@ -30,7 +30,6 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
