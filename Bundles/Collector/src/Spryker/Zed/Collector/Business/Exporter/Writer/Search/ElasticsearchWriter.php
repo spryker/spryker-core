@@ -44,13 +44,12 @@ class ElasticsearchWriter implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $type
      *
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      *
      * @return bool
      */
-    public function write(array $dataSet, $type = '')
+    public function write(array $dataSet)
     {
         if ($this->hasIntegerKeys($dataSet)) {
             throw new InvalidDataSetException();

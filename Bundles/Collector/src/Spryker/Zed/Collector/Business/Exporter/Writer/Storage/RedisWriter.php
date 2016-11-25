@@ -28,11 +28,10 @@ class RedisWriter implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $type
      *
      * @return bool
      */
-    public function write(array $dataSet, $type = '')
+    public function write(array $dataSet)
     {
         return $this->redis->setMulti($dataSet);
     }
