@@ -10,7 +10,6 @@ namespace Spryker\Zed\Shipment\Communication\Form;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -76,10 +75,6 @@ class MethodForm extends AbstractType
         $resolver->setRequired(self::OPTION_PRICE_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_TAX_SETS);
-
-        $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, ChoiceList::class);
-        $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, ChoiceList::class);
     }
 
     /**
@@ -167,7 +162,7 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, 'choice', [
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
-            'choice_list' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'choices' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
             'required' => false,
         ]);
 
@@ -185,7 +180,7 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_PRICE_PLUGIN_FIELD, 'choice', [
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
-            'choice_list' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'choices' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
             'required' => false,
         ]);
 
@@ -203,7 +198,7 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, 'choice', [
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
-            'choice_list' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'choices' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
             'required' => false,
         ]);
 
