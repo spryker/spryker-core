@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSearch\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class FilterPreferencesForm extends AbstractAttributeKeyForm
@@ -28,13 +28,13 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setRequired([
             self::OPTION_FILTER_TYPE_CHOICES,

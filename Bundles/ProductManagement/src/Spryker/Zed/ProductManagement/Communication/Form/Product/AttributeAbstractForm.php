@@ -18,7 +18,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttributeAbstractForm extends AbstractSubForm
@@ -104,13 +104,13 @@ class AttributeAbstractForm extends AbstractSubForm
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setRequired(self::OPTION_ATTRIBUTE);
 
