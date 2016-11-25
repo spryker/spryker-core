@@ -56,6 +56,20 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * Returns number of items in quote
+     *
+     * @api
+     *
+     * @param int $itemCount
+     *
+     * @return void
+     */
+    public function setItemCount($itemCount)
+    {
+        $this->getSession()->setItemCount($itemCount);
+    }
+
+    /**
      * Stores quote
      *
      * @api
@@ -99,6 +113,25 @@ class CartClient extends AbstractClient implements CartClientInterface
         $itemTransfer = $this->findItem($sku, $groupKey);
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
         return $this->getZedStub()->removeItem($cartChangeTransfer);
+    }
+
+    /**
+     *
+     * Specification:
+     *  - Remove all given items
+     *
+     * @api
+     *
+     * @param \ArrayObject $items
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeItems(\ArrayObject $items)
+    {
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer->setItems($items);
+        return $this->getZedStub()->removeItem($cartChangeTransfer);
+
     }
 
     /**

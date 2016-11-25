@@ -15,5 +15,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductBundleQueryContainer extends AbstractQueryContainer implements ProductBundleQueryContainerInterface
 {
 
-
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    public function queryBundledProduct($idProductConcrete)
+    {
+        return $this->getFactory()
+            ->createProductBundleQuery()
+            ->filterByFkBundledProduct($idProductConcrete);
+    }
 }

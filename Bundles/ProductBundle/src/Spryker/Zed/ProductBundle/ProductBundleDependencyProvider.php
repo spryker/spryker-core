@@ -9,12 +9,18 @@ namespace Spryker\Zed\ProductBundle;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 
 class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_PRODUCT = 'product facade';
+    const FACADE_PRICE = 'price facade';
+    const FACADE_LOCALE = 'locale facade';
+    const FACADE_AVAILABILITY = 'facade availability';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +31,18 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_PRODUCT] = function (Container $container) {
             return new ProductBundleToProductBridge($container->getLocator()->product()->facade());
+        };
+
+        $container[self::FACADE_PRICE] = function (Container $container) {
+            return new ProductBundleToPriceBridge($container->getLocator()->price()->facade());
+        };
+
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new ProductBundleToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        $container[self::FACADE_AVAILABILITY] = function(Container $container) {
+            return new ProductBundleToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
 
         return $container;

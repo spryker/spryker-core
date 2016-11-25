@@ -2,14 +2,14 @@
 <config>
     <product>
         <pages>
-            <product_options>
+            <product_bundle>
                 <label>Product Bundles</label>
                 <title>Product Bundles</title>
                 <bundle>product-bundle</bundle>
                 <controller>list</controller>
                 <action>index</action>
                 <visible>2</visible>
-            </product_options>
+            </product_bundle>
         </pages>
     </product>
 </config>

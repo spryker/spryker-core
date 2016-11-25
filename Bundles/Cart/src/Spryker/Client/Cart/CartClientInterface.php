@@ -35,6 +35,17 @@ interface CartClientInterface
     public function getItemCount();
 
     /**
+     * Returns number of items in quote
+     *
+     * @api
+     *
+     * @param int $itemCount
+     *
+     * @return void
+     */
+    public function setItemCount($itemCount);
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -52,6 +63,13 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem($sku, $groupKey = null);
+
+    /**
+     * @param \ArrayObject $items
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeItems(\ArrayObject $items);
 
     /**
      * @api

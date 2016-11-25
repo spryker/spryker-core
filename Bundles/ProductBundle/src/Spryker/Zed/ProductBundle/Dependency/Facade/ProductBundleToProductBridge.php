@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductBundleToProductBridge implements ProductBundleToProductInterface
 {
@@ -37,5 +39,46 @@ class ProductBundleToProductBridge implements ProductBundleToProductInterface
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
     {
         return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstract($idProductAbstract)
+    {
+        $this->productFacade->touchProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->activateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete($concreteSku)
+    {
+        return $this->productFacade->getProductConcrete($concreteSku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
 }

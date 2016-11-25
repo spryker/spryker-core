@@ -5,11 +5,25 @@
 
     <transfer name="ProductBundle">
         <property name="productAbstract" type="ProductAbstract" />
-        <property name="bundledProducts" type="BundledProduct[]" singular="bundledProduct" />
+        <property name="productsToBeAssigned" type="ProductForBundle[]" singular="productToBeAssigned" />
     </transfer>
 
-    <transfer name="BundledProduct">
-        <property name="idProduct" type="int" />
+    <transfer name="ProductForBundle">
+        <property name="idProductConcrete" type="int" />
+        <property name="quantity" type="int" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="bundleItemIdentifier" type="string" />
+        <property name="relatedBundleItemIdentifier" type="string" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="bundleProducts" type="Item[]" singular="bundleProduct" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="bundleProducts" type="Item[]" singular="bundleProduct" />
     </transfer>
 
 </transfers>

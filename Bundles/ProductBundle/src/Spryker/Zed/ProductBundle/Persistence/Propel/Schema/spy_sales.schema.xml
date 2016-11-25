@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
+
+    <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
+        <column name="fk_sales_order_item_bundle" type="INTEGER" required="false"/>
+
+        <foreign-key name="spy_sales_order_item-fk_sales_order_item_bundle" foreignTable="spy_sales_order_item_bundle" phpName="SalesOrderItemBundle" refPhpName="SalesOrderItem">
+            <reference local="fk_sales_order_item_bundle" foreign="id_sales_order_item_bundle"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_sales_order_item_bundle" phpName="SpySalesOrderItemBundle">
+        <column name="id_sales_order_item_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="gross_price" type="INTEGER" required="true"/>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_sales_order_item_bundle_pk_seq"/>
+    </table>
+
+</database>

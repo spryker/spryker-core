@@ -31,6 +31,7 @@ class NonPersistentProvider implements StorageProviderInterface
             if (isset($cartIndex[$itemIdentifier])) {
                 $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
             } else {
+                //$cartIndex[$itemIdentifier] = $existingItems->count();
                 $existingItems->append($itemTransfer);
             }
         }
@@ -53,7 +54,7 @@ class NonPersistentProvider implements StorageProviderInterface
 
             $itemIdentifier = $this->getItemIdentifier($itemTransfer);
             if (isset($cartIndex[$itemIdentifier])) {
-                $this->decreaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
+                $this->decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer);
             }
         }
 
@@ -88,20 +89,29 @@ class NonPersistentProvider implements StorageProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
-     * @param int $index
+     * @param string $itemIdentifier
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function decreaseExistingItem($existingItems, $index, $itemTransfer)
+    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer)
     {
-        $existingItemTransfer = $existingItems[$index];
+        $existingItemTransfer = null;
+        $itemIndex = null;
+        foreach ($existingItems as $index => $itemTransfer) {
+            if ($itemTransfer->getGroupKey() === $itemIdentifier) {
+                $existingItemTransfer = $itemTransfer;
+                $itemIndex = $index;
+                break;
+            }
+        }
+
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
 
         if ($changedQuantity > 0) {
             $existingItemTransfer->setQuantity($changedQuantity);
         } else {
-            unset($existingItems[$index]);
+            unset($existingItems[$itemIndex]);
         }
     }
 

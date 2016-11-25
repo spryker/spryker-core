@@ -7,11 +7,12 @@
 
                 <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
                     <tbody>
-                    {% for orderItem in order.items %}
+                    {% for orderItem in order.items if orderItem.relatedBundleItemIdentifier is empty %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
+                            <th></th>
                             <td class="text-right">{{ orderItem.unitGrossPrice | currency  }}</td>
-                            <td>{{ 'gross price per item' | trans }}</td>
+                            <th></th>
                         </tr>
                         {% for orderItemOption in orderItem.productOptions %}
                             <tr>
@@ -21,14 +22,43 @@
                             </tr>
                         {% endfor %}
                     {% endfor %}
+
+                    {% for orderItem in order.bundleProducts %}
+                        <tr>
+                            <th>{{ orderItem.name }}</th>
+                            <th></th>
+                            <td class="text-right">{{ orderItem.unitGrossPrice | currency  }}</td>
+                            <th></th>
+                        </tr>
+                        {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
+                            <tr>
+                                <th></th>
+                                <th>{{ bundledItem.name }}</th>
+                                <td class="text-right">{{ bundledItem.unitGrossPrice | currency  }}</td>
+                                <td></td>
+                            </tr>
+                            {% for orderItemOption in bundledItem.productOptions %}
+                                <tr>
+                                    <td></td>
+                                    <td> + {{ orderItemOption.value }}</td>
+                                    <td class="text-right">{{ orderItemOption.unitGrossPrice | currency  }}</td>
+                                    <td>{{ 'gross option price' | trans }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+
+                    {% endfor %}
+
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
+                        <th></th>
                         <td class="text-right">{{ order.totals.subtotal | currency }}</td>
                         <td></td>
                     </tr>
                     {% for expense in order.expenses %}
                         <tr>
                             <th>{{ 'Shipment' | trans }} -  {{ expense.name }}</th>
+                            <th></th>
                             <td class="text-right">{{ expense.unitGrossPrice | currency  }}</td>
                             <td></td>
                         </tr>
@@ -36,17 +66,20 @@
 
                     <tr>
                         <th>{{ 'Discount' | trans }}</th>
+                        <th></th>
                         <td class="text-right">-{{ order.totals.discountTotal | currency }}</td>
                         <td></td>
                     </tr>
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
+                        <th></th>
                         <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ order.totals.grandTotal }}">{{ order.totals.grandTotal|currency }}</td>
                         <td></td>
                     </tr>
 
                     <tr>
                         <td>{{ 'Included tax amount' | trans }}</td>
+                        <th></th>
                         <td class="text-right" data-qa="grand-total">{{ order.totals.taxTotal.amount | currency }}</td>
                         <td></td>
                     </tr>

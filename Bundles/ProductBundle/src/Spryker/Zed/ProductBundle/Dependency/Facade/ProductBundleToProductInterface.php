@@ -5,7 +5,9 @@
  */
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleToProductInterface
 {
@@ -20,4 +22,34 @@ interface ProductBundleToProductInterface
      * @return int
      */
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstract($idProductAbstract);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete);
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete($concreteSku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
+
 }
