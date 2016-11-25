@@ -82,7 +82,7 @@ class DependencyTreeDependencyViolationConsole extends Console
 
             $this->info($bundle . ':');
             foreach ($violations as $violation) {
-                $this->info(' - ' . $violation);
+                $this->warning(' - ' . $violation);
             }
 
             $count += count($violations);

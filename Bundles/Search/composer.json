@@ -15,7 +15,6 @@
     "spryker/kernel": "^2.4.0",
     "spryker/messenger": "^2.0.0",
     "spryker/money": "^1.0.0",
-    "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/twig": "^2.1.0",
     "spryker/zend": "^2.0.0"

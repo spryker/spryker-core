@@ -20,7 +20,8 @@
     "spryker/silex": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/config": "^2.0.0"
   },
   "description": "Testify bundle",
   "license": "proprietary",
