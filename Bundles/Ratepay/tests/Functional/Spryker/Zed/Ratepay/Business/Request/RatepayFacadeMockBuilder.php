@@ -8,9 +8,11 @@
 namespace Functional\Spryker\Zed\Ratepay\Business\Request;
 
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainer;
 use Spryker\Zed\Ratepay\RatepayConfig;
+use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 
 class RatepayFacadeMockBuilder
 {
@@ -31,6 +33,12 @@ class RatepayFacadeMockBuilder
         // functional/integration tests there's no need to mock the database layer.
         $queryContainer = new RatepayQueryContainer();
         $businessFactoryMock->setQueryContainer($queryContainer);
+
+        $container = new Container();
+        $ratepayDependencyProvider = new RatepayDependencyProvider();
+        $ratepayDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $businessFactoryMock->setContainer($container);
 
         // Mock the facade to override getFactory() and have it return out
         // previously created mock.

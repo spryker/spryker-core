@@ -14,17 +14,25 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
 {
 
     /**
+     * @param int $orderId
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay
+     */
+    protected function getPaymentMethodByOrderId($orderId)
+    {
+        return $this->queryContainer
+            ->queryPayments()
+            ->findByFkSalesOrder($orderId)->getFirst();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay
      */
     protected function getPaymentMethod(OrderTransfer $orderTransfer)
     {
-        return $this->queryContainer
-            ->queryPayments()
-            ->findByFkSalesOrder(
-                $orderTransfer->requireIdSalesOrder()->getIdSalesOrder()
-            )->getFirst();
+        return $this->getPaymentMethodByOrderId($orderTransfer->requireIdSalesOrder()->getIdSalesOrder());
     }
 
     /**
@@ -49,10 +57,11 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
      * @param string $method
      * @param int|null $entityId
+     * @param array $orderItems
      *
      * @return void
      */
-    protected function logInfo($request, $response, $method, $entityId = null)
+    protected function logInfo($request, $response, $method, $entityId = null, $orderItems = [])
     {
         $headData = $request->getHead()->buildData();
 
@@ -75,6 +84,8 @@ abstract class BaseTransaction extends TransactionHandlerAbstract
             'response_status_code' => $response->getStatusCode(),
             'response_status_text' => $response->getStatusText(),
             'response_customer_message' => $response->getCustomerMessage(),
+
+            'item_count' => count($orderItems),
         ];
 
         $this->getLogger()->info(static::TRANSACTION_TYPE, $context);

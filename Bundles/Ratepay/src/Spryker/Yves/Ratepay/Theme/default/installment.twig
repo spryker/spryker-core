@@ -2,7 +2,7 @@
 
     <div class="small-12 columns">
         <label>
-            { 'payment.ratepay.date_of_birth' | trans }}
+            {{ 'payment.ratepay.date_of_birth' | trans }}*
             {{ form_widget(form.ratepayInstallment.date_of_birth, { 'attr': {'placeholder': 'payment.ratepay.date_of_birth' | trans } }) }}
         </label>
         {{ form_errors(form.ratepayInstallment.date_of_birth) }}
@@ -25,13 +25,7 @@
 
     <div class="ratepay-installment-pay-type ratepay-installment-pay-type-direct-debit">
         <h5>{{ 'payment.ratepay.bank_account' | trans }}</h5>
-        <div class="small-12 columns">
-            <label>
-                {{ 'payment.ratepay.bank_account.holder' | trans }}*
-                {{ form_widget(form.ratepayInstallment.bank_account_holder, { 'attr': {'placeholder': 'payment.ratepay.bank_account.holder' | trans } }) }}
-            </label>
-            {{ form_errors(form.ratepayInstallment.bank_account_holder) }}
-        </div>
+
         <div class="small-12 columns">
             <label>
                 {{ 'payment.ratepay.bank_account.iban' | trans }}*
@@ -68,8 +62,10 @@
     <div class="ratepay-installment-calculation-type ratepay-installment-calculation-by-rate">
         <div class="small-12 columns">
             <label>
-                {{ 'payment.ratepay.installment_calculator.interest_rate' | trans }}*
+                {{ 'payment.ratepay.installment_calculator.interest_rate_desired' | trans }}
                 {{ form_widget(form.ratepayInstallment.interest_rate, { 'attr': {'placeholder': 'payment.ratepay.installment_calculator.interest_rate' | trans } }) }}
+                {{ 'payment.ratepay.installment_calculator.interest_rate_default' | trans }}
+                {{ form_widget(form.ratepayInstallment.interest_rate_default, { 'attr': {'placeholder': 'payment.ratepay.installment_calculator.interest_rate' | trans } }) }}
             </label>
             {{ form_errors(form.ratepayInstallment.interest_rate) }}
         </div>

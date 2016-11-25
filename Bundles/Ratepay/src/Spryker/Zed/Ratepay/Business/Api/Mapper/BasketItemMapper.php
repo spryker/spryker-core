@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,7 +9,9 @@ namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketItemTransfer;
+use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketItemMapper extends BaseMapper
 {
@@ -24,15 +27,23 @@ class BasketItemMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
         ItemTransfer $itemTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
         $this->itemTransfer = $itemTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -43,7 +54,7 @@ class BasketItemMapper extends BaseMapper
         $itemPrice = $this->itemTransfer
             ->requireUnitGrossPriceWithProductOptions()
             ->getUnitGrossPriceWithProductOptions();
-        $itemPrice = $this->centsToDecimal($itemPrice);
+        $itemPrice = $this->moneyFacade->convertIntegerToDecimal((int)$itemPrice);
 
         $itemTransfer = (new RatepayRequestShoppingBasketItemTransfer())
             ->setItemName($this->itemTransfer->requireName()->getName())
@@ -55,17 +66,14 @@ class BasketItemMapper extends BaseMapper
             ->setDescriptionAddition($this->itemTransfer->getDescriptionAddition())
             ->setUnitPriceGross($itemPrice);
 
-        $itemDiscount = $this->getBasketItemDiscount();
-        if ($itemDiscount) {
-            $itemTransfer->setDiscount($itemDiscount);
-        }
-
         $productOptions = [];
         foreach ($this->itemTransfer->getProductOptions() as $productOption) {
             $productOptions[] = $productOption->getLabelOptionValue();
         }
 
         $itemTransfer->setProductOptions($productOptions);
+
+        $this->initBasketIfEmpty();
         $this->requestTransfer->getShoppingBasket()->addItems($itemTransfer);
     }
 
@@ -74,12 +82,17 @@ class BasketItemMapper extends BaseMapper
      */
     protected function getBasketItemDiscount()
     {
-        $itemDiscount = $this->itemTransfer
-            ->requireUnitTotalDiscountAmountWithProductOption()
-            ->getUnitTotalDiscountAmountWithProductOption();
-        $itemDiscount = $this->centsToDecimal($itemDiscount);
+        $itemDiscount = $this->itemTransfer->getUnitTotalDiscountAmountWithProductOption();
+        $itemDiscount = $this->moneyFacade->convertIntegerToDecimal((int)$itemDiscount);
 
         return $itemDiscount;
+    }
+
+    protected function initBasketIfEmpty()
+    {
+        if (!$this->requestTransfer->getShoppingBasket()) {
+            $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
+        }
     }
 
 }

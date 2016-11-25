@@ -108,7 +108,7 @@ class CreditCardSubForm extends AbstractSubForm
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'empty_value' => false,
+                'placeholder' => false,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],

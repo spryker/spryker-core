@@ -15,7 +15,7 @@
     "spryker/guzzle": "^2.1.0",
     "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
+    "spryker/money": "^1.0.0",
     "spryker/log": "^2.0.0",
     "spryker/messenger": "^2.1.0",
     "spryker/monolog": "^2.0.0",

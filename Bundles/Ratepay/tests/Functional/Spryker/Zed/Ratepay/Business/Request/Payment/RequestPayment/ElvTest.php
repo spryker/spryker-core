@@ -57,7 +57,7 @@ class ElvTest extends ElvAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->requestPayment($this->quoteTransfer);
+        return $facade->requestPayment($this->mockRatepayPaymentRequestTransfer());
     }
 
     /**

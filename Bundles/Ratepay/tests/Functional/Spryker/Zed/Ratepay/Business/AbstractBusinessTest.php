@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,6 +15,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
@@ -27,6 +31,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
+use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
 use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
 
@@ -59,6 +64,11 @@ abstract class AbstractBusinessTest extends Test
     protected $orderTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected $orderPartialTransfer;
+
+    /**
      * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected $checkoutResponseTransfer;
@@ -73,6 +83,7 @@ abstract class AbstractBusinessTest extends Test
         $this->checkoutResponseTransfer = $this->createCheckoutResponse();
         $this->quoteTransfer = $this->getQuoteTransfer();
         $this->orderTransfer = $this->getOrderTransfer();
+        $this->orderPartialTransfer = $this->getPartialOrderTransfer();
 
         $orderEntity = $this->createOrderEntity();
         $this->checkoutResponseTransfer->getSaveOrder()->setIdSalesOrder($orderEntity->getIdSalesOrder());
@@ -121,8 +132,59 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TotalsTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
+    protected function getPartialOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RatepayPaymentInitTransfer
+     */
+    protected function mockRatepayPaymentInitTransfer()
+    {
+        $ratepayPaymentInitTransfer = new RatepayPaymentInitTransfer();
+        $ratepayPaymentInitTransfer
+            ->setTransactionId('58-201604122719694')
+            ->setTransactionShortId('5QTZ.2VWD.OMWW.9D3E')
+            ->setPaymentMethodName(static::PAYMENT_METHOD);
+
+        return $ratepayPaymentInitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer|null $paymentData
+     *
+     * @return \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
+     */
+    protected function mockRatepayPaymentRequestTransfer($paymentData = null)
+    {
+        if ($paymentData === null) {
+            $paymentData = $this->mockPaymentElvTransfer();
+        }
+
+        $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
+        $ratepayPaymentInitTransfer = $this->mockRatepayPaymentInitTransfer();
+        $quotePaymentRequestMapper = new QuotePaymentRequestMapper(
+            $ratepayPaymentRequestTransfer,
+            $ratepayPaymentInitTransfer,
+            $this->getQuoteTransfer(),
+            $this->getPartialOrderTransfer(),
+            $paymentData
+        );
+        $quotePaymentRequestMapper->map();
+
+        return $ratepayPaymentRequestTransfer;
+    }
+
     protected function getTotalsTransfer()
     {
         $totalsTransfer = new TotalsTransfer();
@@ -135,11 +197,6 @@ abstract class AbstractBusinessTest extends Test
         return $totalsTransfer;
     }
 
-    /**
-     * @param string $itemPrefix
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     protected function getAddressTransfer($itemPrefix)
     {
         $addressTransfer = new AddressTransfer();
@@ -158,11 +215,6 @@ abstract class AbstractBusinessTest extends Test
         return $addressTransfer;
     }
 
-    /**
-     * @param string $itemPrefix
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function getItemTransfer($itemPrefix)
     {
         $itemTransfer = new ItemTransfer();
@@ -170,18 +222,15 @@ abstract class AbstractBusinessTest extends Test
             ->setName($itemPrefix . 'test')
             ->setSku($itemPrefix . '33333')
             ->setGroupKey($itemPrefix . '33333333333')
-            ->setQuantity($itemPrefix . '2')
-            ->setUnitGrossPrice($itemPrefix . '1')
-            ->setTaxRate($itemPrefix . '9')
-            ->setUnitTotalDiscountAmountWithProductOption($itemPrefix . '9')
-            ->setUnitGrossPriceWithProductOptions($itemPrefix . '55555');
+            ->setQuantity((int)$itemPrefix . '2')
+            ->setUnitGrossPrice((int)$itemPrefix . '1')
+            ->setTaxRate((int)$itemPrefix . '9')
+            ->setUnitTotalDiscountAmountWithProductOption((int)$itemPrefix . '9')
+            ->setUnitGrossPriceWithProductOptions((int)$itemPrefix . '55555');
 
         return $itemTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected function getCustomerTransfer()
     {
         $customerTransfer = new CustomerTransfer();
@@ -223,6 +272,26 @@ abstract class AbstractBusinessTest extends Test
     }
 
     /**
+     * @return \Generated\Shared\Transfer\RatepayPaymentElvTransfer
+     */
+    protected function mockPaymentElvTransfer()
+    {
+        $ratepayPaymentTransfer = new RatepayPaymentElvTransfer();
+        $ratepayPaymentTransfer->setBankAccountIban('iban')
+            ->setBankAccountBic('bic')
+            ->setBankAccountHolder('holder')
+            ->setCurrencyIso3('iso3')
+            ->setGender('m')
+            ->setPhone('123456789')
+            ->setDateOfBirth('1980-01-02')
+            ->setIpAddress('127.1.2.3')
+            ->setCustomerAllowCreditInquiry(true)
+            ->setPaymentType('invoice');
+
+        return $ratepayPaymentTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $payment
      * @param \Spryker\Shared\Transfer\TransferInterface $paymentTransfer
      *
@@ -236,13 +305,10 @@ abstract class AbstractBusinessTest extends Test
     abstract protected function getRatepayPaymentMethodTransfer();
 
     /**
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
+     * @return mixed
      */
     abstract protected function getPaymentTransferFromQuote();
 
-    /**
-     * @return \Spryker\Zed\Ratepay\Business\Order\MethodMapper\PaymentMethodMapperInterface
-     */
     protected function getPaymentMapper()
     {
         return $this->getRatepayBusinessBusinessFactory()
@@ -295,7 +361,7 @@ abstract class AbstractBusinessTest extends Test
             ->setEmail('john@doe.com')
             ->setDateOfBirth('1970-01-01')
             ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setCustomerReference('payolution-pre-authorization-test');
+            ->setCustomerReference('ratepay-pre-authorization-test');
         $customer->save();
 
         $orderEntity = (new SpySalesOrder())

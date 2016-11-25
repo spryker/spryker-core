@@ -6,23 +6,18 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestPaymentTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class PaymentMapper extends BaseMapper
 {
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
-     */
-    protected $ratepayPaymentTransfer;
+    protected $ratepayPaymentRequestTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -30,19 +25,24 @@ class PaymentMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
-        QuoteTransfer $quoteTransfer,
-        TransferInterface $ratepayPaymentTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
 
-        $this->quoteTransfer = $quoteTransfer;
-        $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
+        $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -50,13 +50,11 @@ class PaymentMapper extends BaseMapper
      */
     public function map()
     {
-        $paymentMethod = $this->ratepayPaymentTransfer->requirePaymentType()->getPaymentType();
-        $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
-        $grandTotal = $this->centsToDecimal($totalsTransfer->requireGrandTotal()->getGrandTotal());
+        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getGrandTotal());
 
         $this->requestTransfer->setPayment(new RatepayRequestPaymentTransfer())->getPayment()
-            ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
-            ->setMethod($paymentMethod)
+            ->setCurrency($this->ratepayPaymentRequestTransfer->getCurrencyIso3())
+            ->setMethod($this->ratepayPaymentRequestTransfer->getPaymentType())
             ->setAmount($grandTotal);
     }
 
