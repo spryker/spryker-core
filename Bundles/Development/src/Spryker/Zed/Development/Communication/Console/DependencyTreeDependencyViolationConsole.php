@@ -36,7 +36,7 @@ class DependencyTreeDependencyViolationConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -89,6 +89,7 @@ class DependencyTreeDependencyViolationConsole extends Console
         }
 
         $this->info(sprintf('%d bundle dependency issues found', $count));
+        return $count > 0 ? static::CODE_ERROR : static::CODE_SUCCESS;
     }
 
 }

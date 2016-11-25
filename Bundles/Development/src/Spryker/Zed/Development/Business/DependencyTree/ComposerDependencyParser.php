@@ -58,7 +58,6 @@ class ComposerDependencyParser
         return $dependencies;
     }
 
-
     /**
      * @param string $bundleName
      * @param array $codeDependencies
@@ -95,19 +94,18 @@ class ComposerDependencyParser
     protected function parseDeclaredDependenciesForBundle($bundleName)
     {
         $composerJsonFiles = $this->finder->find();
-        foreach ($composerJsonFiles as $composerJsonFile)
-        {
+        foreach ($composerJsonFiles as $composerJsonFile) {
             if ($this->shouldSkip($composerJsonFile, $bundleName)) {
                 continue;
             }
 
             $path = dirname((string)$composerJsonFile);
-            $depdencyFile = $path . DIRECTORY_SEPARATOR . 'dependency.json';
-            if (!file_exists($depdencyFile)) {
+            $dependencyFile = $path . DIRECTORY_SEPARATOR . 'dependency.json';
+            if (!file_exists($dependencyFile)) {
                 return [];
             }
 
-            $content = file_get_contents($depdencyFile);
+            $content = file_get_contents($dependencyFile);
             $content = json_decode($content, true);
 
             return [
