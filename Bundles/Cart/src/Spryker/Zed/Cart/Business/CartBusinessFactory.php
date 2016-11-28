@@ -28,8 +28,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
             $this->getItemExpanderPlugins(),
-            $this->getPostSavePlugins(),
-            $this->getCartPreCheckPlugins()
+            $this->getCartPreCheckPlugins(),
+            $this->getPostSavePlugins()
         );
     }
 
