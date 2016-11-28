@@ -10,10 +10,10 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Spryker\Shared\Library\Json;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionTable extends AbstractTable
@@ -35,6 +35,11 @@ class ProductOptionTable extends AbstractTable
     protected $productOptionQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var int
      */
     protected $idProductOptionGroup;
@@ -51,17 +56,20 @@ class ProductOptionTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
+     * @param \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface $utilEncodingService
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductOptionGroup
      * @param string $tableContext
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
+        ProductOptionToUtilEncodingInterface $utilEncodingService,
         LocaleTransfer $localeTransfer,
         $idProductOptionGroup,
         $tableContext
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
+        $this->utilEncodingService = $utilEncodingService;
         $this->idProductOptionGroup = $idProductOptionGroup;
 
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
@@ -195,7 +203,7 @@ class ProductOptionTable extends AbstractTable
         return sprintf(
             "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' data-info='%s'>",
             $productOption['id_product_abstract'],
-            Json::encode($info)
+            $this->utilEncodingService->encodeJson($info)
         );
     }
 

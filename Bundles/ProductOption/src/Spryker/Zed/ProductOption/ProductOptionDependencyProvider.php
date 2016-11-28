@@ -16,6 +16,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesBridge;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingBridge;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -29,6 +30,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
+
+    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -95,6 +98,10 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductOptionToGlossaryBridge($container->getLocator()->glossary()->facade());
+        };
+
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ProductOptionToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

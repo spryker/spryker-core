@@ -7,7 +7,6 @@
     "spryker/glossary": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/money": "^0.1.0",
     "spryker/product": "^2.0.0 || ^3.0.0",

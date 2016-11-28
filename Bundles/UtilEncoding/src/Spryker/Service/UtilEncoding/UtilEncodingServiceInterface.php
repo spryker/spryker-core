@@ -18,8 +18,8 @@ interface UtilEncodingServiceInterface
      * @api
      *
      * @param string $jsonValue
-     * @param null $options
-     * @param null $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @return string
      */
