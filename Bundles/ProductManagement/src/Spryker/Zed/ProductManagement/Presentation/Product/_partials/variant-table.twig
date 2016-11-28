@@ -1,0 +1,58 @@
+<div class="table-responsive">
+    <table
+            id="productMatrixTable"
+            class="table table-striped table-bordered table-hover gui-table-data"
+            data-page-size="4"
+            data-order='[["0", "asc"]]'
+            data-column-defs='[{ "targets": "no-sort", "orderable": false }]'
+            data-state-save="false"
+    >
+        <thead>
+        <tr>
+            <th>Sku</th>
+            <th class="center">Price</th>
+            <th class="center">Stock</th>
+            <th class="no-sort">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in concreteProductCollection %}
+            <tr class="gradeX">
+                {# --------------------------------------- SKU --------------------------------------- #}
+                <td>{{ product.sku }}</td>
+                {# --------------------------------------- ATTRIBUTES --------------------------------------- #}
+
+
+                {# --------------------------------------- PRICE --------------------------------------- #}
+                {% if product.price is defined and product.price.price is defined %}
+                    <td class="center">{{ product.price.price|number_format }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+
+                {# --------------------------------------- STOCK --------------------------------------- #}
+                {% if product.stock|length > 0 %}
+                    <td class="center">
+                        {% for stock in product.stock %}
+                            {{ stock.stockType }} : {{ stock.quantity|number_format }} <br />
+                        {% endfor %}
+                    </td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                <td class="center no-sort">
+                    <a href="/product-management/edit/variant?id-product={{ product.idProductConcrete }}&id-product-abstract={{ product.fkProductAbstract }}" target="_blank">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Sku</th>
+            <th class="center">Price</th>
+            <th class="center">Stock</th>
+            <th class="no-sort">Action</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>

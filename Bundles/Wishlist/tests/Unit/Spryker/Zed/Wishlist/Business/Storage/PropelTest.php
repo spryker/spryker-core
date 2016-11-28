@@ -275,7 +275,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $productConcrete = new ProductConcreteTransfer();
-        $productConcrete->setIdProductAbstract(1);
+        $productConcrete->setFkProductAbstract(1);
         $productConcrete->setIdProductConcrete(1);
         $productFacadeMock
             ->expects($this->any())

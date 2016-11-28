@@ -22,6 +22,10 @@ TranslationCopyFields.prototype.addCopyButtons = function() {
     $('input[' + this.translationDataAttributeName + ']').each(function(i, field) {
         var copyButton = $('<button type="button" class="btn btn-primary" data-style="zoom-in" title="Copy to other languages"><span class="fa fa-copy"></span></button>');
 
+        if ($(field).parent().hasClass('input-group')) {
+            return;
+        }
+
         copyButton.on('click', function() {
             self.copy($(this), field);
         });

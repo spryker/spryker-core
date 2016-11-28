@@ -1,12 +1,13 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Search Preferences' %}
+{% set widget_title = 'Search preferences' %}
 
 {% block section_title widget_title | trans %}
 {% block head_title widget_title | trans %}
 
 {% block action %}
-    <a href="#" class="btn-sm"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+    {{ createActionButton('/product-search/search-preferences/create', 'Add attribute to search' | trans) }}
+    {{ viewActionButton('/product-search/search-preferences/sync', 'Synchronize search preferences' | trans, {'id': 'syncSearchPreferences'}) }}
 {% endblock %}
 
 {% block content %}

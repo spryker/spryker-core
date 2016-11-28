@@ -12,10 +12,9 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Library\Json;
-use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 class ProductCategoryTable extends AbstractTable
@@ -23,11 +22,17 @@ class ProductCategoryTable extends AbstractTable
 
     const TABLE_IDENTIFIER = 'product-category-table';
     const COL_CHECKBOX = 'checkbox';
+    const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -41,16 +46,22 @@ class ProductCategoryTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface $utilEncodingService
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      */
-    public function __construct(ProductCategoryQueryContainerInterface $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
-    {
+    public function __construct(
+        ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
+        ProductCategoryToUtilEncodingInterface $utilEncodingService,
+        LocaleTransfer $locale,
+        $idCategory
+    ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
+        $this->utilEncodingService = $utilEncodingService;
         $this->locale = $locale;
         $this->idCategory = $idCategory;
-        $this->defaultUrl = sprintf('product-category-table?%s=%d', ProductCategoryConstants::PARAM_ID_CATEGORY, $this->idCategory);
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->defaultUrl = sprintf('product-category-table?%s=%d', static::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
     }
 
     /**
@@ -65,7 +76,7 @@ class ProductCategoryTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             SpyProductCategoryTableMap::COL_PRODUCT_ORDER => 'Order',
-            self::COL_CHECKBOX => 'Selected',
+            static::COL_CHECKBOX => 'Selected',
         ]);
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
@@ -73,7 +84,7 @@ class ProductCategoryTable extends AbstractTable
         ]);
 
         $config->addRawColumn(SpyProductCategoryTableMap::COL_PRODUCT_ORDER);
-        $config->addRawColumn(self::COL_CHECKBOX);
+        $config->addRawColumn(static::COL_CHECKBOX);
 
         return $config;
     }
@@ -104,38 +115,12 @@ class ProductCategoryTable extends AbstractTable
                 SpyProductAbstractTableMap::COL_SKU => $productCategory['sku'],
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $this->getOrderHtml($productCategory),
-                self::COL_CHECKBOX => $this->getCheckboxHtml($productCategory),
+                static::COL_CHECKBOX => $this->getCheckboxHtml($productCategory),
             ];
         }
         unset($queryResults);
 
         return $results;
-    }
-
-    /**
-     * @param array $productCategory
-     *
-     * @return string
-     */
-    protected function getProductOptionsComboBoxItems($productCategory)
-    {
-        $preConfigQuery = $this->productCategoryQueryContainer
-            ->queryProductCategoryPreConfig($this->idCategory, $productCategory['id_product_abstract'])
-            ->orderByFormat();
-
-        $preconfigItems = $preConfigQuery->find();
-
-        $items = '<option value="0">Default</option>';
-        foreach ($preconfigItems as $preconfigItem) {
-            $selected = '';
-            if ((int)$productCategory['preconfig_product'] === (int)$preconfigItem->getIdProduct()) {
-                $selected = 'selected="selected"';
-            }
-
-            $items .= '<option value="' . $preconfigItem->getIdProduct() . '" ' . $selected . '>' . $preconfigItem->getFormat() . '</option>';
-        }
-
-        return $items;
     }
 
     /**
@@ -154,7 +139,7 @@ class ProductCategoryTable extends AbstractTable
         return sprintf(
             "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' data-info='%s'>",
             $productCategory['id_product_abstract'],
-            Json::encode($info)
+            $this->utilEncodingService->encodeJson($info)
         );
     }
 
@@ -173,7 +158,7 @@ class ProductCategoryTable extends AbstractTable
             "<input type='text' value='%d' id='product_category_order_%d' class='product_category_order' size='4' data-info='%s'>",
             $productCategory['product_order'],
             $productCategory['id_product_abstract'],
-            Json::encode($info)
+            $this->utilEncodingService->encodeJson($info)
         );
     }
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Search\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\SearchConfigCacheTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -143,6 +142,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
+     *
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer)
@@ -150,23 +151,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         return $this->getFactory()
             ->createPageDataMapper()
             ->mapData($pageMap, $data, $localeTransfer);
-    }
-
-    /**
-     * Specification:
-     * - Stores the given search cache configuration into the storage (Redis by default)
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
-     *
-     * @return void
-     */
-    public function saveSearchConfigCache(SearchConfigCacheTransfer $searchConfigCacheTransfer)
-    {
-        $this->getFactory()
-            ->createSearchConfigCacheSaver()
-            ->save($searchConfigCacheTransfer);
     }
 
 }

@@ -169,7 +169,7 @@ class Propel implements StorageInterface
         $wishlistItemEntity = new SpyWishlistItem();
         $wishlistItemEntity->setGroupKey($wishlistItemTransfer->getGroupKey());
         $wishlistItemEntity->setFkProduct($productConcreteTransfer->getIdProductConcrete());
-        $wishlistItemEntity->setFkProductAbstract($productConcreteTransfer->getIdProductAbstract());
+        $wishlistItemEntity->setFkProductAbstract($productConcreteTransfer->getFkProductAbstract());
         $wishlistItemEntity->setFkWishlist($idWishlist);
         $wishlistItemEntity->setQuantity($wishlistItemTransfer->getQuantity());
         $wishlistItemEntity->setAddedAt(new \DateTime());

@@ -14,16 +14,40 @@
         </foreign-key>
         <id-method-parameter value="spy_product_search_pk_seq"/>
     </table>
-    <table name="spy_product_search_attribute_map">
-        <column name="fk_product_attributes_metadata" type="INTEGER" required="true" primaryKey="true"/>
-        <column name="target_field" type="VARCHAR" required="true" primaryKey="true"/>
 
-        <index name="spy_product_search_attribute_map-k_product_attributes_metadata">
-            <index-column name="fk_product_attributes_metadata"/>
+    <table name="spy_product_search_attribute_map">
+        <column name="fk_product_attribute_key" type="INTEGER" required="true" primaryKey="true"/>
+        <column name="target_field" type="VARCHAR" required="true" primaryKey="true"/>
+        <column name="synced" type="BOOLEAN" defaultValue="false"/>
+
+        <index>
+            <index-column name="fk_product_attribute_key"/>
         </index>
 
-        <foreign-key name="spy_product_search_attribute_map-source_attribute_id" foreignTable="spy_product_attributes_metadata" onDelete="cascade">
-            <reference local="fk_product_attributes_metadata" foreign="id_product_attributes_metadata"/>
+        <foreign-key name="spy_product_search_attribute_map-fk_product_attribute_key" foreignTable="spy_product_attribute_key" onDelete="cascade">
+            <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>
         </foreign-key>
+
+        <behavior name="archivable" />
+    </table>
+
+    <table name="spy_product_search_attribute" idMethod="native" allowPkInsert="true">
+        <column name="id_product_search_attribute" type="INTEGER" primaryKey="true" autoIncrement="true" />
+        <column name="fk_product_attribute_key" type="INTEGER" required="true" />
+        <column name="filter_type" type="VARCHAR" required="true" />
+        <column name="position" type="INTEGER" required="true" defaultValue="0" />
+        <column name="synced" type="BOOLEAN" defaultValue="false"/>
+
+        <foreign-key name="spy_product_search_attribute-fk_product_attribute_key" foreignTable="spy_product_attribute_key">
+            <reference local="fk_product_attribute_key" foreign="id_product_attribute_key" />
+        </foreign-key>
+
+        <unique name="spy_product_search_attribute-unique-fk_product_attribute_key">
+            <unique-column name="fk_product_attribute_key" />
+        </unique>
+
+        <id-method-parameter value="spy_product_search_attribute_pk_seq" />
+
+        <behavior name="archivable" />
     </table>
 </database>

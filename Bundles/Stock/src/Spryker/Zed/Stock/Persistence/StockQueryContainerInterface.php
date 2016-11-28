@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Stock\Persistence;
 
-interface StockQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface StockQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

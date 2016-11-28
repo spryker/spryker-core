@@ -26,6 +26,7 @@ class Select2ComboBoxType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['placeholder'] = $options['placeholder'];
+        $view->vars['tags'] = $options['tags'];
     }
 
     /**
@@ -37,6 +38,7 @@ class Select2ComboBoxType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => [],
+            'tags' => false,
             'placeholder' => '-Select value-',
         ]);
     }

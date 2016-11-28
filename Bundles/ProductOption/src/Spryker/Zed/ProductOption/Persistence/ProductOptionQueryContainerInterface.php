@@ -7,27 +7,21 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductOptionQueryContainerInterface
 {
 
     /**
      * @api
      *
-     * @param string $importKeyProductOptionType
+     * @param string $sku
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductOptionTypeByImportKey($importKeyProductOptionType);
-
-    /**
-     * @api
-     *
-     * @param int $fkProductOptionType
-     * @param int $fkLocale
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery
-     */
-    public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
+    public function queryProductAbstractBySku($sku);
 
     /**
      * @api
@@ -36,225 +30,25 @@ interface ProductOptionQueryContainerInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
-    public function queryOptionValueById($idProductOptionValue);
+    public function queryProductOptionByValueId($idProductOptionValue);
 
     /**
      * @api
      *
-     * @param string $importKeyProductOptionValue
-     * @param int $fkProductOptionType
+     * @param string $sku
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
-    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType);
+    public function queryProductOptionValueBySku($sku);
 
     /**
      * @api
      *
-     * @param string $importKeyProductOptionValue
+     * @param string $groupName
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
-    public function queryProductOptionValueByImportKey($importKeyProductOptionValue);
-
-    /**
-     * @api
-     *
-     * @param int $fkProductOptionValue
-     * @param int $fkLocale
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery
-     */
-    public function queryProductOptionValueTranslationByFks($fkProductOptionValue, $fkLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
-     */
-    public function queryProductOptionTypeUsageById($idProductOptionTypeUsage);
-
-    /**
-     * @api
-     *
-     * @param int $fkProduct
-     * @param int $fkProductOptionType
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
-     */
-    public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionValueUsage
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
-     */
-    public function queryProductOptionValueUsageById($idProductOptionValueUsage);
-
-    /**
-     * @api
-     *
-     * @param int $fkProductOptionTypeUsage
-     * @param int $fkProductOptionValue
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
-     */
-    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue);
-
-    /**
-     * @api
-     *
-     * @param int $fkProductOptionTypeUsage
-     * @param int $fkProductOptionType
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
-     */
-    public function queryProductOptionValueUsageIdByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
-
-    /**
-     * @api
-     *
-     * @param int $fkProductOptionTypeUsageA
-     * @param int $fkProductOptionTypeUsageB
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQuery
-     */
-    public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB);
-
-    /**
-     * @api
-     *
-     * @param int $fkProductOptionValueUsageA
-     * @param int $fkProductOptionValueUsageB
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQuery
-     */
-    public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionType
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryAssociatedProductAbstractIdsForProductOptionType($idProductOptionType);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionValue
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryAssociatedProductAbstractIdsForProductOptionValue($idProductOptionValue);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstractIdForProductOptionTypeUsage($idProductOptionTypeUsage);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionValueUsage
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
-     */
-    public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionValueUsage
-     *
-     * @return \Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery
-     */
-    public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     * @param int $idLocale
-     *
-     * @return array
-     */
-    public function queryTypeUsagesForProductConcrete($idProduct, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     * @param int $idLocale
-     *
-     * @return array
-     */
-    public function queryValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     *
-     * @return array
-     */
-    public function queryTypeExclusionsForTypeUsage($idProductOptionTypeUsage);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionValueUsage
-     *
-     * @return array
-     */
-    public function queryValueConstraintsForValueUsage($idProductOptionValueUsage);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionValueUsage
-     * @param string $operator
-     *
-     * @return array
-     */
-    public function queryValueConstraintsForValueUsageByOperator($idProductOptionValueUsage, $operator);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function queryConfigPresetsForProductConcrete($idProduct);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionConfigurationPreset
-     *
-     * @return array
-     */
-    public function queryValueUsagesForConfigPreset($idProductOptionConfigurationPreset);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     *
-     * @return string|null
-     */
-    public function queryEffectiveTaxRateForTypeUsage($idProductOptionTypeUsage);
+    public function queryProductOptionGroupByName($groupName);
 
     /**
      * @api
@@ -264,6 +58,58 @@ interface ProductOptionQueryContainerInterface
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryTaxSetByIdProductOptionValueUsagesAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
+    public function queryTaxSetByIdProductOptionValueAndCountryIso2Code($allIdOptionValueUsages, $countryIso2Code);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryAbstractProductsByOptionGroupId($idProductOptionGroup, LocaleTransfer $localeTransfer);
+
+    /**
+     * @api
+     *
+     * @param string $term
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithValues();
+
+    /**
+     * @api
+     *
+     * @param string $value
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionValue($value);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrder();
 
 }

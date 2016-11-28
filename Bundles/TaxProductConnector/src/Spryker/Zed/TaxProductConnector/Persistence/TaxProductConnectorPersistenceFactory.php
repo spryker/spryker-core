@@ -8,6 +8,7 @@
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -23,6 +24,14 @@ class TaxProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractQuery()
     {
         return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     */
+    public function createTaxSetQuery()
+    {
+        return SpyTaxSetQuery::create();
     }
 
 }

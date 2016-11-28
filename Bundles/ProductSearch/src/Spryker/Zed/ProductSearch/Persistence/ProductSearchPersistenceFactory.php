@@ -8,11 +8,14 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMapQuery;
+use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
@@ -20,14 +23,6 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
  */
 class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
-    /**
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected function getProductQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -54,11 +49,43 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
      */
-    public function createProductAttributesMetadataQuery()
+    public function createProductSearchAttributeMapArchiveQuery()
     {
-        return SpyProductAttributesMetadataQuery::create();
+        return SpyProductSearchAttributeMapArchiveQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function createProductAttributeKeyQuery()
+    {
+        return SpyProductAttributeKeyQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    public function createProductSearchAttributeQuery()
+    {
+        return SpyProductSearchAttributeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
+     */
+    public function createProductSearchAttributeArchiveQuery()
+    {
+        return SpyProductSearchAttributeArchiveQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function createProductAbstractQuery()
+    {
+        return SpyProductAbstractQuery::create();
     }
 
 }

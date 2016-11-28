@@ -5,28 +5,21 @@
 
 'use strict';
 
-var SprykerAjax = require('./legacy/SprykerAjax');
 var editor = require('ZedGuiEditorConfiguration');
-var TabsNavigation = require('./libs/tabs-navigation');
+var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
+var Ibox = require('./libs/ibox');
+var dataTable = require('./libs/data-table');
 
 $(document).ready(function() {
     // editor
     $('.html-editor').summernote(editor.getConfig());
 
     /* Draw data tables */
-    $('.gui-table-data').dataTable({
-        scrollX: 'auto',
-        autoWidth: false
-    });
+    $('.gui-table-data').dataTable(dataTable.defaultConfiguration);
 
     /* Draw data tables without search */
-    $('.gui-table-data-no-search').dataTable({
-        bFilter: false,
-        bInfo: false,
-        scrollX: 'auto',
-        autoWidth: false
-    });
+    $('.gui-table-data-no-search').dataTable(dataTable.noSearchConfiguration);
 
     /* All elements with the same class will have the same height */
     $('.fix-height').sprykerFixHeight();
@@ -40,12 +33,6 @@ $(document).ready(function() {
             source: obj.data('url'),
             minLength: 3
         });
-    });
-
-    /* Trigger change status active|inactive with an ajax call when click on checkbox */
-    $('.gui-table-data').on('click', '.active-checkbox', function() {
-        var elementId = $(this).attr('id').replace('active-', '');
-        spyAj.setUrl('/discount/voucher/status').changeActiveStatus(elementId);
     });
 
     $('.table-dependency tr').hover(
@@ -70,11 +57,14 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
     $('.spryker-form-select2combobox').select2();
 
-    /* Navigable tabs */
-    $('.tabs-container.tabs-navigable').each(function(index, item){
-        new TabsNavigation(item);
+    /* Init tabs */
+    $('.tabs-container').each(function(index, item){
+        new Tabs(item, dataTable.onTabChange);
     });
 
     /* Init translation copy fields */
     new TranslationCopyFields();
+
+    /* Init iboxes */
+    new Ibox();
 });

@@ -12,7 +12,6 @@ use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Config\SearchConfigCacheSaver;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
@@ -50,14 +49,15 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
     protected function createJsonIndexDefinitionLoader()
     {
         return new JsonIndexDefinitionLoader(
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
             $this->createJsonIndexDefinitionMerger(),
-            Store::getInstance()->getAllowedStores()
+            Store::getInstance()->getAllowedStores(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -104,7 +104,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface
      */
     protected function createElasticsearchIndexMapGenerator()
     {
@@ -112,7 +112,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface
      */
     protected function createElasticsearchIndexMapCleaner()
     {
@@ -188,11 +188,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Config\SearchConfigCacheSaverInterface
+     * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
      */
-    public function createSearchConfigCacheSaver()
+    protected function getUtilEncodingService()
     {
-        return new SearchConfigCacheSaver($this->getProvidedDependency(SearchDependencyProvider::CLIENT_STORAGE));
+        return $this->getProvidedDependency(SearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }

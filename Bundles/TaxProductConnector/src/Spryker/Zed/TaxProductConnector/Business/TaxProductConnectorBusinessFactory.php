@@ -8,8 +8,8 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
-use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
+use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper;
+use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
@@ -19,22 +19,19 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface
+     * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter
      */
-    public function createTaxChangeTouchPlugin()
+    public function createProductAbstractTaxWriter()
     {
-        return new TaxChangeTouchPlugin(
-            $this->getProductFacade(),
-            $this->getQueryContainer()
-        );
+        return new ProductAbstractTaxWriter($this->getQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface
+     * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper
      */
-    protected function getProductFacade()
+    public function createProductAbstractTaxSetMapper()
     {
-        return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_PRODUCT);
+        return new ProductAbstractTaxSetMapper($this->getQueryContainer());
     }
 
 }

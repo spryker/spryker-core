@@ -19,6 +19,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_MESSENGER = 'messenger facade';
     const CART_EXPANDER_PLUGINS = 'cart expander plugins';
     const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+    const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +40,10 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getExpanderPlugins($container);
         };
 
+        $container[self::CART_POST_SAVE_PLUGINS] = function (Container $container) {
+            return $this->getPostSavePlugins($container);
+        };
+
         $container[self::CART_PRE_CHECK_PLUGINS] = function (Container $container) {
             return $this->getCartPreCheckPlugins($container);
         };
@@ -52,6 +57,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected function getExpanderPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
+     */
+    protected function getPostSavePlugins(Container $container)
     {
         return [];
     }

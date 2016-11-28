@@ -9,8 +9,8 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
 class IndexMapInstaller implements SearchInstallerInterface
@@ -22,12 +22,12 @@ class IndexMapInstaller implements SearchInstallerInterface
     protected $indexDefinitionLoader;
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner
+     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface
      */
     protected $indexMapCleaner;
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator
+     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface
      */
     protected $indexMapGenerator;
 
@@ -38,17 +38,16 @@ class IndexMapInstaller implements SearchInstallerInterface
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner $indexMapCleaner
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator $indexMapGenerator
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface $indexMapCleaner
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface $indexMapGenerator
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      */
     public function __construct(
         IndexDefinitionLoaderInterface $indexDefinitionLoader,
-        IndexMapCleaner $indexMapCleaner,
-        IndexMapGenerator $indexMapGenerator,
+        IndexMapCleanerInterface $indexMapCleaner,
+        IndexMapGeneratorInterface $indexMapGenerator,
         MessengerInterface $messenger
     ) {
-
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->indexMapCleaner = $indexMapCleaner;
         $this->indexMapGenerator = $indexMapGenerator;

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface WriterInterface
 {
@@ -18,7 +20,7 @@ interface WriterInterface
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceType
+     * @return int
      */
     public function createPriceType($name);
 
@@ -35,5 +37,19 @@ interface WriterInterface
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
 
 }

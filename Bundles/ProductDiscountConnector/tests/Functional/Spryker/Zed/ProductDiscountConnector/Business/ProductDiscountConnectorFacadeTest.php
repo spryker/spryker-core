@@ -15,8 +15,18 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorBusinessFactory;
 use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade;
+use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductBridge;
+use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
+use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @group Functional
@@ -112,6 +122,18 @@ class ProductDiscountConnectorFacadeTest extends Test
      */
     protected function createAbstractProductWithAttributes()
     {
+        $taxSet = new SpyTaxSet();
+        $taxSet->setName('DEFAULT');
+        $taxSet->save();
+
+        $taxSetRate = new SpyTaxRate();
+        $taxSetRate->setFkCountry(60);
+        $taxSetRate->setName('Test');
+
+        $taxSetTaxTax = new SpyTaxSetTax();
+        $taxSetTaxTax->setFkTaxRate($taxSetRate->getIdTaxRate());
+        $taxSetTaxTax->setFkTaxSet($taxSet->getIdTaxSet());
+
         $attributes = ['color' => 'red', 'size' => 'medium'];
         $abstractSku = 'discount-attribute-test-sku';
         $attributesSerialized = json_encode($attributes);
@@ -119,6 +141,7 @@ class ProductDiscountConnectorFacadeTest extends Test
         $abstractProductEntity = new SpyProductAbstract();
         $abstractProductEntity->setAttributes($attributesSerialized);
         $abstractProductEntity->setSku($abstractSku);
+        $abstractProductEntity->setFkTaxSet($taxSetRate->getIdTaxRate());
         $abstractProductEntity->save();
 
         $abstractLocalizedProductAttributesEntity = new SpyProductAbstractLocalizedAttributes();
@@ -149,7 +172,33 @@ class ProductDiscountConnectorFacadeTest extends Test
      */
     protected function createProductDiscountConnectorFacade()
     {
-        return new ProductDiscountConnectorFacade();
+        $productDiscountConnectorFacade = new ProductDiscountConnectorFacade();
+
+        $container = new Container();
+        $dependencyProvider = new ProductDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+        $dependencyProvider->providePersistenceLayerDependencies($container);
+        $productBusinessFactory = new ProductBusinessFactory();
+        $productBusinessFactory->setContainer($container);
+        $productFacade = new ProductFacade();
+        $productFacade->setFactory($productBusinessFactory);
+
+        $container = new Container();
+        $dependencyProvider = new ProductDiscountConnectorDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+        $dependencyProvider->providePersistenceLayerDependencies($container);
+        $container[ProductDiscountConnectorDependencyProvider::FACADE_PRODUCT] = function (Container $container) use ($productFacade) {
+            return new ProductDiscountConnectorToProductBridge($productFacade);
+        };
+
+        $productCartConnectorBusinessFactory = new ProductDiscountConnectorBusinessFactory();
+        $productCartConnectorBusinessFactory->setContainer($container);
+
+        $productDiscountConnectorFacade->setFactory($productCartConnectorBusinessFactory);
+
+        return $productDiscountConnectorFacade;
     }
 
     /**
@@ -160,9 +209,12 @@ class ProductDiscountConnectorFacadeTest extends Test
     protected function createQuoteTransfer(SpyProductAbstract $abstractProductEntity)
     {
         $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku($abstractProductEntity->getSku());
-        $quoteTransfer->addItem($itemTransfer);
+
+        foreach ($abstractProductEntity->getSpyProducts() as $productEntity) {
+            $itemTransfer = new ItemTransfer();
+            $itemTransfer->setId($productEntity->getIdProduct());
+            $quoteTransfer->addItem($itemTransfer);
+        }
 
         return $quoteTransfer;
     }

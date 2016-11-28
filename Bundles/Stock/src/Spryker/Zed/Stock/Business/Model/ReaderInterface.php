@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ReaderInterface
 {
 
@@ -59,7 +61,7 @@ interface ReaderInterface
      *
      * @return int
      */
-    public function getProductAbstractIdBySku($sku);
+    public function findProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku
@@ -97,5 +99,12 @@ interface ReaderInterface
      * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
 
 }

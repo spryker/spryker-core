@@ -24,6 +24,26 @@ interface ReaderInterface
     public function getPriceBySku($sku, $priceTypeName = null);
 
     /**
+     * @param int $idAbstractProduct
+     * @param string|null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
+
+    /**
+     * @param int $idProduct
+     * @param string|null $priceTypeName
+     *
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findProductConcretePrice($idProduct, $priceTypeName = null);
+
+    /**
      * @param string $priceTypeNameName
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType
@@ -77,5 +97,12 @@ interface ReaderInterface
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName);
+
+    /**
+     * @param string|null $priceType
+     *
+     * @return string
+     */
+    public function handleDefaultPriceType($priceType = null);
 
 }

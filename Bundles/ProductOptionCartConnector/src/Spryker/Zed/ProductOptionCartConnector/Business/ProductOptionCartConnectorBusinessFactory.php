@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManager;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
+use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
+use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
 
 /**
@@ -20,17 +21,25 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManagerInterface
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpanderInterface
      */
-    public function createProductOptionManager()
+    public function createProductOptionValueExpander()
     {
-        return new ProductOptionManager(
+        return new ProductOptionValueExpander(
             $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION)
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantityInterface
+     */
+    public function createProductOptionCartQuantity()
+    {
+        return new ProductOptionCartQuantity();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpanderInterface
      */
     public function createGroupKeyExpander()
     {

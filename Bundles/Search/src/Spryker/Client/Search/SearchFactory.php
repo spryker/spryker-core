@@ -150,7 +150,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
      */
     public function createQueryBuilder()
     {
@@ -175,6 +175,22 @@ class SearchFactory extends AbstractFactory
     public function createSearchKeysQuery($searchString, $limit = null, $offset = null)
     {
         return new SearchKeysQuery($searchString, $limit, $offset);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     */
+    public function getSearchConfigExpanderPlugins()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_CONFIG_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::STORE);
     }
 
 }

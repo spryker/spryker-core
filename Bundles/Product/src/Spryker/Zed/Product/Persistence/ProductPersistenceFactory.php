@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use Orm\Zed\Product\Persistence\Base\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
@@ -22,6 +21,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function createProductAbstractQuery()
+    {
+        return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function createProductAbstractLocalizedAttributesQuery()
+    {
+        return SpyProductAbstractLocalizedAttributesQuery::create();
+    }
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -40,43 +55,19 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function createProductAbstractLocalizedAttributesQuery()
+    public function createProductAttributeKeyQuery()
     {
-        return SpyProductAbstractLocalizedAttributesQuery::create();
+        return SpyProductAttributeKeyQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
+     * @return \Spryker\Zed\Product\Dependency\QueryContainer\ProductToUrlInterface
      */
-    public function createProductAttributeTypeQuery()
+    public function getUrlQueryContainer()
     {
-        return SpyProductAttributeTypeQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
-     */
-    public function createProductAttributesMetadataQuery()
-    {
-        return SpyProductAttributesMetadataQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function createProductAbstractQuery()
-    {
-        return SpyProductAbstractQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function createTaxSetQuery()
-    {
-        return SpyTaxSetQuery::create();
+        return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_URL);
     }
 
 }

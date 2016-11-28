@@ -7,16 +7,10 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Marker;
 
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class ProductSearchMarker implements ProductSearchMarkerInterface
 {
-
-    /**
-     * @var \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
-     */
-    protected $touchFacade;
 
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
@@ -24,12 +18,10 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
     protected $productSearchQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface $touchFacade
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQuery
      */
-    public function __construct(ProductSearchToTouchInterface $touchFacade, ProductSearchQueryContainerInterface $productSearchQuery)
+    public function __construct(ProductSearchQueryContainerInterface $productSearchQuery)
     {
-        $this->touchFacade = $touchFacade;
         $this->productSearchQueryContainer = $productSearchQuery;
     }
 
@@ -42,8 +34,6 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
     public function activateProductSearch($idProduct, array $localeCollection)
     {
         $this->markProductSearchable($idProduct, $localeCollection, true);
-
-        $this->touchFacade->touchActive('searchableProduct', $idProduct);
     }
 
     /**
@@ -55,8 +45,6 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
     public function deactivateProductSearch($idProduct, array $localeCollection)
     {
         $this->markProductSearchable($idProduct, $localeCollection, false);
-
-        $this->touchFacade->touchInactive('searchableProduct', $idProduct);
     }
 
     /**

@@ -83,6 +83,8 @@ class NestedRangeQuery extends AbstractNestedQuery
     {
         $this->minValue = isset($rangeValues[self::RANGE_MIN]) ? $rangeValues[self::RANGE_MIN] : 0;
         $this->maxValue = isset($rangeValues[self::RANGE_MAX]) ? $rangeValues[self::RANGE_MAX] : $this->minValue;
+
+        $this->convertMinMaxValues();
     }
 
     /**
@@ -99,6 +101,17 @@ class NestedRangeQuery extends AbstractNestedQuery
         if (count($values) > 1) {
             $this->maxValue = $values[1];
         }
+
+        $this->convertMinMaxValues();
+    }
+
+    /**
+     * @return void
+     */
+    protected function convertMinMaxValues()
+    {
+        $this->minValue = (string)(float)$this->minValue;
+        $this->maxValue = (string)(float)$this->maxValue;
     }
 
 }

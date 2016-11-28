@@ -29,4 +29,42 @@ interface ProductClientInterface
      */
     public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getAttributeMapByIdAndLocale($idProductAbstract, $locale);
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return array
+     */
+    public function getProductConcreteByIdForCurrentLocale($idProductConcrete);
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getProductConcreteByIdAndLocale($idProductConcrete, $locale);
+
 }

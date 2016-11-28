@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-/**
- * @deprecated Will be removed with next major release
- */
 class ProductCategoryToProductBridge implements ProductCategoryToProductInterface
 {
 
@@ -27,23 +24,13 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
     }
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
      *
-     * @return bool
+     * @return void
      */
-    public function hasProductAbstract($sku)
+    public function touchProductAbstract($idProductAbstract)
     {
-        return $this->productFacade->hasProductAbstract($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function getProductAbstractIdBySku($sku)
-    {
-        return $this->productFacade->getProductAbstractIdBySku($sku);
+        $this->productFacade->touchProductAbstract($idProductAbstract);
     }
 
 }

@@ -26,4 +26,21 @@ interface ProductOptionToLocaleInterface
      */
     public function getLocale($localeName);
 
+    /**
+     * @param string $localeCode
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleByCode($localeCode);
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection();
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale();
+
 }

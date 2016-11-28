@@ -8,15 +8,13 @@
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/category": "^2.2.0",
-    "spryker/cms": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
     "spryker/locale": "^2.0.0",
-    "spryker/product": "^2.0.0 || ^3.0.0",
+    "spryker/product": "^4.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/symfony": "^2.1.6",
-    "spryker/touch": "^2.0.0"
+    "spryker/util-encoding": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -28,7 +26,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

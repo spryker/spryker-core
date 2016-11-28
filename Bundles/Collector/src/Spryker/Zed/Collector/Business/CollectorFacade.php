@@ -24,6 +24,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Runs storage exporter collectors for all available stores, locales and collector types.
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -38,6 +41,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Runs storage exporter collectors for the given locale and all available collector types.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -53,6 +59,26 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Runs search exporter collectors for all available stores, locales and collector types.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     */
+    public function exportSearch(OutputInterface $output)
+    {
+        $exporter = $this->getFactory()->createYvesSearchExporter();
+
+        return $exporter->exportStorage($output);
+    }
+
+    /**
+     * Specification:
+     * - Runs search exporter collectors for the given locale and all available collector types.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -68,41 +94,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * @api
+     * Specification:
+     * - Deletes all metadata information from the current search index mapping.
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
-     */
-    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output)
-    {
-        $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
-
-        return $exporter->exportStorageByLocale($locale, $output);
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getSearchIndexName()
-    {
-        return $this->getFactory()->getConfig()->getSearchIndexName();
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getSearchDocumentType()
-    {
-        return $this->getFactory()->getConfig()->getSearchDocumentType();
-    }
-
-    /**
      * @api
      *
      * @param array $keys
@@ -115,6 +109,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Deletes all the provided keys from storage.
+     *
      * @api
      *
      * @param array $keys
@@ -127,6 +124,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns all persisted collector types from database.
+     *
      * @api
      *
      * @return array
@@ -139,6 +139,9 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns the types of all collector plugins that has been registered in the StorageExporter.
+     *
      * @api
      *
      * @return array

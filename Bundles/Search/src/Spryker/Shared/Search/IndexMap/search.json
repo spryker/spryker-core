@@ -53,13 +53,20 @@
 
           }
         },
+        "type": {
+          "type": "string",
+          "include_in_all": false,
+          "index": "not_analyzed"
+        },
         "store": {
           "type": "string",
-          "include_in_all": false
+          "include_in_all": false,
+          "index": "not_analyzed"
         },
         "locale": {
           "type": "string",
-          "include_in_all": false
+          "include_in_all": false,
+          "index": "not_analyzed"
         },
         "full-text": {
           "type": "string",

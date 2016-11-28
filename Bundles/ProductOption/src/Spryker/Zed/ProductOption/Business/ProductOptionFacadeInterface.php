@@ -1,217 +1,139 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
+ */
 interface ProductOptionFacadeInterface
 {
 
     /**
+     * Specification:
+     *  - Persist new product option group, update existing group if idOptionGroup is set
+     *  - Persist option values if provided
+     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys
+     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
+     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
+     *  - Persists value and group name translations, add to glossary
+     *  - Returns id of option group
+     *
      * @api
      *
-     * @param int $idProductOptionValueUsage
-     * @param string $localeCode
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     *
+     * @return int
+     */
+    public function saveProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer);
+
+    /**
+     * Specification:
+     *  - Persist new product option value, updates existing value if idOptionValue is set
+     *  - Returns id of option value
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
+     *
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
+     *
+     * @return int
+     */
+    public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer);
+
+    /**
+     * Specification:
+     *  - Attaches abstract product to existing product group
+     *  - Returns true if product successfully added
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param int $idProductOptionGroup
+     *
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException
+     *
+     * @return bool
+     */
+    public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup);
+
+    /**
+     * Specification:
+     *  - Reads product option from persistence
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValueUsage, $localeCode);
+    public function getProductOptionValueById($idProductOptionValue);
 
     /**
+     *
+     * Specification:
+     *  - Gets product option group from persistence
+     *  - Gets all related product option values
+     *
      * @api
      *
-     * @param int $idProduct
-     * @param string $localeCode
+     * @param int $idProductOptionGroup
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function getProductOptionsByIdProduct($idProduct, $localeCode);
+    public function getProductOptionGroupById($idProductOptionGroup);
 
     /**
+     *
+     * Specification:
+     *  - Loops over all items and calculates gross amount for each items
+     *  - Data is read from sales order persistence
+     *
      * @api
      *
-     * @param string $importKeyProductOptionType
-     * @param array $localizedNames
-     * @param string|null $importKeyTaxSet
-     *
-     * @return int
-     */
-    public function importProductOptionType($importKeyProductOptionType, array $localizedNames = [], $importKeyTaxSet = null);
-
-    /**
-     * @api
-     *
-     * @param string $importKeyProductOptionValue
-     * @param string $importKeyProductOptionType
-     * @param array $localizedNames
-     * @param float|null $price
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     *
-     * @return int
-     */
-    public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $importKeyProductOptionType
-     * @param bool $isOptional
-     * @param int|null $sequence
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     *
-     * @return int
-     */
-    public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     * @param string $importKeyProductOptionValue
-     * @param int|null $sequence
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     *
-     * @return int
-     */
-    public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $importKeyProductOptionTypeA
-     * @param string $importKeyProductOptionTypeB
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
+    public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     *  - Loops over all items and calculates subtotal
+     *
      * @api
      *
-     * @param string $sku
-     * @param int $idProductOptionValueUsageSource
-     * @param string $importKeyProductOptionValueTarget
-     * @param string $operator
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
+    public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     *  - Persist product option sales data
+     *  - Used by sales saver plugin
+     *
      * @api
      *
-     * @param string $sku
-     * @param array $importKeysOptionValues
-     * @param bool $isDefault
-     * @param int|null $sequence
-     *
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
-     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
-     *
-     * @return int
-     */
-    public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     * @param int $idLocale
-     *
-     * @return array
-     */
-    public function getTypeUsagesForProductConcrete($idProduct, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductOptionTypeUsage
-     * @param int $idLocale
-     *
-     * @return array
-     */
-    public function getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAttributeTypeUsage
-     *
-     * @return array
-     */
-    public function getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
-
-    /**
-     * @api
-     *
-     * @param int $idValueUsage
-     *
-     * @return array
-     */
-    public function getValueConstraintsForValueUsage($idValueUsage);
-
-    /**
-     * @api
-     *
-     * @param int $idValueUsage
-     * @param string $operator
-     *
-     * @return array
-     */
-    public function getValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getConfigPresetsForProductConcrete($idProduct);
-
-    /**
-     * @api
-     *
-     * @param int $idConfigPreset
-     *
-     * @return array
-     */
-    public function getValueUsagesForConfigPreset($idConfigPreset);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAttributeTypeUsage
-     *
-     * @return string|null
-     */
-    public function getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
-
-    /**
-     * @api
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function flushBuffer();
+    public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * Specification:
@@ -225,5 +147,18 @@ interface ProductOptionFacadeInterface
      * @return void
      */
     public function calculateProductOptionTaxRate(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Toggle option active/inactive, option wont be diplayed in Yves when disabled. Collectors have to run first.
+     *
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     * @param bool $isActive
+     *
+     * @return bool
+     */
+    public function toggleOptionActive($idProductOptionGroup, $isActive);
 
 }

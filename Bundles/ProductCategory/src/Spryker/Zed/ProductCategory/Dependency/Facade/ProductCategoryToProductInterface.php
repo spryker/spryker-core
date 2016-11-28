@@ -7,26 +7,14 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-/**
- * @deprecated Will be removed with next major release
- */
 interface ProductCategoryToProductInterface
 {
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
      *
-     * @return bool
+     * @return void
      */
-    public function hasProductAbstract($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function getProductAbstractIdBySku($sku);
+    public function touchProductAbstract($idProductAbstract);
 
 }

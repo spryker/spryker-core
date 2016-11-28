@@ -20,10 +20,10 @@ interface ProductSearchToTouchInterface
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param array $itemIds
      *
-     * @return bool
+     * @return int
      */
-    public function touchInactive($itemType, $itemId);
+    public function bulkTouchSetActive($itemType, array $itemIds = []);
 
 }

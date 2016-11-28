@@ -43,13 +43,13 @@ class ElasticsearchUpdateWriter implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $type
      *
      * @return bool
      */
-    public function write(array $dataSet, $type = '')
+    public function write(array $dataSet)
     {
         $type = $this->index->getType($this->type);
+
         $type->updateDocuments($this->createDocuments($dataSet));
         $response = $type->getIndex()->refresh();
 

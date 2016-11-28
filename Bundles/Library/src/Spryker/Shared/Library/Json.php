@@ -7,11 +7,21 @@
 
 namespace Spryker\Shared\Library;
 
+use \Spryker\Service\UtilEncoding\Model\Json AS JsonEncoder;
+
+/**
+ * @deprecated Use \Spryker\Service\UtilEncoding\Model\Json instead.
+ */
 class Json
 {
 
     const DEFAULT_OPTIONS = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT;
     const DEFAULT_DEPTH = 512;
+
+    /**
+     * @var \Spryker\Service\UtilEncoding\Model\Json
+     */
+    protected static $utilJsonEncoder = null;
 
     /**
      * @param mixed $value
@@ -24,7 +34,7 @@ class Json
      */
     public static function encode($value, $options = self::DEFAULT_OPTIONS, $depth = self::DEFAULT_DEPTH)
     {
-        return json_encode($value, $options, $depth);
+        return static::createUtilJsonEncoder()->encode($value, $options, $depth);
     }
 
     /**
@@ -39,7 +49,19 @@ class Json
      */
     public static function decode($jsonString, $assoc = false, $depth = self::DEFAULT_DEPTH, $options = self::DEFAULT_OPTIONS)
     {
-        return json_decode($jsonString, $assoc, $depth, $options);
+        return static::createUtilJsonEncoder()->decode($jsonString, $assoc, $depth, $options);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilEncoding\Model\Json
+     */
+    protected static function createUtilJsonEncoder()
+    {
+        if (static::$utilJsonEncoder === null) {
+            static::$utilJsonEncoder = new JsonEncoder();
+        }
+
+        return static::$utilJsonEncoder;
     }
 
 }

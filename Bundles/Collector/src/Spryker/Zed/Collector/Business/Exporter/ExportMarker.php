@@ -70,7 +70,7 @@ class ExportMarker implements MarkerInterface
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, \DateTime $timestamp)
     {
         $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
-        $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')], $exportType);
+        $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')]);
     }
 
     /**

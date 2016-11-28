@@ -87,52 +87,76 @@ class PageMapBuilder implements PageMapBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
     public function addFullText(PageMapTransfer $pageMapTransfer, $value)
     {
-        $pageMapTransfer->addFullText($value);
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $oneValue) {
+            $pageMapTransfer->addFullText($oneValue);
+        }
 
         return $this;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
     public function addFullTextBoosted(PageMapTransfer $pageMapTransfer, $value)
     {
-        $pageMapTransfer->addFullTextBoosted($value);
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $oneValue) {
+            $pageMapTransfer->addFullTextBoosted($oneValue);
+        }
 
         return $this;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
     public function addSuggestionTerms(PageMapTransfer $pageMapTransfer, $value)
     {
-        $pageMapTransfer->addSuggestionTerms($value);
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $oneValue) {
+            $pageMapTransfer->addSuggestionTerms($oneValue);
+        }
 
         return $this;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
     public function addCompletionTerms(PageMapTransfer $pageMapTransfer, $value)
     {
-        $pageMapTransfer->addCompletionTerms($value);
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $oneValue) {
+            $pageMapTransfer->addCompletionTerms($oneValue);
+        }
 
         return $this;
     }
@@ -140,12 +164,16 @@ class PageMapBuilder implements PageMapBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $name
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
     public function addStringFacet(PageMapTransfer $pageMapTransfer, $name, $value)
     {
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
         $stringFacetMapTransfer = (new StringFacetMapTransfer())
             ->setName($name)
             ->setValue($value);
@@ -158,12 +186,17 @@ class PageMapBuilder implements PageMapBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $name
-     * @param int $value
+     * @param int|array $value
      *
      * @return $this
      */
     public function addIntegerFacet(PageMapTransfer $pageMapTransfer, $name, $value)
     {
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+        $value = array_map('intval', $value);
+
         $integerFacetMapTransfer = (new IntegerFacetMapTransfer())
             ->setName($name)
             ->setValue($value);
@@ -202,7 +235,7 @@ class PageMapBuilder implements PageMapBuilderInterface
     {
         $integerSortMapTransfer = (new IntegerSortMapTransfer())
             ->setName($name)
-            ->setValue($value);
+            ->setValue((int)$value);
 
         $pageMapTransfer->addIntegerSort($integerSortMapTransfer);
 
