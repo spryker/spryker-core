@@ -9,7 +9,7 @@
     "spryker/calculation": "^2.0.0",
     "spryker/cart": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/price": "^2.0.0",
+    "spryker/price": "^2.0.0 || ^3.0.0",
     "spryker/transfer": "^2.0.0"
   },
   "require-dev": {
