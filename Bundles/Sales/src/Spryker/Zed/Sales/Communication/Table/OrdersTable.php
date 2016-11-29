@@ -293,9 +293,9 @@ class OrdersTable extends AbstractTable
     protected function addRangeFilter(SpySalesOrderItemQuery $filterQuery, $filter)
     {
         if ($filter === self::FILTER_DAY) {
-            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_EQUAL);
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_THAN);
         } elseif ($filter === self::FILTER_WEEK) {
-            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_THAN);
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_EQUAL);
             $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::GREATER_EQUAL);
         } else {
             $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
