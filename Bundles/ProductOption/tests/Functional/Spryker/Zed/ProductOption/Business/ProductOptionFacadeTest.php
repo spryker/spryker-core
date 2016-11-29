@@ -17,8 +17,8 @@ use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
@@ -45,9 +45,9 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
         $idOfProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
@@ -61,9 +61,9 @@ class ProductOptionFacadeTest extends Test
         $productOptionValues = $productOptionGroupEntity->getSpyProductOptionValues();
         $productOptionValueEntity = $productOptionValues[0];
 
-        $this->assertSame($productOptionValueEntity->getPrice(), $producOptionValueTransfer->getPrice());
-        $this->assertEquals($producOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
-        $this->assertEquals($producOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+        $this->assertSame($productOptionValueEntity->getPrice(), $productOptionValueTransfer->getPrice());
+        $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
+        $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
     }
 
     /**
@@ -73,9 +73,9 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
         $productAbstractEntity = $this->createProductAbstract('testingSku');
 
@@ -98,9 +98,9 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
         $productAbstractEntity = $this->createProductAbstract('testingSku');
 
@@ -126,9 +126,9 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
         $productAbstractEntity = $this->createProductAbstract('testingSku');
 
@@ -137,7 +137,7 @@ class ProductOptionFacadeTest extends Test
         $idOfProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
         $productOptionGroupTransfer->setProductsToBeAssigned([]);
-        $productOptionGroupTransfer->setProductOptionValuesToBeRemoved([$producOptionValueTransfer->getIdProductOptionValue()]);
+        $productOptionGroupTransfer->setProductOptionValuesToBeRemoved([$productOptionValueTransfer->getIdProductOptionValue()]);
 
         $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
@@ -180,20 +180,20 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
         $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
-        $idOfPersistedOptionValue = $producOptionValueTransfer->getIdProductOptionValue();
+        $idOfPersistedOptionValue = $productOptionValueTransfer->getIdProductOptionValue();
 
         $productOptionTransfer = $productOptionFacade->getProductOptionValueById($idOfPersistedOptionValue);
 
         $this->assertEquals($idOfPersistedOptionValue, $productOptionTransfer->getIdProductOptionValue());
-        $this->assertEquals($producOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
-        $this->assertSame($producOptionValueTransfer->getPrice(), $productOptionTransfer->getUnitGrossPrice());
-        $this->assertEquals($producOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
+        $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
+        $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionTransfer->getUnitGrossPrice());
+        $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
     }
 
     /**
@@ -203,13 +203,13 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $idOfPersistendOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+        $idOfPersistedOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
-        $persistedProductOptionGroupTransfer = $productOptionFacade->getProductOptionGroupById($idOfPersistendOptionGroup);
+        $persistedProductOptionGroupTransfer = $productOptionFacade->getProductOptionGroupById($idOfPersistedOptionGroup);
 
         $this->assertNotEmpty($persistedProductOptionGroupTransfer);
         $this->assertEquals($productOptionGroupTransfer->getName(), $persistedProductOptionGroupTransfer->getName());
@@ -225,9 +225,9 @@ class ProductOptionFacadeTest extends Test
 
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
         $taxSetEntity = $this->createTaxSet($iso2Code, $taxRate);
 
@@ -242,7 +242,7 @@ class ProductOptionFacadeTest extends Test
         $quoteTransfer->setShippingAddress($addressTransfer);
 
         $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setIdProductOptionValue($producOptionValueTransfer->getIdProductOptionValue());
+        $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->addProductOption($productOptionTransfer);
@@ -264,23 +264,23 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $idOfPersistendOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+        $idOfPersistedOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
-        $productOptionFacade->toggleOptionActive($idOfPersistendOptionGroup, 1);
+        $productOptionFacade->toggleOptionActive($idOfPersistedOptionGroup, 1);
 
         $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
-            ->findOneByIdProductOptionGroup($idOfPersistendOptionGroup);
+            ->findOneByIdProductOptionGroup($idOfPersistedOptionGroup);
 
         $this->assertTrue($productOptionGroupEntity->getActive());
 
-        $productOptionFacade->toggleOptionActive($idOfPersistendOptionGroup, 0);
+        $productOptionFacade->toggleOptionActive($idOfPersistedOptionGroup, 0);
 
         $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
-            ->findOneByIdProductOptionGroup($idOfPersistendOptionGroup);
+            ->findOneByIdProductOptionGroup($idOfPersistedOptionGroup);
 
         $this->assertFalse($productOptionGroupEntity->getActive());
     }
@@ -292,22 +292,22 @@ class ProductOptionFacadeTest extends Test
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
-        $producOptionValueTransfer = $this->createProductOptionValueTransfer();
-        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($producOptionValueTransfer);
-        $productOptionGroupTransfer->addProductOptionValue($producOptionValueTransfer);
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $idOfPersistendOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+        $idOfPersistedOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
         $testSku = 'testing-sku';
         $productAbstractEntity = $this->createProductAbstract($testSku);
 
         $productOptionFacade->addProductAbstractToProductOptionGroup(
             $productAbstractEntity->getSku(),
-            $idOfPersistendOptionGroup
+            $idOfPersistedOptionGroup
         );
 
         $groupProducts = SpyProductOptionGroupQuery::create()
-            ->findOneByIdProductOptionGroup($idOfPersistendOptionGroup);
+            ->findOneByIdProductOptionGroup($idOfPersistedOptionGroup);
 
         $assignedAbstractProducts = $groupProducts->getSpyProductAbstracts();
 
@@ -343,6 +343,8 @@ class ProductOptionFacadeTest extends Test
     }
 
     /**
+     * @param string $sku
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected function createProductAbstract($sku)
@@ -388,12 +390,12 @@ class ProductOptionFacadeTest extends Test
      */
     protected function createProductOptionValueTransfer()
     {
-        $producOptionValueTransfer = new ProductOptionValueTransfer();
-        $producOptionValueTransfer->setValue('value.translation.key');
-        $producOptionValueTransfer->setPrice(1000);
-        $producOptionValueTransfer->setSku('sku_for_testing');
+        $productOptionValueTransfer = new ProductOptionValueTransfer();
+        $productOptionValueTransfer->setValue('value.translation.key');
+        $productOptionValueTransfer->setPrice(1000);
+        $productOptionValueTransfer->setSku('sku_for_testing');
 
-        return $producOptionValueTransfer;
+        return $productOptionValueTransfer;
     }
 
     /**

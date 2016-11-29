@@ -109,7 +109,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\Base\SpyProductManagementAttributeValue[] $attributeValues
+     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue[] $attributeValues
      *
      * @return void
      */

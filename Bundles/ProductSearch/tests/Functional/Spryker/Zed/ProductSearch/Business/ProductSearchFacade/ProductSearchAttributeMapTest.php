@@ -9,8 +9,8 @@ namespace Functional\Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
-use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeMapQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMap;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**

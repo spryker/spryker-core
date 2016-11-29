@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
-use Orm\Zed\Cms\Persistence\Base\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
