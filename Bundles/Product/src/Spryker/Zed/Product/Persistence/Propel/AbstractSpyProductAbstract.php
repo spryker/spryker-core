@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Product\Persistence\Propel;
 
-use Orm\Zed\Product\Persistence\Base\SpyProductAttributeTypeQuery as BaseSpyProductAttributeTypeQuery;
+use Orm\Zed\Product\Persistence\Base\SpyProductAbstract as BaseSpyProductAbstract;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_attribute_type' table.
+ * Skeleton subclass for representing a row from the 'spy_product_abstract' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\Product\Persistence\Base\SpyProductAttributeTypeQuery as BaseSpyProd
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductAttributeTypeQuery extends BaseSpyProductAttributeTypeQuery
+class AbstractSpyProductAbstract extends BaseSpyProductAbstract
 {
 }
