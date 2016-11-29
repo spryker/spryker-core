@@ -82,15 +82,34 @@ class RatepayQueryContainer extends AbstractQueryContainer implements RatepayQue
     /**
      * @api
      *
-     * @param int $idPayment
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLogQuery
      */
-    public function queryPaymentLogQueryBySalesOrderId($idPayment)
+    public function queryPaymentLogQueryBySalesOrderId($idOrder)
     {
         return $this
             ->queryPaymentLog()
-            ->filterByFkSalesOrder($idPayment);
+            ->filterByFkSalesOrder($idOrder);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idOrder
+     * @param string $message
+     *
+     * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog
+     */
+    public function getLastLogRecordBySalesOrderIdAndMessage($idOrder, $message)
+    {
+        $logRecord = $this
+            ->queryPaymentLogQueryBySalesOrderId($idOrder)
+            ->filterByMessage($message)
+            ->find()
+            ->getLast();
+
+        return $logRecord;
     }
 
 }

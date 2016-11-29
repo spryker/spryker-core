@@ -10,6 +10,9 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
+use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
@@ -37,11 +40,11 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function initPayment(QuoteTransfer $quoteTransfer);
+    public function initPayment(RatepayPaymentInitTransfer $ratepayPaymentInitTransfer);
 
     /**
      * Specification:
@@ -49,11 +52,24 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function requestPayment(QuoteTransfer $quoteTransfer);
+    public function requestPayment(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer);
+
+    /**
+     * Specification:
+     * - Updates paymentMethod in dataBase according response from paymentRequest
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RatepayResponseTransfer $ratepayPaymentResponseTransfer
+     * @param int $orderId
+     *
+     * @return void
+     */
+    public function updatePaymentMethodByPaymentResponse(RatepayResponseTransfer $ratepayPaymentResponseTransfer, $orderId);
 
     /**
      * Specification:
@@ -74,11 +90,16 @@ interface RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function confirmDelivery(OrderTransfer $orderTransfer, array $orderItems);
+    public function confirmDelivery(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    );
 
     /**
      * Specification:
@@ -87,11 +108,16 @@ interface RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function cancelPayment(OrderTransfer $orderTransfer, array $orderItems);
+    public function cancelPayment(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    );
 
     /**
      * Specification:
@@ -100,11 +126,16 @@ interface RatepayFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $partialOrderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
-    public function refundPayment(OrderTransfer $orderTransfer, array $orderItems);
+    public function refundPayment(
+        OrderTransfer $orderTransfer,
+        OrderTransfer $partialOrderTransfer,
+        array $orderItems
+    );
 
     /**
      * Specification:
@@ -129,6 +160,18 @@ interface RatepayFacadeInterface
      * @return \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer
      */
     public function installmentCalculation(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Checks if the payment request success
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentRequestSuccess(OrderTransfer $orderTransfer);
 
     /**
      * Specification:
@@ -208,7 +251,7 @@ interface RatepayFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RatepayProfileResponseTransfer
+     * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
     public function requestProfile();
 

@@ -60,7 +60,7 @@ class ElvTest extends AbstractMethodMapperTest
         $ratepayPaymentEntity
             ->setResultCode(503)
             ->setDateOfBirth('11.11.1991')
-            ->setCurrencyIso3('EUR')
+            ->setCurrencyIso3('iso3')
             ->setCustomerAllowCreditInquiry(true)
             ->setGender('M')
             ->setPhone('123456789')
@@ -82,14 +82,14 @@ class ElvTest extends AbstractMethodMapperTest
      */
     protected function testPaymentSpecificRequestData($request)
     {
-        $this->assertEquals('ELV', $this->requestTransfer->getPayment()->getMethod());
+        $this->assertEquals('invoice', $this->requestTransfer->getPayment()->getMethod());
 
         $this->assertNull($this->requestTransfer->getPayment()->getInstallmentDetails());
         $this->assertNull($this->requestTransfer->getPayment()->getDebitPayType());
 
-        $this->assertEquals('TestHolder', $this->requestTransfer->getBankAccount()->getOwner());
-        $this->assertEquals('XXXXXXXXXXX', $this->requestTransfer->getBankAccount()->getBicSwift());
-        $this->assertEquals('XXXX XXXX XXXX XXXX XXXX XX', $this->requestTransfer->getBankAccount()->getIban());
+        $this->assertEquals('fn ln', $this->requestTransfer->getBankAccount()->getOwner());
+        $this->assertEquals('bic', $this->requestTransfer->getBankAccount()->getBicSwift());
+        $this->assertEquals('iban', $this->requestTransfer->getBankAccount()->getIban());
     }
 
 }

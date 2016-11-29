@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -20,6 +21,7 @@ use Spryker\Zed\Ratepay\Business\Expander\ProductExpander;
 use Spryker\Zed\Ratepay\Business\Internal\Install;
 use Spryker\Zed\Ratepay\Business\Order\MethodMapperFactory;
 use Spryker\Zed\Ratepay\Business\Order\Saver;
+use Spryker\Zed\Ratepay\Business\Payment\PaymentSaver;
 use Spryker\Zed\Ratepay\Business\Payment\PostSaveHook;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\CancelPaymentTransaction;
 use Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\ConfirmDeliveryTransaction;
@@ -101,6 +103,18 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
         $this->registerAllMethodMappers($transactionHandler);
 
         return $transactionHandler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Business\Payment\PaymentSaverInterface
+     */
+    public function createPaymentMethodSaver()
+    {
+        $paymentSaver = new PaymentSaver(
+            $this->getQueryContainer()
+        );
+
+        return $paymentSaver;
     }
 
     /**
@@ -200,7 +214,7 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface $transactionHandler
+     * @param \Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\QuoteTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\OrderTransactionInterface|\Spryker\Zed\Ratepay\Business\Request\Payment\Handler\Transaction\PaymentInitTransactionInterface $transactionHandler
      *
      * @return void
      */
@@ -273,7 +287,17 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
      */
     protected function createConverterFactory()
     {
-        return new ConverterFactory();
+        return new ConverterFactory(
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(RatepayDependencyProvider::FACADE_MONEY);
     }
 
     /**

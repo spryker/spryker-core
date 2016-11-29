@@ -11,7 +11,6 @@ use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class MethodFormDataProvider
 {
@@ -81,18 +80,9 @@ class MethodFormDataProvider
     {
         $options = [
             MethodForm::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
-            MethodForm::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
-            ),
-            MethodForm::OPTION_PRICE_PLUGIN_CHOICE_LIST => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS])
-            ),
-            MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
-            ),
+            MethodForm::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
+            MethodForm::OPTION_PRICE_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS]),
+            MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
             MethodForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
         ];
 

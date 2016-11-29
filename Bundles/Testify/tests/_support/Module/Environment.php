@@ -35,11 +35,9 @@ class Environment extends Module
     private function initEnvironment()
     {
         $path = self::MODE_DEFAULT_ROOT;
-        $sprykerRoot = '/vendor/spryker/spryker/Bundles';
 
         if (isset($this->config['mode']) && $this->config['mode'] === self::MODE_ISOLATED) {
             $path = self::MODE_ISOLATED_ROOT;
-            $sprykerRoot = '/../';
         }
 
         $applicationRoot = Configuration::projectDir() . $path;

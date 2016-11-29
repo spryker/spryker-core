@@ -44,7 +44,7 @@ class ProductOptionTest extends ZedAcceptanceTester
                 $this->click('#add-another-option');
             }
 
-            $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_value', $value['value_translation_key']);
+            $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_value', $value['value_translation_key'] . rand(1, 999));
             $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_sku', $value['value_sku'] . rand(1, 999));
             $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_price', $value['value_price']);
         }
@@ -62,7 +62,7 @@ class ProductOptionTest extends ZedAcceptanceTester
      */
     public function fillOptionGroupData(array $groupData)
     {
-        $this->fillField('#product_option_general_name', $groupData['group_name_translation_key']);
+        $this->fillField('#product_option_general_name', $groupData['group_name_translation_key'] . rand(1, 999));
         $this->selectOption('#product_option_general_fkTaxSet', $groupData['fk_tax_set']);
 
         $this->fillField(
@@ -84,15 +84,19 @@ class ProductOptionTest extends ZedAcceptanceTester
         $this->click(self::LANGUAGE_SWITCH_XPATH);
     }
 
-
     /**
-     * @param array $productIds
-     *
      * @return array
      */
-    public function assignProducts($productIds = [])
+    public function assignProducts()
     {
         $this->selectProductTab();
+
+        $this->wait(1);
+
+        $productIds = [
+            $this->grabTextFrom('//*[@id="product-table"]/tbody/tr[1]/td[1]'),
+            $this->grabTextFrom('//*[@id="product-table"]/tbody/tr[2]/td[1]'),
+        ];
 
         foreach ($productIds as $id) {
             $this->click('//*[@id="all_products_checkbox_' . $id . '"]');
@@ -100,13 +104,16 @@ class ProductOptionTest extends ZedAcceptanceTester
     }
 
     /**
-     * @param int $idProduct
-     *
      * @return void
      */
-    public function unassignProduct($idProduct)
+    public function unassignProduct()
     {
         $this->click('#products-to-be-assigned');
+
+        $this->wait(1);
+
+        $idProduct = $this->grabTextFrom('//*[@id="selectedProductsTable"]/tbody/tr[1]/td[1]');
+
         $this->click("//a[@data-id='" . $idProduct . "']");
     }
 
@@ -125,7 +132,6 @@ class ProductOptionTest extends ZedAcceptanceTester
     {
         $this->click('#create-product-option-button');
     }
-
 
     /**
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer

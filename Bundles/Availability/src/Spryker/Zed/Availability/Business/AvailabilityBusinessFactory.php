@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
+use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -31,6 +33,28 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface
+     */
+    public function createAvailabilityHandler()
+    {
+        return new AvailabilityHandler(
+            $this->createSellableModel(),
+            $this->getStockFacade(),
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Model\ProductReservationReaderInterface
+     */
+    public function createProductReservationReader()
+    {
+        return new ProductReservationReader($this->getQueryContainer());
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function getStockFacade()
@@ -47,11 +71,27 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
+     */
+    protected function getTouchFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODDUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditionInterface
      */
     public function createProductsAvailablePreCondition()
     {
-        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel());
+        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
     }
 
 }

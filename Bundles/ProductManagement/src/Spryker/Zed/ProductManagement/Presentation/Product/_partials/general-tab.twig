@@ -18,7 +18,7 @@
                 {% for input in form[formKey] %}
                     <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
                         {{ form_label(input) }}
-                        {{ form_widget(input, {'attr': {'class': 'name-translation', 'data-translation-key': input.vars.name}}) }}
+                        {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
                         {{ form_errors(input) }}
                     </div>
                 {% endfor %}
@@ -26,5 +26,3 @@
         {% endembed %}
     {% endif %}
 {% endfor %}
-
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,8 +7,10 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestShoppingBasketTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketMapper extends BaseMapper
 {
@@ -22,14 +25,9 @@ class BasketMapper extends BaseMapper
     const BASKET_DISCOUNT_COEFFICIENT = -1;
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer|\Generated\Shared\Transfer\OrderTransfer
+     * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
-     */
-    protected $ratepayPaymentTransfer;
+    protected $ratepayPaymentRequestTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -37,18 +35,23 @@ class BasketMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
-        $quoteTransfer,
-        $ratepayPaymentTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
-        $this->quoteTransfer = $quoteTransfer;
-        $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
+        $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -56,21 +59,22 @@ class BasketMapper extends BaseMapper
      */
     public function map()
     {
-        $totalsTransfer = $this->quoteTransfer->requireTotals()->getTotals();
-        $shippingUnitPrice = $this->centsToDecimal($totalsTransfer->requireExpenseTotal()->getExpenseTotal());
+        $shippingUnitPrice = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireExpenseTotal()->getExpenseTotal());
+        $grandTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->requireGrandTotal()->getGrandTotal());
+        $discountTotal = $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getDiscountTotal());
 
-        $grandTotal = $this->centsToDecimal($totalsTransfer->requireGrandTotal()->getGrandTotal());
-        $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
+        $this->requestTransfer
+            ->setShoppingBasket(new RatepayRequestShoppingBasketTransfer())->getShoppingBasket()
             ->setAmount($grandTotal)
-            ->setCurrency($this->ratepayPaymentTransfer->requireCurrencyIso3()->getCurrencyIso3())
+            ->setCurrency($this->ratepayPaymentRequestTransfer->requireCurrencyIso3()->getCurrencyIso3())
 
             ->setShippingUnitPrice($shippingUnitPrice)
             ->setShippingTitle(self::DEFAULT_SHIPPING_NODE_VALUE)
-            ->setShippingTaxRate(self::DEFAULT_SHIPPING_TAX_RATE)
+            ->setShippingTaxRate($this->ratepayPaymentRequestTransfer->getShippingTaxRate())
 
             ->setDiscountTitle(self::DEFAULT_DISCOUNT_NODE_VALUE)
-            ->setDiscountUnitPrice(self::DEFAULT_DISCOUNT_UNIT_PRICE * self::BASKET_DISCOUNT_COEFFICIENT)
-            ->setDiscountTaxRate(self::DEFAULT_DISCOUNT_TAX_RATE);
+            ->setDiscountUnitPrice($discountTotal * self::BASKET_DISCOUNT_COEFFICIENT)
+            ->setDiscountTaxRate($this->ratepayPaymentRequestTransfer->getDiscountTaxRate());
     }
 
 }

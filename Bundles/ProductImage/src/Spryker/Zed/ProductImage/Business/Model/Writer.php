@@ -21,14 +21,14 @@ class Writer implements WriterInterface
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
-    protected $productImageContainer;
+    protected $productImageQueryContainer;
 
     /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
      */
     public function __construct(ProductImageQueryContainerInterface $productImageContainer)
     {
-        $this->productImageContainer = $productImageContainer;
+        $this->productImageQueryContainer = $productImageContainer;
     }
 
     /**
@@ -58,7 +58,7 @@ class Writer implements WriterInterface
      */
     public function saveProductImage(ProductImageTransfer $productImageTransfer)
     {
-        $productImageEntity = $this->productImageContainer
+        $productImageEntity = $this->productImageQueryContainer
             ->queryProductImage()
             ->filterByIdProductImage($productImageTransfer->getIdProductImage())
             ->findOneOrCreate();
@@ -100,9 +100,9 @@ class Writer implements WriterInterface
     {
         $this->assertProductIsAssigned($productImageSetTransfer);
 
-        $this->productImageContainer->getConnection()->beginTransaction();
+        $this->productImageQueryContainer->getConnection()->beginTransaction();
 
-        $productImageSetEntity = $this->productImageContainer
+        $productImageSetEntity = $this->productImageQueryContainer
             ->queryProductImageSet()
             ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet())
             ->findOneOrCreate();
@@ -116,7 +116,7 @@ class Writer implements WriterInterface
 
         $productImageSetTransfer = $this->persistProductImageSetCollection($productImageSetTransfer);
 
-        $this->productImageContainer->getConnection()->commit();
+        $this->productImageQueryContainer->getConnection()->commit();
 
         return $productImageSetTransfer;
     }
@@ -169,7 +169,7 @@ class Writer implements WriterInterface
      */
     public function persistProductImageRelation($idProductImageSet, $idProductImage, $sortOrder = null)
     {
-        $productImageRelationEntity = $this->productImageContainer
+        $productImageRelationEntity = $this->productImageQueryContainer
             ->queryProductImageSetToProductImage()
             ->filterByFkProductImageSet($idProductImageSet)
             ->filterByFkProductImage($idProductImage)

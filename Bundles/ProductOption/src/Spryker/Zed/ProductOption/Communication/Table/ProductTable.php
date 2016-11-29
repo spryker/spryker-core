@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductOption\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Spryker\Shared\Library\Json;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductTable extends AbstractTable
@@ -27,6 +27,11 @@ class ProductTable extends AbstractTable
     protected $productOptionQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var int
      */
     protected $idProductOptionGroup;
@@ -38,15 +43,18 @@ class ProductTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
+     * @param \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface $utilEncodingService
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int|null $idProductOptionGroup
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
+        ProductOptionToUtilEncodingInterface $utilEncodingService,
         LocaleTransfer $localeTransfer,
         $idProductOptionGroup = null
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
+        $this->utilEncodingService = $utilEncodingService;
         $this->idProductOptionGroup = (int)$idProductOptionGroup;
         $this->defaultUrl = sprintf(
             'product-table?%s=%d',
@@ -105,7 +113,7 @@ class ProductTable extends AbstractTable
             $checkbox_html = sprintf(
                 "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                Json::encode($info)
+                $this->utilEncodingService->encodeJson($info)
             );
 
             $results[] = [

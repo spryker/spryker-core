@@ -10,9 +10,9 @@
         <column name="id_payment_ratepay" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
         <column name="payment_type" required="true" type="ENUM" valueSet="INVOICE, INSTALLMENT, ELV, PREPAYMENT"/>
-        <column name="transaction_id" required="true" type="VARCHAR" size="50"/>
-        <column name="transaction_short_id" required="true" type="VARCHAR" size="50"/>
-        <column name="result_code" required="true" type="INTEGER"/>
+        <column name="transaction_id" type="VARCHAR" size="50"/>
+        <column name="transaction_short_id" type="VARCHAR" size="50"/>
+        <column name="result_code" type="INTEGER"/>
 
         <column name="gender" required="true" type="ENUM" valueSet="M, F, U"/>
         <column name="date_of_birth" required="true" type="DATE"/>
@@ -71,6 +71,7 @@
         <column name="response_status_code" type="INTEGER"/>
         <column name="response_status_text" type="VARCHAR"/>
         <column name="response_customer_message" type="LONGVARCHAR"/>
+        <column name="item_count" type="INTEGER"/>
 
         <foreign-key name="spy_payment_ratepay_log-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>

@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\StateMachine\Business\Lock;
 
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLock;
@@ -83,7 +83,7 @@ class ItemLockTest extends StateMachineMocks
     }
 
     /**
-     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineLock|null
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineLock|null $stateMachineLockEntityMock
      * @param \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface|null $stateMachineQueryContainerMock
      *
      * @return \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface

@@ -8,13 +8,17 @@ namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
+use Generated\Shared\Transfer\RatepayPaymentInitTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
+use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
 
 /**
  * @group Unit
@@ -55,8 +59,9 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
     protected function mockQuoteTransfer()
     {
         $total = new TotalsTransfer();
-        $total->setGrandTotal(9900)
-            ->setExpenseTotal(8900);
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0)
+            ->setDiscountTotal(200);
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setTotals($total)
@@ -66,6 +71,70 @@ abstract class AbstractMapperTest extends \PHPUnit_Framework_TestCase
             ->setPayment(new PaymentTransfer());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function mockOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total)
+            ->setCustomer($this->mockCustomerTransfer())
+            ->setBillingAddress($this->mockAddressTransfer())
+            ->setShippingAddress($this->mockAddressTransfer());
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function mockPartialOrderTransfer()
+    {
+        $total = new TotalsTransfer();
+        $total->setGrandTotal(1800)
+            ->setExpenseTotal(0);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setTotals($total);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer|\Generated\Shared\Transfer\RatepayPaymentInvoiceTransfer|\Generated\Shared\Transfer\RatepayPaymentPrepaymentTransfer|null $paymentData
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
+     */
+    protected function mockRatepayPaymentRequestTransfer($paymentData = null, $quoteTransfer = null)
+    {
+        if ($paymentData === null) {
+            $paymentData = $this->mockPaymentElvTransfer();
+        }
+        if ($quoteTransfer === null) {
+            $quoteTransfer = $this->mockQuoteTransfer();
+        }
+        $partialOrderTransfer = $this->mockPartialOrderTransfer();
+
+        $ratepayPaymentRequestTransfer = new RatepayPaymentRequestTransfer();
+        $ratepayPaymentInitTransfer = new RatepayPaymentInitTransfer();
+        $quotePaymentRequestMapper = new QuotePaymentRequestMapper(
+            $ratepayPaymentRequestTransfer,
+            $ratepayPaymentInitTransfer,
+            $quoteTransfer,
+            $partialOrderTransfer,
+            $paymentData
+        );
+        $quotePaymentRequestMapper->map();
+        $ratepayPaymentRequestTransfer->setDiscountTotal(200);
+
+        return $ratepayPaymentRequestTransfer;
     }
 
     /**

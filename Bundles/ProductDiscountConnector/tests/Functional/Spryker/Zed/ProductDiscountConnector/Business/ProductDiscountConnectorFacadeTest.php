@@ -8,7 +8,6 @@
 namespace Functional\Spryker\Zed\ProductDiscountConnector\Business;
 
 use Codeception\TestCase\Test;
-use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -26,6 +25,7 @@ use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductBridge;
 use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**

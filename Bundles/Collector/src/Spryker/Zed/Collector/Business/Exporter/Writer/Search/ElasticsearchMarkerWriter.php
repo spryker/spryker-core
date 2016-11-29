@@ -52,11 +52,10 @@ class ElasticsearchMarkerWriter implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $type
      *
      * @return bool
      */
-    public function write(array $dataSet, $type = '')
+    public function write(array $dataSet)
     {
         foreach ($dataSet as $key => $value) {
             $this->metaData[$key] = $value;

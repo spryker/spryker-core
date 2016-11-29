@@ -44,12 +44,4 @@ class QueryContainerLocatorMatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse((new QueryContainerLocatorMatcher())->match('locatorQueryContainer'));
     }
 
-    /**
-     * @return void
-     */
-    public function testFilterShouldReturnEmptyString()
-    {
-        $this->assertSame('', (new QueryContainerLocatorMatcher())->filter('queryContainer'));
-    }
-
 }

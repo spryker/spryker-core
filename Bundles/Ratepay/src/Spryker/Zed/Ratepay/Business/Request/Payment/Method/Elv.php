@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,6 +9,7 @@ namespace Spryker\Zed\Ratepay\Business\Request\Payment\Method;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentElvTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 
 /**
@@ -17,11 +19,16 @@ class Elv extends AbstractMethod
 {
 
     /**
+     * @const Payment method code.
+     */
+    const METHOD = RatepayConstants::METHOD_ELV;
+
+    /**
      * @return string
      */
     public function getMethodName()
     {
-        return RatepayConstants::ELV;
+        return static::METHOD;
     }
 
     /**
@@ -31,19 +38,22 @@ class Elv extends AbstractMethod
      */
     public function getPaymentData(QuoteTransfer $quoteTransfer)
     {
-        return $quoteTransfer->requirePayment()->getPayment()->requireRatepayElv()->getRatepayElv();
+        return $quoteTransfer
+            ->requirePayment()
+            ->getPayment()
+            ->requireRatepayElv()
+            ->getRatepayElv();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentElvTransfer $paymentData
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return void
      */
-    protected function mapPaymentData($quoteTransfer, $paymentData)
+    protected function mapPaymentData(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
-        parent::mapPaymentData($quoteTransfer, $paymentData);
-        $this->mapBankAccountData($quoteTransfer, $paymentData);
+        parent::mapPaymentData($ratepayPaymentRequestTransfer);
+        $this->mapBankAccountData($ratepayPaymentRequestTransfer);
     }
 
     /**

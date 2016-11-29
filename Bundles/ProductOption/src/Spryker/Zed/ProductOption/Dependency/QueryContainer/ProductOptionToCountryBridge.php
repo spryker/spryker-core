@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
-use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
-
 class ProductOptionToCountryBridge implements ProductOptionToCountryInterface
 {
 
     /**
-     * @var CountryQueryContainerInterface
+     * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
 
@@ -31,4 +29,5 @@ class ProductOptionToCountryBridge implements ProductOptionToCountryInterface
     {
         return $this->countryQueryContainer->queryCountries();
     }
+
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -65,6 +66,18 @@ interface ProductSearchFacadeInterface
      * @return void
      */
     public function deactivateProductSearch($idProduct, array $localeCollection);
+
+    /**
+     * Specification:
+     * - Marks the given concrete product searchable or not searchable based on the provided localized attributes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductSearch(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * Specification:
@@ -259,5 +272,34 @@ interface ProductSearchFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
+
+    /**
+     * Specification:
+     * - Checks if any of the given product abstract's variant is marked searchable or not in the given locale.
+     * - If no locale is provided, then the current locale will be used.
+     * - Returns true if at least one variant is searchable, false otherwise.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractSearchable($idProductAbstract, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Checks if the concrete product is marked as searchable in the given locale.
+     * - If no locale is provided, then the current locale will be used.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null);
 
 }

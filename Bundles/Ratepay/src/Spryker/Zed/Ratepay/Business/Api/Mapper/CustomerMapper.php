@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestCustomerTransfer;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
@@ -17,14 +17,9 @@ class CustomerMapper extends BaseMapper
     const ALLOW_CREDIT_INQUIRY_NO = 'no';
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
-     */
-    protected $ratepayPaymentTransfer;
+    protected $ratepayPaymentRequestTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -32,18 +27,15 @@ class CustomerMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Transfer\TransferInterface $ratepayPaymentTransfer
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
      */
     public function __construct(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer,
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
         $requestTransfer
     ) {
 
-        $this->quoteTransfer = $quoteTransfer;
-        $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
+        $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
     }
 
@@ -52,19 +44,19 @@ class CustomerMapper extends BaseMapper
      */
     public function map()
     {
-        $customerTransfer = $this->quoteTransfer->requireCustomer()->getCustomer();
-        $billingAddress = $this->quoteTransfer->requireBillingAddress()->getBillingAddress();
-        $shippingAddress = $this->quoteTransfer->requireBillingAddress()->getShippingAddress();
+        $billingAddress = $this->ratepayPaymentRequestTransfer->requireBillingAddress()->getBillingAddress();
+        $shippingAddress = $this->ratepayPaymentRequestTransfer->requireBillingAddress()->getShippingAddress();
 
         $this->requestTransfer->setCustomer(new RatepayRequestCustomerTransfer())->getCustomer()
             ->setAllowCreditInquiry($this->prepareAllowCreditInquiry())
-            ->setGender($this->ratepayPaymentTransfer->requireGender()->getGender())
-            ->setDob($this->ratepayPaymentTransfer->requireDateOfBirth()->getDateOfBirth())
-            ->setIpAddress($this->ratepayPaymentTransfer->requireIpAddress()->getIpAddress())
+            ->setGender($this->ratepayPaymentRequestTransfer->requireGender()->getGender())
+            ->setDob($this->ratepayPaymentRequestTransfer->requireDateOfBirth()->getDateOfBirth())
+            ->setIpAddress($this->ratepayPaymentRequestTransfer->requireIpAddress()->getIpAddress())
             ->setFirstName($billingAddress->getFirstName())
             ->setLastName($billingAddress->getLastName())
-            ->setEmail($customerTransfer->requireEmail()->getEmail())
-            ->setPhone($this->ratepayPaymentTransfer->requirePhone()->getPhone());
+            ->setCompany($billingAddress->getCompany())
+            ->setEmail($this->ratepayPaymentRequestTransfer->requireCustomerEmail()->getCustomerEmail())
+            ->setPhone($this->ratepayPaymentRequestTransfer->requireCustomerPhone()->getCustomerPhone());
 
         $addressMapper = new AddressMapper(
             $billingAddress,
@@ -86,7 +78,7 @@ class CustomerMapper extends BaseMapper
      */
     protected function prepareAllowCreditInquiry()
     {
-        return ($this->ratepayPaymentTransfer->getCustomerAllowCreditInquiry() === false)
+        return ($this->ratepayPaymentRequestTransfer->getCustomerAllowCreditInquiry() === false)
             ? self::ALLOW_CREDIT_INQUIRY_NO : self::ALLOW_CREDIT_INQUIRY_YES;
     }
 

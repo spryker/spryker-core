@@ -126,7 +126,6 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
         $producOptionValueEntity->fromArray($productOptionValueTransfer->toArray());
     }
 
-
     /**
      * @param int|null $idProductOptionValue
      *

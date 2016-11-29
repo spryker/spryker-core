@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
+use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
@@ -32,15 +33,16 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $formData
+     * @param array $formOptions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCarrierForm()
+    public function createCarrierForm(array $formData, array $formOptions = [])
     {
-        $carrierQuery = $this->getQueryContainer()->queryCarriers();
+        $form = new CarrierForm();
 
-        $form = new CarrierForm($carrierQuery);
-
-        return $this->getFormFactory()->create($form);
+        return $this->getFormFactory()->create($form, $formData, $formOptions);
     }
 
     /**
@@ -82,6 +84,14 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider
+     */
+    public function createCarrierFormDataProvider()
+    {
+        return new CarrierFormDataProvider($this->getQueryContainer());
     }
 
 }

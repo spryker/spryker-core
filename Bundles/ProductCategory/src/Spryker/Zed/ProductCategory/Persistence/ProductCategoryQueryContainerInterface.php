@@ -8,23 +8,10 @@
 namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
 {
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param bool $excludeDirectParent
-     * @param bool $excludeRoot
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function expandProductCategoryPathQuery(ModelCriteria $query, LocaleTransfer $locale, $excludeDirectParent = true, $excludeRoot = true);
 
     /**
      * @api
@@ -44,17 +31,6 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingByIds($idProductAbstract, $idCategoryNode);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
 
     /**
      * @api

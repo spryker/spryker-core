@@ -44,6 +44,7 @@ class AttributeTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => 'Attribute ID',
             SpyProductAttributeKeyTableMap::COL_KEY => 'Attribute Key',
+            SpyProductAttributeKeyTableMap::COL_IS_SUPER => 'Super Attribute',
             static::COL_INPUT_TYPE => 'Type',
             static::COL_ACTIONS => 'Actions',
         ]);
@@ -60,6 +61,7 @@ class AttributeTable extends AbstractTable
         $config->setSortable([
             static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE,
             SpyProductAttributeKeyTableMap::COL_KEY,
+            SpyProductAttributeKeyTableMap::COL_IS_SUPER,
             static::COL_INPUT_TYPE,
         ]);
 
@@ -87,6 +89,7 @@ class AttributeTable extends AbstractTable
             $productAbstractCollection[] = [
                 static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
                 SpyProductAttributeKeyTableMap::COL_KEY => $item[SpyProductAttributeKeyTableMap::COL_KEY],
+                SpyProductAttributeKeyTableMap::COL_IS_SUPER => $item[SpyProductAttributeKeyTableMap::COL_IS_SUPER],
                 static::COL_INPUT_TYPE => $item[static::COL_INPUT_TYPE],
                 static::COL_ACTIONS => implode(' ', $this->createActionColumn($item)),
             ];

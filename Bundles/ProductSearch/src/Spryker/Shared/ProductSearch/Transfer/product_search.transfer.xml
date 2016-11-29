@@ -30,4 +30,8 @@
         <property name="keyTranslation" type="string" />
     </transfer>
 
+    <transfer name="LocalizedAttributes">
+        <property name="isSearchable" type="bool" />
+    </transfer>
+
 </transfers>

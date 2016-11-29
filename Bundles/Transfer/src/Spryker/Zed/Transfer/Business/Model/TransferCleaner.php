@@ -30,8 +30,10 @@ class TransferCleaner implements TransferCleanerInterface
      */
     public function cleanDirectory()
     {
-        $fileSystem = new Filesystem();
-        $fileSystem->remove($this->directory);
+        if (is_dir($this->directory)) {
+            $fileSystem = new Filesystem();
+            $fileSystem->remove($this->directory);
+        }
     }
 
 }

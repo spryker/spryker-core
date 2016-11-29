@@ -28,7 +28,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {
@@ -37,7 +37,8 @@
   "autoload-dev": {
     "psr-0": {
       "Functional": "tests/",
-      "Unit": "tests/"
+      "Unit": "tests/",
+      "Acceptance": "tests/"
     }
   }
 }

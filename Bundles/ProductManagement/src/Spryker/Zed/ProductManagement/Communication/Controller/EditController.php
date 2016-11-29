@@ -56,10 +56,6 @@ class EditController extends AddController
             ->getProductFacade()
             ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $attributeCollection = $this->normalizeAttributeArray(
-            $this->getFactory()->getProductAttributeCollection()
-        );
-
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
         if ($form->isValid()) {
@@ -73,6 +69,10 @@ class EditController extends AddController
                 $idProductAbstract = $this->getFactory()
                     ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, []);
+
+                $this->getFactory()
+                    ->getProductFacade()
+                    ->touchProductAbstract($idProductAbstract);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',
@@ -156,6 +156,10 @@ class EditController extends AddController
                 $this->getFactory()
                     ->getProductFacade()
                     ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
+
+                $this->getFactory()
+                    ->getProductFacade()
+                    ->touchProductConcrete($idProduct);
 
                 $this->addSuccessMessage(sprintf(
                     'The product [%s] was saved successfully.',

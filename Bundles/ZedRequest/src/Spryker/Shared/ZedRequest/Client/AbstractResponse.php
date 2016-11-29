@@ -8,7 +8,7 @@
 namespace Spryker\Shared\ZedRequest\Client;
 
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Acl\Business\Exception\TransferNotFoundException;
+use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
 
 abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
 {
@@ -229,7 +229,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @throws \Spryker\Zed\Acl\Business\Exception\TransferNotFoundException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException
      *
      * @return \Spryker\Shared\Transfer\TransferInterface
      */

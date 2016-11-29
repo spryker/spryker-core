@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,6 +7,11 @@
 namespace Spryker\Zed\Category\Communication;
 
 use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Form\CategoryType;
+use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider;
+use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider;
+use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider;
+use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
@@ -16,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -41,7 +46,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
-    protected function getLocaleFacade()
+    public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
     }
@@ -58,6 +63,94 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param int|null $idParentNode
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryCreateForm($idParentNode)
+    {
+        $categoryCreateForm = new CategoryType();
+        $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create(
+            $categoryCreateForm,
+            $categoryCreateDataFormProvider->getData($idParentNode),
+            $categoryCreateDataFormProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvider
+     */
+    protected function createCategoryCreateFormDataProvider()
+    {
+        return new CategoryCreateDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryEditForm()
+    {
+        $categoryCreateForm = new CategoryType();
+        $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create(
+            $categoryCreateForm,
+            $categoryCreateDataFormProvider->getData(),
+            $categoryCreateDataFormProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider
+     */
+    protected function createCategoryEditFormDataProvider()
+    {
+        return new CategoryEditDataProvider(
+            $this->getQueryContainer(),
+            $this->getFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryDeleteForm($idCategory)
+    {
+        $categoryDeleteForm = new DeleteType();
+        $categoryDeleteFormDataProvider = $this->createCategoryDeleteFormDataProvider();
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create(
+            $categoryDeleteForm,
+            $categoryDeleteFormDataProvider->getData($idCategory),
+            $categoryDeleteFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider
+     */
+    protected function createCategoryDeleteFormDataProvider()
+    {
+        return new CategoryDeleteDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable
@@ -93,6 +186,14 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
             ->queryUrlByIdCategoryNode($idCategoryNode);
 
         return new UrlTable($urlQuery);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
+     */
+    public function getRelationReadPluginStack()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_READ);
     }
 
 }

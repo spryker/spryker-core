@@ -11,19 +11,10 @@ interface ProductCategoryToProductInterface
 {
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
      *
-     * @return bool
+     * @return void
      */
-    public function hasProductAbstract($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function findProductAbstractIdBySku($sku);
+    public function touchProductAbstract($idProductAbstract);
 
 }

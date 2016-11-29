@@ -8,6 +8,7 @@
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/kernel": "^2.0.0",
+    "spryker/product-option": "^3.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/symfony": "^2.0.0",
@@ -23,7 +24,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

@@ -7,11 +7,11 @@
 
 namespace Spryker\Yves\Kernel;
 
-use Pyz\Yves\Application\Plugin\Pimple;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
@@ -117,7 +117,7 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function getFormFactory()
     {
-        return (new Pimple())->getApplication()['form.factory'];
+        return $this->getProvidedDependency(KernelConstants::FORM_FACTORY);
     }
 
     /**

@@ -34,6 +34,21 @@ interface RatepayConstants
     const API_URL = 'RATEPAY_API_URL';
 
     /**
+     * Payment submethods.
+     */
+    const METHOD_INVOICE = 'INVOICE';
+    const METHOD_ELV = 'ELV';
+    const METHOD_PREPAYMENT = 'PREPAYMENT';
+    const METHOD_INSTALLMENT = 'INSTALLMENT';
+
+    const PAYMENT_METHODS_MAP = [
+        self::METHOD_INVOICE => 'ratepayInvoice',
+        self::METHOD_ELV => 'ratepayElv',
+        self::METHOD_INSTALLMENT => 'ratepayInstallment',
+        self::METHOD_PREPAYMENT => 'ratepayPrepayment',
+    ];
+
+    /**
      * Service method
      */
     const METHOD_SERVICE = 'SERVICE';
@@ -63,12 +78,6 @@ interface RatepayConstants
      */
     const GENDER_MALE = 'M';
     const GENDER_FEMALE = 'F';
-
-    /**
-     * User Agent of Spryker client.
-     */
-    const CLIENT_VERSION = '1.0';
-    const CLIENT_NAME = 'Spryker Connector';
 
     /**
      * Ratepay request configuration.

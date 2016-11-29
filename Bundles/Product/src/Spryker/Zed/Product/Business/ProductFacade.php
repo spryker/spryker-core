@@ -424,7 +424,26 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: product abstract and product attribute map.
+     * - Touches abstract product and all it's variants.
+     * - Touches related "product_abstract", "product_concrete" and "attribute_map" entries.
+     * - Used touch event statuses (active, inactive) depends on the current active status of the product and it's variants.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstract($idProductAbstract)
+    {
+        $this->getFactory()
+            ->createProductAbstractTouch()
+            ->touchProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * Specification:
+     * - Touches as active: "product_abstract" and "product_attribute_map"
      *
      * @api
      *
@@ -435,13 +454,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function touchProductActive($idProductAbstract)
     {
         $this->getFactory()
-            ->createProductAbstractManager()
-            ->touchProductActive($idProductAbstract);
+            ->createProductAbstractTouch()
+            ->touchProductAbstractActive($idProductAbstract);
     }
 
     /**
      * Specification:
-     * - Touches as in-active: product abstract and product attribute map.
+     * - Touches as in-active: "product_abstract" and "product_attribute_map".
      *
      * @api
      *
@@ -452,13 +471,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function touchProductInactive($idProductAbstract)
     {
         $this->getFactory()
-            ->createProductAbstractManager()
-            ->touchProductInactive($idProductAbstract);
+            ->createProductAbstractTouch()
+            ->touchProductAbstractInactive($idProductAbstract);
     }
 
     /**
      * Specification:
-     * - Touches as deleted: product abstract and product attribute map.
+     * - Touches as deleted: "product_abstract" and "product_attribute_map".
      *
      * @api
      *
@@ -469,13 +488,32 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function touchProductDeleted($idProductAbstract)
     {
         $this->getFactory()
-            ->createProductAbstractManager()
-            ->touchProductDeleted($idProductAbstract);
+            ->createProductAbstractTouch()
+            ->touchProductAbstractDeleted($idProductAbstract);
     }
 
     /**
      * Specification:
-     * - Touches as active: product concrete.
+     * - Touches a concrete product.
+     * - Touches related "product_concrete", "product_abstract" and "attribute_map" entries.
+     * - Used touch event statuses (active, inactive) depends on the current status of the product.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcrete($idProductConcrete)
+    {
+        $this->getFactory()
+            ->createProductConcreteTouch()
+            ->touchProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * Specification:
+     * - Touches as active: "product_concrete".
      *
      * @api
      *
@@ -486,13 +524,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function touchProductConcreteActive($idProductConcrete)
     {
         $this->getFactory()
-            ->createProductConcreteManager()
-            ->touchProductActive($idProductConcrete);
+            ->createProductConcreteTouch()
+            ->touchProductConcreteActive($idProductConcrete);
     }
 
     /**
      * Specification:
-     * - Touches as in-active: product concrete.
+     * - Touches as in-active: "product_concrete".
      *
      * @api
      *
@@ -503,13 +541,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function touchProductConcreteInactive($idProductConcrete)
     {
         $this->getFactory()
-            ->createProductConcreteManager()
-            ->touchProductInactive($idProductConcrete);
+            ->createProductConcreteTouch()
+            ->touchProductConcreteInactive($idProductConcrete);
     }
 
     /**
      * Specification:
-     * - Touches as deleted: product concrete.
+     * - Touches as deleted: "product_concrete".
      *
      * @api
      *
@@ -520,8 +558,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function touchProductConcreteDelete($idProductConcrete)
     {
         $this->getFactory()
-            ->createProductConcreteManager()
-            ->touchProductDeleted($idProductConcrete);
+            ->createProductConcreteTouch()
+            ->touchProductConcreteDeleted($idProductConcrete);
     }
 
     /**
@@ -562,7 +600,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product URLs based on product abstract localized attributes name.
+     * - Returns localized product URLs for all available locales.
      *
      * @api
      *
@@ -681,7 +719,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function activateProductConcrete($idProductConcrete)
     {
          $this->getFactory()
-             ->createProductActivator()
+             ->createProductConcreteActivator()
              ->activateProductConcrete($idProductConcrete);
     }
 
@@ -701,7 +739,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function deactivateProductConcrete($idProductConcrete)
     {
         $this->getFactory()
-            ->createProductActivator()
+            ->createProductConcreteActivator()
             ->deactivateProductConcrete($idProductConcrete);
     }
 

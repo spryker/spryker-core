@@ -39,6 +39,14 @@ class Constants
         self::REQUEST_MODEL_CONFIGURATION_REQUEST => 500,
         self::REQUEST_MODEL_CALCULATION_REQUEST => 502,
         self::REQUEST_MODEL_PROFILE => 500,
+        self::REQUEST_MODEL_PAYMENT_REFUND => 403,
+        self::REQUEST_MODEL_PAYMENT_CANCEL => 403,
     ];
+
+    /**
+     * User Agent of Spryker client.
+     */
+    const CLIENT_VERSION = '1.0';
+    const CLIENT_NAME = 'Spryker_RP_DE';
 
 }

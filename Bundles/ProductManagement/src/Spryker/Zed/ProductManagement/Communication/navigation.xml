@@ -8,7 +8,6 @@
                 <bundle>product-management</bundle>
                 <controller>index</controller>
                 <action>index</action>
-                <icon>fa-database</icon>
             </products>
             <attributes>
                 <label>Attributes</label>
@@ -16,7 +15,6 @@
                 <bundle>product-management</bundle>
                 <controller>attribute</controller>
                 <action>index</action>
-                <icon>fa-bolt</icon>
             </attributes>
         </pages>
     </product>

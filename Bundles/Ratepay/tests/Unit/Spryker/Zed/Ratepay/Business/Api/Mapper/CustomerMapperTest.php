@@ -27,8 +27,7 @@ class CustomerMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getCustomerMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )
             ->map();
 

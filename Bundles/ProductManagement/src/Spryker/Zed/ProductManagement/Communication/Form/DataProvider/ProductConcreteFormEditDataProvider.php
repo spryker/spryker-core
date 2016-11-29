@@ -13,9 +13,9 @@ use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
@@ -106,8 +106,9 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
                 continue;
             }
 
-            $formData[$generalFormName][GeneralForm::FIELD_NAME] = $localizedAttributesTransfer->getName();
-            $formData[$generalFormName][GeneralForm::FIELD_DESCRIPTION] = $localizedAttributesTransfer->getDescription();
+            $formData[$generalFormName][ConcreteGeneralForm::FIELD_NAME] = $localizedAttributesTransfer->getName();
+            $formData[$generalFormName][ConcreteGeneralForm::FIELD_DESCRIPTION] = $localizedAttributesTransfer->getDescription();
+            $formData[$generalFormName][ConcreteGeneralForm::FIELD_IS_SEARCHABLE] = $localizedAttributesTransfer->getIsSearchable();
 
             $formData[$seoFormName][SeoForm::FIELD_META_TITLE] = $localizedAttributesTransfer->getMetaTitle();
             $formData[$seoFormName][SeoForm::FIELD_META_KEYWORDS] = $localizedAttributesTransfer->getMetaKeywords();

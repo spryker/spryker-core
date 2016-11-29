@@ -13,24 +13,38 @@ interface NodeWriterInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return int $nodeId
      */
-    public function create(NodeTransfer $categoryNode);
+    public function create(NodeTransfer $categoryNodeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return void
      */
-    public function update(NodeTransfer $categoryNode);
+    public function update(NodeTransfer $categoryNodeTransfer);
 
     /**
-     * @param int $nodeId
+     * @deprecated Will be removed with next major release
+     *
+     * @param int $idCategoryNode
      *
      * @return int
      */
-    public function delete($nodeId);
+    public function delete($idCategoryNode);
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateOrder($idCategoryNode, $position);
 
 }

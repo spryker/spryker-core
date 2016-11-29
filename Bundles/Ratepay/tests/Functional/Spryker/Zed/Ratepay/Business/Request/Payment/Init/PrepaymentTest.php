@@ -56,7 +56,7 @@ class PrepaymentTest extends PrepaymentAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->initPayment($this->quoteTransfer);
+        return $facade->initPayment($this->mockRatepayPaymentInitTransfer());
     }
 
 }

@@ -7,8 +7,6 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
-use Generated\Shared\Transfer\ItemTransfer;
-
 /**
  * @group Unit
  * @group Spryker
@@ -29,17 +27,13 @@ class PartialBasketMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getPartialBasketMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer(),
-                [
-                    (new ItemTransfer())->setSumGrossPriceWithProductOptionAndDiscountAmounts(9900),
-                    (new ItemTransfer())->setSumGrossPriceWithProductOptionAndDiscountAmounts(1500),
-                    (new ItemTransfer())->setSumGrossPriceWithProductOptionAndDiscountAmounts(100),
-                ]
+                $this->mockOrderTransfer(),
+                $this->mockPartialOrderTransfer(),
+                $this->mockPaymentElvTransfer()
             )
             ->map();
 
-        $this->assertEquals(115, $this->requestTransfer->getShoppingBasket()->getAmount());
+        $this->assertEquals(18, $this->requestTransfer->getShoppingBasket()->getAmount());
         $this->assertEquals('iso3', $this->requestTransfer->getShoppingBasket()->getCurrency());
     }
 

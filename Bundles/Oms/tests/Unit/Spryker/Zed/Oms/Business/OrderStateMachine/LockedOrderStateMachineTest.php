@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Oms\Persistence\Base\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
@@ -198,7 +198,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function expectStateMachineLockSaveSuccess($expectedIdentifier)
     {
-        $stateMachineLock = $this->createSpyOmsStateMachineLockMock();
+        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
         $stateMachineLock->expects($this->once())
             ->method('setIdentifier')
@@ -224,7 +224,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
      */
     protected function expectStateMachineLockSaveFails($expectedIdentifier)
     {
-        $stateMachineLock = $this->createSpyOmsStateMachineLockMock();
+        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
         $stateMachineLock->expects($this->once())
             ->method('setIdentifier')
@@ -272,7 +272,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createStateMachineMock()
     {
@@ -325,7 +325,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createSpyOmsStateMachineLockMock()
+    protected function createOmsStateMachineLockEntityMock()
     {
         $this->omsStateMachineLockMock = $this->getMockBuilder(SpyOmsStateMachineLock::class)
             ->setMethods(['setIdentifier', 'setExpires', 'save'])

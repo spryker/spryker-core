@@ -8,6 +8,14 @@
         <action>index</action>
         <icon>fa-wrench</icon>
         <pages>
+            <index>
+                <label>System Info</label>
+                <title>Maintenance</title>
+                <bundle>maintenance</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </index>
+
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>

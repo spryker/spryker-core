@@ -11,8 +11,6 @@ use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\ReadOnlyAttributeTranslationCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
@@ -55,7 +53,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUrlFacade(),
-            $this->getUtilTextFacade()
+            $this->getUtilTextService()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -75,7 +73,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUrlFacade(),
-            $this->getUtilTextFacade()
+            $this->getUtilTextService()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -95,7 +93,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUrlFacade(),
-            $this->getUtilTextFacade()
+            $this->getUtilTextService()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -219,11 +217,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToUtilTextInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
      */
-    public function getUtilTextFacade()
+    public function getUtilTextService()
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_UTIL_TEXT);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
     /**
@@ -328,32 +326,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createReadOnlyAttributeForm(array $data = [], array $options = [])
-    {
-        $readOnlyAttributeFormType = $this->createReadOnlyAttributeFormType();
-
-        return $this->getFormFactory()->create($readOnlyAttributeFormType, $data, $options);
-    }
-
-    /**
      * @return \Symfony\Component\Form\AbstractType
      */
     protected function createAttributeFormType()
     {
         return new AttributeForm($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    protected function createReadOnlyAttributeFormType()
-    {
-        return new ReadOnlyAttributeForm($this->getQueryContainer());
     }
 
     /**
@@ -378,32 +355,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createReadOnlyAttributeTranslationFormCollection(array $data = [], array $options = [])
-    {
-        $attributeTranslationFormCollectionType = $this->createReadOnlyAttributeTranslationFormCollectionType();
-
-        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
-    }
-
-    /**
      * @return \Symfony\Component\Form\AbstractType
      */
     public function createAttributeTranslationFormCollectionType()
     {
         return new AttributeTranslationCollectionForm();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    public function createReadOnlyAttributeTranslationFormCollectionType()
-    {
-        return new ReadOnlyAttributeTranslationCollectionForm();
     }
 
     /**
@@ -443,7 +399,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductFormTransferMapper(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->getUtilTextFacade(),
+            $this->getUtilTextService(),
             $this->createLocaleProvider()
         );
     }

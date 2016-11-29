@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
@@ -175,7 +176,11 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     protected function createSessionClient()
     {
+        $pimple = new Pimple();
+        $sessionContainer = $pimple->getApplication()['session'];
+
         $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'migrate'])->getMock();
+        $sessionClient->setContainer($sessionContainer);
 
         return $sessionClient;
     }

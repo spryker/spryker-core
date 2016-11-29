@@ -24,23 +24,13 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
     }
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
      *
-     * @return bool
+     * @return void
      */
-    public function hasProductAbstract($sku)
+    public function touchProductAbstract($idProductAbstract)
     {
-        return $this->productFacade->hasProductAbstract($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function findProductAbstractIdBySku($sku)
-    {
-        return $this->productFacade->findProductAbstractIdBySku($sku);
+        $this->productFacade->touchProductAbstract($idProductAbstract);
     }
 
 }

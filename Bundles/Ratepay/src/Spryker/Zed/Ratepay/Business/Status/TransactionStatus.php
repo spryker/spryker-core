@@ -47,6 +47,22 @@ class TransactionStatus implements TransactionStatusInterface
      *
      * @return bool
      */
+    public function isPaymentRequestSuccess(OrderTransfer $orderTransfer)
+    {
+        $paymentLog = $this->queryContainer
+            ->getLastLogRecordBySalesOrderIdAndMessage($orderTransfer->requireIdSalesOrder()->getIdSalesOrder(), ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST);
+        if (!$paymentLog) {
+            return false;
+        }
+
+        return ($paymentLog->getResponseResultCode() == ApiConstants::REQUEST_CODE_SUCCESS_MATRIX[ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
     public function isPaymentConfirmed(OrderTransfer $orderTransfer)
     {
         $payment = $this->loadOrderPayment($orderTransfer);

@@ -131,6 +131,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -146,6 +148,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -160,6 +164,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @param int $idCategoryNode
      *

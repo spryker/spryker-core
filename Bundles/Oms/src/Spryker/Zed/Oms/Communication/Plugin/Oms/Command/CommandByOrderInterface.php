@@ -7,19 +7,11 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface AS DependencyCommandByOrderInterface;
 
-interface CommandByOrderInterface extends CommandInterface
+/**
+ * Deprecated use instead Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface
+ */
+interface CommandByOrderInterface extends DependencyCommandByOrderInterface, CommandInterface
 {
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
-     *
-     * @return array
-     */
-    public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data);
-
 }

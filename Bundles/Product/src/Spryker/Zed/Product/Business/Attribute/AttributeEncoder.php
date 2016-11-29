@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
-use Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface;
+use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 
 class AttributeEncoder implements AttributeEncoderInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface
+     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
-    protected $utilEncodingFacade;
+    protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface $utilEncodingFacade
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
      */
-    public function __construct(ProductToUtilEncodingInterface $utilEncodingFacade)
+    public function __construct(ProductToUtilEncodingInterface $utilEncodingService)
     {
-        $this->utilEncodingFacade = $utilEncodingFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -32,7 +32,7 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     public function encodeAttributes(array $attributes)
     {
-        return $this->utilEncodingFacade->encodeJson($attributes);
+        return $this->utilEncodingService->encodeJson($attributes);
     }
 
     /**
@@ -42,7 +42,7 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     public function decodeAttributes($json)
     {
-        $value = $this->utilEncodingFacade->decodeJson($json, true);
+        $value = $this->utilEncodingService->decodeJson($json, true);
 
         if (!is_array($value)) {
             $value = [];

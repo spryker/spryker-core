@@ -17,6 +17,9 @@ use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class NodeUrlManager implements NodeUrlManagerInterface
 {
 
@@ -82,15 +85,15 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNode();
+        $path = $this->categoryTreeReader->getPath($idCategoryNode, $localeTransfer);
         $categoryUrl = $this->generateUrlFromPathTokens($path);
-        $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        if (!$this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer)) {
+        if (!$this->urlFacade->hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $localeTransfer)) {
             $urlTransfer = new UrlTransfer();
-            $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
+            $this->updateTransferUrl($urlTransfer, $categoryUrl, $idCategoryNode, $localeTransfer->getIdLocale());
         } else {
-            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, $localeTransfer);
             $this->updateTransferUrl($urlTransfer, $categoryUrl);
         }
 

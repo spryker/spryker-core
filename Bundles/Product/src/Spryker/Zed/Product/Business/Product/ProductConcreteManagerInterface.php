@@ -94,25 +94,4 @@ interface ProductConcreteManagerInterface
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductConcrete);
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductConcrete);
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductConcrete);
-
 }

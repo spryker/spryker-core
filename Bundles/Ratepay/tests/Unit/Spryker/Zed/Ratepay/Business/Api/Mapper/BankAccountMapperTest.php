@@ -27,14 +27,13 @@ class BankAccountMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getBankAccountMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )
             ->map();
 
         $this->assertEquals('iban', $this->requestTransfer->getBankAccount()->getIban());
         $this->assertEquals('bic', $this->requestTransfer->getBankAccount()->getBicSwift());
-        $this->assertEquals('holder', $this->requestTransfer->getBankAccount()->getOwner());
+        $this->assertEquals('fn ln', $this->requestTransfer->getBankAccount()->getOwner());
     }
 
 }

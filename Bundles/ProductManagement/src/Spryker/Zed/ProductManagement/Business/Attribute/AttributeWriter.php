@@ -121,7 +121,7 @@ class AttributeWriter implements AttributeWriterInterface
         }
 
         $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
-        $productAttributeKeyTransfer->setKey($productManagementAttributeTransfer->getKey());
+        $productAttributeKeyTransfer->fromArray($productManagementAttributeTransfer->toArray(), true);
         $productAttributeKeyTransfer = $this->productFacade->createProductAttributeKey($productAttributeKeyTransfer);
 
         return $productAttributeKeyTransfer;

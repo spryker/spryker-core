@@ -150,4 +150,28 @@ interface StockFacadeInterface
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
 
+    /**
+     *
+     * Specification:
+     *  - Returns all available stock types
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAvailableStockTypes();
+
+    /**
+     *
+     * Specification:
+     *  - Returns stock product by givent id product
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete);
+
 }

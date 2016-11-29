@@ -69,25 +69,4 @@ interface ProductAbstractManagerInterface
      */
     public function getLocalizedProductAbstractName(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer);
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductActive($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductInactive($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductDeleted($idProductAbstract);
-
 }

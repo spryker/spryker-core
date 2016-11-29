@@ -17,10 +17,12 @@ use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginAbstractManager;
 use Spryker\Zed\Product\Business\Product\Plugin\PluginConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
-use Spryker\Zed\Product\Business\Product\ProductActivator;
+use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
+use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
@@ -82,14 +84,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductActivatorInterface
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface
      */
-    public function createProductActivator()
+    public function createProductConcreteActivator()
     {
-        return new ProductActivator(
+        return new ProductConcreteActivator(
+            $this->createProductManager(),
             $this->createProductAbstractManager(),
             $this->createProductConcreteManager(),
-            $this->createProductUrlManager()
+            $this->createProductUrlManager(),
+            $this->createProductConcreteTouch(),
+            $this->getQueryContainer()
         );
     }
 
@@ -115,7 +120,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductUrlGenerator(
             $this->createProductAbstractManager(),
             $this->getLocaleFacade(),
-            $this->getUtilTextFacade()
+            $this->getUtilTextService()
         );
     }
 
@@ -135,7 +140,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSkuGenerator()
     {
-        return new SkuGenerator($this->getUtilTextFacade());
+        return new SkuGenerator($this->getUtilTextService());
     }
 
     /**
@@ -159,7 +164,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createAttributeEncoder()
     {
-        return new AttributeEncoder($this->getUtilEncodingFacade());
+        return new AttributeEncoder($this->getUtilEncodingService());
     }
 
     /**
@@ -191,6 +196,30 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouchInterface
+     */
+    public function createProductAbstractTouch()
+    {
+        return new ProductAbstractTouch(
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createProductManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
+     */
+    public function createProductConcreteTouch()
+    {
+        return new ProductConcreteTouch(
+            $this->getTouchFacade(),
+            $this->getQueryContainer(),
+            $this->createProductManager()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected function getLocaleFacade()
@@ -215,19 +244,19 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUtilTextInterface
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
      */
-    protected function getUtilTextFacade()
+    protected function getUtilTextService()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_TEXT);
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_TEXT);
     }
 
     /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUtilEncodingInterface
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
-    protected function getUtilEncodingFacade()
+    protected function getUtilEncodingService()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_UTIL_ENCODING);
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

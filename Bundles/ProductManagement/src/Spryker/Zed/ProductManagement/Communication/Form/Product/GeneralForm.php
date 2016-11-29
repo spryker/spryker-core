@@ -44,6 +44,7 @@ class GeneralForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
@@ -61,6 +62,9 @@ class GeneralForm extends AbstractSubForm
                         'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL]
                     ]),
                 ],
+                'attr' => [
+                    'data-translation-key' => self::FIELD_NAME,
+                ],
             ]);
 
         return $this;
@@ -68,6 +72,7 @@ class GeneralForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
@@ -76,9 +81,6 @@ class GeneralForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_DESCRIPTION, 'textarea', [
                 'required' => false,
-                'constraints' => [
-                    //new NotBlank(),
-                ],
             ]);
 
         return $this;

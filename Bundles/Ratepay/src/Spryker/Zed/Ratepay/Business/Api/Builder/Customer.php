@@ -25,7 +25,6 @@ class Customer extends AbstractBuilder implements BuilderInterface
         $customerData = [
             'first-name' => $this->requestTransfer->getCustomer()->getFirstName(),
             'last-name' => $this->requestTransfer->getCustomer()->getLastName(),
-            'company-name' => '',
             'gender' => $this->requestTransfer->getCustomer()->getGender(),
             'date-of-birth' => $this->requestTransfer->getCustomer()->getDob(),
             'ip-address' => $this->requestTransfer->getCustomer()->getIpAddress(),
@@ -41,6 +40,9 @@ class Customer extends AbstractBuilder implements BuilderInterface
             ],
             'customer-allow-credit-inquiry' => $this->requestTransfer->getCustomer()->getAllowCreditInquiry()
         ];
+        if (strlen($this->requestTransfer->getCustomer()->getCompany())) {
+            $customerData['company-name'] = $this->requestTransfer->getCustomer()->getCompany();
+        }
 
         if ($this->requestTransfer->getBankAccount() !== null) {
             $bankAccountBuilder = new BankAccount($this->requestTransfer);

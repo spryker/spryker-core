@@ -193,4 +193,24 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
         return $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
     }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function touchProductAbstract($idProductAbstract)
+    {
+        $this->productFacade->touchProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function touchProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->touchProductConcrete($idProductConcrete);
+    }
+
 }

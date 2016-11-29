@@ -26,16 +26,4 @@ class QueryContainerLocatorMatcher implements LocatorMatcherInterface
         return (strpos($method, self::METHOD_PREFIX) === 0);
     }
 
-    /**
-     * @api
-     *
-     * @param string $method
-     *
-     * @return string
-     */
-    public function filter($method)
-    {
-        return '';
-    }
-
 }
