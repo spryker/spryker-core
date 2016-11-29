@@ -11,12 +11,14 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Product\Dependency\Client\ProductToLocaleBridge;
 use Spryker\Client\Product\Dependency\Client\ProductToStorageBridge;
+use Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingBridge;
 
 class ProductDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_LOCALE = 'CLIENT_LOCALE';
     const KV_STORAGE = 'KV_STORAGE';
+    const UTIL_ENCODING = 'UTIL_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -31,6 +33,10 @@ class ProductDependencyProvider extends AbstractDependencyProvider
 
         $container[self::CLIENT_LOCALE] = function (Container $container) {
             return new ProductToLocaleBridge($container->getLocator()->locale()->client());
+        };
+
+        $container[self::UTIL_ENCODING] = function (Container $container) {
+            return new ProductToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

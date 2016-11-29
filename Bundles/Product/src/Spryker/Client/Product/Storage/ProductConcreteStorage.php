@@ -8,11 +8,16 @@ namespace Spryker\Client\Product\Storage;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Product\Dependency\Client\ProductToStorageInterface;
+use Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\UtilEncoding\Json;
 
 class ProductConcreteStorage implements ProductConcreteStorageInterface
 {
+
+    /**
+     * @var \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
@@ -32,12 +37,18 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     /**
      * @param \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
-     * @param string $localeName
+     * @param \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
+     * @param $localeName
      */
-    public function __construct(ProductToStorageInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
-    {
+    public function __construct(
+        ProductToStorageInterface $storage,
+        KeyBuilderInterface $keyBuilder,
+        ProductToUtilEncodingInterface $utilEncodingService,
+        $localeName
+    ) {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
+        $this->utilEncodingService = $utilEncodingService;
         $this->localeName = $localeName;
     }
 
@@ -68,11 +79,10 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
         }
 
         $jsonData = $this->storage->getMulti($keyCollection);
-        $jsonUtil = new Json();
 
         $result = [];
         foreach ($jsonData as $key => $json) {
-            $data = $jsonUtil->decode($json, true);
+            $data = $this->utilEncodingService->decodeJson($json, true);
             $result[] = $this->mapStorageProduct($data);
         }
 
@@ -93,6 +103,5 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
 
         return $storageProduct;
     }
-
 
 }
