@@ -215,7 +215,7 @@ class Writer implements WriterInterface
     protected function assertWishlistItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         $wishlistItemTransfer->requireFkWishlist();
-        $wishlistItemTransfer->requireIdProduct();
+        $wishlistItemTransfer->requireSku();
     }
 
     /**
@@ -226,7 +226,7 @@ class Writer implements WriterInterface
     protected function assertWishlistItemUpdateRequest(WishlistItemTransfer $wishlistItemTransfer)
     {
         $wishlistItemTransfer->requireFkCustomer();
-        $wishlistItemTransfer->requireIdProduct();
+        $wishlistItemTransfer->requireSku();
         $wishlistItemTransfer->requireWishlistName();
     }
 
