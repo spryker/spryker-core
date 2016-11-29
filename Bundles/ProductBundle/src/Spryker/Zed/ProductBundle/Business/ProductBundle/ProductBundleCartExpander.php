@@ -79,6 +79,7 @@ class ProductBundleCartExpander
             $bundleItemTransfer = clone $itemTransfer;
 
             $relatedBundleIdentifier = $this->buildBundleIdentifier($bundleItemTransfer, $quoteTransfer->getBundleProducts());
+
             $bundleItemTransfer->setBundleItemIdentifier($relatedBundleIdentifier);
             $bundleItemTransfer->setGroupKey($relatedBundleIdentifier);
 
@@ -93,7 +94,6 @@ class ProductBundleCartExpander
                 $productEntity = $productBundleEntity->getSpyProductRelatedByFkProduct();
 
                 for ($i = 0; $i < $productBundleEntity->getQuantity(); $i++) {
-                    $itemTransfer = new ItemTransfer();
 
                     $productConcreteTransfer = $this->productFacade->getProductConcrete($productEntity->getSku());
 
@@ -102,6 +102,7 @@ class ProductBundleCartExpander
                         $this->localeFacade->getCurrentLocale()
                     );
 
+                    $itemTransfer = new ItemTransfer();
                     $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete())
                         ->setSku($productConcreteTransfer->getSku())
                         ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -155,13 +156,6 @@ class ProductBundleCartExpander
             return $itemTransfer->getSku();
         }
 
-        $numberOfItems = 1;
-        foreach ($bundleItems as $bundledProductTransfer) {
-            if ($bundledProductTransfer->getSku() == $itemTransfer->getSku()) {
-                $numberOfItems++;
-            }
-        }
-
-        return $itemTransfer->getSku() . '_' . $numberOfItems;
+        return $itemTransfer->getSku() . '_' . time() . rand(1, 999);
     }
 }

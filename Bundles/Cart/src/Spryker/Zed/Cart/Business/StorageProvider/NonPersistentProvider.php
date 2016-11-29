@@ -31,7 +31,6 @@ class NonPersistentProvider implements StorageProviderInterface
             if (isset($cartIndex[$itemIdentifier])) {
                 $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
             } else {
-                //$cartIndex[$itemIdentifier] = $existingItems->count();
                 $existingItems->append($itemTransfer);
             }
         }

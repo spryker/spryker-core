@@ -20,7 +20,7 @@ class ProductBundleSalesOrderSaver
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $bundlesSaved = [];
+        $bundleItemsSaved = [];
         foreach ($quoteTransfer->getBundleProducts() as $itemTransfer) {
 
             $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
@@ -28,7 +28,7 @@ class ProductBundleSalesOrderSaver
             $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
             $salesOrderItemBundleEntity->save();
 
-            $bundlesSaved[$itemTransfer->getBundleItemIdentifier()] = $salesOrderItemBundleEntity->getIdSalesOrderItemBundle();
+            $bundleItemsSaved[$itemTransfer->getBundleItemIdentifier()] = $salesOrderItemBundleEntity->getIdSalesOrderItemBundle();
         }
 
         foreach ($checkoutResponse->getSaveOrder()->getOrderItems() as $itemTransfer) {
@@ -39,7 +39,7 @@ class ProductBundleSalesOrderSaver
             $salesOrderItemEntity = SpySalesOrderItemQuery::create()
                 ->findOneByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
-            $salesOrderItemEntity->setFkSalesOrderItemBundle($bundlesSaved[$itemTransfer->getRelatedBundleItemIdentifier()]);
+            $salesOrderItemEntity->setFkSalesOrderItemBundle($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()]);
             $salesOrderItemEntity->save();
         }
     }

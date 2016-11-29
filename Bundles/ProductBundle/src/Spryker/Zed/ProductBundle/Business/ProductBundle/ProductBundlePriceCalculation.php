@@ -108,7 +108,6 @@ class ProductBundlePriceCalculation
             $bundleItemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts() + $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts()
         );
 
-
         $bundleItemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
             $bundleItemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts() + $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts()
         );

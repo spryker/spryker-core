@@ -26,11 +26,9 @@
             <thead>
             <tr class="text-left">
                 <th><input type="checkbox" id="check-all-orders" /></th>
-                {#<th>{{ 'Product' | trans }}</th>#}
                 <th>{{ 'SKU' | trans }}</th>
+                <th>{{ 'Bundle SKU' | trans }}</th>
                 <th>{{ 'Unit Price' | trans }}</th>
-                <th>{{ 'QTY' | trans }}</th>
-                <th>{{ 'Unit price * Qty' | trans }}</th>
                 <th>{{ 'Tax amount' | trans }}</th>
                 <th>{{ 'Tax %' | trans }}</th>
                 <th>{{ 'Discount amount' | trans }}</th>
@@ -45,20 +43,9 @@
             {% for orderItem in order.items %}
                 <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
-                    {#<td>#}
-                        {#<a href="#" target="_blank">{{ 'Yves view' }}</a><br>#}
-                        {#<a href="#" target="_blank">{{ 'Zed View' }}</a>#}
-                    {#</td>#}
                     <td>{{ orderItem.Sku }}</td>
+                    <td>---</td>
                     <td>{{ orderItem.unitGrossPriceWithProductOptions | currency }}</td>
-
-                    {% if orderItem.quantity > 1 %}
-                        <td><a href="#" class="item-split" data-id="{{ orderItem.idSalesOrderItem }}">{{ orderItem.quantity }}</a></td>
-                    {% else %}
-                        <td>{{ orderItem.quantity }}</td>
-                    {% endif %}
-
-                    <td>{{ orderItem.sumGrossPriceWithProductOptions | currency }}</td>
                     <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | currency }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>
                     <td>-{{ orderItem.sumTotalDiscountAmountWithProductOption | currency }} </td>
@@ -94,14 +81,6 @@
                         {%- endif %}
                     </td>
                 </tr>
-                {% if orderItemSplitFormCollection is defined %}
-                    <tr style="display: none;" id="split_form_row_{{ orderItem.idSalesOrderItem }}">
-                        <td colspan="12">
-                            <h4>{{ 'Split order items' | trans }}</h4>
-                            {{ form(orderItemSplitFormCollection[orderItem.idSalesOrderItem]) }}
-                        </td>
-                    </tr>
-                {% endif %}
             {% endfor %}
             </tbody>
 

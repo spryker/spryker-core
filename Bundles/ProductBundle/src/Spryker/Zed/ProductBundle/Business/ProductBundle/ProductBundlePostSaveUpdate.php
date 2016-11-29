@@ -30,7 +30,6 @@ class ProductBundlePostSaveUpdate
 
         $quoteTransfer->setBundleProducts($bundleItems);
 
-
         return $quoteTransfer;
 
     }
