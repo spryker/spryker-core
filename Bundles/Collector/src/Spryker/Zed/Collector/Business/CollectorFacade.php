@@ -95,41 +95,6 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 
     /**
      * Specification:
-     * - Runs search updater collectors for all available stores, locales and collector types.
-     *
-     * @api
-     *
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
-     */
-    public function updateSearch(OutputInterface $output)
-    {
-        $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
-
-        return $exporter->exportStorage($output);
-    }
-
-    /**
-     * Specification:
-     * - Runs search updater collectors for the given locale and all available collector types.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
-     *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
-     */
-    public function updateSearchByLocale(LocaleTransfer $locale, OutputInterface $output)
-    {
-        $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
-
-        return $exporter->exportStorageByLocale($locale, $output);
-    }
-
-    /**
-     * Specification:
      * - Deletes all metadata information from the current search index mapping.
      *
      * @api

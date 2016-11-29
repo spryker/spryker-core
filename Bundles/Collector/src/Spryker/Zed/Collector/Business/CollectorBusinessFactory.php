@@ -180,18 +180,6 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
-     */
-    public function createYvesSearchUpdateExporter()
-    {
-        return new CollectorExporter(
-            $this->getTouchQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($this->createSearchUpdateWriter())
-        );
-    }
-
-    /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $searchWriter
      *
      * @return \Spryker\Zed\Collector\Business\Exporter\SearchExporter

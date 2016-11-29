@@ -22,10 +22,10 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
+     * @api
+     *
      * @param mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
-     *
-     * @api
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *

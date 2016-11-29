@@ -26,7 +26,7 @@ class ProductCategoryAssignCest
      */
     public function testThatICanAssignProducts(ProductCategoryAssignTester $i)
     {
-        $name = 'my_unique_product_name_' . rand(0,1000);
+        $name = 'my_unique_product_name_' . rand(0, 1000);
 
         $idAbstractProduct = $i->createProductEntity($name)->getIdProductAbstract();
 
@@ -61,7 +61,7 @@ class ProductCategoryAssignCest
      */
     public function testThatICanDeassignProducts(ProductCategoryAssignTester $i)
     {
-        $name = 'my_unique_product_name_' . rand(0,1000);
+        $name = 'my_unique_product_name_' . rand(0, 1000);
         $idAbstractProduct = $i->createProductEntity($name)->getIdProductAbstract();
         $i->assignProductToCategory(ProductCategoryAssignPage::ID_CATEGORY, $idAbstractProduct);
 

@@ -10,7 +10,7 @@ namespace Spryker\Shared\Library;
 use \Spryker\Service\UtilEncoding\Model\Json AS JsonEncoder;
 
 /**
- * @deprecated use \Spryker\Zed\UtilEncoding\Business\UtilEncodingFacade insted
+ * @deprecated Use \Spryker\Service\UtilEncoding\Model\Json instead.
  */
 class Json
 {

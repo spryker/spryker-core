@@ -83,7 +83,6 @@ class ProductOptionGroupReaderTest extends MockProvider
         $this->assertInstanceOf(ProductOptionGroupTransfer::class, $productOptionGroupTransfer);
     }
 
-
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface|null $glossaryMock

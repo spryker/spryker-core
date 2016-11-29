@@ -41,30 +41,30 @@ class Operation implements OperationInterface
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
-     */
-    protected $postSavePlugins = [];
-
-    /**
      * @var \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[]
      */
     protected $preCheckPlugins;
+
+    /**
+     * @var \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
+     */
+    protected $postSavePlugins = [];
 
     /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
-     * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $preCheckPlugins
+     * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
         CartToCalculationInterface $calculationFacade,
         CartToMessengerInterface $messengerFacade,
         array $itemExpanderPlugins,
-        array $postSavePlugins = [],
-        array $preCheckPlugins
+        array $preCheckPlugins,
+        array $postSavePlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;

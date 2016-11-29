@@ -103,7 +103,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             $locale->getIdLocale(),
             $this->touchQueryContainer->getConnection()
         );
-        $storeWriter->write($collectedData, $this->collectResourceType());
+        $storeWriter->write($collectedData);
 
         $batchResult->increaseProcessedCount($collectedDataCount);
     }

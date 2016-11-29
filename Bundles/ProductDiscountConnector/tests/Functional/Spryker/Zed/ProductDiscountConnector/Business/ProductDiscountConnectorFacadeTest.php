@@ -20,12 +20,12 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorBusinessFactory;
 use Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade;
 use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductBridge;
 use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**

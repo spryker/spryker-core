@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilEncoding\Business;
+namespace Functional\Spryker\Service\UtilEncoding;
 
 use Codeception\TestCase\Test;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
@@ -13,10 +13,9 @@ use Spryker\Service\UtilEncoding\UtilEncodingService;
 /**
  * @group Functional
  * @group Spryker
- * @group Zed
+ * @group Service
  * @group UtilEncoding
- * @group Business
- * @group UtilEncodingFacadeTest
+ * @group UtilEncodingServiceTest
  */
 class UtilEncodingServiceTest extends Test
 {

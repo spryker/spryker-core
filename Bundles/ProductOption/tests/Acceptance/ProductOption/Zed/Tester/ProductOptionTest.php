@@ -7,7 +7,6 @@
 
 namespace Acceptance\ProductOption\Zed\Tester;
 
-use Acceptance\ProductOption\Zed\PageObject\ProductOptionCreatePage;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -85,7 +84,6 @@ class ProductOptionTest extends ZedAcceptanceTester
         $this->click(self::LANGUAGE_SWITCH_XPATH);
     }
 
-
     /**
      * @return array
      */
@@ -134,7 +132,6 @@ class ProductOptionTest extends ZedAcceptanceTester
     {
         $this->click('#create-product-option-button');
     }
-
 
     /**
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer

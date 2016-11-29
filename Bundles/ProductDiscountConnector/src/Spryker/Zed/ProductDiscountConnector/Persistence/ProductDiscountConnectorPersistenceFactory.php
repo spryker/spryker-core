@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Persistence;
 
-use Orm\Zed\Product\Persistence\Base\SpyProductAttributeKeyQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**

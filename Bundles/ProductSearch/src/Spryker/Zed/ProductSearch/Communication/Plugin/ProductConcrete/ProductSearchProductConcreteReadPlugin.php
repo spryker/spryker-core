@@ -27,7 +27,7 @@ class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements P
     {
         $productConcreteTransfer->requireIdProductConcrete();
 
-        foreach  ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $isSearchable = $this->getFacade()
                 ->isProductConcreteSearchable(
                     $productConcreteTransfer->getIdProductConcrete(),

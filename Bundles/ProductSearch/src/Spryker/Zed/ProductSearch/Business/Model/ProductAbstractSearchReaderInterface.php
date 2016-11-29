@@ -13,7 +13,7 @@ interface ProductAbstractSearchReaderInterface
 {
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool

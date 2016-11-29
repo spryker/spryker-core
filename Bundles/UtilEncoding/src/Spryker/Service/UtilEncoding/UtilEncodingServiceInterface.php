@@ -5,7 +5,6 @@
  */
 namespace Spryker\Service\UtilEncoding;
 
-
 /**
  * @method \Spryker\Service\UtilEncoding\UtilEncodingServiceFactory getFactory()
  */
@@ -19,8 +18,8 @@ interface UtilEncodingServiceInterface
      * @api
      *
      * @param string $jsonValue
-     * @param null $options
-     * @param null $depth
+     * @param int|null $options
+     * @param int|null $depth
      *
      * @return string
      */
@@ -40,4 +39,5 @@ interface UtilEncodingServiceInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+
 }

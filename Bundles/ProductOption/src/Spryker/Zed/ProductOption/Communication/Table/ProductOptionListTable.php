@@ -49,7 +49,6 @@ class ProductOptionListTable extends AbstractTable
         $this->moneyFacade = $moneyFacade;
     }
 
-
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *

@@ -7,8 +7,8 @@
 namespace Spryker\Zed\Availability\Communication\Table;
 
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
@@ -114,7 +114,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstract $productAbstractEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */

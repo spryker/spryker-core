@@ -100,6 +100,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductOptionTable(
             $this->getQueryContainer(),
+            $this->getUtilEncodingService(),
             $this->getCurrentLocale(),
             $idProductOptionGroup,
             $tableContext
@@ -115,6 +116,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductTable(
             $this->getQueryContainer(),
+            $this->getUtilEncodingService(),
             $this->getCurrentLocale(),
             $idProductOptionGroup
         );
@@ -203,6 +205,14 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
 }

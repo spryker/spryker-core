@@ -8,8 +8,8 @@ namespace Functional\Spryker\Zed\Oms\Business;
 
 use Codeception\TestCase\Test;
 use DateTime;
-use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
