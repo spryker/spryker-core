@@ -6,10 +6,10 @@
 
 namespace Spryker\Zed\StateMachine\Persistence;
 
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineEventTimeoutQuery;
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateHistoryQuery;
-use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineLockQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;

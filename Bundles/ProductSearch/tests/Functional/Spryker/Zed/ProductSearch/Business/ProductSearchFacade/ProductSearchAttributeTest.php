@@ -8,8 +8,8 @@
 namespace Functional\Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
-use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributeQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**

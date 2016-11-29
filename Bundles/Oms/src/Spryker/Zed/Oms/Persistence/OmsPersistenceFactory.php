@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Orm\Zed\Oms\Persistence\Base\SpyOmsProductReservationQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -47,7 +47,7 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
     public function createOmsStateMachineLockQuery()
     {
