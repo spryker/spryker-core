@@ -31,12 +31,35 @@ class TransferConfig extends AbstractBundleConfig
             Config::get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/',
         ];
 
-        $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
-        if (glob($applicationTransferGlobPattern)) {
-            $directories[] = $applicationTransferGlobPattern;
+        $additionalGlobPatterns = $this->getAdditionalSourceDirectoryGlobPatterns();
+        array_unshift($additionalGlobPatterns, $this->getApplicationSourceDirectoryGlobPattern());
+
+        foreach ($additionalGlobPatterns as $globPattern) {
+            if (glob($globPattern, GLOB_ONLYDIR)) {
+                $directories[] = $globPattern;
+            }
         }
 
         return $directories;
+    }
+
+    /**
+     * This method can be used to extend the list of directories for transfer object
+     * discovery in project implementations.
+     *
+     * @return string[]
+     */
+    protected function getAdditionalSourceDirectoryGlobPatterns()
+    {
+        return [];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getApplicationSourceDirectoryGlobPattern()
+    {
+        return APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
     }
 
 }
