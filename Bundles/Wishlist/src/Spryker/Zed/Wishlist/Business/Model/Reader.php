@@ -188,7 +188,7 @@ class Reader implements ReaderInterface
         /* @var \Orm\Zed\Product\Persistence\SpyProduct $productEntity */
         foreach ($productCollection as $productEntity) {
             foreach ($itemCollection as $itemTransfer) {
-                if (strcasecmp($itemTransfer->getSku(), $productEntity->getSku()) === 0) {
+                if (mb_strtolower($itemTransfer->getSku()) === mb_strtolower($productEntity->getSku())) {
                     $itemTransfer->setIdProduct($productEntity->getIdProduct());
                 }
             }
