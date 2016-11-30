@@ -30,4 +30,5 @@ class WishlistToProductBridge implements WishlistToProductInterface
     {
         return $this->productQueryContainer->queryProduct();
     }
+
 }
