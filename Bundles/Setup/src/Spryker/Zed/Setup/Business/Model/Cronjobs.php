@@ -420,9 +420,7 @@ class Cronjobs
         $environment = Environment::getInstance();
         $environment_name = $environment->getEnvironment();
         if ($environment->isNotDevelopment()) {
-            return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
-[ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
-[ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
+            return "<command>[ -f " . APPLICATION_ROOT_DIR . "/deploy/vars ] &amp;&amp; . " . APPLICATION_ROOT_DIR . "/deploy/vars
 export APPLICATION_ENV=$environment_name
 export APPLICATION_STORE=$store
 cd \$destination_release_dir
