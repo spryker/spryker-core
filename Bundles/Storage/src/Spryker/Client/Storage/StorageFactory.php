@@ -55,6 +55,8 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use getConnectionParameters() instead.
+     *
      * @return array
      */
     protected function getConfig()
