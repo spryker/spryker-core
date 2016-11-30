@@ -38,7 +38,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
      * @param \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface $storage
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
-     * @param $localeName
+     * @param string $localeName
      */
     public function __construct(
         ProductToStorageInterface $storage,

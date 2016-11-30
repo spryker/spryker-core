@@ -7,9 +7,7 @@
 
 namespace Spryker\Client\Product;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\UtilEncoding\Json;
 
 /**
  * @method \Spryker\Client\Product\ProductFactory getFactory()
