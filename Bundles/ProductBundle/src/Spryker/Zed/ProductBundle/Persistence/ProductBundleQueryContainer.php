@@ -24,6 +24,6 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     {
         return $this->getFactory()
             ->createProductBundleQuery()
-            ->filterByFkBundledProduct($idProductConcrete);
+            ->filterByFkProduct($idProductConcrete);
     }
 }

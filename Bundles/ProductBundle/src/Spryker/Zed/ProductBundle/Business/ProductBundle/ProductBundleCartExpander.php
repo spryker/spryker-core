@@ -91,7 +91,7 @@ class ProductBundleCartExpander
             $totalBundleItemAmount = 0;
             foreach ($bundledProducts as $productBundleEntity) {
 
-                $productEntity = $productBundleEntity->getSpyProductRelatedByFkProduct();
+                $productEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
                 for ($i = 0; $i < $productBundleEntity->getQuantity(); $i++) {
 
@@ -108,6 +108,10 @@ class ProductBundleCartExpander
                         ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
                         ->setAbstractSku($productConcreteTransfer->getAbstractSku())
                         ->setName($localizedProductName);
+
+                    if ($i == 0) {
+                        $itemTransfer->setProductOptions($bundleItemTransfer->getProductOptions());
+                    }
 
                     $itemTransfer->setUnitGrossPrice(
                         $this->priceFacade->getPriceBySku($productEntity->getSku())

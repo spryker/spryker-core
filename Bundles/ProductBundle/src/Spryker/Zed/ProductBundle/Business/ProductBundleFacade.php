@@ -103,6 +103,14 @@ class ProductBundleFacade extends AbstractFacade
     }
 
     /**
+     * @param string $sku
+     */
+    public function updateAvailability($sku)
+    {
+
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

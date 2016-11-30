@@ -84,8 +84,8 @@ class ProductBundleWriter
     protected function createBundleEntity(ProductForBundleTransfer $productForBundleTransfer, $idBundledProduct)
     {
         $productBundleEntity = new SpyProductBundle();
-        $productBundleEntity->setFkBundledProduct($idBundledProduct);
-        $productBundleEntity->setFkProduct($productForBundleTransfer->getIdProductConcrete());
+        $productBundleEntity->setFkBundledProduct($productForBundleTransfer->getIdProductConcrete());
+        $productBundleEntity->setFkProduct($idBundledProduct);
         $productBundleEntity->setQuantity($productForBundleTransfer->getQuantity());
         $productBundleEntity->save();
     }
