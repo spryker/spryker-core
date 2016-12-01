@@ -27,20 +27,30 @@ class TransferConfig extends AbstractBundleConfig
      */
     public function getSourceDirectories()
     {
-        $directories = [
-            Config::get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/',
+        $globPatterns = [
+            $this->getSprykerCoreSourceDirectoryGlobPattern(),
+            $this->getApplicationSourceDirectoryGlobPattern(),
         ];
 
-        $additionalGlobPatterns = $this->getAdditionalSourceDirectoryGlobPatterns();
-        array_unshift($additionalGlobPatterns, $this->getApplicationSourceDirectoryGlobPattern());
+        $globPatterns = array_merge($globPatterns, $this->getAdditionalSourceDirectoryGlobPatterns());
 
-        foreach ($additionalGlobPatterns as $globPattern) {
-            if (glob($globPattern, GLOB_ONLYDIR)) {
-                $directories[] = $globPattern;
-            }
-        }
+        return $globPatterns;
+    }
 
-        return $directories;
+    /**
+     * @return string
+     */
+    protected function getSprykerCoreSourceDirectoryGlobPattern()
+    {
+        return Config::get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getApplicationSourceDirectoryGlobPattern()
+    {
+        return APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
     }
 
     /**
@@ -52,14 +62,6 @@ class TransferConfig extends AbstractBundleConfig
     protected function getAdditionalSourceDirectoryGlobPatterns()
     {
         return [];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getApplicationSourceDirectoryGlobPattern()
-    {
-        return APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
     }
 
 }
