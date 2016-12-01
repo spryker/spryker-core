@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/util-text
+composer require spryker/util-network
 ```
 
 ## Documentation
