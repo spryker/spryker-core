@@ -52,6 +52,10 @@ class ProductBundleWriter
 
         $productAbstractTransfer = $productBundleTransfer->getProductAbstract();
 
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
+            $localizedAttributeTransfer->setIsSearchable(true);
+        }
+
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
         $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());

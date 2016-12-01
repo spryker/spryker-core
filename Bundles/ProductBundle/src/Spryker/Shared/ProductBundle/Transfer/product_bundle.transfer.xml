@@ -19,11 +19,11 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="bundleProducts" type="Item[]" singular="bundleProduct" />
+        <property name="bundleItems" type="Item[]" singular="bundleItem" />
     </transfer>
 
     <transfer name="Order">
-        <property name="bundleProducts" type="Item[]" singular="bundleProduct" />
+        <property name="bundleItems" type="Item[]" singular="bundleItem" />
     </transfer>
 
 </transfers>

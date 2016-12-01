@@ -34,6 +34,14 @@ class AvailabilityFacadeTest extends Test
     const ABSTRACT_SKU = '123_availability_test';
     const CONCRETE_SKU = '123_availability_test-concrete';
 
+
+    public function testBundle()
+    {
+        $availabilityFacade = $this->createAvailabilityFacade();
+
+        $availabilityFacade->updateAvailability('001_25904006');
+    }
+
     /**
      * @return void
      */

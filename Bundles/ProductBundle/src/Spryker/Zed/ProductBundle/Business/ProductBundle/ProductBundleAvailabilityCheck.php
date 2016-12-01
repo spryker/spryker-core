@@ -8,18 +8,18 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityCheck
 {
+
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
-
-    const CART_PRE_CHECK_BUNDLE_AVAILABILITY_FAILED = 'cart.pre.check.bundle.availability.failed';
-    const CART_PRE_CHECK_BUNDLE_AVAILABILITY_EMPTY = 'cart.pre.check.bundle.availability.failed.empty';
 
     const STOCK_TRANSLATION_PARAMETER = 'stock';
 
@@ -55,42 +55,28 @@ class ProductBundleAvailabilityCheck
         $messages = new \ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
 
-            $productEntity = SpyProductQuery::create()
-                ->findOneBySku($itemTransfer->getSku());
-
-            $bundledProducts = $this->productBundleQueryContainer
-                ->queryBundledProduct($productEntity->getIdProduct())
+            $bundledItems = SpyProductBundleQuery::create()
+                ->useSpyProductRelatedByFkProductQuery()
+                    ->filterBySku($itemTransfer->getSku())
+                ->endUse()
                 ->find();
 
-            if (count($bundledProducts) > 0) {
-                foreach ($bundledProducts as $productBundleEntity) {
-                    $relatedProductEntity = $productBundleEntity->getSpyProductRelatedByFkProduct();
-
-                    $sku = $relatedProductEntity->getSku();
-                    $itemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-
-                    $isSellable = $this->isSellable($cartChangeTransfer, $sku, $itemQuantity);
-                    if (!$isSellable) {
-                        $messages[] = $this->createBundleIsNotAvailableMessageTransfer($sku);
-                    }
-                }
+            if (count($bundledItems) > 0) {
+                $this->checkBundledItems($cartChangeTransfer, $bundledItems, $itemTransfer, $messages);
             } else {
                 $sku = $itemTransfer->getSku();
                 $itemQuantity = $itemTransfer->getQuantity();
 
-                $isSellable = $this->isSellable($cartChangeTransfer, $sku, $itemQuantity);
-                if (!$isSellable) {
-                    $messages[] = $this->createItemIsNotAvailableMessageTransfer($sku);
+                if (!$this->checkIfItemIsSellable($cartChangeTransfer, $sku, $itemQuantity)) {
+                    $messages->append(
+                        $this->createItemIsNotAvailableMessageTransfer($sku)
+                    );
                 }
             }
 
         }
 
-        $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
-        $cartPreCheckResponseTransfer->setIsSuccess(count($messages) == 0);
-        $cartPreCheckResponseTransfer->setMessages($messages);
-
-        return $cartPreCheckResponseTransfer;
+        return $this->createCartPreCheckResponseTransfer($messages);
     }
 
     /**
@@ -126,20 +112,6 @@ class ProductBundleAvailabilityCheck
     }
 
     /**
-     * @param int $sku
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createBundleIsNotAvailableMessageTransfer($sku)
-    {
-        $stock = $this->availabilityFacade->calculateStockForProduct($sku);
-        $translationKey = $this->getBundleAvailabilityTranslationKey($stock);
-
-        return $this->createMessageTransfer($stock, $translationKey);
-
-    }
-
-    /**
      * @param int $stock
      *
      * @return string
@@ -154,27 +126,13 @@ class ProductBundleAvailabilityCheck
     }
 
     /**
-     * @param int $stock
-     *
-     * @return string
-     */
-    protected function getBundleAvailabilityTranslationKey($stock)
-    {
-        $translationKey = self::CART_PRE_CHECK_BUNDLE_AVAILABILITY_FAILED;
-        if ($stock <= 0) {
-            $translationKey = self::CART_PRE_CHECK_BUNDLE_AVAILABILITY_EMPTY;
-        }
-        return $translationKey;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
      * @param int $itemQuantity
      *
      * @return bool
      */
-    protected function isSellable(
+    protected function checkIfItemIsSellable(
         CartChangeTransfer $cartChangeTransfer,
         $sku,
         $itemQuantity
@@ -206,5 +164,47 @@ class ProductBundleAvailabilityCheck
         ]);
 
         return $messageTranfer;
+    }
+
+    /**
+     * @param string $messages
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    protected function createCartPreCheckResponseTransfer($messages)
+    {
+        $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
+        $cartPreCheckResponseTransfer->setIsSuccess(count($messages) == 0);
+        $cartPreCheckResponseTransfer->setMessages($messages);
+
+        return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param ObjectCollection $bundledProducts
+     * @param ItemTransfer $itemTransfer
+     * @param \ArrayObject $messages
+     *
+     */
+    protected function checkBundledItems(
+        CartChangeTransfer $cartChangeTransfer,
+        ObjectCollection $bundledProducts,
+        ItemTransfer $itemTransfer,
+        \ArrayObject $messages
+    ) {
+
+        foreach ($bundledProducts as $productBundleEntity) {
+            $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
+
+            $sku = $bundledProductConcreteEntity->getSku();
+            $itemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
+
+            if (!$this->checkIfItemIsSellable($cartChangeTransfer, $sku, $itemQuantity)) {
+                $messages->append(
+                    $this->createItemIsNotAvailableMessageTransfer($sku)
+                );
+            }
+        }
     }
 }

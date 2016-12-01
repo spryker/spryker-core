@@ -51,7 +51,7 @@ class ProductBundlePriceCalculation
             }
         }
 
-        $orderTransfer->setBundleProducts(new \ArrayObject($bundledProducts));
+        $orderTransfer->setBundleItems(new \ArrayObject($bundledProducts));
 
         return $orderTransfer;
     }
@@ -66,7 +66,7 @@ class ProductBundlePriceCalculation
 
         $this->resetBundleAmounts($quoteTransfer);
 
-        foreach ($quoteTransfer->getBundleProducts() as $bundleItemTransfer) {
+        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
                 if ($bundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
                     continue;
@@ -120,7 +120,7 @@ class ProductBundlePriceCalculation
      */
     protected function resetBundleAmounts(QuoteTransfer $quoteTransfer)
     {
-        foreach ($quoteTransfer->getBundleProducts() as $bundleItemTransfer) {
+        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             $bundleItemTransfer->setUnitGrossPrice(0);
             $bundleItemTransfer->setSumGrossPrice(0);
             $bundleItemTransfer->setUnitGrossPriceWithProductOptions(0);

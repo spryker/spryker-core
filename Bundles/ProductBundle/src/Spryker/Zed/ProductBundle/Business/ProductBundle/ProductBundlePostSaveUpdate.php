@@ -19,7 +19,7 @@ class ProductBundlePostSaveUpdate
     public function updateBundles(QuoteTransfer $quoteTransfer)
     {
         $bundleItems = new \ArrayObject();
-        foreach ($quoteTransfer->getBundleProducts() as $bundleItemTransfer) {
+        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
                 if ($bundleItemTransfer->getBundleItemIdentifier() == $itemTransfer->getRelatedBundleItemIdentifier()) {
                     $bundleItems->append($bundleItemTransfer);
@@ -28,7 +28,7 @@ class ProductBundlePostSaveUpdate
             }
         }
 
-        $quoteTransfer->setBundleProducts($bundleItems);
+        $quoteTransfer->setBundleItems($bundleItems);
 
         return $quoteTransfer;
 

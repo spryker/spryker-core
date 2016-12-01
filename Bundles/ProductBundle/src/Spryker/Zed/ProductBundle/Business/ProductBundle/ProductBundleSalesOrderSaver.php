@@ -7,6 +7,7 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
@@ -20,17 +21,50 @@ class ProductBundleSalesOrderSaver
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $bundleItemsSaved = [];
-        foreach ($quoteTransfer->getBundleProducts() as $itemTransfer) {
+        $bundleItemsSaved = $this->saveBundleProducts($quoteTransfer);
+        $this->updateRelatedSalesOrderItems($checkoutResponse, $bundleItemsSaved);
+    }
 
-            $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
-            $salesOrderItemBundleEntity->fromArray($itemTransfer->toArray());
-            $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function saveBundleProducts(QuoteTransfer $quoteTransfer)
+    {
+        $bundleItemsSaved = [];
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+
+            $salesOrderItemBundleEntity = $this->mapSalesOrderItemBundleEntity($itemTransfer);
             $salesOrderItemBundleEntity->save();
 
             $bundleItemsSaved[$itemTransfer->getBundleItemIdentifier()] = $salesOrderItemBundleEntity->getIdSalesOrderItemBundle();
         }
+        return $bundleItemsSaved;
+    }
 
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
+     */
+    protected function mapSalesOrderItemBundleEntity(ItemTransfer $itemTransfer)
+    {
+        $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
+        $salesOrderItemBundleEntity->fromArray($itemTransfer->toArray());
+        $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
+
+        return $salesOrderItemBundleEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param array $bundleItemsSaved
+     *
+     * @return void
+     */
+    protected function updateRelatedSalesOrderItems(CheckoutResponseTransfer $checkoutResponse, array $bundleItemsSaved)
+    {
         foreach ($checkoutResponse->getSaveOrder()->getOrderItems() as $itemTransfer) {
             if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;

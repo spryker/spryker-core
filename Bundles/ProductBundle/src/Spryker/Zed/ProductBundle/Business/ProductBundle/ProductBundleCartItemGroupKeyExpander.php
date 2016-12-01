@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 class ProductBundleCartItemGroupKeyExpander
 {
+
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
