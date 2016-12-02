@@ -80,6 +80,17 @@ class ProductBundleFacade extends AbstractFacade
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     */
+    public function preCheckCheckoutAvailability(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -100,6 +111,16 @@ class ProductBundleFacade extends AbstractFacade
         return $this->getFactory()
             ->createProductBundlePriceCalculator()
             ->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param string $concreteSku
+     */
+    public function updateBundleAvailability($concreteSku)
+    {
+        $this->getFactory()
+            ->createProductBundleAvailabilityHandler()
+            ->updateBundleAvailability($concreteSku);
     }
 
     /**

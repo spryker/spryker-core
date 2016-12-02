@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
@@ -120,8 +119,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $spyAvailability->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
         }
 
-        $this->updateBundleAvailability($sku);
-
         $spyAvailability->setQuantity($quantity);
         $spyAvailability->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
         $spyAvailability->save();
@@ -147,7 +144,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return void
      */
-    protected function touchAvailabilityAbstract($idAvailabilityAbstract)
+    public function touchAvailabilityAbstract($idAvailabilityAbstract)
     {
         $this->touchFacade->touchActive(AvailabilityConfig::RESOURCE_TYPE_AVAILABILITY_ABSTRACT, $idAvailabilityAbstract);
     }
@@ -239,51 +236,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $availableAbstractEntity->save();
 
         return $availableAbstractEntity;
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return void
-     */
-    protected function updateBundleAvailability($sku)
-    {
-        $bundleProducts = SpyProductBundleQuery::create()
-            ->useSpyProductRelatedByFkBundledProductQuery()
-                 ->filterBySku($sku)
-            ->endUse()
-            ->find();
-
-        foreach ($bundleProducts as $bundleProductEntity) {
-
-            $bundleItemSku = $bundleProductEntity->getSpyProductRelatedByFkProduct()->getSku();
-            $bundleProductAvailability = $this->querySpyAvailabilityBySku($bundleItemSku)->findOne();
-
-            $bundledItems = SpyProductBundleQuery::create()
-                ->filterByFkProduct($bundleProductEntity->getFkProduct())
-                ->find();
-
-            $maxQty = 0;
-            $maxQtyAvailability = 0;
-            foreach ($bundledItems as $bundledItemEntity) {
-                $bundledItemQuantity = $bundledItemEntity->getQuantity();
-                $bundledItemSku = $bundledItemEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
-
-                $bundledProductAvailability = $this->querySpyAvailabilityBySku($bundledItemSku)->findOne();
-
-                if ($bundledItemQuantity > $maxQty) {
-                    $maxQty = $bundledItemQuantity;
-                    $maxQtyAvailability = $bundledProductAvailability->getQuantity();
-                }
-            }
-
-            $bundleAvailabilityQuantity = floor($maxQtyAvailability / $maxQty);
-
-            $bundleProductAvailability->setQuantity($bundleAvailabilityQuantity)->save();
-
-            $this->updateAbstractAvailabilityQuantity($bundleProductAvailability->getFkAvailabilityAbstract());
-            $this->touchAvailabilityAbstract($bundleProductAvailability->getFkAvailabilityAbstract());
-        }
     }
 
 }

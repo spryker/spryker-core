@@ -13,6 +13,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityBridg
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
+use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
 
 class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,6 +23,8 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_AVAILABILITY = 'facade availability';
 
+    const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -29,20 +32,24 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductBundleToProductBridge($container->getLocator()->product()->facade());
         };
 
-        $container[self::FACADE_PRICE] = function (Container $container) {
+        $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductBundleToPriceBridge($container->getLocator()->price()->facade());
         };
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductBundleToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_AVAILABILITY] = function(Container $container) {
+        $container[static::FACADE_AVAILABILITY] = function(Container $container) {
             return new ProductBundleToAvailabilityBridge($container->getLocator()->availability()->facade());
+        };
+
+        $container[static::QUERY_CONTAINER_AVAILABILITY] = function(Container $container) {
+            return new ProductBundleToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
         };
 
         return $container;

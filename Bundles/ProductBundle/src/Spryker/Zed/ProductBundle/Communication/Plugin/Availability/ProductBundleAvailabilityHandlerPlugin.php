@@ -29,6 +29,6 @@ class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements R
      */
     public function handle($sku)
     {
-        $this->getFacade()->updateAvailability($sku);
+        $this->getFacade()->updateBundleAvailability($sku);
     }
 }

@@ -22,4 +22,11 @@ interface ProductBundleToAvailabilityInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
+
+    /**
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract);
 }

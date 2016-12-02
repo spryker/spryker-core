@@ -88,4 +88,17 @@ interface AvailabilityFacadeInterface
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
 
+    /**
+     *
+     * Specification:
+     *  - Touches availability abstract collector for given abstract product
+     *
+     * @api
+     *
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract);
+
 }

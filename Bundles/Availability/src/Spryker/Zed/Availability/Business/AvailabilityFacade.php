@@ -118,4 +118,22 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
+    /**
+     *
+     * Specification:
+     *  - Touches availability abstract collector for given abstract product
+     *
+     * @api
+     *
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract)
+    {
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->touchAvailabilityAbstract($idAvailabilityAbstract);
+    }
+
 }

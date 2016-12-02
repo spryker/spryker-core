@@ -44,4 +44,14 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     {
         return $this->availabilityFacade->calculateStockForProduct($sku);
     }
+
+    /**
+     * @param int
+     *
+     * @return void
+     */
+    public function touchAvailabilityAbstract($idAvailabilityAbstract)
+    {
+        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
+    }
 }

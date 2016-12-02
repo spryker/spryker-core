@@ -8,14 +8,15 @@
 namespace Spryker\Zed\ProductBundle\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleAvailabilityCheck;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleCartExpander;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleCartItemGroupKeyExpander;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundlePriceCalculation;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleSalesOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityCheck;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundlePostSaveUpdate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
@@ -33,7 +34,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleCartExpander
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */
     public function createProductBundleCartExpander()
     {
@@ -46,7 +47,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleCartItemGroupKeyExpander
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander
      */
     public function createProductBundleCartItemGroupKeyExpander()
     {
@@ -54,7 +55,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleSalesOrderSaver
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver
      */
     public function createProductBundleSalesOrderSaver()
     {
@@ -62,7 +63,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundlePriceCalculation
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation
      */
     public function createProductBundlePriceCalculator()
     {
@@ -70,19 +71,30 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundlePostSaveUpdate
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate
      */
     public function createProductBundlePostSaveUpdate()
     {
-        return new ProductBundlePostSaveUpdate();
+        return new ProductBundleCartPostSaveUpdate();
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleAvailabilityCheck
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityCheck
      */
     public function createProductBundleCartPreCheck()
     {
         return new ProductBundleAvailabilityCheck($this->getAvailabilityFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler
+     */
+    public function createProductBundleAvailabilityHandler()
+    {
+        return new ProductBundleAvailabilityHandler(
+            $this->getAvailabilityQueryContainer(),
+            $this->getAvailabilityFacade()
+        );
     }
 
     /**
@@ -115,5 +127,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getAvailabilityFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
+     */
+    protected function getAvailabilityQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::QUERY_CONTAINER_AVAILABILITY);
     }
 }
