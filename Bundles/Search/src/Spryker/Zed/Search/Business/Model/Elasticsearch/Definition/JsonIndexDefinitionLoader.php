@@ -42,14 +42,14 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
-     * @param array $stores
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
+     * @param array $stores
      */
     public function __construct(
         array $sourceDirectories,
         IndexDefinitionMergerInterface $definitionMerger,
-        array $stores,
-        SearchToUtilEncodingInterface $utilEncodingService
+        SearchToUtilEncodingInterface $utilEncodingService,
+        array $stores
     ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;

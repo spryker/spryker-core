@@ -137,6 +137,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             $this->getStores(),
+            $this->getUtilEncodingMock(),
             $suffix
         );
 
@@ -307,18 +308,20 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
      * @param array $sourceDirectories
      * @param JsonIndexDefinitionMerger $definitionMerger
      * @param array $stores
+     * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingMock
      * @param string $suffix
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|JsonIndexDefinitionLoader
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
      */
     protected function createJsonIndexDefinitionLoader(
         array $sourceDirectories,
         JsonIndexDefinitionMerger $definitionMerger,
         array $stores,
+        SearchToUtilEncodingInterface $utilEncodingMock,
         $suffix = ''
     ) {
         $jsonIndexDefinitionLoader = $this->getMockBuilder(JsonIndexDefinitionLoader::class)
-            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $stores])
+            ->setConstructorArgs([$sourceDirectories, $definitionMerger, $utilEncodingMock, $stores])
             ->setMethods(['getIndexNameSuffix'])
             ->getMock();
 
