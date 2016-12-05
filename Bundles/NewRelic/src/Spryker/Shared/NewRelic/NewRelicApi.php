@@ -9,6 +9,7 @@ namespace Spryker\Shared\NewRelic;
 
 use GuzzleHttp\Client;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
 
 /**
@@ -282,6 +283,26 @@ class NewRelicApi implements NewRelicApiInterface
         if ($this->active) {
             newrelic_disable_autorum();
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function recordCustomEvent($name, array $attributes = [])
+    {
+        if (!$this->active) {
+            return $this;
+        }
+
+        if (!isset($attributes['store'])) {
+            $attributes['store'] = Store::getInstance()->getStoreName();
+        }
+        newrelic_record_custom_event($name, $attributes);
 
         return $this;
     }

@@ -9,11 +9,12 @@ namespace Spryker\Zed\ProductImage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 
 class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -22,8 +23,8 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new ProductImageToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;
@@ -36,10 +37,6 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer();
-        };
-
         return $container;
     }
 

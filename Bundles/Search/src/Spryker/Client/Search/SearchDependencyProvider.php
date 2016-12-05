@@ -11,11 +11,14 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
+use Spryker\Shared\Kernel\Store;
 
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
 
     const SEARCH_CONFIG_BUILDER = 'search config builder';
+    const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
+    const STORE = 'store';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,8 +29,14 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
+        $container = $this->provideStore($container);
+
         $container[self::SEARCH_CONFIG_BUILDER] = function (Container $container) {
             return $this->createSearchConfigBuilderPlugin($container);
+        };
+
+        $container[self::SEARCH_CONFIG_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->createSearchConfigExpanderPlugins($container);
         };
 
         return $container;
@@ -46,6 +55,30 @@ class SearchDependencyProvider extends AbstractDependencyProvider
             'Missing instance of %s! You need to implement your own plugin and instantiate it in your own SearchDependencyProvider::createSearchConfigBuilder() to be able to search.',
             SearchConfigBuilderInterface::class
         ));
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     */
+    protected function createSearchConfigExpanderPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function provideStore(Container $container)
+    {
+        $container[self::STORE] = function () {
+            return Store::getInstance();
+        };
+
+        return $container;
     }
 
 }

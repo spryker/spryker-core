@@ -31,12 +31,12 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
 
     /**
      * @var string

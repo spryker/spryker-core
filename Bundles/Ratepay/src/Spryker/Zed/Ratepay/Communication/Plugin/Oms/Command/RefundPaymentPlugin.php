@@ -29,7 +29,8 @@ class RefundPaymentPlugin extends BaseCommandPlugin implements CommandByOrderInt
     {
         $orderTransfer = $this->getOrderTransfer($orderEntity);
         $orderTransferItems = $this->getOrderItemsTransfer($orderItems);
-        $this->getFacade()->refundPayment($orderTransfer, $orderTransferItems);
+        $partialOrderTransfer = $this->getPartialOrderTransferByOrderItems($orderItems);
+        $this->getFacade()->refundPayment($orderTransfer, $partialOrderTransfer, $orderTransferItems);
 
         return [];
     }

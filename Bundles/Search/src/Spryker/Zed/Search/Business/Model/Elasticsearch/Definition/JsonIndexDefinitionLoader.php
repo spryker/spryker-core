@@ -9,8 +9,8 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Library\Json;
 use Spryker\Shared\Search\SearchConstants;
+use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -35,15 +35,26 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $storePrefixes;
 
     /**
+     * @var \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param array $sourceDirectories
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface $definitionMerger
      * @param array $stores
+     * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
      */
-    public function __construct(array $sourceDirectories, IndexDefinitionMergerInterface $definitionMerger, array $stores)
-    {
+    public function __construct(
+        array $sourceDirectories,
+        IndexDefinitionMergerInterface $definitionMerger,
+        array $stores,
+        SearchToUtilEncodingInterface $utilEncodingService
+    ) {
         $this->sourceDirectories = $sourceDirectories;
         $this->definitionMerger = $definitionMerger;
         $this->storePrefixes = $this->getStorePrefixes($stores);
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -55,7 +66,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 
         $jsonFiles = $this->getJsonFiles();
         foreach ($jsonFiles as $jsonFile) {
-            $definitionData = Json::decode($jsonFile->getContents(), true);
+            $definitionData = $this->decodeJson($jsonFile->getContents());
             $indexDefinitions = $this->getDefinitionByStores($jsonFile, $indexDefinitions, $definitionData);
         }
 
@@ -207,6 +218,17 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected function getIndexNameSuffix()
     {
         return Config::get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
+    }
+
+    /**
+     * @param string $jsonValue
+     *
+     * @return array
+     */
+    protected function decodeJson($jsonValue)
+    {
+        return $this->utilEncodingService
+            ->decodeJson($jsonValue, true);
     }
 
 }

@@ -3,26 +3,8 @@
     <product>
         <label>Products</label>
         <title>Products</title>
-        <uri>/product</uri>
         <icon>fa-database</icon>
-        <pages>
-            <product>
-                <label>Product List</label>
-                <title>Product List</title>
-                <bundle>product</bundle>
-                <controller>index</controller>
-                <action>index</action>
-                <order>0</order>
-                <visible>0</visible>
-            </product>
-            <import>
-                <label>Import/Update</label>
-                <title>Import/Update</title>
-                <bundle>product</bundle>
-                <controller>import</controller>
-                <action>index</action>
-                <visible>0</visible>
-            </import>
-        </pages>
+        <uri>#</uri>
+        <pages/>
     </product>
 </config>

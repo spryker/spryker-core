@@ -9,7 +9,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class IndexMapCleaner
+class IndexMapCleaner implements IndexMapCleanerInterface
 {
 
     /**
@@ -30,8 +30,10 @@ class IndexMapCleaner
      */
     public function cleanDirectory()
     {
-        $fileSystem = new Filesystem();
-        $fileSystem->remove($this->directory);
+        if (is_dir($this->directory)) {
+            $fileSystem = new Filesystem();
+            $fileSystem->remove($this->directory);
+        }
     }
 
 }

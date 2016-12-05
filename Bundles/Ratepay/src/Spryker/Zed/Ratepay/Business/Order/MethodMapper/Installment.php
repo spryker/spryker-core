@@ -42,8 +42,8 @@ class Installment extends AbstractMapper
         parent::mapMethodDataToPayment($quoteTransfer, $payment);
 
         $paymentTransfer = $this->getPaymentTransfer($quoteTransfer);
-        $payment->setBankAccountBic($paymentTransfer->getBankAccountBic())
-            ->setBankAccountHolder($paymentTransfer->getBankAccountHolder())
+        $payment
+            ->setBankAccountBic($paymentTransfer->getBankAccountBic())
             ->setBankAccountIban($paymentTransfer->getBankAccountIban())
 
             ->setDebitPayType($paymentTransfer->getDebitPayType())

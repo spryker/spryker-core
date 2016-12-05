@@ -15,10 +15,12 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\CancelPaymentPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\ConfirmDeliveryPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\ConfirmPaymentPlugin;
+use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\PaymentRequestPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\RefundPaymentPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition\IsCancellationConfirmedPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition\IsDeliveryConfirmedPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition\IsPaymentConfirmedPlugin;
+use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition\IsPaymentRequestPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition\IsRefundedPlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
@@ -46,6 +48,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection
+                ->add(new PaymentRequestPlugin(), 'Ratepay/PaymentRequest')
                 ->add(new CancelPaymentPlugin(), 'Ratepay/CancelOrder')
                 ->add(new ConfirmPaymentPlugin(), 'Ratepay/ConfirmPayment')
                 ->add(new ConfirmDeliveryPlugin(), 'Ratepay/ConfirmDelivery')
@@ -66,6 +69,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
+                ->add(new IsPaymentRequestPlugin(), 'Ratepay/IsPaymentRequestSuccess')
                 ->add(new IsCancellationConfirmedPlugin(), 'Ratepay/IsCancellationConfirmed')
                 ->add(new IsPaymentConfirmedPlugin(), 'Ratepay/IsPaymentConfirmed')
                 ->add(new IsDeliveryConfirmedPlugin(), 'Ratepay/IsDeliveryConfirmed')

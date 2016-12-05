@@ -7,11 +7,9 @@
 
 namespace Spryker\Client\Search\Plugin\Config;
 
-use Generated\Shared\Transfer\SearchConfigCacheTransfer;
+use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Search\SearchConstants;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -88,62 +86,37 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
      */
     protected function extendConfig()
     {
-        $searchConfigCacheTransfer = $this->getDynamicSearchConfig();
+        $searchConfigExpanders = $this->getFactory()->getSearchConfigExpanderPlugins();
+        foreach ($searchConfigExpanders as $searchConfigExpander) {
+            $searchConfigExtensionTransfer = $searchConfigExpander->getSearchConfigExtension();
 
-        $this->setDynamicFacets($searchConfigCacheTransfer);
-        $this->setDynamicSorts($searchConfigCacheTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\SearchConfigCacheTransfer
-     */
-    protected function getDynamicSearchConfig()
-    {
-        $searchConfigCacheKey = $this->getSearchConfigCacheKey();
-        $cacheData = $this
-            ->getFactory()
-            ->getStorageClient()
-            ->get($searchConfigCacheKey);
-
-        $searchConfigCacheTransfer = new SearchConfigCacheTransfer();
-
-        if (is_array($cacheData)) {
-            $searchConfigCacheTransfer->fromArray($cacheData, true);
+            $this->extendFacetConfig($searchConfigExtensionTransfer);
+            $this->extendSortConfig($searchConfigExtensionTransfer);
         }
-
-        return $searchConfigCacheTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
+     * @param \Generated\Shared\Transfer\SearchConfigExtensionTransfer $searchConfigExtensionTransfer
      *
      * @return void
      */
-    protected function setDynamicFacets(SearchConfigCacheTransfer $searchConfigCacheTransfer)
+    protected function extendFacetConfig(SearchConfigExtensionTransfer $searchConfigExtensionTransfer)
     {
-        foreach ($searchConfigCacheTransfer->getFacetConfigs() as $facetConfigTransfer) {
+        foreach ($searchConfigExtensionTransfer->getFacetConfigs() as $facetConfigTransfer) {
             $this->facetConfigBuilder->addFacet($facetConfigTransfer);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchConfigCacheTransfer $searchConfigCacheTransfer
+     * @param \Generated\Shared\Transfer\SearchConfigExtensionTransfer $searchConfigExtensionTransfer
      *
      * @return void
      */
-    protected function setDynamicSorts(SearchConfigCacheTransfer $searchConfigCacheTransfer)
+    protected function extendSortConfig(SearchConfigExtensionTransfer $searchConfigExtensionTransfer)
     {
-        foreach ($searchConfigCacheTransfer->getSortConfigs() as $sortConfigTransfer) {
+        foreach ($searchConfigExtensionTransfer->getSortConfigs() as $sortConfigTransfer) {
             $this->sortConfigBuilder->addSort($sortConfigTransfer);
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSearchConfigCacheKey()
-    {
-        return Config::get(SearchConstants::SEARCH_CONFIG_CACHE_KEY);
     }
 
 }

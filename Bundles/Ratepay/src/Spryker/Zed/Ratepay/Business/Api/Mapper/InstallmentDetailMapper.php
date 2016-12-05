@@ -6,22 +6,18 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Mapper;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestInstallmentDetailsTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class InstallmentDetailMapper extends BaseMapper
 {
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
-    protected $quoteTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\RatepayPaymentElvTransfer|\Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer
-     */
-    protected $ratepayPaymentTransfer;
+    protected $ratepayPaymentRequestTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
@@ -29,18 +25,23 @@ class InstallmentDetailMapper extends BaseMapper
     protected $requestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $ratepayPaymentTransfer
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      * @param \Generated\Shared\Transfer\RatepayRequestTransfer $requestTransfer
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
     public function __construct(
-        QuoteTransfer $quoteTransfer,
-        $ratepayPaymentTransfer,
-        RatepayRequestTransfer $requestTransfer
+        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer,
+        RatepayRequestTransfer $requestTransfer,
+        RatepayToMoneyInterface $moneyFacade
     ) {
-        $this->quoteTransfer = $quoteTransfer;
-        $this->ratepayPaymentTransfer = $ratepayPaymentTransfer;
+        $this->ratepayPaymentRequestTransfer = $ratepayPaymentRequestTransfer;
         $this->requestTransfer = $requestTransfer;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -49,11 +50,11 @@ class InstallmentDetailMapper extends BaseMapper
     public function map()
     {
         $this->requestTransfer->setInstallmentDetails(new RatepayRequestInstallmentDetailsTransfer())->getInstallmentDetails()
-            ->setRatesNumber($this->ratepayPaymentTransfer->getInstallmentNumberRates())
-            ->setAmount($this->centsToDecimal($this->ratepayPaymentTransfer->getInstallmentRate()))
-            ->setLastAmount($this->centsToDecimal($this->ratepayPaymentTransfer->getInstallmentLastRate()))
-            ->setInterestRate($this->centsToDecimal($this->ratepayPaymentTransfer->getInstallmentInterestRate()))
-            ->setPaymentFirstday($this->ratepayPaymentTransfer->getInstallmentPaymentFirstDay());
+            ->setRatesNumber($this->ratepayPaymentRequestTransfer->getInstallmentNumberRates())
+            ->setAmount($this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getInstallmentRate()))
+            ->setLastAmount($this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getInstallmentLastRate()))
+            ->setInterestRate($this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getInstallmentInterestRate()))
+            ->setPaymentFirstday($this->ratepayPaymentRequestTransfer->getInstallmentPaymentFirstDay());
     }
 
 }

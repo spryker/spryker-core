@@ -43,7 +43,8 @@ class CategoryExtractor implements AggregationExtractorInterface
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
             ->setName($parameterName)
-            ->setValues($facetResultValueTransfers);
+            ->setValues($facetResultValueTransfers)
+            ->setConfig(clone $this->facetConfigTransfer);
 
         if (isset($requestParameters[$parameterName])) {
             $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);

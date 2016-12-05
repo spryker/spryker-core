@@ -25,6 +25,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_GRAPH = 'graph plugin';
 
+    const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
+    const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -45,10 +48,30 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_GRAPH] = function (Container $container) {
-            return $this->getGraphPlugin();
+            return $this->createGraphPlugin();
         };
 
+        $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
+            return $this->getRelationDeletePluginStack();
+        });
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Graph\GraphInterface
+     */
+    protected function createGraphPlugin()
+    {
+        return new GraphPlugin();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+     */
+    protected function getRelationDeletePluginStack()
+    {
+        return [];
     }
 
     /**
@@ -62,15 +85,19 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new CategoryToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
+        $container[static::PLUGIN_STACK_RELATION_READ] = Container::share(function () {
+            return $this->getRelationReadPluginStack();
+        });
+
         return $container;
     }
 
     /**
-     * @return \Spryker\Shared\Graph\GraphInterface
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
      */
-    protected function getGraphPlugin()
+    protected function getRelationReadPluginStack()
     {
-        return new GraphPlugin();
+        return [];
     }
 
 }

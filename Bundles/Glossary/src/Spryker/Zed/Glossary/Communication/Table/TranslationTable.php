@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Glossary\Communication\Table;
 
-use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Url\Url;
@@ -41,7 +41,7 @@ class TranslationTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery $glossaryKeyQuery
-     * @param \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery $subGlossaryKey
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $subGlossaryKey
      * @param array $locales
      */
     public function __construct(SpyGlossaryKeyQuery $glossaryKeyQuery, SpyGlossaryTranslationQuery $subGlossaryKey, array $locales)

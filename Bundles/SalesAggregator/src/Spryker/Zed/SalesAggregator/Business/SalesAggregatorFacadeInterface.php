@@ -20,6 +20,8 @@ interface SalesAggregatorFacadeInterface
      *
      * @api
      *
+     * @throw \Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -32,6 +34,8 @@ interface SalesAggregatorFacadeInterface
      *  - Run all item aggregation plugins defined in SalesAggregatorDependencyProvider
      *
      * @api
+     *
+     * @throw \Spryker\Zed\SalesAggregator\Business\Exception\OrderTotalHydrationException
      *
      * @param int $idSalesOrderItem
      *

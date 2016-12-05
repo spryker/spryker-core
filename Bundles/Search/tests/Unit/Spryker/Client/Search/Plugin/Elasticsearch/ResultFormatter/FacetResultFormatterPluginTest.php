@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
-use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Client\Search\SearchFactory;
+use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 
 /**
  * @group Unit
@@ -133,7 +133,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(2))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
-                    ->setDocCount(3)),
+                    ->setDocCount(3))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];
@@ -196,7 +197,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(2))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
-                    ->setDocCount(3)),
+                    ->setDocCount(3))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
                 ->addValue((new FacetSearchResultValueTransfer())
@@ -207,7 +209,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(20))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('f')
-                    ->setDocCount(30)),
+                    ->setDocCount(30))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('bar')),
             'baz' => (new FacetSearchResultTransfer())
                 ->setName('baz')
                 ->addValue((new FacetSearchResultValueTransfer())
@@ -218,7 +221,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(200))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('i')
-                    ->setDocCount(300)),
+                    ->setDocCount(300))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('baz')),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];
@@ -261,7 +265,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(20))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue(3)
-                    ->setDocCount(30)),
+                    ->setDocCount(30))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];
@@ -322,7 +327,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(2))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
-                    ->setDocCount(3)),
+                    ->setDocCount(3))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
                 ->addValue((new FacetSearchResultValueTransfer())
@@ -333,11 +339,15 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(20))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('f')
-                    ->setDocCount(30)),
+                    ->setDocCount(30))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('bar')),
             'baz' => (new RangeSearchResultTransfer())
                 ->setName('baz')
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('baz'))
                 ->setMin(10)
-                ->setMax(20),
+                ->setMax(20)
+                ->setActiveMin(10)
+                ->setActiveMax(20),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];
@@ -371,7 +381,8 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(20))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c3')
-                    ->setDocCount(30)),
+                    ->setDocCount(30))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];
@@ -389,15 +400,15 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setName('foo')
                     ->setParameterName('foo')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(FacetConfigBuilder::TYPE_ENUMERATION)
-                ->setIsMultiValued(true)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setIsMultiValued(true)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                ->setType(FacetConfigBuilder::TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             );
 
         $aggregationResult = [
@@ -447,7 +458,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ],
                 ],
             ],
-            // this data should never get generated normally, but we want to make sure that it's not used when it's not needed even if it's there
             FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . 'bar' => [
                 FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME => [
                     PageIndexMap::STRING_FACET => [
@@ -457,9 +467,9 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                                     'key' => 'bar',
                                     PageIndexMap::STRING_FACET . '-value' => [
                                         'buckets' => [
-                                            ['key' => 'a', 'doc_count' => 40],
-                                            ['key' => 'b', 'doc_count' => 50],
-                                            ['key' => 'c', 'doc_count' => 60],
+                                            ['key' => 'd', 'doc_count' => 40],
+                                            ['key' => 'e', 'doc_count' => 50],
+                                            ['key' => 'f', 'doc_count' => 60],
                                         ],
                                     ],
                                 ],
@@ -481,18 +491,20 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                     ->setDocCount(20))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
-                    ->setDocCount(30)),
+                    ->setDocCount(30))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('d')
-                    ->setDocCount(4))
+                    ->setDocCount(40))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('e')
-                    ->setDocCount(5))
+                    ->setDocCount(50))
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('f')
-                    ->setDocCount(6)),
+                    ->setDocCount(60))
+                ->setConfig($searchConfig->getFacetConfigBuilder()->get('bar')),
         ];
 
         return [$searchConfig, $aggregationResult, $expectedResult];

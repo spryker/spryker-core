@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
+
 interface RatepayToSalesAggregatorInterface
 {
 
@@ -16,6 +18,13 @@ interface RatepayToSalesAggregatorInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer);
 
     /**
      * @param int $idSalesOrderItem

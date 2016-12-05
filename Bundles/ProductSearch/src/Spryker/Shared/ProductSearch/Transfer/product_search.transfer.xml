@@ -9,12 +9,29 @@
     </transfer>
 
     <transfer name="ProductSearchPreferences">
-        <property name="idProductAttributesMetadata" type="int" />
-        <property name="attributeType" type="string" />
+        <property name="idProductAttributeKey" type="int" />
+        <property name="key" type="string" />
         <property name="fullText" type="bool" />
         <property name="fullTextBoosted" type="bool" />
         <property name="suggestionTerms" type="bool" />
         <property name="completionTerms" type="bool" />
+    </transfer>
+
+    <transfer name="ProductSearchAttribute">
+        <property name="idProductSearchAttribute" type="int" />
+        <property name="key" type="string" />
+        <property name="filterType" type="string" />
+        <property name="position" type="int" />
+        <property name="localizedKeys" type="LocalizedProductSearchAttributeKey[]" singular="localizedKey" />
+    </transfer>
+
+    <transfer name="LocalizedProductSearchAttributeKey">
+        <property name="localeName" type="string" />
+        <property name="keyTranslation" type="string" />
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="isSearchable" type="bool" />
     </transfer>
 
 </transfers>

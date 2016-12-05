@@ -27,14 +27,13 @@ class BasketMapperTest extends AbstractMapperTest
     {
         $this->mapperFactory
             ->getBasketMapper(
-                $this->mockQuoteTransfer(),
-                $this->mockPaymentElvTransfer()
+                $this->mockRatepayPaymentRequestTransfer()
             )
             ->map();
 
-        $this->assertEquals(99, $this->requestTransfer->getShoppingBasket()->getAmount());
+        $this->assertEquals(18, $this->requestTransfer->getShoppingBasket()->getAmount());
         $this->assertEquals('iso3', $this->requestTransfer->getShoppingBasket()->getCurrency());
-        $this->assertEquals(89, $this->requestTransfer->getShoppingBasket()->getShippingUnitPrice());
+        $this->assertEquals(0, $this->requestTransfer->getShoppingBasket()->getShippingUnitPrice());
     }
 
 }

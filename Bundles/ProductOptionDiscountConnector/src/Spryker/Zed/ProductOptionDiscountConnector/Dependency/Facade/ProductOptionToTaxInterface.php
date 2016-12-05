@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade;
 
+/**
+ * @deprecated Use ProductOptionToTaxInterface instead
+ */
 interface ProductOptionToTaxInterface
 {
 

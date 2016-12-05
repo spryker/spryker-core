@@ -12,6 +12,7 @@ use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InstallmentSubForm extends AbstractPayolutionSubForm
@@ -51,17 +52,27 @@ class InstallmentSubForm extends AbstractPayolutionSubForm
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => PayolutionPaymentTransfer::class,
+        ])->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults([
-            'data_class' => PayolutionPaymentTransfer::class,
-        ])->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
+        $this->configureOptions($resolver);
     }
 
     /**
@@ -96,7 +107,7 @@ class InstallmentSubForm extends AbstractPayolutionSubForm
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'empty_value' => false,
+                'placeholder' => false,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],

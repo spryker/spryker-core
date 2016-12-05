@@ -1,0 +1,30 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Price & Tax</h3>
+        <p>Enter price and tax set.</p>
+    {% endfilter %}
+</div>
+
+{{ form_row(form.price_and_tax.price) }}
+
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Stock</h3>
+        <p>Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.</p>
+    {% endfilter %}
+</div>
+
+{% for inputCollection in form.price_and_stock %}
+    {% set form_group_errors_css = '' %}
+
+    {% if inputCollection.quantity.vars.errors|length %}
+        {% set form_group_errors_css = 'has-error' %}
+    {% endif %}
+
+    {{ form_row(inputCollection.id_stock_product) }}
+    {{ form_row(inputCollection.fk_stock) }}
+
+    {{ form_row(inputCollection.type) }}
+    {{ form_row(inputCollection.quantity) }}
+    {{ form_row(inputCollection.is_never_out_of_stock) }}
+{% endfor %}

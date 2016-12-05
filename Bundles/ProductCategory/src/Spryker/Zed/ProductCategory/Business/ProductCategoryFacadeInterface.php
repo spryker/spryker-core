@@ -7,51 +7,18 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductCategoryFacadeInterface
 {
 
     /**
-     * @api
+     * Specification:
+     * - Creates and persists new category mapping entries to database.
+     * - If a product category mapping already exists, same logic will still apply.
+     * - Touches affected category.
+     * - Touches affected abstract products.
      *
-     * @param string $sku
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
-     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
-     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return int
-     */
-    public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param string $sku
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return bool
-     */
-    public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
-     */
-    public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
      * @api
      *
      * @param int $idCategory
@@ -64,6 +31,11 @@ interface ProductCategoryFacadeInterface
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
 
     /**
+     * Specification:
+     * - Removes existing product category mapping entries from database.
+     * - Touches affected category.
+     * - Touches affected abstract products.
+     *
      * @api
      *
      * @param int $idCategory
@@ -74,6 +46,11 @@ interface ProductCategoryFacadeInterface
     public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign);
 
     /**
+     * Specification:
+     * - Updates order of existing product category mapping entries in database.
+     * - Touches affected category.
+     * - Touches affected abstract products.
+     *
      * @api
      *
      * @param int $idCategory
@@ -86,57 +63,31 @@ interface ProductCategoryFacadeInterface
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
     /**
+     * Specification:
+     * - Removes all existing product category mapping entries from database.
+     * - Touches affected category.
+     * - Touches affected abstract products.
+     *
      * @api
      *
      * @param int $idCategory
-     * @param array $productPreConfig
      *
      * @return void
      */
-    public function updateProductCategoryPreConfig($idCategory, array $productPreConfig);
+    public function removeAllProductMappingsForCategory($idCategory);
 
     /**
+     * Specification:
+     * - Returns all abstract products that are assigned to the given category.
+     * - The data of the returned products are localized based on the given locale transfer.
+     *
      * @api
      *
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return void
-     */
-    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
-     * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return void
-     */
-    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $fkParentCategoryNode
-     * @param bool $deleteChildren
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
-     */
-    public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer);
+    public function getAbstractProductsByIdCategory($idCategory, LocaleTransfer $localeTransfer);
 
 }

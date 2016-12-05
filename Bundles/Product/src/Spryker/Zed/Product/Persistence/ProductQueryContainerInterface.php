@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductQueryContainerInterface extends QueryContainerInterface
@@ -27,11 +25,34 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstract();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProduct();
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryTaxSetForProductAbstract($idProductAbstract);
+    public function queryProductAbstractLocalizedAttributes($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryProductLocalizedAttributes($idProduct);
 
     /**
      * @api
@@ -50,24 +71,6 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractBySku($sku);
-
-    /**
-     * @api
-     *
-     * @param string $attributeName
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
-     */
-    public function queryAttributeByName($attributeName);
-
-    /**
-     * @api
-     *
-     * @param string $attributeType
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
-     */
-    public function queryAttributeTypeByName($attributeType);
 
     /**
      * @api
@@ -92,20 +95,18 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     *
-     * @return $this
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function joinProductConcreteCollection(ModelCriteria $expandableQuery);
+    public function queryProductAttributeKey();
 
     /**
      * @api
      *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param int $idProductAbstract
+     * @param int $idLocale
      *
-     * @return $this
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale);
+    public function queryUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
 }

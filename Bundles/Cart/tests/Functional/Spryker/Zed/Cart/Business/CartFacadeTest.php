@@ -18,7 +18,6 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
  * @group Functional
@@ -45,11 +44,6 @@ class CartFacadeTest extends Test
     private $cartFacade;
 
     /**
-     * @var \Spryker\Zed\Price\Business\PriceFacade
-     */
-    private $priceFacade;
-
-    /**
      * @return void
      */
     public function setUp()
@@ -64,8 +58,6 @@ class CartFacadeTest extends Test
         $dependencyProvider->providePersistenceLayerDependencies($container);
 
         $this->cartFacade = new CartFacade();
-
-        $this->priceFacade = new PriceFacade();
 
         $this->setTestData();
     }

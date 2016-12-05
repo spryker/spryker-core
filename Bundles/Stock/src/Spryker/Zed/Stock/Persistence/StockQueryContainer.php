@@ -146,4 +146,22 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
             ->filterByIdStockProduct($idStockProduct);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByIdProduct($idProduct)
+    {
+        return $this->queryStockByProducts($idProduct)
+              ->useStockQuery()
+                  ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
+              ->endUse()
+                ->useSpyProductQuery()
+                ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
+            ->endUse();
+    }
+
 }

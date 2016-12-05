@@ -5,10 +5,12 @@
     * tabsViewTransfer (`\Generated\Shared\Transfer\TabsViewTransfer`): transfer object that contains all information of the tabs (required).
     * context (array):  Context variables that will be available in included templates (optional).
 #}
-<div class="tabs-container {% if tabsViewTransfer.isNavigable %}tabs-navigable{% endif %}">
+<div class="tabs-container"
+     data-is-navigable="{{ tabsViewTransfer.isNavigable ? 'true' : 'false' }}"
+     data-auto-errors="{{ tabsViewTransfer.autoErrors is null or tabsViewTransfer.autoErrors ? 'true' : 'false' }}">
     <ul class="nav nav-tabs">
         {% for tab in tabsViewTransfer.tabs %}
-            <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}">
+            <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-tab-content-id="tab-content-{{ tab.name }}">
                 <a href="#tab-content-{{ tab.name }}" data-toggle="tab">{{ tab.title | trans }}</a>
             </li>
         {% endfor %}

@@ -1,0 +1,52 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% form_theme form with [
+    '@ProductManagement/_partials/no-label-checkbox-theme.twig',
+    '@ProductManagement/_partials/product-image-set-theme.twig',
+    '@ProductManagement/_partials/product-image-collection-theme.twig',
+]%}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Create a Product' | trans %}
+{% endif %}
+
+{% if submit_title is not defined %}
+    {% set submit_title = 'Save' | trans %}
+{% endif %}
+
+{% if idProduct is not defined %}
+    {% set idProduct = 0 %}
+{% endif %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/product-management', 'List Products' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
+
+    {{ tabs(productFormAddTabs, {
+        'form': form,
+        'currentLocale': currentLocale,
+        'concreteProductCollection': concreteProductCollection,
+        'localeCollection': localeCollection,
+        'attributeLocaleCollection': attributeLocaleCollection,
+        'submit_title': submit_title
+    }) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productmanagement-main.js"></script>
+{% endblock %}

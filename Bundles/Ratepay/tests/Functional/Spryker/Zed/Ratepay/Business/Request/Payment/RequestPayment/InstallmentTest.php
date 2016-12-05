@@ -35,7 +35,7 @@ class InstallmentTest extends InstallmentAbstractTest
     }
 
     /**
-     * @return \Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentInvoiceAdapterMock
+     * @return \Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentInstallmentAdapterMock
      */
     protected function getPaymentSuccessResponseAdapterMock()
     {
@@ -43,7 +43,7 @@ class InstallmentTest extends InstallmentAbstractTest
     }
 
     /**
-     * @return \Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentInvoiceAdapterMock
+     * @return \Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\RequestPaymentInstallmentAdapterMock
      */
     protected function getPaymentFailureResponseAdapterMock()
     {
@@ -57,7 +57,7 @@ class InstallmentTest extends InstallmentAbstractTest
      */
     protected function runFacadeMethod($facade)
     {
-        return $facade->requestPayment($this->quoteTransfer);
+        return $facade->requestPayment($this->mockRatepayPaymentRequestTransfer());
     }
 
     /**

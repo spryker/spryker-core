@@ -7,19 +7,12 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValueQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraintQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
@@ -29,27 +22,11 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
-    public function createProductOptionTypeQuery()
+    public function createProductOptionGroupQuery()
     {
-        return SpyProductOptionTypeQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery
-     */
-    public function createProductOptionTypeTranslationQuery()
-    {
-        return SpyProductOptionTypeTranslationQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
-     */
-    public function createProductOptionTypeUsageQuery()
-    {
-        return SpyProductOptionTypeUsageQuery::create();
+        return SpyProductOptionGroupQuery::create();
     }
 
     /**
@@ -61,38 +38,6 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery
-     */
-    public function createProductOptionValueTranslationQuery()
-    {
-        return SpyProductOptionValueTranslationQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
-     */
-    public function createProductOptionValueUsageQuery()
-    {
-        return SpyProductOptionValueUsageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery
-     */
-    public function createProductOptionTypeUsageExclusionQuery()
-    {
-        return SpyProductOptionTypeUsageExclusionQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraintQuery
-     */
-    public function createProductOptionValueUsageConstraintQuery()
-    {
-        return SpyProductOptionValueUsageConstraintQuery::create();
-    }
-
-    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function createProductAbstractQuery()
@@ -101,27 +46,27 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
-    public function createProductOptionConfigurationPresetQuery()
+    public function createProductAbstractProductOptionGroupQuery()
     {
-        return SpyProductOptionConfigurationPresetQuery::create();
+        return SpyProductAbstractProductOptionGroupQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesInterface
      */
-    public function createTaxSetQuery()
+    public function getSalesQueryContainer()
     {
-        return SpyTaxSetQuery::create();
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValueQuery
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryInterface
      */
-    public function createProductOptionConfigurationPresetValueQuery()
+    public function getCountryQueryContainer()
     {
-        return SpyProductOptionConfigurationPresetValueQuery::create();
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_COUNTRY);
     }
 
 }

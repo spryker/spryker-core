@@ -8,12 +8,16 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
-use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice;
-use Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
+use Spryker\Zed\ProductOption\Business\SalesAggregator\ItemProductOptionGrossPrice;
+use Spryker\Zed\ProductOption\Business\SalesAggregator\SubtotalWithProductOptions;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -24,39 +28,91 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReaderInterface
      */
-    public function createDataImportWriterModel()
+    public function createProductOptionGroupReader()
     {
-        return new DataImportWriter($this->getQueryContainer(), $this->getProductFacade(), $this->getLocaleFacade());
+        return new ProductOptionGroupReader(
+            $this->getQueryContainer(),
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaverInterface
      */
-    public function createProductOptionReaderModel()
+    public function createProductOptionGroupSaver()
     {
-        return new ProductOptionReader($this->getQueryContainer(), $this->getLocaleFacade());
+        return new ProductOptionGroupSaver(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->createTranslationSaver(),
+            $this->createAbstractProductOptionSaver(),
+            $this->createProductOptionValueSaver()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaverInterface
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
      */
-    public function createProductOptionOrderSaver()
+    public function createProductOptionValueSaver()
     {
-        return new ProductOptionOrderSaver();
+        return new ProductOptionValueSaver(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->createTranslationSaver()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface
+     */
+    protected function createTranslationSaver()
+    {
+        return new TranslationSaver(
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
+     */
+    public function createAbstractProductOptionSaver()
+    {
+        return new AbstractProductOptionSaver(
+            $this->getQueryContainer(),
+            $this->getTouchFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
      */
     public function createItemProductOptionGrossPriceAggregator()
     {
-        return new ItemProductOptionGrossPrice($this->getSalesQueryContainer());
+        return new ItemProductOptionGrossPrice($this->getQueryContainer());
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaverInterface
+     */
+    public function createProductOptionOrderSaver()
+    {
+        return new ProductOptionOrderSaver($this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReaderInterface
+     */
+    public function createProductOptionValueReader()
+    {
+        return new ProductOptionValueReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\SalesAggregator\OrderAmountAggregatorInterface
      */
     public function createSubtotalWithProductOption()
     {
@@ -64,19 +120,11 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionTaxRateCalculator
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */
     public function createProductOptionTaxRateCalculator()
     {
         return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
-     */
-    protected function getSalesQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
@@ -88,19 +136,27 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
      */
-    protected function getProductFacade()
+    protected function getTouchFacade()
     {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT);
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TOUCH);
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridgeInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface
      */
     protected function getTaxFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
     }
 
 }

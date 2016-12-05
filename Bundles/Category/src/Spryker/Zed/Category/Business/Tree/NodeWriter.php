@@ -9,12 +9,15 @@ namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
+use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class NodeWriter implements NodeWriterInterface
 {
 
+    /**
+     * @deprecated This is not in use anymore
+     */
     const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
 
     /**
@@ -23,64 +26,96 @@ class NodeWriter implements NodeWriterInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryToucherInterface
+     */
+    protected $categoryToucher;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryToucherInterface $categoryToucher
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->categoryToucher = $categoryToucher;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
      * @return int
      */
-    public function create(NodeTransfer $categoryNode)
+    public function create(NodeTransfer $categoryNodeTransfer)
     {
-        $nodeEntity = new SpyCategoryNode();
-        $nodeEntity->fromArray($categoryNode->toArray());
-        $nodeEntity->save();
+        $categoryNodeEntity = new SpyCategoryNode();
+        $categoryNodeEntity->fromArray($categoryNodeTransfer->toArray());
+        $categoryNodeEntity->save();
 
-        $nodeId = $nodeEntity->getIdCategoryNode();
-        $categoryNode->setIdCategoryNode($nodeId);
+        $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
+        $categoryNodeTransfer->setIdCategoryNode($idCategoryNode);
 
-        return $nodeId;
+        return $idCategoryNode;
     }
 
     /**
-     * @param int $nodeId
+     * @deprecated Will be removed with next major release
      *
-     * @throws \Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException
-     *
-     * @return int
-     */
-    public function delete($nodeId)
-    {
-        $nodeEntity = $this->queryContainer
-            ->queryNodeById($nodeId)
-            ->findOne();
-        if (!$nodeEntity) {
-            throw new NodeNotFoundException();
-        }
-        $categoryId = $nodeEntity->getFkCategory();
-        $nodeEntity->delete();
-
-        return $categoryId;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param int $idCategoryNode
      *
      * @return void
      */
-    public function update(NodeTransfer $categoryNode)
+    public function delete($idCategoryNode)
     {
         $nodeEntity = $this->queryContainer
-            ->queryNodeById($categoryNode->getIdCategoryNode())
+            ->queryNodeById($idCategoryNode)
             ->findOne();
+
         if ($nodeEntity) {
-            $nodeEntity->fromArray($categoryNode->toArray());
+            $nodeEntity->delete();
+        }
+    }
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     *
+     * @return void
+     */
+    public function update(NodeTransfer $categoryNodeTransfer)
+    {
+        $nodeEntity = $this->queryContainer
+            ->queryNodeById($categoryNodeTransfer->getIdCategoryNode())
+            ->findOne();
+
+        if ($nodeEntity) {
+            $nodeEntity->fromArray($categoryNodeTransfer->toArray());
             $nodeEntity->save();
+        }
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateOrder($idCategoryNode, $position)
+    {
+        $categoryNodeEntity = $this
+            ->queryContainer
+            ->queryNodeById($idCategoryNode)
+            ->findOne();
+
+        if ($categoryNodeEntity) {
+            $categoryNodeEntity->setNodeOrder($position);
+            $categoryNodeEntity->save();
+
+            $this->categoryToucher->touchCategoryNodeActive($categoryNodeEntity->getIdCategoryNode());
         }
     }
 

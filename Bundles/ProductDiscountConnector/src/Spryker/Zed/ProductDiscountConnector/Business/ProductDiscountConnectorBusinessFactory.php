@@ -26,7 +26,8 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeDecisionRule(
             $this->getProductFacade(),
-            $this->getDiscountFacade()
+            $this->getDiscountFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -60,6 +61,14 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getDiscountFacade()
     {
         return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_LOCALE);
     }
 
 }

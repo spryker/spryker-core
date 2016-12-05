@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductDiscountConnector\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -17,11 +17,11 @@ class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFact
 {
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function createProductAttributesMetadataQuery()
+    public function createProductAttributesKeyQuery()
     {
-        return SpyProductAttributesMetadataQuery::create();
+        return SpyProductAttributeKeyQuery::create();
     }
 
 }

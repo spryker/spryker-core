@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Ratepay\Business\Api\Converter;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 use \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface;
 
 abstract class BaseConverter implements ConverterInterface
@@ -18,21 +18,18 @@ abstract class BaseConverter implements ConverterInterface
     protected $response;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
+     * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface
      */
-    protected $currencyManager;
+    protected $moneyFacade;
 
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
+     * @param \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface $moneyFacade
      */
-    public function __construct(
-        ResponseInterface $response,
-        CurrencyManager $currencyManager
-    ) {
-
+    public function __construct(ResponseInterface $response, RatepayToMoneyInterface $moneyFacade)
+    {
         $this->response = $response;
-        $this->currencyManager = $currencyManager;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -42,7 +39,7 @@ abstract class BaseConverter implements ConverterInterface
      */
     protected function decimalToCents($amount)
     {
-        return $this->currencyManager->convertDecimalToCent($amount);
+        return $this->moneyFacade->convertDecimalToInteger($amount);
     }
 
 }

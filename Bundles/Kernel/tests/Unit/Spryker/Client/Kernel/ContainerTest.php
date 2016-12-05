@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Kernel\Locator;
 
 /**
  * @group Unit
@@ -26,7 +27,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new Container();
 
-        $this->assertInstanceOf('Spryker\Client\Kernel\Locator', $container->getLocator());
+        $this->assertInstanceOf(Locator::class, $container->getLocator());
     }
 
 }

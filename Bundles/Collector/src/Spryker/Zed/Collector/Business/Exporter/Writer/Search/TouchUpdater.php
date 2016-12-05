@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouchSearch;
+use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -31,11 +31,17 @@ class TouchUpdater extends AbstractTouchUpdater
     protected $touchKeyColumnName = CollectorConfig::COLLECTOR_SEARCH_KEY;
 
     /**
+     * @param string $key
+     * @param int $idLocale
+     *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
      */
-    protected function createTouchKeyEntity()
+    protected function findOrCreateTouchKeyEntity($key, $idLocale)
     {
-        return new SpyTouchSearch();
+        return SpyTouchSearchQuery::create()
+            ->filterByKey($key)
+            ->filterByFkLocale($idLocale)
+            ->findOneOrCreate();
     }
 
 }

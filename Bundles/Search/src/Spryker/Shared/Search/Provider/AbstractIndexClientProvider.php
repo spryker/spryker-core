@@ -7,12 +7,10 @@
 
 namespace Spryker\Shared\Search\Provider;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Search\SearchConstants;
 
 /**
- * Class ClientStorageProvider
- *
  * @method \Elastica\Index getInstance()
  */
 abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
@@ -25,7 +23,7 @@ abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
     {
         $client = parent::createZedClient();
 
-        return $client->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
+        return $client->getIndex(Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME));
     }
 
 }

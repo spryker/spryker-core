@@ -47,6 +47,23 @@ abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrde
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getPartialOrderTransferByOrderItems($orderItems)
+    {
+        $partialOrderTransfer = $this->getFactory()->createOrderTransfer();
+        $items = $this->getFactory()->createOrderTransferItems($orderItems);
+        $partialOrderTransfer->setItems($items);
+
+        return $this
+            ->getFactory()
+            ->getSalesAggregator()
+            ->getOrderTotalByOrderTransfer($partialOrderTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getOrderItemsTransfer(array $orderItems)
@@ -55,6 +72,7 @@ abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrde
         foreach ($orderItems as $orderItem) {
             $orderTransferItems[$orderItem->getIdSalesOrderItem()] = $this
                 ->getOrderItemTotalsByIdSalesOrderItem($orderItem->getIdSalesOrderItem());
+
         }
 
         return $orderTransferItems;

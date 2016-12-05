@@ -40,7 +40,7 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
             ->getPaginationConfigBuilder();
 
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
-        $maxPage = ceil($searchResult->getTotalHits() / $itemsPerPage);
+        $maxPage = (int)ceil($searchResult->getTotalHits() / $itemsPerPage);
         $currentPage = min($paginationConfig->getCurrentPage($requestParameters), $maxPage);
 
         $paginationSearchResultTransfer = new PaginationSearchResultTransfer();
@@ -48,7 +48,8 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
             ->setNumFound($searchResult->getTotalHits())
             ->setCurrentPage($currentPage)
             ->setMaxPage($maxPage)
-            ->setCurrentItemsPerPage($itemsPerPage);
+            ->setCurrentItemsPerPage($itemsPerPage)
+            ->setConfig(clone $paginationConfig->get());
 
         return $paginationSearchResultTransfer;
     }

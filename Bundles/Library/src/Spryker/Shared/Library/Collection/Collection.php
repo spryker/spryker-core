@@ -9,6 +9,6 @@ namespace Spryker\Shared\Library\Collection;
 
 use Everon\Component\Collection\Collection as EveronCollection;
 
-class Collection extends EveronCollection
+class Collection extends EveronCollection implements CollectionInterface
 {
 }

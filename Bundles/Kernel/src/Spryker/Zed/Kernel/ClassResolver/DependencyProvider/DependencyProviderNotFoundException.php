@@ -44,7 +44,7 @@ class DependencyProviderNotFoundException extends \Exception
             $callerClassInfo->getBundle()
         );
 
-        $message .= new Backtrace();
+        $message .= PHP_EOL . new Backtrace();
 
         return $message;
     }

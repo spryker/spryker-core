@@ -67,16 +67,6 @@ abstract class TransactionHandlerAbstract implements TransactionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Zed\Ratepay\Business\Api\Model\Base $request
-     * @param \Spryker\Zed\Ratepay\Business\Api\Model\Response\ResponseInterface $response
-     * @param string $method
-     * @param int|null $entityId
-     *
-     * @return void
-     */
-    abstract protected function logInfo($request, $response, $method, $entityId = null);
-
-    /**
      * @param \Spryker\Zed\Ratepay\Business\Request\RequestMethodInterface $mapper
      *
      * @return void

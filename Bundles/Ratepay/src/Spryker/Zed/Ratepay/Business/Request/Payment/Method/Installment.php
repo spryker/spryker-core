@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,6 +9,7 @@ namespace Spryker\Zed\Ratepay\Business\Request\Payment\Method;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
+use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Spryker\Shared\Ratepay\RatepayConstants;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
@@ -18,11 +20,16 @@ class Installment extends AbstractMethod
 {
 
     /**
+     * @const Payment method code.
+     */
+    const METHOD = RatepayConstants::METHOD_INSTALLMENT;
+
+    /**
      * @return string
      */
     public function getMethodName()
     {
-        return RatepayConstants::INSTALLMENT;
+        return static::METHOD;
     }
 
     /**
@@ -60,7 +67,7 @@ class Installment extends AbstractMethod
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request
+     * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation
      */
     public function calculationRequest(QuoteTransfer $quoteTransfer)
     {
@@ -76,23 +83,22 @@ class Installment extends AbstractMethod
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer $paymentData
+     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
      *
      * @return void
      */
-    protected function mapPaymentData($quoteTransfer, $paymentData)
+    protected function mapPaymentData(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
-        parent::mapPaymentData($quoteTransfer, $paymentData);
+        parent::mapPaymentData($ratepayPaymentRequestTransfer);
 
         $this->mapperFactory
-            ->getInstallmentPaymentMapper($quoteTransfer, $paymentData)
+            ->getInstallmentPaymentMapper($ratepayPaymentRequestTransfer)
             ->map();
         $this->mapperFactory
-            ->getInstallmentDetailMapper($quoteTransfer, $paymentData)
+            ->getInstallmentDetailMapper($ratepayPaymentRequestTransfer)
             ->map();
-        if ($paymentData->getDebitPayType() == RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT) {
-            $this->mapBankAccountData($quoteTransfer, $paymentData);
+        if ($ratepayPaymentRequestTransfer->getDebitPayType() == RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT) {
+            $this->mapBankAccountData($ratepayPaymentRequestTransfer);
         }
     }
 

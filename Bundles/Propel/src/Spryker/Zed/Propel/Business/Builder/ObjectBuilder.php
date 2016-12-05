@@ -1,8 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Propel package - modified by Spryker Systems GmbH.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with the source code of the extended class.
+ *
+ * @license MIT License
  */
 
 namespace Spryker\Zed\Propel\Business\Builder;

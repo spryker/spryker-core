@@ -7,14 +7,37 @@
 
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+
 interface ProductSearchToProductInterface
 {
 
     /**
-     * @param array $productsData
+     * @param string $key
      *
-     * @return array
+     * @return bool
      */
-    public function buildProducts(array $productsData);
+    public function hasProductAttributeKey($key);
+
+    /**
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
+     */
+    public function findProductAttributeKey($key);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyTransfer $productAttributeKeyTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
+     */
+    public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer);
 
 }

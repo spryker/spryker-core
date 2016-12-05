@@ -7,39 +7,18 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CarrierForm extends AbstractForm
+class CarrierForm extends AbstractType
 {
 
     const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     const FIELD_NAME_FIELD = 'name';
     const FIELD_IS_ACTIVE_FIELD = 'isActive';
     const CARRIER_ID = 'carrier_id';
-
-    /**
-     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    protected $carrierQuery;
-
-    /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
-     */
-    public function __construct(SpyShipmentCarrierQuery $carrierQuery)
-    {
-        $this->carrierQuery = $carrierQuery;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
 
     /**
      * @return string
@@ -60,37 +39,19 @@ class CarrierForm extends AbstractForm
         $builder->add(self::FIELD_NAME_FIELD, 'text', [
                 'label' => 'Name',
                 'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
+                    new NotBlank(),
                 ],
             ])
             ->add(self::FIELD_NAME_GLOSSARY_FIELD, new AutosuggestType(), [
                 'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys',
                 'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
+                    new NotBlank(),
                 ],
             ])
             ->add(self::FIELD_IS_ACTIVE_FIELD, 'checkbox', [
                 'label' => 'Enabled?',
             ]);
-    }
-
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        $result = [];
-        $carrierId = $this->getRequest()->get(self::CARRIER_ID);
-
-        if ($carrierId !== null) {
-            $carrier = $this->carrierQuery->findOneByIdShipmentCarrier($carrierId);
-            $result = [
-                self::FIELD_IS_ACTIVE_FIELD => $carrier->getIsActive(),
-            ];
-        }
-
-        return $result;
     }
 
 }

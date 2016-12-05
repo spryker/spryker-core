@@ -1,0 +1,8 @@
+{
+  "description": "Needed for core dependency management - overwrites dependencies between bundles",
+  "include": {
+  },
+  "exclude": {
+    "Messenger": "Required by tests"
+  }
+}

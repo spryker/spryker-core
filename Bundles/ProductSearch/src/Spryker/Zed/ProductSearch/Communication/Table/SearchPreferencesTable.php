@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Table;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributesMetadataTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;
@@ -16,13 +17,12 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 class SearchPreferencesTable extends AbstractTable
 {
 
-    const COL_NAME = SpyProductAttributesMetadataTableMap::COL_KEY;
-    const COL_PROPERTY_TYPE = 'type';
+    const COL_NAME = SpyProductAttributeKeyTableMap::COL_KEY;
     const COL_SUGGESTION_TERMS = 'suggestionTerms';
     const COL_COMPLETION_TERMS = 'completionTerms';
     const COL_FULL_TEXT = 'fullText';
     const COL_FULL_TEXT_BOOSTED = 'fullTextBoosted';
-    const ACTION = 'action';
+    const ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
@@ -48,7 +48,7 @@ class SearchPreferencesTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::ACTION);
+        $config->addRawColumn(self::ACTIONS);
 
         return $config;
     }
@@ -59,13 +59,12 @@ class SearchPreferencesTable extends AbstractTable
     protected function getHeaderFields()
     {
         return [
-            self::COL_NAME => 'Attribute name',
-            self::COL_PROPERTY_TYPE => 'Type',
-            self::COL_FULL_TEXT => 'Include for Full Text',
-            self::COL_FULL_TEXT_BOOSTED => 'Include for Full Text Boosted',
-            self::COL_SUGGESTION_TERMS => 'Include for Suggestion',
-            self::COL_COMPLETION_TERMS => 'Include for Suggestion',
-            self::ACTION => 'Action',
+            self::COL_NAME => 'Attribute key',
+            self::COL_FULL_TEXT => 'Include for full text',
+            self::COL_FULL_TEXT_BOOSTED => 'Include for full text boosted',
+            self::COL_SUGGESTION_TERMS => 'Include for suggestion',
+            self::COL_COMPLETION_TERMS => 'Include for completion',
+            self::ACTIONS => 'Actions',
         ];
     }
 
@@ -86,7 +85,6 @@ class SearchPreferencesTable extends AbstractTable
     {
         return [
             self::COL_NAME,
-            self::COL_PROPERTY_TYPE,
             self::COL_FULL_TEXT,
             self::COL_FULL_TEXT_BOOSTED,
             self::COL_SUGGESTION_TERMS,
@@ -103,24 +101,16 @@ class SearchPreferencesTable extends AbstractTable
     {
         $result = [];
 
-        $productAttributesMetadata = $this->getProductAttributesMetadata($config);
+        $productAttributeKeys = $this->getProductAttributeKeys($config);
 
-        foreach ($productAttributesMetadata as $productAttributesMetadataEntity) {
+        foreach ($productAttributeKeys as $productAttributeKeyEntity) {
             $result[] = [
-                self::COL_NAME => $productAttributesMetadataEntity->getKey(),
-                self::COL_PROPERTY_TYPE => $productAttributesMetadataEntity->getSpyProductAttributeType()->getName(),
-                self::COL_FULL_TEXT => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_FULL_TEXT)),
-                self::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_FULL_TEXT_BOOSTED)),
-                self::COL_SUGGESTION_TERMS => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_SUGGESTION_TERMS)),
-                self::COL_COMPLETION_TERMS => $this->boolToString($productAttributesMetadataEntity->getVirtualColumn(self::COL_COMPLETION_TERMS)),
-                self::ACTION => $this->generateEditButton(
-                    sprintf(
-                        '/product-search/search-preferences/edit?%s=%d',
-                        SearchPreferencesController::PARAM_ID,
-                        $productAttributesMetadataEntity->getIdProductAttributesMetadata()
-                    ),
-                    'Edit'
-                ),
+                self::COL_NAME => $productAttributeKeyEntity->getKey(),
+                self::COL_FULL_TEXT => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_FULL_TEXT)),
+                self::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_FULL_TEXT_BOOSTED)),
+                self::COL_SUGGESTION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_SUGGESTION_TERMS)),
+                self::COL_COMPLETION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_COMPLETION_TERMS)),
+                self::ACTIONS => $this->getActions($productAttributeKeyEntity),
             ];
         }
 
@@ -130,17 +120,17 @@ class SearchPreferencesTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadata[]
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]
      */
-    protected function getProductAttributesMetadata(TableConfiguration $config)
+    protected function getProductAttributeKeys(TableConfiguration $config)
     {
         $query = $this
             ->productSearchQueryContainer
             ->querySearchPreferencesTable();
 
-        $productAttributesMetadata = $this->runQuery($query, $config, true);
+        $productAttributeKey = $this->runQuery($query, $config, true);
 
-        return $productAttributesMetadata;
+        return $productAttributeKey;
     }
 
     /**
@@ -151,6 +141,35 @@ class SearchPreferencesTable extends AbstractTable
     protected function boolToString($boolValue)
     {
         return $boolValue ? 'yes' : 'no';
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey $productAttributeKeyEntity
+     *
+     * @return string
+     */
+    protected function getActions(SpyProductAttributeKey $productAttributeKeyEntity)
+    {
+        $actions = [
+            $this->generateEditButton(
+                sprintf(
+                    '/product-search/search-preferences/edit?%s=%d',
+                    SearchPreferencesController::PARAM_ID,
+                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                ),
+                'Edit'
+            ),
+            $this->generateRemoveButton(
+                sprintf(
+                    '/product-search/search-preferences/clean?%s=%d',
+                    SearchPreferencesController::PARAM_ID,
+                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                ),
+                'Deactivate all'
+            ),
+        ];
+
+        return implode(' ', $actions);
     }
 
 }

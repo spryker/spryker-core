@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade;
 
 /**
- * @deprecate Use ProductOptionToTaxInterface instead
+ * @deprecated Use ProductOptionToTaxInterface instead
  */
 interface ProductOptionToTaxBridgeInterface extends ProductOptionToTaxInterface
 {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
@@ -66,7 +66,7 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
     }
 
     /**
-     * @param \Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $transactionStatusLogEntity
      *
      * @return bool
      */

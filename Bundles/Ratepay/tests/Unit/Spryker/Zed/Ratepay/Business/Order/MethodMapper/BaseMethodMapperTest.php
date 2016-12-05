@@ -48,6 +48,7 @@ class BaseMethodMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->quoteTransfer = $this->mockQuoteTransfer();
         $this->payment = new SpyPaymentRatepay();
+        $this->payment->setBankAccountHolder('acchold');
     }
 
     protected function testAbstractMapMethodDataToPayment()
