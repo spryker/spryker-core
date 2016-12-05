@@ -23,7 +23,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/library": "^2.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/sequence-number": "^2.0.0",
     "spryker/testify": "*"

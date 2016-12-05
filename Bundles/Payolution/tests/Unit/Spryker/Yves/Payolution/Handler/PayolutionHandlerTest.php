@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Payolution\PayolutionClientInterface;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
 use Spryker\Yves\Payolution\Handler\PayolutionHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +34,7 @@ class PayolutionHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function testAddPaymentToQuoteShouldReturnQuoteTransfer()
     {
-        $paymentHandler = new PayolutionHandler($this->getPayolutionClientMock(), CurrencyManager::getInstance());
+        $paymentHandler = new PayolutionHandler($this->getPayolutionClientMock());
 
         $request = Request::createFromGlobals();
         $quoteTransfer = new QuoteTransfer();
@@ -64,7 +63,7 @@ class PayolutionHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetPayolutionPaymentTransferShouldThrowExceptionIfPaymentSelectionNotFound()
     {
-        $paymentHandler = new PayolutionHandler($this->getPayolutionClientMock(), CurrencyManager::getInstance());
+        $paymentHandler = new PayolutionHandler($this->getPayolutionClientMock());
 
         $request = Request::createFromGlobals();
         $quoteTransfer = new QuoteTransfer();

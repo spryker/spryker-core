@@ -14,6 +14,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_AUTH = 'auth client';
+    const SERVICE_NETWORK = 'util network service';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -22,8 +23,35 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::CLIENT_AUTH] = function (Container $container) {
+        $container = $this->addAuthClient($container);
+        $container = $this->addUtilNetworkService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAuthClient(Container $container)
+    {
+        $container[static::CLIENT_AUTH] = function (Container $container) {
             return $container->getLocator()->auth()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilNetworkService(Container $container)
+    {
+        $container[static::SERVICE_NETWORK] = function (Container $container) {
+            return $container->getLocator()->utilNetwork()->service();
         };
 
         return $container;

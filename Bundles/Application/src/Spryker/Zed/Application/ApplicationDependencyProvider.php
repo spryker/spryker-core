@@ -15,7 +15,6 @@ use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
 use Spryker\Shared\Library\Environment;
 use Spryker\Shared\Url\UrlBuilder;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
@@ -40,6 +39,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const URL_BUILDER = 'URL_BUILDER';
+    const SERVICE_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,8 +48,11 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::URL_BUILDER] = function () {
+        $container[static::URL_BUILDER] = function () {
             return new UrlBuilder();
+        };
+        $container[static::SERVICE_ENCODING] = function (Container $container) {
+            return $container->getLocator()->utilEncoding()->service();
         };
 
         return $container;
@@ -81,7 +84,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new HeaderServiceProvider(),
             new NavigationServiceProvider(),
             new GuiTwigExtensionServiceProvider(),
-            new DateFormatterServiceProvider(),
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
             new HeadersSecurityServiceProvider(),

@@ -18,10 +18,10 @@
     "spryker/event-journal": "^2.0.1",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
     "spryker/log": "^2.0.0",
     "spryker/silex": "^2.0.0",
-    "spryker/transfer": "^2.0.0"
+    "spryker/transfer": "^2.0.0",
+    "spryker/util-network": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
 use Spryker\Zed\Payolution\PayolutionConfig;
@@ -50,18 +49,11 @@ class PayolutionHandler
     protected $payolutionClient;
 
     /**
-     * @var \Spryker\Shared\Library\Currency\CurrencyManager
-     */
-    protected $currencyManager;
-
-    /**
      * @param \Spryker\Client\Payolution\PayolutionClientInterface $payolutionClient
-     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
      */
-    public function __construct(PayolutionClientInterface $payolutionClient, CurrencyManager $currencyManager)
+    public function __construct(PayolutionClientInterface $payolutionClient)
     {
         $this->payolutionClient = $payolutionClient;
-        $this->currencyManager = $currencyManager;
     }
 
     /**

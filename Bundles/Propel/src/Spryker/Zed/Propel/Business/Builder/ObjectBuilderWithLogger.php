@@ -17,8 +17,8 @@ use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\MssqlPlatform;
 use Propel\Generator\Platform\PlatformInterface;
 use Propel\Runtime\Exception\PropelException;
+use Spryker\Shared\Config\Application\Environment;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Library\Application\Environment;
 use Spryker\Shared\Propel\PropelConstants;
 
 class ObjectBuilderWithLogger extends PropelObjectBuilder

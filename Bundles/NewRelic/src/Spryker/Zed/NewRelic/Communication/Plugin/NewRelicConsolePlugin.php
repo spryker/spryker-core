@@ -28,7 +28,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     public function onConsoleTerminate(ConsoleTerminateEvent $event)
     {
         $transactionName = $this->getTransactionName($event);
-        $hostName = $this->getFactory()->getSystem()->getHostname();
+        $hostName = $this->getFactory()->getUtilNetworkService()->getHostname();
 
         $this->getFactory()->getNewRelicApi()
             ->markAsBackgroundJob()

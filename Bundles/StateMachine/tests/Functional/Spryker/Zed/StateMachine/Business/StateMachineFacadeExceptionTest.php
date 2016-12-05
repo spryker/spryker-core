@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
+use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
@@ -96,6 +97,10 @@ class StateMachineFacadeExceptionTest extends Test
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
              return new GraphPlugin();
+        };
+
+        $container[StateMachineDependencyProvider::SERVICE_NETWORK] = function () {
+             return new UtilNetworkService();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

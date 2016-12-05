@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Reader\Storage;
 
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface;
 
 class RedisReader implements ReaderInterface
 {
@@ -16,12 +16,12 @@ class RedisReader implements ReaderInterface
     const READER_NAME = 'redis-reader';
 
     /**
-     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
+     * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface
      */
     protected $redis;
 
     /**
-     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface $redis
+     * @param \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface $redis
      */
     public function __construct(ReadInterface $redis)
     {

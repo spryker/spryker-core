@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\EventJournal\Model;
 
-use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Service\UtilText\UtilTextService;
 
 /**
  * @deprecated Use Log bundle instead
@@ -40,9 +40,9 @@ class Event implements EventInterface
      */
     private function getRandomString()
     {
-        $generator = new StringGenerator();
+        $utilTextService = new UtilTextService();
 
-        return $generator->generateRandomString();
+        return $utilTextService->generateRandomString(32);
     }
 
     /**

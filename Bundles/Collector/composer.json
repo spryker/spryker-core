@@ -16,13 +16,15 @@
     "spryker/elastica": "^2.0.0 || ^3.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.4.0",
-    "spryker/library": "^2.0.0",
     "spryker/locale": "^2.0.0",
     "spryker/propel": "^2.3.1",
+    "spryker/redis": "^2.0.0",
+    "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
-    "spryker/touch": "^2.0.0"
+    "spryker/touch": "^2.0.0",
+    "spryker/util-data": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

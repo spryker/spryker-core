@@ -90,7 +90,7 @@ class ProductFactory extends AbstractFactory
      */
     protected function getUtilEncodingService()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::UTIL_ENCODING);
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_ENCODING);
     }
 
     /**

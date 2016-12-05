@@ -11,7 +11,7 @@ use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Library\DataDirectory;
+use Spryker\Shared\Kernel\Store;
 
 class File implements StorageInterface
 {
@@ -59,7 +59,7 @@ class File implements StorageInterface
      */
     protected function getCacheFilename()
     {
-        return DataDirectory::getLocalStoreSpecificPath('cache/autoloader') . '/unresolvable.php';
+        return APPLICATION_ROOT_DIR . '/cache/' . Store::getInstance()->getCurrentCountry() . '/autoloader/unresolvable.php';
     }
 
 }

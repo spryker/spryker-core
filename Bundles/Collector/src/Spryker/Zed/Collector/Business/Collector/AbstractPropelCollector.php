@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Shared\Library\BatchIterator\PropelBatchIterator;
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
@@ -20,6 +20,19 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
      * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery
      */
     protected $queryBuilder;
+
+    /**
+     * @var \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
+     */
+    protected $utilDataReaderService;
+
+    /**
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     */
+    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService)
+    {
+        $this->utilDataReaderService = $utilDataReaderService;
+    }
 
     /**
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException
@@ -39,11 +52,11 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
     }
 
     /**
-     * @return \Spryker\Shared\Library\BatchIterator\CountableIteratorInterface
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
-        return new PropelBatchIterator($this->queryBuilder->getTouchQuery(), $this->chunkSize);
+        return $this->utilDataReaderService->getPropelBatchIterator($this->queryBuilder->getTouchQuery(), $this->chunkSize);
     }
 
     /**

@@ -9,8 +9,8 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use PDO;
 use SessionHandlerInterface;
+use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Environment;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
 class SessionHandlerMysql implements SessionHandlerInterface

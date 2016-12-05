@@ -11,7 +11,7 @@ use ArrayObject;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
-use Spryker\Shared\Library\Json;
+use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
@@ -433,7 +433,9 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
      */
     public function serialize()
     {
-        return Json::encode($this->modifiedToArray());
+        $jsonUtil = new Json();
+
+        return $jsonUtil->encode($this->modifiedToArray());
     }
 
     /**
@@ -446,7 +448,8 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     public function unserialize($serialized)
     {
         try {
-            $this->fromArray(Json::decode($serialized, true), true);
+            $jsonUtil = new Json();
+            $this->fromArray($jsonUtil->decode($serialized, true), true);
             $this->initCollectionProperties();
         } catch (Exception $exception) {
             throw new TransferUnserializationException(

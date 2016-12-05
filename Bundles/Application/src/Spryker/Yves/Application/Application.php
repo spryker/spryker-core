@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Application;
 
 use Spryker\Shared\Application\Communication\Application as SharedApplication;
-use Spryker\Yves\Library\Session\TransferSession;
 
 class Application extends SharedApplication
 {
@@ -22,15 +21,7 @@ class Application extends SharedApplication
     }
 
     /**
-     * @return \Spryker\Yves\Library\Session\TransferSession
-     */
-    public function getTransferSession()
-    {
-        return new TransferSession($this['session']);
-    }
-
-    /**
-     * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
+     * @return \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface
      */
     public function getStorageKeyValue()
     {

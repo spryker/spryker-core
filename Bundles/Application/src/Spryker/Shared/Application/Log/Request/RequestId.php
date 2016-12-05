@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Application\Log\Request;
 
-use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Service\UtilText\UtilTextService;
 
 class RequestId
 {
@@ -40,10 +40,8 @@ class RequestId
             return $_SERVER[static::REQUEST_ID_HEADER_KEY];
         }
 
-        $stringGenerator = new StringGenerator();
-        $requestId = $stringGenerator
-            ->setLength(8)
-            ->generateRandomString();
+        $utilTextService = new UtilTextService();
+        $requestId = $utilTextService->generateRandomString(8);
 
         return $requestId;
     }

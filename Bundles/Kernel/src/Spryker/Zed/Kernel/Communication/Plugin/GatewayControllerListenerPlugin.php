@@ -102,7 +102,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $parameters = $methodReflection->getParameters();
         $countParameters = count($parameters);
 
-        if ($countParameters > 2 || $countParameters === 2 && end($parameters)->getClass() !== 'Spryker\\Shared\\Library\\Transfer\\Request') {
+        if ($countParameters >= 2) {
             throw new LogicException('Only one transfer object can be received in yves-action');
         }
 

@@ -200,7 +200,8 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         $productSearchConfigCollector = new ProductSearchConfigExtensionCollector(
             $this->createAttributeReader(),
             $this->getConfig(),
-            $this->createProductSearchConfigExtensionKeyBuilder()
+            $this->createProductSearchConfigExtensionKeyBuilder(),
+            $this->getUtilDataReaderService()
         );
 
         $productSearchConfigCollector->setTouchQueryContainer(
@@ -211,6 +212,14 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         );
 
         return $productSearchConfigCollector;
+    }
+
+    /**
+     * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
+     */
+    protected function getUtilDataReaderService()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::SERVICE_DATA);
     }
 
     /**

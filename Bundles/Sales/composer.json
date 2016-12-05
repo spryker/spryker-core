@@ -27,6 +27,8 @@
     "spryker/url": "^2.0.0",
     "spryker/util-sanitize": "^1.0.0",
     "spryker/user": "^2.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-sanitize": "^1.0.0",
     "spryker/zed-request": "^2.0.0"
   },
   "require-dev": {

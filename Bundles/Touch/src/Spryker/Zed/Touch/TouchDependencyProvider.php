@@ -15,6 +15,7 @@ class TouchDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    const SERVICE_DATA = 'util data service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,8 +24,12 @@ class TouchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+        $container[static::PLUGIN_PROPEL_CONNECTION] = function () {
             return (new Connection())->get();
+        };
+
+        $container[static::SERVICE_DATA] = function (Container $container) {
+            return $container->getLocator()->utilDataReader()->service();
         };
 
         return $container;

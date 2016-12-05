@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Storage\Client;
+namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 use Exception;
 
-/**
- * @deprecated Not used anymore.
- */
-abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadWriteInterface
+class RedisReadWrite extends RedisRead implements ReadWriteInterface
 {
 
     /**
@@ -93,13 +90,20 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
 
     /**
      * @param array $keys
+     * @param string $prefix
      *
      * @return void
      */
-    public function deleteMulti(array $keys)
+    public function deleteMulti(array $keys, $prefix = self::KV_PREFIX)
     {
-        $this->getResource()->del($keys);
-        $this->addMultiDeleteAccessStats($keys);
+        $items = [];
+        foreach ($keys as $key => $value) {
+            $dataKey = $this->getKeyName($key, $prefix);
+            $items[] = $dataKey;
+        }
+
+        $this->getResource()->del($items);
+        $this->addMultiDeleteAccessStats($items);
     }
 
     /**

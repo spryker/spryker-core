@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Console\Business\Model;
 
-use Spryker\Shared\Library\Application\Environment as SprykerEnvironment;
+use Spryker\Shared\Config\Application\Environment as SprykerEnvironment;
 
 class Environment
 {
@@ -29,7 +29,7 @@ class Environment
         defined('SYSTEM_UNDER_TEST')
             || define('SYSTEM_UNDER_TEST', false);
 
-        SprykerEnvironment::initialize(APPLICATION, true);
+        SprykerEnvironment::initialize();
     }
 
 }

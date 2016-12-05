@@ -10,7 +10,7 @@ namespace Spryker\Zed\Propel\Business\Model;
 use ArrayObject;
 use DOMDocument;
 use SimpleXMLElement;
-use Spryker\Zed\Library\Generator\StringGenerator;
+use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -234,8 +234,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (empty($elementName) || is_array($elementName)) {
-            $generator = new StringGenerator();
-            $elementName = 'anonymous_' . $generator->generateRandomString();
+            $utilTextService = new UtilTextService();
+            $elementName = 'anonymous_' . $utilTextService->generateRandomString(32);
         }
 
         return $elementName;

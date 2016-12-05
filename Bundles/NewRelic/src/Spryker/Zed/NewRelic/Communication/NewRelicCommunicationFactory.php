@@ -36,7 +36,7 @@ class NewRelicCommunicationFactory extends AbstractCommunicationFactory
         return new ControllerListener(
             $this->getNewRelicApi(),
             $this->getStore(),
-            $this->getSystem(),
+            $this->getUtilNetworkService(),
             $this->getConfig()->getIgnorableTransactions()
         );
     }
@@ -58,11 +58,11 @@ class NewRelicCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\System
+     * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
-    public function getSystem()
+    public function getUtilNetworkService()
     {
-        return $this->getProvidedDependency(NewRelicDependencyProvider::SYSTEM);
+        return $this->getProvidedDependency(NewRelicDependencyProvider::SERVICE_NETWORK);
     }
 
 }

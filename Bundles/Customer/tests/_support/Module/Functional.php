@@ -12,9 +12,9 @@ use Propel\Runtime\Propel;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
+use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DateFormatterServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
@@ -49,7 +49,7 @@ class Functional extends Module
         $application->register(new ValidatorServiceProvider());
         $application->register(new FormServiceProvider());
         $application->register(new TwigServiceProvider());
-        $application->register(new DateFormatterServiceProvider());
+        $application->register(new DateTimeFormatterServiceProvider());
 
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot($application);

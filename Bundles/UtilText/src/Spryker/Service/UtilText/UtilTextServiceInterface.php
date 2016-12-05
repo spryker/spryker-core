@@ -33,4 +33,12 @@ interface UtilTextServiceInterface
      */
     public function generateRandomString($length);
 
+    /**
+     * @param string $algorithm
+     * @param mixed $value
+     *
+     * @return string
+     */
+    public function hashValue($algorithm, $value);
+
 }

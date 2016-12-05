@@ -38,7 +38,7 @@ class TransferServer
     private $httpRequest;
 
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface|\Spryker\Shared\Library\Communication\Response
+     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     protected $response;
 

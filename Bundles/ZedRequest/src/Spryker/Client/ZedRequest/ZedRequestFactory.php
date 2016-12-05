@@ -34,7 +34,8 @@ class ZedRequestFactory extends AbstractFactory
             $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             $this->getConfig()->getZedRequestBaseUrl(),
             $this->getConfig()->getRawToken(),
-            $this->getConfig()->isAuthenticationEnabled()
+            $this->getConfig()->isAuthenticationEnabled(),
+            $this->getUtilNetworkService()
         );
 
         return $httpClient;
@@ -46,6 +47,14 @@ class ZedRequestFactory extends AbstractFactory
     protected function getConfig()
     {
         return new ZedRequestConfig(Config::getInstance());
+    }
+
+    /**
+     * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+     */
+    protected function getUtilNetworkService()
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_NETWORK);
     }
 
 }

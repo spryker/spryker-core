@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Library\Collection\Collection;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;

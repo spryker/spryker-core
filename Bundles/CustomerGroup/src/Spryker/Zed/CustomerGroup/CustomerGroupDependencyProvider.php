@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerGroup;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -33,8 +32,8 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_DATE_FORMATTER] = function () {
-            return (new Pimple())->getApplication()['dateFormatter'];
+        $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
         };
 
         return $container;

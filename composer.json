@@ -238,15 +238,6 @@
       "Unit\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
       "Functional\\Spryker\\Zed\\Kernel\\": "Bundles/Kernel/tests",
 
-      "Spryker\\Shared\\Library\\": "Bundles/Library/src",
-      "Unit\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
-      "Functional\\Spryker\\Shared\\Library\\": "Bundles/Library/tests",
-      "Spryker\\Yves\\Library\\": "Bundles/Library/src",
-      "Unit\\Spryker\\Yves\\Library\\": "Bundles/Library/tests",
-      "Functional\\Spryker\\Yves\\Library\\": "Bundles/Library/tests",
-      "Spryker\\Zed\\Library\\": "Bundles/Library/src",
-      "Unit\\Spryker\\Zed\\Library\\": "Bundles/Library/tests",
-      "Functional\\Spryker\\Zed\\Library\\": "Bundles/Library/tests",
       "Spryker\\Client\\Locale\\": "Bundles/Locale/src",
       "Unit\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",
       "Functional\\Spryker\\Client\\Locale\\": "Bundles/Locale/tests",
@@ -571,7 +562,13 @@
       "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
 
       "Spryker\\Service\\UtilText\\": "Bundles/UtilText/src",
-      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
+      "Unit\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
+
+      "Spryker\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/src",
+      "Functional\\Spryker\\Service\\UtilText\\": "Bundles/UtilDataReader/tests",
+
+      "Spryker\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/src",
+      "Spryker\\Shared\\UtilDateTime\\": "Bundles/UtilDateTime/src",
 
       "Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/src",
       "Functional\\Spryker\\Service\\UtilSanitize\\": "Bundles/UtilSanitize/tests",

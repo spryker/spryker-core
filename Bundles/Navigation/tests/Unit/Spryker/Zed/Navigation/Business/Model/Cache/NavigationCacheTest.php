@@ -84,7 +84,6 @@ class NavigationCacheTest extends PHPUnit_Framework_TestCase
         $cacheFile = $this->getCacheFile();
         $isEnabled = true;
         $navigationCache = new NavigationCache($cacheFile, $isEnabled, $this->getUtilEncodingService());
-
         $navigationData = ['foo' => 'bar'];
         $navigationCache->setNavigation($navigationData);
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Library\Log;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
@@ -35,9 +35,9 @@ class Repeater extends AbstractPlugin
     {
         $this->isRepeatInProgress = true;
         if ($mvc !== null) {
-            return Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
+            return $this->getFlashInFile('last_yves_request_' . $mvc . '.log');
         } else {
-            return Log::getFlashInFile('last_yves_request.log');
+            return $this->getFlashInFile('last_yves_request.log');
         }
     }
 
@@ -71,8 +71,50 @@ class Repeater extends AbstractPlugin
             $httpRequest->attributes->get('action')
         );
 
-        Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
-        Log::setFlashInFile($repeatData, 'last_yves_request.log');
+        $this->setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
+        $this->setFlashInFile($repeatData, 'last_yves_request.log');
+    }
+
+    /**
+     * @param array $repeatData
+     * @param string $fileName
+     *
+     * @return void
+     */
+    protected function setFlashInFile(array $repeatData, $fileName)
+    {
+        $filePath = $this->getFilePath($fileName);
+        $string = serialize($repeatData);
+        file_put_contents($filePath, $string);
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return array
+     */
+    protected function getFlashInFile($fileName)
+    {
+        $filePath = $this->getFilePath($fileName);
+        if (!file_exists($filePath)) {
+            return [];
+        }
+        $content = file_get_contents($filePath);
+        if (empty($content)) {
+            return [];
+        }
+
+        return unserialize($content);
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return string
+     */
+    protected function getFilePath($fileName)
+    {
+        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getCurrentCountry() . '/logs/ZED/' . $fileName;
     }
 
 }

@@ -15,7 +15,6 @@
     "php-mock/php-mock": "~1.0.1",
     "satooshi/php-coveralls": "^1.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/silex": "^2.0.0"
   },

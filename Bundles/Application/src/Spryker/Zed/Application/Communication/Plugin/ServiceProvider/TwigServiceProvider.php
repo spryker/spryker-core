@@ -13,10 +13,10 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Twig\TwigFileSystem;
 use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Library\Twig\Loader\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -59,7 +59,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             }
             $paths[] = $this->getConfig()->getBundlesDirectory() . '/%2$s/src/Spryker/Zed/%1$s/Presentation/';
 
-            return new Filesystem($paths);
+            return new TwigFileSystem($paths);
         });
 
         $app['twig.loader'] = $app->share(function ($app) {

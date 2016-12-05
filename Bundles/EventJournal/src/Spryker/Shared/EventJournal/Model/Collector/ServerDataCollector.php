@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\EventJournal\Model\Collector;
 
-use Spryker\Shared\Library\System;
+use Spryker\Service\UtilNetwork\Model\Host;
 
 /**
  * @deprecated Use Log bundle instead
@@ -83,7 +83,9 @@ class ServerDataCollector extends AbstractDataCollector
      */
     protected function getHost()
     {
-        return isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : System::getHostname();
+        $utilNetworkHost = new Host();
+
+        return isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : $utilNetworkHost->getHostname();
     }
 
     /**

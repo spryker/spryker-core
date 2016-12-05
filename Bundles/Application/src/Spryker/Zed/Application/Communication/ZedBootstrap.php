@@ -12,7 +12,6 @@ use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\DataDirectory;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
@@ -41,11 +40,12 @@ class ZedBootstrap
      */
     public function boot()
     {
+        $store = Store::getInstance();
         $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
-        $this->application['locale'] = Store::getInstance()->getCurrentLocale();
+        $this->application['locale'] = $store->getCurrentLocale();
 
         if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
-            $this->application['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
+            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getCurrentCountry() . '/cache/profiler';
         }
 
         $this->optimizeApp();

@@ -10,6 +10,7 @@ namespace Unit\Spryker\Shared\ZedRequest\Client;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Auth\AuthClient;
+use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
@@ -59,7 +60,9 @@ class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
         $client = new AuthClient();
         $url = $baseUrl . '/';
 
-        return $this->getMockBuilder(AbstractHttpClient::class)->setMethods(['sendRequest'])->setConstructorArgs([$client, $url])->getMock();
+        $utilNetworkService = new UtilNetworkService();
+
+        return $this->getMockBuilder(AbstractHttpClient::class)->setMethods(['sendRequest'])->setConstructorArgs([$client, $url, $utilNetworkService])->getMock();
     }
 
 }

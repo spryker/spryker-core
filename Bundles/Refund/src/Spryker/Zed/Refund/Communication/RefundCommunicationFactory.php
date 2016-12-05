@@ -33,11 +33,11 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\DateFormatterInterface
+     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected function getDateFormatter()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::DATE_FORMATTER);
+        return $this->getProvidedDependency(RefundDependencyProvider::SERVICE_DATE_TIME);
     }
 
     /**

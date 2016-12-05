@@ -8,6 +8,7 @@
 namespace Spryker\Client\ZedRequest\Client;
 
 use Spryker\Client\Auth\AuthClientInterface;
+use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 
 class HttpClient extends AbstractHttpClient implements HttpClientInterface
@@ -28,14 +29,17 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
      * @param string $baseUrl
      * @param string $rawToken
      * @param bool $isAuthenticationEnabled
+     * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      */
     public function __construct(
         AuthClientInterface $authClient,
         $baseUrl,
         $rawToken,
-        $isAuthenticationEnabled = true
+        $isAuthenticationEnabled,
+        UtilNetworkServiceInterface $utilNetworkService
     ) {
-        parent::__construct($authClient, $baseUrl);
+        parent::__construct($authClient, $baseUrl, $utilNetworkService);
+
         $this->rawToken = $rawToken;
         $this->isAuthenticationEnabled = $isAuthenticationEnabled;
     }

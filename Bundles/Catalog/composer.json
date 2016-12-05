@@ -10,6 +10,7 @@
     "spryker/elastica": "^3.0.0",
     "spryker/kernel": "^2.4.0",
     "spryker/search": "^5.2.0"
+    "spryker/storage": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

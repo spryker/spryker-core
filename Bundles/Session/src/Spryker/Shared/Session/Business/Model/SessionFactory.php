@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Session\Business\Model;
 
+use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Environment;
 use Spryker\Shared\NewRelic\NewRelicApiTrait;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;

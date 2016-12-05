@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Spryker\Shared\Library\DateFormatterInterface;
+use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -40,9 +40,9 @@ class OrdersTable extends AbstractTable
     protected $salesAggregatorFacade;
 
     /**
-     * @var \Spryker\Shared\Library\DateFormatterInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    protected $dateFormatter;
+    protected $utilDateTimeService;
 
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface
@@ -57,22 +57,22 @@ class OrdersTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
-     * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
+     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
         SalesToSalesAggregatorInterface $salesAggregatorFacade,
-        DateFormatterInterface $dateFormatter,
         SalesToMoneyInterface $moneyFacade,
-        SalesToUtilSanitizeInterface $sanitizeService
+        SalesToUtilSanitizeInterface $sanitizeService,
+        UtilDateTimeServiceInterface $utilDateTimeService
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->salesAggregatorFacade = $salesAggregatorFacade;
-        $this->dateFormatter = $dateFormatter;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -113,7 +113,7 @@ class OrdersTable extends AbstractTable
             $results[] = [
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
-                SpySalesOrderTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
+                SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),

@@ -9,8 +9,8 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Service\UtilNetwork\Model\Host;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\System;
 use Spryker\Shared\NewRelic\NewRelicApi;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +41,7 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
     public function boot(Application $app)
     {
         $app->before(function (Request $request) {
+            $utilNetworkHost = new Host();
             $module = $request->attributes->get('module');
             $controller = $request->attributes->get('controller');
             $action = $request->attributes->get('action');
@@ -48,7 +49,7 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
 
             $requestUri = array_key_exists('REQUEST_URI', $_SERVER) ? $_SERVER['REQUEST_URI'] : 'unknown';
 
-            $host = isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : System::getHostname();
+            $host = isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : $utilNetworkHost->getHostname();
 
             $store = Store::getInstance();
 

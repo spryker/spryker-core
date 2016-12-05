@@ -5,23 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Storage\Client;
+namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
-use Spryker\Shared\Library\Storage\AdapterInterface;
-use Spryker\Shared\Library\Storage\AdapterTrait;
+use Predis\Client;
+use Predis\Connection\ConnectionException;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Storage\StorageConstants;
 
-/**
- * @deprecated Not used anymore.
- */
-abstract class AbstractKeyValue implements AdapterInterface
+abstract class Redis
 {
-
-    use AdapterTrait;
 
     /**
      * @var array
      */
     protected $accessStats;
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * @var \Predis\Client
+     */
+    protected $resource;
+
+    /**
+     * @var bool
+     */
+    protected $debug;
 
     /**
      * @param array $config
@@ -32,6 +44,70 @@ abstract class AbstractKeyValue implements AdapterInterface
         $this->config = $config;
         $this->debug = $debug;
         $this->resetAccessStats();
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return $this
+     */
+    public function setConfig(array $config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param resource $resource
+     *
+     * @return $this
+     */
+    protected function setResource($resource)
+    {
+        $this->resource = $resource;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResource()
+    {
+        if (!$this->resource) {
+            $this->connect();
+        }
+
+        return $this->resource;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDebug()
+    {
+        return $this->debug;
+    }
+
+    /**
+     * @param bool $debug
+     *
+     * @return $this
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+
+        return $this;
     }
 
     /**
@@ -138,6 +214,36 @@ abstract class AbstractKeyValue implements AdapterInterface
         if ($this->debug) {
             $this->accessStats['count']['delete'] += count($keys);
             $this->accessStats['keys']['delete'] = $this->accessStats['keys']['delete'] + $keys;
+        }
+    }
+
+    /**
+     * @throws \Predis\Connection\ConnectionException
+     *
+     * @return void
+     */
+    public function connect()
+    {
+        if (!$this->resource) {
+            $resource = new Client($this->config);
+
+            if (!$resource) {
+                throw new ConnectionException($resource, 'Could not connect to redis server');
+            }
+
+            $this->resource = $resource;
+        }
+    }
+
+    /**
+     * close redis connection
+     */
+    public function __destruct()
+    {
+        $isPersistent = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION, false);
+
+        if (!$isPersistent && $this->resource) {
+            $this->resource->disconnect();
         }
     }
 

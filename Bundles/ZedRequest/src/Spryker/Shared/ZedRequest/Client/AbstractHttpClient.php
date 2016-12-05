@@ -18,11 +18,11 @@ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
+use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
-use Spryker\Shared\Library\System;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
@@ -96,15 +96,23 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $authClient;
 
     /**
+     * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+     */
+    protected $utilNetworkService;
+
+    /**
      * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
+     * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      */
     public function __construct(
         AuthClientInterface $authClient,
-        $baseUrl
+        $baseUrl,
+        UtilNetworkServiceInterface $utilNetworkService
     ) {
         $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
+        $this->utilNetworkService = $utilNetworkService;
     }
 
     /**
@@ -224,7 +232,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $request = $this->getRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
-        $request->setHost(System::getHostname() ?: 'n/a');
+        $request->setHost($this->utilNetworkService->getHostname() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {

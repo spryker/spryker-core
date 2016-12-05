@@ -5,9 +5,9 @@
     "spryker/console": "^2.0.0",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
     "spryker/silex": "^1.0.0 || ^2.0.0",
-    "spryker/symfony": "^2.0.0"
+    "spryker/symfony": "^2.0.0",
+    "spryker/util-network": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Storage\Client;
+namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
-/**
- * @deprecated Not used anymore.
- */
-abstract class AbstractRedisRead extends AbstractRedis implements ReadInterface
+class RedisRead extends Redis implements ReadInterface
 {
 
     const KV_PREFIX = 'kv:';
@@ -29,7 +26,7 @@ abstract class AbstractRedisRead extends AbstractRedis implements ReadInterface
 
         $result = json_decode($value, true);
 
-        if (json_last_error() === JSON_ERROR_SYNTAX) {
+        if (json_last_error() === \JSON_ERROR_SYNTAX) {
             return $value;
         }
 

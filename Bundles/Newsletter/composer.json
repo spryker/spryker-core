@@ -12,8 +12,8 @@
     "spryker/glossary": "^2.0.0",
     "spryker/installer": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^2.8.0",
-    "spryker/library": "^2.0.0",
     "spryker/mail": "^3.0.0",
+    "spryker/util-text": "^1.0.0",
     "spryker/zed-request": "^2.0.0"
   },
   "require-dev": {
