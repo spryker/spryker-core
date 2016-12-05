@@ -64,7 +64,7 @@ class ProductBundlePriceCalculation
     public function calculate(QuoteTransfer $quoteTransfer)
     {
 
-        $this->resetBundleAmounts($quoteTransfer);
+        $this->resetBundlePriceAmounts($quoteTransfer);
 
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -88,6 +88,7 @@ class ProductBundlePriceCalculation
      */
     protected function addAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
+        // item price as assigned for product
         $bundleItemTransfer->setUnitGrossPrice(
             $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice()
         );
@@ -95,6 +96,8 @@ class ProductBundlePriceCalculation
         $bundleItemTransfer->setSumGrossPrice(
             $bundleItemTransfer->getSumGrossPrice() + $itemTransfer->getSumGrossPrice()
         );
+
+        // + options
 
         $bundleItemTransfer->setUnitGrossPriceWithProductOptions(
             $bundleItemTransfer->getUnitGrossPriceWithProductOptions() + $itemTransfer->getUnitGrossPriceWithProductOptions()
@@ -104,6 +107,7 @@ class ProductBundlePriceCalculation
             $bundleItemTransfer->getSumGrossPriceWithProductOptions() + $itemTransfer->getSumGrossPriceWithProductOptions()
         );
 
+        // options + discounts
         $bundleItemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
             $bundleItemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts() + $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts()
         );
@@ -118,7 +122,7 @@ class ProductBundlePriceCalculation
      *
      * @return void
      */
-    protected function resetBundleAmounts(QuoteTransfer $quoteTransfer)
+    protected function resetBundlePriceAmounts(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             $bundleItemTransfer->setUnitGrossPrice(0);

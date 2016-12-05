@@ -68,7 +68,7 @@ class ProductBundleCartExpander
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
 
             $bundledProducts = $this->productBundleQueryContainer
-                ->queryBundledProduct($itemTransfer->getId())
+                ->queryBundleProduct($itemTransfer->getId())
                 ->find();
 
             if (count($bundledProducts) == 0) {

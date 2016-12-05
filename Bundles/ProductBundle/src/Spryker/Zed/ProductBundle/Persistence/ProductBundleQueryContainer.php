@@ -20,10 +20,50 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
-    public function queryBundledProduct($idProductConcrete)
+    public function queryBundleProduct($idProductConcrete)
     {
         return $this->getFactory()
             ->createProductBundleQuery()
             ->filterByFkProduct($idProductConcrete);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    public function queryBundleProductBySku($sku)
+    {
+        return $this->getFactory()
+            ->createProductBundleQuery()
+            ->useSpyProductRelatedByFkProductQuery()
+                ->filterBySku($sku)
+            ->endUse();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    public function queryBundledProductBySku($sku)
+    {
+       return $this->getFactory()
+           ->createProductBundleQuery()
+           ->useSpyProductRelatedByFkBundledProductQuery()
+              ->filterBySku($sku)
+           ->endUse();
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    public function queryBundledProductByIdProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductBundleQuery()
+            ->filterByFkBundledProduct($idProduct);
     }
 }

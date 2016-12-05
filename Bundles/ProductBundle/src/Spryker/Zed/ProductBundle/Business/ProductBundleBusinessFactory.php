@@ -93,7 +93,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityQueryContainer(),
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
+            $this->getQueryContainer()
         );
     }
 

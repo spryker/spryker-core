@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -59,11 +58,12 @@ class ProductBundleAvailabilityCheck
     {
         $currentCartItems = $quoteTransfer->getItems();
         $messages = new \ArrayObject();
-        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            $bundledItems = SpyProductBundleQuery::create()
-                ->useSpyProductRelatedByFkProductQuery()
-                    ->filterBySku($bundleItemTransfer->getSku())
-                ->endUse()
+
+        $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
+
+        foreach ($uniqueBundleItems as $bundleItemTransfer) {
+            $bundledItems = $this->productBundleQueryContainer
+                ->queryBundleProductBySku($bundleItemTransfer->getSku())
                 ->find();
 
             if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $bundleItemTransfer)) {
@@ -91,10 +91,8 @@ class ProductBundleAvailabilityCheck
         $currentCartItems = $cartChangeTransfer->getQuote()->getItems();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
 
-            $bundledItems = SpyProductBundleQuery::create()
-                ->useSpyProductRelatedByFkProductQuery()
-                    ->filterBySku($itemTransfer->getSku())
-                ->endUse()
+            $bundledItems = $this->productBundleQueryContainer
+                ->queryBundleProductBySku($itemTransfer->getSku())
                 ->find();
 
             if (count($bundledItems) > 0) {
@@ -242,14 +240,14 @@ class ProductBundleAvailabilityCheck
     }
 
     /**
-     * @param \ArrayObject $items
+     * @param ArrayObject $items
      * @param ObjectCollection $bundledProducts
      * @param ItemTransfer $itemTransfer
      *
      * @return bool
      */
     protected function isAllBundleItemsAvailable(
-        \ArrayObject $items,
+        ArrayObject $items,
         ObjectCollection $bundledProducts,
         ItemTransfer $itemTransfer
     ) {
@@ -267,4 +265,23 @@ class ProductBundleAvailabilityCheck
 
         return true;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function getUniqueBundleItems(QuoteTransfer $quoteTransfer)
+    {
+        $uniqueBundledItems = [];
+        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
+            if (!isset($uniqueBundledItems[$bundleItemTransfer->getSku()])) {
+                $uniqueBundledItems[$bundleItemTransfer->getSku()] = $bundleItemTransfer;
+                continue;
+            }
+        }
+
+        return $uniqueBundledItems;
+    }
+
 }
