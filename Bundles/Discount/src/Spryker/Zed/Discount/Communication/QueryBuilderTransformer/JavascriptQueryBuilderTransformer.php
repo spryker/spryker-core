@@ -18,7 +18,7 @@ class JavascriptQueryBuilderTransformer
     protected $discountFacade;
 
     /**
-     * @var array|string[]
+     * @var string[]
      */
     protected $queryOperatorMapping = [
         '=' => 'equal',
@@ -41,7 +41,7 @@ class JavascriptQueryBuilderTransformer
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getFilters($type)
     {
@@ -66,7 +66,7 @@ class JavascriptQueryBuilderTransformer
      * @param string $type
      * @param string $ruleField
      *
-     * @return array|string[]
+     * @return string[]
      */
     protected function transformComparators($type, $ruleField)
     {

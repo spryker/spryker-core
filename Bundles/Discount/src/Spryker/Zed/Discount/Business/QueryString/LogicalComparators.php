@@ -13,7 +13,7 @@ class LogicalComparators
     const COMPARATOR_OR = 'or';
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getLogicalOperators()
     {

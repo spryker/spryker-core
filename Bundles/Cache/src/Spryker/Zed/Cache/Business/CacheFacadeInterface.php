@@ -17,4 +17,11 @@ interface CacheFacadeInterface
      */
     public function deleteAllFiles();
 
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function deleteAllAutoloaderFiles();
+
 }

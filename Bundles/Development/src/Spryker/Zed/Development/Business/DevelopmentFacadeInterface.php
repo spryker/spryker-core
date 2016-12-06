@@ -134,4 +134,30 @@ interface DevelopmentFacadeInterface
      */
     public function getEngineBundleList();
 
+    /**
+     * @api
+     *
+     * @param array $bundles
+     *
+     * @return void
+     */
+    public function updateComposerJsonInBundles(array $bundles);
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getExternalDependencyTree();
+
+    /**
+     * @api
+     *
+     * @param string $bundleName
+     * @param array $dependencies
+     *
+     * @return array
+     */
+    public function getComposerDependencyComparison($bundleName, array $dependencies);
+
 }

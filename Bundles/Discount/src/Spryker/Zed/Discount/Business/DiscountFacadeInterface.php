@@ -224,7 +224,7 @@ interface DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringFieldsByType($type);
 
@@ -238,7 +238,7 @@ interface DiscountFacadeInterface
      * @param string $type
      * @param string $fieldName
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringFieldExpressionsForField($type, $fieldName);
 
@@ -251,7 +251,7 @@ interface DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringComparatorExpressions($type);
 
@@ -264,7 +264,7 @@ interface DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringLogicalComparators($type);
 
@@ -295,7 +295,7 @@ interface DiscountFacadeInterface
      * @param string $type
      * @param string $queryString
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function validateQueryStringByType($type, $queryString);
 

@@ -41,7 +41,7 @@ class GeneralForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|string[] $options
+     * @param string[] $options
      *
      * @return void
      */
@@ -75,7 +75,7 @@ class GeneralForm extends AbstractType
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     protected function getVoucherChoices()
     {
