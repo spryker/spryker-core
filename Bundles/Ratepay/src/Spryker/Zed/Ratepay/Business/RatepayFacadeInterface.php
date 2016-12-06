@@ -23,7 +23,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Saves order ratepay payment method data according to quote and checkout response transfer data.
+     * - Saves order payment method data according to quote and checkout response transfer data.
      *
      * @api
      *
@@ -36,7 +36,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Performs init payment request to Ratepay Getaway to retrieve transaction data.
+     * - Performs init payment request to RatePAY Getaway to retrieve transaction data.
      *
      * @api
      *
@@ -48,7 +48,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Performs check the customer and order details payment request to RatePAY Gateway.
+     * - Performs the init payment request to RatePAY Gateway to retrieve transaction data.
      *
      * @api
      *
@@ -103,7 +103,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Performs cancel payment request to RatePAY Gateway.
+     * - Performs the cancel payment request to RatePAY Gateway.
      *
      * @api
      *
@@ -139,7 +139,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Performs installment payment method calculator configuration request to RatePAY Gateway.
+     * - Performs the installment payment method calculator configuration request to RatePAY Gateway.
      *
      * @api
      *
@@ -151,7 +151,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Performs installment payment method calculator calculation request to RatePAY Gateway.
+     * - Performs the installment payment method calculator calculation request to RatePAY Gateway.
      *
      * @api
      *
@@ -223,7 +223,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Expands cart items with necessary for Ratepay information (short_description, long_description, etc).
+     * - Expands cart items with necessary for RatePAY information (short_description, long_description, etc).
      *
      * @api
      *
@@ -257,7 +257,7 @@ interface RatepayFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves profile data from Ratepay Gateway.
+     * - Retrieves profile data from RatePAY Gateway.
      *
      * @api
      *
