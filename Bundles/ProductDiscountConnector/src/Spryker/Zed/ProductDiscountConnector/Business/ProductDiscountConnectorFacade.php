@@ -15,13 +15,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorBusinessFactory getFactory()
  */
-class ProductDiscountConnectorFacade extends AbstractFacade
+class ProductDiscountConnectorFacade extends AbstractFacade implements ProductDiscountConnectorFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Build all product variants by abstract sku
-     * - Look for attribute in any variants
+     * {@inheritdoc}
      *
      * @api
      *
@@ -43,10 +41,7 @@ class ProductDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     * - Build all product variants by abstract sku
-     * - Look for attribute in any variants
-     * - Collect all matching items
+     * {@inheritdoc}
      *
      * @api
      *
@@ -63,12 +58,11 @@ class ProductDiscountConnectorFacade extends AbstractFacade
     }
 
     /**
-     *  Specification:
-     * - Query and return array list of attributes
+     * {@inheritdoc}
      *
      * @api
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getAttributeTypes()
     {

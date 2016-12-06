@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerFacadeInterface
 {
@@ -221,5 +223,31 @@ interface CustomerFacadeInterface
      * @return bool
      */
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveCustomerForOrder(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer  $checkoutResponseTransfer
+    );
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function checkOrderPreSaveConditions(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer  $checkoutResponseTransfer
+    );
 
 }

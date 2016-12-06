@@ -26,7 +26,7 @@ class AttributeProvider implements AttributeProviderInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAllAttributeTypes()
     {

@@ -18,10 +18,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
 {
 
     /**
-     * Specification:
-     *  - Checks if product is never out of stock
-     *  - Checks if product have stock in productStock table
-     *  - Checks if have placed orders where items have statemachine state flagged as reserved
+     * {@inheritdoc}
      *
      * @api
      *
@@ -38,10 +35,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Checks if product have stock in productStock table
-     *  - Checks if have placed orders where items have statemachine state flagged as reserved
-     *  - Returns integer value which is Product stock - reserved state machine items.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -57,9 +51,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
-     *  - Writes error message into CheckoutResponseTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -78,12 +70,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     *
-     * Specification:
-     *  - Calculates current item stock, take into account reserved items
-     *  - Stores new stock for concrete product
-     *  - Stores sum of all concrete product stocks for abstract product
-     *  - Touches availability abstract collector
+     * {@inheritdoc}
      *
      * @api
      *
@@ -99,10 +86,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     *
-     * Specification:
-     *  - Reads product availability data from persistense, stock, reservation, availability.
-     *  - Returns data for selected abstract product
+     * {@inheritdoc}
      *
      * @api
      *

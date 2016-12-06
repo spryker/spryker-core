@@ -9,7 +9,7 @@ interface MetaDataProviderInterface
 {
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableFields();
 
@@ -25,22 +25,22 @@ interface MetaDataProviderInterface
     /**
      * @param string $fieldName
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableOperatorExpressionsForField($fieldName);
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableComparatorExpressions();
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getLogicalComparators();
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getCompoundExpressions();
 
