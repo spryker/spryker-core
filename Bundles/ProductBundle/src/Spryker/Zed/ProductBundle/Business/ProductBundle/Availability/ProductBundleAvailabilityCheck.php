@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use \ArrayObject;
 
@@ -37,15 +38,23 @@ class ProductBundleAvailabilityCheck
     protected $productBundleQueryContainer;
 
     /**
+     * @var ProductBundleToAvailabilityQueryContainerInterface
+     */
+    protected $availabilityQueryContainer;
+
+    /**
      * @param ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer
+        ProductBundleQueryContainerInterface $productBundleQueryContainer,
+        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->availabilityQueryContainer = $availabilityQueryContainer;
     }
 
     /**
@@ -97,15 +106,20 @@ class ProductBundleAvailabilityCheck
 
             if (count($bundledItems) > 0) {
                 if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $itemTransfer)) {
-                    $messages[] = $this->createItemIsNotAvailableMessageTransfer($itemTransfer->getSku());
+                    $availabilityEntity = $this->availabilityQueryContainer
+                        ->querySpyAvailabilityBySku($itemTransfer->getSku())
+                        ->findOne();
+
+                    $messages[] = $this->createItemIsNotAvailableMessageTransfer($availabilityEntity->getQuantity());
                 }
             } else {
                 $sku = $itemTransfer->getSku();
                 $itemQuantity = $itemTransfer->getQuantity();
 
                 if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $itemQuantity)) {
+                    $available = $this->availabilityFacade->calculateStockForProduct($sku);
                     $messages->append(
-                        $this->createItemIsNotAvailableMessageTransfer($sku)
+                        $this->createItemIsNotAvailableMessageTransfer($available)
                     );
                 }
             }
@@ -134,16 +148,14 @@ class ProductBundleAvailabilityCheck
     }
 
     /**
-     * @param int $sku
+     * @param string $stock
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createItemIsNotAvailableMessageTransfer($sku)
+    protected function createItemIsNotAvailableMessageTransfer($stock)
     {
-        $available = $this->availabilityFacade->calculateStockForProduct($sku);
-        $translationKey = $this->getItemAvailabilityTranslationKey($available);
-
-        return $this->createMessageTransfer($available, $translationKey);
+        $translationKey = $this->getItemAvailabilityTranslationKey($stock);
+        return $this->createMessageTransfer($stock, $translationKey);
     }
 
     /**

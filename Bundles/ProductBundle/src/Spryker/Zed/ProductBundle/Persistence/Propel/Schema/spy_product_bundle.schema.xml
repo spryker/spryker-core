@@ -4,9 +4,9 @@
     <table name="spy_product_bundle" idMethod="native" allowPkInsert="true" phpName="SpyProductBundle">
         <column name="id_product_bundle" type="INTEGER" primaryKey="true" autoIncrement="true"/>
 
-        <column name="fk_bundled_product" type="INTEGER" required="true"/>
-        <column name="fk_product" type="INTEGER" required="true"/>
-        <column name="quantity" required="true" type="INTEGER"/>
+        <column name="fk_bundled_product" type="INTEGER" required="true" description="Representation of the single item in this bundle" />
+        <column name="fk_product" type="INTEGER" required="true" description="Relation to the main bundle product" />
+        <column name="quantity" required="true" type="INTEGER" default="1" description="Number of items bundled. For instance when you have 5000 equal items you will have quantity 5000"/>
 
         <behavior name="timestampable"/>
 

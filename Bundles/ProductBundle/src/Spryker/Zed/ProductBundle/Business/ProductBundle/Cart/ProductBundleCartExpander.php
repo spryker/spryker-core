@@ -175,7 +175,7 @@ class ProductBundleCartExpander
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createBundledItemTransfer($bundledConcreteProductEntity, $bundleItemIdentifier)
+    protected function createBundledItemTransfer(SpyProduct $bundledConcreteProductEntity, $bundleItemIdentifier)
     {
         $productConcreteTransfer = $this->productFacade->getProductConcrete(
             $bundledConcreteProductEntity->getSku()

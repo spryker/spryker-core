@@ -98,7 +98,6 @@ class ProductBundlePriceCalculation
         );
 
         // + options
-
         $bundleItemTransfer->setUnitGrossPriceWithProductOptions(
             $bundleItemTransfer->getUnitGrossPriceWithProductOptions() + $itemTransfer->getUnitGrossPriceWithProductOptions()
         );

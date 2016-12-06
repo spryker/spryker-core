@@ -83,7 +83,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundleCartPreCheck()
     {
-        return new ProductBundleAvailabilityCheck($this->getAvailabilityFacade(), $this->getQueryContainer());
+        return new ProductBundleAvailabilityCheck(
+            $this->getAvailabilityFacade(),
+            $this->getQueryContainer(),
+            $this->getAvailabilityQueryContainer()
+        );
     }
 
     /**
