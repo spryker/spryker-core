@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\Search\Model\Handler;
 
+use Elastica\Exception\ResponseException;
 use Elastica\ResultSet;
 use Elastica\SearchableInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Exception\SearchResponseException;
 
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
@@ -67,11 +69,23 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     /**
      * @param \Elastica\Query $query
      *
+     * @throws \Spryker\Client\Search\Exception\SearchResponseException
+     *
      * @return \Elastica\ResultSet
      */
     protected function executeQuery($query)
     {
-        $rawSearchResult = $this->searchableInterface->search($query);
+        try {
+            $rawSearchResult = $this->searchableInterface->search($query);
+        } catch (ResponseException $e) {
+            $rawQuery = json_encode($query->toArray());
+
+            throw new SearchResponseException(
+                sprintf("Search failed with the following reason: %s. Query: %s", $e->getMessage(), $rawQuery),
+                $e->getCode(),
+                $e
+            );
+        }
 
         return $rawSearchResult;
     }

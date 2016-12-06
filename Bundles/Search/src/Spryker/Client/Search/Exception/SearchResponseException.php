@@ -5,16 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Dependency\Plugin;
+namespace Spryker\Client\Search\Exception;
 
-interface QueryInterface
+use Exception;
+
+class SearchResponseException extends Exception
 {
-
-    /**
-     * @api
-     *
-     * @return mixed A query object.
-     */
-    public function getSearchQuery();
-
 }

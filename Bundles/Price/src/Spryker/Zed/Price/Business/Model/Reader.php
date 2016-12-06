@@ -161,16 +161,31 @@ class Reader implements ReaderInterface
      */
     public function getPriceTypeByName($priceTypeName)
     {
+        if (!$this->hasPriceType($priceTypeName)) {
+            throw new Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
+        }
+
+        return $this->priceTypeEntityByNameCache[$priceTypeName];
+    }
+
+    /**
+     * @param string $priceTypeName
+     *
+     * @return bool
+     */
+    protected function hasPriceType($priceTypeName)
+    {
         if (!isset($this->priceTypeEntityByNameCache[$priceTypeName])) {
             $priceTypeEntity = $this->queryContainer->queryPriceType($priceTypeName)->findOne();
+
             if ($priceTypeEntity === null) {
-                throw new Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
+                return false;
             }
 
             $this->priceTypeEntityByNameCache[$priceTypeName] = $priceTypeEntity;
         }
 
-        return $this->priceTypeEntityByNameCache[$priceTypeName];
+        return true;
     }
 
     /**
@@ -182,8 +197,12 @@ class Reader implements ReaderInterface
     public function hasValidPrice($sku, $priceTypeName = null)
     {
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
-        $priceType = $this->getPriceTypeByName($priceTypeName);
 
+        if (!$this->hasPriceType($priceTypeName)) {
+            return false;
+        }
+
+        $priceType = $this->getPriceTypeByName($priceTypeName);
         if ($this->hasPriceForProductConcrete($sku, $priceType) || $this->hasPriceForProductAbstract($sku, $priceType)) {
             return true;
         }

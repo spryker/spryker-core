@@ -87,7 +87,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
-            ->setSort(
+            ->addSort(
                 [
                     PageIndexMap::STRING_SORT . '.foo' => [
                         'order' => SortConfigBuilder::DIRECTION_ASC,

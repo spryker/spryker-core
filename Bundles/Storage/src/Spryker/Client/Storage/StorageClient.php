@@ -210,14 +210,15 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         self::$cachedKeys = [];
         $cacheKey = self::generateCacheKey();
+        if (!$cacheKey) {
+            return;
+        }
 
-        if (!empty($cacheKey)) {
-            $cachedKeys = $this->getService()->get($cacheKey);
+        $cachedKeys = $this->getService()->get($cacheKey);
 
-            if (!empty($cachedKeys) && is_array($cachedKeys)) {
-                foreach ($cachedKeys as $key) {
-                    self::$cachedKeys[$key] = self::KEY_INIT;
-                }
+        if ($cachedKeys && is_array($cachedKeys)) {
+            foreach ($cachedKeys as $key) {
+                self::$cachedKeys[$key] = self::KEY_INIT;
             }
         }
     }
@@ -279,7 +280,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public static function persistCache(Request $request = null)
     {
         $cacheKey = static::generateCacheKey($request);
-        if (!empty($cacheKey) && is_array(self::$cachedKeys)) {
+        if ($cacheKey && is_array(self::$cachedKeys)) {
             $updateCache = false;
             foreach (self::$cachedKeys as $key => $status) {
                 if ($status === self::KEY_INIT) {
@@ -288,7 +289,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
                 if ($status !== self::KEY_USED) {
                     $updateCache = true;
-                    break;
                 }
             }
 
@@ -330,7 +330,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $result = json_decode($value, true);
 
-        if (json_last_error() === \JSON_ERROR_SYNTAX) {
+        if (json_last_error() === JSON_ERROR_SYNTAX) {
             return $value;
         }
 
