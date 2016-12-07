@@ -10,7 +10,6 @@ namespace Unit\Spryker\Zed\Cart\Communication\Plugin;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
-use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group Unit
