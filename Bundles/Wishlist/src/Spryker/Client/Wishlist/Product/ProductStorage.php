@@ -58,7 +58,7 @@ class ProductStorage implements ProductStorageInterface
     }
 
     /**
-     * @param WishlistOverviewResponseTransfer $wishlistResponseTransfer
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistResponseTransfer
      *
      * @return array
      */
