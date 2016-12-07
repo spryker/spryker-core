@@ -10,7 +10,6 @@ namespace Unit\Spryker\Zed\Cart\Communication\Plugin;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
-use Spryker\Zed\Kernel\Communication\Factory;
 use Spryker\Zed\Kernel\Locator;
 
 /**
@@ -38,7 +37,7 @@ class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = new CartChangeTransfer();
         $changeTransfer->addItem($itemTransfer);
 
-        $plugin = new SkuGroupKeyPlugin(new Factory('Cart'), Locator::getInstance());
+        $plugin = new SkuGroupKeyPlugin();
         $plugin->expandItems($changeTransfer);
 
         $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
@@ -56,7 +55,7 @@ class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = new CartChangeTransfer();
         $changeTransfer->addItem($itemTransfer);
 
-        $plugin = new SkuGroupKeyPlugin(new Factory('Cart'), Locator::getInstance());
+        $plugin = new SkuGroupKeyPlugin();
         $plugin->expandItems($changeTransfer);
 
         $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
