@@ -68,6 +68,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param array $options
      *

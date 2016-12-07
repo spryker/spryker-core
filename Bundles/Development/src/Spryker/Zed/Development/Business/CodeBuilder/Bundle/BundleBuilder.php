@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\CodeBuilder\Bundle;
 
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class BundleBuilder
@@ -21,6 +22,15 @@ class BundleBuilder
     protected $bundleRootDirectory;
 
     /**
+     * List of files to generate in each bundle.
+     *
+     * @var array
+     */
+    protected $files = [
+        '.gitattributes'
+    ];
+
+    /**
      * @param string $bundleRootDirectory
      */
     public function __construct($bundleRootDirectory)
@@ -32,13 +42,18 @@ class BundleBuilder
      * @param string $bundle
      * @param array $options
      *
+     * @throws \RuntimeException
+     *
      * @return void
      */
     public function build($bundle, array $options)
     {
-        if ($bundle === 'all') {
-            $bundles = $this->getBundleNames();
-        } else {
+        $bundles = $this->getBundleNames();
+
+        if ($bundle !== 'all') {
+            if (!in_array($bundle, $bundles)) {
+                throw new RuntimeException('No such bundle: ' . $bundle);
+            }
             $bundles = (array)$bundle;
         }
 
@@ -47,33 +62,38 @@ class BundleBuilder
         }
     }
 
-    protected function getBundleNames() {
-        $composerFiles = $this->findBundles();
-
-        dd($composerFiles);
-
-    }
-
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return array
      */
-    public function findBundles()
+    protected function getBundleNames()
     {
-        return $this->finder->in($this->pathToBundles)->name('composer.json')->depth('< 2');
+        $bundleDirectories = glob($this->bundleRootDirectory . '*');
+
+        $bundles = [];
+        foreach ($bundleDirectories as $bundleDirectory) {
+            $bundles[] = pathinfo($bundleDirectory, PATHINFO_BASENAME);
+        }
+
+        return $bundles;
     }
 
     /**
      * @param string $bundle
-     * @param string $toBundle
+     * @param array $options
      *
      * @return void
      */
-    protected function createOrUpdateBundle($bundle, $toBundle)
+    protected function createOrUpdateBundle($bundle, $options)
     {
-        $templateContent = $this->getInterfaceTemplateContent();
-        $templateContent = $this->replacePlaceHolder($bundle, $toBundle, $templateContent);
+        $files = $this->files;
 
-        $this->saveFile($bundle, $templateContent, $bundle . 'To' . $toBundle . 'Interface.php');
+        foreach ($files as $file) {
+            $templateContent = $this->getTemplateContent($file);
+
+            $templateContent = $this->replacePlaceHolder($bundle, $templateContent);
+
+            $this->saveFile($bundle, $templateContent, $file, $options['force']);
+        }
     }
 
     /**
@@ -90,16 +110,15 @@ class BundleBuilder
 
     /**
      * @param string $bundle
-     * @param string $toBundle
      * @param string $templateContent
      *
      * @return string
      */
-    protected function replacePlaceHolder($bundle, $toBundle, $templateContent)
+    protected function replacePlaceHolder($bundle, $templateContent)
     {
         $templateContent = str_replace(
-            ['{bundle}', '{toBundle}', '{toBundleVariable}'],
-            [$bundle, $toBundle, lcfirst($toBundle)],
+            ['{bundle}', '{bundleVariable}'],
+            [$bundle, lcfirst($bundle)],
             $templateContent
         );
 
@@ -110,31 +129,20 @@ class BundleBuilder
      * @param string $bundle
      * @param string $templateContent
      * @param string $fileName
+     * @param bool $overwrite
      *
      * @return void
      */
-    protected function saveFile($bundle, $templateContent, $fileName)
+    protected function saveFile($bundle, $templateContent, $fileName, $overwrite = false)
     {
-        $path = $this->getPathToDependencyFiles($bundle);
+        $path = $this->bundleRootDirectory . $bundle . DIRECTORY_SEPARATOR;
 
         $filesystem = new Filesystem();
-        $filePath = $path . DIRECTORY_SEPARATOR . $fileName;
+        $filePath = $path . $fileName;
 
-        if (!is_file($filePath)) {
+        if (!is_file($filePath) || $overwrite) {
             $filesystem->dumpFile($filePath, $templateContent);
         }
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return string
-     */
-    protected function getPathToDependencyFiles($bundle)
-    {
-        $pathParts = [$this->bundleRootDirectory, $bundle, 'src', 'Spryker', 'Zed', $bundle, 'Dependency', 'Facade'];
-
-        return implode(DIRECTORY_SEPARATOR, $pathParts);
     }
 
 }

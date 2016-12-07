@@ -50,6 +50,8 @@ interface DevelopmentFacadeInterface
     public function createBridge($bundle, $toBundle);
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param array $options
      *

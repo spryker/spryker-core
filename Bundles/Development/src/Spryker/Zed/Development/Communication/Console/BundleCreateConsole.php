@@ -21,7 +21,7 @@ class BundleCreateConsole extends Console
 
     const COMMAND_NAME = 'dev:bundle:create';
     const OPTION_BUNDLE = 'from bundle';
-    const OPTION_FORCE = 'force (overwrite)';
+    const OPTION_FORCE = 'force';
 
     /**
      * @return void
@@ -32,7 +32,7 @@ class BundleCreateConsole extends Console
 
         $this->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Create basic core bundle.');
+            ->setDescription('Create basic core bundle (Spryker core dev only).');
 
         $this->addArgument(self::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to create or sync. Use "all" for all.');
         $this->addOption(self::OPTION_FORCE, 'f', InputOption::VALUE_NONE, 'Force the command, will overwrite existing files.');
@@ -49,7 +49,7 @@ class BundleCreateConsole extends Console
         $bundle = $this->input->getArgument(self::OPTION_BUNDLE);
 
         if ($bundle !== 'all') {
-            $message = 'Create Spryker core bundle ' . $bundle;
+            $message = 'Create or update Spryker core bundle ' . $bundle;
         } else {
             $message = 'Sync all Spryker core bundles';
         }
