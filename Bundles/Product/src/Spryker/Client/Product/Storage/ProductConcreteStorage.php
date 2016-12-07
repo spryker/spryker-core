@@ -72,13 +72,8 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection)
     {
-        $keyCollection = [];
-        foreach ($idProductConcreteCollection as $idProductConcrete) {
-            $key = $this->keyBuilder->generateKey($idProductConcrete, $this->localeName);
-            $keyCollection[] = $key;
-        }
-
-        $jsonData = $this->storage->getMulti($keyCollection);
+        $storageKeyCollection = $this->getStorageKeyCollection($idProductConcreteCollection);
+        $jsonData = $this->storage->getMulti($storageKeyCollection);
 
         $result = [];
         foreach ($jsonData as $key => $json) {
@@ -87,6 +82,22 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $idProductConcreteCollection
+     *
+     * @return array
+     */
+    protected function getStorageKeyCollection(array $idProductConcreteCollection)
+    {
+        $keyCollection = [];
+        foreach ($idProductConcreteCollection as $idProductConcrete) {
+            $key = $this->keyBuilder->generateKey($idProductConcrete, $this->localeName);
+            $keyCollection[] = $key;
+        }
+
+        return $keyCollection;
     }
 
     /**

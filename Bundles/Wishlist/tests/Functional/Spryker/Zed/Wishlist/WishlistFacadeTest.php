@@ -181,7 +181,7 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetWishList()
+    public function testGetWishListByName()
     {
         $this->setupBigWishlist();
 
@@ -200,14 +200,14 @@ class WishlistFacadeTest extends Test
      */
     public function testAddItemShouldAddItem()
     {
-        $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
+        $WishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_3->getSku());
 
-        $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
+        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
 
-        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
         $this->assertWishlistItemCount(3);
     }
 

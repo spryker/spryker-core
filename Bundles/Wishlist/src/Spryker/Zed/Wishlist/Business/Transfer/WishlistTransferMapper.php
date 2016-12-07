@@ -36,12 +36,12 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
      */
     public function convertWishlistCollection(ObjectCollection $wishlistEntityCollection)
     {
-        $transferList = [];
+        $transferCollection = [];
         foreach ($wishlistEntityCollection as $wishlistEntity) {
-            $transferList[] = $this->convertWishlist($wishlistEntity);
+            $transferCollection[] = $this->convertWishlist($wishlistEntity);
         }
 
-        return $transferList;
+        return $transferCollection;
     }
 
     /**
@@ -64,12 +64,12 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
      */
     public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection)
     {
-        $transferList = [];
+        $transferCollection = [];
         foreach ($wishlistItemEntityCollection as $wishlistEntity) {
-            $transferList[] = $this->convertWishlistItem($wishlistEntity);
+            $transferCollection[] = $this->convertWishlistItem($wishlistEntity);
         }
 
-        return $transferList;
+        return $transferCollection;
     }
 
 }

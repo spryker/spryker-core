@@ -36,19 +36,15 @@ class ProductStorage implements ProductStorageInterface
     {
         $wishlistResponseTransfer->requireWishlist();
 
-        $ids = [];
-        foreach ($wishlistResponseTransfer->getItems() as $wishlistItem) {
-            $ids[] = $wishlistItem->getIdProduct();
-        }
+        $idProductCollection = $this->getIdProductCollection($wishlistResponseTransfer);
 
-        if (empty($ids)) {
+        if (empty($idProductCollection)) {
             return $wishlistResponseTransfer;
         }
 
         $wishlistResponseTransfer->setItems(new \ArrayObject());
 
-        $storageProductCollection = $this->productClient->getProductConcreteCollection($ids);
-
+        $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
         foreach ($storageProductCollection as $storageProduct) {
             $wishlistItem = (new WishlistItemTransfer())
                 ->setIdProduct($storageProduct->getIdProductConcrete())
@@ -59,6 +55,21 @@ class ProductStorage implements ProductStorageInterface
         }
 
         return $wishlistResponseTransfer;
+    }
+
+    /**
+     * @param WishlistOverviewResponseTransfer $wishlistResponseTransfer
+     *
+     * @return array
+     */
+    protected function getIdProductCollection(WishlistOverviewResponseTransfer $wishlistResponseTransfer)
+    {
+        $idProductCollection = [];
+        foreach ($wishlistResponseTransfer->getItems() as $wishlistItem) {
+            $idProductCollection[] = $wishlistItem->getIdProduct();
+        }
+
+        return $idProductCollection;
     }
 
 }

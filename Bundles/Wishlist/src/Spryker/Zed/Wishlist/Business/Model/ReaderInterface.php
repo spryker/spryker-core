@@ -44,6 +44,6 @@ interface ReaderInterface
      *
      * @return \Orm\Zed\Wishlist\Persistence\Base\SpyWishlist
      */
-    public function getWishlistEntityByCustomerIdAndName($idCustomer, $name);
+    public function getWishlistEntityByCustomerIdAndWishlistName($idCustomer, $name);
 
 }

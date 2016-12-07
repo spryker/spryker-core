@@ -61,7 +61,7 @@ class Reader implements ReaderInterface
         $wishlistTransfer->requireFkCustomer();
         $wishlistTransfer->requireName();
 
-        $wishlistEntity = $this->getWishlistEntityByCustomerIdAndName(
+        $wishlistEntity = $this->getWishlistEntityByCustomerIdAndWishlistName(
             $wishlistTransfer->getFkCustomer(),
             $wishlistTransfer->getName()
         );
@@ -78,46 +78,89 @@ class Reader implements ReaderInterface
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
+        $this->assertWishlistOverviewRequest($wishlistOverviewRequestTransfer);
+
+        $wishlistPaginationTransfer = $this->buildWishlistPaginationTransfer($wishlistOverviewRequestTransfer);
+        $wishlistOverviewResponseTransfer = $this->buildWishlistOverviewResponseTransfer(
+            $wishlistOverviewRequestTransfer->getWishlist(),
+            $wishlistPaginationTransfer
+        );
+
+        $wishlistEntity = $this->findWishlistEntity($wishlistOverviewRequestTransfer->getWishlist());
+
+        if (!$wishlistEntity) {
+            return $wishlistOverviewResponseTransfer;
+        }
+
+        $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
+        $wishlistOverviewRequestTransfer->setWishlist($wishlistTransfer);
+
+        $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
+        $wishlistPaginationTransfer = $this->updatePaginationTransfer($wishlistPaginationTransfer, $itemPaginationModel);
+        $wishlistItems = $this->transferMapper->convertWishlistItemCollection(
+            $itemPaginationModel->getResults()
+        );
+
+        $wishlistItems = $this->expandProductId($wishlistItems);
+
+        $wishlistOverviewResponseTransfer
+            ->setWishlist($wishlistTransfer)
+            ->setPagination($wishlistPaginationTransfer)
+            ->setItems(new ArrayObject($wishlistItems));
+
+        return $wishlistOverviewResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertWishlistOverviewRequest(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
         $wishlistOverviewRequestTransfer->requireWishlist();
 
         $wishlistTransfer = $wishlistOverviewRequestTransfer->getWishlist();
         $wishlistTransfer->requireFkCustomer();
         $wishlistTransfer->requireName();
+    }
 
-        $paginationTransfer = (new WishlistPaginationTransfer())
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPaginationTransfer
+     */
+    protected function buildWishlistPaginationTransfer(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return (new WishlistPaginationTransfer())
             ->setPage($wishlistOverviewRequestTransfer->getPage())
             ->setItemsPerPage($wishlistOverviewRequestTransfer->getItemsPerPage());
+    }
 
-        $responseTransfer = (new WishlistOverviewResponseTransfer())
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistPaginationTransfer $wishlistPaginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    protected function buildWishlistOverviewResponseTransfer(WishlistTransfer $wishlistTransfer, WishlistPaginationTransfer $wishlistPaginationTransfer)
+    {
+        return (new WishlistOverviewResponseTransfer())
             ->setWishlist($wishlistTransfer)
-            ->setPagination($paginationTransfer);
+            ->setPagination($wishlistPaginationTransfer);
+    }
 
-        $wishlistEntity = $this->queryContainer
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
+     */
+    protected function findWishlistEntity(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->queryContainer
             ->queryWishlistByCustomerId($wishlistTransfer->getFkCustomer())
             ->filterByName($wishlistTransfer->getName())
             ->findOne();
-
-        if (!$wishlistEntity) {
-            return $responseTransfer;
-        }
-
-        $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
-        $wishlistOverviewRequestTransfer->setWishlist($wishlistTransfer);
-        $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
-
-        $paginationTransfer = $this->updatePaginationTransfer($paginationTransfer, $itemPaginationModel);
-        $items = $this->transferMapper->convertWishlistItemCollection(
-            $itemPaginationModel->getResults()
-        );
-
-        $items = $this->expandProductId($items);
-
-        $responseTransfer
-            ->setWishlist($wishlistTransfer)
-            ->setPagination($paginationTransfer)
-            ->setItems(new ArrayObject($items));
-
-        return $responseTransfer;
     }
 
     /**
@@ -218,18 +261,18 @@ class Reader implements ReaderInterface
      */
     public function getWishlistEntityById($idWishlist)
     {
-        $wishListEntity = $this->queryContainer->queryWishlist()
+        $wishlistEntity = $this->queryContainer->queryWishlist()
             ->filterByIdWishlist($idWishlist)
             ->findOne();
 
-        if (!$wishListEntity) {
+        if (!$wishlistEntity) {
             throw new MissingWishlistException(sprintf(
                 'Wishlist with id %s not found',
                 $idWishlist
             ));
         }
 
-        return $wishListEntity;
+        return $wishlistEntity;
     }
 
     /**
@@ -240,7 +283,7 @@ class Reader implements ReaderInterface
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
-    public function getWishlistEntityByCustomerIdAndName($idCustomer, $name)
+    public function getWishlistEntityByCustomerIdAndWishlistName($idCustomer, $name)
     {
         $wishlistEntity = $this->queryContainer
             ->queryWishlistByCustomerId($idCustomer)

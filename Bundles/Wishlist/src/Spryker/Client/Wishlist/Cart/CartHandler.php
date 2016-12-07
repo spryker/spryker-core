@@ -45,7 +45,7 @@ class CartHandler implements CartHandlerInterface
         $wishlistMoveToCartRequestTransfer->requireSku();
         $wishlistMoveToCartRequestTransfer->requireWishlistItem();
 
-        $this->handleCart($wishlistMoveToCartRequestTransfer->getSku());
+        $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
         $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
 
         return $wishlistMoveToCartRequestTransfer;
@@ -56,7 +56,7 @@ class CartHandler implements CartHandlerInterface
      *
      * @return void
      */
-    protected function handleCart($sku)
+    protected function storeItemInQuote($sku)
     {
         $cartItem = (new ItemTransfer())
             ->setSku($sku)

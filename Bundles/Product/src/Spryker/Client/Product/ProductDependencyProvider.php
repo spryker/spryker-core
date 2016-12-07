@@ -27,15 +27,15 @@ class ProductDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::KV_STORAGE] = function (Container $container) {
+        $container[static::KV_STORAGE] = function (Container $container) {
             return new ProductToStorageBridge($container->getLocator()->storage()->client());
         };
 
-        $container[self::CLIENT_LOCALE] = function (Container $container) {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new ProductToLocaleBridge($container->getLocator()->locale()->client());
         };
 
-        $container[self::UTIL_ENCODING] = function (Container $container) {
+        $container[static::UTIL_ENCODING] = function (Container $container) {
             return new ProductToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
