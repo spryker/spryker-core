@@ -26,6 +26,10 @@ class CustomerTable extends AbstractTable
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
     const COL_GENDER = 'gender';
+    const GENDER_MAPPER = [
+        0 => 'Male',
+        1 => 'Female',
+    ];
 
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
@@ -147,6 +151,7 @@ class CustomerTable extends AbstractTable
         $customerRow = $customerGroupToCustomer->toArray();
 
         $customerRow[self::ACTIONS] = $this->buildLinks($customerGroupToCustomer);
+        $customerRow['gender'] = self::GENDER_MAPPER[$customerRow['gender']];
 
         return $customerRow;
     }
