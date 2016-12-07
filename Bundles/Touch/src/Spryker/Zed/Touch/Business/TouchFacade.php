@@ -204,9 +204,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification:
-     * Removes all the rows from the touch table(s)
-     * which are marked as deleted (item_event = SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+     * {@inheritdoc}
      *
      * @api
      *

@@ -245,6 +245,15 @@ interface UrlFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer);
+
+    /**
+     * @api
+     *
      * @deprecated This method will be removed with next major release because of invalid dependency direction.
      * Use ProductFacade::getProductUrl() instead.
      *

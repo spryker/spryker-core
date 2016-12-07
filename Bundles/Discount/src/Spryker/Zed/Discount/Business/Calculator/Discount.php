@@ -173,7 +173,7 @@ class Discount implements DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|string[]
+     * @return string[]
      */
     protected function getVoucherCodes(QuoteTransfer $quoteTransfer)
     {

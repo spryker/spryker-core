@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesAggregator\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
- * @method \Spryker\Zed\DiscountSalesAggregatorConnector\Business\DiscountSalesAggregatorConnectorFacade getFacade()
+ * @method \Spryker\Zed\DiscountSalesAggregatorConnector\Business\DiscountSalesAggregatorConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountSalesAggregatorConnector\Communication\DiscountSalesAggregatorConnectorCommunicationFactory getFactory()
  */
 class ItemDiscountsOrderAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
