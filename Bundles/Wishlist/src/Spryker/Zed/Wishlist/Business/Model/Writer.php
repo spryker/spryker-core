@@ -149,12 +149,12 @@ class Writer implements WriterInterface
             $wishlistItemTransfer->getFkCustomer()
         );
 
-        $entity = $this->queryContainer->queryWishlistItem()
+        $wishlistEntity = $this->queryContainer->queryWishlistItem()
             ->filterByFkWishlist($idWishlist)
             ->filterBySku($wishlistItemTransfer->getSku())
             ->findOneOrCreate();
 
-        $entity->save();
+        $wishlistEntity->save();
 
         return $wishlistItemTransfer;
     }
