@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Development\Business\CodeBuilder\Bundle;
 
-use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Zend\Filter\FilterChain;
 
@@ -42,8 +41,6 @@ class BundleBuilder
     /**
      * @param string $bundle
      * @param array $options
-     *
-     * @throws \RuntimeException
      *
      * @return void
      */
