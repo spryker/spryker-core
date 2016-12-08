@@ -37,7 +37,6 @@ class ProductStorage implements ProductStorageInterface
         $wishlistResponseTransfer->requireWishlist();
 
         $idProductCollection = $this->getIdProductCollection($wishlistResponseTransfer);
-
         if (empty($idProductCollection)) {
             return $wishlistResponseTransfer;
         }

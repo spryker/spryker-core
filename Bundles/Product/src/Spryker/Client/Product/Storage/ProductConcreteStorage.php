@@ -72,16 +72,26 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection)
     {
-        $storageKeyCollection = $this->getStorageKeyCollection($idProductConcreteCollection);
-        $jsonData = $this->storage->getMulti($storageKeyCollection);
+        $jsonData = $this->getProductConcreteStorageData($idProductConcreteCollection);
 
         $result = [];
         foreach ($jsonData as $key => $json) {
-            $data = $this->utilEncodingService->decodeJson($json, true);
+            $data = (array) $this->utilEncodingService->decodeJson($json, true);
             $result[] = $this->mapStorageProduct($data);
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $idProductConcreteCollection
+     *
+     * @return array
+     */
+    protected function getProductConcreteStorageData(array $idProductConcreteCollection)
+    {
+        $storageKeyCollection = $this->getStorageKeyCollection($idProductConcreteCollection);
+        return $this->storage->getMulti($storageKeyCollection);
     }
 
     /**
@@ -101,16 +111,14 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     }
 
     /**
-     * @param mixed $data
+     * @param array  $data
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    protected function mapStorageProduct($data)
+    protected function mapStorageProduct(array $data)
     {
         $storageProduct = new StorageProductTransfer();
-        if (is_array($data)) {
-            $storageProduct->fromArray($data, true);
-        }
+        $storageProduct->fromArray($data, true);
 
         return $storageProduct;
     }

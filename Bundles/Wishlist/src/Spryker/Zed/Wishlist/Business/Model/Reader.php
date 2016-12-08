@@ -219,16 +219,8 @@ class Reader implements ReaderInterface
      */
     protected function expandProductId(array $itemCollection)
     {
-        $skuCollection = [];
-        foreach ($itemCollection as $itemTransfer) {
-            $skuCollection[] = $itemTransfer->getSku();
-        }
+        $productCollection = $this->getProductCollection($itemCollection);
 
-        $productCollection = $this->productQueryContainer
-            ->queryProduct()
-            ->filterBySku_In($skuCollection);
-
-        /* @var \Orm\Zed\Product\Persistence\SpyProduct $productEntity */
         foreach ($productCollection as $productEntity) {
             foreach ($itemCollection as $itemTransfer) {
                 if (mb_strtolower($itemTransfer->getSku()) === mb_strtolower($productEntity->getSku())) {
@@ -238,6 +230,36 @@ class Reader implements ReaderInterface
         }
 
         return $itemCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getProductCollection(array $itemCollection)
+    {
+        $skuCollection = $this->getSkuCollection($itemCollection);
+
+        return $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku_In($skuCollection)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     *
+     * @return array
+     */
+    protected function getSkuCollection(array $itemCollection)
+    {
+        $skuCollection = [];
+        foreach ($itemCollection as $itemTransfer) {
+            $skuCollection[] = $itemTransfer->getSku();
+        }
+
+        return $skuCollection;
     }
 
     /**

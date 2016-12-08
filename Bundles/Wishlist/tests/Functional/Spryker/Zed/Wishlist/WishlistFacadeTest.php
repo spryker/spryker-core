@@ -140,7 +140,7 @@ class WishlistFacadeTest extends Test
      */
     protected function setupBigWishlist()
     {
-        for ($a = 0; $a < 100; $a++) {
+        for ($a = 0; $a < 25; $a++) {
             $productEntity = $this->createProduct('concrete_sku_many_' . $a, $this->productAbstract->getIdProductAbstract());
             $this->createWishlistItem($this->wishlist->getIdWishlist(), $productEntity->getSku());
         }
@@ -387,7 +387,7 @@ class WishlistFacadeTest extends Test
     {
         $this->setupBigWishlist();
 
-        $pageNumber = 5;
+        $pageNumber = 3;
         $itemsPerPage = 10;
         $orderBy = SpyWishlistItemTableMap::COL_CREATED_AT;
         $orderDirection = Criteria::DESC;
