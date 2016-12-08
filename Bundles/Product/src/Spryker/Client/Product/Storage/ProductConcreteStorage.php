@@ -76,7 +76,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
 
         $result = [];
         foreach ($jsonData as $key => $json) {
-            $data = (array) $this->utilEncodingService->decodeJson($json, true);
+            $data = (array)$this->utilEncodingService->decodeJson($json, true);
             $result[] = $this->mapStorageProduct($data);
         }
 
@@ -111,7 +111,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     }
 
     /**
-     * @param array  $data
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
