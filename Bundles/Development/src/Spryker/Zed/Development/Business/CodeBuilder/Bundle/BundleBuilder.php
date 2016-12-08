@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Business\CodeBuilder\Bundle;
 
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
+use Zend\Filter\FilterChain;
 
 class BundleBuilder
 {
@@ -51,15 +52,25 @@ class BundleBuilder
         $bundles = $this->getBundleNames();
 
         if ($bundle !== 'all') {
-            if (!in_array($bundle, $bundles)) {
-                throw new RuntimeException('No such bundle: ' . $bundle);
-            }
+            $bundle = $this->getUnderscoreToCamelCaseFilter()->filter($bundle);
             $bundles = (array)$bundle;
         }
 
         foreach ($bundles as $bundle) {
             $this->createOrUpdateBundle($bundle, $options);
         }
+    }
+
+    /**
+     * @return \Zend\Filter\FilterChain
+     */
+    protected function getUnderscoreToCamelCaseFilter()
+    {
+        $filter = new FilterChain();
+
+        $filter->attachByName('WordUnderscoreToCamelCase');
+
+        return $filter;
     }
 
     /**
@@ -136,6 +147,9 @@ class BundleBuilder
     protected function saveFile($bundle, $templateContent, $fileName, $overwrite = false)
     {
         $path = $this->bundleRootDirectory . $bundle . DIRECTORY_SEPARATOR;
+        if (!is_dir($path)) {
+            mkdir($path, 0770, true);
+        }
 
         $filesystem = new Filesystem();
         $filePath = $path . $fileName;
