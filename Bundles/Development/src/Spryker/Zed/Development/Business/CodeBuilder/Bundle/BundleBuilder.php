@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Business\CodeBuilder\Bundle;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Zend\Filter\FilterChain;
+use Zend\Filter\Word\CamelCaseToDash;
 
 class BundleBuilder
 {
@@ -30,7 +31,7 @@ class BundleBuilder
         '.gitattributes',
         '.gitignore',
         '.coveralls.yml',
-        '.codeception.yml',
+        'codeception.yml',
         '.travis.yml',
         'CHANGELOG.md',
         'README.md',
@@ -103,6 +104,10 @@ class BundleBuilder
         $files = $this->files;
 
         foreach ($files as $file) {
+            if (!empty($options['file']) && $file !== $options['file']) {
+                continue;
+            }
+
             $templateContent = $this->getTemplateContent($file);
 
             $templateContent = $this->replacePlaceHolder($bundle, $templateContent);
@@ -132,12 +137,25 @@ class BundleBuilder
     protected function replacePlaceHolder($bundle, $templateContent)
     {
         $templateContent = str_replace(
-            ['{bundle}', '{bundleVariable}'],
-            [$bundle, lcfirst($bundle)],
+            ['{bundle}', '{bundleVariable}', '{bundleDashed}'],
+            [$bundle, lcfirst($bundle), $this->dashed($bundle)],
             $templateContent
         );
 
         return $templateContent;
+    }
+
+    /**
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function dashed($bundle) {
+        $filter = new CamelCaseToDash();
+
+        $bundle = strtolower($filter->filter($bundle));
+
+        return $bundle;
     }
 
     /**

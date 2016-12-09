@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/error-handler
+composer require spryker/{bundleDashed}
 ```
 
 ## Documentation

@@ -20,7 +20,8 @@ class BundleCreateConsole extends Console
 {
 
     const COMMAND_NAME = 'dev:bundle:create';
-    const OPTION_BUNDLE = 'from bundle';
+    const ARGUMENT_BUNDLE = 'bundle';
+    const ARGUMENT_FILE = 'file';
     const OPTION_FORCE = 'force';
 
     /**
@@ -30,12 +31,13 @@ class BundleCreateConsole extends Console
     {
         parent::configure();
 
-        $this->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+        $this->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create basic core bundle (Spryker core dev only).');
 
-        $this->addArgument(self::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to create or sync. Use "all" for all.');
-        $this->addOption(self::OPTION_FORCE, 'f', InputOption::VALUE_NONE, 'Force the command, will overwrite existing files.');
+        $this->addArgument(static::ARGUMENT_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to create or sync. Use "all" for all.');
+        $this->addArgument(static::ARGUMENT_FILE, InputArgument::REQUIRED, 'Name of core bundle to create or sync. Use "all" for all.');
+        $this->addOption(static::OPTION_FORCE, 'f', InputOption::VALUE_NONE, 'Force the command, will overwrite existing files.');
     }
 
     /**
@@ -46,7 +48,7 @@ class BundleCreateConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getArgument(self::OPTION_BUNDLE);
+        $bundle = $this->input->getArgument(static::ARGUMENT_BUNDLE);
 
         if ($bundle !== 'all') {
             $message = 'Create or update Spryker core bundle ' . $bundle;
@@ -57,6 +59,7 @@ class BundleCreateConsole extends Console
         $this->info($message);
 
         $options = $this->input->getOptions();
+        $options[static::ARGUMENT_FILE] = $this->input->getArgument(static::ARGUMENT_FILE);
 
         $this->getFacade()->createBundle($bundle, $options);
     }
