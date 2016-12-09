@@ -19,7 +19,7 @@ class JenkinsGenerateConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:jenkins:generate';
-    const DESCRIPTION = 'Generate jenkins jobs configuration';
+    const DESCRIPTION = 'Generate Jenkins jobs configuration';
 
     /**
      * @return void

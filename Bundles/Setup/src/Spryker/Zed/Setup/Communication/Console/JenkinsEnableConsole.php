@@ -18,7 +18,7 @@ class JenkinsEnableConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:jenkins:enable';
-    const DESCRIPTION = 'Enable jenkins';
+    const DESCRIPTION = 'Enable Jenkins';
 
     /**
      * @return void

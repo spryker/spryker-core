@@ -30,7 +30,7 @@ class GenerateServiceIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate service ide auto completion files');
+        $this->setDescription('Generate IDE auto completion files for Service.');
     }
 
     /**

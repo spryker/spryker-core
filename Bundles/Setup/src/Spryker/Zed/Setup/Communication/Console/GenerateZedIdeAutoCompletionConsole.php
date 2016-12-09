@@ -33,7 +33,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate zed ide auto completion files');
+        $this->setDescription('Generate IDE auto completion files for Zed.');
     }
 
     /**
