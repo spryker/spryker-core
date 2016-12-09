@@ -53,13 +53,13 @@ class ComposerJsonUpdaterConsole extends Console
             $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
         }
 
+        $processedBundles = $this->getFacade()->updateComposerJsonInBundles($bundles);
         if ($this->input->getOption(self::VERBOSE)) {
-            foreach ($bundles as $bundle) {
-                $this->output->write('- '. $bundle);
+            $this->output->writeln(count($processedBundles) . ' bundles updated:');
+            foreach ($processedBundles as $processedBundle) {
+                $this->output->writeln('- '. $processedBundle);
             }
         }
-
-        $this->getFacade()->updateComposerJsonInBundles($bundles);
     }
 
 }

@@ -40,18 +40,24 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     /**
      * @param array $bundles
      *
-     * @return void
+     * @return array
      */
     public function update(array $bundles)
     {
         $composerJsonFiles = $this->finder->find();
+
+        $processed = [];
         foreach ($composerJsonFiles as $composerJsonFile) {
             if ($this->shouldSkip($composerJsonFile, $bundles)) {
                 continue;
             }
 
             $this->updateComposerJsonFile($composerJsonFile);
+
+            $processed[] = $composerJsonFile->getRelativePath();
         }
+
+        return $processed;
     }
 
     /**
