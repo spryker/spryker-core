@@ -32,7 +32,7 @@ class ComposerJsonUpdaterConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Update composer.json of core bundles');
+            ->setDescription('Update composer.json of core bundles (Spryker core dev only).');
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
     }

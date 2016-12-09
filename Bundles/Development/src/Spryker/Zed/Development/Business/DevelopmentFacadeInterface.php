@@ -52,6 +52,16 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @param string $bundle
+     * @param array $options
+     *
+     * @return void
+     */
+    public function createBundle($bundle, $options);
+
+    /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
