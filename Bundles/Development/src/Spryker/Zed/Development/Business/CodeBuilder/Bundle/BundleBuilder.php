@@ -150,7 +150,8 @@ class BundleBuilder
      *
      * @return string
      */
-    protected function dashed($bundle) {
+    protected function dashed($bundle)
+    {
         $filter = new CamelCaseToDash();
 
         $bundle = strtolower($filter->filter($bundle));
