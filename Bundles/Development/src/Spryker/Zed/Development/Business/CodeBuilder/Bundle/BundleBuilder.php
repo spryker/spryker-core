@@ -31,7 +31,7 @@ class BundleBuilder
         '.gitattributes',
         '.gitignore',
         '.coveralls.yml',
-        'codeception.yml',
+        'codecept.yml'=> 'codeception.yml',
         '.travis.yml',
         'CHANGELOG.md',
         'README.md',
@@ -101,12 +101,17 @@ class BundleBuilder
      */
     protected function createOrUpdateBundle($bundle, $options)
     {
-        foreach ($this->files as $file) {
+        foreach ($this->files as $alias => $file) {
+            $source = $file;
+            if (is_string($alias)) {
+                $source = $alias;
+            }
+
             if (!empty($options['file']) && $file !== $options['file']) {
                 continue;
             }
 
-            $templateContent = $this->getTemplateContent($file);
+            $templateContent = $this->getTemplateContent($source);
 
             $templateContent = $this->replacePlaceHolder($bundle, $templateContent);
 
