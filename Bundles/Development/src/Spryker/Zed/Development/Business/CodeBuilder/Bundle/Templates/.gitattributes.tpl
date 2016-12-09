@@ -11,10 +11,14 @@
 *.phar binary
 *.ttf binary
 *.woff binary
+*.woff2 binary
 *.eot binary
 *.ico binary
 *.mo binary
 *.pdf binary
+*.xsd binary
+*.ts binary
+*.exe binary
 
 # Remove files for archives generated using `git archive`
 codeception.yml export-ignore
