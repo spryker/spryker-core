@@ -18,6 +18,8 @@
 
 # Remove files for archives generated using `git archive`
 codeception.yml export-ignore
+dependency.json export-ignore
+.coveralls.yml export-ignore
 .travis.yml export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
