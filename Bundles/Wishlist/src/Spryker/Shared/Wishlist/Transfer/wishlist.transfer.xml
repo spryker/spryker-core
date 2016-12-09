@@ -4,23 +4,49 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Wishlist">
-        <property name="customer" type="Customer" />
-        <property name="items" type="Item[]" singular="item" />
+        <property name="idWishlist" type="int" />
+        <property name="fkCustomer" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
-    <transfer name="WishlistChange">
-        <property name="customer" type="Customer" />
-        <property name="wishlist" type="Wishlist" />
-        <property name="items" type="Item[]" singular="item" />
-    </transfer>
-
-    <transfer name="Item">
-        <property name="id" type="int"/>
-        <property name="addedAt" type="string"/>
-        <property name="quantity" type="int" />
+    <transfer name="WishlistItem">
+        <property name="wishlistName" type="string" />
+        <property name="fkWishlist" type="int" />
+        <property name="fkCustomer" type="int" />
+        <property name="idProduct" type="int" />
         <property name="sku" type="string" />
-        <property name="groupKey" type="string" />
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
-        <property name="productConcrete" type="ProductConcrete" />
+        <property name="product" type="StorageProduct" />
     </transfer>
+
+    <transfer name="WishlistMoveToCartRequest">
+        <property name="sku" type="string" />
+        <property name="wishlistItem" type="WishlistItem" />
+    </transfer>
+
+    <transfer name="WishlistOverviewRequest">
+        <property name="wishlist" type="Wishlist" />
+        <property name="page" type="int" />
+        <property name="itemsPerPage" type="int" />
+        <property name="orderBy" type="string" />
+        <property name="orderDirection" type="string" />
+    </transfer>
+
+    <transfer name="WishlistOverviewResponse">
+        <property name="wishlist" type="Wishlist" />
+        <property name="items" type="WishlistItem[]" singular="item" />
+        <property name="pagination" type="WishlistPagination" />
+    </transfer>
+
+    <transfer name="StorageProduct">
+        <property name="idProductConcrete" type="int" />
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="WishlistPagination">
+        <property name="page" type="int" />
+        <property name="pagesTotal" type="int" />
+        <property name="itemsPerPage" type="int" />
+        <property name="itemsTotal" type="int" />
+    </transfer>
+
 </transfers>

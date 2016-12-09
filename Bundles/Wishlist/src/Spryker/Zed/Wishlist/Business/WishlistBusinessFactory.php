@@ -7,17 +7,10 @@
 
 namespace Spryker\Zed\Wishlist\Business;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Wishlist\Business\Model\Customer;
-use Spryker\Zed\Wishlist\Business\Operator\AbstractOperator;
-use Spryker\Zed\Wishlist\Business\Operator\Add;
-use Spryker\Zed\Wishlist\Business\Operator\Decrease;
-use Spryker\Zed\Wishlist\Business\Operator\Increase;
-use Spryker\Zed\Wishlist\Business\Operator\Remove;
-use Spryker\Zed\Wishlist\Business\Storage\InMemory;
-use Spryker\Zed\Wishlist\Business\Storage\Propel;
+use Spryker\Zed\Wishlist\Business\Model\Reader;
+use Spryker\Zed\Wishlist\Business\Model\Writer;
+use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -28,123 +21,42 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Operator\Add
+     * @return \Spryker\Zed\Wishlist\Business\Model\ReaderInterface
      */
-    public function createAddOperator(WishlistChangeTransfer $wishlistChange)
+    public function createReader()
     {
-        $storage = $this->createStorage($wishlistChange);
-        $operator = new Add($storage, $wishlistChange);
-        $this->provideOperatorPlugins($operator);
-
-        return $operator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Operator\Increase
-     */
-    public function createIncreaseOperator(WishlistChangeTransfer $wishlistChange)
-    {
-        $storage = $this->createStorage($wishlistChange);
-        $operator = new Increase($storage, $wishlistChange);
-        $this->provideOperatorPlugins($operator);
-
-        return $operator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Operator\Decrease
-     */
-    public function createDecreaseOperator(WishlistChangeTransfer $wishlistChange)
-    {
-        $storage = $this->createStorage($wishlistChange);
-        $operator = new Decrease($storage, $wishlistChange);
-        $this->provideOperatorPlugins($operator);
-
-        return $operator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Operator\Remove
-     */
-    public function createRemoveOperator(WishlistChangeTransfer $wishlistChange)
-    {
-        $storage = $this->createStorage($wishlistChange);
-        $operator = new Remove($storage, $wishlistChange);
-        $this->provideOperatorPlugins($operator);
-
-        return $operator;
-    }
-
-    /**
-     * @param \Spryker\Zed\Wishlist\Business\Operator\AbstractOperator $operator
-     *
-     * @return void
-     */
-    protected function provideOperatorPlugins(AbstractOperator $operator)
-    {
-        $operator->setPostSavePlugins($this->getProvidedDependency(WishlistDependencyProvider::POST_SAVE_PLUGINS));
-        $operator->setPreSavePlugins($this->getProvidedDependency(WishlistDependencyProvider::PRE_SAVE_PLUGINS));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Storage\StorageInterface
-     */
-    protected function createStorage(WishlistChangeTransfer $wishlistChange)
-    {
-        if ($wishlistChange->getCustomer() !== null) {
-            return $this->createPropelStorage($wishlistChange);
-        }
-
-        return $this->createInMemoryStrorage($wishlistChange);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Storage\Propel
-     */
-    protected function createPropelStorage(WishlistChangeTransfer $wishlistChange)
-    {
-        return new Propel(
+        return new Reader(
             $this->getQueryContainer(),
-            $this->createCustomer($wishlistChange->getCustomer()),
-            $wishlistChange->getWishlist(),
-            $wishlistChange->getCustomer(),
-            $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT)
+            $this->getProductQueryContainer(),
+            $this->createTransferMapper()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Storage\InMemory
+     * @return \Spryker\Zed\Wishlist\Business\Model\WriterInterface
      */
-    protected function createInMemoryStrorage(WishlistChangeTransfer $wishlistChange)
+    public function createWriter()
     {
-        return new InMemory(
-            $wishlistChange->getWishlist(),
-            $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT)
+        return new Writer(
+            $this->getQueryContainer(),
+            $this->createReader()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Spryker\Zed\Wishlist\Business\Model\Customer
+     * @return \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface
      */
-    public function createCustomer(CustomerTransfer $customerTransfer)
+    protected function createTransferMapper()
     {
-        return new Customer($this->getQueryContainer(), $customerTransfer);
+        return new WishlistTransferMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductBridge
+     */
+    protected function getProductQueryContainer()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
 }

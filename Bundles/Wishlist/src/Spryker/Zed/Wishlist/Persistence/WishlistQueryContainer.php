@@ -18,35 +18,11 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @api
      *
-     * @param int $idWishlist
-     * @param int $idProduct
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
-    public function queryCustomerWishlistByProductId($idWishlist, $idProduct)
+    public function queryWishlist()
     {
-        $query = $this->getFactory()->createWishlistItemQuery()
-            ->filterByFkWishlist($idWishlist)
-            ->filterByFkProduct($idProduct);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idWishlist
-     * @param string $groupKey
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
-     */
-    public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey)
-    {
-        $query = $this->getFactory()->createWishlistItemQuery()
-            ->filterByFkWishlist($idWishlist)
-            ->filterByGroupKey($groupKey);
-
-        return $query;
+        return $this->getFactory()->createWishlistQuery();
     }
 
     /**
@@ -62,11 +38,29 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @api
      *
+     * @param int $idCustomer
+     *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
-    public function queryWishlist()
+    public function queryWishlistByCustomerId($idCustomer)
     {
-        return $this->getFactory()->createWishlistQuery();
+        return $this->getFactory()
+            ->createWishlistQuery()
+            ->filterByFkCustomer($idCustomer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idWishlist
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    public function queryItemsByWishlistId($idWishlist)
+    {
+        return $this->getFactory()
+            ->createWishlistItemQuery()
+            ->filterByFkWishlist($idWishlist);
     }
 
 }

@@ -7,7 +7,10 @@
 
 namespace Spryker\Client\Wishlist;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
  * @method \Spryker\Client\Wishlist\WishlistFactory getFactory()
@@ -18,51 +21,73 @@ interface WishlistClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function addItem(ItemTransfer $wishlistItem);
+    public function createWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function increaseItemQuantity(ItemTransfer $wishlistItem);
+    public function updateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function decreaseItemQuantity(ItemTransfer $wishlistItem);
+    public function removeWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(ItemTransfer $wishlistItem);
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function getWishlist();
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
+     */
+    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function synchronizeSession();
+    public function getWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
 }

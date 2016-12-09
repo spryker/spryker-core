@@ -5,17 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Product\Storage;
+namespace Spryker\Client\Wishlist\Dependency\Client;
 
-interface ProductConcreteStorageInterface
+interface WishlistToProductInterface
 {
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return mixed
-     */
-    public function getProductConcreteById($idProductConcrete);
 
     /**
      * @param array $idProductConcreteCollection
