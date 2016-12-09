@@ -26,7 +26,7 @@ class BaseRuleTester extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
-    protected function createCurrencyCoverterMock()
+    protected function createCurrencyConverterMock()
     {
         return $this->getMockBuilder(MoneyValueConverterInterface::class)->getMock();
     }

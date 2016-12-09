@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByPriceCollectorPlugin;
@@ -25,6 +24,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRuleP
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -37,6 +37,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'PROPEL_CONNECTION_PLUGIN';
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
+    const FACADE_MONEY = 'money plugin';
 
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
@@ -51,33 +52,12 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function () {
-            return Store::getInstance();
-        };
-
-        $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
-        };
-
-        $container[self::CALCULATOR_PLUGINS] = function () {
-            return $this->getAvailableCalculatorPlugins();
-        };
-
-        $container[self::DECISION_RULE_PLUGINS] = function () {
-            return $this->getDecisionRulePlugins();
-        };
-
-        $container[self::CALCULATOR_PLUGINS] = function () {
-            return $this->getAvailableCalculatorPlugins();
-        };
-
-        $container[self::COLLECTOR_PLUGINS] = function () {
-            return $this->getCollectorPlugins();
-        };
-
-        $container[self::CURRENCY_MANAGER] = function () {
-            return $this->getCurrencyManager();
-        };
+        $container = $this->addStore($container);
+        $container = $this->addMessengerFacade($container);
+        $container = $this->addCalculatorPlugins($container);
+        $container = $this->addDecisionRulePlugins($container);
+        $container = $this->addCollectorPlugins($container);
+        $container = $this->addMoneyFacade($container);
 
         return $container;
     }
@@ -89,21 +69,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function () {
-            return Store::getInstance();
-        };
-
-        $container[self::DECISION_RULE_PLUGINS] = function () {
-            return $this->getDecisionRulePlugins();
-        };
-
-        $container[self::CALCULATOR_PLUGINS] = function () {
-            return $this->getAvailableCalculatorPlugins();
-        };
-
-        $container[self::COLLECTOR_PLUGINS] = function () {
-            return $this->getCollectorPlugins();
-        };
+        $container = $this->addStore($container);
+        $container = $this->addDecisionRulePlugins($container);
+        $container = $this->addCalculatorPlugins($container);
+        $container = $this->addCollectorPlugins($container);
+        $container = $this->addMoneyFacade($container);
 
         return $container;
     }
@@ -132,14 +102,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
-     */
-    protected function getCurrencyManager()
-    {
-        return CurrencyManager::getInstance();
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins()
@@ -156,6 +118,92 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             new MonthDecisionRulePlugin(),
             new TimeDecisionRulePlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade(Container $container)
+    {
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            $discountToMoneyBridge = new DiscountToMoneyBridge($container->getLocator()->money()->facade());
+
+            return $discountToMoneyBridge;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[self::STORE_CONFIG] = function () {
+            return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container)
+    {
+        $container[self::FACADE_MESSENGER] = function (Container $container) {
+            return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCalculatorPlugins(Container $container)
+    {
+        $container[self::CALCULATOR_PLUGINS] = function () {
+            return $this->getAvailableCalculatorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDecisionRulePlugins(Container $container)
+    {
+        $container[self::DECISION_RULE_PLUGINS] = function () {
+            return $this->getDecisionRulePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectorPlugins(Container $container)
+    {
+        $container[self::COLLECTOR_PLUGINS] = function () {
+            return $this->getCollectorPlugins();
+        };
+
+        return $container;
     }
 
 }

@@ -130,7 +130,15 @@ class SearchFactory extends AbstractFactory
      */
     public function createQueryFactory()
     {
-        return new QueryFactory($this->createQueryBuilder());
+        return new QueryFactory($this->createQueryBuilder(), $this->getMoneyPlugin());
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     */
+    protected function getMoneyPlugin()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGIN_MONEY);
     }
 
     /**

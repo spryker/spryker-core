@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -31,11 +30,11 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
-    protected function getCurrencyManager()
+    protected function getMoneyPlugin()
     {
-        return CurrencyManager::getInstance();
+        return $this->getFactory()->getMoneyFacade();
     }
 
     /**
@@ -45,7 +44,7 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
      */
     public function transformForPersistence($value)
     {
-        return (int)round($this->getCurrencyManager()->convertDecimalToCent($value));
+        return $this->getMoneyPlugin()->convertDecimalToInteger((float)$value);
     }
 
     /**
@@ -55,20 +54,21 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
      */
     public function transformFromPersistence($value)
     {
-        return $this->getCurrencyManager()->format(
-            $this->getCurrencyManager()->convertCentToDecimal($value),
-            false
-        );
+        $moneyTransfer = $this->getMoneyPlugin()->fromInteger((int)$value);
+
+        return $this->getMoneyPlugin()->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
+     * @param int $amount
+     *
      * @return string
      */
     public function getFormattedAmount($amount)
     {
-        $discountAmount = $this->getCurrencyManager()->convertCentToDecimal($amount);
+        $moneyTransfer = $this->getMoneyPlugin()->fromInteger($amount);
 
-        return $this->getCurrencyManager()->format($discountAmount);
+        return $this->getMoneyPlugin()->formatWithSymbol($moneyTransfer);
     }
 
     /**

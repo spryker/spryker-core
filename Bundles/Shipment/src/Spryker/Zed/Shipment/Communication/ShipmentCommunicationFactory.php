@@ -29,7 +29,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         $methodQuery = $this->getQueryContainer()->queryMethods();
 
-        return new MethodTable($methodQuery);
+        return new MethodTable($methodQuery, $this->getMoneyFacade());
     }
 
     /**
@@ -53,7 +53,8 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
             $this->getTaxFacade(),
-            $this->getPlugins()
+            $this->getPlugins(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -63,6 +64,14 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     protected function getPlugins()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_MONEY);
     }
 
     /**

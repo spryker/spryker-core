@@ -7,9 +7,9 @@
 
 namespace Unit\Spryker\Zed\Refund;
 
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesAggregatorBridge;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
@@ -86,8 +86,8 @@ class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container = $refundDependencyProvider->provideCommunicationLayerDependencies($container);
 
-        $this->assertArrayHasKey(RefundDependencyProvider::CURRENCY_MANAGER, $container);
-        $this->assertInstanceOf(CurrencyManagerInterface::class, $container[RefundDependencyProvider::CURRENCY_MANAGER]);
+        $this->assertArrayHasKey(RefundDependencyProvider::FACADE_MONEY, $container);
+        $this->assertInstanceOf(RefundToMoneyBridge::class, $container[RefundDependencyProvider::FACADE_MONEY]);
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Communication\Form\DataProvider;
 
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -31,18 +32,26 @@ class MethodFormDataProvider
     protected $taxFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param array $plugins
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
         ShipmentToTaxInterface $taxFacade,
-        array $plugins
+        array $plugins,
+        ShipmentToMoneyInterface $moneyFacade
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
         $this->taxFacade = $taxFacade;
         $this->plugins = $plugins;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -85,6 +94,8 @@ class MethodFormDataProvider
             MethodForm::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
             MethodForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
         ];
+
+        $options[MethodForm::OPTION_MONEY_FACADE] = $this->moneyFacade;
 
         return $options;
     }

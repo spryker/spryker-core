@@ -160,7 +160,7 @@ class Discount implements DiscountInterface
 
         $applicableDiscounts = [];
         foreach ($discounts as $discountEntity) {
-            if ($this->isDiscountApplicable($quoteTransfer, $discountEntity) === false) {
+            if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
                 continue;
             }
 
