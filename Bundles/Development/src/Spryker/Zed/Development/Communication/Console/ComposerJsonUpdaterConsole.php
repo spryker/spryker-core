@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ComposerJsonUpdaterConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:composer-json:update';
+    const COMMAND_NAME = 'dev:dependency:update-composer-files';
     const OPTION_BUNDLE = 'bundle';
     const VERBOSE = 'verbose';
 

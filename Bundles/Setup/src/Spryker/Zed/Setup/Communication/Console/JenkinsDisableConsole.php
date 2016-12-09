@@ -18,7 +18,7 @@ class JenkinsDisableConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:jenkins:disable';
-    const DESCRIPTION = 'Disable jenkins';
+    const DESCRIPTION = 'Disable Jenkins';
 
     /**
      * @return void
