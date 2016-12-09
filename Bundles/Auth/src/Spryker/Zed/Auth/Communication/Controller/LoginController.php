@@ -44,6 +44,10 @@ class LoginController extends AbstractController
             }
 
             $this->addErrorMessage('Authentication failed!');
+        } else {
+            if ($this->getFacade()->hasCurrentUser()) {
+                return $this->redirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
+            }
         }
 
         return $this->viewResponse([
