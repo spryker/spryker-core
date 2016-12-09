@@ -25,6 +25,8 @@ class BundleBuilder
     /**
      * List of files to generate in each bundle.
      *
+     * The codecept alias is required to not trigger codeception autoloading.
+     *
      * @var array
      */
     protected $files = [
