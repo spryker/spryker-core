@@ -15,13 +15,6 @@
 *.ico binary
 *.mo binary
 *.pdf binary
-*.exe binary
-*.xcf binary
-*.eps binary
-*.psd binary
-*.dll binary
-*.doc binary
-*.docx binary
 
 # Remove files for archives generated using `git archive`
 codeception.yml export-ignore

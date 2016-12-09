@@ -27,7 +27,14 @@ class BundleBuilder
      * @var array
      */
     protected $files = [
-        '.gitattributes'
+        '.gitattributes',
+        '.gitignore',
+        '.coveralls.yml',
+        '.codeception.yml',
+        '.travis.yml',
+        'CHANGELOG.md',
+        'README.md',
+        'LICENSE'
     ];
 
     /**
