@@ -54,11 +54,11 @@ class BundleBuilder
      */
     public function build($bundle, array $options)
     {
-        $bundles = $this->getBundleNames();
-
         if ($bundle !== 'all') {
             $bundle = $this->getUnderscoreToCamelCaseFilter()->filter($bundle);
             $bundles = (array)$bundle;
+        } else {
+            $bundles = $this->getBundleNames();
         }
 
         foreach ($bundles as $bundle) {
@@ -101,9 +101,7 @@ class BundleBuilder
      */
     protected function createOrUpdateBundle($bundle, $options)
     {
-        $files = $this->files;
-
-        foreach ($files as $file) {
+        foreach ($this->files as $file) {
             if (!empty($options['file']) && $file !== $options['file']) {
                 continue;
             }
@@ -138,7 +136,7 @@ class BundleBuilder
     {
         $templateContent = str_replace(
             ['{bundle}', '{bundleVariable}', '{bundleDashed}'],
-            [$bundle, lcfirst($bundle), $this->dashed($bundle)],
+            [$bundle, lcfirst($bundle), $this->camelCaseToDash($bundle)],
             $templateContent
         );
 
@@ -150,7 +148,7 @@ class BundleBuilder
      *
      * @return string
      */
-    protected function dashed($bundle)
+    protected function camelCaseToDash($bundle)
     {
         $filter = new CamelCaseToDash();
 
