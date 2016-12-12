@@ -25,7 +25,7 @@ class StorageRequestCacheServiceProvider extends AbstractPlugin implements Servi
      */
     public function register(Application $app)
     {
-        $app->after(function (Request $request) {
+        $app->finish(function (Request $request) {
             $this->getClient()->persistCacheForRequest($request);
         });
     }
