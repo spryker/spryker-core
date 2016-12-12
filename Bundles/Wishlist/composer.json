@@ -9,7 +9,7 @@
     "spryker/cart": "^2.0.0",
     "spryker/customer": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/product": "^4.0.0",
+    "spryker/product": "^4.1.0",
     "spryker/propel": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
