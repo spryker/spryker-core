@@ -33,7 +33,7 @@ class BundleBuilder
         '.gitattributes',
         '.gitignore',
         '.coveralls.yml',
-        'codecept.yml'=> 'codeception.yml',
+        'codecept.yml' => 'codeception.yml',
         '.travis.yml',
         'CHANGELOG.md',
         'README.md',
