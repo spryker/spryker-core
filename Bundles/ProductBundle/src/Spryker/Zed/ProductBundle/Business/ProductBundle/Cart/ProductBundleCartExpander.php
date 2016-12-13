@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
@@ -118,9 +118,8 @@ class ProductBundleCartExpander
     {
         $bundledItems = [];
         foreach ($bundledProducts as $productBundleEntity) {
-            $bundledConcreteProductEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
             for ($i = 0; $i < $productBundleEntity->getQuantity(); $i++) {
-                $bundledItems[] = $this->createBundledItemTransfer($bundledConcreteProductEntity, $bundleItemIdentifier);
+                $bundledItems[] = $this->createBundledItemTransfer($productBundleEntity, $bundleItemIdentifier);
             }
         }
         return $bundledItems;
@@ -170,13 +169,15 @@ class ProductBundleCartExpander
     }
 
     /**
-     * @param SpyProduct $bundledConcreteProductEntity
+     * @param SpyProductBundle $bundleProductEntity
      * @param string $bundleItemIdentifier
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createBundledItemTransfer(SpyProduct $bundledConcreteProductEntity, $bundleItemIdentifier)
+    protected function createBundledItemTransfer(SpyProductBundle $bundleProductEntity, $bundleItemIdentifier)
     {
+        $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
+
         $productConcreteTransfer = $this->productFacade->getProductConcrete(
             $bundledConcreteProductEntity->getSku()
         );

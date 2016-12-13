@@ -9,9 +9,24 @@ namespace Spryker\Zed\ProductManagement\Communication\Tabs;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class ProductConcreteFormEditTabs extends ProductFormEditTabs
 {
+
+    /**
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * @param string $type
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
@@ -25,7 +40,9 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
             ->addPriceAndStockTab($tabsViewTransfer)
             ->addAttributesTab($tabsViewTransfer)
             ->addImageTab($tabsViewTransfer)
+            ->addAssigneBundledProductsTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
+
 
         return $tabsViewTransfer;
     }
@@ -78,6 +95,28 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
             ->setName('variants')
             ->setTitle('Variants')
             ->setTemplate('@ProductManagement/Product/_partials/variant-tab-adding.twig');
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addAssigneBundledProductsTab(TabsViewTransfer $tabsViewTransfer)
+    {
+        if ($this->type != ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+            return $this;
+        }
+
+        $tabItemTransfer = new TabItemTransfer();
+        $tabItemTransfer
+            ->setName('bundled')
+            ->setTitle('Assign bundled products')
+            ->setTemplate('@ProductManagement/Product/_partials/product-bundles-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

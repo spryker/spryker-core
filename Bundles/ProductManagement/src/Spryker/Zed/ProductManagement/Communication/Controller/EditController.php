@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -132,6 +133,11 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
+        $type = $request->query->get('type');
+        if ($productTransfer->getProductBundle() !== null) {
+            $type = ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
+        }
+
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
         $dataProvider = $this->getFactory()->createProductVariantFormEditDataProvider();
@@ -139,9 +145,12 @@ class EditController extends AddController
             ->getFactory()
             ->createProductVariantFormEdit(
                 $dataProvider->getData($idProductAbstract, $idProduct),
-                $dataProvider->getOptions($idProductAbstract)
+                $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);
+
+        $bundledProductTable = $this->getFactory()
+            ->createBundledProductTable($idProduct);
 
         if ($form->isValid()) {
             try {
@@ -186,7 +195,9 @@ class EditController extends AddController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
-            'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
+            'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs($type)->createView(),
+            'bundledProductTable' => $bundledProductTable->render(),
+            'type' => $type
         ]);
     }
 

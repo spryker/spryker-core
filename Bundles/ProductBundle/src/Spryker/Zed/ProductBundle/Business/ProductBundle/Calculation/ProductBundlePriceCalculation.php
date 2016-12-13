@@ -81,6 +81,9 @@ class ProductBundlePriceCalculation
     }
 
     /**
+     *
+     * @todo remove after total price refactoring
+     *
      * @param ItemTransfer $bundleItemTransfer
      * @param ItemTransfer $itemTransfer
      *

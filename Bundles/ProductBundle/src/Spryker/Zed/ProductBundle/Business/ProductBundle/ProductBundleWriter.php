@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
-use Generated\Shared\Transfer\BundledProductTransfer;
-use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -30,53 +27,55 @@ class ProductBundleWriter
     protected $productBundleQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter
+     */
+    protected $productBundleStockWriter;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter $productBundleStockWriter
      */
     public function __construct(
         ProductBundleToProductInterface $productFacade,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer
+        ProductBundleQueryContainerInterface $productBundleQueryContainer,
+        ProductBundleStockWriter $productBundleStockWriter
     ) {
         $this->productFacade = $productFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->productBundleStockWriter = $productBundleStockWriter;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductBundle(ProductBundleTransfer $productBundleTransfer)
+    public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productBundleTransfer->requireProductAbstract()->requireProductsToBeAssigned();
-
-        $this->productBundleQueryContainer->getConnection()->beginTransaction();
-
-        $productAbstractTransfer = $productBundleTransfer->getProductAbstract();
-
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
-            $localizedAttributeTransfer->setIsSearchable(true);
+        if ($productConcreteTransfer->getProductBundle() === null) {
+            return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
-        $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
-        $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+        $productBundleTransfer = $productConcreteTransfer->getProductBundle();
+        $bundledProducts = $productConcreteTransfer->getProductBundle()->getBundledProducts();
+        if ($bundledProducts->count() == 0){
+            return $productConcreteTransfer;
+        }
 
-        $stockProductTransfer = new StockProductTransfer();
-        $stockProductTransfer->setIdStockProduct(1);
-        $stockProductTransfer->setQuantity(5);
-        $stockProductTransfer->setSku($productConcreteTransfer->getSku());
-        $stockProductTransfer->setStockType('Warehouse1');
+        $productConcreteTransfer->requireIdProductConcrete();
 
-        $productConcreteTransfer->addStock($stockProductTransfer);
+        foreach ($bundledProducts as $productForBundleTransfer) {
+            $this->createProductBundleEntity($productForBundleTransfer, $productConcreteTransfer->getIdProductConcrete());
+        }
 
-        $idProductAbstract = $this->productFacade->addProduct($productBundleTransfer->getProductAbstract(), [$productConcreteTransfer]);
-        $this->createBundledProducts($productBundleTransfer, $productConcreteTransfer->getIdProductConcrete());
+        $productsToRemove = $productBundleTransfer->getBundlesToRemove();
 
-        $this->productFacade->touchProductAbstract($idProductAbstract);
+        $this->removeBundledProducts($productsToRemove, $productConcreteTransfer->getIdProductConcrete());
 
-        $this->productFacade->activateProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        $this->productBundleStockWriter->updateStock($productConcreteTransfer);
 
-        $this->productBundleQueryContainer->getConnection()->commit();
+        return $productConcreteTransfer;
     }
 
     /**
@@ -85,25 +84,36 @@ class ProductBundleWriter
      *
      * @return void
      */
-    protected function createBundleEntity(ProductForBundleTransfer $productForBundleTransfer, $idBundledProduct)
+    protected function createProductBundleEntity(ProductForBundleTransfer $productForBundleTransfer, $idBundledProduct)
     {
-        $productBundleEntity = new SpyProductBundle();
-        $productBundleEntity->setFkBundledProduct($productForBundleTransfer->getIdProductConcrete());
-        $productBundleEntity->setFkProduct($idBundledProduct);
+        $productBundleEntity = $this->productBundleQueryContainer
+            ->queryBundleProduct($idBundledProduct)
+            ->filterByFkBundledProduct($productForBundleTransfer->getIdProductConcrete())
+            ->findOneOrCreate();
+
         $productBundleEntity->setQuantity($productForBundleTransfer->getQuantity());
         $productBundleEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
-     * @param int $idBundledProduct
+     * @param array $productsToRemove
+     * @param int $idProductBundle
      *
      * @return void
      */
-    protected function createBundledProducts(ProductBundleTransfer $productBundleTransfer, $idBundledProduct)
+    protected function removeBundledProducts(array $productsToRemove, $idProductBundle)
     {
-        foreach ($productBundleTransfer->getProductsToBeAssigned() as $productForBundleTransfer) {
-            $this->createBundleEntity($productForBundleTransfer, $idBundledProduct);
+        foreach ($productsToRemove as $idBundledProduct) {
+            $productBundleEntity = $this->productBundleQueryContainer
+                ->queryBundledProductByIdProduct($idBundledProduct)
+                ->filterByFkProduct($idProductBundle)
+                ->findOne();
+
+            if ($productBundleEntity === null) {
+                continue;
+            }
+
+            $productBundleEntity->delete();
         }
     }
 }

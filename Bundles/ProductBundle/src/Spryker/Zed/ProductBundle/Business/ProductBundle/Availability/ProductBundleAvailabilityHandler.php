@@ -58,7 +58,7 @@ class ProductBundleAvailabilityHandler
      *
      * @return void
      */
-    public function updateBundleAvailability($bundledProductSku)
+    public function updateAffectedBundlesAvailability($bundledProductSku)
     {
         $bundledProducts = $this->getBundleItemsBySku($bundledProductSku);
 
@@ -66,44 +66,32 @@ class ProductBundleAvailabilityHandler
 
             $bundleItems = $this->getBundleItemsByIdProduct($bundledProductEntity->getFkProduct());
 
-            $maxQty = 0;
-            $maxQtyAvailability = 0;
-            foreach ($bundleItems as $bundleItemEntity) {
-                $bundledItemQuantity = $bundleItemEntity->getQuantity();
-
-                if ($bundledItemQuantity > $maxQty) {
-                    $maxQty = $bundledItemQuantity;
-
-                    $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
-                        ->getSku();
-
-                    $bundledProductAvailability = $this->availabilityQueryContainer
-                        ->querySpyAvailabilityBySku($bundledItemSku)
-                        ->findOne();
-
-                    $maxQtyAvailability = $bundledProductAvailability->getQuantity();
-                }
-            }
-
-            $bundleAvailabilityQuantity = floor($maxQtyAvailability / $maxQty);
-
-            $bundleItemSku = $bundledProductEntity
+            $bundleProductSku = $bundledProductEntity
                 ->getSpyProductRelatedByFkProduct()
                 ->getSku();
 
-            $bundleProductAvailability = $this->availabilityQueryContainer
-                ->querySpyAvailabilityBySku($bundleItemSku)
-                ->findOne();
-
-            if ($bundleProductAvailability->getQuantity() != $bundleAvailabilityQuantity) {
-                $bundleProductAvailability
-                    ->setQuantity($bundleAvailabilityQuantity)
-                    ->save();
-
-                $this->updateAbstractAvailabilityQuantity($bundleProductAvailability->getFkAvailabilityAbstract());
-                $this->availabilityFacade->touchAvailabilityAbstract($bundleProductAvailability->getFkAvailabilityAbstract());
-            }
+            $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
         }
+    }
+
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return string
+     */
+    public function updateBundleAvailability($bundleProductSku)
+    {
+        $bundleProductEntity = $this->productBundleQueryContainer
+              ->queryBundleProductBySku($bundleProductSku)
+              ->findOne();
+
+        if ($bundleProductEntity === null) {
+            return;
+        }
+
+        $bundleItems = $this->getBundleItemsByIdProduct($bundleProductEntity->getFkProduct());
+        $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
+
     }
 
     /**
@@ -155,6 +143,45 @@ class ProductBundleAvailabilityHandler
         }
 
         return static::$bundledItemEntityCache[$bundledProductSku];
+    }
+
+    /**
+     * @param array $bundleItems
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    protected function updateBundleProductAvailability($bundleItems, $bundleProductSku)
+    {
+        $bundleAvailabilityQuantity = 0;
+        foreach ($bundleItems as $bundleItemEntity) {
+
+            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
+                ->getSku();
+
+            $bundledProductAvailability = $this->availabilityQueryContainer
+                ->querySpyAvailabilityBySku($bundledItemSku)
+                ->findOne();
+
+            $bundledItemQuantity = floor($bundledProductAvailability->getQuantity() / $bundleItemEntity->getQuantity());
+
+            if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0) {
+                $bundleAvailabilityQuantity = $bundledItemQuantity;
+            }
+        }
+
+        $bundleProductAvailability = $this->availabilityQueryContainer
+            ->querySpyAvailabilityBySku($bundleProductSku)
+            ->findOne();
+
+        if ($bundleProductAvailability->getQuantity() != $bundleAvailabilityQuantity) {
+            $bundleProductAvailability
+                ->setQuantity($bundleAvailabilityQuantity)
+                ->save();
+
+            $this->updateAbstractAvailabilityQuantity($bundleProductAvailability->getFkAvailabilityAbstract());
+            $this->availabilityFacade->touchAvailabilityAbstract($bundleProductAvailability->getFkAvailabilityAbstract());
+        }
     }
 
 }

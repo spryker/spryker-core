@@ -39,4 +39,11 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
      */
     public function queryBundledProductByIdProduct($idProduct);
 
+    /**
+     * @param int $idProductBundle
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    public function queryBundleByIdProductBundle($idProductBundle);
+
 }

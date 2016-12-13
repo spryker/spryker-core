@@ -27,6 +27,8 @@ class VariantTable extends AbstractProductTable
     const COL_NAME = 'name';
     const COL_STATUS = 'status';
     const COL_ACTIONS = 'actions';
+    const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
+    const COL_IS_BUNDLE = 'is_bundle';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -69,6 +71,7 @@ class VariantTable extends AbstractProductTable
             static::COL_SKU => 'Sku',
             static::COL_NAME => 'Name',
             static::COL_STATUS => 'Status',
+            static::COL_IS_BUNDLE  => 'Is bundle',
             static::COL_ACTIONS => 'Actions',
         ]);
 
@@ -131,8 +134,22 @@ class VariantTable extends AbstractProductTable
             static::COL_SKU => $productEntity->getSku(),
             static::COL_NAME => $productEntity->getVirtualColumn(static::COL_NAME),
             static::COL_STATUS => $this->getStatusLabel($productEntity->getIsActive()),
+            static::COL_IS_BUNDLE => $this->getIsBundleProduct($productEntity),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productEntity)),
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return string
+     */
+    protected function getIsBundleProduct(SpyProduct $productEntity)
+    {
+        if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
+            return 'Yes';
+        }
+        return 'No';
     }
 
     /**

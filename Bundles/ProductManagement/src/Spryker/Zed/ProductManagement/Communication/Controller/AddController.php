@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\ProductManagement\ProductManagementConfig;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,6 +33,9 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $dataProvider = $this->getFactory()->createProductFormAddDataProvider();
+
+        $type = $request->query->get('type');
+
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
@@ -36,10 +43,6 @@ class AddController extends AbstractController
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
-
-        $attributeCollection = $this->normalizeAttributeArray(
-            $this->getFactory()->getProductAttributeCollection()
-        );
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
@@ -49,13 +52,11 @@ class AddController extends AbstractController
                     ->createProductFormTransferGenerator()
                     ->buildProductAbstractTransfer($form);
 
-                $attributeValues = $this->getFactory()
-                    ->createProductFormTransferGenerator()
-                    ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
-
-                $concreteProductCollection = $this->getFactory()
-                    ->getProductFacade()
-                    ->generateVariants($productAbstractTransfer, $attributeValues);
+                $concreteProductCollection = $this->createProductConcreteCollection(
+                    $type,
+                    $productAbstractTransfer,
+                    $form
+                );
 
                 $idProductAbstract = $this->getFactory()
                     ->getProductFacade()
@@ -66,11 +67,23 @@ class AddController extends AbstractController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract
-                ));
+                if ($type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+                    $productConcreteTransfer = $concreteProductCollection[0];
+                    return $this->redirectResponse(sprintf(
+                        '/product-management/edit/variant?%s=%d&id-product=%d&type=bundle#tab-content-bundled',
+                        self::PARAM_ID_PRODUCT_ABSTRACT,
+                        $idProductAbstract,
+                        $productConcreteTransfer->getIdProductConcrete()
+                    ));
+                } else {
+                    return $this->redirectResponse(sprintf(
+                        '/product-management/edit?%s=%d',
+                        self::PARAM_ID_PRODUCT_ABSTRACT,
+                        $idProductAbstract
+                    ));
+                }
+
+
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -83,7 +96,25 @@ class AddController extends AbstractController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'productFormAddTabs' => $this->getFactory()->createProductFormAddTabs()->createView(),
+            'type' => $type
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function bundledProductTableAction(Request $request)
+    {
+        $idProductConcrete = $this->castId($request->get('id-product-concrete'));
+
+        $bundledProductTable = $this->getFactory()
+            ->createBundledProductTable($idProductConcrete);
+
+        return $this->jsonResponse(
+            $bundledProductTable->fetchData()
+        );
     }
 
     /**
@@ -115,6 +146,43 @@ class AddController extends AbstractController
         }
 
         return $attributeArray;
+    }
+
+    /**
+     * @param string $type
+     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function createProductConcreteCollection(
+        $type,
+        ProductAbstractTransfer $productAbstractTransfer,
+        FormInterface $form
+    ) {
+        if ($type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+            $concreteProductCollection = [];
+            $productConcreteTransfer = new ProductConcreteTransfer();
+            $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
+            $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
+            $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+            $concreteProductCollection[] = $productConcreteTransfer;
+        } else {
+
+            $attributeCollection = $this->normalizeAttributeArray(
+                $this->getFactory()->getProductAttributeCollection()
+            );
+
+            $attributeValues = $this->getFactory()
+                ->createProductFormTransferGenerator()
+                ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
+
+            $concreteProductCollection = $this->getFactory()
+                ->getProductFacade()
+                ->generateVariants($productAbstractTransfer, $attributeValues);
+        }
+
+        return $concreteProductCollection;
     }
 
 }

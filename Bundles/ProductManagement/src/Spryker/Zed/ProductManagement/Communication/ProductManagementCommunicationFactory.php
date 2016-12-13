@@ -21,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
+use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
@@ -29,6 +30,7 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
+use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -265,6 +267,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return ProductManagementToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection()
@@ -437,6 +447,22 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param int $idProductConcrete
+     * @return \Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable
+     */
+    public function createBundledProductTable($idProductConcrete = null)
+    {
+        return new BundledProductTable(
+            $this->getProductQueryContainer(),
+            $this->getUtilEncoding(),
+            $this->getPriceFacade(),
+            $this->getMoneyFacade(),
+            $this->getAvailabilityFacade(),
+            $idProductConcrete
+        );
+    }
+
+    /**
      * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
      */
     protected function createAttributeGlossaryKeyBuilder()
@@ -461,11 +487,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param string $type
+     *
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
-    public function createProductConcreteFormEditTabs()
+    public function createProductConcreteFormEditTabs($type = null)
     {
-        return new ProductConcreteFormEditTabs();
+        return new ProductConcreteFormEditTabs($type);
     }
 
     /**
@@ -474,6 +502,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface
+     */
+    protected function getAvailabilityFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_AVAILABILITY);
     }
 
 }

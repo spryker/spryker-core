@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
@@ -157,6 +159,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->setSku($sku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+        $productConcreteTransfer = $this->assignProductToBeBundled($form, $productConcreteTransfer);
+        $productConcreteTransfer = $this->assignProductsToBeRemovedFromBundle($form, $productConcreteTransfer);
 
         $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
@@ -417,6 +422,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $result = [];
         $sku = $form->get(ProductFormAdd::FIELD_SKU)->getData();
 
+        if (!$form->has(ProductFormAdd::FORM_PRICE_AND_STOCK)) {
+            return $result;
+        }
         foreach ($form->get(ProductFormAdd::FORM_PRICE_AND_STOCK) as $stockForm) {
             $stockData = $stockForm->getData();
             $type = $stockForm->get(StockForm::FIELD_TYPE)->getData();
@@ -459,4 +467,48 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         return $attributes;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function assignProductToBeBundled(FormInterface $form, ProductConcreteTransfer $productConcreteTransfer)
+    {
+        if (!isset($form->getData()[ProductConcreteFormEdit::FORM_ASSIGNED_BUNDLED_PRODUCTS])) {
+            return $productConcreteTransfer;
+        }
+
+        $productsToBeBundled = new \ArrayObject();
+        $productBundleTransfer = new ProductBundleTransfer();
+        foreach ($form->getData()[ProductConcreteFormEdit::FORM_ASSIGNED_BUNDLED_PRODUCTS] as $bundledProduct) {
+            $productForBundleTransfer = new ProductForBundleTransfer();
+            $productForBundleTransfer->fromArray($bundledProduct, true);
+            $productsToBeBundled->append($productForBundleTransfer);
+        }
+
+        $productBundleTransfer->setBundledProducts($productsToBeBundled);
+
+        $productConcreteTransfer->setProductBundle($productBundleTransfer);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function assignProductsToBeRemovedFromBundle(FormInterface $form, ProductConcreteTransfer $productConcreteTransfer)
+    {
+        if (!isset($form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED])) {
+            return $productConcreteTransfer;
+        }
+
+        $productConcreteTransfer->getProductBundle()
+            ->setBundlesToRemove($form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED]);
+
+        return $productConcreteTransfer;
+    }
 }

@@ -45,4 +45,15 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
         return $this->priceFacade->findProductConcretePrice($idProduct, $priceType);
     }
 
+    /**
+     * @param string $sku
+     * @param string|null $priceTypeName
+     *
+     * @return int
+     */
+    public function getPriceBySku($sku, $priceTypeName = null)
+    {
+        return $this->priceFacade->getPriceBySku($sku, $priceTypeName);
+    }
+
 }

@@ -9,11 +9,24 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Sales;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
+use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
 class ProductBundleSalesOrderSaver
 {
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleToSalesQueryContainerInterface
+     */
+    protected $salesQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
+     */
+    public function __construct(ProductBundleToSalesQueryContainerInterface $salesQueryContainer)
+    {
+        $this->salesQueryContainer = $salesQueryContainer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -70,7 +83,8 @@ class ProductBundleSalesOrderSaver
                 continue;
             }
 
-            $salesOrderItemEntity = SpySalesOrderItemQuery::create()
+            $salesOrderItemEntity = $this->salesQueryContainer
+                ->querySalesOrderItem()
                 ->findOneByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
             $salesOrderItemEntity->setFkSalesOrderItemBundle($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()]);

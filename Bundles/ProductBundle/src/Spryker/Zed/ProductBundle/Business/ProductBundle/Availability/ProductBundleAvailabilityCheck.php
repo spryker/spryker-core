@@ -23,6 +23,7 @@ class ProductBundleAvailabilityCheck
 {
 
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
 
     const STOCK_TRANSLATION_PARAMETER = 'available';
@@ -66,8 +67,8 @@ class ProductBundleAvailabilityCheck
     public function checkCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $currentCartItems = $quoteTransfer->getItems();
-        $messages = new \ArrayObject();
 
+        $checkoutErrorMessages = new ArrayObject();
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
@@ -76,14 +77,14 @@ class ProductBundleAvailabilityCheck
                 ->find();
 
             if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $bundleItemTransfer)) {
-                $messages[] = $this->createItemIsNotAvailableCheckoutMessageTransfer($bundleItemTransfer->getSku());
+                $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
             }
         }
 
-        if (count($messages) > 0) {
+        if (count($checkoutErrorMessages) > 0) {
             $checkoutResponse->setIsSuccess(false);
 
-            foreach ($messages as $checkoutErrorTransfer) {
+            foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
                 $checkoutResponse->addError($checkoutErrorTransfer);
             }
         }
@@ -96,7 +97,7 @@ class ProductBundleAvailabilityCheck
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer)
     {
-        $messages = new \ArrayObject();
+        $cartPreCheckErrorMessages = new ArrayObject();
         $currentCartItems = $cartChangeTransfer->getQuote()->getItems();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
 
@@ -110,7 +111,7 @@ class ProductBundleAvailabilityCheck
                         ->querySpyAvailabilityBySku($itemTransfer->getSku())
                         ->findOne();
 
-                    $messages[] = $this->createItemIsNotAvailableMessageTransfer($availabilityEntity->getQuantity());
+                    $cartPreCheckErrorMessages[] = $this->createItemIsNotAvailableMessageTransfer($availabilityEntity->getQuantity());
                 }
             } else {
                 $sku = $itemTransfer->getSku();
@@ -118,14 +119,14 @@ class ProductBundleAvailabilityCheck
 
                 if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $itemQuantity)) {
                     $available = $this->availabilityFacade->calculateStockForProduct($sku);
-                    $messages->append(
+                    $cartPreCheckErrorMessages->append(
                         $this->createItemIsNotAvailableMessageTransfer($available)
                     );
                 }
             }
         }
 
-        return $this->createCartPreCheckResponseTransfer($messages);
+        return $this->createCartPreCheckResponseTransfer($cartPreCheckErrorMessages);
     }
 
     /**
@@ -159,28 +160,12 @@ class ProductBundleAvailabilityCheck
     }
 
     /**
-     * @param int $sku
-     *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createItemIsNotAvailableCheckoutMessageTransfer($sku)
-    {
-        $available = $this->availabilityFacade->calculateStockForProduct($sku);
-        $translationKey = $this->getItemAvailabilityTranslationKey($available);
-
-        return $this->createCheckoutResponseTransfer($available, $translationKey);
-    }
-
-    /**
-     * @param int $available
-     * @param string $translationKey
-     *
-     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
-     */
-    protected function createCheckoutResponseTransfer($available, $translationKey)
+    protected function createCheckoutResponseTransfer()
     {
         $checkoutErrorTransfer = new CheckoutErrorTransfer();
-        $checkoutErrorTransfer->setMessage($translationKey);
+        $checkoutErrorTransfer->setMessage(self::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY);
 
         return $checkoutErrorTransfer;
     }
@@ -206,18 +191,12 @@ class ProductBundleAvailabilityCheck
      *
      * @return bool
      */
-    protected function checkIfItemIsSellable(ArrayObject $items, $sku, $itemQuantity)
+    protected function checkIfItemIsSellable(ArrayObject $items, $sku, $itemQuantity = 0)
     {
-        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku(
-            $items,
-            $sku
-        );
+        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
         $currentItemQuantity += $itemQuantity;
 
-        return $this->availabilityFacade->isProductSellable(
-            $sku,
-            $currentItemQuantity
-        );
+        return $this->availabilityFacade->isProductSellable($sku, $currentItemQuantity);
     }
 
     /**
@@ -268,9 +247,7 @@ class ProductBundleAvailabilityCheck
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            $itemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-
-            if (!$this->checkIfItemIsSellable($items, $sku, $itemQuantity)) {
+            if (!$this->checkIfItemIsSellable($items, $sku)) {
                 return false;
             }
         }

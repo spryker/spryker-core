@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductBundleTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -19,16 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductBundleFacade extends AbstractFacade
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
-     */
-    public function addProductBundle(ProductBundleTransfer $productBundleTransfer)
-    {
-        return $this->getFactory()
-            ->createProductBundleWriter()
-            ->createProductBundle($productBundleTransfer);
-    }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -119,12 +109,26 @@ class ProductBundleFacade extends AbstractFacade
 
     /**
      * @param string $concreteSku
+     *
+     * @return void
      */
-    public function updateBundleAvailability($concreteSku)
+    public function updateAffectedBundlesAvailability($concreteSku)
     {
         $this->getFactory()
             ->createProductBundleAvailabilityHandler()
-            ->updateBundleAvailability($concreteSku);
+            ->updateAffectedBundlesAvailability($concreteSku);
+    }
+
+    /**
+     * @param string $productBundleSku
+     *
+     * @retur void
+     */
+    public function updateBundleAvailability($productBundleSku)
+    {
+        $this->getFactory()
+            ->createProductBundleAvailabilityHandler()
+            ->updateBundleAvailability($productBundleSku);
     }
 
     /**
@@ -138,5 +142,53 @@ class ProductBundleFacade extends AbstractFacade
          $this->getFactory()
             ->createProductBundleSalesOrderSaver()
             ->saveSaleOrderBundleItems($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundleWriter()
+            ->saveBundledProducts($productConcreteTransfer);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \ArrayObject
+     */
+    public function findBundledProductsByIdProductConcrete($idProductConcrete)
+    {
+        return $this->getFactory()
+            ->createProductBundleReader()
+            ->findBundledProductsByIdProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundleReader()
+            ->assignBundledProductsToProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function updateBundleStock(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundleStockWriter()
+            ->updateStock($productConcreteTransfer);
     }
 }

@@ -66,4 +66,16 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
             ->createProductBundleQuery()
             ->filterByFkBundledProduct($idProduct);
     }
+
+    /**
+     * @param int $idProductBundle
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    public function queryBundleByIdProductBundle($idProductBundle)
+    {
+       return $this->getFactory()
+           ->createProductBundleQuery()
+           ->filterByIdProductBundle($idProductBundle);
+    }
 }

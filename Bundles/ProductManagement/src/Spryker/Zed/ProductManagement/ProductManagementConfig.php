@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductManagementConfig extends AbstractBundleConfig
 {
+    const PRODUCT_TYPE_BUNDLE = 'bundle';
 
     /**
      * @return array
