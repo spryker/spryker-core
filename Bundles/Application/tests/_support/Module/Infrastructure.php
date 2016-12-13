@@ -6,11 +6,12 @@
 
 namespace Application\Module;
 
-use Symfony\Component\Process\Process;
 use Codeception\Module;
+use Symfony\Component\Process\Process;
 
 class Infrastructure extends Module
 {
+
     const TEST_ENV_SCRIPT = 'setup_test';
 
     /**
@@ -48,4 +49,5 @@ class Infrastructure extends Module
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
     }
+
 }

@@ -21,7 +21,6 @@ class PayPalGuestCheckoutCest
 {
 
     /**
-     *
      * @skip Broken because of new checkout
      *
      * @param \Acceptance\Braintree\Checkout\Yves\Tester\CheckoutTester $i

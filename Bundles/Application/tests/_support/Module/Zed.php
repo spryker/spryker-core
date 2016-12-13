@@ -7,12 +7,11 @@
 
 namespace Application\Module;
 
-use Codeception\TestCase;
 use Acceptance\Auth\Login\Zed\PageObject\LoginPage;
+use Codeception\TestCase;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Propel\Runtime\Propel;
-use \Silex\Application;
 
 class Zed extends Infrastructure
 {
@@ -21,6 +20,7 @@ class Zed extends Infrastructure
 
     /**
      * @param \Codeception\TestCase $test
+     *
      * @throws \Exception
      *
      * @return void
@@ -33,7 +33,7 @@ class Zed extends Infrastructure
         $process = $this->runTestSetup('--restore');
 
         if ($process->getExitCode() != 0) {
-            throw new \Exception('An error in data restore occured: '. $process->getErrorOutput());
+            throw new \Exception('An error in data restore occured: ' . $process->getErrorOutput());
         }
     }
 
