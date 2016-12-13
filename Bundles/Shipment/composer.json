@@ -1,16 +1,11 @@
 {
   "name": "spryker/shipment",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "spryker/application": "^2.0.0",
     "spryker/country": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
-    "spryker/library": "^2.0.0",
+    "spryker/money": "^1.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/sales": "^2.0.0",
     "spryker/session": "^2.0.0",
@@ -35,10 +30,27 @@
   "config": {
     "sort-packages": true
   },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-0": {
+      "Acceptance": "tests/",
       "Functional": "tests/",
       "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ]
 }

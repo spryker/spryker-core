@@ -1,5 +1,9 @@
 class_name: UnitTester
 modules:
-    enabled:
-        - Asserts
-        - \Discount\Module\Unit
+  enabled:
+    - \Testify\Module\Environment
+    - \Config\Module\ConfigInit
+    - \Propel\Module\PropelInstall
+    - \Propel\Module\Database
+    - \Transfer\Module\TransferGenerate
+    - \Discount\Module\Unit

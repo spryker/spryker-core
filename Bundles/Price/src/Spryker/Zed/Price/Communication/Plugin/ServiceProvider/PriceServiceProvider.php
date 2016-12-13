@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Price\Communication\Plugin\Twig\PriceTwigExtension;
 
 /**
+ * @deprecated Use `TwigMoneyServiceProvider` instead. Replace '| currency' usages in your twig files with `| money`
+ *
  * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
  * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */

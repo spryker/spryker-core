@@ -12,7 +12,7 @@ interface ValidatorInterface
      * @param string $type
      * @param string $queryString
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function validateByType($type, $queryString);
 

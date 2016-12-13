@@ -58,10 +58,10 @@ class RangeExtractor implements AggregationExtractorInterface
         list($activeMin, $activeMax) = $this->getActiveRangeData($requestParameters, $min, $max);
 
         $rangeResultTransfer
-            ->setMin(min($min, $activeMin))
-            ->setMax(max($max, $activeMax))
-            ->setActiveMin($activeMin)
-            ->setActiveMax($activeMax);
+            ->setMin((int)min($min, $activeMin))
+            ->setMax((int)max($max, $activeMax))
+            ->setActiveMin((int)$activeMin)
+            ->setActiveMax((int)$activeMax);
 
         return $rangeResultTransfer;
     }
@@ -101,7 +101,7 @@ class RangeExtractor implements AggregationExtractorInterface
             if (isset($nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX])) {
                 return [
                     $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['min'],
-                    $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['max']
+                    $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['max'],
                 ];
             }
         }

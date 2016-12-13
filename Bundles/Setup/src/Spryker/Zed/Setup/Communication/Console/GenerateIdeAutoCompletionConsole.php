@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:generate-ide-auto-completion';
+    const COMMAND_NAME = 'dev:ide:generate-auto-completion';
 
     /**
      * @return void
@@ -22,7 +22,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate ide auto completion files.');
+        $this->setDescription('Generate IDE auto completion files.');
     }
 
     /**

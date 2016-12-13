@@ -35,7 +35,7 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
         $orderTransfer = $this->createOrderTransfer();
         $orderTaxAmountWithDiscountsAggregator->aggregate($orderTransfer);
 
-        $this->assertSame(186.0, $orderTransfer->getTotals()->getTaxTotal()->getAmount());
+        $this->assertSame(186, $orderTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
     /**

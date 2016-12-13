@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateZedIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:generate-zed-ide-auto-completion';
+    const COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
     const APPLICATION_ZED = 'Zed';
 
     /**
@@ -33,7 +33,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate zed ide auto completion files');
+        $this->setDescription('Generate IDE auto completion files for Zed.');
     }
 
     /**

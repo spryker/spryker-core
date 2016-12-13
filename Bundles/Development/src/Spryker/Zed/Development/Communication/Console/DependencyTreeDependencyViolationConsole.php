@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DependencyTreeDependencyViolationConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:dependency-violation:find';
+    const COMMAND_NAME = 'dev:dependency:find-violations';
 
     /**
      * @return void
@@ -29,7 +29,7 @@ class DependencyTreeDependencyViolationConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Find dependency violations in the dependency tree');
+            ->setDescription('Find dependency violations in the dependency tree (Spryker core dev only).');
     }
 
     /**

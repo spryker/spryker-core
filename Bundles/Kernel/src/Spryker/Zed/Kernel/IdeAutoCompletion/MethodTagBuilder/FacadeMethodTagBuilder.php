@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FacadeMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
 {
 
-    const METHOD_STRING_PATTERN = '@method {{className}} facade()';
+    const METHOD_STRING_PATTERN = '@method {{className}}Interface facade()';
     const PATH_PATTERN = 'Business/';
     const FILE_NAME_SUFFIX = 'Facade.php';
 

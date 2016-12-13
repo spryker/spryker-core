@@ -52,7 +52,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
     protected function getTaxTotals($totalTaxAmount)
     {
         $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount(round($totalTaxAmount));
+        $taxTotalTransfer->setAmount((int)round($totalTaxAmount));
 
         return $taxTotalTransfer;
     }

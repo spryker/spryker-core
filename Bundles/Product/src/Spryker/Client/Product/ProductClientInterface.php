@@ -67,4 +67,16 @@ interface ProductClientInterface
      */
     public function getProductConcreteByIdAndLocale($idProductConcrete, $locale);
 
+    /**
+     * Specification:
+     * - Read product concrete information based on product concrete id collection
+     *
+     * @api
+     *
+     * @param array $idProductConcreteCollection
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     */
+    public function getProductConcreteCollection(array $idProductConcreteCollection);
+
 }
