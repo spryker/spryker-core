@@ -15,7 +15,7 @@ class Environment
     const PRODUCTION = 'production';
     const STAGING = 'staging';
     const DEVELOPMENT = 'development';
-    const TESTING = 'testing';
+    const TESTING = 'devtest';
 
     /**
      * @var string
