@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"
+>
+
+    <transfer name="IdeAutoCompletionBundle">
+        <property name="name" type="string"/>
+        <property name="namespace" type="string"/>
+        <property name="methodName" type="string"/>
+        <property name="directory" type="string"/>
+        <property name="baseDirectory" type="string"/>
+        <property name="methods" singular="method" type="IdeAutoCompletionBundleMethod[]"/>
+    </transfer>
+
+    <transfer name="IdeAutoCompletionBundleMethod">
+        <property name="name" type="string"/>
+        <property name="className" type="string"/>
+        <property name="namespace" type="string"/>
+    </transfer>
+
+</transfers>

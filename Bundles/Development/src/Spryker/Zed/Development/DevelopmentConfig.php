@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Development;
 
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
@@ -156,6 +158,80 @@ class DevelopmentConfig extends AbstractBundleConfig
             'fabpot/php-cs-fixer',
             'sensiolabs/security-checker',
             'sllh/composer-versions-check',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getZedIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Zed';
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClientIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Client';
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getServiceIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Service';
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultIdeAutoCompletionOptions()
+    {
+        return [
+            IdeAutoCompletionOptionConstants::TARGET_BASE_PATH => APPLICATION_SOURCE_DIR . '/',
+            IdeAutoCompletionOptionConstants::TARGET_PATH_PATTERN => sprintf(
+                'Generated/%s/Ide',
+                IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+            ),
+            IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN => sprintf(
+                'Generated\%s\Ide',
+                IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+            ),
+            IdeAutoCompletionOptionConstants::SOURCE_DIRECTORY_GLOB_PATTERNS => [
+                $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/' => sprintf(
+                    'Spryker/%s/',
+                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+                ),
+                APPLICATION_SOURCE_DIR . '/' => sprintf(
+                    'Pyz/%s/',
+                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+                ),
+            ]
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIdeAutoCompletionGeneratorTemplatePaths()
+    {
+        return [
+            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/Development/src/Spryker/Zed/Development/Business/IdeAutoCompletion/Generator/Templates',
         ];
     }
 

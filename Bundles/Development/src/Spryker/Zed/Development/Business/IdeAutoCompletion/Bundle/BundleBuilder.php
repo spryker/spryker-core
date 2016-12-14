@@ -1,0 +1,100 @@
+<?php
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
+
+use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
+use Symfony\Component\Finder\SplFileInfo;
+
+class BundleBuilder implements BundleBuilderInterface
+{
+
+    /**
+     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
+     */
+    protected $namespaceExtractor;
+
+    /**
+     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected $bundleMethodBuilders;
+
+    /**
+     * @var \Twig_Environment
+     */
+    protected $twig;
+
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface $namespaceExtractor
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[] $bundleMethodBuilders
+     * @param array $options
+     */
+    public function __construct(
+        NamespaceExtractorInterface $namespaceExtractor,
+        array $bundleMethodBuilders,
+        array $options
+    ) {
+        $this->namespaceExtractor = $namespaceExtractor;
+        $this->bundleMethodBuilders = $bundleMethodBuilders;
+        $this->options = $options;
+    }
+
+    /**
+     * @param string $baseDirectory
+     * @param \Symfony\Component\Finder\SplFileInfo $bundleDirectory
+     *
+     * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
+     */
+    public function buildFromPath($baseDirectory, SplFileInfo $bundleDirectory)
+    {
+        $bundleTransfer = new IdeAutoCompletionBundleTransfer();
+        $bundleTransfer->setName($bundleDirectory->getBasename());
+        $bundleTransfer->setNamespace($this->getBundleNamespace());
+        $bundleTransfer->setMethodName(lcfirst($bundleDirectory->getBasename()));
+        $bundleTransfer->setDirectory($bundleDirectory->getPath());
+        $bundleTransfer->setBaseDirectory($baseDirectory);
+
+        $this->hydrateMethods($bundleTransfer);
+
+        return $bundleTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBundleNamespace()
+    {
+        return str_replace(
+            IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
+            $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
+            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN]
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
+     *
+     * @return void
+     */
+    protected function hydrateMethods(IdeAutoCompletionBundleTransfer $bundleTransfer)
+    {
+        foreach ($this->bundleMethodBuilders as $methodBuilder) {
+            $methodTransfer = $methodBuilder->getMethod($bundleTransfer);
+
+            if ($methodTransfer) {
+                $bundleTransfer->addMethod($methodTransfer);
+            }
+        }
+    }
+
+}

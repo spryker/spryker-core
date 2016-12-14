@@ -58,6 +58,16 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignEx
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder;
 use Spryker\Zed\Development\Business\Dependency\BundleParser;
 use Spryker\Zed\Development\Business\Dependency\Manager;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -742,6 +752,153 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerDependencyParser()
     {
         return new ComposerDependencyParser($this->createComposerJsonFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createZedIdeAutoCompletionWriter()
+    {
+        $options = $this->getConfig()->getZedIdeAutoCompletionOptions();
+
+        return $this->createIdeAutoCompletionWriter($options);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createClientIdeAutoCompletionWriter()
+    {
+        $options = $this->getConfig()->getClientIdeAutoCompletionOptions();
+
+        return $this->createIdeAutoCompletionWriter($options);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createServiceIdeAutoCompletionWriter()
+    {
+        $options = $this->getConfig()->getServiceIdeAutoCompletionOptions();
+
+        return $this->createIdeAutoCompletionWriter($options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter
+     */
+    protected function createIdeAutoCompletionWriter(array $options)
+    {
+        return new IdeAutoCompletionWriter(
+            $this->getIdeAutoCompletionGeneratorStack($options),
+            $this->createIdeAutoCompletionBundleFinder($options),
+            $options
+        );
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[]
+     */
+    protected function getIdeAutoCompletionGeneratorStack(array $options)
+    {
+        return [
+            $this->createIdeAutoCompletionBundleGenerator($options),
+            $this->createIdeAutoCompletionBundleMethodGenerator($options),
+        ];
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface
+     */
+    protected function createIdeAutoCompletionBundleGenerator(array $options)
+    {
+        return new BundleGenerator($this->createTwigEnvironment(), $options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface
+     */
+    protected function createIdeAutoCompletionBundleMethodGenerator(array $options)
+    {
+        return new BundleMethodGenerator($this->createTwigEnvironment(), $options);
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function createTwigEnvironment()
+    {
+        return new \Twig_Environment($this->createTwigFilesystemLoader());
+    }
+
+    /**
+     * @return \Twig_LoaderInterface
+     */
+    protected function createTwigFilesystemLoader()
+    {
+        return new \Twig_Loader_Filesystem($this->getConfig()->getIdeAutoCompletionGeneratorTemplatePaths());
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface
+     */
+    protected function createIdeAutoCompletionBundleFinder(array $options)
+    {
+        $finder = new \Symfony\Component\Finder\Finder();
+
+        return new BundleFinder(
+            $finder,
+            $this->createIdeAutoCompletionBundleBuilder($options),
+            $options
+        );
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createIdeAutoCompletionBundleBuilder(array $options)
+    {
+        return new BundleBuilder(
+            $this->createIdeAutoCompletionNamespaceExtractor(),
+            $this->createIdeAutoCompletionBundleMethodBuilderStack(),
+            $options
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
+     */
+    protected function createIdeAutoCompletionNamespaceExtractor()
+    {
+        return new NamespaceExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function createIdeAutoCompletionBundleMethodBuilderStack()
+    {
+        $finder = new \Symfony\Component\Finder\Finder();
+        $namespaceExtractor = $this->createIdeAutoCompletionNamespaceExtractor();
+
+        return [
+            new FacadeMethodBuilder($finder, $namespaceExtractor),
+            new QueryContainerMethodBuilder($finder, $namespaceExtractor),
+            new ClientMethodBuilder($finder, $namespaceExtractor),
+            new ServiceMethodBuilder($finder, $namespaceExtractor),
+        ];
     }
 
 }
