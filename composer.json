@@ -561,6 +561,13 @@
       "Unit\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
       "Functional\\Spryker\\Zed\\DiscountSalesAggregatorConnector\\": "Bundles/DiscountSalesAggregatorConnector/tests",
 
+      "Spryker\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/src",
+      "Unit\\Service\\UtilDataReader\\": "Bundles/UtilDataReader/tests",
+
+      "Spryker\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/src",
+      "Unit\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/tests",
+      "Functional\\Service\\UtilDateTime\\": "Bundles/UtilDateTime/tests",
+
       "Spryker\\Service\\UtilText\\": "Bundles/UtilText/src",
       "Unit\\Spryker\\Service\\UtilText\\": "Bundles/UtilText/tests",
 

@@ -1,0 +1,4 @@
+modules:
+  config:
+    \Testify\Module\Environment:
+      mode: 'isolated'
