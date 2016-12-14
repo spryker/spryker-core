@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\Kernel\ClassResolver;
+namespace Unit\Spryker\Client\Kernel\ClassResolver;
 
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @group Unit
  * @group Spryker
- * @group Service
+ * @group Client
  * @group Kernel
  * @group ClassResolver
  * @group AbstractResolverTest
