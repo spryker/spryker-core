@@ -49,13 +49,8 @@ class BundleFinder implements BundleFinderInterface
 
         foreach ($this->directoryGlobPatterns as $baseDirectoryGlobPattern => $namespaceDirectoryFragmentGlobPattern) {
             $bundleDirectoryGlobPattern = $baseDirectoryGlobPattern . $namespaceDirectoryFragmentGlobPattern;
-            $isInitializedBundleByName = [];
 
             foreach ($this->getBundleDirectories($bundleDirectoryGlobPattern) as $bundleDirectory) {
-                if (array_key_exists($bundleDirectory->getBasename(), $isInitializedBundleByName)) {
-                    continue;
-                }
-
                 $bundleTransfer = $this->bundleBuilder->buildFromDirectory($baseDirectoryGlobPattern, $bundleDirectory);
                 $bundleTransfer = $this->mergeWithPossibleExistingBundle($bundleTransfer, $bundleTransferCollection);
 
