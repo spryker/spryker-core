@@ -20,6 +20,8 @@ interface KernelConstants
     const PROJECT_NAMESPACES = ApplicationConstants::PROJECT_NAMESPACES;
     const PROJECT_TIMEZONE = ApplicationConstants::PROJECT_TIMEZONE;
 
+    const SPRYKER_ROOT = 'SPRYKER_ROOT';
+
     /**
      * @deprecated Use PropelConstants::PROPEL instead.
      */

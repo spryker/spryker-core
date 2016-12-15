@@ -9,21 +9,4 @@ namespace Spryker\Zed\Application\Business;
 
 interface ApplicationFacadeInterface
 {
-
-    /**
-     * @api
-     *
-     * @param string $pathInfo
-     *
-     * @return array
-     */
-    public function buildNavigation($pathInfo);
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function writeNavigationCache();
-
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -20,7 +21,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return $this->getConfig()->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
+        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -229,7 +230,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
     {
         return [
-            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/' => 'Spryker/*/',
+            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/src/' => 'Spryker/*/',
             APPLICATION_SOURCE_DIR . '/' => $this->get(ApplicationConstants::PROJECT_NAMESPACE) . '/*/',
         ];
     }

@@ -14,14 +14,8 @@ $config[ApplicationConstants::PROJECT_NAMESPACE] = 'Pyz';
 
 $config[ApplicationConstants::ERROR_LEVEL] = E_ALL;
 
-/* Customer */
-$config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] = APPLICATION_ROOT_DIR . '/../';
 $config[ApplicationConstants::ZED_TWIG_OPTIONS] = [
     'cache' => \Spryker\Shared\Library\DataDirectory::getLocalStoreSpecificPath('cache/Zed/twig'),
 ];
 
-// Why this?
 $config[ApplicationConstants::YVES_SSL_ENABLED] = false;
-$config[ApplicationConstants::NAVIGATION_CACHE_ENABLED] = false;
-
-$config[ApplicationConstants::NAVIGATION_ENABLED] = false;

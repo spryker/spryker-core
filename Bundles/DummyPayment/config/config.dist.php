@@ -3,7 +3,6 @@
  * Copy over the following configs to your config
  */
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
@@ -26,7 +25,7 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
-    $config[ApplicationConstants::APPLICATION_SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms',
+    $config[KernelConstants::SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms'
 ];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [

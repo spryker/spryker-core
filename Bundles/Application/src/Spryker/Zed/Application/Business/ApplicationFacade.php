@@ -14,27 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInterface
 {
-
-    /**
-     * @api
-     *
-     * @param string $pathInfo
-     *
-     * @return array
-     */
-    public function buildNavigation($pathInfo)
-    {
-        return $this->getFactory()->createNavigationBuilder()->build($pathInfo);
-    }
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function writeNavigationCache()
-    {
-        $this->getFactory()->createNavigationCacheBuilder()->writeNavigationCache();
-    }
-
 }
