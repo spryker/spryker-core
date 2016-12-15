@@ -13,7 +13,7 @@ class Container extends \Pimple implements ContainerInterface
 {
 
     /**
-     * @return \Generated\Client\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
+     * @return \Generated\Yves\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     public function getLocator()
     {
