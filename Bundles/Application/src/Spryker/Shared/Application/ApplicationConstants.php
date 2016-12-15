@@ -12,7 +12,6 @@ use Spryker\Shared\Session\SessionConstants;
 interface ApplicationConstants
 {
 
-    const ALLOW_INTEGRATION_CHECKS = 'ALLOW_INTEGRATION_CHECKS';
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
     const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Application\Business;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,102 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ApplicationFacade extends AbstractFacade implements ApplicationFacadeInterface
 {
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
-     */
-    public function getCheckSteps(LoggerInterface $logger = null)
-    {
-        return $this->getFactory()->getCheckSteps($logger);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepCodeCeption(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepCodeCeption($logger)->run();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepDeleteDatabase(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepDeleteDatabase($logger)->run();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepDeleteGeneratedDirectory($logger)->run();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepExportStorage(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepStorageValue($logger)->run();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepExportSearch(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepExportSearch($logger)->run();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepImportDemoData(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepImportDemoData($logger)->run();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface|null $logger
-     *
-     * @return void
-     */
-    public function runCheckStepSetupInstall(LoggerInterface $logger = null)
-    {
-        $this->getFactory()->createCheckStepSetupInstall($logger)->run();
-    }
 
     /**
      * @api
