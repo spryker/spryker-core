@@ -18,4 +18,9 @@ interface BundleMethodBuilderInterface
      */
     public function getMethod(IdeAutoCompletionBundleTransfer $bundleTransfer);
 
+    /**
+     * @return string
+     */
+    public function getMethodName();
+
 }

@@ -12,7 +12,7 @@ class FacadeMethodBuilder extends AbstractBundleMethodBuilder
     /**
      * @return string
      */
-    protected function getMethodName()
+    public function getMethodName()
     {
         return 'facade';
     }

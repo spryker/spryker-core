@@ -8,6 +8,7 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class BundleFinder implements BundleFinderInterface
 {
@@ -48,12 +49,18 @@ class BundleFinder implements BundleFinderInterface
 
         foreach ($this->directoryGlobPatterns as $baseDirectoryGlobPattern => $namespaceDirectoryFragmentGlobPattern) {
             $bundleDirectoryGlobPattern = $baseDirectoryGlobPattern . $namespaceDirectoryFragmentGlobPattern;
+            $isInitializedBundleByName = [];
 
             foreach ($this->getBundleDirectories($bundleDirectoryGlobPattern) as $bundleDirectory) {
+                if (array_key_exists($bundleDirectory->getBasename(), $isInitializedBundleByName)) {
+                    continue;
+                }
+
                 $bundleTransfer = $this->bundleBuilder->buildFromDirectory($baseDirectoryGlobPattern, $bundleDirectory);
                 $bundleTransfer = $this->mergeWithPossibleExistingBundle($bundleTransfer, $bundleTransferCollection);
 
                 $bundleTransferCollection[$bundleTransfer->getName()] = $bundleTransfer;
+                $isInitializedBundleByName[$bundleDirectory->getBasename()] = true;
             }
         }
 
@@ -63,7 +70,7 @@ class BundleFinder implements BundleFinderInterface
     /**
      * @param string $bundleDirectoryGlobPattern
      *
-     * @return \Traversable
+     * @return \Traversable|SplFileInfo[]
      */
     protected function getBundleDirectories($bundleDirectoryGlobPattern)
     {

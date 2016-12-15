@@ -141,11 +141,6 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     }
 
     /**
-     * @return string
-     */
-    abstract protected function getMethodName();
-
-    /**
      * @param \Symfony\Component\Finder\SplFileInfo $file
      *
      * @return string
