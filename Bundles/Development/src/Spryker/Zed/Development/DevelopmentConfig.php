@@ -226,7 +226,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getIdeAutoCompletionDirectoryGlobPatterns()
+    public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
     {
         return [
             $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/' => 'Spryker/*/',

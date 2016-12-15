@@ -955,7 +955,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new BundleFinder(
             $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
             $bundleBuilder,
-            $this->getConfig()->getIdeAutoCompletionDirectoryGlobPatterns()
+            $this->getConfig()->getIdeAutoCompletionSourceDirectoryGlobPatterns()
         );
     }
 
