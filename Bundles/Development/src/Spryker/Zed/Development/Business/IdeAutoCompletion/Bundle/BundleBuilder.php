@@ -25,11 +25,6 @@ class BundleBuilder implements BundleBuilderInterface
     protected $bundleMethodBuilders;
 
     /**
-     * @var \Twig_Environment
-     */
-    protected $twig;
-
-    /**
      * @var array
      */
     protected $options;
