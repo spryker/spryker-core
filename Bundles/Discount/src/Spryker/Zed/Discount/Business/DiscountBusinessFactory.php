@@ -149,7 +149,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface[]
      */
     public function getCalculatorPlugins()
     {
@@ -353,7 +353,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule
      */
     public function createItemQuantityDecisionRule()
     {

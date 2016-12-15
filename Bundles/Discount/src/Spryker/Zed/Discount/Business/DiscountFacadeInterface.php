@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -374,6 +375,18 @@ interface DiscountFacadeInterface
     public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer);
 
     /**
+     * @api
+     *
+     * @deprecated Use calculatePercentageDiscount() instead
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param float $percentage
+     *
+     * @return int
+     */
+    public function calculatePercentage(array $discountableObjects, $percentage);
+
+    /**
      * Specification:
      * - Loop over all discountable items and calculate discount price amount per item
      * - Sum each amount to to total
@@ -383,11 +396,23 @@ interface DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $percentage
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculatePercentage(array $discountableObjects, $percentage);
+    public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer);
+
+    /**
+     * @api
+     *
+     * @deprecated Use calculateFixedDiscount() instead
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param float $amount
+     *
+     * @return int
+     */
+    public function calculateFixed(array $discountableObjects, $amount);
 
     /**
      * Specification:
@@ -398,11 +423,11 @@ interface DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $amount
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculateFixed(array $discountableObjects, $amount);
+    public function calculateFixedDiscount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
      * Specification:

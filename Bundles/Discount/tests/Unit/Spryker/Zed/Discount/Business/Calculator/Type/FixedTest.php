@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\Calculator\Type;
 
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 
@@ -43,7 +44,8 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         );
 
         $calculator = new Fixed();
-        $discountAmount = $calculator->calculate($items, self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertEquals(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
     }
@@ -62,7 +64,8 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         );
 
         $calculator = new Fixed();
-        $discountAmount = $calculator->calculate($items, -1 * self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertEquals(0, $discountAmount);
     }

@@ -7,27 +7,28 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
+use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface
+class FixedPlugin extends AbstractCalculatorPlugin
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param int $percentage
+     * @api
      *
-     * @return float
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
      */
-    public function calculate(array $discountableItems, $percentage)
+    public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
     {
-        return $this->getFacade()->calculateFixed($discountableItems, $percentage);
+        return $this->getFacade()->calculateFixedDiscount($discountableItems, $discountTransfer);
     }
 
     /**
@@ -39,6 +40,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * @api
+     *
      * @param float $value
      *
      * @return int
@@ -49,6 +52,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * @api
+     *
      * @param int $value
      *
      * @return string
@@ -62,6 +67,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getFormattedAmount($amount)
@@ -72,6 +79,8 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAmountValidators()

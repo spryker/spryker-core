@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -537,6 +538,23 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @api
+     *
+     * @deprecated Use calculatePercentageDiscount() instead
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param float $percentage
+     *
+     * @return int
+     */
+    public function calculatePercentage(array $discountableObjects, $percentage)
+    {
+        return $this->getFactory()
+            ->createCalculatorPercentage()
+            ->calculate($discountableObjects, $percentage);
+    }
+
+    /**
      * Specification:
      * - Loop over all discountable items and calculate discount price amount per item
      * - Sum each amount to to total
@@ -546,15 +564,32 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $percentage
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculatePercentage(array $discountableObjects, $percentage)
+    public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
         return $this->getFactory()
             ->createCalculatorPercentage()
-            ->calculate($discountableObjects, $percentage);
+            ->calculateDiscount($discountableObjects, $discountTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use calculateFixedDiscount() instead
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param float $amount
+     *
+     * @return int
+     */
+    public function calculateFixed(array $discountableObjects, $amount)
+    {
+        return $this->getFactory()
+            ->createCalculatorFixed()
+            ->calculate($discountableObjects, $amount);
     }
 
     /**
@@ -566,15 +601,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $amount
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculateFixed(array $discountableObjects, $amount)
+    public function calculateFixedDiscount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
         return $this->getFactory()
             ->createCalculatorFixed()
-            ->calculate($discountableObjects, $amount);
+            ->calculateDiscount($discountableObjects, $discountTransfer);
     }
 
     /**
