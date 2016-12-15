@@ -58,7 +58,7 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignEx
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder;
 use Spryker\Zed\Development\Business\Dependency\BundleParser;
 use Spryker\Zed\Development\Business\Dependency\Manager;
-use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder as IdeAutoCompletionBundleBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
@@ -771,7 +771,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createYvesIdeAutoCompletionBundleBuilder()
     {
-        return new BundleBuilder(
+        return new IdeAutoCompletionBundleBuilder(
             $this->getYvesIdeAutoCompletionMethodBuilderStack(),
             $this->getConfig()->getYvesIdeAutoCompletionOptions()
         );
@@ -793,7 +793,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createZedIdeAutoCompletionBundleBuilder()
     {
-        return new BundleBuilder(
+        return new IdeAutoCompletionBundleBuilder(
             $this->getZedIdeAutoCompletionMethodBuilderStack(),
             $this->getConfig()->getZedIdeAutoCompletionOptions()
         );
@@ -815,7 +815,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createClientIdeAutoCompletionBundleBuilder()
     {
-        return new BundleBuilder(
+        return new IdeAutoCompletionBundleBuilder(
             $this->getClientIdeAutoCompletionMethodBuilderStack(),
             $this->getConfig()->getClientIdeAutoCompletionOptions()
         );
@@ -837,7 +837,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createServiceIdeAutoCompletionBundleBuilder()
     {
-        return new BundleBuilder(
+        return new IdeAutoCompletionBundleBuilder(
             $this->getServiceIdeAutoCompletionMethodBuilderStack(),
             $this->getConfig()->getServiceIdeAutoCompletionOptions()
         );
