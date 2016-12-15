@@ -1,0 +1,15 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: ''
+            browser: chrome
+            window_size: 1920x1080
+
+        - \Application\Module\Yves
+        - \Application\Module\Zed
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
+        - \Propel\Module\PropelInstall
+        - \Propel\Module\Database
+        - Asserts

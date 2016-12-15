@@ -1,0 +1,21 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'View bundled products' | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/availability-gui/index/view', {'id-product': idProductAbstract}), 'Back to product' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Bundled products availability' } %}
+        {% block widget_content %}
+            <div class="row">
+
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

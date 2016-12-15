@@ -577,7 +577,11 @@
       "Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Unit\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests",
       "Functional\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests",
-      "Acceptance\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests"
+      "Acceptance\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests",
+
+      "Spryker\\Zed\\AvailabilityGui\\": "Bundles/AvailabilityGui/src",
+      "Functional\\Spryker\\Zed\\AvailabilityGui\\": "Bundles/AvailabilityGui/tests",
+      "Acceptance\\Spryker\\Zed\\AvailabilityGui\\": "Bundles/AvailabilityGui/tests"
 
     },
     "psr-4": {

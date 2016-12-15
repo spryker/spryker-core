@@ -8,6 +8,8 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Stock\ProductBundleAvailabilityHandlerPlugin;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
@@ -68,6 +70,54 @@ class ProductBundleStockWriter
             ->queryBundleProduct($productConcreteTransfer->getIdProductConcrete())
             ->find();
 
+        $bundleTotalStockPerWarehause = $this->calculateBundleStockPerWarehouse($bundleItems);
+
+        $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehause);
+
+        $this->productBundleAvailabilityHandler->updateBundleAvailability($productConcreteTransfer->getSku());
+
+        return $productConcreteTransfer;
+
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $bundleTotalStockPerWarehause
+     *
+     * @return void
+     */
+    protected function updateBundleStock(
+        ProductConcreteTransfer $productConcreteTransfer,
+        array $bundleTotalStockPerWarehause
+    ) {
+
+        foreach ($bundleTotalStockPerWarehause as $idStock => $bundleStock) {
+
+            $stockEntity = $this->stockQueryContainer
+                ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
+                ->filterByFkStock($idStock)
+                ->findOneOrCreate();
+
+            $stockEntity->setQuantity($bundleStock);
+            $stockEntity->save();
+
+            $stockTransfer = new StockProductTransfer();
+            $stockTransfer->setSku($productConcreteTransfer->getSku());
+            $stockTransfer->setStockType($stockEntity->getStock()->getName());
+            $stockTransfer->fromArray($stockEntity->toArray(), true);
+
+            $productConcreteTransfer->addStock($stockTransfer);
+
+        }
+    }
+
+    /**
+     * @param ObjectCollection|SpyProductBundle[] $bundleItems
+     *
+     * @return array
+     */
+    protected function calculateBundleStockPerWarehouse(ObjectCollection $bundleItems)
+    {
         $bundledItemStock = [];
         $bundledItemQuantity = [];
         foreach ($bundleItems as $bundleItemEntity) {
@@ -109,28 +159,6 @@ class ProductBundleStockWriter
             $bundleTotalStockPerWarehause[$idStock] = $bundleStock;
         }
 
-        foreach ($bundleTotalStockPerWarehause as $idStock => $bundleStock) {
-
-            $stockEntity = $this->stockQueryContainer
-                ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
-                ->filterByFkStock($idStock)
-                ->findOneOrCreate();
-
-            $stockEntity->setQuantity($bundleStock);
-            $stockEntity->save();
-
-            $stockTransfer = new StockProductTransfer();
-            $stockTransfer->setSku($productConcreteTransfer->getSku());
-            $stockTransfer->setStockType($stockEntity->getStock()->getName());
-            $stockTransfer->fromArray($stockEntity->toArray(), true);
-
-            $productConcreteTransfer->addStock($stockTransfer);
-
-        }
-
-        $this->productBundleAvailabilityHandler->updateBundleAvailability($productConcreteTransfer->getSku());
-
-        return $productConcreteTransfer;
-
+        return $bundleTotalStockPerWarehause;
     }
 }

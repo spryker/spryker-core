@@ -1,0 +1,27 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Edit Stock' | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/availability-gui/index/view', {'id-product': idProductAbstract}), 'Back to product' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Stock' | trans } %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+            {% for stock in form.stocks %}
+
+                {{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

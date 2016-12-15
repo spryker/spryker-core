@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Availability;
 
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToLocaleBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
@@ -60,14 +59,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new AvailabilityToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[self::FACADE_STOCK] = function (Container $container) {
-            return new AvailabilityToStockBridge($container->getLocator()->stock()->facade());
-        };
-
         return $container;
     }
 

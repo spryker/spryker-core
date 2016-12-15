@@ -1,0 +1,49 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Product Availability' | trans %}
+
+{% block action %}
+    {{ backActionButton('/availability-gui', 'List of product availability' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-lg-2">
+                    <p><b>{{ 'SKU' | trans }}</b></p><p> {{ productAbstractAvailability.sku }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Name' | trans }}:</b></p><p> {{ productAbstractAvailability.productName }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Availability' | trans }}:</b></p><p>
+                        {% if productAbstractAvailability.availability > 0 %}
+                            <span class="label label-info"> {{ "Available" | trans }}</span>
+                        {% else  %}
+                            <span class="label label-info"> {{ "Not available" | trans }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractAvailability.stockQuantity }}</p>
+                </div>
+                <div class="col-lg-2">
+                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity }}</p>
+                </div>
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Variant availability' | trans } %}
+
+        {% block widget_content %}
+            {{ indexTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
