@@ -22,7 +22,7 @@ class QueryContainerMethodBuilder extends AbstractBundleMethodBuilder
      *
      * @return string
      */
-    protected function getSearchPathGlobPattern($bundleDirectory)
+    protected function getSearchDirectoryGlobPattern($bundleDirectory)
     {
         return sprintf('%s/*/Persistence/', $bundleDirectory);
     }

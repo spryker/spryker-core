@@ -59,25 +59,13 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     }
 
     /**
-     * @return string
-     */
-    abstract protected function getMethodName();
-
-    /**
-     * @param string $bundleDirectory
-     *
-     * @return string
-     */
-    abstract protected function getSearchPathGlobPattern($bundleDirectory);
-
-    /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
      * @return null|\Symfony\Component\Finder\SplFileInfo
      */
     protected function findFile(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
-        $searchPathGlobPattern = $this->getSearchPathGlobPattern($bundleTransfer->getDirectory());
+        $searchPathGlobPattern = $this->getSearchDirectoryGlobPattern($bundleTransfer->getDirectory());
 
         $interfaceFileName = $this->getInterfaceFileName($bundleTransfer->getName());
         $file = $this->findFileByName($interfaceFileName, $searchPathGlobPattern);
@@ -93,18 +81,20 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     }
 
     /**
+     * @param string $bundleDirectory
+     *
+     * @return string
+     */
+    abstract protected function getSearchDirectoryGlobPattern($bundleDirectory);
+
+    /**
      * @param string $bundleName
      *
      * @return string
      */
     protected function getInterfaceFileName($bundleName)
     {
-        return sprintf(
-            '%s%sInterface.%s',
-            $bundleName,
-            ucfirst($this->getMethodName()),
-            static::FILE_EXTENSION
-        );
+        return sprintf('%s%sInterface.%s', $bundleName, ucfirst($this->getMethodName()), static::FILE_EXTENSION);
     }
 
     /**
@@ -114,12 +104,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      */
     protected function getClassFileName($bundleName)
     {
-        return sprintf(
-            '%s%s.%s',
-            $bundleName,
-            ucfirst($this->getMethodName()),
-            static::FILE_EXTENSION
-        );
+        return sprintf('%s%s.%s', $bundleName, ucfirst($this->getMethodName()), static::FILE_EXTENSION);
     }
 
     /**
@@ -154,6 +139,11 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     {
         return clone $this->finder;
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getMethodName();
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $file

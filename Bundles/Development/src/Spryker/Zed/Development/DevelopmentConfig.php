@@ -203,8 +203,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected function getDefaultIdeAutoCompletionOptions()
     {
         return [
-            IdeAutoCompletionOptionConstants::TARGET_BASE_PATH => APPLICATION_SOURCE_DIR . '/',
-            IdeAutoCompletionOptionConstants::TARGET_PATH_PATTERN => sprintf(
+            IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY => APPLICATION_SOURCE_DIR . '/',
+            IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN => sprintf(
                 'Generated/%s/Ide',
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
             ),

@@ -60,22 +60,22 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
      */
     protected function saveFile($generatorName, $fileContent)
     {
-        $pathToFile = $this->getTargetPath();
+        $targetDirectory = $this->getTargetDirectory();
 
-        $this->makeDirIfNotExists($pathToFile);
+        $this->makeDirIfNotExists($targetDirectory);
 
         $fileName = "{$generatorName}.php";
 
-        file_put_contents($pathToFile . $fileName, $fileContent);
+        file_put_contents($targetDirectory . $fileName, $fileContent);
     }
 
     /**
      * @return string
      */
-    protected function getTargetPath()
+    protected function getTargetDirectory()
     {
         $basePath = rtrim(
-            $this->options[IdeAutoCompletionOptionConstants::TARGET_BASE_PATH],
+            $this->options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],
             DIRECTORY_SEPARATOR
         );
 
@@ -83,7 +83,7 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
             IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
             $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
             trim(
-                $this->options[IdeAutoCompletionOptionConstants::TARGET_PATH_PATTERN],
+                $this->options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN],
                 DIRECTORY_SEPARATOR
             )
         );

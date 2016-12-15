@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateServiceIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:generate-service-ide-auto-completion';
+    const COMMAND_NAME = 'dev:generate-service-ide-auto-completion';
 
     /**
      * @return void

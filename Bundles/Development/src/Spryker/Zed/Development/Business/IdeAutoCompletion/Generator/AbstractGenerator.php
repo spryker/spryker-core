@@ -33,6 +33,21 @@ abstract class AbstractGenerator implements GeneratorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $bundleTransferCollection
+     *
+     * @return string
+     */
+    public function generate(array $bundleTransferCollection)
+    {
+        $templateVariables = [
+            'bundleTransferCollection' => $bundleTransferCollection,
+            'namespace' => $this->getNamespace(),
+        ];
+
+        return $this->twig->render($this->getTemplateName(), $templateVariables);
+    }
+
+    /**
      * @return string
      */
     protected function getTemplateName()

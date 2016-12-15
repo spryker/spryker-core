@@ -10,21 +10,6 @@ class BundleGenerator extends AbstractGenerator
 {
 
     /**
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $bundleTransferCollection
-     *
-     * @return string
-     */
-    public function generate(array $bundleTransferCollection)
-    {
-        $templateVariables = [
-            'bundleTransferCollection' => $bundleTransferCollection,
-            'namespace' => $this->getNamespace(),
-        ];
-
-        return $this->twig->render($this->getTemplateName(), $templateVariables);
-    }
-
-    /**
      * @return string
      */
     public function getName()
