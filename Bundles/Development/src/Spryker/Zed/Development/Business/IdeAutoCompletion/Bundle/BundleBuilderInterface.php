@@ -17,6 +17,6 @@ interface BundleBuilderInterface
      *
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    public function buildFromPath($baseDirectory, SplFileInfo $bundleDirectory);
+    public function buildFromDirectory($baseDirectory, SplFileInfo $bundleDirectory);
 
 }

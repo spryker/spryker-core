@@ -57,7 +57,7 @@ class BundleFinder implements BundleFinderInterface
             );
 
             foreach ($this->getBundleDirectories($bundleDirectoryGlobPattern) as $bundleDirectory) {
-                $bundleTransfer = $this->bundleBuilder->buildFromPath($baseDirectoryGlobPattern, $bundleDirectory);
+                $bundleTransfer = $this->bundleBuilder->buildFromDirectory($baseDirectoryGlobPattern, $bundleDirectory);
                 $bundleTransfer = $this->mergeWithPossibleExistingBundle($bundleTransfer, $bundleTransferCollection);
 
                 $bundleTransferCollection[$bundleTransfer->getName()] = $bundleTransfer;

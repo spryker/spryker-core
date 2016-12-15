@@ -50,7 +50,7 @@ class BundleBuilder implements BundleBuilderInterface
      *
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    public function buildFromPath($baseDirectory, SplFileInfo $bundleDirectory)
+    public function buildFromDirectory($baseDirectory, SplFileInfo $bundleDirectory)
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName($bundleDirectory->getBasename());
