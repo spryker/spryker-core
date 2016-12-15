@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
@@ -21,6 +22,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TAX = 'facade tax';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    const FACADE_MONEY = 'money facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,14 +33,30 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGINS] = function (Container $container) {
             return [
-                self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
-                self::PRICE_PLUGINS => $this->getPricePlugins($container),
-                self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
+                static::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
+                static::PRICE_PLUGINS => $this->getPricePlugins($container),
+                static::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
             ];
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
+        $container = $this->addMoneyFacade($container);
+
+        $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade(Container $container)
+    {
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            return new ShipmentToMoneyBridge($container->getLocator()->money()->facade());
         };
 
         return $container;
@@ -51,19 +69,19 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS] = function (Container $container) {
             return [
-                self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
-                self::PRICE_PLUGINS => $this->getPricePlugins($container),
-                self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
+                static::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
+                static::PRICE_PLUGINS => $this->getPricePlugins($container),
+                static::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
             ];
         };
 
-        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
+        $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
         };
 

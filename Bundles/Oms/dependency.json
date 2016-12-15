@@ -6,5 +6,6 @@
     "UtilText": "Required by bridge"
   },
   "exclude": {
+    "Config": "Required by tests only"
   }
 }

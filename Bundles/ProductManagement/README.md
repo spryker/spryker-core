@@ -1,11 +1,11 @@
-# Product Management Bundle
+# ProductManagement Bundle
 
 ## Installation
 
 ```
-composer require spryker/product
+composer require spryker/product-management
 ```
 
 ## Documentation
 
-[Product Management Documentation](http://spryker.github.io/core/bundles/product-management)
+[Spryker Documentation](http://spryker.github.io)

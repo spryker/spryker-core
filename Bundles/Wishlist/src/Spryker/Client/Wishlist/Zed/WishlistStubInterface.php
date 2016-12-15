@@ -7,45 +7,60 @@
 
 namespace Spryker\Client\Wishlist\Zed;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function addItem(WishlistChangeTransfer $wishlistChange);
+    public function createWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function removeItem(WishlistChangeTransfer $wishlistChange);
+    public function updateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function descreaseQuantity(WishlistChangeTransfer $wishlistChange);
+    public function removeWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function increaseQuantity(WishlistChangeTransfer $wishlistChange);
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getCustomerWishlist(CustomerTransfer $customer);
+    public function getWishlist(WishlistTransfer $wishlistTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
 }

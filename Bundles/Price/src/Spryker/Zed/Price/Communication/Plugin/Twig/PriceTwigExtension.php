@@ -12,6 +12,9 @@ use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Shared\Twig\TwigFilter;
 use Spryker\Zed\Price\Communication\Plugin\Twig\Filters\PriceFilter;
 
+/**
+ * @deprecated Use `TwigMoneyServiceProvider` instead.
+ */
 class PriceTwigExtension extends TwigExtension
 {
 

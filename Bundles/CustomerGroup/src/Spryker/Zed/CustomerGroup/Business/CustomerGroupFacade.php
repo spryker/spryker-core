@@ -17,6 +17,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
@@ -31,6 +33,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
@@ -45,6 +49,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
@@ -59,6 +65,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
@@ -73,6 +81,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer

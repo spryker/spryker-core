@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DependencyTreeBuilderConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:dependency-tree:build';
+    const COMMAND_NAME = 'dev:dependency:build-tree';
 
     const OPTION_APPLICATION = 'application';
     const OPTION_BUNDLE = 'bundle';
@@ -34,7 +34,7 @@ class DependencyTreeBuilderConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Build dependency tree');
+            ->setDescription('Build dependency tree (Spryker core dev only).');
 
         $this->addOption(self::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application to build the dependency tree (Client, Shared, Yves, Zed)');
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of bundle to build the dependency tree');

@@ -458,12 +458,15 @@
       "Spryker\\Zed\\Setup\\": "Bundles/Setup/src",
       "Unit\\Spryker\\Zed\\Setup\\": "Bundles/Setup/tests",
       "Functional\\Spryker\\Zed\\Setup\\": "Bundles/Setup/tests",
+
       "Spryker\\Client\\Shipment\\": "Bundles/Shipment/src",
       "Unit\\Spryker\\Client\\Shipment\\": "Bundles/Shipment/tests",
       "Spryker\\Shared\\Shipment\\": "Bundles/Shipment/src",
       "Unit\\Spryker\\Shared\\Shipment\\": "Bundles/Shipment/tests",
       "Spryker\\Zed\\Shipment\\": "Bundles/Shipment/src",
       "Unit\\Spryker\\Zed\\Shipment\\": "Bundles/Shipment/tests",
+      "Acceptance\\Shipment\\": "Bundles/Shipment/tests",
+
       "Spryker\\Shared\\SqlCriteriaBuilder\\": "Bundles/SqlCriteriaBuilder/src",
       "Spryker\\Shared\\Stock\\": "Bundles/Stock/src",
       "Unit\\Spryker\\Shared\\Stock\\": "Bundles/Stock/tests",

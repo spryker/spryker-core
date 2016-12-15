@@ -13,7 +13,7 @@
                     <tbody>
                     {% for refund in refunds %}
                         <tr data-qa="refund-row">
-                            <td data-qa="refund-amount-raw" data-qa-raw="{{ refund.amount }}">{{ refund.amount | currency }}</td>
+                            <td data-qa="refund-amount-raw" data-qa-raw="{{ refund.amount }}">{{ refund.amount | money }}</td>
                             <td>{{ refund.comment }}</td>
                             <td>{{ refund.createdAt | date }}</td>
                         </tr>

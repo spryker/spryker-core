@@ -8,7 +8,6 @@
 namespace Unit\Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
@@ -54,24 +53,18 @@ class ItemPriceCollectorTest extends BaseRuleTester
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface|null $currencyManagerMock
      *
      * @return \Spryker\Zed\Discount\Business\Collector\ItemPriceCollector
      */
-    protected function createItemPriceCollector(
-        ComparatorOperatorsInterface $comparatorMock = null,
-        CurrencyManagerInterface $currencyManagerMock = null
-    ) {
-
+    protected function createItemPriceCollector(ComparatorOperatorsInterface $comparatorMock = null)
+    {
         if (!$comparatorMock) {
             $comparatorMock = $this->createComparatorMock();
         }
 
-        if (!$currencyManagerMock) {
-            $currencyManagerMock = $this->createCurrencyCoverterMock();
-        }
+        $currencyConverterMock = $this->createCurrencyConverterMock();
 
-        return new ItemPriceCollector($comparatorMock, $currencyManagerMock);
+        return new ItemPriceCollector($comparatorMock, $currencyConverterMock);
     }
 
 }

@@ -160,7 +160,7 @@ class Discount implements DiscountInterface
 
         $applicableDiscounts = [];
         foreach ($discounts as $discountEntity) {
-            if ($this->isDiscountApplicable($quoteTransfer, $discountEntity) === false) {
+            if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
                 continue;
             }
 
@@ -173,7 +173,7 @@ class Discount implements DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|string[]
+     * @return string[]
      */
     protected function getVoucherCodes(QuoteTransfer $quoteTransfer)
     {

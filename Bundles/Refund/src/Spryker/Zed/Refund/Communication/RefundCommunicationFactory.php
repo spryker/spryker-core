@@ -26,7 +26,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
         $refundTable = new RefundTable(
             $this->getQueryContainer(),
             $this->getDateFormatter(),
-            $this->getCurrencyManager()
+            $this->getMoneyFacade()
         );
 
         return $refundTable;
@@ -41,11 +41,11 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyInterface
      */
-    protected function getCurrencyManager()
+    protected function getMoneyFacade()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::CURRENCY_MANAGER);
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_MONEY);
     }
 
 }

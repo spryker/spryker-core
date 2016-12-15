@@ -9,6 +9,7 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
 use Spryker\Shared\Kernel\Store;
@@ -19,6 +20,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     const SEARCH_CONFIG_BUILDER = 'search config builder';
     const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
     const STORE = 'store';
+    const PLUGIN_MONEY = 'money plugin';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -31,12 +33,28 @@ class SearchDependencyProvider extends AbstractDependencyProvider
 
         $container = $this->provideStore($container);
 
-        $container[self::SEARCH_CONFIG_BUILDER] = function (Container $container) {
+        $container[static::SEARCH_CONFIG_BUILDER] = function (Container $container) {
             return $this->createSearchConfigBuilderPlugin($container);
         };
 
-        $container[self::SEARCH_CONFIG_EXPANDER_PLUGINS] = function (Container $container) {
+        $container[static::SEARCH_CONFIG_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->createSearchConfigExpanderPlugins($container);
+        };
+
+        $container = $this->addMoneyPlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addMoneyPlugin(Container $container)
+    {
+        $container[static::PLUGIN_MONEY] = function () {
+            return new MoneyPlugin();
         };
 
         return $container;
@@ -74,7 +92,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 

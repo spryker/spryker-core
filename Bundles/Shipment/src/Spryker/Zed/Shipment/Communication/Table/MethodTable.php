@@ -9,10 +9,10 @@ namespace Spryker\Zed\Shipment\Communication\Table;
 
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
 
 class MethodTable extends AbstractTable
 {
@@ -37,11 +37,18 @@ class MethodTable extends AbstractTable
     protected $methodQuery;
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $methodQuery
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
      */
-    public function __construct(SpyShipmentMethodQuery $methodQuery)
+    protected $moneyFacade;
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $methodQuery
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
+     */
+    public function __construct(SpyShipmentMethodQuery $methodQuery, ShipmentToMoneyInterface $moneyFacade)
     {
         $this->methodQuery = $methodQuery;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -93,10 +100,13 @@ class MethodTable extends AbstractTable
      */
     protected function formatPrice($value, $includeSymbol = true)
     {
-        $currencyManager = CurrencyManager::getInstance();
-        $value = $currencyManager->convertCentToDecimal($value);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value);
 
-        return $currencyManager->format($value, $includeSymbol);
+        if ($includeSymbol) {
+            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        }
+
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**

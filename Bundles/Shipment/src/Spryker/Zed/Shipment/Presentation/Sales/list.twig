@@ -20,7 +20,7 @@
                             <td>
                                 {% for expense in order.expenses %}
                                     {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
-                                      {{ expense.sumGrossPriceWithDiscounts | currency }}
+                                      {{ expense.sumGrossPriceWithDiscounts | money }}
                                     {% endif %}
                                 {% endfor %}
                             </td>

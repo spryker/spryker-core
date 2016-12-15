@@ -331,7 +331,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringFieldsByType($type)
     {
@@ -351,7 +351,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param string $type
      * @param string $fieldName
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringFieldExpressionsForField($type, $fieldName)
     {
@@ -370,7 +370,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringComparatorExpressions($type)
     {
@@ -389,7 +389,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringLogicalComparators($type)
     {
@@ -429,7 +429,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param string $type
      * @param string $queryString
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function validateQueryStringByType($type, $queryString)
     {

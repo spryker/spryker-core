@@ -56,6 +56,7 @@ class ProductFactory extends AbstractFactory
         return new ProductConcreteStorage(
             $this->getStorage(),
             $this->createProductConcreteKeyBuilder(),
+            $this->getUtilEncodingService(),
             $locale
         );
     }
@@ -82,6 +83,14 @@ class ProductFactory extends AbstractFactory
     protected function getStorage()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::KV_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::UTIL_ENCODING);
     }
 
     /**

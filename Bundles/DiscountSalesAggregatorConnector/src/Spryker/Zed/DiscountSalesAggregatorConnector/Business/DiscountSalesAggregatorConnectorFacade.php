@@ -13,15 +13,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\DiscountSalesAggregatorConnector\Business\DiscountSalesAggregatorConnectorBusinessFactory getFactory()
  */
-class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
+class DiscountSalesAggregatorConnectorFacade extends AbstractFacade implements DiscountSalesAggregatorConnectorFacadeInterface
 {
 
     /**
-     * Specification:
-     *
-     * - Loop over all quote items, and sum all calculated discounts
-     * - Loop over all quote expenses, and sum all calculated discounts
-     * - Store total amount into order transfer discount totals
+     * {@inheritdoc}
      *
      * @api
      *
@@ -37,11 +33,7 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *
-     * - Loop over item calculated discount and group by discount display name
-     * - Loop over expense calculated discount and group by discount display name
-     * - Store all variations to order transfer calculated discounts
+     * {@inheritdoc}
      *
      * @api
      *
@@ -57,9 +49,7 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *
-     * - Loop over item calculated discounts and calculate item gross amount after discounts
+     * {@inheritdoc}
      *
      * @api
      *
@@ -75,9 +65,7 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *
-     * - Take current grand total and subtract total discount
+     * {@inheritdoc}
      *
      * @api
      *
@@ -93,9 +81,7 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *
-     * - Loop over expenses and calculate order expense tax after discounts
+     * {@inheritdoc}
      *
      * @api
      *
@@ -111,9 +97,7 @@ class DiscountSalesAggregatorConnectorFacade extends AbstractFacade
     }
 
     /**
-     * Specification:
-     *
-     * - Loop over order expenses and calculated expense gross amount after discounts
+     * {@inheritdoc}
      *
      * @api
      *

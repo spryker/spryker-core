@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Unit\Spryker\Zed\Discount\Business\BaseRuleTester;
@@ -46,26 +45,21 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
 
     /**
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     * @param \Spryker\Shared\Library\Currency\CurrencyManagerInterface|null $currencyManagerMock
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule
      */
-    protected function createItemPriceDecisionRule(
-        ComparatorOperatorsInterface $comparatorMock = null,
-        CurrencyManagerInterface $currencyManagerMock = null
-    ) {
+    protected function createItemPriceDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();
         }
 
-        if ($currencyManagerMock === null) {
-            $currencyManagerMock = $this->createCurrencyCoverterMock();
-            $currencyManagerMock->method('convertDecimalToCent')->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
-                return $clauseTransfer->setValue($clauseTransfer->getValue() * 100);
-            });
-        }
+        $currencyConverterMock = $this->createCurrencyConverterMock();
+        $currencyConverterMock->method('convertDecimalToCent')->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
+            return $clauseTransfer->setValue($clauseTransfer->getValue() * 100);
+        });
 
-        return new ItemPriceDecisionRule($comparatorMock, $currencyManagerMock);
+        return new ItemPriceDecisionRule($comparatorMock, $currencyConverterMock);
     }
 
 }

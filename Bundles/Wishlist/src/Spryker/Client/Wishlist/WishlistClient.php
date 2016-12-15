@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\Wishlist;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
+use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,143 +22,98 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function addItem(ItemTransfer $wishlistItem)
+    public function createWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $wishlistChange = $this->createChangeTransfer($wishlistItem);
-        $wishlist = $this->getZedStub()->addItem($wishlistChange);
-        $this->getSession()->setWishlist($wishlist);
-
-        return $wishlist;
+        return $this->getZedStub()->createWishlist($wishlistTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function increaseItemQuantity(ItemTransfer $wishlistItem)
+    public function updateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $wishlistChange = $this->createChangeTransfer($wishlistItem);
-        $wishlist = $this->getZedStub()->increaseQuantity($wishlistChange);
-
-        $this->getSession()->setWishlist($wishlist);
-
-        return $wishlist;
+        return $this->getZedStub()->updateWishlist($wishlistTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function decreaseItemQuantity(ItemTransfer $wishlistItem)
+    public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $wishlistChange = $this->createChangeTransfer($wishlistItem);
-        $wishlist = $this->getZedStub()->descreaseQuantity($wishlistChange);
-
-        $this->getSession()->setWishlist($wishlist);
-
-        return $wishlist;
+        return $this->getZedStub()->removeWishlist($wishlistTransfer);
     }
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function removeItem(ItemTransfer $wishlistItem)
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        $wishlistChange = $this->createChangeTransfer($wishlistItem);
-        $wishlist = $this->getZedStub()->removeItem($wishlistChange);
-        $this->getSession()->setWishlist($wishlist);
-
-        return $wishlist;
+        return $this->getZedStub()->addItem($wishlistItemTransfer);
     }
 
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function getWishlist()
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        $wishlistItems = $this->getSession()->getWishlist();
-        $this->getStorage()->expandProductDetails($wishlistItems);
-
-        return $wishlistItems;
+        return $this->getZedStub()->removeItem($wishlistItemTransfer);
     }
 
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
+     */
+    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
+    {
+        return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function synchronizeSession()
+    public function getWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $wishlistItems = $this->getSession()->getWishlist();
-
-        $wishlistChange = new WishlistChangeTransfer();
-        $customerTransfer = $this->getCustomerTransfer();
-        $wishlistChange->setCustomer($customerTransfer);
-
-        foreach ($wishlistItems->getItems() as $item) {
-            $wishlistChange->addItem($item);
-        }
-
-        $wishlist = $this->getZedStub()->addItem($wishlistChange);
-        $this->getSession()->setWishlist($wishlist);
-
-        return $wishlist;
+        return $this->getZedStub()->getWishlist($wishlistTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItemTransfer
+     * @api
      *
-     * @return \Generated\Shared\Transfer\WishlistChangeTransfer
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
-    protected function createChangeTransfer(ItemTransfer $wishlistItemTransfer)
+    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
-        $wishlistTransfer = $this->getSession()->getWishlist();
-
-        $wishlistChange = new WishlistChangeTransfer();
-        $wishlistChange->setWishlist($wishlistTransfer);
-        $wishlistChange->addItem($wishlistItemTransfer);
-        $customerTransfer = $this->getCustomerTransfer();
-
-        if ($customerTransfer !== null) {
-            $wishlistChange->setCustomer($customerTransfer);
-        }
-
-        return $wishlistChange;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomerTransfer()
-    {
-        $customerClient = $this->getFactory()->createCustomerClient();
-        $customerTransfer = $customerClient->getCustomer();
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @return \Spryker\Client\Wishlist\Session\WishlistSessionInterface
-     */
-    protected function getSession()
-    {
-        return $this->getFactory()->createSession();
+        $wishlistOverviewResponse = $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+        return $this->getFactory()->createProductStorage()->expandProductDetails($wishlistOverviewResponse);
     }
 
     /**
@@ -168,11 +125,14 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return \Spryker\Client\Wishlist\Storage\WishlistStorageInterface
+     * @return \Spryker\Client\Wishlist\Cart\CartHandlerInterface
      */
-    protected function getStorage()
+    protected function createCartHandler()
     {
-        return $this->getFactory()->createStorage();
+        return $this->getFactory()->createCartHandler(
+            $this->getFactory()->createCartClient(),
+            $this
+        );
     }
 
 }

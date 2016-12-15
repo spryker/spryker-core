@@ -10,7 +10,7 @@ namespace Spryker\Zed\Wishlist\Persistence\Propel;
 use Orm\Zed\Wishlist\Persistence\Base\SpyWishlistQuery as BaseSpyWishlistQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_wishlist' table.
+ * Skeleton subclass for representing a row from the 'spy_product_to_bundle' table.
  *
  *
  *

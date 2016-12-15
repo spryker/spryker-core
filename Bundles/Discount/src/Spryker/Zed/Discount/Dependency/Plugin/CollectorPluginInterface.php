@@ -41,7 +41,7 @@ interface CollectorPluginInterface
      *
      * @api
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function acceptedDataTypes();
 

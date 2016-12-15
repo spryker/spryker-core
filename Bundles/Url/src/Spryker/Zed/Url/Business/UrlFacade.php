@@ -126,8 +126,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * Specification:
-     * - check if a ResourceUrl by CategoryNode and Locale exist
+     * {@inheritdoc}
      *
      * @api
      *
