@@ -39,6 +39,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $dependingCommands = [
+            GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateZedIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateServiceIdeAutoCompletionConsole::COMMAND_NAME,

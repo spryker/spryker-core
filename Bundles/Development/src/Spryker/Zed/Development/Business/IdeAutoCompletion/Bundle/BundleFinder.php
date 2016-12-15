@@ -6,10 +6,7 @@
 
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 
-use Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
-use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
-use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Symfony\Component\Finder\Finder;
 
 class BundleFinder implements BundleFinderInterface
@@ -28,18 +25,18 @@ class BundleFinder implements BundleFinderInterface
     /**
      * @var array
      */
-    protected $options;
+    protected $directoryGlobPatterns;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
-     * @param array $options
+     * @param array $directoryGlobPatterns
      */
-    public function __construct(Finder $finder, BundleBuilderInterface $bundleBuilder, array $options)
+    public function __construct(Finder $finder, BundleBuilderInterface $bundleBuilder, array $directoryGlobPatterns)
     {
         $this->finder = $finder;
         $this->bundleBuilder = $bundleBuilder;
-        $this->options = $options;
+        $this->directoryGlobPatterns = $directoryGlobPatterns;
     }
 
     /**
@@ -48,13 +45,9 @@ class BundleFinder implements BundleFinderInterface
     public function find()
     {
         $bundleTransferCollection = [];
-        $sourceDirectoryGlobPatterns = $this->getSourceDirectoryGlobPatterns();
 
-        foreach ($sourceDirectoryGlobPatterns as $baseDirectoryGlobPattern => $namespaceDirectoryFragmentGlobPattern) {
-            $bundleDirectoryGlobPattern = $this->buildBundleDirectoryGlobPattern(
-                $baseDirectoryGlobPattern,
-                $namespaceDirectoryFragmentGlobPattern
-            );
+        foreach ($this->directoryGlobPatterns as $baseDirectoryGlobPattern => $namespaceDirectoryFragmentGlobPattern) {
+            $bundleDirectoryGlobPattern = $baseDirectoryGlobPattern . $namespaceDirectoryFragmentGlobPattern;
 
             foreach ($this->getBundleDirectories($bundleDirectoryGlobPattern) as $bundleDirectory) {
                 $bundleTransfer = $this->bundleBuilder->buildFromDirectory($baseDirectoryGlobPattern, $bundleDirectory);
@@ -65,31 +58,6 @@ class BundleFinder implements BundleFinderInterface
         }
 
         return $bundleTransferCollection;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getSourceDirectoryGlobPatterns()
-    {
-        return $this->options[IdeAutoCompletionOptionConstants::SOURCE_DIRECTORY_GLOB_PATTERNS];
-    }
-
-    /**
-     * @param string $baseDirectoryGlobPattern
-     * @param string $namespaceFragmentGlobPattern
-     *
-     * @return string
-     */
-    protected function buildBundleDirectoryGlobPattern(
-        $baseDirectoryGlobPattern,
-        $namespaceFragmentGlobPattern
-    ) {
-        return str_replace(
-            IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
-            $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-            $baseDirectoryGlobPattern . $namespaceFragmentGlobPattern
-        );
     }
 
     /**
@@ -104,7 +72,7 @@ class BundleFinder implements BundleFinderInterface
                 ->getFinder()
                 ->directories()
                 ->in($bundleDirectoryGlobPattern)
-                ->depth(0);
+                ->depth('== 0');
         } catch (\InvalidArgumentException $exception) {
             return new \ArrayIterator();
         }
@@ -144,10 +112,10 @@ class BundleFinder implements BundleFinderInterface
     }
 
     /**
-     * @param \ArrayObject|IdeAutoCompletionBundleMethodTransfer[] $existingMethodTransferCollection
-     * @param \ArrayObject|IdeAutoCompletionBundleMethodTransfer[] $methodTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[] $existingMethodTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[] $methodTransferCollection
      *
-     * @return \ArrayObject|IdeAutoCompletionBundleMethodTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[]
      */
     protected function mergeMethods(
         \ArrayObject $existingMethodTransferCollection,

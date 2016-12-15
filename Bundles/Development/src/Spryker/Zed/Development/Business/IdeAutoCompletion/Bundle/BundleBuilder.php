@@ -15,11 +15,6 @@ class BundleBuilder implements BundleBuilderInterface
 {
 
     /**
-     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
-     */
-    protected $namespaceExtractor;
-
-    /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
      */
     protected $bundleMethodBuilders;
@@ -30,16 +25,11 @@ class BundleBuilder implements BundleBuilderInterface
     protected $options;
 
     /**
-     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface $namespaceExtractor
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[] $bundleMethodBuilders
      * @param array $options
      */
-    public function __construct(
-        NamespaceExtractorInterface $namespaceExtractor,
-        array $bundleMethodBuilders,
-        array $options
-    ) {
-        $this->namespaceExtractor = $namespaceExtractor;
+    public function __construct(array $bundleMethodBuilders, array $options)
+    {
         $this->bundleMethodBuilders = $bundleMethodBuilders;
         $this->options = $options;
     }
@@ -54,7 +44,7 @@ class BundleBuilder implements BundleBuilderInterface
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName($bundleDirectory->getBasename());
-        $bundleTransfer->setNamespace($this->getBundleNamespace());
+        $bundleTransfer->setNamespace($this->getNamespace());
         $bundleTransfer->setMethodName(lcfirst($bundleDirectory->getBasename()));
         $bundleTransfer->setDirectory($bundleDirectory->getPath());
         $bundleTransfer->setBaseDirectory($baseDirectory);
@@ -67,7 +57,7 @@ class BundleBuilder implements BundleBuilderInterface
     /**
      * @return string
      */
-    protected function getBundleNamespace()
+    protected function getNamespace()
     {
         return str_replace(
             IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,

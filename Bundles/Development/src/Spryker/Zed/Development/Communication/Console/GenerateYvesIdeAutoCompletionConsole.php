@@ -13,10 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
-class GenerateClientIdeAutoCompletionConsole extends Console
+class GenerateYvesIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:generate-client-ide-auto-completion';
+    const COMMAND_NAME = 'dev:generate-yves-ide-auto-completion';
 
     /**
      * @return void
@@ -26,7 +26,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         parent::configure();
 
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Generate Client locator auto-completion files for the IDE');
+        $this->setDescription('Generate Yves locator auto-completion files for the IDE');
     }
 
     /**
@@ -37,9 +37,9 @@ class GenerateClientIdeAutoCompletionConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->generateClientIdeAutoCompletion();
+        $this->getFacade()->generateYvesIdeAutoCompletion();
 
-        $this->info('Generated Client IDE auto-completion files');
+        $this->info('Generated Yves IDE auto-completion files');
     }
 
 }

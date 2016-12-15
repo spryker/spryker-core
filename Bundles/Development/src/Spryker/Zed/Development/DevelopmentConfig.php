@@ -162,12 +162,22 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
+     */
+    public function getYvesIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Yves';
+
+        return $options;
+    }
+
+    /**
+     * @return string[]
      */
     public function getZedIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
-
         $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Zed';
 
         return $options;
@@ -179,7 +189,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getClientIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
-
         $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Client';
 
         return $options;
@@ -191,7 +200,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getServiceIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
-
         $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Service';
 
         return $options;
@@ -212,16 +220,17 @@ class DevelopmentConfig extends AbstractBundleConfig
                 'Generated\%s\Ide',
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
             ),
-            IdeAutoCompletionOptionConstants::SOURCE_DIRECTORY_GLOB_PATTERNS => [
-                $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/' => sprintf(
-                    'Spryker/%s/',
-                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
-                ),
-                APPLICATION_SOURCE_DIR . '/' => sprintf(
-                    'Pyz/%s/',
-                    IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
-                ),
-            ]
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIdeAutoCompletionDirectoryGlobPatterns()
+    {
+        return [
+            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/*/src/' => 'Spryker/*/',
+            APPLICATION_SOURCE_DIR . '/' => $this->get(ApplicationConstants::PROJECT_NAMESPACE) . '/*/',
         ];
     }
 

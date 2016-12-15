@@ -59,6 +59,7 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFin
 use Spryker\Zed\Development\Business\Dependency\BundleParser;
 use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
@@ -757,11 +758,45 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
+    public function createYvesIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createYvesIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getYvesIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createYvesIdeAutoCompletionBundleBuilder()
+    {
+        return new BundleBuilder(
+            $this->getYvesIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getYvesIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
     public function createZedIdeAutoCompletionWriter()
     {
-        $options = $this->getConfig()->getZedIdeAutoCompletionOptions();
+        return $this->createIdeAutoCompletionWriter(
+            $this->createZedIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getZedIdeAutoCompletionOptions()
+        );
+    }
 
-        return $this->createIdeAutoCompletionWriter($options);
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createZedIdeAutoCompletionBundleBuilder()
+    {
+        return new BundleBuilder(
+            $this->getZedIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getZedIdeAutoCompletionOptions()
+        );
     }
 
     /**
@@ -769,9 +804,21 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createClientIdeAutoCompletionWriter()
     {
-        $options = $this->getConfig()->getClientIdeAutoCompletionOptions();
+        return $this->createIdeAutoCompletionWriter(
+            $this->createClientIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getClientIdeAutoCompletionOptions()
+        );
+    }
 
-        return $this->createIdeAutoCompletionWriter($options);
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createClientIdeAutoCompletionBundleBuilder()
+    {
+        return new BundleBuilder(
+            $this->getClientIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getClientIdeAutoCompletionOptions()
+        );
     }
 
     /**
@@ -779,22 +826,136 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createServiceIdeAutoCompletionWriter()
     {
-        $options = $this->getConfig()->getServiceIdeAutoCompletionOptions();
-
-        return $this->createIdeAutoCompletionWriter($options);
+        return $this->createIdeAutoCompletionWriter(
+            $this->createServiceIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getServiceIdeAutoCompletionOptions()
+        );
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createServiceIdeAutoCompletionBundleBuilder()
+    {
+        return new BundleBuilder(
+            $this->getServiceIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getServiceIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getYvesIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getZedIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionFacadeMethodBuilder(),
+            $this->createIdeAutoCompletionQueryContainerMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getClientIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getServiceIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionFacadeMethodBuilder()
+    {
+        return new FacadeMethodBuilder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->createIdeAutoCompletionNamespaceExtractor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionQueryContainerMethodBuilder()
+    {
+        return new QueryContainerMethodBuilder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->createIdeAutoCompletionNamespaceExtractor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionClientMethodBuilder()
+    {
+        return new ClientMethodBuilder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->createIdeAutoCompletionNamespaceExtractor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionServiceMethodBuilder()
+    {
+        return new ServiceMethodBuilder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->createIdeAutoCompletionNamespaceExtractor()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
      * @param array $options
      *
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter
      */
-    protected function createIdeAutoCompletionWriter(array $options)
+    protected function createIdeAutoCompletionWriter(BundleBuilderInterface $bundleBuilder, array $options)
     {
         return new IdeAutoCompletionWriter(
             $this->getIdeAutoCompletionGeneratorStack($options),
-            $this->createIdeAutoCompletionBundleFinder($options),
+            $this->createIdeAutoCompletionBundleFinder($bundleBuilder),
             $options
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
+     *
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface
+     */
+    protected function createIdeAutoCompletionBundleFinder(BundleBuilderInterface $bundleBuilder)
+    {
+        return new BundleFinder(
+            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $bundleBuilder,
+            $this->getConfig()->getIdeAutoCompletionDirectoryGlobPatterns()
         );
     }
 
@@ -848,57 +1009,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param array $options
-     *
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface
-     */
-    protected function createIdeAutoCompletionBundleFinder(array $options)
-    {
-        $finder = new \Symfony\Component\Finder\Finder();
-
-        return new BundleFinder(
-            $finder,
-            $this->createIdeAutoCompletionBundleBuilder($options),
-            $options
-        );
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
-     */
-    protected function createIdeAutoCompletionBundleBuilder(array $options)
-    {
-        return new BundleBuilder(
-            $this->createIdeAutoCompletionNamespaceExtractor(),
-            $this->createIdeAutoCompletionBundleMethodBuilderStack(),
-            $options
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
      */
     protected function createIdeAutoCompletionNamespaceExtractor()
     {
         return new NamespaceExtractor();
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
-     */
-    protected function createIdeAutoCompletionBundleMethodBuilderStack()
-    {
-        $finder = new \Symfony\Component\Finder\Finder();
-        $namespaceExtractor = $this->createIdeAutoCompletionNamespaceExtractor();
-
-        return [
-            new FacadeMethodBuilder($finder, $namespaceExtractor),
-            new QueryContainerMethodBuilder($finder, $namespaceExtractor),
-            new ClientMethodBuilder($finder, $namespaceExtractor),
-            new ServiceMethodBuilder($finder, $namespaceExtractor),
-        ];
     }
 
 }

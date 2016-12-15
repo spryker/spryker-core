@@ -235,6 +235,16 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function generateYvesIdeAutoCompletion()
+    {
+        $this->getFactory()->createYvesIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
     public function generateZedIdeAutoCompletion()
     {
         $this->getFactory()->createZedIdeAutoCompletionWriter()->writeCompletionFiles();

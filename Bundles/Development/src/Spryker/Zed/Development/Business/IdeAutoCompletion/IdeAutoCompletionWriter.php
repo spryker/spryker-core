@@ -74,21 +74,21 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
      */
     protected function getTargetDirectory()
     {
-        $basePath = rtrim(
+        $baseDirectory = rtrim(
             $this->options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],
             DIRECTORY_SEPARATOR
         );
 
-        $applicationPathFragment = str_replace(
-            IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
-            $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-            trim(
-                $this->options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN],
-                DIRECTORY_SEPARATOR
-            )
+        $applicationPathFragment = trim(
+            str_replace(
+                IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
+                $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
+                $this->options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN]
+            ),
+            DIRECTORY_SEPARATOR
         );
 
-        return "{$basePath}/{$applicationPathFragment}/";
+        return "{$baseDirectory}/{$applicationPathFragment}/";
     }
 
     /**
