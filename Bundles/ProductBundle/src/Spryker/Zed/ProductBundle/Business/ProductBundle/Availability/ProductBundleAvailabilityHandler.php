@@ -170,18 +170,12 @@ class ProductBundleAvailabilityHandler
             }
         }
 
-        $bundleProductAvailability = $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($bundleProductSku)
-            ->findOne();
+        $idAvailabilityAbstract = $this->availabilityFacade->saveProductAvailability(
+            $bundleProductSku,
+            $bundleAvailabilityQuantity
+        );
 
-        if ($bundleProductAvailability->getQuantity() != $bundleAvailabilityQuantity) {
-            $bundleProductAvailability
-                ->setQuantity($bundleAvailabilityQuantity)
-                ->save();
-
-            $this->updateAbstractAvailabilityQuantity($bundleProductAvailability->getFkAvailabilityAbstract());
-            $this->availabilityFacade->touchAvailabilityAbstract($bundleProductAvailability->getFkAvailabilityAbstract());
-        }
+        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
     }
 
 }

@@ -101,4 +101,12 @@ interface AvailabilityFacadeInterface
      */
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
 
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity);
+
 }

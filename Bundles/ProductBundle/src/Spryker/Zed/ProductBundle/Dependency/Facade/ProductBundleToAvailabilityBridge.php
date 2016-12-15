@@ -54,4 +54,15 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     {
         $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
     }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity)
+    {
+        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
+    }
 }

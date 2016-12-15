@@ -73,10 +73,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $currentQuantity = $this->findCurrentPhysicalQuantity($sku);
         $quantityWithReservedItems = $this->getQuantity($this->sellable->calculateStockForProduct($sku));
 
-        $savedAvailabilityEntity = $this->saveCurrentAvailability($sku, $quantityWithReservedItems);
+        $idAvailabilityAbstract = $this->saveCurrentAvailability($sku, $quantityWithReservedItems);
 
         if ($this->isAvailabilityStatusChanged($currentQuantity, $quantityWithReservedItems)) {
-            $this->touchAvailabilityAbstract($savedAvailabilityEntity->getFkAvailabilityAbstract());
+            $this->touchAvailabilityAbstract($idAvailabilityAbstract);
         }
     }
 
@@ -107,9 +107,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param int $quantity
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return int
      */
-    protected function saveCurrentAvailability($sku, $quantity)
+    public function saveCurrentAvailability($sku, $quantity)
     {
         $spyAvailability = $this->querySpyAvailabilityBySku($sku)
             ->findOneOrCreate();
@@ -125,7 +125,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         $this->updateAbstractAvailabilityQuantity($spyAvailability->getFkAvailabilityAbstract());
 
-        return $spyAvailability;
+        return $spyAvailability->getFkAvailabilityAbstract();
     }
 
     /**
