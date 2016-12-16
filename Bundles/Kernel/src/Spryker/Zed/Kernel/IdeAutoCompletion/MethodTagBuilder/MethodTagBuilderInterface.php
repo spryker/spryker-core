@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 interface MethodTagBuilderInterface
 {
 

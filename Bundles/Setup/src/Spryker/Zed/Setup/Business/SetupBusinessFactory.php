@@ -75,10 +75,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     public function getConsoleCommands()
     {
         return [
-            $this->createGenerateIdeAutoCompletionConsole(),
-            $this->createGenerateZedIdeAutoCompletionConsole(),
-            $this->createGenerateClientIdeAutoCompletionConsole(),
-            $this->createGenerateServiceIdeAutoCompletionConsole(),
             $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
@@ -90,6 +86,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole
      */
     protected function createGenerateIdeAutoCompletionConsole()
@@ -98,6 +96,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole
      */
     protected function createGenerateZedIdeAutoCompletionConsole()
@@ -106,6 +106,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole
      */
     protected function createGenerateClientIdeAutoCompletionConsole()
@@ -114,6 +116,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\GenerateServiceIdeAutoCompletionConsole
      */
     protected function createGenerateServiceIdeAutoCompletionConsole()

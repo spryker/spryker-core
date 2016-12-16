@@ -11,6 +11,9 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class AbstractBundle
 {
 

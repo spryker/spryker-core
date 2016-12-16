@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\BundleNameFinder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 abstract class AbstractIdeAutoCompletionGenerator
 {
 
