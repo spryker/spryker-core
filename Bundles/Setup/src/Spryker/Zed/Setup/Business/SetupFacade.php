@@ -73,9 +73,9 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
-     * @deprecated Hook in commands manually on project level
-     *
      * @api
+     *
+     * @deprecated Hook in commands manually on project level
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */
