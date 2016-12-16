@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Development;
 
-use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 

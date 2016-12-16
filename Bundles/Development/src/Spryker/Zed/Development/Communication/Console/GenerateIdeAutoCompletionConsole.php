@@ -7,12 +7,11 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Development\Business\DevelopmentFacadeInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class GenerateIdeAutoCompletionConsole extends Console
 {

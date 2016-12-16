@@ -35,11 +35,11 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
             return $this->createFinder();
         };
 
-        $container[static::TWIG_ENVIRONMENT] = function() {
+        $container[static::TWIG_ENVIRONMENT] = function () {
             return $this->createTwigEnvironment();
         };
 
-        $container[static::TWIG_LOADER_FILESYSTEM] = function() {
+        $container[static::TWIG_LOADER_FILESYSTEM] = function () {
             return $this->createTwigLoaderFilesystem();
         };
 

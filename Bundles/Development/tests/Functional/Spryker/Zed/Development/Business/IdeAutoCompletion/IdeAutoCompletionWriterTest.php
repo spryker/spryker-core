@@ -6,7 +6,6 @@
 
 namespace Functional\Spryker\Zed\Development\Business\IdeAutoCompletion;
 
-use Codeception\TestCase;
 use Codeception\TestCase\Test;
 use Development\FunctionalTester;
 use Development\Module\IdeAutoCompletion;

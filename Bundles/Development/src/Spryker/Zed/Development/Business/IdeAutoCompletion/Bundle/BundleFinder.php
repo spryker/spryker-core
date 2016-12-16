@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class BundleFinder implements BundleFinderInterface
 {
@@ -65,7 +64,7 @@ class BundleFinder implements BundleFinderInterface
     /**
      * @param string $bundleDirectoryGlobPattern
      *
-     * @return \Traversable|SplFileInfo[]
+     * @return \Traversable|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function getBundleDirectories($bundleDirectoryGlobPattern)
     {
