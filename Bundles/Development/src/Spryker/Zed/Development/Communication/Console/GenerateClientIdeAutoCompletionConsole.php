@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GenerateClientIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:generate-client-ide-auto-completion';
+    const COMMAND_NAME = 'dev:ide:generate-client-auto-completion';
 
     /**
      * @return void
