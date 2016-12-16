@@ -8,6 +8,7 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
+use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\SuggestionQueryPlugin;
 use Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\CatalogSearchResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -25,6 +26,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     const CATALOG_SEARCH_QUERY_PLUGIN = 'catalog search query plugin';
     const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
     const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
+    const SUGGESTION_QUERY_PLUGIN = 'suggestion query plugin';
+    const SUGGESTION_QUERY_EXPANDER_PLUGINS = 'suggestion query expander plugins';
+    const SUGGESTION_RESULT_FORMATTER_PLUGINS = 'suggestion result formatter plugins';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -49,6 +53,18 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
 
         $container[self::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->createCatalogSearchResultFormatterPlugins();
+        };
+
+        $container[self::SUGGESTION_QUERY_PLUGIN] = function () {
+            return $this->createSuggestionQueryPlugin();
+        };
+
+        $container[self::SUGGESTION_QUERY_EXPANDER_PLUGINS] = function () {
+            return $this->createSuggestionQueryExpanderPlugins();
+        };
+
+        $container[self::SUGGESTION_RESULT_FORMATTER_PLUGINS] = function () {
+            return $this->createSuggestionResultFormatterPlugins();
         };
 
         return $container;
@@ -107,6 +123,30 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
             new PaginatedResultFormatterPlugin(),
             new CatalogSearchResultFormatterPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    protected function createSuggestionQueryPlugin()
+    {
+        return new SuggestionQueryPlugin();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function createSuggestionQueryExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    protected function createSuggestionResultFormatterPlugins()
+    {
+        return [];
     }
 
 }

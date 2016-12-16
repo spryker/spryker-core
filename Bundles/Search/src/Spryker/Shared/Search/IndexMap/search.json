@@ -11,6 +11,9 @@
           "filter": [
             "lowercase"
           ]
+        },
+        "suggestion_analyzer": {
+          "tokenizer": "keyword"
         }
       }
     }
@@ -104,12 +107,12 @@
           }
         },
         "completion-terms": {
-          "type": "string",
-          "include_in_all": false
+          "type": "completion"
         },
         "suggestion-terms": {
           "type": "string",
-          "include_in_all": false
+          "include_in_all": false,
+          "analyzer": "suggestion_analyzer"
         },
         "string-sort": {
           "type": "object",

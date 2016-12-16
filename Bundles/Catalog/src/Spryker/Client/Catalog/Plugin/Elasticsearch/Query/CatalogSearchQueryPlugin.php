@@ -8,6 +8,7 @@
 namespace Spryker\Client\Catalog\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
+use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
@@ -84,10 +85,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
             $matchQuery = new MatchAll();
         }
 
-        $boolQuery = (new BoolQuery())
-            ->addMust($matchQuery);
-
-        $baseQuery->setQuery($boolQuery);
+        $baseQuery->setQuery($this->createBoolQuery($matchQuery));
 
         return $baseQuery;
     }
@@ -110,6 +108,19 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
             ->setType(MultiMatch::TYPE_CROSS_FIELDS);
 
         return $matchQuery;
+    }
+
+    /**
+     * @param \Elastica\Query\AbstractQuery $matchQuery
+     *
+     * @return \Elastica\Query\BoolQuery
+     */
+    protected function createBoolQuery(AbstractQuery $matchQuery)
+    {
+        $boolQuery = new BoolQuery();
+        $boolQuery->addMust($matchQuery);
+
+        return $boolQuery;
     }
 
 }
