@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel;
+namespace Spryker\Client\Kernel;
 
 use Spryker\Shared\Kernel\AbstractBundleConfig as SharedAbstractBundleConfig;
 

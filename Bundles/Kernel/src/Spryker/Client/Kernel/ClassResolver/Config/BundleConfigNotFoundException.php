@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\Config;
+namespace Spryker\Client\Kernel\ClassResolver\Config;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class BundleConfigNotFoundException extends \Exception
 {
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -24,7 +24,7 @@ class BundleConfigNotFoundException extends \Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -39,7 +39,7 @@ class BundleConfigNotFoundException extends \Exception
         $message .= 'You can fix this by adding the missing Config to your bundle.';
 
         $message .= sprintf(
-            'E.g. %s\\Zed\\%2$s\\%2$sConfig',
+            'E.g. %s\\Client\\%2$s\\%2$sConfig',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         ) . PHP_EOL;

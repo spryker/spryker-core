@@ -19,6 +19,8 @@ use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 abstract class AbstractFactory implements FactoryInterface
 {
 
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var \Spryker\Yves\Kernel\Container $container
      */

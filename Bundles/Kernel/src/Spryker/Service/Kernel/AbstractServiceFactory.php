@@ -13,6 +13,8 @@ use Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException;
 class AbstractServiceFactory
 {
 
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var \Spryker\Service\Kernel\Container $container
      */

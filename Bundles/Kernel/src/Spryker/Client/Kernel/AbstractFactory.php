@@ -14,6 +14,8 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 abstract class AbstractFactory
 {
 
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var \Spryker\Client\Kernel\Container
      */
