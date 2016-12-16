@@ -67,7 +67,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function createTwigEnvironment()
     {
-        return new \Twig_Environment(null);
+        return new \Twig_Environment();
     }
 
     /**
@@ -75,7 +75,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function createTwigLoaderFilesystem()
     {
-        return new \Twig_Loader_Filesystem([]);
+        return new \Twig_Loader_Filesystem();
     }
 
 }
