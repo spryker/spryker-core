@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -32,55 +31,45 @@ class ServiceMethodBuilderTest extends Test
 
     public function testMethodNameIsClient()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getServiceMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('name')
-            ->willReturn([new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', null, null)]);
+            ->method('findFileByName')
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/FooBundleServiceInterface.php', null, null));
 
-        $methodBuilder = new ServiceMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $bundleMethodTransfer = $methodBuilder->getMethod($this->getBundleTransfer());
+        $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
         $this->assertSame('service', $bundleMethodTransfer->getName());
     }
 
     public function testFileLookupIsPerformedInClientApplication()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getServiceMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('in')
-            ->with($this->equalTo(static::BUNDLE_DIRECTORY . '/*/'));
-        $finderMock
-            ->expects($this->any())
-            ->method('name')
-            ->willReturn([]);
+            ->method('findFileByName')
+            ->with($this->anything(), $this->equalTo(static::BUNDLE_DIRECTORY . 'FooBundle/'));
 
-        $methodBuilder = new ServiceMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $methodBuilder->getMethod($this->getBundleTransfer());
+        $methodBuilderMock->getMethod($this->getBundleTransfer());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Finder\Finder
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
      */
-    protected function getFinderMock()
+    protected function getServiceMethodBuilderMock()
     {
-        $mock = $this
-            ->getMockBuilder(Finder::class)
-            ->disableOriginalConstructor()
+        $methodBuilderMock = $this
+            ->getMockBuilder(ServiceMethodBuilder::class)
+            ->setConstructorArgs([$this->getNamespaceExtractorMock()])
+            ->setMethods(['findFileByName', 'isSearchDirectoryAccessible'])
             ->getMock();
 
-        $mock
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('files')
-            ->willReturnSelf();
+            ->method('isSearchDirectoryAccessible')
+            ->willReturn(true);
 
-        $mock
-            ->expects($this->any())
-            ->method('in')
-            ->willReturnSelf();
-
-        return $mock;
+        return $methodBuilderMock;
     }
 
     /**

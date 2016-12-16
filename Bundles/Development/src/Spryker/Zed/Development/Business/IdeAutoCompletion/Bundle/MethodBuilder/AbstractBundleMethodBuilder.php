@@ -9,18 +9,12 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilde
 use Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterface
 {
 
     const FILE_EXTENSION = 'php';
-
-    /**
-     * @var \Symfony\Component\Finder\Finder
-     */
-    protected $finder;
 
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface
@@ -31,9 +25,8 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractorInterface $namespaceExtractor
      */
-    public function __construct(Finder $finder, NamespaceExtractorInterface $namespaceExtractor)
+    public function __construct(NamespaceExtractorInterface $namespaceExtractor)
     {
-        $this->finder = $finder;
         $this->namespaceExtractor = $namespaceExtractor;
     }
 
@@ -65,21 +58,18 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      */
     protected function findFile(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
-        $searchPath = $this->getSearchDirectory($bundleTransfer);
+        $searchDirectory = $this->getSearchDirectory($bundleTransfer);
 
-        if (!is_dir($searchPath)) {
+        if (!$this->isSearchDirectoryAccessible($searchDirectory)) {
             return null;
         }
 
-        $interfaceFileName = $this->getInterfaceFileName($bundleTransfer->getName());
-        $file = $this->findFileByName($interfaceFileName, $searchPath);
-
+        $file = $this->findInterfaceFile($bundleTransfer, $searchDirectory);
         if ($file) {
             return $file;
         }
 
-        $classFileName = $this->getClassFileName($bundleTransfer->getName());
-        $file = $this->findFileByName($classFileName, $searchPath);
+        $file = $this->findClassFile($bundleTransfer, $searchDirectory);
 
         return $file;
     }
@@ -92,6 +82,29 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     abstract protected function getSearchDirectory(IdeAutoCompletionBundleTransfer $bundleTransfer);
 
     /**
+     * @param string $searchDirectory
+     *
+     * @return bool
+     */
+    protected function isSearchDirectoryAccessible($searchDirectory)
+    {
+        return is_dir($searchDirectory);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
+     * @param string $searchDirectory
+     *
+     * @return null|\Symfony\Component\Finder\SplFileInfo
+     */
+    protected function findInterfaceFile(IdeAutoCompletionBundleTransfer $bundleTransfer, $searchDirectory)
+    {
+        $interfaceFileName = $this->getInterfaceFileName($bundleTransfer->getName());
+
+        return $this->findFileByName($interfaceFileName, $searchDirectory);
+    }
+
+    /**
      * @param string $bundleName
      *
      * @return string
@@ -99,6 +112,19 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     protected function getInterfaceFileName($bundleName)
     {
         return sprintf('%s%sInterface.%s', $bundleName, ucfirst($this->getMethodName()), static::FILE_EXTENSION);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
+     * @param string $searchDirectory
+     *
+     * @return null|\Symfony\Component\Finder\SplFileInfo
+     */
+    protected function findClassFile(IdeAutoCompletionBundleTransfer $bundleTransfer, $searchDirectory)
+    {
+        $classFileName = $this->getClassFileName($bundleTransfer->getName());
+
+        return $this->findFileByName($classFileName, $searchDirectory);
     }
 
     /**
@@ -126,14 +152,6 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
         }
 
         return null;
-    }
-
-    /**
-     * @return \Symfony\Component\Finder\Finder
-     */
-    protected function getFinder()
-    {
-        return clone $this->finder;
     }
 
     /**

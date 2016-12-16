@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -33,97 +32,84 @@ class FacadeMethodBuilderTest extends Test
 
     public function testMethodNameIsFacade()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getFacadeMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('name')
-            ->willReturn([new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', null, null)]);
+            ->method('findFileByName')
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', null, null));
 
-        $methodBuilder = new FacadeMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $bundleMethodTransfer = $methodBuilder->getMethod($this->getBundleTransfer());
+        $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
         $this->assertSame('facade', $bundleMethodTransfer->getName());
     }
 
     public function testFileLookupIsPerformedInBusinessLayer()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getFacadeMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('in')
-            ->with($this->equalTo(static::BUNDLE_DIRECTORY . '/*/Business/'));
-        $finderMock
-            ->expects($this->any())
-            ->method('name')
-            ->willReturn([]);
+            ->method('findFileByName')
+            ->with($this->anything(), $this->equalTo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/'));
 
-        $methodBuilder = new FacadeMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $methodBuilder->getMethod($this->getBundleTransfer());
+        $methodBuilderMock->getMethod($this->getBundleTransfer());
     }
 
     public function testFileLookupPrefersInterface()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getFacadeMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->exactly(1))
-            ->method('name')
+            ->method('findFileByName')
             ->withConsecutive(
-                ['FooBundleFacadeInterface.php'],
-                ['FooBundleFacade.php']
+                [$this->equalTo('FooBundleFacadeInterface.php'), $this->anything()]
             )
             ->will($this->onConsecutiveCalls(
-                [new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', null, null)],
-                [new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', null, null)]
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacadeInterface.php', null, null),
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', null, null)
             ));
 
-        $methodBuilder = new FacadeMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $bundleMethodTransfer = $methodBuilder->getMethod($this->getBundleTransfer());
+        $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
         $this->assertSame('FooBundleFacadeInterface', $bundleMethodTransfer->getClassName());
     }
 
     public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getFacadeMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->exactly(2))
-            ->method('name')
+            ->method('findFileByName')
             ->withConsecutive(
-                ['FooBundleFacadeInterface.php'],
-                ['FooBundleFacade.php']
+                [$this->equalTo('FooBundleFacadeInterface.php'), $this->anything()],
+                [$this->equalTo('FooBundleFacade.php'), $this->anything()]
             )
             ->will($this->onConsecutiveCalls(
-                [],
-                [new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', null, null)]
+                null,
+                new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Business/FooBundleFacade.php', null, null)
             ));
 
-        $methodBuilder = new FacadeMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $bundleMethodTransfer = $methodBuilder->getMethod($this->getBundleTransfer());
+        $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
         $this->assertSame('FooBundleFacade', $bundleMethodTransfer->getClassName());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Finder\Finder
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
      */
-    protected function getFinderMock()
+    protected function getFacadeMethodBuilderMock()
     {
-        $mock = $this
-            ->getMockBuilder(Finder::class)
-            ->disableOriginalConstructor()
+        $methodBuilderMock = $this
+            ->getMockBuilder(FacadeMethodBuilder::class)
+            ->setConstructorArgs([$this->getNamespaceExtractorMock()])
+            ->setMethods(['findFileByName', 'isSearchDirectoryAccessible'])
             ->getMock();
 
-        $mock
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('files')
-            ->willReturnSelf();
+            ->method('isSearchDirectoryAccessible')
+            ->willReturn(true);
 
-        $mock
-            ->expects($this->any())
-            ->method('in')
-            ->willReturnSelf();
-
-        return $mock;
+        return $methodBuilderMock;
     }
 
     /**

@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -32,55 +31,45 @@ class QueryContainerMethodBuilderTest extends Test
 
     public function testMethodNameIsQueryConntainer()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getQueryContainerMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('name')
-            ->willReturn([new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Persistence/FooBundleQueryContainerInterface.php', null, null)]);
+            ->method('findFileByName')
+            ->willReturn(new SplFileInfo(static::BUNDLE_DIRECTORY . 'FooBundle/Persistence/FooBundleQueryContainerInterface.php', null, null));
 
-        $methodBuilder = new QueryContainerMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $bundleMethodTransfer = $methodBuilder->getMethod($this->getBundleTransfer());
+        $bundleMethodTransfer = $methodBuilderMock->getMethod($this->getBundleTransfer());
 
         $this->assertSame('queryContainer', $bundleMethodTransfer->getName());
     }
 
     public function testFileLookupIsPerformedInPersistenceLayer()
     {
-        $finderMock = $this->getFinderMock();
-        $finderMock
+        $methodBuilderMock = $this->getQueryContainerMethodBuilderMock();
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('in')
-            ->with($this->equalTo(static::BUNDLE_DIRECTORY . '/*/Persistence/'));
-        $finderMock
-            ->expects($this->any())
-            ->method('name')
-            ->willReturn([]);
+            ->method('findFileByName')
+            ->with($this->anything(), $this->equalTo(static::BUNDLE_DIRECTORY . 'FooBundle/Persistence/'));
 
-        $methodBuilder = new QueryContainerMethodBuilder($finderMock, $this->getNamespaceExtractorMock());
-        $methodBuilder->getMethod($this->getBundleTransfer());
+        $methodBuilderMock->getMethod($this->getBundleTransfer());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Finder\Finder
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder
      */
-    protected function getFinderMock()
+    protected function getQueryContainerMethodBuilderMock()
     {
-        $mock = $this
-            ->getMockBuilder(Finder::class)
-            ->disableOriginalConstructor()
+        $methodBuilderMock = $this
+            ->getMockBuilder(QueryContainerMethodBuilder::class)
+            ->setConstructorArgs([$this->getNamespaceExtractorMock()])
+            ->setMethods(['findFileByName', 'isSearchDirectoryAccessible'])
             ->getMock();
 
-        $mock
+        $methodBuilderMock
             ->expects($this->any())
-            ->method('files')
-            ->willReturnSelf();
+            ->method('isSearchDirectoryAccessible')
+            ->willReturn(true);
 
-        $mock
-            ->expects($this->any())
-            ->method('in')
-            ->willReturnSelf();
-
-        return $mock;
+        return $methodBuilderMock;
     }
 
     /**

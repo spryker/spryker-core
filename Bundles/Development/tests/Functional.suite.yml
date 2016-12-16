@@ -3,3 +3,4 @@ modules:
     enabled:
         - Filesystem
         - \Development\Module\Functional
+        - \Development\Module\IdeAutoCompletion

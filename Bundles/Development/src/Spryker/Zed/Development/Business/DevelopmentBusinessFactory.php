@@ -891,10 +891,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionFacadeMethodBuilder()
     {
-        return new FacadeMethodBuilder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
-            $this->createIdeAutoCompletionNamespaceExtractor()
-        );
+        return new FacadeMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }
 
     /**
@@ -902,10 +899,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionQueryContainerMethodBuilder()
     {
-        return new QueryContainerMethodBuilder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
-            $this->createIdeAutoCompletionNamespaceExtractor()
-        );
+        return new QueryContainerMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }
 
     /**
@@ -913,10 +907,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionClientMethodBuilder()
     {
-        return new ClientMethodBuilder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
-            $this->createIdeAutoCompletionNamespaceExtractor()
-        );
+        return new ClientMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }
 
     /**
@@ -924,10 +915,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionServiceMethodBuilder()
     {
-        return new ServiceMethodBuilder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
-            $this->createIdeAutoCompletionNamespaceExtractor()
-        );
+        return new ServiceMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }
 
     /**
