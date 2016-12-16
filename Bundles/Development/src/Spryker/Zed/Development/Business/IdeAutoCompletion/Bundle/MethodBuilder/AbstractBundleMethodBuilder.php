@@ -46,7 +46,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
         $bundleMethodTransfer = new IdeAutoCompletionBundleMethodTransfer();
         $bundleMethodTransfer->setName($this->getMethodName());
         $bundleMethodTransfer->setClassName($this->getClassNameFromFile($file));
-        $bundleMethodTransfer->setNamespace($this->getNamespace($file, $bundleTransfer));
+        $bundleMethodTransfer->setNamespaceName($this->getNamespace($file, $bundleTransfer));
 
         return $bundleMethodTransfer;
     }

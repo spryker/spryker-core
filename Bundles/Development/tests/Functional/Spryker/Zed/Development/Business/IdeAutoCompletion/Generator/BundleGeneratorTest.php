@@ -57,6 +57,7 @@ namespace Generated\FooApplication\Ide;
  */
 interface AutoCompletion
 {}
+
 EOD;
 
         return [
@@ -97,6 +98,7 @@ namespace Generated\FooApplication\Ide;
  */
 interface AutoCompletion
 {}
+
 EOD;
 
         return [
@@ -159,7 +161,7 @@ EOD;
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');
-        $bundleTransfer->setNamespace('Generated\FooApplication\Ide');
+        $bundleTransfer->setNamespaceName('Generated\FooApplication\Ide');
         $bundleTransfer->setMethodName('fooBundle');
         $bundleTransfer->setDirectory('/foo/bar/baz/FooBundle/src/Spryker/FooApplication/Business/');
         $bundleTransfer->setBaseDirectory('/foo/bar/baz/FooBundle/src/');
@@ -174,7 +176,7 @@ EOD;
     {
         $bundleMethodTransfer = new IdeAutoCompletionBundleMethodTransfer();
         $bundleMethodTransfer->setName('');
-        $bundleMethodTransfer->setNamespace('');
+        $bundleMethodTransfer->setNamespaceName('');
         $bundleMethodTransfer->setClassName('');
 
         return $bundleMethodTransfer;

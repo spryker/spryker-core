@@ -44,7 +44,7 @@ class BundleBuilder implements BundleBuilderInterface
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName($bundleDirectory->getBasename());
-        $bundleTransfer->setNamespace($this->getNamespace());
+        $bundleTransfer->setNamespaceName($this->getNamespace());
         $bundleTransfer->setMethodName(lcfirst($bundleDirectory->getBasename()));
         $bundleTransfer->setDirectory($bundleDirectory->getPath());
         $bundleTransfer->setBaseDirectory($baseDirectory);

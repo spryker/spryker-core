@@ -158,7 +158,7 @@ EOD;
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');
-        $bundleTransfer->setNamespace('Generated\FooApplication\Ide');
+        $bundleTransfer->setNamespaceName('Generated\FooApplication\Ide');
         $bundleTransfer->setMethodName('fooBundle');
         $bundleTransfer->setDirectory('/foo/bar/baz/FooBundle/src/Spryker/FooApplication/Business/');
         $bundleTransfer->setBaseDirectory('/foo/bar/baz/FooBundle/src/');
@@ -173,7 +173,7 @@ EOD;
     {
         $bundleMethodTransfer = new IdeAutoCompletionBundleMethodTransfer();
         $bundleMethodTransfer->setName('facade');
-        $bundleMethodTransfer->setNamespace('Spryker\FooApplication\Business');
+        $bundleMethodTransfer->setNamespaceName('Spryker\FooApplication\Business');
         $bundleMethodTransfer->setClassName('FooBundleFacadeInterface');
 
         return $bundleMethodTransfer;

@@ -89,7 +89,7 @@ class ClientMethodBuilderTest extends Test
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');
-        $bundleTransfer->setNamespace('Generated\FooApplication\Ide');
+        $bundleTransfer->setNamespaceName('Generated\FooApplication\Ide');
         $bundleTransfer->setBaseDirectory(static::BASE_DIRECTORY);
         $bundleTransfer->setDirectory(static::BUNDLE_DIRECTORY);
         $bundleTransfer->setMethodName('fooBundle');

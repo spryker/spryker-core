@@ -6,7 +6,7 @@ namespace {{ namespace }};
 {% if bundleTransfer.getMethods().count() %}
 /**
 {% for methodTransfer in bundleTransfer.getMethods() %}
- * @method \{{ methodTransfer.getNamespace() }}\{{ methodTransfer.getClassName() }} {{ methodTransfer.getName() }}()
+ * @method \{{ methodTransfer.getNamespaceName() }}\{{ methodTransfer.getClassName() }} {{ methodTransfer.getName() }}()
 {% endfor %}
  */
 interface {{ bundleTransfer.getName() }}

@@ -5,7 +5,7 @@ namespace {{ namespace }};
 /**
 {% for bundleTransfer in bundleTransferCollection %}
 {% if bundleTransfer.getMethods().count() %}
- * @method \{{ bundleTransfer.getNamespace() }}\{{ bundleTransfer.getName() }} {{ bundleTransfer.getMethodName() }}()
+ * @method \{{ bundleTransfer.getNamespaceName() }}\{{ bundleTransfer.getName() }} {{ bundleTransfer.getMethodName() }}()
 {% endif %}
 {% endfor %}
  */
