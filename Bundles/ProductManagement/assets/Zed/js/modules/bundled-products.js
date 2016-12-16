@@ -15,6 +15,8 @@ $(document).ready(function() {
 
     $('#bundled-product-table').dataTable({
         destroy: true,
+        scrollX: 'auto',
+        autoWidth: false,
         fnDrawCallback: function(settings) {
             $('.product_assign_checkbox').off('change');
             $('.product_assign_checkbox').on('change', function() {

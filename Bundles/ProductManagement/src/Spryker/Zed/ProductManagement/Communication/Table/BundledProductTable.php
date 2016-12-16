@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
-use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -90,7 +89,12 @@ class BundledProductTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl(sprintf('bundledProductTable?id-product-concrete=%d', $this->idProductConcrete));
+        $config->setUrl(
+            sprintf(
+                'bundledProductTable?id-product-concrete=%d',
+                $this->idProductConcrete
+            )
+        );
 
         $config->setHeader([
             static::COL_SELECT => 'Select',

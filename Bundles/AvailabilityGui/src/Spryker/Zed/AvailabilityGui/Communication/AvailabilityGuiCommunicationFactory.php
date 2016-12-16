@@ -12,6 +12,7 @@ use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStoc
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
@@ -47,6 +48,23 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $queryProductAbstractAvailability,
             $idProductAbstract,
             $this->getProductBundleQueryContainer()
+        );
+    }
+
+    /**
+     *
+     * @param int $idLocale
+     * @param int $idAbstractProductBundle
+     *
+     * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
+     */
+    public function createBundledProductAvailabilityTable($idLocale, $idAbstractProductBundle = null)
+    {
+        return new BundledProductAvailabilityTable(
+            $this->getAvailabilityQueryContainer(),
+            $this->getProductBundleQueryContainer(),
+            $idLocale,
+            $idAbstractProductBundle
         );
     }
 

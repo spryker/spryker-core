@@ -8,13 +8,13 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 
 class AvailabilityTable extends AbstractTable
 {
@@ -50,6 +50,9 @@ class AvailabilityTable extends AbstractTable
         $idProductAbstract,
         AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
     ) {
+
+        $this->setTableIdentifier('availability-table');
+
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
         $this->idProductAbstract = $idProductAbstract;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
@@ -67,6 +70,7 @@ class AvailabilityTable extends AbstractTable
         ])->build();
 
         $config->setUrl($url);
+
         $config->setHeader([
             AvailabilityQueryContainer::CONCRETE_SKU => 'SKU',
             AvailabilityQueryContainer::CONCRETE_NAME => 'Name',
@@ -159,15 +163,15 @@ class AvailabilityTable extends AbstractTable
         $buttons = $this->generateEditButton($viewTaxSetUrl, 'Edit Stock');
 
         if ($isBundle) {
-            $viewBundledProductsUrl = Url::generate(
-                sprintf(
-                    '/availability-gui/product-bundle/view?%s=%d',
-                    static::URL_PARAM_ID_PRODUCT,
-                    $productAbstract[AvailabilityQueryContainer::ID_PRODUCT]
-                )
+
+            $viewBundleUrl = Url::generate(
+                '/availability-gui/index/bundled-product-availability-table',
+                [
+                    BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                ]
             );
 
-            $buttons .= ' ' . $this->generateViewButton($viewBundledProductsUrl, 'View bundled products');
+            $buttons .= ' ' . $this->generateViewButton($viewBundleUrl, 'View bundled products');
         }
 
         return $buttons;

@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
+use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -49,9 +50,12 @@ class IndexController extends AbstractController
                 $localeTransfer->getIdLocale()
             );
 
+        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable();
+
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
-            'indexTable' => $availabilityTable->render()
+            'indexTable' => $availabilityTable->render(),
+            'bundledProductAvailabilityTable' => $bundledProductAvailabilityTable->render(),
         ];
     }
 
@@ -80,7 +84,7 @@ class IndexController extends AbstractController
 
         return [
             'form' => $availabilityStockForm->createView(),
-            'idProductAbstract' => $idProductAbstract,
+            'idProductBundle' => $idProductAbstract,
         ];
     }
 
@@ -104,10 +108,32 @@ class IndexController extends AbstractController
     public function availabilityTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
-        $AvailabilityGuiTable = $this->getAvailabilityTable($idProductAbstract);
+        $availabilityTable = $this->getAvailabilityTable($idProductAbstract);
 
         return $this->jsonResponse(
-            $AvailabilityGuiTable->fetchData()
+            $availabilityTable->fetchData()
+        );
+    }
+
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function bundledProductAvailabilityTableAction(Request $request)
+    {
+        $idBundleProduct = $request->query->getInt(BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE);
+
+        if (!$idBundleProduct) {
+            return $this->jsonResponse([]);
+        }
+
+        $idBundleProduct = $this->castId($idBundleProduct);
+        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idBundleProduct);
+
+        return $this->jsonResponse(
+            $bundledProductAvailabilityTable->fetchData()
         );
     }
 
@@ -141,6 +167,22 @@ class IndexController extends AbstractController
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
         return $this->getFactory()->createAvailabilityTable($idProductAbstract, $localeTransfer->getIdLocale());
+    }
+
+    /**
+     * @param int $idProductBundle
+     *
+     * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
+     */
+    protected function getBundledProductAvailabilityTable($idProductBundle = null)
+    {
+        $localeTransfer = $this->getCurrentLocaleTransfer();
+
+        return $this->getFactory()
+            ->createBundledProductAvailabilityTable(
+                $localeTransfer->getIdLocale(),
+                $idProductBundle
+            );
     }
 
     /**
