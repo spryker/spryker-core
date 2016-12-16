@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder;
 
+use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
+
 class QueryContainerMethodBuilder extends AbstractBundleMethodBuilder
 {
 
@@ -18,13 +20,17 @@ class QueryContainerMethodBuilder extends AbstractBundleMethodBuilder
     }
 
     /**
-     * @param string $bundleDirectory
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
      * @return string
      */
-    protected function getSearchDirectoryGlobPattern($bundleDirectory)
+    protected function getSearchDirectory(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
-        return sprintf('%s/*/Persistence/', $bundleDirectory);
+        return sprintf(
+            '%s%s/Persistence/',
+            $bundleTransfer->getDirectory(),
+            $bundleTransfer->getName()
+        );
     }
 
 }

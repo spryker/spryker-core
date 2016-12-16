@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder;
 
+use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
+
 class FacadeMethodBuilder extends AbstractBundleMethodBuilder
 {
 
@@ -18,13 +20,17 @@ class FacadeMethodBuilder extends AbstractBundleMethodBuilder
     }
 
     /**
-     * @param string $bundleDirectory
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
      * @return string
      */
-    protected function getSearchDirectoryGlobPattern($bundleDirectory)
+    protected function getSearchDirectory(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
-        return sprintf('%s/*/Business/', $bundleDirectory);
+        return sprintf(
+            '%s%s/Business/',
+            $bundleTransfer->getDirectory(),
+            $bundleTransfer->getName()
+        );
     }
 
 }

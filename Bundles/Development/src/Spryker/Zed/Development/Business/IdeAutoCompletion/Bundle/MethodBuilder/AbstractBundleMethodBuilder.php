@@ -65,27 +65,31 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      */
     protected function findFile(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
-        $searchPathGlobPattern = $this->getSearchDirectoryGlobPattern($bundleTransfer->getDirectory());
+        $searchPath = $this->getSearchDirectory($bundleTransfer);
+
+        if (!is_dir($searchPath)) {
+            return null;
+        }
 
         $interfaceFileName = $this->getInterfaceFileName($bundleTransfer->getName());
-        $file = $this->findFileByName($interfaceFileName, $searchPathGlobPattern);
+        $file = $this->findFileByName($interfaceFileName, $searchPath);
 
         if ($file) {
             return $file;
         }
 
         $classFileName = $this->getClassFileName($bundleTransfer->getName());
-        $file = $this->findFileByName($classFileName, $searchPathGlobPattern);
+        $file = $this->findFileByName($classFileName, $searchPath);
 
         return $file;
     }
 
     /**
-     * @param string $bundleDirectory
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleDirectory
      *
      * @return string
      */
-    abstract protected function getSearchDirectoryGlobPattern($bundleDirectory);
+    abstract protected function getSearchDirectory(IdeAutoCompletionBundleTransfer $bundleTransfer);
 
     /**
      * @param string $bundleName
@@ -109,24 +113,16 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
 
     /**
      * @param string $fileName
-     * @param string $searchPathGlobPattern
+     * @param string $searchPath
      *
      * @return null|\Symfony\Component\Finder\SplFileInfo
      */
-    protected function findFileByName($fileName, $searchPathGlobPattern)
+    protected function findFileByName($fileName, $searchPath)
     {
-        try {
-            $files = $this
-                ->getFinder()
-                ->files()
-                ->in($searchPathGlobPattern)
-                ->name($fileName);
-        } catch (\InvalidArgumentException $exception) {
-            return null;
-        }
+        $filePath = $searchPath . $fileName;
 
-        foreach ($files as $file) {
-            return $file;
+        if (file_exists($filePath)) {
+            return new SplFileInfo($filePath, null, null);
         }
 
         return null;
