@@ -979,7 +979,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionBundleGenerator(array $options)
     {
-        return new BundleGenerator($this->createTwigEnvironment(), $options);
+        return new BundleGenerator($this->getTwigEnvironment(), $options);
     }
 
     /**
@@ -989,23 +989,29 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionBundleMethodGenerator(array $options)
     {
-        return new BundleMethodGenerator($this->createTwigEnvironment(), $options);
+        return new BundleMethodGenerator($this->getTwigEnvironment(), $options);
     }
 
     /**
      * @return \Twig_Environment
      */
-    protected function createTwigEnvironment()
+    protected function getTwigEnvironment()
     {
-        return new \Twig_Environment($this->createTwigFilesystemLoader());
+        $twigEnvironment = $this->getProvidedDependency(DevelopmentDependencyProvider::TWIG_ENVIRONMENT);
+        $twigEnvironment->setLoader($this->getTwigFilesystemLoader());
+
+        return $twigEnvironment;
     }
 
     /**
      * @return \Twig_LoaderInterface
      */
-    protected function createTwigFilesystemLoader()
+    protected function getTwigFilesystemLoader()
     {
-        return new \Twig_Loader_Filesystem($this->getConfig()->getIdeAutoCompletionGeneratorTemplatePaths());
+        $filesystemLoader = $this->getProvidedDependency(DevelopmentDependencyProvider::TWIG_LOADER_FILESYSTEM);
+        $filesystemLoader->setPaths($this->getConfig()->getIdeAutoCompletionGeneratorTemplatePaths());
+
+        return $filesystemLoader;
     }
 
     /**
