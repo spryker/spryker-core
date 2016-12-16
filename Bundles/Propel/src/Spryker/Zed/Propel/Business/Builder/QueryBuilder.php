@@ -51,6 +51,11 @@ SCRIPT;
         return $script;
     }
 
+    /**
+     * @param \Propel\Generator\Model\Column $col
+     *
+     * @return string
+     */
     protected function addFilterByColBetween(Column $col)
     {
         $script = '';
@@ -133,7 +138,7 @@ SCRIPT;
     /**
      * Adds the filterByCol method for this object.
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script
      * @param \Propel\Generator\Model\Column $col
      *
      * @return void
@@ -240,15 +245,15 @@ SCRIPT;
         if (is_array(\$$variableName)) {
             \$useMinMax = false;
             if (isset(\${$variableName}['min'])) {
-                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::GREATER_EQUAL) {
-                    throw new AmbiguousComparisonException('\\'min\\' requires explicit Criteria::GREATER_EQUAL or SprykerCriteria::BETWEEN when \\'max\\' is also needed as comparison criteria.');
+                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::GREATER_EQUAL && \$comparison != Criteria::GREATER_THAN) {
+                    throw new AmbiguousComparisonException('\\'min\\' requires explicit Criteria::GREATER_EQUAL, Criteria::GREATER_THAN or SprykerCriteria::BETWEEN when \\'max\\' is also needed as comparison criteria.');
                 }
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['min'], Criteria::GREATER_EQUAL);
                 \$useMinMax = true;
             }
             if (isset(\${$variableName}['max'])) {
-                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::LESS_EQUAL) {
-                    throw new AmbiguousComparisonException('\\'max\\' requires explicit Criteria::LESS_EQUAL or SprykerCriteria::BETWEEN when \\'min\\' is also needed as comparison criteria.');
+                if (\$comparison != SprykerCriteria::BETWEEN && \$comparison != Criteria::LESS_EQUAL && \$comparison != Criteria::LESS_THAN) {
+                    throw new AmbiguousComparisonException('\\'max\\' requires explicit Criteria::LESS_EQUAL, Criteria::LESS_THAN or SprykerCriteria::BETWEEN when \\'min\\' is also needed as comparison criteria.');
                 }
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['max'], Criteria::LESS_EQUAL);
                 \$useMinMax = true;
