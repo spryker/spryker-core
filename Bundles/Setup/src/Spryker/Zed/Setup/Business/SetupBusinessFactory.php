@@ -70,11 +70,17 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Hook in commands manually on project level
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {
         return [
+            $this->createGenerateIdeAutoCompletionConsole(),
+            $this->createGenerateZedIdeAutoCompletionConsole(),
+            $this->createGenerateClientIdeAutoCompletionConsole(),
+            $this->createGenerateServiceIdeAutoCompletionConsole(),
             $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
@@ -126,6 +132,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole
      */
     protected function createRunnerConsole()
@@ -134,6 +142,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole
      */
     protected function createRemoveGeneratedDirectoryConsole()
@@ -142,6 +152,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\InstallConsole
      */
     protected function createInstallConsole()
@@ -150,6 +162,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole
      */
     protected function createJenkinsEnableConsole()
@@ -158,6 +172,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\JenkinsDisableConsole
      */
     protected function createJenkinsDisableConsole()
@@ -166,6 +182,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\JenkinsGenerateConsole
      */
     protected function createJenkinsGenerateConsole()
@@ -174,6 +192,8 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @return \Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole
      */
     protected function createDeployPreparePropelConsole()
