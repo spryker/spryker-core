@@ -84,7 +84,7 @@ class IndexController extends AbstractController
 
         return [
             'form' => $availabilityStockForm->createView(),
-            'idProductBundle' => $idProductAbstract,
+            'idProductAbstract' => $idProductAbstract,
         ];
     }
 

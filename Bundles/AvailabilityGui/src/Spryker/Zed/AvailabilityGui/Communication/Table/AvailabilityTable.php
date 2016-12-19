@@ -160,10 +160,10 @@ class AvailabilityTable extends AbstractTable
             ]
         );
 
-        $buttons = $this->generateEditButton($viewTaxSetUrl, 'Edit Stock');
-
-        if ($isBundle) {
-
+        $buttons = '';
+        if (!$isBundle) {
+            $buttons = $this->generateEditButton($viewTaxSetUrl, 'Edit Stock');
+        } else {
             $viewBundleUrl = Url::generate(
                 '/availability-gui/index/bundled-product-availability-table',
                 [

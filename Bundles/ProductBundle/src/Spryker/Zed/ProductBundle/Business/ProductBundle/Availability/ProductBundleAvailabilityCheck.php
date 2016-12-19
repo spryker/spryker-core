@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -76,7 +75,7 @@ class ProductBundleAvailabilityCheck
                 ->queryBundleProductBySku($bundleItemTransfer->getSku())
                 ->find();
 
-            if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $bundleItemTransfer)) {
+            if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems)) {
                 $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
             }
         }
@@ -106,7 +105,7 @@ class ProductBundleAvailabilityCheck
                 ->find();
 
             if (count($bundledItems) > 0) {
-                if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $itemTransfer)) {
+                if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems)) {
                     $availabilityEntity = $this->availabilityQueryContainer
                         ->querySpyAvailabilityBySku($itemTransfer->getSku())
                         ->findOne();
@@ -233,16 +232,11 @@ class ProductBundleAvailabilityCheck
     /**
      * @param ArrayObject $items
      * @param ObjectCollection $bundledProducts
-     * @param ItemTransfer $itemTransfer
      *
      * @return bool
      */
-    protected function isAllBundleItemsAvailable(
-        ArrayObject $items,
-        ObjectCollection $bundledProducts,
-        ItemTransfer $itemTransfer
-    ) {
-
+    protected function isAllBundleItemsAvailable(ArrayObject $items, ObjectCollection $bundledProducts)
+    {
         foreach ($bundledProducts as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 

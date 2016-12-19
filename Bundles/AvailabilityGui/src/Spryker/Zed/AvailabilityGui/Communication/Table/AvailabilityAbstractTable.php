@@ -50,7 +50,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $config->setHeader([
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             AvailabilityQueryContainer::PRODUCT_NAME => 'Name',
-            SpyAvailabilityAbstractTableMap::COL_QUANTITY => 'AvailabilityGui',
+            SpyAvailabilityAbstractTableMap::COL_QUANTITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
             self::IS_BUNDLE_PRODUCT => 'Is bundle product',

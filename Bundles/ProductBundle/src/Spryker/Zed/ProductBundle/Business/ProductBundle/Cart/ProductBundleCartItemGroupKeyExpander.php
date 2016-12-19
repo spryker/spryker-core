@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 class ProductBundleCartItemGroupKeyExpander
 {
+    const GROUP_KEY_DELIMITER = '_';
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -23,7 +24,9 @@ class ProductBundleCartItemGroupKeyExpander
                 continue;
             }
 
-            $groupKey = $itemTransfer->getGroupKey() . '_' . $itemTransfer->getRelatedBundleItemIdentifier();
+            $itemTransfer->requireGroupKey();
+
+            $groupKey = $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier();
             $itemTransfer->setGroupKey($groupKey);
         }
 

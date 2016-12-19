@@ -64,7 +64,10 @@ class ProductBundleCartExpander
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer)
     {
         $cartChangeItems = new \ArrayObject();
-        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $quoteTransfer = $cartChangeTransfer
+            ->requireQuote()
+            ->getQuote();
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
 
             $bundledProducts = $this->productBundleQueryContainer
@@ -76,7 +79,8 @@ class ProductBundleCartExpander
                 continue;
             };
 
-            $itemTransfer->requireUnitGrossPrice();
+            $itemTransfer->requireUnitGrossPrice()
+                ->requireQuantity();
 
             for ($i = 0; $i < $itemTransfer->getQuantity(); $i++) {
 
@@ -159,7 +163,7 @@ class ProductBundleCartExpander
 
             $unitDistributedPrice = 0;
             $priceBefore = (($itemTransfer->getUnitGrossPrice()) * $priceRatio) + $roundingError;
-            $priceRounded = round($priceBefore);
+            $priceRounded = (int)round($priceBefore);
             $roundingError = $priceBefore - $priceRounded;
 
             $unitDistributedPrice += $priceRounded;

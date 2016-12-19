@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
-use Spryker\Zed\ProductBundle\Communication\Plugin\Stock\ProductBundleAvailabilityHandlerPlugin;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -142,6 +141,17 @@ class ProductBundleStockWriter
             }
         }
 
+        return $this->groupBundleStockByWarehouse($bundledItemStock, $bundledItemQuantity);
+    }
+
+    /**
+     * @param array $bundledItemStock
+     * @param array $bundledItemQuantity
+     *
+     * @return array
+     */
+    protected function groupBundleStockByWarehouse(array $bundledItemStock, array $bundledItemQuantity)
+    {
         $bundleTotalStockPerWarehause = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
             $bundleStock = 0;
@@ -149,7 +159,7 @@ class ProductBundleStockWriter
 
                 $quantity = $bundledItemQuantity[$idProduct];
 
-                $itemStock = floor($productStockQuantity / $quantity);
+                $itemStock = (int)floor($productStockQuantity / $quantity);
 
                 if ($bundleStock > $itemStock || $bundleStock == 0) {
                     $bundleStock = $itemStock;
@@ -158,7 +168,6 @@ class ProductBundleStockWriter
 
             $bundleTotalStockPerWarehause[$idStock] = $bundleStock;
         }
-
         return $bundleTotalStockPerWarehause;
     }
 }

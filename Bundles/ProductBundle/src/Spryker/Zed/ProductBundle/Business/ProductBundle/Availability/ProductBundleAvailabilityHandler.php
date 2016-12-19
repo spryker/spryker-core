@@ -159,11 +159,15 @@ class ProductBundleAvailabilityHandler
             $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
                 ->getSku();
 
-            $bundledProductAvailability = $this->availabilityQueryContainer
+            $bundledProductAvailabilityEntity = $this->availabilityQueryContainer
                 ->querySpyAvailabilityBySku($bundledItemSku)
                 ->findOne();
 
-            $bundledItemQuantity = floor($bundledProductAvailability->getQuantity() / $bundleItemEntity->getQuantity());
+            if ($bundledProductAvailabilityEntity === null) {
+                continue;
+            }
+
+            $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
 
             if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0) {
                 $bundleAvailabilityQuantity = $bundledItemQuantity;
