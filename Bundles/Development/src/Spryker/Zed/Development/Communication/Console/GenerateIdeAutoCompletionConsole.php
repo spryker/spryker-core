@@ -26,7 +26,7 @@ class GenerateIdeAutoCompletionConsole extends Console
         parent::configure();
 
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Generate locator auto-completion files for the IDE');
+        $this->setDescription('Generate IDE auto completion files.');
     }
 
     /**

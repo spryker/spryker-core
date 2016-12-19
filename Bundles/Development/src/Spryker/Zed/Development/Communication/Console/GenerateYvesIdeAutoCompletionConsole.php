@@ -26,7 +26,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         parent::configure();
 
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Generate Yves locator auto-completion files for the IDE');
+        $this->setDescription('Generate IDE auto completion files for Yves.');
     }
 
     /**
