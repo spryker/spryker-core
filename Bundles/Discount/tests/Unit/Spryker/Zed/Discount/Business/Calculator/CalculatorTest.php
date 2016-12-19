@@ -179,7 +179,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $calculatedDiscountTranser = $collectedDiscounts[0];
 
         $this->assertSame($calculatedDiscountTranser->getDiscount()->getAmount(), $discountTransfer->getAmount());
-         $this->assertNotEmpty($collectedDiscounts);
+        $this->assertNotEmpty($collectedDiscounts);
     }
 
     /**
