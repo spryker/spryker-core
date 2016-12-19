@@ -10,7 +10,6 @@ namespace Spryker\Zed\Setup;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Application\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
-use Spryker\Zed\Development\Communication\Console\GenerateIdeAutoCompletionConsole;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
@@ -78,7 +77,6 @@ class SetupConfig extends AbstractBundleConfig
             PropelInstallConsole::COMMAND_NAME => ['--' . PropelInstallConsole::OPTION_NO_DIFF => true],
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,
-            GenerateIdeAutoCompletionConsole::COMMAND_NAME,
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];
