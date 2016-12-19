@@ -13,10 +13,10 @@ interface CollectorPluginInterface
 {
 
     /**
-     *
-     *  Collect items to which discount have to be applied, ClauseTransfer holds query string parameters,
-     *  Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
-     *  Returns array of discountable items with reference to original CalculatedDiscountTransfer, which is modified by reference by distributor.
+     * Specification:
+     *  - Collect items to which discount have to be applied, ClauseTransfer holds query string parameters,
+     *  - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
+     *  - Returns array of discountable items with reference to original CalculatedDiscountTransfer, which is modified by reference by distributor.
      *
      * @api
      *

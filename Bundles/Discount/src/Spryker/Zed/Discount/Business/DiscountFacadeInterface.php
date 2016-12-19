@@ -375,6 +375,12 @@ interface DiscountFacadeInterface
     public function saveVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer);
 
     /**
+     * Specification:
+     * - Loop over all discountable items and calculate discount price amount per item
+     * - Sum each amount to to total
+     * - Round up cent fraction for total discount amount!
+     * - Return total calculated discount amount on given discountable items
+     *
      * @api
      *
      * @deprecated Use calculatePercentageDiscount() instead
@@ -403,6 +409,11 @@ interface DiscountFacadeInterface
     public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
+     * Specification:
+     *
+     * - Return amount passed as parameter,
+     * - Return 0 if negative number is given
+     *
      * @api
      *
      * @deprecated Use calculateFixedDiscount() instead

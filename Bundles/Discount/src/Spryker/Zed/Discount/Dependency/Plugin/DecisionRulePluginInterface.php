@@ -14,10 +14,11 @@ interface DecisionRulePluginInterface
 {
 
     /**
+     * Specification:
      *
-     * Make decision on given Quote or Item transfer.
-     * Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
-     * Returns false when not matching.
+     * - Make decision on given Quote or Item transfer.
+     * - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
+     * - Returns false when not matching.
      *
      * @api
      *

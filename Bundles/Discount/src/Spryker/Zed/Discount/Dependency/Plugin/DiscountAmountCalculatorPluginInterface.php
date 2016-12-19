@@ -12,10 +12,10 @@ interface DiscountAmountCalculatorPluginInterface
 {
 
     /**
-     *
-     * Calculate discount amount on given discountable items, which are collected by configured Collectors.
-     * The discount amount is set in DiscountTransfer::amount
-     * Returns calculated amount.
+     * Specification:
+     * - Calculate discount amount on given discountable items, which are collected by configured Collectors.
+     * - The discount amount is set in DiscountTransfer::amount
+     * - Returns calculated amount.
      *
      * @api
      *

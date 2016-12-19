@@ -13,8 +13,6 @@ interface CalculatorInterface
 {
 
     /**
-     * @api
-     *
      * @deprecated use calculateDiscount instead
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
