@@ -280,6 +280,20 @@ class ProductBundleFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testSaveSalesOrderBundleItems()
+    {
+
+
+    }
+
+    public function testSaveBundledProducts()
+    {
+
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundleFacade
      */
     protected function createProductBundleFacade()

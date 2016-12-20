@@ -59,6 +59,7 @@ class ProductBundleWriter
 
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
         $bundledProducts = $productConcreteTransfer->getProductBundle()->getBundledProducts();
+
         if ($bundledProducts->count() == 0){
             return $productConcreteTransfer;
         }

@@ -502,9 +502,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      */
     protected function assignProductsToBeRemovedFromBundle(FormInterface $form, ProductConcreteTransfer $productConcreteTransfer)
     {
-        if (!isset($form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED])) {
+        if (!isset($form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED]) || !$form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED]) {
             return $productConcreteTransfer;
         }
+
 
         $productConcreteTransfer->getProductBundle()
             ->setBundlesToRemove($form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED]);

@@ -31,10 +31,12 @@ class ProductBundleSalesOrderSaver
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $bundleItemsSaved = $this->saveBundleProducts($quoteTransfer);
+        $bundleItemsSaved = $this->saveSalesBundleProducts($quoteTransfer);
         $this->updateRelatedSalesOrderItems($checkoutResponse, $bundleItemsSaved);
     }
 
@@ -43,7 +45,7 @@ class ProductBundleSalesOrderSaver
      *
      * @return array
      */
-    protected function saveBundleProducts(QuoteTransfer $quoteTransfer)
+    protected function saveSalesBundleProducts(QuoteTransfer $quoteTransfer)
     {
         $bundleItemsSaved = [];
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
@@ -79,16 +81,26 @@ class ProductBundleSalesOrderSaver
     protected function updateRelatedSalesOrderItems(CheckoutResponseTransfer $checkoutResponse, array $bundleItemsSaved)
     {
         foreach ($checkoutResponse->getSaveOrder()->getOrderItems() as $itemTransfer) {
-            if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
+            if (!$itemTransfer->getRelatedBundleItemIdentifier() || !isset($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()])) {
                 continue;
             }
+            $itemTransfer->requireIdSalesOrderItem();
 
-            $salesOrderItemEntity = $this->salesQueryContainer
-                ->querySalesOrderItem()
-                ->findOneByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
-
+            $salesOrderItemEntity = $this->findSalesOrderItem($itemTransfer->getIdSalesOrderItem());
             $salesOrderItemEntity->setFkSalesOrderItemBundle($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()]);
             $salesOrderItemEntity->save();
         }
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    protected function findSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->salesQueryContainer
+            ->querySalesOrderItem()
+            ->findOneByIdSalesOrderItem($idSalesOrderItem);
     }
 }
