@@ -230,4 +230,44 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
         return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleName, $dependencies);
     }
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateYvesIdeAutoCompletion()
+    {
+        $this->getFactory()->createYvesIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateZedIdeAutoCompletion()
+    {
+        $this->getFactory()->createZedIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateClientIdeAutoCompletion()
+    {
+        $this->getFactory()->createClientIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateServiceIdeAutoCompletion()
+    {
+        $this->getFactory()->createServiceIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
 }

@@ -13,6 +13,9 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInterface
 {
 

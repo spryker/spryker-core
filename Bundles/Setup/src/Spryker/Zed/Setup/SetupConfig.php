@@ -14,7 +14,6 @@ use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Search\Communication\Console\SearchConsole;
-use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 use Spryker\Zed\Transfer\Communication\Console\GeneratorConsole;
 
@@ -78,7 +77,6 @@ class SetupConfig extends AbstractBundleConfig
             PropelInstallConsole::COMMAND_NAME => ['--' . PropelInstallConsole::OPTION_NO_DIFF => true],
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,
-            GenerateIdeAutoCompletionConsole::COMMAND_NAME,
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];

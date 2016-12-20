@@ -11,6 +11,9 @@ use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class GenerateIdeAutoCompletionConsole extends Console
 {
 

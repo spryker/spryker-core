@@ -21,6 +21,9 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ServiceMethodTagBuilde
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class GenerateZedIdeAutoCompletionConsole extends Console
 {
 
