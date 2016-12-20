@@ -62,7 +62,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getArchitectureStandard()
     {
-        return dirname(__FILE__) . '/Business/PhpMd/ruleset.xml';
+        return __DIR__ . '/Business/PhpMd/ruleset.xml';
     }
 
     /**
@@ -92,7 +92,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPathToBundleConfig()
     {
-        return dirname(__FILE__) . '/Business/DependencyTree/bundle_config.json';
+        return __DIR__ . '/Business/DependencyTree/bundle_config.json';
     }
 
     /**
@@ -240,7 +240,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getIdeAutoCompletionGeneratorTemplatePaths()
     {
         return [
-            $this->get(ApplicationConstants::APPLICATION_SPRYKER_ROOT) . '/Development/src/Spryker/Zed/Development/Business/IdeAutoCompletion/Generator/Templates',
+            __DIR__. '/Business/IdeAutoCompletion/Generator/Templates',
         ];
     }
 
