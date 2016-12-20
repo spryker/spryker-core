@@ -240,7 +240,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getIdeAutoCompletionGeneratorTemplatePaths()
     {
         return [
-            __DIR__. '/Business/IdeAutoCompletion/Generator/Templates',
+            __DIR__ . '/Business/IdeAutoCompletion/Generator/Templates',
         ];
     }
 
