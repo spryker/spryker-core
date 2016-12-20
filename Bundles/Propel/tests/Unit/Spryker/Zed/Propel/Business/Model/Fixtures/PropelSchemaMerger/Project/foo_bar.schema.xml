@@ -12,4 +12,15 @@
         </unique>
     </table>
 
+    <table name="spy_foo" idMethod="native">
+        <column name="project_column" type="BOOLEAN" />
+        <unique name="spy_foo-unique">
+            <unique-column name="project_column"/>
+            <unique-column name="core_column"/>
+        </unique>
+        <foreign-key name="spy_foo-some_other" foreignTable="spy_bar" phpName="Bar">
+            <reference foreign="id_bar" local="core_column"/>
+        </foreign-key>
+    </table>
+
 </database>
