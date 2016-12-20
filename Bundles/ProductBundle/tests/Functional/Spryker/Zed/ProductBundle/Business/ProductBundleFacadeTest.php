@@ -8,6 +8,7 @@ namespace Functional\Spryker\Zed\ProductBundle\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -31,13 +32,20 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
  */
 class ProductBundleFacadeTest extends Test
 {
+    const SKU_1 = 'sku-1';
+    const SKU_2 = 'sku-2';
+    const SKU_3 = 'sku-3';
+
+    const PRODUCT_PRICE_1 = 50;
+    const PRODUCT_PRICE_2 = 100;
+
 
     /**
      * @return void
      */
     public function testExpandBundleItemsShouldCreateBundleItemsAndCalculateSplitPrice()
     {
-        $bundlePrice = 100;
+        $bundlePrice = self::PRODUCT_PRICE_2;
 
         $productConcreteTransfer = $this->createProductBundle($bundlePrice);
 
@@ -130,9 +138,9 @@ class ProductBundleFacadeTest extends Test
     /**
      * @return void
      */
-    public function testPreCheckCartAvailability()
+    public function testPreCheckCartAvailabilityWhenBundleAvailable()
     {
-        $productConcreteTransfer = $this->createProductBundle(100);
+        $productConcreteTransfer = $this->createProductBundle(self::PRODUCT_PRICE_2);
 
         $productBundleFacade = $this->createProductBundleFacade();
 
@@ -140,6 +148,7 @@ class ProductBundleFacadeTest extends Test
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
+
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
@@ -151,7 +160,108 @@ class ProductBundleFacadeTest extends Test
 
         $cartChangeTransfer->addItem($itemTransfer);
 
-        $productBundleFacade->preCheckCartAvailability($cartChangeTransfer);
+        $cartChangeTransfer = $productBundleFacade->preCheckCartAvailability($cartChangeTransfer);
+
+        $this->assertTrue($cartChangeTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreCheckCartAvailabilityWhenBundleUnavailable()
+    {
+        $productConcreteTransfer = $this->createProductBundle(self::PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(5);
+        $itemTransfer->setSku($productConcreteTransfer->getSku());
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku(self::SKU_1);
+        $itemTransfer->setQuantity(25);
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $cartChangeTransfer = $productBundleFacade->preCheckCartAvailability($cartChangeTransfer);
+
+        $this->assertFalse($cartChangeTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreCheckCheckoutAvailabilityWhenBundleUnavailable()
+    {
+        $productConcreteTransfer = $this->createProductBundle(self::PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(50);
+        $itemTransfer->setSku(self::SKU_1);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setSku($productConcreteTransfer->getSku());
+        $quoteTransfer->addBundleItem($itemTransfer);
+
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        $productBundleFacade->preCheckCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
+
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreCheckCheckoutAvailabilityWhenBundleAvailable()
+    {
+        $productConcreteTransfer = $this->createProductBundle(self::PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setSku(self::SKU_1);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setSku($productConcreteTransfer->getSku());
+        $quoteTransfer->addBundleItem($itemTransfer);
+
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        $productBundleFacade->preCheckCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
+
+        $this->assertNull($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function updateAffectedBundleAvailability()
+    {
+        $productConcreteTransfer = $this->createProductBundle(self::PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
     }
 
     /**
@@ -180,9 +290,11 @@ class ProductBundleFacadeTest extends Test
 
     /**
      * @param int $price
+     * @param string $sku
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProduct($price)
+    protected function createProduct($price, $sku)
     {
         $productFacade = $this->createProductBundleToProductBridge();
         $productAbstractTransfer = new ProductAbstractTransfer();
@@ -195,18 +307,19 @@ class ProductBundleFacadeTest extends Test
         $productAbstractTransfer->setAttributes([]);
 
         $concreteProductCollection = [];
-        $productConcreteTransfer = new ProductConcreteTransfer();
 
         $stockProductTransfer = new StockProductTransfer();
-        $stockProductTransfer->setSku($productAbstractTransfer->getSku());
+        $stockProductTransfer->setSku($sku);
         $stockProductTransfer->setQuantity(10);
         $stockProductTransfer->setStockType('Warehouse1');
-        $productConcreteTransfer->addStock($stockProductTransfer);
 
-        $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->addStock($stockProductTransfer);
+        $productConcreteTransfer->setSku($sku);
         $productConcreteTransfer->setIsActive(false);
         $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
         $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+
         $concreteProductCollection[] = $productConcreteTransfer;
 
         $productFacade->addProduct($productAbstractTransfer, $concreteProductCollection);
@@ -221,8 +334,8 @@ class ProductBundleFacadeTest extends Test
      */
     protected function createProductBundle($bundlePrice)
     {
-        $productConcreteTransferToAssign1 = $this->createProduct(50);
-        $productConcreteTransferToAssign2 = $this->createProduct(100);
+        $productConcreteTransferToAssign1 = $this->createProduct(self::PRODUCT_PRICE_1, self::SKU_1);
+        $productConcreteTransferToAssign2 = $this->createProduct(self::PRODUCT_PRICE_2, self::SKU_2);
 
         $productBundleTransfer = new ProductBundleTransfer();
 
@@ -236,7 +349,7 @@ class ProductBundleFacadeTest extends Test
         $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign2->getIdProductConcrete());
         $productBundleTransfer->addBundledProduct($bundledProductTransfer);
 
-        $productConcreteTransfer = $this->createProduct($bundlePrice);
+        $productConcreteTransfer = $this->createProduct($bundlePrice, self::SKU_3);
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         $productBundleFacade = $this->createProductBundleFacade();
