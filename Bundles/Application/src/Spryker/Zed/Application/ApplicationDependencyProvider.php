@@ -24,8 +24,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvi
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
-use Spryker\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
-use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
@@ -67,11 +65,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $providers = [
             new NewRelicRequestTransactionServiceProvider(),
-            new RedirectAfterLoginProvider(),
             new RequestServiceProvider(),
             new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
-            new AuthBootstrapProvider(),
             new PropelServiceProvider(),
             new RoutingServiceProvider(),
             new MvcRoutingServiceProvider(),

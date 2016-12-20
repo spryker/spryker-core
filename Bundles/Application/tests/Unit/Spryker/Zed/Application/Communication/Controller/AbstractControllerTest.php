@@ -8,7 +8,6 @@
 namespace Unit\Spryker\Zed\Application\Communication\Controller;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Unit\Spryker\Zed\Application\Communication\Controller\Fixtures\MockController;
 
 /**
@@ -39,7 +38,7 @@ class AbstractControllerTest extends PHPUnit_Framework_TestCase
         $controller = new MockController();
 
         if (!$isValid) {
-            $this->expectException(InvalidArgumentException::class);
+            $this->expectException(\Exception::class);
         }
 
         $result = $controller->indexAction($input);

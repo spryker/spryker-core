@@ -9,7 +9,6 @@ namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
@@ -231,11 +230,17 @@ class ZedBootstrap
     }
 
     /**
+     * For performance reasons you can disable this in your project
+     * Set `AuthConstants::AUTH_ZED_ENABLED` in your config to false
+     * if you don't need authentication enabled.
+     *
+     * If set to false only a subset of ServiceProvider will be added.
+     *
      * @return bool
      */
     protected function isAuthenticationEnabled()
     {
-        return Config::get(AuthConstants::AUTH_ZED_ENABLED, true);
+        return true;
     }
 
 }
