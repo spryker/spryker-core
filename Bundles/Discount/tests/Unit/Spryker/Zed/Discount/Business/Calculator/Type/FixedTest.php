@@ -47,7 +47,7 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
+        $this->assertSame(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
     }
 
     /**
@@ -67,7 +67,7 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
-        $this->assertEquals(0, $discountAmount);
+        $this->assertSame(0, $discountAmount);
     }
 
     /**

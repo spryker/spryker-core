@@ -88,7 +88,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscounts = $calculator->calculate($discounts, $quoteTransfer);
 
         $this->assertCount(1, $collectedDiscounts);
-        $this->assertEquals(30, $collectedDiscounts[0]->getDiscount()->getAmount());
+        $this->assertSame(30, $collectedDiscounts[0]->getDiscount()->getAmount());
     }
 
     /**
