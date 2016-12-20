@@ -108,6 +108,14 @@ class ProductBundleFacade extends AbstractFacade
     }
 
     /**
+     * Specification:
+     *
+     * - Gets all items which belong to bundle
+     * - Updates bundle products with new availability, given sku belong
+     * - Touch abstract availability for bundle product
+     *
+     * @api
+     *
      * @param string $concreteSku
      *
      * @return void
@@ -122,7 +130,7 @@ class ProductBundleFacade extends AbstractFacade
     /**
      * @param string $productBundleSku
      *
-     * @retur void
+     * @return void
      */
     public function updateBundleAvailability($productBundleSku)
     {
