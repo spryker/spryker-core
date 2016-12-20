@@ -52,6 +52,8 @@ class InstallConsole extends Console
                 return $this->getLastExitCode();
             }
         }
+
+        return static::CODE_SUCCESS;
     }
 
 }
