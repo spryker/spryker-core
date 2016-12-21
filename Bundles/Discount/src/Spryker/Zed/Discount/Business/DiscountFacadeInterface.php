@@ -22,12 +22,12 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *  - Find all discounts with voucher
-     *  - Find all discounts matching decision rules
-     *  - Collect discountable items for each discount type
-     *  - Apply discount to exclusive if exists
-     *  - distribute discount amount throw all discountable items
-     *  - Add discount totals to quote discount properties
+     *  - Finds all discounts with voucher
+     *  - Finds all discounts matching decision rules
+     *  - Collects discountable items for each discount type
+     *  - Applies discount to exclusive if exists
+     *  - Distributes discount amount throw all discountable items
+     *  - Adds discount totals to quote discount properties
      *
      * @api
      *
@@ -39,7 +39,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Check if given item transfer matching clause
+     * - Checks if given item transfer matches clause
      *
      * @api
      *
@@ -52,8 +52,8 @@ interface DiscountFacadeInterface
     public function isItemSkuSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *  Specification:
-     * - Check if quote grandTotal matching clause
+     * Specification:
+     * - Checks if quote grand total matches clause
      *
      * @api
      *
@@ -66,8 +66,8 @@ interface DiscountFacadeInterface
     public function isQuoteGrandTotalSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *  Specification:
-     * - Check if cart total quantity matching clause
+     * Specification:
+     * - Checks if cart total quantity matches clause
      *
      * @api
      *
@@ -80,8 +80,8 @@ interface DiscountFacadeInterface
     public function isTotalQuantitySatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *  Specification:
-     * - Check quote subtotal matching clause
+     * Specification:
+     * - Check quote subtotal matches clause
      *
      * @api
      *
@@ -94,8 +94,8 @@ interface DiscountFacadeInterface
     public function isSubTotalSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
     /**
-     *  Specification:
-     * - Collect all items matching given sku in clause
+     * Specification:
+     * - Collects all items match given sku in clause
      *
      * @api
      *
@@ -108,7 +108,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Check if item quantity matching clause
+     * - Checks if item quantity matches clause
      *
      * @api
      *
@@ -122,7 +122,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Collect all items matching given quantity in clause
+     * - Collects all items match given quantity in clause
      *
      * @api
      *
@@ -135,7 +135,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Check if there is items matching single item price in clause
+     * - Checks if there is items matching single item price in clause
      *
      * @api
      *
@@ -376,10 +376,10 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Loop over all discountable items and calculate discount price amount per item
-     * - Sum each amount to to total
-     * - Round up cent fraction for total discount amount!
-     * - Return total calculated discount amount on given discountable items
+     * - Loops over all discountable items and calculate discount price amount per item
+     * - Sums each amount to to total
+     * - Rounds up cent fraction for total discount amount.
+     * - Returns total calculated discount amount on given discountable items
      *
      * @api
      *
@@ -394,10 +394,10 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Loop over all discountable items and calculate discount price amount per item
-     * - Sum each amount to to total
-     * - Round up cent fraction for total discount amount!
-     * - Return total calculated discount amount on given discountable items
+     * - Loops over all discountable items and calculate discount price amount per item
+     * - Sums each amount to to total
+     * - Rounds up cent fraction for total discount amount.
+     * - Returns total calculated discount amount on given discountable items
      *
      * @api
      *
@@ -410,9 +410,8 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Return amount passed as parameter,
-     * - Return 0 if negative number is given
+     * - Returns amount passed as parameter
+     * - Returns 0 if negative number is given
      *
      * @api
      *
@@ -427,9 +426,8 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Return amount passed as parameter,
-     * - Return 0 if negative number is given
+     * - Returns amount passed as parameter
+     * - Returns 0 if negative number is given
      *
      * @api
      *
@@ -442,10 +440,9 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Loop over each DiscountableItemTransfer and calculate each item price amount share from current discount total, for single item.
-     * - Calculate floating point error and store it for later item, add it to next item.
-     * - Store item price share amount into DiscountableItemTransfer::originalItemCalculatedDiscounts array object reference! Which points to original item!
+     * - Loops over each DiscountableItemTransfer and calculate each item price amount share from current discount total, for single item.
+     * - Calculates floating point error and store it for later item, add it to next item.
+     * - Stores item price share amount into DiscountableItemTransfer::originalItemCalculatedDiscounts array object reference. Points to original item.
      *
      * @api
      *
@@ -457,7 +454,6 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *
      * - For given voucherCodes find all voucher entities with counter
      * - Reduce voucher number of uses property by 1 to indicate it's not used/released.
      *
@@ -471,9 +467,8 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *
-     * - For given voucherCodes find all voucher entities with counter
-     * - Increment voucher number of uses property by 1.
+     * - For given voucherCodes finds all voucher entities with counter
+     * - Increments voucher number of uses property by 1.
      *
      * @api
      *
@@ -485,10 +480,9 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Loop over all quote items, take calculated discounts and persist them discount amount is for single item
-     * - Loop over all quote expenses, take calculated discounts and persist them discount amount is for single item
-     * - If there is voucher codes mark them as already used by incrementing number of uses.
+     * - Loops over all quote items, take calculated discounts and persist them discount amount is for single item
+     * - Loops over all quote expenses, take calculated discounts and persist them discount amount is for single item
+     * - If there is voucher codes marks them as already used by incrementing number of uses.
      *
      * @api
      *
