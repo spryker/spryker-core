@@ -11,6 +11,8 @@ use LogicException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
+use Spryker\Yves\Application\Dependency\Messenger\ApplicationToMessengerBridge;
+use Spryker\Yves\Application\Dependency\Messenger\NullMessenger;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -120,7 +122,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message)
     {
-        $this->getFlashMessenger()->addSuccessMessage($message);
+        $this->getMessenger()->addSuccessMessage($message);
 
         return $this;
     }
@@ -132,7 +134,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message)
     {
-        $this->getFlashMessenger()->addInfoMessage($message);
+        $this->getMessenger()->addInfoMessage($message);
 
         return $this;
     }
@@ -144,7 +146,7 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message)
     {
-        $this->getFlashMessenger()->addErrorMessage($message);
+        $this->getMessenger()->addErrorMessage($message);
 
         return $this;
     }
@@ -258,16 +260,6 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use DependencyProvider instead
-     *
-     * @return \Generated\Client\Ide\AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     protected function getClient()
@@ -324,11 +316,14 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     * @return \Spryker\Yves\Application\Dependency\Messenger\ApplicationToMessengerInterface
      */
-    private function getFlashMessenger()
+    private function getMessenger()
     {
-        return $this->application['flash_messenger'];
+        $messenger = ($this->application->offsetExists('flash_messenger')) ? $this->application['flash_messenger'] : new NullMessenger();
+        $applicationToMessengerBridge = new ApplicationToMessengerBridge($messenger);
+
+        return $applicationToMessengerBridge;
     }
 
 }

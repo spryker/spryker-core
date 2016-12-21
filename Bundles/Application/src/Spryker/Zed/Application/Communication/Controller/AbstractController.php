@@ -349,14 +349,6 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Generated\Zed\Ide\AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
      * @return \Spryker\Zed\Assertion\Business\AssertionFacadeInterface
      */
     protected function getAssertion()
