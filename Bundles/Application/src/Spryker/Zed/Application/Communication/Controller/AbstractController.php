@@ -10,7 +10,9 @@ namespace Spryker\Zed\Application\Communication\Controller;
 use Generated\Shared\Transfer\MessageTransfer;
 use LogicException;
 use Silex\Application;
+use Spryker\Zed\Application\Dependency\Facade\NullMessenger;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Application\Dependency\Facade\ApplicationToMessengerBridge;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -44,11 +46,6 @@ abstract class AbstractController
      * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
-     */
-    private $messengerFacade;
 
     /**
      * @return void
@@ -224,7 +221,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message, array $data = [])
     {
-        $this->getMessengerFacade()->addSuccessMessage($this->createMessageTransfer($message, $data));
+        $this->getMessenger()->addSuccessMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }
@@ -237,7 +234,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message, array $data = [])
     {
-        $this->getMessengerFacade()->addInfoMessage($this->createMessageTransfer($message, $data));
+        $this->getMessenger()->addInfoMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }
@@ -250,21 +247,20 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message, array $data = [])
     {
-        $this->getMessengerFacade()->addErrorMessage($this->createMessageTransfer($message, $data));
+        $this->getMessenger()->addErrorMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }
 
     /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @return \Spryker\Zed\Application\Dependency\Facade\ApplicationToMessengerInterface
      */
-    protected function getMessengerFacade()
+    protected function getMessenger()
     {
-        if ($this->messengerFacade === null) {
-            $this->messengerFacade = $this->getLocator()->messenger()->facade();
-        }
+        $messenger = ($this->application->offsetExists('messenger')) ? $this->application['messenger'] : new NullMessenger();
+        $applicationToMessengerBridge = new ApplicationToMessengerBridge($messenger);
 
-        return $this->messengerFacade;
+        return $applicationToMessengerBridge;
     }
 
     /**

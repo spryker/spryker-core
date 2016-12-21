@@ -12,6 +12,7 @@ use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MessengerServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
@@ -110,7 +111,9 @@ class ZedBootstrap
      */
     protected function getServiceProvider()
     {
-        return [];
+        return [
+            new MessengerServiceProvider()
+        ];
     }
 
     /**

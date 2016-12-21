@@ -30,7 +30,6 @@ use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Navigation\Communication\Plugin\ServiceProvider\NavigationServiceProvider;
-use Spryker\Zed\NewRelic\Communication\Plugin\ServiceProvider\NewRelicRequestTransactionServiceProvider;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
@@ -64,7 +63,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getServiceProvider(Container $container)
     {
         $providers = [
-            new NewRelicRequestTransactionServiceProvider(),
             new RequestServiceProvider(),
             new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
@@ -75,7 +73,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
             new UrlGeneratorServiceProvider(),
-            new NewRelicRequestTransactionServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
             new NavigationServiceProvider(),
