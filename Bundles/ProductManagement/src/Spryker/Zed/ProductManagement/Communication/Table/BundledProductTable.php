@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -59,11 +60,17 @@ class BundledProductTable extends AbstractTable
     protected $idProductConcrete;
 
     /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer|\Spryker\Zed\ProductManagement\Communication\Table\LocaleTransfer
+     */
+    protected $localeTransfer;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface $availabilityFacade
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int|null $idProductConcrete
      */
     public function __construct(
@@ -72,6 +79,7 @@ class BundledProductTable extends AbstractTable
         ProductManagementToPriceInterface $priceFacade,
         ProductManagementToMoneyInterface $moneyFacade,
         ProductManagementToAvailabilityInterface $availabilityFacade,
+        LocaleTransfer $localeTransfer,
         $idProductConcrete = null
     ) {
         $this->setTableIdentifier('bundled-product-table');
@@ -81,6 +89,7 @@ class BundledProductTable extends AbstractTable
         $this->moneyFacade = $moneyFacade;
         $this->availabilityFacade = $availabilityFacade;
         $this->idProductConcrete = $idProductConcrete;
+        $this->localeTransfer = $localeTransfer;
     }
 
     /**
@@ -104,7 +113,8 @@ class BundledProductTable extends AbstractTable
             SpyProductTableMap::COL_SKU => 'SKU',
             static::COL_PRICE => 'Price',
             SpyStockProductTableMap::COL_QUANTITY => 'Stock',
-            static::COL_AVAILABILITY => 'Availability'
+            static::COL_AVAILABILITY => 'Availability',
+            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => 'Is never out of stock',
         ]);
 
         $config->setRawColumns([
@@ -115,13 +125,14 @@ class BundledProductTable extends AbstractTable
 
         $config->setSearchable([
             SpyProductLocalizedAttributesTableMap::COL_NAME,
-            SpyProductTableMap::COL_SKU
+            SpyProductTableMap::COL_SKU,
         ]);
 
         $config->setSortable([
             SpyProductLocalizedAttributesTableMap::COL_NAME,
             SpyProductTableMap::COL_SKU,
-            SpyStockProductTableMap::COL_QUANTITY
+            SpyStockProductTableMap::COL_QUANTITY,
+            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK
         ]);
 
         return $config;
@@ -142,7 +153,8 @@ class BundledProductTable extends AbstractTable
             ->joinStockProduct()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, 'Name')
             ->withColumn(SpyStockProductTableMap::COL_QUANTITY, 'stockQuantity')
-            ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', 66)
+            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, 'isNeverOutOfStock')
+            ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
             ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, CRITERIA::ISNULL);
 
         $queryResults = $this->runQuery($query, $config, true);
@@ -159,7 +171,8 @@ class BundledProductTable extends AbstractTable
                 SpyProductTableMap::COL_SKU => $item->getSku(),
                 static::COL_PRICE => $this->getFormatedPrice($item->getSku()),
                 SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
-                static::COL_AVAILABILITY => $availability
+                static::COL_AVAILABILITY => $availability,
+                SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
             ];
         }
 

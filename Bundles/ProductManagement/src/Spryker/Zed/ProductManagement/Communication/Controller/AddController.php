@@ -67,21 +67,7 @@ class AddController extends AbstractController
                     $productAbstractTransfer->getSku()
                 ));
 
-                if ($type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
-                    $productConcreteTransfer = $concreteProductCollection[0];
-                    return $this->redirectResponse(sprintf(
-                        '/product-management/edit/variant?%s=%d&id-product=%d&type=bundle#tab-content-bundled',
-                        self::PARAM_ID_PRODUCT_ABSTRACT,
-                        $idProductAbstract,
-                        $productConcreteTransfer->getIdProductConcrete()
-                    ));
-                } else {
-                    return $this->redirectResponse(sprintf(
-                        '/product-management/edit?%s=%d',
-                        self::PARAM_ID_PRODUCT_ABSTRACT,
-                        $idProductAbstract
-                    ));
-                }
+                return $this->createRedirectResponseAfterAdd($type, $idProductAbstract, $concreteProductCollection);
 
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -97,6 +83,33 @@ class AddController extends AbstractController
             'productFormAddTabs' => $this->getFactory()->createProductFormAddTabs()->createView(),
             'type' => $type
         ]);
+    }
+
+    /**
+     * @param string $type
+     * @param int $idProductAbstract
+     * @param array $concreteProductCollection
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function createRedirectResponseAfterAdd($type, $idProductAbstract, array $concreteProductCollection)
+    {
+        if ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+            $productConcreteTransfer = $concreteProductCollection[0];
+            return $this->redirectResponse(sprintf(
+                '/product-management/edit/variant?%s=%d&id-product=%d&type=%s#tab-content-bundled',
+                self::PARAM_ID_PRODUCT_ABSTRACT,
+                $idProductAbstract,
+                $productConcreteTransfer->getIdProductConcrete(),
+                ProductManagementConfig::PRODUCT_TYPE_BUNDLE
+            ));
+        }
+
+        return $this->redirectResponse(sprintf(
+            '/product-management/edit?%s=%d',
+            self::PARAM_ID_PRODUCT_ABSTRACT,
+            $idProductAbstract
+        ));
     }
 
     /**
@@ -159,28 +172,24 @@ class AddController extends AbstractController
         ProductAbstractTransfer $productAbstractTransfer,
         FormInterface $form
     ) {
-        if ($type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
-            $concreteProductCollection = [];
+        if ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
             $productConcreteTransfer = new ProductConcreteTransfer();
             $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
             $productConcreteTransfer->setIsActive(false);
             $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
             $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
-            $concreteProductCollection[] = $productConcreteTransfer;
-        } else {
-
-            $attributeCollection = $this->normalizeAttributeArray(
-                $this->getFactory()->getProductAttributeCollection()
-            );
-
-            $attributeValues = $this->getFactory()
-                ->createProductFormTransferGenerator()
-                ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
-
-            $concreteProductCollection = $this->getFactory()
-                ->getProductFacade()
-                ->generateVariants($productAbstractTransfer, $attributeValues);
+            return [$productConcreteTransfer];
         }
+
+        $attributeCollection = $this->normalizeAttributeArray($this->getFactory()->getProductAttributeCollection());
+
+        $attributeValues = $this->getFactory()
+            ->createProductFormTransferGenerator()
+            ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
+
+        $concreteProductCollection = $this->getFactory()
+            ->getProductFacade()
+            ->generateVariants($productAbstractTransfer, $attributeValues);
 
         return $concreteProductCollection;
     }

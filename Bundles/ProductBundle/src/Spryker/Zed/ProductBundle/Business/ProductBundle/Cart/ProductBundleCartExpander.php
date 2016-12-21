@@ -8,6 +8,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
@@ -63,18 +64,21 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer)
     {
+        $cartChangeTransfer->requireQuote()
+            ->requireItems();
+
         $cartChangeItems = new \ArrayObject();
-        $quoteTransfer = $cartChangeTransfer
-            ->requireQuote()
-            ->getQuote();
+        $quoteTransfer = $cartChangeTransfer->getQuote();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+
+            $itemTransfer->requireId();
 
             $bundledProducts = $this->productBundleQueryContainer
                 ->queryBundleProduct($itemTransfer->getId())
                 ->find();
 
-            if (count($bundledProducts) == 0) {
+            if ($bundledProducts->count() == 0) {
                 $cartChangeItems->append($itemTransfer);
                 continue;
             };
@@ -82,28 +86,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $itemTransfer->requireUnitGrossPrice()
                 ->requireQuantity();
 
-            for ($i = 0; $i < $itemTransfer->getQuantity(); $i++) {
+            $addToCartItems = $this->buildBundle($itemTransfer, $quoteTransfer, $bundledProducts);
 
-                $bundleItemTransfer = clone $itemTransfer;
-                $bundleItemTransfer->setQuantity(1);
-
-                $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer, $quoteTransfer->getBundleItems());
-
-                $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);
-                $bundleItemTransfer->setGroupKey($bundleItemIdentifier);
-
-                $quoteTransfer->addBundleItem($bundleItemTransfer);
-
-                $bundledItems = $this->createBundledItems($bundledProducts, $bundleItemIdentifier);
-
-                $this->distributeBundlePriceAmount($bundledItems, $itemTransfer->getUnitGrossPrice());
-
-                foreach ($bundledItems as $bundledItemTransfer) {
-                    $cartChangeItems->append($bundledItemTransfer);
-                }
-
+            foreach ($addToCartItems as $bundledItemTransfer) {
+                $cartChangeItems->append($bundledItemTransfer);
             }
-
         }
 
         $cartChangeTransfer->setItems($cartChangeItems);
@@ -113,12 +100,45 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
+     * @param ItemTransfer $itemTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param ObjectCollection $bundledProducts
+     *
+     * @return array
+     */
+    protected function buildBundle(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer, ObjectCollection $bundledProducts)
+    {
+        $addToCartItems = [];
+        for ($i = 0; $i < $itemTransfer->getQuantity(); $i++) {
+
+            $bundleItemTransfer = clone $itemTransfer;
+            $bundleItemTransfer->setQuantity(1);
+
+            $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer, $quoteTransfer->getBundleItems());
+
+            $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);
+            $bundleItemTransfer->setGroupKey($bundleItemIdentifier);
+
+            $quoteTransfer->addBundleItem($bundleItemTransfer);
+
+            $bundledItems = $this->createBundledItemsTransferCollection($bundledProducts, $bundleItemIdentifier);
+
+            $this->distributeBundlePriceAmount($bundledItems, $itemTransfer->getUnitGrossPrice());
+
+            $addToCartItems = array_merge($addToCartItems, $bundledItems);
+        }
+
+        return $addToCartItems;
+    }
+
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param string $bundleItemIdentifier
      *
      * @return array
      */
-    protected function createBundledItems(ObjectCollection $bundledProducts, $bundleItemIdentifier)
+    protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier)
     {
         $bundledItems = [];
         foreach ($bundledProducts as $productBundleEntity) {
@@ -141,7 +161,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             return $itemTransfer->getSku();
         }
 
-        return $itemTransfer->getSku() . '_' . time() . rand(1, 999);
+        return $itemTransfer->getSku() . '_' . time() . rand(1, 901);
     }
 
     /**
@@ -152,23 +172,19 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function distributeBundlePriceAmount(array $bundledProducts, $bundleUnitPrice)
     {
-        $totalBundleItemAmount = array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) {
-            $total += $itemTransfer->getUnitGrossPrice();
-            return $total;
-        });
+        $totalBundleItemAmount = $this->calculateTotalBundledAmount($bundledProducts);
 
         $roundingError = 0;
         $priceRatio = $bundleUnitPrice / $totalBundleItemAmount;
         foreach ($bundledProducts as $itemTransfer) {
 
-            $unitDistributedPrice = 0;
-            $priceBefore = (($itemTransfer->getUnitGrossPrice()) * $priceRatio) + $roundingError;
-            $priceRounded = (int)round($priceBefore);
-            $roundingError = $priceBefore - $priceRounded;
+            $itemTransfer->requireUnitGrossPrice();
 
-            $unitDistributedPrice += $priceRounded;
+            $priceBeforeRound = (($itemTransfer->getUnitGrossPrice()) * $priceRatio) + $roundingError;
+            $priceRounded = (int)round($priceBeforeRound);
+            $roundingError = $priceBeforeRound - $priceRounded;
 
-            $itemTransfer->setUnitGrossPrice($unitDistributedPrice);
+            $itemTransfer->setUnitGrossPrice($priceRounded);
         }
     }
 
@@ -205,5 +221,22 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         return $itemTransfer;
     }
+
+    /**
+     * @param array|ItemTransfer[] $bundledProducts
+     *
+     * @return int
+     */
+    protected function calculateTotalBundledAmount(array $bundledProducts)
+    {
+        $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) {
+            $total += $itemTransfer->getUnitGrossPrice();
+            return $total;
+        });
+
+        return $totalBundleItemAmount;
+    }
+
+
 
 }

@@ -230,18 +230,18 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     }
 
     /**
-     * @param \ArrayObject $items
+     * @param \ArrayObject $quoteItems
      * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      *
      * @return bool
      */
-    protected function isAllBundleItemsAvailable(ArrayObject $items, ObjectCollection $bundledProducts)
+    protected function isAllBundleItemsAvailable(ArrayObject $quoteItems, ObjectCollection $bundledProducts)
     {
         foreach ($bundledProducts as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            if (!$this->checkIfItemIsSellable($items, $sku)) {
+            if (!$this->checkIfItemIsSellable($quoteItems, $sku)) {
                 return false;
             }
         }

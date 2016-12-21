@@ -10,8 +10,11 @@ namespace Spryker\Zed\ProductManagement\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
@@ -28,7 +31,7 @@ class ProductTable extends AbstractProductTable
     const COL_STATUS = 'status';
 
     const COL_ACTIONS = 'actions';
-    const COL_IS_BUNDLE = 'is_bundle';
+    const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -66,13 +69,12 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => 'Tax Set',
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
-            static::COL_IS_BUNDLE => 'Is bundle',
+            static::COL_ID_PRODUCT_BUNDLE => 'Is bundle',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
-            static::COL_IS_BUNDLE,
             static::COL_ACTIONS,
         ]);
 
@@ -87,6 +89,7 @@ class ProductTable extends AbstractProductTable
             static::COL_SKU,
             static::COL_NAME,
             static::COL_TAX_SET,
+            static::COL_ID_PRODUCT_BUNDLE
         ]);
 
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -108,7 +111,11 @@ class ProductTable extends AbstractProductTable
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse()
+            ->addJoin(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, Criteria::LEFT_JOIN)
+            ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductBundleTableMap::COL_FK_PRODUCT, Criteria::LEFT_JOIN)
+            ->addJoinCondition(1, SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE . Criteria::ISNOTNULL, null )
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, static::COL_ID_PRODUCT_BUNDLE)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
 
         $queryResults = $this->runQuery($query, $config, true);
@@ -135,7 +142,7 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
+            static::COL_ID_PRODUCT_BUNDLE => $this->getIsBundleProductLabel($productAbstractEntity),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
     }
@@ -188,13 +195,10 @@ class ProductTable extends AbstractProductTable
      *
      * @return string
      */
-    protected function getIsBundleProductLable(SpyProductAbstract $productAbstractEntity)
+    protected function getIsBundleProductLabel(SpyProductAbstract $productAbstractEntity)
     {
-        foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
-            if ($spyProductEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
-                return 'Yes';
-                break;
-            }
+        if ($productAbstractEntity->getIdProductBundle() > 0) {
+            return 'Yes';
         }
 
         return 'No';

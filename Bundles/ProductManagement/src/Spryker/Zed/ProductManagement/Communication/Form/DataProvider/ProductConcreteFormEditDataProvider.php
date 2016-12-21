@@ -33,7 +33,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     {
         $formOptions = parent::getOptions($idProductAbstract);
 
-        $formOptions[ProductConcreteFormEdit::OPTION_IS_BUNDLE_ITEM] = ($type == ProductManagementConfig::PRODUCT_TYPE_BUNDLE) ? true : false;
+        $formOptions[ProductConcreteFormEdit::OPTION_IS_BUNDLE_ITEM] = ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) ? true : false;
 
         return $formOptions;
     }

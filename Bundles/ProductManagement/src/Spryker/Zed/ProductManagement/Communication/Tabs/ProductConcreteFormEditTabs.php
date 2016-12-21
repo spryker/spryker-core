@@ -106,7 +106,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
      */
     protected function addAssigneBundledProductsTab(TabsViewTransfer $tabsViewTransfer)
     {
-        if ($this->type != ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
+        if ($this->type !== ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
             return $this;
         }
 

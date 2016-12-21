@@ -458,6 +458,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceFacade(),
             $this->getMoneyFacade(),
             $this->getAvailabilityFacade(),
+            $this->getLocaleFacade()->getCurrentLocale(),
             $idProductConcrete
         );
     }
