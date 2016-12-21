@@ -15,7 +15,7 @@ interface MailTypeCollectionGetInterface
      *
      * @throws \Spryker\Zed\Mail\Business\Exception\MailNotFoundException
      *
-     * @return \Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface
+     * @return \Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
     public function get($mailType);
 

@@ -13,7 +13,7 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
-use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
  * @group Unit
@@ -188,11 +188,11 @@ class MailerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
     protected function getMailTypeMock()
     {
-        $mailTypeMock = $this->getMockBuilder(MailTypeInterface::class)->setMethods(['build', 'getName'])->getMock();
+        $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->setMethods(['build', 'getName'])->getMock();
         $mailTypeMock->expects($this->once())->method('build');
 
         return $mailTypeMock;

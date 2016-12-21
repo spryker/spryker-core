@@ -9,13 +9,13 @@ namespace Spryker\Zed\Oms\Communication\Plugin\Mail;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
-use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
-class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailTypeInterface
+class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
 
     const MAIL_TYPE = 'order confirmation mail';

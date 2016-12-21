@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Mail\Business\Model\Mail;
 
 use Spryker\Zed\Mail\Business\Exception\MailNotFoundException;
-use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 class MailTypeCollection implements MailTypeCollectionAddInterface, MailTypeCollectionGetInterface
 {
@@ -19,11 +19,11 @@ class MailTypeCollection implements MailTypeCollectionAddInterface, MailTypeColl
     protected $mailTypes;
 
     /**
-     * @param \Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface $mailType
+     * @param \Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface $mailType
      *
      * @return $this
      */
-    public function add(MailTypeInterface $mailType)
+    public function add(MailTypePluginInterface $mailType)
     {
         $this->mailTypes[$mailType->getName()] = $mailType;
 
@@ -45,7 +45,7 @@ class MailTypeCollection implements MailTypeCollectionAddInterface, MailTypeColl
      *
      * @throws \Spryker\Zed\Mail\Business\Exception\MailNotFoundException
      *
-     * @return \Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface
+     * @return \Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
     public function get($mailType)
     {

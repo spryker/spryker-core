@@ -9,13 +9,13 @@ namespace Spryker\Zed\Newsletter\Communication\Plugin\Mail;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
-use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
-class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements MailTypeInterface
+class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
 
     const MAIL_TYPE = 'newsletter unsubscribed mail';

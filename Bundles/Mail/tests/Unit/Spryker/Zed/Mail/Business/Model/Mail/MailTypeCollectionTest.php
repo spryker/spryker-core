@@ -9,7 +9,7 @@ namespace Unit\Spryker\Zed\Mail\Business\Model\Mail;
 
 use Spryker\Zed\Mail\Business\Exception\MailNotFoundException;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
-use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
  * @group Unit
@@ -68,7 +68,7 @@ class MailTypeCollectionTest extends \PHPUnit_Framework_TestCase
         $mailTypeCollection = $this->getMailCollection();
         $mailTypeCollection->add($mailTypeMock);
 
-        $this->assertInstanceOf(MailTypeInterface::class, $mailTypeCollection->get(static::MAIL_TYPE_A));
+        $this->assertInstanceOf(MailTypePluginInterface::class, $mailTypeCollection->get(static::MAIL_TYPE_A));
     }
 
     /**
@@ -91,11 +91,11 @@ class MailTypeCollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
     protected function getMailTypeMock()
     {
-        $mailTypeMock = $this->getMockBuilder(MailTypeInterface::class)->setMethods(['getName', 'build'])->getMock();
+        $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->setMethods(['getName', 'build'])->getMock();
         $mailTypeMock->method('getName')->willReturn(static::MAIL_TYPE_A);
 
         return $mailTypeMock;

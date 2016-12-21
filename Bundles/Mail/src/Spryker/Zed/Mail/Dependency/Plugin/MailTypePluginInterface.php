@@ -9,7 +9,7 @@ namespace Spryker\Zed\Mail\Dependency\Plugin;
 
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 
-interface MailTypeInterface
+interface MailTypePluginInterface
 {
 
     /**
