@@ -16,6 +16,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
 {
 
     /**
+     * @api
+     *
      * @param int $idProductConcrete
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
@@ -28,6 +30,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
@@ -42,13 +46,15 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
     public function queryBundledProductBySku($sku)
     {
-       return $this->getFactory()
+        return $this->getFactory()
            ->createProductBundleQuery()
            ->useSpyProductRelatedByFkBundledProductQuery()
               ->filterBySku($sku)
@@ -56,6 +62,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
@@ -68,14 +76,17 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int $idProductBundle
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
     public function queryBundleByIdProductBundle($idProductBundle)
     {
-       return $this->getFactory()
+        return $this->getFactory()
            ->createProductBundleQuery()
            ->filterByIdProductBundle($idProductBundle);
     }
+
 }

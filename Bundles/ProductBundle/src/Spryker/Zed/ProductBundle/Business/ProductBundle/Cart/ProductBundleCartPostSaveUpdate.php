@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class ProductBundleCartPostSaveUpdate
+class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdateInterface
 {
 
     /**
@@ -31,6 +31,6 @@ class ProductBundleCartPostSaveUpdate
         $quoteTransfer->setBundleItems($bundleItems);
 
         return $quoteTransfer;
-
     }
+
 }

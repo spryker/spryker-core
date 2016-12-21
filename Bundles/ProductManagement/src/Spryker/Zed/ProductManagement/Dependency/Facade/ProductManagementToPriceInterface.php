@@ -27,7 +27,6 @@ interface ProductManagementToPriceInterface
     public function findProductConcretePrice($idProduct, $priceType = null);
 
     /**
-     *
      * @param string $sku
      * @param string|null $priceTypeName
      *

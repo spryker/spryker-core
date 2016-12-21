@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AvailabilityGuiBusinessFactory extends AbstractBusinessFactory
 {
-
 }

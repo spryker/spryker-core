@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\Calculation;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
@@ -31,4 +31,5 @@ class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPlu
     {
         $this->getFacade()->calculateBundlePrice($quoteTransfer);
     }
+
 }

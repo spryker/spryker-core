@@ -26,4 +26,5 @@ interface ProductManagementToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+
 }

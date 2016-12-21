@@ -71,7 +71,7 @@ class VariantTable extends AbstractProductTable
             static::COL_SKU => 'Sku',
             static::COL_NAME => 'Name',
             static::COL_STATUS => 'Status',
-            static::COL_IS_BUNDLE  => 'Is bundle',
+            static::COL_IS_BUNDLE => 'Is bundle',
             static::COL_ACTIONS => 'Actions',
         ]);
 

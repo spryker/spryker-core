@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 
-class ProductBundlePriceCalculation
+class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInterface
 {
 
     /**
@@ -63,7 +63,6 @@ class ProductBundlePriceCalculation
      */
     public function calculate(QuoteTransfer $quoteTransfer)
     {
-
         $this->resetBundlePriceAmounts($quoteTransfer);
 
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
@@ -77,15 +76,13 @@ class ProductBundlePriceCalculation
         }
 
         return $quoteTransfer;
-
     }
 
     /**
-     *
      * @todo remove after total price refactoring
      *
-     * @param ItemTransfer $bundleItemTransfer
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */

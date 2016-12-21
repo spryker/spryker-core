@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
-
 class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityInterface
 {
 
     /**
-     * @var AvailabilityFacadeInterface
+     * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
-     protected $availabilityFacade;
+    protected $availabilityFacade;
 
     /**
      * @param \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface $availabilityFacade
@@ -65,4 +63,5 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     {
         return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
     }
+
 }

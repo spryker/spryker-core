@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
@@ -33,4 +33,5 @@ class ProductBundleOrderSaverPlugin extends AbstractPlugin implements CheckoutSa
     {
          $this->getFacade()->saveSalesOrderBundleItems($quoteTransfer, $checkoutResponse);
     }
+
 }

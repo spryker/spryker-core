@@ -85,7 +85,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
                     return explode(',', $productBundlesToBeRemoved);
                 }
-        ));
+            ));
 
         return $this;
     }

@@ -6,29 +6,30 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
+use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class BundledProductTable extends AbstractTable
 {
+
     const COL_SELECT = 'select';
     const COL_PRICE = 'price';
     const COL_AVAILABILITY = 'availability';
     const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 
@@ -58,12 +59,12 @@ class BundledProductTable extends AbstractTable
     protected $idProductConcrete;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface $availabilityFacade
-     * @param int $idProductConcrete
+     * @param int|null $idProductConcrete
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -141,7 +142,7 @@ class BundledProductTable extends AbstractTable
             ->joinStockProduct()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, 'Name')
             ->withColumn(SpyStockProductTableMap::COL_QUANTITY, 'stockQuantity')
-            ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE .' = ?', 66)
+            ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', 66)
             ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, CRITERIA::ISNULL);
 
         $queryResults = $this->runQuery($query, $config, true);
@@ -152,8 +153,8 @@ class BundledProductTable extends AbstractTable
             $availability = $this->availabilityFacade->calculateStockForProduct($item->getSku());
 
             $productAbstractCollection[] = [
-                static::COL_SELECT  => $this->addCheckBox($item),
-                static::COL_ID_PRODUCT_CONCRETE =>$item->getIdProduct(),
+                static::COL_SELECT => $this->addCheckBox($item),
+                static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
                 SpyProductTableMap::COL_SKU => $item->getSku(),
                 static::COL_PRICE => $this->getFormatedPrice($item->getSku()),
@@ -180,7 +181,7 @@ class BundledProductTable extends AbstractTable
     }
 
     /**
-     * @param SpyProduct $productConcreteEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
      *
      * @return string
      */
@@ -203,4 +204,5 @@ class BundledProductTable extends AbstractTable
             $checked
         );
     }
+
 }

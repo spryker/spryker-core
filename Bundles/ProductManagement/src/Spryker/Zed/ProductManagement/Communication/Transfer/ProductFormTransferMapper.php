@@ -469,7 +469,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -495,7 +495,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param FormInterface $form
+     * @param \Symfony\Component\Form\FormInterface $form
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -506,10 +506,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             return $productConcreteTransfer;
         }
 
-
         $productConcreteTransfer->getProductBundle()
             ->setBundlesToRemove($form->getData()[ProductConcreteFormEdit::PRODUCT_BUNDLES_TO_BE_REMOVED]);
 
         return $productConcreteTransfer;
     }
+
 }

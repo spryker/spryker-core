@@ -32,4 +32,5 @@ class ProductBundleAvailabilityCheckoutPreConditionPlugin extends AbstractPlugin
     {
         $this->getFacade()->preCheckCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
     }
+
 }

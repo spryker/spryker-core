@@ -27,7 +27,6 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $this->type = $type;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -42,7 +41,6 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
             ->addImageTab($tabsViewTransfer)
             ->addAssigneBundledProductsTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
-
 
         return $tabsViewTransfer;
     }

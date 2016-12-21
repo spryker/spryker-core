@@ -10,7 +10,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInter
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
-class ProductBundleAvailabilityHandler
+class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
 
     /**
@@ -91,7 +91,6 @@ class ProductBundleAvailabilityHandler
 
         $bundleItems = $this->getBundleItemsByIdProduct($bundleProductEntity->getFkProduct());
         $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
-
     }
 
     /**

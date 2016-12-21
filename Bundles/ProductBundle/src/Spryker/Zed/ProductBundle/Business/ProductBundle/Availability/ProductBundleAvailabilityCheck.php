@@ -18,7 +18,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use \ArrayObject;
 
-class ProductBundleAvailabilityCheck
+class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckInterface
 {
 
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
@@ -38,14 +38,14 @@ class ProductBundleAvailabilityCheck
     protected $productBundleQueryContainer;
 
     /**
-     * @var ProductBundleToAvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
     protected $availabilityQueryContainer;
 
     /**
-     * @param ProductBundleToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
@@ -230,8 +230,8 @@ class ProductBundleAvailabilityCheck
     }
 
     /**
-     * @param ArrayObject $items
-     * @param ObjectCollection $bundledProducts
+     * @param \ArrayObject $items
+     * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      *
      * @return bool
      */

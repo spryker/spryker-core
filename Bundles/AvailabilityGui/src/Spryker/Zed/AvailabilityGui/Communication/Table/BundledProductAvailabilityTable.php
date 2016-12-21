@@ -6,19 +6,20 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
+use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class BundledProductAvailabilityTable extends AbstractTable
 {
+
     const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
@@ -48,7 +49,7 @@ class BundledProductAvailabilityTable extends AbstractTable
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param int $idLocale
-     * @param int $idProductBundle
+     * @param int|null $idProductBundle
      */
     public function __construct(
         AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer,
@@ -145,8 +146,5 @@ class BundledProductAvailabilityTable extends AbstractTable
 
         return $result;
     }
-
-
-
 
 }

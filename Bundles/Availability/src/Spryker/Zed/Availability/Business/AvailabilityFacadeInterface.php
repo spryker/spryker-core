@@ -102,6 +102,8 @@ interface AvailabilityFacadeInterface
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param int $quantity
      *

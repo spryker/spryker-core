@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
-
 class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityGuiToAvailabilityQueryContainerInterface
 {
 
     /**
-     * @var AvailabilityQueryContainerInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
     protected $availabilityQueryContainer;
 
@@ -25,7 +23,6 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
     }
 
     /**
-     *
      * @param int $idLocale
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery

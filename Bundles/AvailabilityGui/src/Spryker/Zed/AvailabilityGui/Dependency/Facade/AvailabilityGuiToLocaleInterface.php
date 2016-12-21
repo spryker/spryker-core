@@ -12,4 +12,5 @@ interface AvailabilityGuiToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
+
 }

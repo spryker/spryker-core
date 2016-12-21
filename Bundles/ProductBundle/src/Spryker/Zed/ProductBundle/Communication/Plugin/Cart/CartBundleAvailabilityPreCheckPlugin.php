@@ -7,8 +7,8 @@
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
@@ -34,4 +34,5 @@ class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements Car
     {
          return $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
     }
+
 }

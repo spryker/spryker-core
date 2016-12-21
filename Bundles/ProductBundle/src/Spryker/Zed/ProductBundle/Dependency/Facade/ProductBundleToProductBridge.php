@@ -31,9 +31,6 @@ class ProductBundleToProductBridge implements ProductBundleToProductInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
-     *
      * @return int
      */
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
@@ -81,4 +78,5 @@ class ProductBundleToProductBridge implements ProductBundleToProductInterface
     {
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
+
 }

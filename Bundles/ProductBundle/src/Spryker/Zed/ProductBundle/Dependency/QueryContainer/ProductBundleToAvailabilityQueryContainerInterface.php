@@ -28,4 +28,5 @@ interface ProductBundleToAvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
+
 }

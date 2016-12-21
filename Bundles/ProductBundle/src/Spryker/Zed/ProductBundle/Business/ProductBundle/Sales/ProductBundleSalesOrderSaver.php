@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
-class ProductBundleSalesOrderSaver
+class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterface
 {
 
     /**
@@ -59,7 +59,7 @@ class ProductBundleSalesOrderSaver
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
      */
@@ -103,4 +103,5 @@ class ProductBundleSalesOrderSaver
             ->querySalesOrderItem()
             ->findOneByIdSalesOrderItem($idSalesOrderItem);
     }
+
 }

@@ -8,17 +8,16 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
-class ProductBundleStockWriter
+class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
 
     /**
-     * @var ProductBundleQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
     protected $productBundleQueryContainer;
 
@@ -76,7 +75,6 @@ class ProductBundleStockWriter
         $this->productBundleAvailabilityHandler->updateBundleAvailability($productConcreteTransfer->getSku());
 
         return $productConcreteTransfer;
-
     }
 
     /**
@@ -111,7 +109,7 @@ class ProductBundleStockWriter
     }
 
     /**
-     * @param ObjectCollection|SpyProductBundle[] $bundleItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundleItems
      *
      * @return array
      */
@@ -170,4 +168,5 @@ class ProductBundleStockWriter
         }
         return $bundleTotalStockPerWarehause;
     }
+
 }

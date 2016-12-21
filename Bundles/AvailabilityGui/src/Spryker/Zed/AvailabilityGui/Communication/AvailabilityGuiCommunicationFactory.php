@@ -11,8 +11,8 @@ use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
@@ -52,9 +52,8 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @param int $idLocale
-     * @param int $idAbstractProductBundle
+     * @param int|null $idAbstractProductBundle
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
      */
@@ -126,7 +125,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getAvailabilityQueryContainer()
     {
-       return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::QUERY_CONTAINER_AVAILABILITY);
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::QUERY_CONTAINER_AVAILABILITY);
     }
 
     /**

@@ -31,4 +31,5 @@ class ProductBundlePriceAggregatorPlugin extends AbstractPlugin implements Order
     {
          $this->getFacade()->aggregateBundlePrice($orderTransfer);
     }
+
 }

@@ -81,4 +81,5 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     {
         return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
     }
+
 }

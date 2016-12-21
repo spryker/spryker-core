@@ -52,6 +52,4 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
         return $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
     }
 
-
-
 }

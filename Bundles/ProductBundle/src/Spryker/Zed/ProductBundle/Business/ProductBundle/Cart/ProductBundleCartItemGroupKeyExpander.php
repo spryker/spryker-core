@@ -8,8 +8,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-class ProductBundleCartItemGroupKeyExpander
+class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGroupKeyExpanderInterface
 {
+
     const GROUP_KEY_DELIMITER = '_';
 
     /**
@@ -32,4 +33,5 @@ class ProductBundleCartItemGroupKeyExpander
 
         return $cartChangeTransfer;
     }
+
 }

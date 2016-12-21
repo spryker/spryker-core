@@ -34,7 +34,6 @@ interface ProductManagementToMoneyInterface
     public function formatWithSymbol(MoneyTransfer $moneyTransfer);
 
     /**
-     *
      * @param int $amount
      * @param string|null $isoCode
      *

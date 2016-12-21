@@ -33,4 +33,5 @@ class ExpandBundleItemsPlugin extends AbstractPlugin implements ItemExpanderPlug
     {
         return $this->getFacade()->expandBundleItems($cartChangeTransfer);
     }
+
 }

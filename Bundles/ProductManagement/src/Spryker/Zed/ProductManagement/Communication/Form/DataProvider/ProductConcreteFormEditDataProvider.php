@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
@@ -27,6 +26,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     /**
      * @param int|null $idProductAbstract |null
      * @param string|null $type
+     *
      * @return mixed
      */
     public function getOptions($idProductAbstract = null, $type = null)
@@ -170,7 +170,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     }
 
     /**
-     * @param ProductConcreteTransfer $productTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
      * @param array $formData
      *
      * @return array
@@ -265,7 +265,5 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         return false;
     }
-
-
 
 }

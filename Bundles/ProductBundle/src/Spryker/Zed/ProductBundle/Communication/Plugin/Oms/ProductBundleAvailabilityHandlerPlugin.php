@@ -30,4 +30,5 @@ class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements R
     {
         $this->getFacade()->updateAffectedBundlesAvailability($sku);
     }
+
 }

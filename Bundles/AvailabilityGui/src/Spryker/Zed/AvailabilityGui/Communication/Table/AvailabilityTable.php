@@ -10,11 +10,10 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Shared\Url\Url;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 
 class AvailabilityTable extends AbstractTable
 {
@@ -176,7 +175,5 @@ class AvailabilityTable extends AbstractTable
 
         return $buttons;
     }
-
-
 
 }

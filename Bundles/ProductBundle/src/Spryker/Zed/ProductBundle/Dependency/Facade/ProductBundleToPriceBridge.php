@@ -32,4 +32,5 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     {
         return $this->priceFacade->getPriceBySku($sku, $priceType);
     }
+
 }

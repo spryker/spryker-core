@@ -33,4 +33,5 @@ class ProductBundleProductConcreteReadPlugin extends AbstractPlugin implements P
     {
         return $this->getFacade()->assignBundledProductsToProductConcrete($productConcreteTransfer);
     }
+
 }

@@ -65,6 +65,8 @@ interface CartClientInterface
     public function removeItem($sku, $groupKey = null);
 
     /**
+     * @api
+     *
      * @param \ArrayObject $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

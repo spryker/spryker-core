@@ -32,4 +32,5 @@ class CartItemWithBundleGroupKeyExpanderPlugin extends AbstractPlugin implements
     {
         return $this->getFacade()->expandBundleCartItemGroupKey($cartChangeTransfer);
     }
+
 }

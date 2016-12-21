@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_LOCALE = 'locale facade';
     const FACADE_STOCK = 'stock facade';
     const FACADE_AVAILABILITY = 'availability facade';

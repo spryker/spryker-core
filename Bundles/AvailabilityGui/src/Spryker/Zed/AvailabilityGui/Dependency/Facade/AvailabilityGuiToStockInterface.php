@@ -49,4 +49,5 @@ interface AvailabilityGuiToStockInterface
      * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
+
 }

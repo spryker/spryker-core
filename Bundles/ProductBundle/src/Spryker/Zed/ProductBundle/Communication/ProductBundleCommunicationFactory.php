@@ -15,5 +15,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ProductBundleCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }

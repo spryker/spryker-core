@@ -37,4 +37,5 @@ interface ProductBundleToAvailabilityInterface
      * @return int
      */
     public function saveProductAvailability($sku, $quantity);
+
 }

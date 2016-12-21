@@ -30,7 +30,6 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
-use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -267,7 +266,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductManagementToUtilEncodingInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface
      */
     public function getUtilEncoding()
     {
@@ -447,7 +446,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int|null $idProductConcrete
+     *
      * @return \Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable
      */
     public function createBundledProductTable($idProductConcrete = null)
@@ -487,7 +487,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
      *
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */

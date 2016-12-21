@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
-class ProductBundleReader
+class ProductBundleReader implements ProductBundleReaderInterface
 {
 
     /**
-     * @var ProductBundleQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
     protected $productBundleQueryContainer;
 
@@ -42,7 +42,6 @@ class ProductBundleReader
      * @param int $idProductConcrete
      *
      * @return \ArrayObject
-     *
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
@@ -79,9 +78,9 @@ class ProductBundleReader
              $productConcreteTransfer->getIdProductConcrete()
          );
 
-         if (count($bundledProducts) === 0) {
-             return $productConcreteTransfer;
-         }
+        if (count($bundledProducts) === 0) {
+            return $productConcreteTransfer;
+        }
 
          $productBundleTransfer = new ProductBundleTransfer();
 

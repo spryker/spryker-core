@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
-
 class ProductManagementToAvailabilityBridge implements ProductManagementToAvailabilityInterface
 {
 
     /**
-     * @var AvailabilityFacadeInterface
+     * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
     protected $availabilityFacade;
 
@@ -25,7 +23,6 @@ class ProductManagementToAvailabilityBridge implements ProductManagementToAvaila
     }
 
     /**
-     *
      * @param string $sku
      *
      * @return int

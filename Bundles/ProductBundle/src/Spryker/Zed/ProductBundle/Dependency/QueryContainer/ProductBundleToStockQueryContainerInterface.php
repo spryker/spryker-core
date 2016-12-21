@@ -14,4 +14,5 @@ interface ProductBundleToStockQueryContainerInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByProducts($idProduct);
+
 }

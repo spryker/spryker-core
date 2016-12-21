@@ -29,4 +29,5 @@ class AvailabilityGuiToLocaleBridge implements AvailabilityGuiToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
 }

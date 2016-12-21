@@ -13,7 +13,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWri
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
-class ProductBundleWriter
+class ProductBundleWriter implements ProductBundleWriterInterface
 {
 
     /**
@@ -94,6 +94,8 @@ class ProductBundleWriter
 
         $productBundleEntity->setQuantity($productForBundleTransfer->getQuantity());
         $productBundleEntity->save();
+
+        $productForBundleTransfer->setIdProductBundle($productBundleEntity->getIdProductBundle());
     }
 
     /**
@@ -117,4 +119,5 @@ class ProductBundleWriter
             $productBundleEntity->delete();
         }
     }
+
 }

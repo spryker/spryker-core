@@ -83,7 +83,6 @@ class AddController extends AbstractController
                     ));
                 }
 
-
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -150,8 +149,8 @@ class AddController extends AbstractController
 
     /**
      * @param string $type
-     * @param ProductAbstractTransfer $productAbstractTransfer
-     * @param FormInterface $form
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */

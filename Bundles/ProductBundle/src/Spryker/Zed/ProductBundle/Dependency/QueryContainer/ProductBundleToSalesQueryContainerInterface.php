@@ -12,4 +12,5 @@ interface ProductBundleToSalesQueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
+
 }

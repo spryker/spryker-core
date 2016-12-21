@@ -7,8 +7,8 @@
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Cart\Dependency\PostSavePluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
@@ -26,4 +26,5 @@ class CartPostSaveUpdateBundlesPlugin extends AbstractPlugin implements PostSave
     {
         return $this->getFacade()->postSaveCartUpdateBundles($quoteTransfer);
     }
+
 }

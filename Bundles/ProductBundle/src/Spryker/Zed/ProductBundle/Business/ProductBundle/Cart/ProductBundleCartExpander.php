@@ -10,12 +10,12 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 
-class ProductBundleCartExpander
+class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
 
     /**
@@ -113,7 +113,7 @@ class ProductBundleCartExpander
     }
 
     /**
-     * @param ObjectCollection $bundledProducts
+     * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param string $bundleItemIdentifier
      *
      * @return array
@@ -131,7 +131,7 @@ class ProductBundleCartExpander
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \ArrayObject|ItemTransfer[] $bundleItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
      * @return string
      */
@@ -145,14 +145,14 @@ class ProductBundleCartExpander
     }
 
     /**
-     * @param ItemTransfer[] $bundledProducts
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      * @param int $bundleUnitPrice
      *
      * @return void
      */
     protected function distributeBundlePriceAmount(array $bundledProducts, $bundleUnitPrice)
     {
-        $totalBundleItemAmount = array_reduce($bundledProducts, function($total, ItemTransfer $itemTransfer) {
+        $totalBundleItemAmount = array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) {
             $total += $itemTransfer->getUnitGrossPrice();
             return $total;
         });
@@ -173,7 +173,7 @@ class ProductBundleCartExpander
     }
 
     /**
-     * @param SpyProductBundle $bundleProductEntity
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleProductEntity
      * @param string $bundleItemIdentifier
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
@@ -205,6 +205,5 @@ class ProductBundleCartExpander
 
         return $itemTransfer;
     }
-
 
 }

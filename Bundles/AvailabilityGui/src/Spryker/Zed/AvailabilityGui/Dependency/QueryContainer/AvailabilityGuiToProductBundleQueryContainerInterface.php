@@ -14,4 +14,5 @@ interface AvailabilityGuiToProductBundleQueryContainerInterface
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
     public function queryBundleProduct($idProductConcrete);
+
 }

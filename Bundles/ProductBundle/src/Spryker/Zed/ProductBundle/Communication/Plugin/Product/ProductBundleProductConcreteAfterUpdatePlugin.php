@@ -34,4 +34,5 @@ class ProductBundleProductConcreteAfterUpdatePlugin extends AbstractPlugin imple
     {
         return $this->getFacade()->saveBundledProducts($productConcreteTransfer);
     }
+
 }

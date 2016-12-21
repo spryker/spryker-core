@@ -6,12 +6,11 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-
 class ProductBundleToSalesQueryContainerBridge implements ProductBundleToSalesQueryContainerInterface
 {
+
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
@@ -28,7 +27,7 @@ class ProductBundleToSalesQueryContainerBridge implements ProductBundleToSalesQu
      */
     public function querySalesOrderItem()
     {
-       return $this->salesQueryContainer->querySalesOrderItem();
+        return $this->salesQueryContainer->querySalesOrderItem();
     }
 
 }

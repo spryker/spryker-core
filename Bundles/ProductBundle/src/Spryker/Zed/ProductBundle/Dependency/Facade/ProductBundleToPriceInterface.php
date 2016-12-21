@@ -15,4 +15,5 @@ interface ProductBundleToPriceInterface
      * @return int
      */
     public function getPriceBySku($sku, $priceType = null);
+
 }

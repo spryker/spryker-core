@@ -152,7 +152,6 @@ class AvailabilityAbstractTable extends AbstractTable
         return false;
     }
 
-
     /**
      * @param string $reservationQuantity
      *

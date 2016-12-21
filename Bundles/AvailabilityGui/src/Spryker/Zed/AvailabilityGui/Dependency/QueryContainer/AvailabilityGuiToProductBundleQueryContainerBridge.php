@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-
 class AvailabilityGuiToProductBundleQueryContainerBridge implements AvailabilityGuiToProductBundleQueryContainerInterface
 {
 
     /**
-     * @var ProductBundleQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
     protected $productBundleQueryContainter;
 
@@ -33,6 +31,5 @@ class AvailabilityGuiToProductBundleQueryContainerBridge implements Availability
     {
         return $this->productBundleQueryContainter->queryBundleProduct($idProductConcrete);
     }
-
 
 }

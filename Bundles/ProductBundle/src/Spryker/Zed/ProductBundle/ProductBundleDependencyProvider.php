@@ -48,19 +48,19 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductBundleToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[static::FACADE_AVAILABILITY] = function(Container $container) {
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new ProductBundleToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
 
-        $container[static::QUERY_CONTAINER_AVAILABILITY] = function(Container $container) {
+        $container[static::QUERY_CONTAINER_AVAILABILITY] = function (Container $container) {
             return new ProductBundleToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
         };
 
-        $container[static::QUERY_CONTAINER_SALES] = function(Container $container) {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return new ProductBundleToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
         };
 
-        $container[static::QUERY_CONTAINER_STOCK] = function(Container $container) {
+        $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
             return new ProductBundleToStockQueryContainerBridge($container->getLocator()->stock()->queryContainer());
         };
 

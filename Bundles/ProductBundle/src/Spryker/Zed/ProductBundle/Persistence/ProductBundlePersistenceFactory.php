@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
 {
+
     /**
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
@@ -23,4 +24,5 @@ class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductBundleQuery::create();
     }
+
 }

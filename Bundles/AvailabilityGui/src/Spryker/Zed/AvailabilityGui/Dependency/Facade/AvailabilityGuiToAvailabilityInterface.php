@@ -15,4 +15,5 @@ interface AvailabilityGuiToAvailabilityInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
+
 }
