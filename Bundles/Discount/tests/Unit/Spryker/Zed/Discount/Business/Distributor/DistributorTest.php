@@ -56,7 +56,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
             $totalAmount += $discountableObject->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
         }
 
-        $this->assertEquals($discountAmount, $totalAmount);
+        $this->assertSame($discountAmount, $totalAmount);
     }
 
     /**
@@ -153,7 +153,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
             $totalAmount += $discountableObject->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
         }
 
-        $this->assertEquals(10, $totalAmount);
+        $this->assertSame(10, $totalAmount);
     }
 
     /**
@@ -184,7 +184,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
             $totalAmount += $discountableObject->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
         }
 
-        $this->assertEquals(50, $totalAmount);
+        $this->assertSame(50, $totalAmount);
     }
 
     /**

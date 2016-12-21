@@ -13,6 +13,8 @@ interface DiscountCalculatorPluginInterface
     /**
      * @api
      *
+     * @deprecated Use DiscountAmountCalculatorPluginInterface::calculateDiscount() instead.
+     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param mixed $percentage
      *
