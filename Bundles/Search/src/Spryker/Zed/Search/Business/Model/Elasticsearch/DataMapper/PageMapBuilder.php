@@ -98,7 +98,9 @@ class PageMapBuilder implements PageMapBuilderInterface
         }
 
         foreach ($value as $oneValue) {
-            $pageMapTransfer->addFullText($oneValue);
+            if ($oneValue !== null) {
+                $pageMapTransfer->addFullText($oneValue);
+            }
         }
 
         return $this;
@@ -117,7 +119,9 @@ class PageMapBuilder implements PageMapBuilderInterface
         }
 
         foreach ($value as $oneValue) {
-            $pageMapTransfer->addFullTextBoosted($oneValue);
+            if ($oneValue !== null) {
+                $pageMapTransfer->addFullTextBoosted($oneValue);
+            }
         }
 
         return $this;
@@ -136,7 +140,9 @@ class PageMapBuilder implements PageMapBuilderInterface
         }
 
         foreach ($value as $oneValue) {
-            $pageMapTransfer->addSuggestionTerms($oneValue);
+            if ($oneValue !== null) {
+                $pageMapTransfer->addSuggestionTerms($oneValue);
+            }
         }
 
         return $this;
@@ -155,7 +161,9 @@ class PageMapBuilder implements PageMapBuilderInterface
         }
 
         foreach ($value as $oneValue) {
-            $pageMapTransfer->addCompletionTerms($oneValue);
+            if ($oneValue !== null) {
+                $pageMapTransfer->addCompletionTerms($oneValue);
+            }
         }
 
         return $this;

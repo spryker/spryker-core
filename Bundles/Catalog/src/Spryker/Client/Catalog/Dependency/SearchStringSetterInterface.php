@@ -7,14 +7,11 @@
 
 namespace Spryker\Client\Catalog\Dependency;
 
-interface SearchStringSetterInterface
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface as CorrectSearchStringSetterInterface;
+
+/**
+ * @deprecated Use \Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface instead
+ */
+interface SearchStringSetterInterface extends CorrectSearchStringSetterInterface
 {
-
-    /**
-     * @param string $searchString
-     *
-     * @return void
-     */
-    public function setSearchString($searchString);
-
 }

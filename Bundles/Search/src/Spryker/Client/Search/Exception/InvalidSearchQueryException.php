@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Plugin\Elasticsearch\Query;
+namespace Spryker\Client\Search\Exception;
 
-class SuggestionQueryPlugin extends CatalogSearchQueryPlugin
+class InvalidSearchQueryException extends \Exception
 {
 }

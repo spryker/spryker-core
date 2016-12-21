@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Catalog;
 
-use Spryker\Client\Catalog\Dependency\SearchStringSetterInterface;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()

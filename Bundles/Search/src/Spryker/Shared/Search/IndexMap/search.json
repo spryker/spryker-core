@@ -14,6 +14,12 @@
         },
         "suggestion_analyzer": {
           "tokenizer": "keyword"
+        },
+        "completion_analyzer": {
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase"
+          ]
         }
       }
     }
@@ -107,7 +113,8 @@
           }
         },
         "completion-terms": {
-          "type": "completion"
+          "type": "string",
+          "analyzer": "completion_analyzer"
         },
         "suggestion-terms": {
           "type": "string",

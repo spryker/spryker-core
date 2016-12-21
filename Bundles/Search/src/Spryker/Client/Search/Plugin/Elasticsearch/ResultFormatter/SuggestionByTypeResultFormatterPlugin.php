@@ -8,22 +8,23 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpanderPlugin;
+use Generated\Shared\Search\PageIndexMap;
+use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SuggestionByTypeQueryExpanderPlugin;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
-class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class SuggestionByTypeResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
-    const NAME = 'completion';
+    const NAME = 'suggestionByType';
 
     /**
      * @return string
      */
     public function getName()
     {
-        return static::NAME;
+        return self::NAME;
     }
 
     /**
@@ -34,23 +35,15 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
-        $completions = $this->getCompletionFromSuggests($searchResult);
-
-        return $completions;
-    }
-
-    /**
-     * @param ResultSet $searchResult
-     *
-     * @return array
-     */
-    protected function getCompletionFromSuggests(ResultSet $searchResult)
-    {
         $result = [];
-        $aggregation = $searchResult->getAggregation(CompletionQueryExpanderPlugin::AGGREGATION_NAME);
+        $aggregation = $searchResult->getAggregation(SuggestionByTypeQueryExpanderPlugin::AGGREGATION_NAME);
 
         foreach ($aggregation['buckets'] as $agg) {
-            $result[] = $agg['key'];
+            $type = $agg['key'];
+
+            foreach ($agg[SuggestionByTypeQueryExpanderPlugin::NESTED_AGGREGATION_NAME]['hits']['hits'] as $hit) {
+                $result[$type][] = $hit['_source'][PageIndexMap::SEARCH_RESULT_DATA];
+            }
         }
 
         return $result;

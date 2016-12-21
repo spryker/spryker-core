@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
+use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SuggestionQueryExpanderPlugin;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -34,7 +35,7 @@ class SuggestionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
         $result = [];
-        $aggregation = $searchResult->getAggregation(static::NAME);
+        $aggregation = $searchResult->getAggregation(SuggestionQueryExpanderPlugin::AGGREGATION_NAME);
 
         foreach ($aggregation['buckets'] as $agg) {
             $result[] = $agg['key'];
