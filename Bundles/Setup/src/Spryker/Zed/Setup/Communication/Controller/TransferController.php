@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Setup\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;

@@ -62,7 +62,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
+     * @return \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater
      */
     public function getTransferObjectRepeater()
     {

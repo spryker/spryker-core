@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Communication\Plugin;
+namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -22,12 +21,12 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
 {
 
     /**
-     * @var \Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface
+     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface
      */
     protected $controllerListener;
 
     /**
-     * @param \Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface $controllerListener
+     * @param \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface $controllerListener
      *
      * @return void
      */

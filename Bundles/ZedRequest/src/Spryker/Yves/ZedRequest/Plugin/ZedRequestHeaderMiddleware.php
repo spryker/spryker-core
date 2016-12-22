@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Application\Plugin;
+namespace Spryker\Yves\ZedRequest\Plugin;
 
 use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;

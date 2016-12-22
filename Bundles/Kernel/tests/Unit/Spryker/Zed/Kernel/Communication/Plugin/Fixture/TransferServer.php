@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 
 class TransferServer extends CoreTransferServer

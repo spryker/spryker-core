@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
+namespace Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject;
 
 use LogicException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
@@ -43,12 +43,12 @@ class TransferServer
     protected $response;
 
     /**
-     * @var \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
+     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater
      */
     private $repeater;
 
     /**
-     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
+     * @param \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater $repeater
      */
     private function __construct(Repeater $repeater)
     {
@@ -56,7 +56,7 @@ class TransferServer
     }
 
     /**
-     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater|null $repeater
+     * @param \Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater|null $repeater
      *
      * @return $this
      */

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Communication;
+namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

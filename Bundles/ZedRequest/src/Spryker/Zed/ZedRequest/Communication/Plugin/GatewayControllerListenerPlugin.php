@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Communication\Plugin;
+namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 
 use LogicException;
 use ReflectionObject;
@@ -13,17 +13,16 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Message;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
- * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {

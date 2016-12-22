@@ -14,6 +14,7 @@ use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractHttpClient;
 
@@ -55,7 +56,7 @@ class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
      */
     protected function getAbstractRequestMock()
     {
-        $baseUrl = 'http://' . Config::get(ApplicationConstants::HOST_ZED_GUI);
+        $baseUrl = 'http://' . Config::get(ZedRequestConstants::HOST_ZED_API);
 
         $client = new AuthClient();
         $url = $baseUrl . '/';

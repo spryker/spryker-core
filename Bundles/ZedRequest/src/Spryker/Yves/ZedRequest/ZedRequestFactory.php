@@ -8,6 +8,7 @@
 namespace Spryker\Yves\ZedRequest;
 
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
+use Spryker\Yves\ZedRequest\Plugin\ZedRequestHeaderMiddleware;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
 use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
@@ -37,6 +38,14 @@ class ZedRequestFactory extends AbstractFactory
     public function createResponseLogPlugin()
     {
         return new ZedResponseLogPlugin();
+    }
+
+    /**
+     * @return \Spryker\Yves\ZedRequest\Plugin\ZedRequestHeaderMiddleware
+     */
+    public function createZedRequestHeaderMiddleware()
+    {
+        return new ZedRequestHeaderMiddleware();
     }
 
 }

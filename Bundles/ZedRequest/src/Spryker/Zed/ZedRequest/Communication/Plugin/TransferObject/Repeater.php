@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
+namespace Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
- * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
+ * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  */
 class Repeater extends AbstractPlugin
 {
@@ -53,7 +53,7 @@ class Repeater extends AbstractPlugin
             return;
         }
 
-        if (Config::get(ApplicationConstants::SET_REPEAT_DATA, false) === false) {
+        if (Config::get(ZedRequestConstants::SET_REPEAT_DATA, false) === false) {
             return;
         }
 

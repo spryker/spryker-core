@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\Communication\Plugin;
+namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin;
 
 use LogicException;
 use PHPUnit_Framework_TestCase;
@@ -13,9 +13,9 @@ use ReflectionClass;
 use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
+use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
@@ -190,7 +190,7 @@ class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater
      */
     private function createRepeaterMock()
     {

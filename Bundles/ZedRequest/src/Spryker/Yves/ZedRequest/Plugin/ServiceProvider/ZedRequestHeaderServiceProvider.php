@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Application\Plugin\ServiceProvider;
+namespace Spryker\Yves\ZedRequest\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -13,7 +13,7 @@ use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Yves\Application\ApplicationFactory getFactory()
+ * @method \Spryker\Yves\ZedRequest\ZedRequestFactory getFactory()
  */
 class ZedRequestHeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

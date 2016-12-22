@@ -6,14 +6,10 @@
     "spryker/console": "^2.0.0",
     "spryker/error-handler": "^1.1.0",
     "spryker/gui": "^2.0.0",
-    "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^2.5.0",
     "spryker/log": "^2.0.0",
     "spryker/monolog": "^2.0.0",
-    "spryker/navigation": "^1.0.0",
-    "spryker/new-relic": "^2.1.0",
     "spryker/propel": "^2.3.1",
-    "spryker/session": "^2.1.2",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/transfer": "^1.0.0 || ^2.0.0",
@@ -21,8 +17,7 @@
     "spryker/url": "^2.0.0",
     "spryker/util-encoding": "^1.0.0",
     "spryker/util-network": "^1.0.0",
-    "spryker/util-text": "^1.0.0",
-    "spryker/zed-request": "^2.0.0"
+    "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

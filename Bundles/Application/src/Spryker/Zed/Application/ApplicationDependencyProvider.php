@@ -26,11 +26,7 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServ
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
 use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
-use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Navigation\Communication\Plugin\ServiceProvider\NavigationServiceProvider;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -66,7 +62,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new RequestServiceProvider(),
             new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
-            new PropelServiceProvider(),
             new RoutingServiceProvider(),
             new MvcRoutingServiceProvider(),
             new SilexRoutingServiceProvider(),
@@ -75,7 +70,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new UrlGeneratorServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
-            new NavigationServiceProvider(),
             new GuiTwigExtensionServiceProvider(),
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
@@ -87,18 +81,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         }
 
         return $providers;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin
-     */
-    protected function getGatewayServiceProvider()
-    {
-        $controllerListener = new GatewayControllerListenerPlugin();
-        $serviceProvider = new GatewayServiceProviderPlugin();
-        $serviceProvider->setControllerListener($controllerListener);
-
-        return $serviceProvider;
     }
 
 }

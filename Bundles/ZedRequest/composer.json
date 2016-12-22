@@ -15,11 +15,12 @@
     "spryker/application": "^2.0.0",
     "spryker/auth": "^2.0.2",
     "spryker/config": "^2.0.0",
-    "spryker/event-journal": "^2.0.1",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^2.0.0",
     "spryker/log": "^2.0.0",
+    "spryker/messenger": "^1.0.0 || ^2.0.0",
     "spryker/silex": "^2.0.0",
+    "spryker/symfony": "^2.1.8",
     "spryker/transfer": "^2.0.0",
     "spryker/util-network": "^1.0.0"
   },
