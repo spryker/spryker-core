@@ -241,7 +241,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            if (!$this->checkIfItemIsSellable($quoteItems, $sku)) {
+            if (!$this->checkIfItemIsSellable($quoteItems, $sku, $productBundleEntity->getQuantity())) {
                 return false;
             }
         }

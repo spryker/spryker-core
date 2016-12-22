@@ -87,6 +87,7 @@ class BundledProductAvailabilityTable extends AbstractTable
         $config->setSortable([
             AvailabilityQueryContainer::CONCRETE_SKU,
             AvailabilityQueryContainer::CONCRETE_NAME,
+            AvailabilityQueryContainer::CONCRETE_AVAILABILITY,
             AvailabilityQueryContainer::STOCK_QUANTITY,
             AvailabilityQueryContainer::RESERVATION_QUANTITY
         ]);
@@ -128,7 +129,8 @@ class BundledProductAvailabilityTable extends AbstractTable
             ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale($this->idProductBundle, $this->idLocale)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT, Criteria::INNER_JOIN)
             ->withColumn(SpyProductBundleTableMap::COL_QUANTITY, static::COL_BUNDLED_ITEMS)
-            ->addOr(SpyProductTableMap::COL_ID_PRODUCT, $ids, Criteria::IN);
+            ->addOr(SpyProductTableMap::COL_ID_PRODUCT, $ids, Criteria::IN)
+            ->addAnd(SpyProductBundleTableMap::COL_FK_PRODUCT, $this->idProductBundle);
 
         $queryResult = $this->runQuery($queryProductAbstractAvailability, $config, true);
 
@@ -140,6 +142,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY],
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
             ];
         }
