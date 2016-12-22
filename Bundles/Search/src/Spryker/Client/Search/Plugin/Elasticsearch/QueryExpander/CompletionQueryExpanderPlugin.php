@@ -90,6 +90,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      */
     protected function getRegexpQueryString($searchString)
     {
+        $searchString = mb_strtolower($searchString);
         $searchString = preg_replace('/\s+/', ' ' . static::SEARCH_WILDCARD, $searchString);
 
         if ($searchString) {
