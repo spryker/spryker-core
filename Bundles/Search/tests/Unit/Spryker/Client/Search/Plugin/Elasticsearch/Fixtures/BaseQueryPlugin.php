@@ -10,14 +10,21 @@ namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\Fixtures;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
-class BaseQueryPlugin implements QueryInterface
+class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
 
     /**
      * @var \Elastica\Query
      */
     protected $query;
+
+    /**
+     * @var
+     */
+    protected $searchString;
 
     public function __construct()
     {
@@ -31,6 +38,24 @@ class BaseQueryPlugin implements QueryInterface
     public function getSearchQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * @param string $searchString
+     *
+     * @return void
+     */
+    public function setSearchString($searchString)
+    {
+        $this->searchString = $searchString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchString()
+    {
+        return $this->searchString;
     }
 
 }

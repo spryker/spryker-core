@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
 use Generated\Shared\Search\PageIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -44,8 +43,10 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     {
         $boolQuery = $this->getBoolQuery($query);
 
-        $matchQuery = new Match();
-        $matchQuery->setField(PageIndexMap::STORE, $this->getStore());
+        $matchQuery = $this->getFactory()
+            ->createQueryBuilder()
+            ->createMatchQuery()
+            ->setField(PageIndexMap::STORE, $this->getStore());
 
         $boolQuery->addMust($matchQuery);
     }

@@ -40,7 +40,7 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
     }
 
     /**
-     * @param ResultSet $searchResult
+     * @param \Elastica\ResultSet $searchResult
      *
      * @return array
      */

@@ -11,6 +11,8 @@ interface SearchStringSetterInterface
 {
 
     /**
+     * @api
+     *
      * @param string $searchString
      *
      * @return void

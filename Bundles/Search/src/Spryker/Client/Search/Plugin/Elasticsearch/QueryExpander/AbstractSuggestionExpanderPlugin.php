@@ -57,7 +57,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
     {
         if (!$query->hasParam('suggest')) {
             throw new MissingSuggestionQueryException(
-                'The query to be extended needs to have "suggest" query set. Use `$query->setSuggest()`.'
+                'The base query to be extended needs to have "suggest" parameter set. Use `$query->setSuggest()`.'
             );
         }
     }
@@ -77,11 +77,11 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
     }
 
     /**
-     * @param \Elastica\Query $searchQuery
+     * @param \Elastica\Query $query
      * @param array $requestParameters
      *
      * @return \Elastica\Suggest\AbstractSuggest
      */
-    abstract protected function createCompletion(Query $searchQuery, array $requestParameters = []);
+    abstract protected function createCompletion(Query $query, array $requestParameters = []);
 
 }

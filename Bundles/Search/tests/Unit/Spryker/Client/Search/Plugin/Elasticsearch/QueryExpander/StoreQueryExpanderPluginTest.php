@@ -80,6 +80,8 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             ->method('getStore')
             ->willReturn('AB');
 
+        $queryExpander->setFactory($this->getSearchFactory());
+
         return $queryExpander;
     }
 

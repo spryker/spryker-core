@@ -14,6 +14,7 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
@@ -171,6 +172,14 @@ class SearchFactory extends AbstractFactory
     public function createAggregationBuilder()
     {
         return new AggregationBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilderInterface
+     */
+    public function createSuggestBuilder()
+    {
+        return new SuggestBuilder();
     }
 
     /**

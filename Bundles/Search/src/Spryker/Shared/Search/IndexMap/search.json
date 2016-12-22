@@ -13,7 +13,10 @@
           ]
         },
         "suggestion_analyzer": {
-          "tokenizer": "keyword"
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
         },
         "completion_analyzer": {
           "tokenizer": "keyword",

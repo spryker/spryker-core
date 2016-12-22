@@ -25,6 +25,8 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
 
     const SIZE = 10;
 
+    const SEARCH_WILDCARD = '.*';
+
     /**
      * @api
      *
@@ -88,7 +90,13 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      */
     protected function getRegexpQueryString($searchString)
     {
-        return '.*' . preg_replace('/\s+/', ' .*', $searchString) . '.*';
+        $searchString = preg_replace('/\s+/', ' ' . static::SEARCH_WILDCARD, $searchString);
+
+        if ($searchString) {
+            return static::SEARCH_WILDCARD . $searchString . static::SEARCH_WILDCARD;
+        }
+
+        return '';
     }
 
 }

@@ -11,6 +11,8 @@ interface SearchStringGetterInterface
 {
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchString();

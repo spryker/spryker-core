@@ -7,9 +7,8 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
+use Elastica\Aggregation\Terms;
 use Elastica\Query;
-use Elastica\Suggest;
-use Elastica\Suggest\Completion;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpanderPlugin;
 
@@ -27,20 +26,6 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
 
     /**
-     * @expectedException \Spryker\Client\Search\Exception\MissingSuggestionQueryException
-     *
-     * @return void
-     */
-    public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest()
-    {
-        $baseQueryPlugin = $this->createBaseQueryPlugin();
-
-        $queryExpander = new CompletionQueryExpanderPlugin();
-
-        $queryExpander->expandQuery($baseQueryPlugin);
-    }
-
-    /**
      * @dataProvider CompletionQueryExpanderDataProvider
      *
      * @param \Elastica\Query $expectedQuery
@@ -50,10 +35,8 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     public function testCompletionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery)
     {
         $baseQueryPlugin = $this->createBaseQueryPlugin();
-        $baseQueryPlugin->getSearchQuery()->setSuggest(new Suggest());
 
         $queryExpander = new CompletionQueryExpanderPlugin();
-
         $query = $queryExpander->expandQuery($baseQueryPlugin);
 
         $query = $query->getSearchQuery();
@@ -81,13 +64,12 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             ->createBaseQueryPlugin()
             ->getSearchQuery();
 
-        $expectedCompletion = new Completion(CompletionQueryExpanderPlugin::AGGREGATION_NAME, PageIndexMap::COMPLETION_TERMS);
-        $expectedCompletion->setSize(CompletionQueryExpanderPlugin::SIZE);
+        $expectedAggregation = new Terms(CompletionQueryExpanderPlugin::AGGREGATION_NAME);
+        $expectedAggregation->setField(PageIndexMap::COMPLETION_TERMS);
+        $expectedAggregation->setSize(CompletionQueryExpanderPlugin::SIZE);
+        $expectedAggregation->setInclude('');
 
-        $suggest = new Suggest();
-        $suggest->addSuggestion($expectedCompletion);
-
-        $expectedQuery->setSuggest($suggest);
+        $expectedQuery->addAggregation($expectedAggregation);
 
         return [$expectedQuery];
     }

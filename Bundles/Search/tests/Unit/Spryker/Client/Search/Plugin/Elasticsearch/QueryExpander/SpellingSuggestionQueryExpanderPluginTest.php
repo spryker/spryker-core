@@ -7,10 +7,11 @@
 
 namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Aggregation\Terms;
 use Elastica\Query;
+use Elastica\Suggest;
+use Elastica\Suggest\Term;
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SuggestionQueryExpanderPlugin;
+use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQueryExpanderPlugin;
 
 /**
  * @group Unit
@@ -20,10 +21,24 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SuggestionQueryExpa
  * @group Plugin
  * @group Elasticsearch
  * @group QueryExpander
- * @group SuggestionQueryExpanderPluginTest
+ * @group SpellingSuggestionQueryExpanderPluginTest
  */
-class SuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
+class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
+
+    /**
+     * @expectedException \Spryker\Client\Search\Exception\MissingSuggestionQueryException
+     *
+     * @return void
+     */
+    public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest()
+    {
+        $baseQueryPlugin = $this->createBaseQueryPlugin();
+
+        $queryExpander = new SpellingSuggestionQueryExpanderPlugin();
+
+        $queryExpander->expandQuery($baseQueryPlugin);
+    }
 
     /**
      * @dataProvider suggestionQueryExpanderDataProvider
@@ -34,9 +49,12 @@ class SuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     public function testSuggestionQueryExpanderShouldExpandTheBaseQueryWithAggregation(Query $expectedQuery)
     {
-        $queryExpander = new SuggestionQueryExpanderPlugin();
+        $queryExpander = new SpellingSuggestionQueryExpanderPlugin();
 
-        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin());
+        $baseQuery = $this->createBaseQueryPlugin();
+        $baseQuery->getSearchQuery()->setSuggest(new Suggest());
+
+        $query = $queryExpander->expandQuery($baseQuery);
 
         $query = $query->getSearchQuery();
 
@@ -63,12 +81,13 @@ class SuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             ->createBaseQueryPlugin()
             ->getSearchQuery();
 
-        $expectedAggregation = new Terms(SuggestionQueryExpanderPlugin::AGGREGATION_NAME);
-        $expectedAggregation
-            ->setField(PageIndexMap::SUGGESTION_TERMS)
-            ->setSize(SuggestionQueryExpanderPlugin::SIZE);
+        $expectedTermSuggest = new Term(SpellingSuggestionQueryExpanderPlugin::SUGGESTION_NAME, PageIndexMap::SUGGESTION_TERMS);
+        $expectedTermSuggest->setSize(SpellingSuggestionQueryExpanderPlugin::SIZE);
 
-        $expectedQuery->addAggregation($expectedAggregation);
+        $expectedSuggest = new Suggest();
+        $expectedSuggest->addSuggestion($expectedTermSuggest);
+
+        $expectedQuery->setSuggest($expectedSuggest);
 
         return [$expectedQuery];
     }
