@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Category\Communication\Controller;
 
 use Spryker\Shared\Category\CategoryConstants;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

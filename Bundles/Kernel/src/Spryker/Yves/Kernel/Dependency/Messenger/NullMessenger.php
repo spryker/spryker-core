@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Application\Dependency\Messenger;
+namespace Spryker\Yves\Kernel\Dependency\Messenger;
 
-interface ApplicationToMessengerInterface
+class NullMessenger implements ApplicationToMessengerInterface
 {
 
     /**
@@ -15,20 +15,26 @@ interface ApplicationToMessengerInterface
      *
      * @return void
      */
-    public function addSuccessMessage($message);
+    public function addSuccessMessage($message)
+    {
+    }
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addInfoMessage($message);
+    public function addInfoMessage($message)
+    {
+    }
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addErrorMessage($message);
+    public function addErrorMessage($message)
+    {
+    }
 
 }

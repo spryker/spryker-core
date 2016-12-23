@@ -14,6 +14,7 @@ use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
 use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
@@ -50,6 +51,7 @@ class Functional extends Module
         $application->register(new FormServiceProvider());
         $application->register(new TwigServiceProvider());
         $application->register(new DateTimeFormatterServiceProvider());
+        $application->register(new FormFactoryServiceProvider());
 
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot($application);

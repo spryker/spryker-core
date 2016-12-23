@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Setup;
 
-use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater;
 
 class SetupDependencyProvider extends AbstractBundleDependencyProvider
 {

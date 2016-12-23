@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Facade;
 
+use Generated\Shared\Transfer\MessageTransfer;
+
 class KernelToMessengerBridge implements KernelToMessengerInterface
 {
 
@@ -24,11 +26,33 @@ class KernelToMessengerBridge implements KernelToMessengerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
      */
-    public function getStoredMessages()
+    public function addSuccessMessage(MessageTransfer $message)
     {
-        return $this->messengerFacade->getStoredMessages();
+        $this->messengerFacade->addSuccessMessage($message);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addInfoMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addInfoMessage($message);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addErrorMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addErrorMessage($message);
     }
 
 }

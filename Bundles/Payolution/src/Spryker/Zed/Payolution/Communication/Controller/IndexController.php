@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()

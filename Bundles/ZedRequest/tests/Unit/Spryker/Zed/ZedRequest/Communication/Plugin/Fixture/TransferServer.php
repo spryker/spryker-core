@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture;
 
-use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 
 class TransferServer extends CoreTransferServer
 {

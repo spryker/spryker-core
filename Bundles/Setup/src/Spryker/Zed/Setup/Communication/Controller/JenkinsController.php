@@ -10,7 +10,7 @@ namespace Spryker\Zed\Setup\Communication\Controller;
 use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @deprecated Will be removed in 1.0.0.

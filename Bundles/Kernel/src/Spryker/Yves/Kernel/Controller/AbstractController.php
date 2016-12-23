@@ -5,25 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Application\Controller;
+namespace Spryker\Yves\Kernel\Controller;
 
-use LogicException;
+use Silex\Application;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Yves\Application\Application;
-use Spryker\Yves\Application\Dependency\Messenger\ApplicationToMessengerBridge;
-use Spryker\Yves\Application\Dependency\Messenger\NullMessenger;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Yves\Kernel\Locator;
+use Spryker\Yves\Kernel\Dependency\Messenger\ApplicationToMessengerBridge;
+use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractController
 {
 
     /**
-     * @var \Spryker\Yves\Application\Application
+     * @var \Silex\Application
      */
     private $application;
 
@@ -45,13 +41,15 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Spryker\Yves\Application\Application $application
+     * @param \Silex\Application $application
      *
      * @return $this
      */
     public function setApplication(Application $application)
     {
         $this->application = $application;
+
+        return $this;
     }
 
     /**
@@ -67,7 +65,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Application\Application
+     * @return \Silex\Application
      */
     protected function getApplication()
     {
@@ -152,114 +150,6 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function buildForm(AbstractForm $form, array $options = [])
-    {
-        return $this->getApplication()->buildForm($form, $options);
-    }
-
-    /**
-     * @TODO rethink
-     *
-     * @param string $role
-     *
-     * @throws \LogicException
-     *
-     * @return bool
-     */
-    protected function isGranted($role)
-    {
-        $security = $this->getApplication()['security'];
-        if ($security) {
-            return $security->isGranted($role);
-        }
-
-        throw new LogicException('Security is not enabled!');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    protected function getSecurityError(Request $request)
-    {
-        $app = $this->getApplication();
-
-        return $app['security.last_error']($request);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function hasUser()
-    {
-        $securityContext = $this->getSecurityContext();
-        $token = $securityContext->getToken();
-
-        return $token === null;
-    }
-
-    /**
-     * @throws \LogicException
-     *
-     * @return mixed
-     */
-    protected function getSecurityContext()
-    {
-        $securityContext = $this->getApplication()['security'];
-        if ($securityContext === null) {
-            throw new LogicException('Security is not enabled!');
-        }
-
-        return $securityContext;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUsername()
-    {
-        $user = $this->getUser();
-        if (is_string($user)) {
-            return $user;
-        }
-
-        return $user->getUsername();
-    }
-
-    /**
-     * @throws \LogicException
-     *
-     * @return mixed
-     */
-    protected function getUser()
-    {
-        $securityContext = $this->getSecurityContext();
-        $token = $securityContext->getToken();
-        if ($token === null) {
-            throw new LogicException('No logged in user found.');
-        }
-
-        return $token->getUser();
-    }
-
-    /**
-     * @param string $viewPath
-     * @param array $parameters
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function renderView($viewPath, array $parameters = [])
-    {
-        return $this->getApplication()->render($viewPath, $parameters);
-    }
-
-    /**
      * @return \Spryker\Client\Kernel\AbstractClient
      */
     protected function getClient()
@@ -316,7 +206,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Application\Dependency\Messenger\ApplicationToMessengerInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Messenger\ApplicationToMessengerInterface
      */
     private function getMessenger()
     {

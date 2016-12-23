@@ -68,6 +68,9 @@ class EditControllerTest extends Test
         $controllerMock->method('getFacade')->willReturn($customerFacade);
 
         $this->controller = $controllerMock;
+
+        $pimple = new Pimple();
+        $this->controller->setApplication($pimple->getApplication());
     }
 
     /**

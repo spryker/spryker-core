@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 

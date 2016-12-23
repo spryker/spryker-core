@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()

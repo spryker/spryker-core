@@ -5,27 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Controller;
+namespace Spryker\Zed\Kernel\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use LogicException;
 use Silex\Application;
-use Spryker\Zed\Application\Dependency\Facade\NullMessenger;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Spryker\Zed\Application\Dependency\Facade\ApplicationToMessengerBridge;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
+use Spryker\Zed\Kernel\Dependency\Facade\NullMessenger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
-
-    const TWIG_MESSENGER_PLUGIN = 'TwigMessengerPlugin';
 
     /**
      * @var \Silex\Application
@@ -79,7 +73,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\Spryker\Zed\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
@@ -253,14 +247,14 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Application\Dependency\Facade\ApplicationToMessengerInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface
      */
     protected function getMessenger()
     {
         $messenger = ($this->application->offsetExists('messenger')) ? $this->application['messenger'] : new NullMessenger();
-        $applicationToMessengerBridge = new ApplicationToMessengerBridge($messenger);
+        $kernelToMessengerBridge = new KernelToMessengerBridge($messenger);
 
-        return $applicationToMessengerBridge;
+        return $kernelToMessengerBridge;
     }
 
     /**
@@ -279,73 +273,11 @@ abstract class AbstractController
     }
 
     /**
-     * @return void
-     */
-    protected function clearBreadcrumbs()
-    {
-        $this->getTwig()->addGlobal('breadcrumbs', []);
-    }
-
-    /**
-     * @throws \LogicException
-     *
-     * @return \Twig_Environment
-     */
-    private function getTwig()
-    {
-        $twig = $this->getApplication()['twig'];
-        if ($twig === null) {
-            throw new LogicException('Twig environment not set up.');
-        }
-
-        return $twig;
-    }
-
-    /**
      * @return \Silex\Application
      */
     protected function getApplication()
     {
-        if ($this->application === null) {
-            $pimplePlugin = new Pimple();
-            $this->application = $pimplePlugin->getApplication();
-        }
-
         return $this->application;
-    }
-
-    /**
-     * @param string $label
-     * @param string $uri
-     *
-     * @return void
-     */
-    protected function addBreadcrumb($label, $uri)
-    {
-        $twig = $this->getTwig();
-        $globals = $twig->getGlobals();
-        $breadcrumbs = $globals['breadcrumbs'];
-
-        if ($breadcrumbs === null) {
-            $breadcrumbs = [];
-        }
-
-        $breadcrumbs[] = [
-            'label' => $label,
-            'uri' => $uri,
-        ];
-
-        $twig->addGlobal('breadcrumbs', $breadcrumbs);
-    }
-
-    /**
-     * @param string $uri
-     *
-     * @return void
-     */
-    protected function setMenuHighlight($uri)
-    {
-        $this->getTwig()->addGlobal('menu_highlight', $uri);
     }
 
     /**
@@ -354,30 +286,6 @@ abstract class AbstractController
     protected function getAssertion()
     {
         return $this->getApplication()['assertion'];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $blockUrl
-     *
-     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function handleSubRequest(Request $request, $blockUrl)
-    {
-        $blockResponse = $this->getSubrequestHandler()->handleSubRequest($request, $blockUrl);
-        if ($blockResponse instanceof RedirectResponse) {
-            return $blockResponse;
-        }
-
-        return $blockResponse->getContent();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
-     */
-    protected function getSubrequestHandler()
-    {
-        return $this->getApplication()['sub_request'];
     }
 
 }

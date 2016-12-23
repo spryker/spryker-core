@@ -11,7 +11,6 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Auth\AuthClient;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;

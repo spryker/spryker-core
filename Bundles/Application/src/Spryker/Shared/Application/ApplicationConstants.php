@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Application;
 
+use Spryker\Shared\Kernel\KernelConstants;
+
 interface ApplicationConstants
 {
 
@@ -40,8 +42,14 @@ interface ApplicationConstants
 
     const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
-    const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
-    const CORE_NAMESPACES = 'CORE_NAMESPACES';
+    /**
+     * @deprecated Use `KernelConstants::PROJECT_NAMESPACES` instead
+     */
+    const PROJECT_NAMESPACES = KernelConstants::PROJECT_NAMESPACES;
+    /**
+     * @deprecated Use `KernelConstants::CORE_NAMESPACES` instead
+     */
+    const CORE_NAMESPACES = KernelConstants::CORE_NAMESPACES;
 
     const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
     const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
@@ -74,7 +82,11 @@ interface ApplicationConstants
      * Global timezone used to for underlying data, timezones for presentation layer can be changed in stores configuration
      */
     const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
-    const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
+
+    /**
+     * @deprecated Use `KernelConstants::PROJECT_NAMESPACE` instead
+     */
+    const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 
     /**
      * Cloud

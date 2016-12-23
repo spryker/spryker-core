@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Storage\Provider;
 
 use ErrorException;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\Storage\StorageConstants;

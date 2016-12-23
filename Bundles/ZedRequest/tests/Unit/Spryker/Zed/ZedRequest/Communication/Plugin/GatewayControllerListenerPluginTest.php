@@ -13,22 +13,22 @@ use ReflectionClass;
 use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
-use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
-use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;
-use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\Request;
-use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
+use Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent;
+use Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture\GatewayController;
+use Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture\NotGatewayController;
+use Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture\Request;
+use Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture\TransferServer;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group Kernel
+ * @group ZedRequest
  * @group Communication
  * @group Plugin
  * @group GatewayControllerListenerPluginTest

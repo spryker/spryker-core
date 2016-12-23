@@ -11,7 +11,6 @@ use Silex\Application as SilexApplication;
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
-use Spryker\Shared\Gui\Form\AbstractForm;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -25,46 +24,6 @@ class Application extends SilexApplication
     const REQUEST = 'request';
     const ROUTERS = 'routers';
     const REQUEST_STACK = 'request_stack';
-
-    /**
-     * Returns a form.
-     *
-     * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
-     *
-     * @see createBuilder()
-     *
-     * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)->create(FooFormType::class);
-     *
-     * @param string|\Symfony\Component\Form\FormTypeInterface $type The type of the form
-     * @param mixed $data The initial data
-     * @param array $options The options
-     *
-     * @return \Symfony\Component\Form\FormInterface The form named after the type
-     */
-    public function createForm($type = 'form', $data = null, array $options = [])
-    {
-        /** @var \Symfony\Component\Form\FormInterface $form */
-        $form = $this['form.factory']->create($type, $data, $options);
-        $request = ($this[self::REQUEST_STACK]) ? $this[self::REQUEST_STACK]->getCurrentRequest() : $this[self::REQUEST];
-        $form->handleRequest($request);
-
-        return $form;
-    }
-
-    /**
-     * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
-     *
-     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
-     * @param array $options The options
-     *
-     * @return \Symfony\Component\Form\FormInterface The form named after the type
-     */
-    public function buildForm(AbstractForm $form, array $options = [])
-    {
-        return $this['form.factory']->create($form, $form->populateFormFields(), $options);
-    }
 
     /**
      * Adds a router to the list of routers.

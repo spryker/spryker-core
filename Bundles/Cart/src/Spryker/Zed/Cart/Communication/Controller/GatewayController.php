@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Cart\Communication\Controller;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Cart\Business\CartFacade getFacade()

@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\ZedRequest\Communication\Plugin\Fixture;
 
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
 use stdClass;
 
 class GatewayController extends AbstractGatewayController

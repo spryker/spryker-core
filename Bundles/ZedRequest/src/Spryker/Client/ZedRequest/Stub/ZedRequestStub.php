@@ -9,7 +9,7 @@ namespace Spryker\Client\ZedRequest\Stub;
 
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
-class BaseStub
+class ZedRequestStub
 {
 
     /**

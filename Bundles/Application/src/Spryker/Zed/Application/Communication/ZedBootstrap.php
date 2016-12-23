@@ -10,9 +10,9 @@ namespace Spryker\Zed\Application\Communication;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MessengerServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
@@ -111,9 +111,7 @@ class ZedBootstrap
      */
     protected function getServiceProvider()
     {
-        return [
-            new MessengerServiceProvider()
-        ];
+        return [];
     }
 
     /**
@@ -189,7 +187,7 @@ class ZedBootstrap
                 $variables += [
                     'environment' => APPLICATION_ENV,
                     'store' => Store::getInstance()->getStoreName(),
-                    'title' => Config::get(ApplicationConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
+                    'title' => Config::get(KernelConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
                     'currentController' => get_class($this),
                 ];
 

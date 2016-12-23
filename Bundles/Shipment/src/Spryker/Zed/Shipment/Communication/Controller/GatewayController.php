@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()

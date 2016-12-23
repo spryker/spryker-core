@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\BundleNameFinder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
@@ -108,7 +108,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
      */
     private function getProjectNamespace()
     {
-        return Config::get(ApplicationConstants::PROJECT_NAMESPACES)[0];
+        return Config::get(KernelConstants::PROJECT_NAMESPACES)[0];
     }
 
 }

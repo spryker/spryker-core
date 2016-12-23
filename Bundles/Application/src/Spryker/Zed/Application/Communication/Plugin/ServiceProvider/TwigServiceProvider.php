@@ -12,6 +12,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigFileSystem;
 use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
@@ -48,7 +49,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
-            $namespaces = Config::get(ApplicationConstants::PROJECT_NAMESPACES);
+            $namespaces = Config::get(KernelConstants::PROJECT_NAMESPACES);
 
             $storeName = Store::getInstance()->getStoreName();
 

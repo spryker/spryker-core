@@ -10,7 +10,7 @@ namespace Spryker\Zed\Wishlist\Communication\Controller;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Wishlist\Business\WishlistFacade getFacade()

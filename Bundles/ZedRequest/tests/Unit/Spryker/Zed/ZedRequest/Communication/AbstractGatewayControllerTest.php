@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Kernel\Communication;
+namespace Unit\Spryker\Zed\ZedRequest\Communication;
 
 use PHPUnit_Framework_TestCase;
 use Silex\Application;
-use Unit\Spryker\Zed\Kernel\Communication\Fixtures\FixtureGatewayController;
+use Spryker\Zed\ZedRequest\Communication\Controller\AbstractGatewayController;
+use Unit\Spryker\Zed\ZedRequest\Communication\Fixture\FixtureGatewayController;
 
 /**
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group Kernel
+ * @group ZedRequest
  * @group Communication
  * @group AbstractGatewayControllerTest
  */
@@ -30,7 +31,7 @@ class AbstractGatewayControllerTest extends PHPUnit_Framework_TestCase
         $application = new Application();
 
         $this->assertInstanceOf(
-            'Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController',
+            AbstractGatewayController::class,
             new FixtureGatewayController($application)
         );
     }

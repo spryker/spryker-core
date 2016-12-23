@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Controller\Fixtures;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Assertion\Business\AssertionFacade;
 
 class MockController extends AbstractController

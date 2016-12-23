@@ -8,11 +8,12 @@
 namespace Spryker\Shared\Cms;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 
 interface CmsConstants
 {
 
-    const PROJECT_NAMESPACE = ApplicationConstants::PROJECT_NAMESPACE;
+    const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 
     const RESOURCE_TYPE_PAGE = 'page';
     const RESOURCE_TYPE_BLOCK = 'block';

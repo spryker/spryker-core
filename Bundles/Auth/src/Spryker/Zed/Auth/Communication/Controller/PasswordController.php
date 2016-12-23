@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Auth\Communication\Controller;
 
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

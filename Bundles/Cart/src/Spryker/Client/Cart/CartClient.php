@@ -262,9 +262,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
-    protected function getZedStub()
+    public function getZedStub()
     {
         return $this->getFactory()->createZedStub();
     }

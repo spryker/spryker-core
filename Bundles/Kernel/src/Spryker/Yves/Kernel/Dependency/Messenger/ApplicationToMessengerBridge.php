@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Application\Dependency\Messenger;
+namespace Spryker\Yves\Kernel\Dependency\Messenger;
 
 class ApplicationToMessengerBridge implements ApplicationToMessengerInterface
 {

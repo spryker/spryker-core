@@ -2,16 +2,17 @@
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 
-$config[ApplicationConstants::PROJECT_NAMESPACES] = [
+$config[KernelConstants::PROJECT_NAMESPACES] = [
     'Pyz',
 ];
-$config[ApplicationConstants::CORE_NAMESPACES] = [
+$config[KernelConstants::CORE_NAMESPACES] = [
     'Spryker',
 ];
 
 $config[ApplicationConstants::PROJECT_TIMEZONE] = 'UTC';
-$config[ApplicationConstants::PROJECT_NAMESPACE] = 'Pyz';
+$config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
 
 $config[ErrorHandlerConstants::ERROR_LEVEL] = E_ALL;
 

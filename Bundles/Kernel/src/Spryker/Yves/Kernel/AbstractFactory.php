@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
@@ -108,18 +107,6 @@ abstract class AbstractFactory implements FactoryInterface
     protected function createClientResolver()
     {
         return new ClientResolver();
-    }
-
-    /**
-     * @deprecated Use `$this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)` to get the form factory.
-     *
-     * Ensure that you registered `Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider`
-     *
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected function getFormFactory()
-    {
-        return $this->getProvidedDependency(KernelConstants::FORM_FACTORY);
     }
 
     /**
