@@ -31,6 +31,9 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
 
             $itemTransfer->setUnitGrossPriceWithProductOptions($itemTransfer->getUnitGrossPrice() + $productOptionUnitTotal);
             $itemTransfer->setSumGrossPriceWithProductOptions($itemTransfer->getSumGrossPrice() + $productOptionSumTotal);
+
+            $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithProductOptions());
+            $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithProductOptions());
         }
     }
 

@@ -231,18 +231,8 @@ class SaverTest extends Test
         $bundleEntity
             ->setName('test bundle')
             ->setSku('13243546')
-            ->setGrossPrice(1000)
-            ->setBundleType('NonSplitBundle');
+            ->setGrossPrice(1000);
         $bundleEntity->save();
-
-        $bundleItemEntity = new SpySalesOrderItemBundleItem();
-        $bundleItemEntity
-            ->setFkSalesOrderItemBundle($bundleEntity->getIdSalesOrderItemBundle())
-            ->setName('test bundle item')
-            ->setSku('13243546')
-            ->setGrossPrice(1000)
-            ->setVariety('Simple');
-        $bundleItemEntity->save();
 
         return $bundleEntity;
     }

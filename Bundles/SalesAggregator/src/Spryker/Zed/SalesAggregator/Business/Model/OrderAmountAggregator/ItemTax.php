@@ -59,6 +59,9 @@ class ItemTax implements OrderAmountAggregatorInterface
 
             $itemTransfer->setUnitTaxAmount($unitTaxAmount);
             $itemTransfer->setSumTaxAmount($sumTaxAmount);
+
+            $itemTransfer->setUnitTaxTotal($unitTaxAmount);
+            $itemTransfer->setSumTaxTotal($sumTaxAmount);
         }
     }
 

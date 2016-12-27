@@ -81,6 +81,9 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
             $itemTransfer->setUnitTaxAmountWithProductOptionAndDiscountAmounts($itemUnitAmount + $unitOptionTaxTotalAmount);
             $itemTransfer->setSumTaxAmountWithProductOptionAndDiscountAmounts($itemSumTaxAmount + $sumOptionTaxTotalAmount);
 
+            $itemTransfer->setUnitTaxTotal($itemTransfer->getUnitTaxAmountWithProductOptionAndDiscountAmounts());
+            $itemTransfer->setSumTaxTotal($itemTransfer->getSumTaxAmountWithProductOptionAndDiscountAmounts());
+
         }
     }
 

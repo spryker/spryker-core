@@ -109,12 +109,14 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
                 $expenseUnitTotalDiscountAmount = $expenseTransfer->getUnitGrossPrice();
             }
             $expenseTransfer->setUnitTotalDiscountAmount($expenseUnitTotalDiscountAmount);
+            $expenseTransfer->setFinalUnitDiscountAmount($expenseUnitTotalDiscountAmount);
 
             $expenseSumTotalDiscountAmount = $expenseTransfer->getSumTotalDiscountAmount() + $calculatedDiscountTransfer->getSumGrossAmount();
             if ($expenseSumTotalDiscountAmount > $expenseTransfer->getSumGrossPrice()) {
                 $expenseSumTotalDiscountAmount = $expenseTransfer->getSumGrossPrice();
             }
             $expenseTransfer->setSumTotalDiscountAmount($expenseSumTotalDiscountAmount);
+            $expenseTransfer->setFinalSumDiscountAmount($expenseSumTotalDiscountAmount);
 
             $this->setExpenseRefundableAmount($expenseTransfer, $calculatedDiscountTransfer);
         }
@@ -160,9 +162,13 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
                 $expenseTransfer->getUnitGrossPrice() - $expenseTransfer->getUnitTotalDiscountAmount()
             );
 
+            $expenseTransfer->setUnitItemTotal($expenseTransfer->getUnitGrossPriceWithDiscounts());
+
             $expenseTransfer->setSumGrossPriceWithDiscounts(
                 $expenseTransfer->getSumGrossPrice() - $expenseTransfer->getSumTotalDiscountAmount()
             );
+
+            $expenseTransfer->setSumItemTotal($expenseTransfer->getSumGrossPriceWithDiscounts());
         }
     }
 

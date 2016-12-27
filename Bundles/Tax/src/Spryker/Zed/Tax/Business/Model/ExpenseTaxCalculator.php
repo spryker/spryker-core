@@ -45,6 +45,9 @@ class ExpenseTaxCalculator implements CalculatorInterface
 
             $expenseTransfer->setUnitTaxAmount($unitTaxAmount);
             $expenseTransfer->setSumTaxAmount($sumTaxAmount);
+
+            $expenseTransfer->setUnitTaxTotal($unitTaxAmount);
+            $expenseTransfer->setSumTaxTotal($sumTaxAmount);
         }
     }
 

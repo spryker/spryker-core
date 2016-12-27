@@ -62,6 +62,9 @@ class ExpenseTaxWithDiscountsCalculator implements CalculatorInterface
 
             $expenseTransfer->setSumTaxAmountWithDiscounts($itemSumTaxAmount);
 
+            $expenseTransfer->setUnitTaxTotal($expenseTransfer->getUnitTaxAmountWithDiscounts());
+            $expenseTransfer->setSumTaxTotal($expenseTransfer->getSumTaxAmountWithDiscounts());
+
         }
     }
 

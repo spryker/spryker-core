@@ -27,6 +27,9 @@ class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements S
     {
         $this->getFacade()
             ->updateBundleAvailability($sku);
+
+        $this->getFacade()
+            ->updateAffectedBundlesAvailability($sku);
     }
 
 }

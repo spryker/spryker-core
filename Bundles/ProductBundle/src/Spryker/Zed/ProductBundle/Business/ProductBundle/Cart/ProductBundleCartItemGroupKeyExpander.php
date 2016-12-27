@@ -7,11 +7,17 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGroupKeyExpanderInterface
 {
 
     const GROUP_KEY_DELIMITER = '_';
+
+    /**
+     * @var array
+     */
+    protected $skuMap = [];
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -27,11 +33,27 @@ class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGrou
 
             $itemTransfer->requireGroupKey();
 
-            $groupKey = $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier();
+            $groupKey = $this->buildGroupKey($itemTransfer);
             $itemTransfer->setGroupKey($groupKey);
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function buildGroupKey(ItemTransfer $itemTransfer)
+    {
+        if (!isset($this->skuMap[$itemTransfer->getSku()])) {
+            $this->skuMap[$itemTransfer->getSku()] = 1;
+        } else {
+            $this->skuMap[$itemTransfer->getSku()]++;
+        }
+
+        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . $this->skuMap[$itemTransfer->getSku()];
     }
 
 }

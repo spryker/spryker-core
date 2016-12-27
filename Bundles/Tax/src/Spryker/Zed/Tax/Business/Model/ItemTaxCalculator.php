@@ -54,6 +54,9 @@ class ItemTaxCalculator implements CalculatorInterface
 
             $itemTransfer->setUnitTaxAmount($unitTaxAmount);
             $itemTransfer->setSumTaxAmount($sumTaxAmount);
+
+            $itemTransfer->setUnitTaxAmount($itemTransfer->getUnitTaxAmount());
+            $itemTransfer->getSumTaxAmount($itemTransfer->getSumTaxAmount());
         }
     }
 

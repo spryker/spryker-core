@@ -47,6 +47,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $itemTransfer->setUnitTotalDiscountAmount($totalDiscountUnitGrossAmount);
         $itemTransfer->setSumTotalDiscountAmount($totalDiscountSumGrossAmount);
 
+        $itemTransfer->setFinalUnitDiscountAmount($totalDiscountUnitGrossAmount);
+        $itemTransfer->setFinalSumDiscountAmount($totalDiscountSumGrossAmount);
+
         $itemTransfer->setUnitGrossPriceWithDiscounts(
             $itemTransfer->getUnitGrossPrice() - $totalDiscountUnitGrossAmount
         );
@@ -54,6 +57,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
         $itemTransfer->setSumGrossPriceWithDiscounts(
             $itemTransfer->getSumGrossPrice() - $totalDiscountSumGrossAmount
         );
+
+        $itemTransfer->setUnitItemTotal($itemTransfer->getUnitGrossPriceWithDiscounts());
+        $itemTransfer->setSumItemTotal($itemTransfer->getSumGrossPriceWithDiscounts());
     }
 
     /**
@@ -122,6 +128,9 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $expenseTransfer->setUnitTotalDiscountAmount($unitAmount);
             $expenseTransfer->setSumTotalDiscountAmount($sumAmount);
 
+            $expenseTransfer->setFinalUnitDiscountAmount($expenseTransfer->getUnitTotalDiscountAmount());
+            $expenseTransfer->setFinalUnitDiscountAmount($expenseTransfer->getSumTotalDiscountAmount());
+
             $expenseTransfer->setUnitGrossPriceWithDiscounts(
                 $expenseTransfer->getUnitGrossPrice() - $unitAmount
             );
@@ -129,6 +138,11 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $expenseTransfer->setSumGrossPriceWithDiscounts(
                 $expenseTransfer->getSumGrossPrice() - $sumAmount
             );
+
+            $expenseTransfer->setUnitItemTotal($expenseTransfer->getUnitGrossPriceWithDiscounts());
+            $expenseTransfer->setSumItemTotal($expenseTransfer->getSumGrossPriceWithDiscounts());
+
+
         }
     }
 

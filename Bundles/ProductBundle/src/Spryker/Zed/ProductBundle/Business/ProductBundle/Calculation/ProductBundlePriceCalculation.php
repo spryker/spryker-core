@@ -79,8 +79,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     }
 
     /**
-     * @todo remove after total price refactoring
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -88,7 +86,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
      */
     protected function addAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
-        // item price as assigned for product
         $bundleItemTransfer->setUnitGrossPrice(
             $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice()
         );
@@ -97,22 +94,20 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->getSumGrossPrice() + $itemTransfer->getSumGrossPrice()
         );
 
-        // + options
-        $bundleItemTransfer->setUnitGrossPriceWithProductOptions(
-            $bundleItemTransfer->getUnitGrossPriceWithProductOptions() + $itemTransfer->getUnitGrossPriceWithProductOptions()
+        $bundleItemTransfer->setUnitItemTotal(
+            $bundleItemTransfer->getUnitItemTotal() + $itemTransfer->getUnitItemTotal()
         );
 
-        $bundleItemTransfer->setSumGrossPriceWithProductOptions(
-            $bundleItemTransfer->getSumGrossPriceWithProductOptions() + $itemTransfer->getSumGrossPriceWithProductOptions()
+        $bundleItemTransfer->setSumItemTotal(
+            $bundleItemTransfer->getSumItemTotal() + $itemTransfer->getSumItemTotal()
         );
 
-        // options + discounts
-        $bundleItemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
-            $bundleItemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts() + $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts()
+        $bundleItemTransfer->setFinalUnitDiscountAmount(
+            $bundleItemTransfer->getFinalUnitDiscountAmount() + $itemTransfer->getFinalUnitDiscountAmount()
         );
 
-        $bundleItemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
-            $bundleItemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts() + $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts()
+        $bundleItemTransfer->setFinalSumDiscountAmount(
+            $bundleItemTransfer->getFinalSumDiscountAmount() + $itemTransfer->getFinalSumDiscountAmount()
         );
     }
 
@@ -126,10 +121,10 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             $bundleItemTransfer->setUnitGrossPrice(0);
             $bundleItemTransfer->setSumGrossPrice(0);
-            $bundleItemTransfer->setUnitGrossPriceWithProductOptions(0);
-            $bundleItemTransfer->setSumGrossPriceWithProductOptions(0);
-            $bundleItemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(0);
-            $bundleItemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(0);
+            $bundleItemTransfer->setUnitItemTotal(0);
+            $bundleItemTransfer->setSumItemTotal(0);
+            $bundleItemTransfer->setFinalUnitDiscountAmount(0);
+            $bundleItemTransfer->setFinalSumDiscountAmount(0);
 
         }
     }

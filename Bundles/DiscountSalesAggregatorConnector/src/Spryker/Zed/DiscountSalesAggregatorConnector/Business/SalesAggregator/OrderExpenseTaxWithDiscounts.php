@@ -55,6 +55,7 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
             );
 
             $expenseTransfer->setUnitTaxAmountWithDiscounts($itemUnitTaxAmount);
+            $expenseTransfer->setUnitTaxTotal($itemUnitTaxAmount);
 
             $itemSumTaxAmount = $this->calculateTaxAmount(
                 $expenseTransfer->getSumGrossPriceWithDiscounts(),
@@ -62,6 +63,7 @@ class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
             );
 
             $expenseTransfer->setSumTaxAmountWithDiscounts($itemSumTaxAmount);
+            $expenseTransfer->setSumTaxTotal($itemSumTaxAmount);
 
         }
     }

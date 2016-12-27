@@ -111,7 +111,7 @@ class ProductBundleFacadeTest extends Test
         $itemTransfer = $cartChangeTransfer->getItems()[0];
 
         $this->assertEquals(
-            $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() ,
+            $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier(). '1' ,
             $itemTransfer->getGroupKey()
         );
     }

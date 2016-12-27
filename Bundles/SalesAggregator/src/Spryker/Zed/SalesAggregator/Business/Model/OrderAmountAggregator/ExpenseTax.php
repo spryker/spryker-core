@@ -64,6 +64,9 @@ class ExpenseTax implements OrderAmountAggregatorInterface
 
             $expenseTransfer->setUnitTaxAmount($expenseUnitAmount);
             $expenseTransfer->setSumTaxAmount($expenseSumTaxAmount);
+
+            $expenseTransfer->setUnitTaxTotal($expenseUnitAmount);
+            $expenseTransfer->setSumTaxTotal($expenseSumTaxAmount);
         }
     }
 
