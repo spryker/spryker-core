@@ -75,7 +75,8 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
                 ->queryBundleProductBySku($bundleItemTransfer->getSku())
                 ->find();
 
-            if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems)) {
+
+            if (!$this->isAllCheckoutBundledItemsAvailable($currentCartItems, $bundledItems)) {
                 $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
             }
         }
@@ -105,7 +106,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
                 ->find();
 
             if (count($bundledItems) > 0) {
-                if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems)) {
+                if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $itemTransfer->getQuantity())) {
                     $availabilityEntity = $this->availabilityQueryContainer
                         ->querySpyAvailabilityBySku($itemTransfer->getSku())
                         ->findOne();
@@ -232,16 +233,38 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     /**
      * @param \ArrayObject $quoteItems
      * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param int $cartItemQuantity
      *
      * @return bool
      */
-    protected function isAllBundleItemsAvailable(ArrayObject $quoteItems, ObjectCollection $bundledProducts)
+    protected function isAllBundleItemsAvailable(ArrayObject $quoteItems, ObjectCollection $bundledProducts, $cartItemQuantity)
     {
         foreach ($bundledProducts as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            if (!$this->checkIfItemIsSellable($quoteItems, $sku, $productBundleEntity->getQuantity())) {
+            $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $cartItemQuantity;
+            if (!$this->checkIfItemIsSellable($quoteItems, $sku, $totalBundledItemQuantity)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \ArrayObject $currentCartItems
+     * @param ObjectCollection $bundledItems
+     *
+     * @return bool
+     */
+    protected function isAllCheckoutBundledItemsAvailable(ArrayObject $currentCartItems, ObjectCollection $bundledItems)
+    {
+        foreach ($bundledItems as $productBundleEntity) {
+            $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
+
+            $sku = $bundledProductConcreteEntity->getSku();
+            if (!$this->checkIfItemIsSellable($currentCartItems, $sku)) {
                 return false;
             }
         }
