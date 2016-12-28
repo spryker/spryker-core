@@ -111,7 +111,7 @@ class ProductBundleFacadeTest extends Test
         $itemTransfer = $cartChangeTransfer->getItems()[0];
 
         $this->assertEquals(
-            $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier(). '1' ,
+            $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . '1',
             $itemTransfer->getGroupKey()
         );
     }
@@ -273,13 +273,6 @@ class ProductBundleFacadeTest extends Test
         $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::BUNDLE_SKU_3)->findOne();
 
         $this->assertSame(0, $bundledProductAvailability->getQuantity());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSaveSalesOrderBundleItems()
-    {
     }
 
     /**

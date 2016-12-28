@@ -60,14 +60,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function updateAffectedBundlesAvailability($bundledProductSku)
     {
-        $bundledProducts = $this->getBundleItemsBySku($bundledProductSku);
+        $bundleProducts = $this->getBundlesUsingProductBySku($bundledProductSku);
 
-        foreach ($bundledProducts as $bundledProductEntity) {
+        foreach ($bundleProducts as $productBundleEntity) {
 
-            $bundleItems = $this->getBundleItemsByIdProduct($bundledProductEntity->getFkProduct());
+            $bundleItems = $this->getBundleItemsByIdProduct($productBundleEntity->getFkProduct());
 
-            $bundleProductSku = $bundledProductEntity
-                ->getSpyProductRelatedByFkProduct()
+            $bundleProductSku = $productBundleEntity->getSpyProductRelatedByFkProduct()
                 ->getSku();
 
             $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
@@ -81,9 +80,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function updateBundleAvailability($bundleProductSku)
     {
-        $bundleProductEntity = $this->productBundleQueryContainer
-              ->queryBundleProductBySku($bundleProductSku)
-              ->findOne();
+        $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
 
         if ($bundleProductEntity === null) {
             return;
@@ -94,32 +91,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return void
-     */
-    protected function updateAbstractAvailabilityQuantity($idAvailabilityAbstract)
-    {
-        $availabilityAbstractEntity = $this->availabilityQueryContainer
-            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
-            ->findOne();
-
-        $sumQuantity = (int)$this->availabilityQueryContainer
-            ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
-            ->findOne();
-
-        $availabilityAbstractEntity->setQuantity($sumQuantity);
-        $availabilityAbstractEntity->save();
-    }
-
-    /**
      * @param int $idConcreteProduct
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getBundleItemsByIdProduct($idConcreteProduct)
     {
-        if (!isset(static::$bundleItemEntityCache[$idConcreteProduct])) {
+        if (!isset(static::$bundleItemEntityCache[$idConcreteProduct]) || count(static::$bundleItemEntityCache[$idConcreteProduct]) == 0) {
             static::$bundleItemEntityCache[$idConcreteProduct] = $this->productBundleQueryContainer
                 ->queryBundleProduct($idConcreteProduct)
                 ->find();
@@ -133,9 +111,9 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getBundleItemsBySku($bundledProductSku)
+    protected function getBundlesUsingProductBySku($bundledProductSku)
     {
-        if (!isset(static::$bundledItemEntityCache[$bundledProductSku])) {
+        if (!isset(static::$bundledItemEntityCache[$bundledProductSku]) || count(static::$bundledItemEntityCache[$bundledProductSku]) == 0) {
             static::$bundledItemEntityCache[$bundledProductSku] = $this->productBundleQueryContainer
                 ->queryBundledProductBySku($bundledProductSku)
                 ->find();
@@ -158,9 +136,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
                 ->getSku();
 
-            $bundledProductAvailabilityEntity = $this->availabilityQueryContainer
-                ->querySpyAvailabilityBySku($bundledItemSku)
-                ->findOne();
+            $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku($bundledItemSku);
 
             if ($bundledProductAvailabilityEntity === null) {
                 continue;
@@ -173,12 +149,34 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             }
         }
 
-        $idAvailabilityAbstract = $this->availabilityFacade->saveProductAvailability(
+        $this->availabilityFacade->saveProductAvailability(
             $bundleProductSku,
             $bundleAvailabilityQuantity
         );
+    }
 
-        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     */
+    protected function findBundleProductEntityBySku($bundleProductSku)
+    {
+        return $this->productBundleQueryContainer
+            ->queryBundleProductBySku($bundleProductSku)
+            ->findOne();
+    }
+
+    /**
+     * @param string $bundledItemSku
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function findBundledItemAvailabilityEntityBySku($bundledItemSku)
+    {
+        return $this->availabilityQueryContainer
+            ->querySpyAvailabilityBySku($bundledItemSku)
+            ->findOne();
     }
 
 }

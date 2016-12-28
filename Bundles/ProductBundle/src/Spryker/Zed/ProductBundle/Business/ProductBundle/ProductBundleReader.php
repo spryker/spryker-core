@@ -41,14 +41,11 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
-        $bundledProducts = $this->productBundleQueryContainer
-            ->queryBundleProduct($idProductConcrete)
-            ->joinWithSpyProductRelatedByFkBundledProduct()
-            ->find();
+        $bundledProducts = $this->findBundledProducts($idProductConcrete);
 
         $bundledProductsTransferCollection = new ArrayObject();
         foreach ($bundledProducts as $bundledProductEntity) {
@@ -72,31 +69,51 @@ class ProductBundleReader implements ProductBundleReaderInterface
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-         $productConcreteTransfer->requireIdProductConcrete();
+        $productConcreteTransfer->requireIdProductConcrete()->requireSku();
 
-         $bundledProducts = $this->findBundledProductsByIdProductConcrete(
-             $productConcreteTransfer->getIdProductConcrete()
-         );
+        $bundledProducts = $this->findBundledProductsByIdProductConcrete(
+            $productConcreteTransfer->getIdProductConcrete()
+        );
 
-        if (count($bundledProducts) === 0) {
+        if (count($bundledProducts) == 0) {
             return $productConcreteTransfer;
         }
 
-         $productBundleTransfer = new ProductBundleTransfer();
+        $productBundleTransfer = new ProductBundleTransfer();
+        $productBundleTransfer->setBundledProducts($bundledProducts);
 
-         $productBundleTransfer->setBundledProducts($bundledProducts);
-
-         $productBundleAvailabilityEntity = $this->availabilityQueryContainer
-             ->querySpyAvailabilityBySku($productConcreteTransfer->getSku())
-             ->findOneOrCreate();
-
+        $productBundleAvailabilityEntity = $this->findOrCreateProductBundleAvailabilityEntity($productConcreteTransfer);
         if ($productBundleAvailabilityEntity !== null) {
             $productBundleTransfer->setAvailability($productBundleAvailabilityEntity->getQuantity());
         }
 
-         $productConcreteTransfer->setProductBundle($productBundleTransfer);
+        $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
-         return $productConcreteTransfer;
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findBundledProducts($idProductConcrete)
+    {
+        return $this->productBundleQueryContainer
+            ->queryBundleWithRelatedBundledProduct($idProductConcrete)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function findOrCreateProductBundleAvailabilityEntity(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->availabilityQueryContainer
+            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku())
+            ->findOneOrCreate();
     }
 
 }

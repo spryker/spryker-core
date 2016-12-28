@@ -59,33 +59,29 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function checkCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function checkCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $currentCartItems = $quoteTransfer->getItems();
+        $itemsInCart = $quoteTransfer->getItems();
 
         $checkoutErrorMessages = new ArrayObject();
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
-            $bundledItems = $this->productBundleQueryContainer
-                ->queryBundleProductBySku($bundleItemTransfer->getSku())
-                ->find();
-
-
-            if (!$this->isAllCheckoutBundledItemsAvailable($currentCartItems, $bundledItems)) {
+            $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());
+            if (!$this->isAllCheckoutBundledItemsAvailable($itemsInCart, $bundledItems)) {
                 $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
             }
         }
 
         if (count($checkoutErrorMessages) > 0) {
-            $checkoutResponse->setIsSuccess(false);
+            $checkoutResponseTransfer->setIsSuccess(false);
 
             foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
-                $checkoutResponse->addError($checkoutErrorTransfer);
+                $checkoutResponseTransfer->addError($checkoutErrorTransfer);
             }
         }
     }
@@ -98,32 +94,30 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer)
     {
         $cartPreCheckErrorMessages = new ArrayObject();
-        $currentCartItems = $cartChangeTransfer->getQuote()->getItems();
+        $itemsInCart = $cartChangeTransfer->getQuote()->getItems();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
 
-            $bundledItems = $this->productBundleQueryContainer
-                ->queryBundleProductBySku($itemTransfer->getSku())
-                ->find();
+            $bundledItems = $this->findBundledProducts($itemTransfer->getSku());
 
             if (count($bundledItems) > 0) {
-                if (!$this->isAllBundleItemsAvailable($currentCartItems, $bundledItems, $itemTransfer->getQuantity())) {
-                    $availabilityEntity = $this->availabilityQueryContainer
-                        ->querySpyAvailabilityBySku($itemTransfer->getSku())
-                        ->findOne();
+                if (!$this->isAllBundleItemsAvailable($itemsInCart, $bundledItems, $itemTransfer->getQuantity())) {
+                    $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku());
 
                     $cartPreCheckErrorMessages[] = $this->createItemIsNotAvailableMessageTransfer($availabilityEntity->getQuantity());
                 }
-            } else {
-                $sku = $itemTransfer->getSku();
-                $itemQuantity = $itemTransfer->getQuantity();
-
-                if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $itemQuantity)) {
-                    $available = $this->availabilityFacade->calculateStockForProduct($sku);
-                    $cartPreCheckErrorMessages->append(
-                        $this->createItemIsNotAvailableMessageTransfer($available)
-                    );
-                }
+                continue;
             }
+
+            $sku = $itemTransfer->getSku();
+            $itemQuantity = $itemTransfer->getQuantity();
+
+            if (!$this->checkIfItemIsSellable($itemsInCart, $sku, $itemQuantity)) {
+                $available = $this->availabilityFacade->calculateStockForProduct($sku);
+                $cartPreCheckErrorMessages->append(
+                    $this->createItemIsNotAvailableMessageTransfer($available)
+                );
+            }
+
         }
 
         return $this->createCartPreCheckResponseTransfer($cartPreCheckErrorMessages);
@@ -156,7 +150,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     protected function createItemIsNotAvailableMessageTransfer($stock)
     {
         $translationKey = $this->getItemAvailabilityTranslationKey($stock);
-        return $this->createMessageTransfer($stock, $translationKey);
+        return $this->createCartMessageTransfer($stock, $translationKey);
     }
 
     /**
@@ -205,7 +199,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageTransfer($stock, $translationKey)
+    protected function createCartMessageTransfer($stock, $translationKey)
     {
         $messageTranfer = new MessageTransfer();
         $messageTranfer->setValue($translationKey);
@@ -232,7 +226,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
 
     /**
      * @param \ArrayObject $quoteItems
-     * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundledProducts
      * @param int $cartItemQuantity
      *
      * @return bool
@@ -254,7 +248,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
 
     /**
      * @param \ArrayObject $currentCartItems
-     * @param ObjectCollection $bundledItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundledItems
      *
      * @return bool
      */
@@ -288,6 +282,30 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
         }
 
         return $uniqueBundledItems;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findBundledProducts($sku)
+    {
+        return $this->productBundleQueryContainer
+            ->queryBundleProductBySku($sku)
+            ->find();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
+     */
+    protected function findAvailabilityEntityBySku($sku)
+    {
+        return $this->availabilityQueryContainer
+            ->querySpyAvailabilityBySku($sku)
+            ->findOne();
     }
 
 }

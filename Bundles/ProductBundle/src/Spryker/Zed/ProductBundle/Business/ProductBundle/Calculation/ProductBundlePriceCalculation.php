@@ -46,7 +46,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
 
                 $itemTransfer->setRelatedBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
 
-                $this->addAmounts($bundleItemTransfer, $itemTransfer);
+                $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
 
             }
         }
@@ -70,7 +70,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
                 if ($bundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
                     continue;
                 }
-                $this->addAmounts($bundleItemTransfer, $itemTransfer);
+                $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
 
             }
         }
@@ -84,7 +84,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
      *
      * @return void
      */
-    protected function addAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    protected function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
     {
         $bundleItemTransfer->setUnitGrossPrice(
             $bundleItemTransfer->getUnitGrossPrice() + $itemTransfer->getUnitGrossPrice()

@@ -100,16 +100,17 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
-     * @param QuoteTransfer $quoteTransfer
-     * @param ObjectCollection $bundledProducts
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      *
      * @return array
      */
     protected function buildBundle(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer, ObjectCollection $bundledProducts)
     {
         $addToCartItems = [];
-        for ($i = 0; $i < $itemTransfer->getQuantity(); $i++) {
+        $quantity = $itemTransfer->getQuantity();
+        for ($i = 0; $i < $quantity; $i++) {
 
             $bundleItemTransfer = clone $itemTransfer;
             $bundleItemTransfer->setQuantity(1);
@@ -131,7 +132,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         return $addToCartItems;
     }
 
-
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param string $bundleItemIdentifier
@@ -142,7 +142,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $bundledItems = [];
         foreach ($bundledProducts as $productBundleEntity) {
-            for ($i = 0; $i < $productBundleEntity->getQuantity(); $i++) {
+            $quantity = $productBundleEntity->getQuantity();
+            for ($i = 0; $i < $quantity; $i++) {
                 $bundledItems[] = $this->createBundledItemTransfer($productBundleEntity, $bundleItemIdentifier);
             }
         }
@@ -223,7 +224,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param array|ItemTransfer[] $bundledProducts
+     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      *
      * @return int
      */
@@ -236,7 +237,5 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         return $totalBundleItemAmount;
     }
-
-
 
 }

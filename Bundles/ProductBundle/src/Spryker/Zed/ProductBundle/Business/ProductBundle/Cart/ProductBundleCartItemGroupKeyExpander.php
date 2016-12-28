@@ -41,7 +41,7 @@ class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGrou
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return string
      */
