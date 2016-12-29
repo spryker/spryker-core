@@ -10,6 +10,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "swiftmailer/swiftmailer": "Default Mailer"
+  },
   "description": "Mail bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
