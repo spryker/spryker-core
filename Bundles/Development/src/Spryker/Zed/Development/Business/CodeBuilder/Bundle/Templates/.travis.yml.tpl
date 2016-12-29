@@ -19,7 +19,7 @@ install:
   - composer install --no-interaction --prefer-dist
 
 script:
-  - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v
+  - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml
   - vendor/bin/codecept run --env isolated --coverage-xml
 
 after_success:
