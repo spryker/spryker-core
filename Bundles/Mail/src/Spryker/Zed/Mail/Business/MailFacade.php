@@ -17,9 +17,7 @@ class MailFacade extends AbstractFacade implements MailFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Runs MailDecoratorPluginInterfaces
-     * - Runs MailProviderPluginInterfaces
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,8 +31,7 @@ class MailFacade extends AbstractFacade implements MailFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Sends the mail
+     * {@inheritdoc}
      *
      * @api
      *
