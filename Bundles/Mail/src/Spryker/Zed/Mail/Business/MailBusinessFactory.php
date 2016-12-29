@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\Mail\Business;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Mail\MailConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
+use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
+use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer;
+use Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer;
+use Spryker\Zed\Mail\MailDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Mail\MailConfig getConfig()
@@ -18,40 +21,84 @@ class MailBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Mail\Business\MailSenderInterface
+     * @return \Spryker\Zed\Mail\Business\Model\Mailer\MailHandlerInterface
      */
-    public function createMailSender()
+    public function createMailHandler()
     {
-        return new MandrillMailSender(
-            $this->createMandrill(),
-            $this->createInclusionHandler()
+        return new MailHandler(
+            $this->createMailBuilder(),
+            $this->getMailTypeCollection(),
+            $this->getMailProviderCollection()
         );
     }
 
     /**
-     * @return \Mandrill
+     * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
      */
-    protected function createMandrill()
+    protected function createMailBuilder()
     {
-        return new \Mandrill(
-            $this->getAPIKey()
+        return new MailBuilder(
+            $this->getGlossaryFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Mail\Business\InclusionHandlerInterface
+     * @return \Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
-    protected function createInclusionHandler()
+    protected function getMailProviderCollection()
     {
-        return new InclusionHandler();
+        return $this->getProvidedDependency(MailDependencyProvider::MAIL_PROVIDER_COLLECTION);
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
-    protected function getAPIKey()
+    protected function getMailTypeCollection()
     {
-        return Config::get(MailConstants::MAIL_PROVIDER_MANDRILL)['api-key'];
+        return $this->getProvidedDependency(MailDependencyProvider::MAIL_TYPE_COLLECTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer
+     */
+    public function createMailer()
+    {
+        return new SwiftMailer(
+            $this->createRenderer(),
+            $this->getMailer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer
+     */
+    public function createRenderer()
+    {
+        return new TwigRenderer($this->getRenderer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(MailDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
+     */
+    protected function getRenderer()
+    {
+        return $this->getProvidedDependency(MailDependencyProvider::RENDERER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
+     */
+    protected function getMailer()
+    {
+        return $this->getProvidedDependency(MailDependencyProvider::MAILER);
     }
 
 }

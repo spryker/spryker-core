@@ -14,7 +14,11 @@ use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Newsletter\Business\NewsletterBusinessFactory;
 use Spryker\Zed\Newsletter\Business\NewsletterFacade;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
+use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
@@ -255,6 +259,17 @@ class NewsletterFacadeTest extends Test
     protected function setNewsletterFacade()
     {
         $this->newsletterFacade = new NewsletterFacade();
+        $container = new Container();
+        $newsletterDependencyProvider = new NewsletterDependencyProvider();
+        $newsletterDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $mailFacadeMock = $this->getMockBuilder(NewsletterToMailInterface::class)->getMock();
+        $container[NewsletterDependencyProvider::FACADE_MAIL] = $mailFacadeMock;
+
+        $newsletterBusinessFactory = new NewsletterBusinessFactory();
+        $newsletterBusinessFactory->setContainer($container);
+
+        $this->newsletterFacade->setFactory($newsletterBusinessFactory);
     }
 
     /**

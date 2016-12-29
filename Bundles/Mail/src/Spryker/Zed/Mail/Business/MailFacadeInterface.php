@@ -8,27 +8,33 @@
 namespace Spryker\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\MailTransfer;
-use Generated\Shared\Transfer\SendMailResponsesTransfer;
 
 interface MailFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Prepares the mail before send
+     * - Builds the needed MailTransfer by given MailType specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
+     * @return void
      */
-    public function sendMail(MailTransfer $mailTransfer);
+    public function handleMail(MailTransfer $mailTransfer);
 
     /**
+     * Specification:
+     * - Sends the mail
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function isMailSent(SendMailResponsesTransfer $mailResponses);
+    public function sendMail(MailTransfer $mailTransfer);
 
 }

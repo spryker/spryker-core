@@ -90,23 +90,8 @@ class EditControllerTest extends Test
         $container = new Container();
 
         $dependencyProvider->provideBusinessLayerDependencies($container);
-        $container[CustomerDependencyProvider::SENDER_PLUGINS] = $this->getSenderPlugins();
 
         return $container;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSenderPlugins()
-    {
-        $senderPlugins = [];
-
-        $senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] = [];
-        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORE_TOKEN_SENDERS] = [];
-        $senderPlugins[CustomerDependencyProvider::PASSWORD_RESTORED_CONFIRMATION_SENDERS] = [];
-
-        return $senderPlugins;
     }
 
     /**

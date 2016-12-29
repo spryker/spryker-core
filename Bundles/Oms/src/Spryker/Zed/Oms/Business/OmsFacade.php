@@ -484,4 +484,28 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         $this->getFactory()->createTriggerLocker()->clearLocks();
     }
 
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    public function sendOrderConfirmationMail(SpySalesOrder $salesOrderEntity)
+    {
+        $this->getFactory()->createMailHandler()->sendOrderConfirmationMail($salesOrderEntity);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity)
+    {
+        $this->getFactory()->createMailHandler()->sendOrderShippedMail($salesOrderEntity);
+    }
+
 }

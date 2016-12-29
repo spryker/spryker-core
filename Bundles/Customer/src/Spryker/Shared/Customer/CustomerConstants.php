@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Customer;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Mail\MailConstants;
 
 interface CustomerConstants
 {
@@ -18,7 +17,6 @@ interface CustomerConstants
 
     const HOST_YVES = ApplicationConstants::HOST_YVES;
 
-    const MERGE_LANGUAGE_HANDLEBARS = MailConstants::MERGE_LANGUAGE_HANDLEBARS;
     const NAME_CUSTOMER_REFERENCE = 'CustomerReference';
 
     const PARAM_ID_CUSTOMER = 'id-customer';

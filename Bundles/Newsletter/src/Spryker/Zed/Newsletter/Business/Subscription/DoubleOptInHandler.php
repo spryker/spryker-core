@@ -16,23 +16,6 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
 {
 
     /**
-     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface[]
-     */
-    protected $subscriberOptInSenders = [];
-
-    /**
-     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface $subscriberOptInSender
-     *
-     * @return \Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface
-     */
-    public function addSubscriberOptInSender(SubscriberOptInSenderInterface $subscriberOptInSender)
-    {
-        $this->subscriberOptInSenders[] = $subscriberOptInSender;
-
-        return $this;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException
@@ -52,20 +35,6 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
 
         if ($subscriberEntity->getIsConfirmed() === false) {
             $subscriberTransfer->fromArray($subscriberEntity->toArray(), true);
-
-            $this->triggerSubscriberOptInSenders($subscriberTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
-     *
-     * @return void
-     */
-    protected function triggerSubscriberOptInSenders(NewsletterSubscriberTransfer $subscriberTransfer)
-    {
-        foreach ($this->subscriberOptInSenders as $sender) {
-            $sender->send($subscriberTransfer);
         }
     }
 

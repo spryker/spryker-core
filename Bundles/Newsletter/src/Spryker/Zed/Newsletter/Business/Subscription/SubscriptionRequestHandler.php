@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
@@ -14,6 +15,9 @@ use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\Messages\Messages;
 use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException;
+use Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterSubscribedMailTypePlugin;
+use Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterUnsubscribedMailTypePlugin;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionRequestHandler
@@ -37,21 +41,29 @@ class SubscriptionRequestHandler
     /**
      * @var bool
      */
-    private $subscriberExists;
+    protected $subscriberExists;
+
+    /**
+     * @var \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface
+     */
+    protected $mailFacade;
 
     /**
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface $subscriptionManager
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface $subscriberManager
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface $mailFacade
      */
     public function __construct(
         SubscriptionManagerInterface $subscriptionManager,
         SubscriberManagerInterface $subscriberManager,
-        NewsletterQueryContainerInterface $queryContainer
+        NewsletterQueryContainerInterface $queryContainer,
+        NewsletterToMailInterface $mailFacade
     ) {
         $this->subscriptionManager = $subscriptionManager;
         $this->subscriberManager = $subscriberManager;
         $this->queryContainer = $queryContainer;
+        $this->mailFacade = $mailFacade;
     }
 
     /**
@@ -77,6 +89,10 @@ class SubscriptionRequestHandler
             foreach ($newsletterSubscriptionRequest->getNewsletterTypes() as $newsletterTypeTransfer) {
                 $subscriptionResult = $this->processSubscription($newsletterSubscriberTransfer, $newsletterTypeTransfer);
                 $subscriptionResponse->addSubscriptionResult($subscriptionResult);
+
+                if ($subscriptionResult->getIsSuccess()) {
+                    $this->sendSubscribedMail($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+                }
             }
 
             if ($this->subscriberExists === false) {
@@ -114,6 +130,10 @@ class SubscriptionRequestHandler
 
                 $subscriptionResult = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, $isSuccess);
                 $subscriptionResponse->addSubscriptionResult($subscriptionResult);
+
+                if ($isSuccess) {
+                    $this->sendUnsubscribedMail($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+                }
             }
 
             $connection->commit();
@@ -123,6 +143,42 @@ class SubscriptionRequestHandler
         }
 
         return $subscriptionResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterTypeTransfer
+     *
+     * @return void
+     */
+    protected function sendSubscribedMail(NewsletterSubscriberTransfer $newsletterSubscriberTransfer, NewsletterTypeTransfer $newsletterTypeTransfer)
+    {
+        $mailTransfer = new MailTransfer();
+        $mailTransfer
+            ->setType(NewsletterSubscribedMailTypePlugin::MAIL_TYPE)
+            ->setNewsletterSubscriber($newsletterSubscriberTransfer)
+            ->setNewsletterType($newsletterTypeTransfer)
+            ->setLocale($newsletterSubscriberTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterTypeTransfer
+     *
+     * @return void
+     */
+    protected function sendUnsubscribedMail(NewsletterSubscriberTransfer $newsletterSubscriberTransfer, NewsletterTypeTransfer $newsletterTypeTransfer)
+    {
+        $mailTransfer = new MailTransfer();
+        $mailTransfer
+            ->setType(NewsletterUnsubscribedMailTypePlugin::MAIL_TYPE)
+            ->setNewsletterSubscriber($newsletterSubscriberTransfer)
+            ->setNewsletterType($newsletterTypeTransfer)
+            ->setLocale($newsletterSubscriberTransfer->getLocale());
+
+        $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**

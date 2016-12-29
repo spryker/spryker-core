@@ -1,0 +1,14 @@
+{{ 'mail.order.shipped.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},
+
+{{ 'mail.order.shipped.text' | trans }}
+
+{{ 'mail.order.shipped.footer.text_line_1' | trans }},
+{{ 'mail.order.shipped.footer.text_line_2' | trans }}
+
+- - - - - - - - - -
+
+{{ 'mail.order.shipped.details' | trans }}
+
+{{ 'mail.order.shipped.order_number' | trans }}: {{ mail.order.orderReference }}
+{{ 'mail.order.shipped.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}
+{{ 'mail.order.shipped.date' | trans }}: {{ mail.order.createdAt | date }}

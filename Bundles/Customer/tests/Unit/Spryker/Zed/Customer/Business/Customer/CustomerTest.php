@@ -9,11 +9,15 @@ namespace Unit\Spryker\Zed\Customer\Business\Customer;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Mail\Business\MailFacade;
 
 /**
  * @group Unit
@@ -40,7 +44,18 @@ class CustomerTest extends Test
         $queryContainer = new CustomerQueryContainer();
         $customerReferenceGenerator = $this->createCustomerReferenceGeneratorMock();
         $customerConfig = new CustomerConfig();
-        $this->customer = new Customer($queryContainer, $customerReferenceGenerator, $customerConfig);
+        $mailFacade = new CustomerToMailBridge(new MailFacade());
+        $localeQueryContainer = new LocaleQueryContainer();
+        $store = Store::getInstance();
+
+        $this->customer = new Customer(
+            $queryContainer,
+            $customerReferenceGenerator,
+            $customerConfig,
+            $mailFacade,
+            $localeQueryContainer,
+            $store
+        );
     }
 
     /**

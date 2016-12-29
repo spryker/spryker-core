@@ -32,7 +32,8 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
         return new SubscriptionRequestHandler(
             $this->createSubscriptionManager(),
             $this->createSubscriberManager(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getMailFacade()
         );
     }
 
@@ -78,12 +79,6 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
             $this->createSubscriberKeyGenerator()
         );
 
-        $optInSenderPlugins = $this->getProvidedDependency(NewsletterDependencyProvider::DOUBLE_OPT_IN_SENDER_PLUGINS);
-
-        foreach ($optInSenderPlugins as $optInSenderPlugin) {
-            $subscriberOptInHandler->addSubscriberOptInSender($optInSenderPlugin);
-        }
-
         return $subscriberOptInHandler;
     }
 
@@ -104,6 +99,14 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig()->getNewsletterTypes()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface
+     */
+    protected function getMailFacade()
+    {
+        return $this->getProvidedDependency(NewsletterDependencyProvider::FACADE_MAIL);
     }
 
 }
