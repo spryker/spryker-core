@@ -84,7 +84,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundlePriceCalculator()
     {
-        return new ProductBundlePriceCalculation();
+        return new ProductBundlePriceCalculation($this->getSalesQueryContainer());
     }
 
     /**

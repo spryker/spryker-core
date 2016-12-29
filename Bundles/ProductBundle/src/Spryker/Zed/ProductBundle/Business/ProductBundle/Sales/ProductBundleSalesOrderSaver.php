@@ -16,7 +16,7 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
 {
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleToSalesQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
@@ -65,7 +65,7 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
      */
     protected function mapSalesOrderItemBundleEntity(ItemTransfer $itemTransfer)
     {
-        $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
+        $salesOrderItemBundleEntity = $this->createSalesOrderItemBundleEntity();
         $salesOrderItemBundleEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
 
@@ -80,7 +80,11 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
      */
     protected function updateRelatedSalesOrderItems(CheckoutResponseTransfer $checkoutResponse, array $bundleItemsSaved)
     {
-        foreach ($checkoutResponse->getSaveOrder()->getOrderItems() as $itemTransfer) {
+        $checkoutResponse->requireSaveOrder();
+        $checkoutResponse->getSaveOrder()->requireOrderItems();
+
+        $orderItems = $checkoutResponse->getSaveOrder()->getOrderItems();
+        foreach ($orderItems as $itemTransfer) {
             if (!$itemTransfer->getRelatedBundleItemIdentifier() || !isset($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()])) {
                 continue;
             }
@@ -102,6 +106,14 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
         return $this->salesQueryContainer
             ->querySalesOrderItem()
             ->findOneByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
+     */
+    protected function createSalesOrderItemBundleEntity()
+    {
+        return new SpySalesOrderItemBundle();
     }
 
 }

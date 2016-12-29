@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdateInterface
@@ -18,7 +19,7 @@ class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdate
      */
     public function updateBundles(QuoteTransfer $quoteTransfer)
     {
-        $bundleItems = new \ArrayObject();
+        $bundleItems = new ArrayObject();
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             foreach ($quoteTransfer->getItems() as $itemTransfer) {
                 if ($bundleItemTransfer->getBundleItemIdentifier() == $itemTransfer->getRelatedBundleItemIdentifier()) {

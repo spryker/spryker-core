@@ -8,8 +8,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -34,12 +35,12 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface $stockQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler $productBundleAvailabilityHandler
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStockQueryContainerInterface $stockQueryContainer,
-        ProductBundleAvailabilityHandler $productBundleAvailabilityHandler
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
@@ -56,17 +57,13 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         $productConcreteTransfer->requireSku()
             ->requireIdProductConcrete();
 
-        $bundleProductEntity = $this->productBundleQueryContainer
-            ->queryBundleProductBySku($productConcreteTransfer->getSku())
-            ->findOne();
+        $bundleProductEntity = $this->findProductBundleBySku($productConcreteTransfer->getSku());
 
         if ($bundleProductEntity === null) {
             return $productConcreteTransfer;
         }
 
-        $bundleItems = $this->productBundleQueryContainer
-            ->queryBundleProduct($productConcreteTransfer->getIdProductConcrete())
-            ->find();
+        $bundleItems = $this->findBundledItemsByIdBundleProduct($productConcreteTransfer->getIdProductConcrete());
 
         $bundleTotalStockPerWarehause = $this->calculateBundleStockPerWarehouse($bundleItems);
 
@@ -90,18 +87,12 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
         foreach ($bundleTotalStockPerWarehause as $idStock => $bundleStock) {
 
-            $stockEntity = $this->stockQueryContainer
-                ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
-                ->filterByFkStock($idStock)
-                ->findOneOrCreate();
+            $stockEntity = $this->findOrCreateProductStockEntity($productConcreteTransfer, $idStock);
 
             $stockEntity->setQuantity($bundleStock);
             $stockEntity->save();
 
-            $stockTransfer = new StockProductTransfer();
-            $stockTransfer->setSku($productConcreteTransfer->getSku());
-            $stockTransfer->setStockType($stockEntity->getStock()->getName());
-            $stockTransfer->fromArray($stockEntity->toArray(), true);
+            $stockTransfer = $this->mapStockTransfer($productConcreteTransfer, $stockEntity);
 
             $productConcreteTransfer->addStock($stockTransfer);
 
@@ -122,9 +113,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $bundledItemQuantity[$bundledProductEntity->getIdProduct()] = $bundleItemEntity->getQuantity();
 
-            $productStocks = $this->stockQueryContainer
-                ->queryStockByProducts($bundledProductEntity->getIdProduct())
-                ->find();
+            $productStocks = $this->findProductStocks($bundledProductEntity->getIdProduct());
 
             foreach ($productStocks as $productStockEntity) {
                 if (!isset($bundledItemStock[$productStockEntity->getFkStock()])) {
@@ -167,6 +156,72 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $bundleTotalStockPerWarehause[$idStock] = $bundleStock;
         }
         return $bundleTotalStockPerWarehause;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     */
+    protected function findProductBundleBySku($sku)
+    {
+        return $this->productBundleQueryContainer
+            ->queryBundleProductBySku($sku)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findBundledItemsByIdBundleProduct($idProductConcrete)
+    {
+        return $this->productBundleQueryContainer
+            ->queryBundleProduct($idProductConcrete)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idStock
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct
+     */
+    protected function findOrCreateProductStockEntity(ProductConcreteTransfer $productConcreteTransfer, $idStock)
+    {
+        return $this->stockQueryContainer
+            ->queryStockByProducts($productConcreteTransfer->getIdProductConcrete())
+            ->filterByFkStock($idStock)
+            ->findOneOrCreate();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param SpyStockProduct $stockProductEntity
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer
+     */
+    protected function mapStockTransfer(ProductConcreteTransfer $productConcreteTransfer, SpyStockProduct $stockProductEntity)
+    {
+        $stockTransfer = new StockProductTransfer();
+        $stockTransfer->setSku($productConcreteTransfer->getSku());
+        $stockTransfer->setStockType($stockProductEntity->getStock()->getName());
+        $stockTransfer->fromArray($stockProductEntity->toArray(), true);
+
+        return $stockTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findProductStocks($idProduct)
+    {
+        return $this->stockQueryContainer
+            ->queryStockByProducts($idProduct)
+            ->find();
     }
 
 }

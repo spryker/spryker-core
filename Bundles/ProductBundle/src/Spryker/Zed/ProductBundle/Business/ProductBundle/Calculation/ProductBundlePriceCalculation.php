@@ -6,13 +6,28 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
+use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
 class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInterface
 {
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
+     */
+    protected $salesQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
+     */
+    public function __construct(ProductBundleToSalesQueryContainerInterface $salesQueryContainer)
+    {
+        $this->salesQueryContainer = $salesQueryContainer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -21,37 +36,34 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $orderItems = SpySalesOrderItemQuery::create()
-            ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
+        $orderItems = $this->findOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
 
         $bundledProducts = [];
-        foreach ($orderItems as $orderItemEntity) {
-            if (!$orderItemEntity->getFkSalesOrderItemBundle()) {
+        foreach ($orderItems as $salesOrderItemEntity) {
+            if (!$salesOrderItemEntity->getFkSalesOrderItemBundle()) {
                 continue;
             }
 
             foreach ($orderTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getIdSalesOrderItem() !== $orderItemEntity->getIdSalesOrderItem()) {
+                if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderItemEntity->getIdSalesOrderItem()) {
                     continue;
                 }
 
-                if (!isset($bundledProducts[$orderItemEntity->getFkSalesOrderItemBundle()])) {
-                    $bundleItemTransfer = new ItemTransfer();
-                    $bundleItemTransfer->setBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
-                    $bundleItemTransfer->fromArray($orderItemEntity->getSalesOrderItemBundle()->toArray(), true);
-                    $bundledProducts[$orderItemEntity->getFkSalesOrderItemBundle()] = $bundleItemTransfer;
+                if (!isset($bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()])) {
+                    $bundleItemTransfer = $this->mapBundledItemTransferFromSalesOrderItemEntity($salesOrderItemEntity);
+                    $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()] = $bundleItemTransfer;
                 }
 
-                $bundleItemTransfer = $bundledProducts[$orderItemEntity->getFkSalesOrderItemBundle()];
+                $bundleItemTransfer = $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()];
 
-                $itemTransfer->setRelatedBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
+                $itemTransfer->setRelatedBundleItemIdentifier($salesOrderItemEntity->getFkSalesOrderItemBundle());
 
                 $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
 
             }
         }
 
-        $orderTransfer->setBundleItems(new \ArrayObject($bundledProducts));
+        $orderTransfer->setBundleItems(new ArrayObject($bundledProducts));
 
         return $orderTransfer;
     }
@@ -127,6 +139,32 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->setFinalSumDiscountAmount(0);
 
         }
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findOrderItemsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->salesQueryContainer
+            ->querySalesOrderItem()
+            ->findByFkSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param SpySalesOrderItem $orderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapBundledItemTransferFromSalesOrderItemEntity(SpySalesOrderItem $orderItemEntity)
+    {
+        $bundleItemTransfer = new ItemTransfer();
+        $bundleItemTransfer->setBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
+        $bundleItemTransfer->fromArray($orderItemEntity->getSalesOrderItemBundle()->toArray(), true);
+
+        return $bundleItemTransfer;
     }
 
 }
