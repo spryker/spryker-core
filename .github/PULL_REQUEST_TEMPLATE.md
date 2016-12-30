@@ -17,6 +17,11 @@
 
 - Recommended reviewers: @reviewer_usernames
 
+#### Feature Release Notes
+
+{These are necessary for more than a single release, and are usually combined feature release notes.}
+{Make sure you use proper English sentences. Please remove if not necessary.}
+
 -----------------------------------------
 
 #### Bundle MajorBundleA (e.g. "Bundle Cms")
