@@ -53,7 +53,7 @@ class NonPersistentProvider implements StorageProviderInterface
 
             $itemIdentifier = $this->getItemIdentifier($itemTransfer);
             if (isset($cartIndex[$itemIdentifier])) {
-                $this->decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer);
+                $this->decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, $cartIndex);
             }
         }
 
@@ -90,10 +90,11 @@ class NonPersistentProvider implements StorageProviderInterface
      * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param string $itemIdentifier
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $cartIndex
      *
      * @return void
      */
-    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer)
+    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer , array $cartIndex)
     {
         $existingItemTransfer = null;
         $itemIndex = null;
@@ -106,7 +107,6 @@ class NonPersistentProvider implements StorageProviderInterface
         }
 
         if ($existingItemTransfer === null) {
-            $cartIndex = $this->createCartIndex($existingItems);
             $itemIndex = $cartIndex[$itemIdentifier];
             $existingItemTransfer = $existingItems[$itemIndex];
         }

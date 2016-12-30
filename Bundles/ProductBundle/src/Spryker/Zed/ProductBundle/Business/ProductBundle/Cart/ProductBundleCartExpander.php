@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use OutOfBoundsException;
@@ -44,6 +46,21 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $localeFacade;
 
     /**
+     * @var array
+     */
+    protected static $productConcreteCache = [];
+
+    /**
+     * @var array
+     */
+    protected static $localizedProductNameCache = [];
+
+    /**
+     * @var array
+     */
+    protected static $productPriceCache = [];
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
@@ -75,6 +92,10 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+                $cartChangeItems->append($itemTransfer);
+                continue;
+            }
 
             $itemTransfer->requireId()
                 ->requireUnitGrossPrice()
@@ -121,6 +142,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
             $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);
+            $bundleItemTransfer->setGroupKey($bundleItemIdentifier);
 
             $quoteTransfer->addBundleItem($bundleItemTransfer);
 
@@ -161,7 +183,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $itemTransfer->requireSku();
 
-        return $itemTransfer->getSku() . self::BUNDLE_IDENTIFIER_DELIMITER . time() . rand(1, 901);
+        return $itemTransfer->getSku() . self::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
     }
 
     /**
@@ -202,16 +224,16 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
-        $productConcreteTransfer = $this->productFacade->getProductConcrete(
+        $productConcreteTransfer = $this->getProductConcreteTransfer(
             $bundledConcreteProductEntity->getSku()
         );
 
-        $localizedProductName = $this->productFacade->getLocalizedProductConcreteName(
+        $localizedProductName = $this->getLocalizedProductName(
             $productConcreteTransfer,
             $this->localeFacade->getCurrentLocale()
         );
 
-        $unitGrossPrice = $this->priceFacade->getPriceBySku($bundledConcreteProductEntity->getSku());
+        $unitGrossPrice = $this->getProductPrice($bundledConcreteProductEntity->getSku());
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete())
@@ -224,6 +246,58 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             ->setRelatedBundleItemIdentifier($bundleItemIdentifier);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    protected function getProductPrice($sku)
+    {
+         if (!isset(static::$productPriceCache[$sku])) {
+             static::$productPriceCache[$sku] = $this->priceFacade->getPriceBySku($sku);
+         }
+
+         return static::$productPriceCache[$sku];
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return ProductConcreteTransfer
+     */
+    protected function getProductConcreteTransfer($sku)
+    {
+        if (!isset(static::$productConcreteCache[$sku])) {
+            static::$productConcreteCache[$sku] = $this->productFacade->getProductConcrete($sku);
+        }
+
+        return static::$productConcreteCache[$sku];
+    }
+
+    /**
+     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocaleTransfer
+     *
+     * @return string
+     */
+    protected function getLocalizedProductName(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $currentLocaleTransfer
+    ) {
+
+        $localeMapKey = $currentLocaleTransfer->getLocaleName() . $productConcreteTransfer->getIdProductConcrete();
+
+        if (!isset(static::$localizedProductNameCache[$localeMapKey])) {
+            static::$localizedProductNameCache[$localeMapKey] = $this->productFacade->getLocalizedProductConcreteName(
+                $productConcreteTransfer,
+                $this->localeFacade->getCurrentLocale()
+            );
+        }
+
+        return static::$localizedProductNameCache[$localeMapKey];
+
     }
 
     /**

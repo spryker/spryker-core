@@ -47,13 +47,14 @@ class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGrou
      */
     protected function buildGroupKey(ItemTransfer $itemTransfer)
     {
-        if (!isset($this->skuMap[$itemTransfer->getSku()])) {
-            $this->skuMap[$itemTransfer->getSku()] = 1;
+        $mapKey = $itemTransfer->getSku() . $itemTransfer->getRelatedBundleItemIdentifier();
+        if (!isset($this->skuMap[$mapKey])) {
+            $this->skuMap[$mapKey] = 1;
         } else {
-            $this->skuMap[$itemTransfer->getSku()]++;
+            $this->skuMap[$mapKey]++;
         }
 
-        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . $this->skuMap[$itemTransfer->getSku()];
+        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . $this->skuMap[$mapKey];
     }
 
 }
