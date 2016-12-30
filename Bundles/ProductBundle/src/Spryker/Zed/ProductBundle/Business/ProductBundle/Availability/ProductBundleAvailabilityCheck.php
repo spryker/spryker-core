@@ -24,8 +24,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
-
-    const STOCK_TRANSLATION_PARAMETER = 'available';
+    const STOCK_TRANSLATION_PARAMETER = 'stock';
 
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface

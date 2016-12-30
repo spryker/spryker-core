@@ -85,6 +85,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productBundleAvailabilityEntity = $this->findOrCreateProductBundleAvailabilityEntity($productConcreteTransfer);
         if ($productBundleAvailabilityEntity !== null) {
             $productBundleTransfer->setAvailability($productBundleAvailabilityEntity->getQuantity());
+            $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityEntity->getIsNeverOutOfStock());
         }
 
         $productConcreteTransfer->setProductBundle($productBundleTransfer);

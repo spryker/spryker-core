@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface;
@@ -121,6 +122,7 @@ class BundledProductTable extends AbstractTable
             static::COL_SELECT,
             static::COL_PRICE,
             static::COL_AVAILABILITY,
+            SpyProductTableMap::COL_SKU
         ]);
 
         $config->setSearchable([
@@ -168,7 +170,7 @@ class BundledProductTable extends AbstractTable
                 static::COL_SELECT => $this->addCheckBox($item),
                 static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
-                SpyProductTableMap::COL_SKU => $item->getSku(),
+                SpyProductTableMap::COL_SKU =>$this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
                 static::COL_PRICE => $this->getFormatedPrice($item->getSku()),
                 SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
                 static::COL_AVAILABILITY => $availability,
@@ -177,6 +179,25 @@ class BundledProductTable extends AbstractTable
         }
 
         return $productAbstractCollection;
+    }
+
+    /**
+     * @param string $sku
+     * @param int $idProductAbstract
+     * @param int $idProductConcrete
+     *
+     * @return string
+     */
+    protected function getProductEditPageLink($sku, $idProductAbstract, $idProductConcrete)
+    {
+        $pageEditUrl = Url::generate('/product-management/edit/variant', [
+            'id-product-abstract' => $idProductAbstract,
+            'id-product' => $idProductConcrete,
+        ])->build();
+
+        $pageEditLink = '<a target="_blank" href="' . $pageEditUrl . '">' . $sku . '</a>';
+
+        return $pageEditLink;
     }
 
     /**

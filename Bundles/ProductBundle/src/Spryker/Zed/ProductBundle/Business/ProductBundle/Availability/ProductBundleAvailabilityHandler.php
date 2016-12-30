@@ -138,13 +138,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
 
             $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku($bundledItemSku);
 
-            if ($bundledProductAvailabilityEntity === null) {
+            if ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock()) {
                 continue;
             }
 
             $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
 
-            if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0) {
+            if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0 ) {
                 $bundleAvailabilityQuantity = $bundledItemQuantity;
             }
         }

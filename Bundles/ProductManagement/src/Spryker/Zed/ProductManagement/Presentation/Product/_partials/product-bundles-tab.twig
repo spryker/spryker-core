@@ -2,7 +2,12 @@
 
 <strong>{{ "Bundle availability based on assigned products:" | trans }} </strong> :
 {% if currentProduct.product_bundle %}
-    {{ currentProduct.product_bundle.availability }}
+    {% if currentProduct.product_bundle.is_never_out_of_stock %}
+         {{ 'Is never out of stock' }}
+    {% else %}
+        {{ currentProduct.product_bundle.availability }}
+    {% endif %}
+
 {% endif %}
 
 <br />

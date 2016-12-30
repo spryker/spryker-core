@@ -89,7 +89,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $stockEntity = $this->findOrCreateProductStockEntity($productConcreteTransfer, $idStock);
 
-            $stockEntity->setQuantity($bundleStock);
+            $stockEntity->setQuantity($bundleStock['quantity']);
+            $stockEntity->setIsNeverOutOfStock($bundleStock['is_never_out_of_stock']);
             $stockEntity->save();
 
             $stockTransfer = $this->mapStockTransfer($productConcreteTransfer, $stockEntity);
@@ -124,7 +125,10 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                     $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [];
                 }
 
-                $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = $productStockEntity->getQuantity();
+                $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [
+                    'quantity' => $productStockEntity->getQuantity(),
+                    'is_never_out_of_stock' => $productStockEntity->getIsNeverOutOfStock(),
+                ];
             }
         }
 
@@ -142,18 +146,27 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         $bundleTotalStockPerWarehause = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
             $bundleStock = 0;
+            $isAllNeverOutOfStock = true;
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
 
-                $quantity = $bundledItemQuantity[$idProduct];
+                $bundleItemQuantity = $bundledItemQuantity[$idProduct];
+                $isNeverOutOfStock = $productStockQuantity['is_never_out_of_stock'];
 
-                $itemStock = (int)floor($productStockQuantity / $quantity);
+                $itemStock = (int)floor($productStockQuantity['quantity'] / $bundleItemQuantity);
 
-                if ($bundleStock > $itemStock || $bundleStock == 0) {
+                if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
                     $bundleStock = $itemStock;
+                }
+
+                if (!$isNeverOutOfStock) {
+                    $isAllNeverOutOfStock = false;
                 }
             }
 
-            $bundleTotalStockPerWarehause[$idStock] = $bundleStock;
+            $bundleTotalStockPerWarehause[$idStock] = [
+               'quantity' => $bundleStock,
+               'is_never_out_of_stock' => $isAllNeverOutOfStock ,
+            ];
         }
         return $bundleTotalStockPerWarehause;
     }

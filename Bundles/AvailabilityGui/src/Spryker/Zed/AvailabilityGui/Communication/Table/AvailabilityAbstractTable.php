@@ -73,6 +73,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $config->addRawColumn(self::TABLE_COL_ACTION);
         $config->addRawColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY);
         $config->addRawColumn(self::IS_BUNDLE_PRODUCT);
+        $config->addRawColumn(SpyProductAbstractTableMap::COL_SKU);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
@@ -94,7 +95,7 @@ class AvailabilityAbstractTable extends AbstractTable
             $haveBundledProducts = $this->haveBundledProducts($productAbstract);
 
             $result[] = [
-                SpyProductAbstractTableMap::COL_SKU => $productAbstract->getSku(),
+                SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstract->getSku(), $productAbstract->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstract->getProductName(),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstract->getAvailabilityQuantity()),
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstract->getStockQuantity(),
@@ -105,6 +106,23 @@ class AvailabilityAbstractTable extends AbstractTable
         }
 
         return $result;
+    }
+
+    /**
+     * @param string  $sku
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getProductEditPageLink($sku, $idProductAbstract)
+    {
+        $pageEditUrl = Url::generate('/product-management/edit', [
+            'id-product-abstract' => $idProductAbstract,
+        ])->build();
+
+        $pageEditLink = '<a target="_blank" href="' . $pageEditUrl . '">' . $sku . '</a>';
+
+        return $pageEditLink;
     }
 
     /**
