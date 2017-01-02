@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -79,7 +80,7 @@ class ProductImageWriterTest extends Test
             ->setExternalUrlLarge('large')
             ->setExternalUrlSmall('small');
 
-        $imageCollection = new \ArrayObject([$imageTransfer]);
+        $imageCollection = new ArrayObject([$imageTransfer]);
 
         $imageSetTransfer = new ProductImageSetTransfer();
         $imageSetTransfer

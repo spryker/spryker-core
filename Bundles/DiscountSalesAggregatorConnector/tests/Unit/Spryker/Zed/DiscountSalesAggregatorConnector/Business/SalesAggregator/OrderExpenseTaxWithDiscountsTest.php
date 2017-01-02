@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggreg
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSalesAggregatorConnectorToTaxInterface;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\DiscountSalesAggregatorConnector\Dependency\Facade\DiscountSales
  * @group SalesAggregator
  * @group OrderExpenseTaxWithDiscountsTest
  */
-class OrderExpenseTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
+class OrderExpenseTaxWithDiscountsTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Storage\Provider;
 
+use ErrorException;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
@@ -74,7 +75,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
                 return $this->getConnectionParameters();
         }
 
-        throw new \ErrorException('Missing implementation for adapter ' . $kvName);
+        throw new ErrorException('Missing implementation for adapter ' . $kvName);
     }
 
     /**

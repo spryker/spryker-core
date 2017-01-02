@@ -10,6 +10,7 @@ namespace Functional\Spryker\Client;
 use Elastica\Client;
 use Elastica\ResultSet;
 use Elastica\Status;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
@@ -25,7 +26,7 @@ use Spryker\Client\Search\SearchFactory;
  * @group Client
  * @group SearchClientTest
  */
-class SearchClientTest extends \PHPUnit_Framework_TestCase
+class SearchClientTest extends PHPUnit_Framework_TestCase
 {
 
     /**

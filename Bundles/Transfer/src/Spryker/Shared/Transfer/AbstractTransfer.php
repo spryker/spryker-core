@@ -10,12 +10,13 @@ namespace Spryker\Shared\Transfer;
 use ArrayObject;
 use Exception;
 use InvalidArgumentException;
+use Serializable;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Transfer\Exception\TransferUnserializationException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-abstract class AbstractTransfer implements TransferInterface, \Serializable
+abstract class AbstractTransfer implements TransferInterface, Serializable
 {
 
     /**

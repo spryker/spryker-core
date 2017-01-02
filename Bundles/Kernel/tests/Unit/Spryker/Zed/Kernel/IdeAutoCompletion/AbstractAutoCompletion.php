@@ -7,9 +7,10 @@
 
 namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
 
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Finder\Finder;
 
-abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
+abstract class AbstractAutoCompletion extends PHPUnit_Framework_TestCase
 {
 
     public function __construct()

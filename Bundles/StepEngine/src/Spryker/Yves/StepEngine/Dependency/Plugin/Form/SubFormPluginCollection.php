@@ -7,7 +7,10 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Plugin\Form;
 
-class SubFormPluginCollection implements \Iterator, \Countable
+use Countable;
+use Iterator;
+
+class SubFormPluginCollection implements Iterator, Countable
 {
 
     /**

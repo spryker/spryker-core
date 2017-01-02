@@ -40,7 +40,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
             $taxRateForm,
             $taxRateFormDataProvider->getData(),
             [
-                 'data_class' => TaxRateTransfer::class
+                 'data_class' => TaxRateTransfer::class,
               ]
         );
     }
@@ -58,7 +58,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
             $taxSetForm,
             $taxSetFormDataProvider->getData(),
             [
-                'data_class' => TaxSetTransfer::class
+                'data_class' => TaxSetTransfer::class,
             ]
         );
     }

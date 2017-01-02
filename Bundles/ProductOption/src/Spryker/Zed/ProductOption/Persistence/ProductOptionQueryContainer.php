@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -231,9 +232,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         if (trim($term) !== '') {
             $term = '%' . mb_strtoupper($term) . '%';
 
-            $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
+            $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, PDO::PARAM_STR)
                 ->_or()
-                ->where('UPPER(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR);
+                ->where('UPPER(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') LIKE ?', $term, PDO::PARAM_STR);
         }
 
         return $query;

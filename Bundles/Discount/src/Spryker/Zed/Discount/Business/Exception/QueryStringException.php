@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Discount\Business\Exception;
 
-class QueryStringException extends \Exception
+use Exception;
+
+class QueryStringException extends Exception
 {
 }

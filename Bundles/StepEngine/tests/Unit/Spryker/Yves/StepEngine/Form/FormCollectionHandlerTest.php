@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Form;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
@@ -25,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Form
  * @group FormCollectionHandlerTest
  */
-class FormCollectionHandlerTest extends \PHPUnit_Framework_TestCase
+class FormCollectionHandlerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

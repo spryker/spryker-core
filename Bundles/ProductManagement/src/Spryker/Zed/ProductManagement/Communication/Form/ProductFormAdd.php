@@ -286,10 +286,10 @@ class ProductFormAdd extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new SkuRegex([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new Callback([
                         'methods' => [
@@ -315,7 +315,7 @@ class ProductFormAdd extends AbstractType
                                 }
                             },
                         ],
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                 ],
             ]);
@@ -358,8 +358,8 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_GENERAL]
-                ])]
+                    'groups' => [self::VALIDATION_GROUP_GENERAL],
+                ])],
             ]);
 
         return $this;
@@ -399,8 +399,8 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT]
-                ])]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT],
+                ])],
             ]);
 
         return $this;
@@ -450,8 +450,8 @@ class ProductFormAdd extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_SUPER]
-                ])]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_SUPER],
+                ])],
             ]);
 
         return $this;

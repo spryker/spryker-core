@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Availability\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
@@ -20,7 +21,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
  * @group Model
  * @group SellableTest
  */
-class SellableTest extends \PHPUnit_Framework_TestCase
+class SellableTest extends PHPUnit_Framework_TestCase
 {
 
     const SKU_PRODUCT = 'sku-123-321';

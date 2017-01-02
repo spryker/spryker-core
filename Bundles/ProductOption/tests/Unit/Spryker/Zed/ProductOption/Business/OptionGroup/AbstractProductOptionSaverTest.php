@@ -114,7 +114,7 @@ class AbstractProductOptionSaverTest extends MockProvider
             ])
             ->setMethods([
                 'getProductAbstractBySku',
-                'getOptionGroupById'
+                'getOptionGroupById',
             ])
             ->getMock();
 

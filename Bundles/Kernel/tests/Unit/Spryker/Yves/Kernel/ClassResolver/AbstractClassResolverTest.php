@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel\ClassResolver;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
  * @group ClassResolver
  * @group AbstractClassResolverTest
  */
-class AbstractClassResolverTest extends \PHPUnit_Framework_TestCase
+class AbstractClassResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

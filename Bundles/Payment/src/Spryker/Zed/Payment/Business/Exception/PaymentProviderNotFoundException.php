@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Business\Exception;
 
-class PaymentProviderNotFoundException extends \Exception
+use Exception;
+
+class PaymentProviderNotFoundException extends Exception
 {
 }

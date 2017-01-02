@@ -38,7 +38,7 @@ class Calculation extends Base
     {
         $result = parent::buildData();
         $result['content'] = [
-            $this->getInstallmentCalculation()->getRootTag() => $this->getInstallmentCalculation()
+            $this->getInstallmentCalculation()->getRootTag() => $this->getInstallmentCalculation(),
         ];
 
         return $result;

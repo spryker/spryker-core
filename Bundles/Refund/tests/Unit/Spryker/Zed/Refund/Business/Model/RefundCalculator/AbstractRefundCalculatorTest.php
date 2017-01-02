@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @group Unit
@@ -22,7 +23,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
  * @group RefundCalculator
  * @group AbstractRefundCalculatorTest
  */
-class AbstractRefundCalculatorTest extends \PHPUnit_Framework_TestCase
+class AbstractRefundCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

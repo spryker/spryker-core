@@ -7,8 +7,10 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\Calculator\Type;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
@@ -24,7 +26,7 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
  * @group Type
  * @group PercentageTest
  */
-class PercentageTest extends \PHPUnit_Framework_TestCase
+class PercentageTest extends PHPUnit_Framework_TestCase
 {
 
     const ITEM_GROSS_PRICE_1000 = 1000;
@@ -144,7 +146,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
             $discountableItems = new DiscountableItemTransfer();
             $discountableItems->setUnitGrossPrice($grossPrice);
             $discountableItems->setQuantity(1);
-            $discountableItems->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+            $discountableItems->setOriginalItemCalculatedDiscounts(new ArrayObject());
 
             $items[] = $discountableItems;
         }

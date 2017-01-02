@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Auth\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Orm\Zed\User\Persistence\SpyUser;
@@ -104,7 +105,7 @@ class AuthFacadeTest extends Test
         $userEntity->reload();
 
         $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUser($userEntity->getIdUser());
-        $expiredDateTime = new \DateTime('last year');
+        $expiredDateTime = new DateTime('last year');
         $passwordEntity->setCreatedAt($expiredDateTime);
         $passwordEntity->save();
 

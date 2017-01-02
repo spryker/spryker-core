@@ -96,9 +96,9 @@ class PreCheckTransaction extends AbstractTransaction
     {
         return [
             'threeDSecure' => [
-                'required' => $this->config->getIs3DSecure()
+                'required' => $this->config->getIs3DSecure(),
             ],
-            'storeInVault' => $this->config->getIsVaulted()
+            'storeInVault' => $this->config->getIsVaulted(),
         ];
     }
 
@@ -135,7 +135,7 @@ class PreCheckTransaction extends AbstractTransaction
             'locality' => $addressTransfer->getCity(),
             'region' => $addressTransfer->getRegion(),
             'postalCode' => $addressTransfer->getZipCode(),
-            'countryCodeAlpha2' => $addressTransfer->getIso2Code()
+            'countryCodeAlpha2' => $addressTransfer->getIso2Code(),
         ];
     }
 

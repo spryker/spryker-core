@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Transfer\Exception;
 
-class TransferUnserializationException extends \Exception
+use Exception;
+
+class TransferUnserializationException extends Exception
 {
 }

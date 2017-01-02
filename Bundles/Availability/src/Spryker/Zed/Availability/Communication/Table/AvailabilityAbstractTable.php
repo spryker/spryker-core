@@ -52,14 +52,14 @@ class AvailabilityAbstractTable extends AbstractTable
             SpyAvailabilityAbstractTableMap::COL_QUANTITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
-            self::TABLE_COL_ACTION => 'Actions'
+            self::TABLE_COL_ACTION => 'Actions',
         ]);
 
         $config->setSortable([
             SpyProductAbstractTableMap::COL_SKU,
             AvailabilityQueryContainer::PRODUCT_NAME,
             AvailabilityQueryContainer::STOCK_QUANTITY,
-            AvailabilityQueryContainer::RESERVATION_QUANTITY
+            AvailabilityQueryContainer::RESERVATION_QUANTITY,
         ]);
 
         $config->setSearchable([
@@ -123,7 +123,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $viewTaxSetUrl = Url::generate(
             '/availability/index/view',
             [
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract()
+                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Console\Business\Model;
 
+use RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -158,7 +159,7 @@ trait Helper
         }
 
         if (strtolower($answer[0]) === 'a') {
-            throw new \RuntimeException('Aborted');
+            throw new RuntimeException('Aborted');
         }
 
         if ($default === false) {

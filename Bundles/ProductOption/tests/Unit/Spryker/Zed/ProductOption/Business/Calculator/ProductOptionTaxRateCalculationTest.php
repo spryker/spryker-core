@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
@@ -23,7 +24,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  * @group Calculator
  * @group ProductOptionTaxRateCalculationTest
  */
-class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
+class ProductOptionTaxRateCalculationTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -71,7 +72,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMock(ProductOptionTaxRateCalculator::class, ['findTaxRatesByIdOptionValueAndCountryIso2Code'], [
             $this->createQueryContainerMock(),
-            $this->createProductOptionToTaxBridgeMock()
+            $this->createProductOptionToTaxBridgeMock(),
         ]);
     }
 
@@ -190,7 +191,7 @@ class ProductOptionTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
             [
                 ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE => 1,
                 ProductOptionQueryContainer::COL_MAX_TAX_RATE => 11,
-            ]
+            ],
         ];
     }
 

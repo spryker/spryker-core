@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Yves\Checkout\DataContainer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
 
@@ -19,7 +20,7 @@ use Spryker\Yves\Checkout\DataContainer\DataContainer;
  * @group DataContainer
  * @group DataContainerTest
  */
-class DataContainerTest extends \PHPUnit_Framework_TestCase
+class DataContainerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -772,7 +772,7 @@ abstract class AbstractTable
 
         $options = [
             'fields' => $options,
-            'action' => $url
+            'action' => $url,
         ];
 
         $form = $formFactory->create($deleteForm, [], $options);

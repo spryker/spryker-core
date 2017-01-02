@@ -58,7 +58,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
         $builder
             ->add(self::FIELD_SKU, 'text', [
                 'label' => 'SKU',
-                'read_only' => true
+                'read_only' => true,
             ]);
 
         return $this;
@@ -109,7 +109,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX]
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
                 ])],
                 ConcretePriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
             ]);
@@ -149,8 +149,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_STOCK]
-                ])]
+                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_STOCK],
+                ])],
             ]);
 
         return $this;

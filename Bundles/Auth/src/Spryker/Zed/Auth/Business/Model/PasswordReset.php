@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use DateInterval;
+use DateTime;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPassword;
@@ -134,9 +136,9 @@ class PasswordReset
 
         $expiresInSeconds = $this->authConfig->getPasswordTokenExpirationInSeconds();
         $expiresAt = $resetPasswordEntity->getCreatedAt();
-        $expiresAt->add(new \DateInterval('PT' . $expiresInSeconds . 'S'));
+        $expiresAt->add(new DateInterval('PT' . $expiresInSeconds . 'S'));
 
-        $currentDateTime = new \DateTime();
+        $currentDateTime = new DateTime();
 
         if ($currentDateTime > $expiresAt) {
             $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_EXPIRED);

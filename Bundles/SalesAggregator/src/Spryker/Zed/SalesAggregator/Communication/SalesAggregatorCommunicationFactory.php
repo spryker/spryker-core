@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesAggregator\Communication;
 
+use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade;
 use Spryker\Zed\SalesAggregator\Communication\Form\AddressForm;
@@ -103,7 +104,7 @@ class SalesAggregatorCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return array
      */
-    public function createOrderItemSplitFormCollection(\ArrayObject $orderItems)
+    public function createOrderItemSplitFormCollection(ArrayObject $orderItems)
     {
         $formCollectionArray = [];
         $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();

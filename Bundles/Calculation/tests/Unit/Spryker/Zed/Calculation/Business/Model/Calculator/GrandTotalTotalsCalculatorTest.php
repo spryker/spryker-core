@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
  * @group Calculator
  * @group GrandTotalTotalsCalculatorTest
  */
-class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class GrandTotalTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const SUB_TOTAL = 100;

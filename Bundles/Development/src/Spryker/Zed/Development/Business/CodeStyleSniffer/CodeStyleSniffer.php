@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
+use ErrorException;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -68,11 +69,11 @@ class CodeStyleSniffer
                 $message .= ' in bundle ' . $bundle;
             }
 
-            throw new \ErrorException($message . ': ' . $path);
+            throw new ErrorException($message . ': ' . $path);
         }
 
         $defaults = [
-            'ignore' => $bundle ? '' : 'vendor/'
+            'ignore' => $bundle ? '' : 'vendor/',
         ];
         $options += $defaults;
 

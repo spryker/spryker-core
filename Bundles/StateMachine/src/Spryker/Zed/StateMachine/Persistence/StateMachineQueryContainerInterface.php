@@ -5,6 +5,7 @@
  */
 namespace Spryker\Zed\StateMachine\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -37,7 +38,7 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery
      */
-    public function queryItemsWithExpiredTimeout(\DateTime $expirationDate, $stateMachineName);
+    public function queryItemsWithExpiredTimeout(DateTime $expirationDate, $stateMachineName);
 
     /**
      * @api
@@ -94,7 +95,7 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
 
     /**
      * @api
@@ -103,7 +104,7 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate);
+    public function queryLockedItemsByExpirationDate(DateTime $expirationDate);
 
     /**
      * @api

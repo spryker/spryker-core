@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\ApplicationConfig;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Application\ApplicationConfig;
  * @group Application
  * @group ApplicationConfigTest
  */
-class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
+class ApplicationConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

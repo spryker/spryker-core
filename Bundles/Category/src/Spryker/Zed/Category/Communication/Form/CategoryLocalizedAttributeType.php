@@ -87,7 +87,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'property_path' => 'locale.idLocale'
+                'property_path' => 'locale.idLocale',
             ]);
 
         return $this;
@@ -105,7 +105,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'property_path' => 'locale.localeName'
+                'property_path' => 'locale.localeName',
             ]);
 
         return $this;

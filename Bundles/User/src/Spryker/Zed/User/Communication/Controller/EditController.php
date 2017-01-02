@@ -44,7 +44,7 @@ class EditController extends AbstractController
             ->handleRequest($request);
 
         $viewData = [
-            'userForm' => $userForm->createView()
+            'userForm' => $userForm->createView(),
         ];
 
         if ($userForm->isValid()) {

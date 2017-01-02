@@ -7,12 +7,13 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\Client;
 
+use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
 
-class ClientNotFoundException extends \Exception
+class ClientNotFoundException extends Exception
 {
 
     /**

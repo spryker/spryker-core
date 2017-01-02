@@ -28,7 +28,7 @@ class IndexController extends AbstractController
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable();
 
         return [
-            'indexTable' => $availabilityAbstractTable->render()
+            'indexTable' => $availabilityAbstractTable->render(),
         ];
     }
 
@@ -51,7 +51,7 @@ class IndexController extends AbstractController
 
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
-            'indexTable' => $availabilityTable->render()
+            'indexTable' => $availabilityTable->render(),
         ];
     }
 

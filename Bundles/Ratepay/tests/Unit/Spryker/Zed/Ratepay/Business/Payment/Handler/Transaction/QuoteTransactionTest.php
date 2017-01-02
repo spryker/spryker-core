@@ -49,7 +49,7 @@ class QuoteTransactionTest extends BaseTransactionTest
     public function testInitPayment()
     {
         $additionalMockMethods = [
-            'getMethodMapper' => $this->mockPaymentMethod(Elv::class)
+            'getMethodMapper' => $this->mockPaymentMethod(Elv::class),
         ];
         $transactionHandler = $this->getTransactionHandlerObject(InitPaymentTransaction::class, $additionalMockMethods);
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
@@ -70,7 +70,7 @@ class QuoteTransactionTest extends BaseTransactionTest
     public function testRequestPayment()
     {
         $additionalMockMethods = [
-            'getMethodMapper' => $this->mockPaymentMethod(Elv::class)
+            'getMethodMapper' => $this->mockPaymentMethod(Elv::class),
         ];
         $transactionHandler = $this->getTransactionHandlerObject(RequestPaymentTransaction::class, $additionalMockMethods);
         $transactionHandler->registerMethodMapper($this->mockMethodInvoice());
@@ -91,7 +91,7 @@ class QuoteTransactionTest extends BaseTransactionTest
     public function testInstallmentConfiguration()
     {
         $additionalMockMethods = [
-            'getMethodMapper' => $this->mockPaymentMethod(Installment::class)
+            'getMethodMapper' => $this->mockPaymentMethod(Installment::class),
         ];
         $transactionHandler = $this->getTransactionHandlerObject(InstallmentConfigurationTransaction::class, $additionalMockMethods);
         $transactionHandler->registerMethodMapper($this->mockMethodInstallmentConfiguration());
@@ -112,7 +112,7 @@ class QuoteTransactionTest extends BaseTransactionTest
     public function testInstallmentCalculation()
     {
         $additionalMockMethods = [
-            'getMethodMapper' => $this->mockPaymentMethod(Installment::class)
+            'getMethodMapper' => $this->mockPaymentMethod(Installment::class),
         ];
 
         $transactionHandler = $this->getTransactionHandlerObject(InstallmentCalculationTransaction::class, $additionalMockMethods);

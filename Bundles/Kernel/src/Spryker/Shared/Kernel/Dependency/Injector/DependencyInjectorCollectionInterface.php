@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Kernel\Dependency\Injector;
 
-interface DependencyInjectorCollectionInterface extends \Countable
+use Countable;
+
+interface DependencyInjectorCollectionInterface extends Countable
 {
 
     /**

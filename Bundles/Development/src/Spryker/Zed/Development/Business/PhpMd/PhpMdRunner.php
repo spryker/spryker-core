@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\PhpMd;
 
+use ErrorException;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -65,11 +66,11 @@ class PhpMdRunner
                 $message = 'This bundle does not exist';
             }
 
-            throw new \ErrorException($message);
+            throw new ErrorException($message);
         }
 
         $defaults = [
-            'ignore' => $bundle ? '' : 'vendor/'
+            'ignore' => $bundle ? '' : 'vendor/',
         ];
         $options += $defaults;
 

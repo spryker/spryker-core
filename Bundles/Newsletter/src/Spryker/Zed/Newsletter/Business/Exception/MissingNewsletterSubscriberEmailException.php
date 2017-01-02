@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Newsletter\Business\Exception;
 
-class MissingNewsletterSubscriberEmailException extends \Exception
+use Exception;
+
+class MissingNewsletterSubscriberEmailException extends Exception
 {
 }

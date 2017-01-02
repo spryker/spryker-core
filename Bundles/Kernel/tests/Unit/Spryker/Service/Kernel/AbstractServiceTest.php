@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Service\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Unit\Spryker\Service\Kernel\Fixtures\Service;
@@ -18,7 +19,7 @@ use Unit\Spryker\Service\Kernel\Fixtures\Service;
  * @group Kernel
  * @group AbstractServiceTest
  */
-class AbstractServiceTest extends \PHPUnit_Framework_TestCase
+class AbstractServiceTest extends PHPUnit_Framework_TestCase
 {
 
     /**

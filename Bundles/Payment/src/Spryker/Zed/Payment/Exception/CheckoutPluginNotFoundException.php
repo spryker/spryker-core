@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Exception;
 
-class CheckoutPluginNotFoundException extends \Exception
+use Exception;
+
+class CheckoutPluginNotFoundException extends Exception
 {
 }

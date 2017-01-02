@@ -35,9 +35,9 @@ class AttributePermutationGenerator implements AttributePermutationGeneratorInte
      */
     public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = [])
     {
-        if (empty($superAttributes)) {
+        if (!$superAttributes) {
             return [
-                ProductConfig::VARIANT_LEAF_NODE_ID => $idProductConcrete //set leaf node to id of concrete product
+                ProductConfig::VARIANT_LEAF_NODE_ID => $idProductConcrete, // Set leaf node to id of concrete product
             ];
         }
 

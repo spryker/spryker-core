@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 
 /**
@@ -23,7 +24,7 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAll
  * @group Calculator
  * @group RemoveAllCalculatedDiscountsCalculatorTest
  */
-class RemoveAllCalculatedDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
+class RemoveAllCalculatedDiscountsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Search\Business\Exception;
 
-class InvalidPropertyNameException extends \Exception
+use Exception;
+
+class InvalidPropertyNameException extends Exception
 {
 }

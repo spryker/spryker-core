@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Cleaner;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
  * @group Cleaner
  * @group TransferCleanerTest
  */
-class TransferCleanerTest extends \PHPUnit_Framework_TestCase
+class TransferCleanerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

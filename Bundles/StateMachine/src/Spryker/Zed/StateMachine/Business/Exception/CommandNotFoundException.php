@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class CommandNotFoundException extends \Exception
+use Exception;
+
+class CommandNotFoundException extends Exception
 {
 }

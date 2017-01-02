@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 
 /**
@@ -22,7 +23,7 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\OrderTaxAmo
  * @group OrderAmountAggregator
  * @group OrderTaxAmountTest
  */
-class OrderTaxAmountTest extends \PHPUnit_Framework_TestCase
+class OrderTaxAmountTest extends PHPUnit_Framework_TestCase
 {
 
     /**

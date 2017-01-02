@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\ItemDiscounts;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -25,7 +26,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group SalesAggregator
  * @group ItemDiscountsTest
  */
-class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
+class ItemDiscountsTest extends PHPUnit_Framework_TestCase
 {
 
     /**

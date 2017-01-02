@@ -76,7 +76,7 @@ class CmsGlossaryForm extends AbstractType
                 }
 
                 return [Constraint::DEFAULT_GROUP];
-            }
+            },
         ]);
     }
 

@@ -1,6 +1,8 @@
 <?php
 namespace Refund;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace Refund;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
 
     use _generated\UnitTesterActions;

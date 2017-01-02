@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Wishlist\Business\Exception;
 
-class MissingWishlistException extends \Exception
+use Exception;
+
+class MissingWishlistException extends Exception
 {
 }

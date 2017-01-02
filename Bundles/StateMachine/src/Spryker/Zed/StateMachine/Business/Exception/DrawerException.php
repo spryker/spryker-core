@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class DrawerException extends \Exception
+use Exception;
+
+class DrawerException extends Exception
 {
 }

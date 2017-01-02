@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
@@ -23,7 +24,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Model
  * @group PropelSchemaTest
  */
-class PropelSchemaTest extends \PHPUnit_Framework_TestCase
+class PropelSchemaTest extends PHPUnit_Framework_TestCase
 {
 
     /**

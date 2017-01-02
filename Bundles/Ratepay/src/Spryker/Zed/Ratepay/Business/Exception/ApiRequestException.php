@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Ratepay\Business\Exception;
 
-class ApiRequestException extends \Exception
+use Exception;
+
+class ApiRequestException extends Exception
 {
 }

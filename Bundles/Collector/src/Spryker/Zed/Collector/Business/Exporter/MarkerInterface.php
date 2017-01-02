@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface MarkerInterface
@@ -27,7 +28,7 @@ interface MarkerInterface
      *
      * @return void
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, \DateTime $timestamp);
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, DateTime $timestamp);
 
     /**
      * @param array $keys

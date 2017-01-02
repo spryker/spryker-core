@@ -1,6 +1,8 @@
 <?php
 namespace Cart;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace Cart;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ClientTester extends \Codeception\Actor
+class ClientTester extends Actor
 {
 
     use _generated\ClientTesterActions;

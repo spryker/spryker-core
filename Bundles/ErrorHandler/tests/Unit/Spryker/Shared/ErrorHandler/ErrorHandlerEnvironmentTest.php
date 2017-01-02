@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\ErrorHandler;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
  * @group ErrorHandler
  * @group ErrorHandlerEnvironmentTest
  */
-class ErrorHandlerEnvironmentTest extends \PHPUnit_Framework_TestCase
+class ErrorHandlerEnvironmentTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Voucher;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -21,7 +22,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Voucher
  * @group VoucherCodeTest
  */
-class VoucherCodeTest extends \PHPUnit_Framework_TestCase
+class VoucherCodeTest extends PHPUnit_Framework_TestCase
 {
 
     /**

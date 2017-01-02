@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\Kernel\BundleProxy;
 
@@ -17,7 +18,7 @@ use Spryker\Shared\Kernel\BundleProxy;
  * @group Kernel
  * @group LocatorTest
  */
-class LocatorTest extends \PHPUnit_Framework_TestCase
+class LocatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

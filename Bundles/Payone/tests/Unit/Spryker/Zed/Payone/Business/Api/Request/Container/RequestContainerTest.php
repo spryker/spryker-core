@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Api\Request\Container;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
@@ -45,7 +46,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankA
  * @group Container
  * @group RequestContainerTest
  */
-class RequestContainerTest extends \PHPUnit_Framework_TestCase
+class RequestContainerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

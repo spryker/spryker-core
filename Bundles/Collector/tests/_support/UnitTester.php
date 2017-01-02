@@ -1,6 +1,8 @@
 <?php
 namespace Collector;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  *
@@ -17,7 +19,7 @@ namespace Collector;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
 
     use _generated\UnitTesterActions;

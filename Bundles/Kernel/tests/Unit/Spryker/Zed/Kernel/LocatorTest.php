@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Locator;
 
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\Locator;
  * @group Kernel
  * @group LocatorTest
  */
-class LocatorTest extends \PHPUnit_Framework_TestCase
+class LocatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

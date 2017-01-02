@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class RootNodeModificationException extends \Exception
+use Exception;
+
+class RootNodeModificationException extends Exception
 {
 }

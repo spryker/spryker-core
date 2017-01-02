@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\Application\Log\Processor;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Log\Processor\RequestProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @group Processor
  * @group RequestProcessorTest
  */
-class RequestProcessorTest extends \PHPUnit_Framework_TestCase
+class RequestProcessorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -48,8 +49,8 @@ class RequestProcessorTest extends \PHPUnit_Framework_TestCase
         $record = [
             RequestProcessor::RECORD_EXTRA => [],
             RequestProcessor::RECORD_CONTEXT => [
-                RequestProcessor::CONTEXT_KEY => $this->getRequestMockWithSession()
-            ]
+                RequestProcessor::CONTEXT_KEY => $this->getRequestMockWithSession(),
+            ],
         ];
         $result = $processor($record);
 
@@ -66,8 +67,8 @@ class RequestProcessorTest extends \PHPUnit_Framework_TestCase
         $record = [
             RequestProcessor::RECORD_EXTRA => [],
             RequestProcessor::RECORD_CONTEXT => [
-                RequestProcessor::CONTEXT_KEY => $this->getRequestMockWithUser()
-            ]
+                RequestProcessor::CONTEXT_KEY => $this->getRequestMockWithUser(),
+            ],
         ];
         $result = $processor($record);
 
@@ -84,8 +85,8 @@ class RequestProcessorTest extends \PHPUnit_Framework_TestCase
         $record = [
             RequestProcessor::RECORD_EXTRA => [],
             RequestProcessor::RECORD_CONTEXT => [
-                RequestProcessor::CONTEXT_KEY => $this->getRequestMockWithSession()
-            ]
+                RequestProcessor::CONTEXT_KEY => $this->getRequestMockWithSession(),
+            ],
         ];
         $result = $processor($record);
 

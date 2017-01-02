@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -90,7 +91,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
             $availableLocales
         );
 
-        $productOptionGroupTransfer->setProductOptionValueTranslations(new \ArrayObject($productOptionValueTranslations));
+        $productOptionGroupTransfer->setProductOptionValueTranslations(new ArrayObject($productOptionValueTranslations));
 
         $groupNameTranslations = $this->getOptionTranslations(
             $availableLocales,
@@ -98,7 +99,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
             $this->createRelatedKeyHash($productOptionGroupTransfer->getName())
         );
 
-        $productOptionGroupTransfer->setGroupNameTranslations(new \ArrayObject($groupNameTranslations));
+        $productOptionGroupTransfer->setGroupNameTranslations(new ArrayObject($groupNameTranslations));
 
         return $productOptionGroupTransfer;
     }

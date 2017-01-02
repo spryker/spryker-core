@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
 use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
@@ -24,7 +25,7 @@ use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
  * @group Model
  * @group OrderItemSplitTest
  */
-class OrderItemSplitTest extends \PHPUnit_Framework_TestCase
+class OrderItemSplitTest extends PHPUnit_Framework_TestCase
 {
 
     /**

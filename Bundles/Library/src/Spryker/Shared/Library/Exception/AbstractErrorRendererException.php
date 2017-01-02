@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Library\Exception;
 
-abstract class AbstractErrorRendererException extends \Exception
+use Exception;
+
+abstract class AbstractErrorRendererException extends Exception
 {
 
     /**

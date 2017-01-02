@@ -1,6 +1,8 @@
 <?php
 namespace StockSalesConnector;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace StockSalesConnector;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
 
     use _generated\UnitTesterActions;

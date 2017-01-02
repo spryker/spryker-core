@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\NewRelic\Communication\Plugin;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\NewRelic\NewRelicApi;
 use Spryker\Zed\Kernel\AbstractFactory;
@@ -25,7 +26,7 @@ use Symfony\Component\Console\Output\Output;
  * @group Plugin
  * @group NewRelicConsolePluginTest
  */
-class NewRelicConsolePluginTest extends \PHPUnit_Framework_TestCase
+class NewRelicConsolePluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -75,8 +76,8 @@ class NewRelicConsolePluginTest extends \PHPUnit_Framework_TestCase
         $testData = [
             'foo' => 'bar',
             'baz' => [
-                'zip' => 'zap'
-            ]
+                'zip' => 'zap',
+            ],
         ];
         $inputMock->method('getArguments')->willReturn($testData);
         $inputMock->method('getOptions')->willReturn($testData);

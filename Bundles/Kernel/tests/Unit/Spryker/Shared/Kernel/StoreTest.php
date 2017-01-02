@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Shared\Kernel\Store;
  * @group Kernel
  * @group StoreTest
  */
-class StoreTest extends \PHPUnit_Framework_TestCase
+class StoreTest extends PHPUnit_Framework_TestCase
 {
 
     /**

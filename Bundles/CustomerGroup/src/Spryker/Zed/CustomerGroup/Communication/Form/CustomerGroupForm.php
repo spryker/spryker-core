@@ -105,7 +105,7 @@ class CustomerGroupForm extends AbstractType
     {
         $builder->add(self::FIELD_DESCRIPTION, 'textarea', [
             'label' => 'Description',
-            'required' => false
+            'required' => false,
         ]);
 
         return $this;

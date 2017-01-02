@@ -1,6 +1,8 @@
 <?php
 namespace Availability;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace Availability;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends \Codeception\Actor
+class UnitTester extends Actor
 {
 
     use _generated\UnitTesterActions;

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Library\Sanitize;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Library\Sanitize\Html;
 use stdClass;
 
@@ -18,7 +19,7 @@ use stdClass;
  * @group Sanitize
  * @group HtmlTest
  */
-class HtmlTest extends \PHPUnit_Framework_TestCase
+class HtmlTest extends PHPUnit_Framework_TestCase
 {
 
     /**

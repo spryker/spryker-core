@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -19,7 +20,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @group Model
  * @group PropelSchemaMergerTest
  */
-class PropelSchemaMergerTest extends \PHPUnit_Framework_TestCase
+class PropelSchemaMergerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

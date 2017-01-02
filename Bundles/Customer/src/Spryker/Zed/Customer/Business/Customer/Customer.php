@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
+use DateTime;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
@@ -259,7 +260,7 @@ class Customer
             throw new CustomerNotFoundException(sprintf('Customer for registration key `%s` not found', $customerTransfer->getRegistrationKey()));
         }
 
-        $customerEntity->setRegistered(new \DateTime());
+        $customerEntity->setRegistered(new DateTime());
         $customerEntity->setRegistrationKey(null);
 
         $customerEntity->save();
@@ -283,7 +284,7 @@ class Customer
             return $customerResponseTransfer;
         }
 
-        $customerEntity->setRestorePasswordDate(new \DateTime());
+        $customerEntity->setRestorePasswordDate(new DateTime());
         $customerEntity->setRestorePasswordKey($this->generateKey());
 
         $customerEntity->save();

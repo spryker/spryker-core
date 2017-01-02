@@ -91,7 +91,7 @@ class CmsBlockForm extends AbstractType
                 }
 
                 return [Constraint::DEFAULT_GROUP];
-            }
+            },
         ]);
     }
 
@@ -163,7 +163,7 @@ class CmsBlockForm extends AbstractType
                     }
                 },
             ],
-            'groups' => [self::GROUP_UNIQUE_BLOCK_CHECK]
+            'groups' => [self::GROUP_UNIQUE_BLOCK_CHECK],
         ]);
 
         return $blockConstraints;

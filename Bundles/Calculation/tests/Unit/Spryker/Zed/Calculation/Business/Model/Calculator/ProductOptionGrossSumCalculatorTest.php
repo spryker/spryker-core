@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalcu
  * @group Calculator
  * @group ProductOptionGrossSumCalculatorTest
  */
-class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
+class ProductOptionGrossSumCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

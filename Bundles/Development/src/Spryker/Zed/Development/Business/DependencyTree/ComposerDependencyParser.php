@@ -51,7 +51,7 @@ class ComposerDependencyParser
         foreach ($together as $bundleName) {
             $dependencies[] = [
                 'code' => in_array($bundleName, $codeDependencies) ? $bundleName : '',
-                'composer' => in_array($bundleName, $composerDependencies) ? $bundleName : ''
+                'composer' => in_array($bundleName, $composerDependencies) ? $bundleName : '',
             ];
         }
 
@@ -112,7 +112,7 @@ class ComposerDependencyParser
                 self::TYPE_INCLUDE => isset($content[self::TYPE_INCLUDE]) ? array_keys($content[self::TYPE_INCLUDE]) : [],
                 self::TYPE_EXCLUDE => isset($content[self::TYPE_EXCLUDE]) ? array_keys($content[self::TYPE_EXCLUDE]) : [],
                 self::TYPE_INCLUDE_DEV => isset($content[self::TYPE_INCLUDE_DEV]) ? array_keys($content[self::TYPE_INCLUDE_DEV]) : [],
-                self::TYPE_EXCLUDE_DEV => isset($content[self::TYPE_EXCLUDE_DEV]) ? array_keys($content[self::TYPE_EXCLUDE_DEV]) : []
+                self::TYPE_EXCLUDE_DEV => isset($content[self::TYPE_EXCLUDE_DEV]) ? array_keys($content[self::TYPE_EXCLUDE_DEV]) : [],
             ];
         }
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\ZedRequest\Client\Exception;
 
-class TransferNotFoundException extends \Exception
+use Exception;
+
+class TransferNotFoundException extends Exception
 {
 }

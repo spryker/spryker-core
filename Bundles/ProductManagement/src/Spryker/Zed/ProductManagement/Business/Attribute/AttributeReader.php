@@ -11,6 +11,7 @@ use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValue
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use PDO;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -73,7 +74,7 @@ class AttributeReader implements AttributeReaderInterface
 
             $results[] = [
                 'id' => $attributeEntity->getIdProductManagementAttributeValue(),
-                'text' => $title
+                'text' => $title,
             ];
         }
 
@@ -126,9 +127,9 @@ class AttributeReader implements AttributeReaderInterface
             $term = '%' . mb_strtoupper($searchText) . '%';
 
             $query
-                ->where('UPPER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') LIKE ?', $term, \PDO::PARAM_STR)
+                ->where('UPPER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') LIKE ?', $term, PDO::PARAM_STR)
                 ->_or()
-                ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, \PDO::PARAM_STR);
+                ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, PDO::PARAM_STR);
         }
     }
 
@@ -161,7 +162,7 @@ class AttributeReader implements AttributeReaderInterface
         if ($searchText !== '') {
             $term = '%' . mb_strtoupper($searchText) . '%';
 
-            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, \PDO::PARAM_STR);
+            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
         }
 
         return $query->find();

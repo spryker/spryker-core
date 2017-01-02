@@ -36,7 +36,7 @@ class CreateController extends BaseOptionController
             $redirectUrl = Url::generate(
                 '/product-option/edit/index',
                 [
-                    BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup
+                    BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $idProductOptionGroup,
                 ]
             )->build();
 
@@ -53,7 +53,7 @@ class CreateController extends BaseOptionController
             'generalForm' => $productOptionGroupForm->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'productsTable' => $productTable->render(),
-            'optionTabs' => $optionTabs->createView()
+            'optionTabs' => $optionTabs->createView(),
         ];
     }
 

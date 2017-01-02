@@ -1,6 +1,8 @@
 <?php
 namespace Url;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace Url;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends \Codeception\Actor
+class FunctionalTester extends Actor
 {
 
     use _generated\FunctionalTesterActions;

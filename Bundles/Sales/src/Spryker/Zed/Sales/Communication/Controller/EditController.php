@@ -48,7 +48,7 @@ class EditController extends AbstractController
                 Url::generate(
                     '/sales/detail',
                     [
-                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
                     ]
                 )->build()
             );
@@ -90,7 +90,7 @@ class EditController extends AbstractController
                 Url::generate(
                     '/sales/detail',
                     [
-                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder
+                        SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
                     ]
                 )->build()
             );

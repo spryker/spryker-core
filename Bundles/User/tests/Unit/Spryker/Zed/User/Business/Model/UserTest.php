@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\User\UserConfig;
  * @group Model
  * @group UserTest
  */
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -46,7 +46,7 @@ class ViewController extends BaseOptionController
             'productOptionGroup' => $productOptionGroupTransfer,
             'availableLocales' => $availableLocales,
             'productOptionsTable' => $productOptionsTable->render(),
-            'taxSet' => $taxSetTransfer
+            'taxSet' => $taxSetTransfer,
         ];
     }
 

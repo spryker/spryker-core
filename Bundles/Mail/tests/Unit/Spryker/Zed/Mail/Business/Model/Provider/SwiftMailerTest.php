@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer;
 use Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface;
@@ -26,7 +27,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  * @group Provider
  * @group SwiftMailerTest
  */
-class SwiftMailerTest extends \PHPUnit_Framework_TestCase
+class SwiftMailerTest extends PHPUnit_Framework_TestCase
 {
 
     const SUBJECT = 'subject';

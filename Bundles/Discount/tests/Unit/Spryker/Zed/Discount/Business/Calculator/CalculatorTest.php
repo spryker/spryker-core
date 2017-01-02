@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Calculator\Calculator;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
@@ -30,7 +31,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
  * @group Calculator
  * @group CalculatorTest
  */
-class CalculatorTest extends \PHPUnit_Framework_TestCase
+class CalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -259,7 +260,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
     protected function createCalculatorPlugins($calculatorPluginMock)
     {
         return [
-            'test' => $calculatorPluginMock
+            'test' => $calculatorPluginMock,
         ];
     }
 

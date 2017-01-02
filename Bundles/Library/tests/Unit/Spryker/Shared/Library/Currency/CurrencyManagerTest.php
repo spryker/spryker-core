@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Library\Currency;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Shared\Library\Currency\CurrencyManager;
  * @group Currency
  * @group CurrencyManagerTest
  */
-class CurrencyManagerTest extends \PHPUnit_Framework_TestCase
+class CurrencyManagerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

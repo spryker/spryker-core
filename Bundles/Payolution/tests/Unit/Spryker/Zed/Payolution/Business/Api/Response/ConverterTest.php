@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payolution\Business\Api\Response;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
  * @group Response
  * @group ConverterTest
  */
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

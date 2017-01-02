@@ -9,6 +9,7 @@ namespace Unit\Spryker\Shared\Transfer;
 
 use ArrayObject;
 use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 
@@ -19,7 +20,7 @@ use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
  * @group Transfer
  * @group AbstractTransferTest
  */
-class AbstractTransferTest extends \PHPUnit_Framework_TestCase
+class AbstractTransferTest extends PHPUnit_Framework_TestCase
 {
 
     /**

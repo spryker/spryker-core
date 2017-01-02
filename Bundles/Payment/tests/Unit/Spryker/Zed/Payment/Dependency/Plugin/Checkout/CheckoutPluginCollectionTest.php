@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
  * @group Checkout
  * @group CheckoutPluginCollectionTest
  */
-class CheckoutPluginCollectionTest extends \PHPUnit_Framework_TestCase
+class CheckoutPluginCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const PROVIDER = 'provider';

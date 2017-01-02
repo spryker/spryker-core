@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
@@ -94,7 +95,7 @@ class CategoryTree implements CategoryTreeInterface
         $idSourceCategoryNode
     ) {
         $extraParentNodeTransferCollection = $categoryTransfer->getExtraParents();
-        $updatedParentNodeTransferCollection = new \ArrayObject();
+        $updatedParentNodeTransferCollection = new ArrayObject();
 
         foreach ($extraParentNodeTransferCollection as $extraParentNodeTransfer) {
             if ($extraParentNodeTransfer->requireIdCategoryNode()->getIdCategoryNode() === $idSourceCategoryNode) {

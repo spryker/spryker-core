@@ -58,7 +58,7 @@ class GenerateServiceIdeAutoCompletionConsole extends Console
         $generator = new IdeAutoCompletionGenerator($options, $this);
         $generator
             ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder([
-                GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN => ' * @method \Generated\Service\Ide\{{bundle}} {{methodName}}()'
+                GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN => ' * @method \Generated\Service\Ide\{{bundle}} {{methodName}}()',
             ]));
 
         $generator->create();

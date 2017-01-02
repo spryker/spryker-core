@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Application\Log\Processor;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Log\Processor\TransferSanitizerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Unit\Spryker\Shared\Application\Log\Processor\Fixtures\ComplexTransfer;
@@ -20,7 +21,7 @@ use Unit\Spryker\Shared\Application\Log\Processor\Fixtures\ComplexTransfer;
  * @group Processor
  * @group TransferSanitizerProcessorTest
  */
-class TransferSanitizerProcessorTest extends \PHPUnit_Framework_TestCase
+class TransferSanitizerProcessorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -35,7 +36,7 @@ class TransferSanitizerProcessorTest extends \PHPUnit_Framework_TestCase
         $record = ['message' => 'message', 'context' => $context];
         $filterFields = [
             'foo',
-            'string'
+            'string',
         ];
         $sanitizer = new Sanitizer($filterFields, '***');
         $processor = new TransferSanitizerProcessor($sanitizer);

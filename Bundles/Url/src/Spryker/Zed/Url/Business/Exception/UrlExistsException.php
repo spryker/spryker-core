@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Url\Business\Exception;
 
-class UrlExistsException extends \Exception
+use Exception;
+
+class UrlExistsException extends Exception
 {
 }

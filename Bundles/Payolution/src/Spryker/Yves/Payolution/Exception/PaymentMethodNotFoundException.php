@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Payolution\Exception;
 
-class PaymentMethodNotFoundException extends \Exception
+use Exception;
+
+class PaymentMethodNotFoundException extends Exception
 {
 }

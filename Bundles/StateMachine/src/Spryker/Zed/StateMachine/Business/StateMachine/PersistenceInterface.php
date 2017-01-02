@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
@@ -97,7 +98,7 @@ interface PersistenceInterface
      */
     public function saveStateMachineItemTimeout(
         StateMachineItemTransfer $stateMachineItemTransfer,
-        \DateTime $timeoutDate,
+        DateTime $timeoutDate,
         $eventName
     );
 

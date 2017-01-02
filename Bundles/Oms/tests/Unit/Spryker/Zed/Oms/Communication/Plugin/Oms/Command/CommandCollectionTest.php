@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
@@ -23,7 +24,7 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
  * @group Command
  * @group CommandCollectionTest
  */
-class CommandCollectionTest extends \PHPUnit_Framework_TestCase
+class CommandCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const COMMAND_NAME = 'commandName';

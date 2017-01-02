@@ -63,7 +63,7 @@ class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
             $availabilityForm,
             $availabilityStockFormDataProvider->getData($idProduct, $sku),
             [
-                AvailabilityStockFormDataProvider::DATA_CLASS => $availabilityStockFormDataProvider->getOptions()[AvailabilityStockFormDataProvider::DATA_CLASS]
+                AvailabilityStockFormDataProvider::DATA_CLASS => $availabilityStockFormDataProvider->getOptions()[AvailabilityStockFormDataProvider::DATA_CLASS],
             ]
         );
     }

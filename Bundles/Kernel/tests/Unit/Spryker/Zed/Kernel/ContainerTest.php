@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Kernel\Container;
@@ -18,7 +19,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Kernel
  * @group ContainerTest
  */
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends PHPUnit_Framework_TestCase
 {
 
     const TEST_VALUE = 'foo';

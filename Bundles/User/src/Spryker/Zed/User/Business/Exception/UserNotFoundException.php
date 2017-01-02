@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\User\Business\Exception;
 
-class UserNotFoundException extends \Exception
+use Exception;
+
+class UserNotFoundException extends Exception
 {
 }

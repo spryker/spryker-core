@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Product;
 
+use ArrayObject;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
@@ -41,7 +42,7 @@ class ProductStorage implements ProductStorageInterface
             return $wishlistResponseTransfer;
         }
 
-        $wishlistResponseTransfer->setItems(new \ArrayObject());
+        $wishlistResponseTransfer->setItems(new ArrayObject());
 
         $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
         foreach ($storageProductCollection as $storageProduct) {

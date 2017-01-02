@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Search\Exception;
 
-class MissingFacetAggregationException extends \Exception
+use Exception;
+
+class MissingFacetAggregationException extends Exception
 {
 }

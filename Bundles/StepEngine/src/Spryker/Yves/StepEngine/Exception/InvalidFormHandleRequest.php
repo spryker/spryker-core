@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\StepEngine\Exception;
 
-class InvalidFormHandleRequest extends \Exception
+use Exception;
+
+class InvalidFormHandleRequest extends Exception
 {
 }

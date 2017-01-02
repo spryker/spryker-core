@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Exception;
 
-class MissingAttributeTypeException extends \Exception
+use Exception;
+
+class MissingAttributeTypeException extends Exception
 {
 }

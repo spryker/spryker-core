@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Discount\Business\Exception;
 
-class VoucherEngineException extends \Exception
+use Exception;
+
+class VoucherEngineException extends Exception
 {
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
@@ -40,7 +41,7 @@ class AttributeFormTransferMapper implements AttributeFormTransferMapperInterfac
      */
     protected function addAttributeValues(ProductManagementAttributeTransfer $attributeTransfer, array $values)
     {
-        $attributeTransfer->setValues(new \ArrayObject());
+        $attributeTransfer->setValues(new ArrayObject());
 
         foreach ($values as $value) {
             $attributeValueTransfer = new ProductManagementAttributeValueTransfer();

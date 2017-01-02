@@ -97,9 +97,9 @@ class AttributeAbstractForm extends AbstractSubForm
             ],
             'constraints' => [
                 new NotBlank([
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE]
+                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE],
                 ]),
-            ]
+            ],
         ];
     }
 

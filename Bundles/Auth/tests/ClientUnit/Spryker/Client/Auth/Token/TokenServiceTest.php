@@ -7,6 +7,7 @@
 
 namespace ClientUnit\Spryker\Client\Auth\Token;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Auth\Token\TokenService;
 
 /**
@@ -15,7 +16,7 @@ use Spryker\Client\Auth\Token\TokenService;
  * @group Service
  * @group AuthClient
  */
-class TokenServiceTest extends \PHPUnit_Framework_TestCase
+class TokenServiceTest extends PHPUnit_Framework_TestCase
 {
 
     /**

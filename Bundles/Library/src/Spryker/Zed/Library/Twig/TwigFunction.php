@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Library\Twig;
 
+use Twig_SimpleFunction;
+
 /**
  * @deprecated Use Twig bundle instead.
  */
-abstract class TwigFunction extends \Twig_SimpleFunction
+abstract class TwigFunction extends Twig_SimpleFunction
 {
 
     public function __construct()

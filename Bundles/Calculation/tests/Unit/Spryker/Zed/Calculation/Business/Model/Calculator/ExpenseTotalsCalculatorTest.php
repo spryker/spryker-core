@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
  * @group Calculator
  * @group ExpenseTotalsCalculatorTest
  */
-class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class ExpenseTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

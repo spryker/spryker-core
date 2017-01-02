@@ -54,7 +54,7 @@ class SetTable extends AbstractTable
             SpyTaxSetTableMap::COL_ID_TAX_SET => 'Tax set ID',
             SpyTaxSetTableMap::COL_NAME => 'Name',
             SpyTaxSetTableMap::COL_CREATED_AT => 'Created at',
-            self::TABLE_COL_ACTIONS => 'Actions'
+            self::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -123,7 +123,7 @@ class SetTable extends AbstractTable
         $editTaxSetUrl = Url::generate(
             '/tax/set/edit',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet()
+                self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet(),
             ]
         );
         return $this->generateEditButton($editTaxSetUrl, 'Edit');
@@ -139,7 +139,7 @@ class SetTable extends AbstractTable
         $viewTaxSetUrl = Url::generate(
             '/tax/set/view',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet()
+                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -155,7 +155,7 @@ class SetTable extends AbstractTable
         $deleteTaxSetUrl = Url::generate(
             '/tax/set/delete',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet()
+                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ]
         );
 

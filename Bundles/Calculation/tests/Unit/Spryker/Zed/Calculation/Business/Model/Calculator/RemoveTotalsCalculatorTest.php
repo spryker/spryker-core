@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
  * @group Calculator
  * @group RemoveTotalsCalculatorTest
  */
-class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class RemoveTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

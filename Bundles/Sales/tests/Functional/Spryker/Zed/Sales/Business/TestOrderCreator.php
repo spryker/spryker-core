@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Sales\Business;
 
+use DateTime;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -174,8 +175,8 @@ class TestOrderCreator
         $salesOrderAddressEntity->setSalutation('Mr');
         $salesOrderAddressEntity->setCellPhone('123456789');
         $salesOrderAddressEntity->setCity('City');
-        $salesOrderAddressEntity->setCreatedAt(new \DateTime());
-        $salesOrderAddressEntity->setUpdatedAt(new \DateTime());
+        $salesOrderAddressEntity->setCreatedAt(new DateTime());
+        $salesOrderAddressEntity->setUpdatedAt(new DateTime());
         $salesOrderAddressEntity->setComment('Comment');
         $salesOrderAddressEntity->setDescription('Description');
         $salesOrderAddressEntity->setCompany('Company');

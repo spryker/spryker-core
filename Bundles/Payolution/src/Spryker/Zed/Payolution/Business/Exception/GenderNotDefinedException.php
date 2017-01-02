@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payolution\Business\Exception;
 
-class GenderNotDefinedException extends \Exception
+use Exception;
+
+class GenderNotDefinedException extends Exception
 {
 }

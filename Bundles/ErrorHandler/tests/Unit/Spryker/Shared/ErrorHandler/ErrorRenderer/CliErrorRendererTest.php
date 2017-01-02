@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
  * @group ErrorRenderer
  * @group CliErrorRendererTest
  */
-class CliErrorRendererTest extends \PHPUnit_Framework_TestCase
+class CliErrorRendererTest extends PHPUnit_Framework_TestCase
 {
 
     /**

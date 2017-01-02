@@ -255,13 +255,13 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $config = [
             'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
             'connect_timeout' => 1.5,
-            'handler' => $handlerStackContainer->getHandlerStack()
+            'handler' => $handlerStackContainer->getHandlerStack(),
         ];
         $config = $this->addCookiesToForwardDebugSession($config);
         $client = new Client($config);
 
         $options = [
-            'json' => $requestTransfer->toArray()
+            'json' => $requestTransfer->toArray(),
         ];
         $response = $client->send($request, $options);
 

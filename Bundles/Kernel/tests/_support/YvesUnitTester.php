@@ -1,6 +1,8 @@
 <?php
 namespace Kernel;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace Kernel;
  *
  * @SuppressWarnings(PHPMD)
  */
-class YvesUnitTester extends \Codeception\Actor
+class YvesUnitTester extends Actor
 {
 
     use _generated\YvesUnitTesterActions;

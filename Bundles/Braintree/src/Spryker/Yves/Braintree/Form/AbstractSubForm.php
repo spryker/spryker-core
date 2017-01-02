@@ -36,7 +36,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     {
         $resolver->setDefaults([
             'data_class' => BraintreePaymentTransfer::class,
-            SubFormInterface::OPTIONS_FIELD_NAME => []
+            SubFormInterface::OPTIONS_FIELD_NAME => [],
         ]);
     }
 

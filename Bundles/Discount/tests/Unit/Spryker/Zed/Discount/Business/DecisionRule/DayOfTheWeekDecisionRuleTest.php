@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\DecisionRule;
 
+use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
@@ -28,7 +29,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
      */
     public function testDecisionRuleShouldReturnTrueIfGivenDateMatchesClause()
     {
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
 
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $calendarWeek) {
@@ -53,7 +54,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
      */
     protected function createDateOfTheWeekDecisionRule(
         ComparatorOperatorsInterface $comparatorMock,
-        \DateTime $currentDateTime
+        DateTime $currentDateTime
     ) {
         $calendarWeekDecisionRule = $this->getMockBuilder(DayOfWeekDecisionRule::class)->setMethods(['getCurrentDateTime'])->setConstructorArgs([$comparatorMock])->getMock();
 

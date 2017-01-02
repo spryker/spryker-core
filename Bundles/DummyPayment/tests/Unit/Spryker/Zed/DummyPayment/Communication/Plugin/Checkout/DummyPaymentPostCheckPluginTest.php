@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\DummyPayment\Communication\Plugin\Checkout;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheckPlugin;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheck
  * @group Checkout
  * @group DummyPaymentPostCheckPluginTest
  */
-class DummyPaymentPostCheckPluginTest extends \PHPUnit_Framework_TestCase
+class DummyPaymentPostCheckPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

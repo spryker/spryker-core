@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
@@ -26,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Handler
  * @group PayolutionHandlerTest
  */
-class PayolutionHandlerTest extends \PHPUnit_Framework_TestCase
+class PayolutionHandlerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

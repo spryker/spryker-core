@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use DateInterval;
+use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\Process\EventInterface;
@@ -53,7 +55,7 @@ class Timeout implements TimeoutInterface
 
         $events = $targetState->getTimeoutEvents();
         $handledEvents = [];
-        $currentTime = new \DateTime('now');
+        $currentTime = new DateTime('now');
         foreach ($events as $event) {
             if (in_array($event->getName(), $handledEvents)) {
                 continue;
@@ -93,11 +95,11 @@ class Timeout implements TimeoutInterface
      *
      * @return \DateTime
      */
-    protected function calculateTimeoutDateFromEvent(\DateTime $currentTime, EventInterface $event)
+    protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event)
     {
         if (!isset($this->eventToTimeoutBuffer[$event->getName()])) {
             $timeout = $event->getTimeout();
-            $interval = \DateInterval::createFromDateString($timeout);
+            $interval = DateInterval::createFromDateString($timeout);
 
             $this->validateTimeout($interval, $timeout);
 
@@ -130,7 +132,7 @@ class Timeout implements TimeoutInterface
      *
      * @return int
      */
-    protected function validateTimeout(\DateInterval $interval, $timeout)
+    protected function validateTimeout(DateInterval $interval, $timeout)
     {
         $intervalProperties = get_object_vars($interval);
         $intervalSum = 0;

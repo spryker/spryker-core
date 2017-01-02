@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\NewRelic\Communication\Plugin;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\NewRelic\NewRelicApi;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group Plugin
  * @group ControllerListenerTest
  */
-class ControllerListenerTest extends \PHPUnit_Framework_TestCase
+class ControllerListenerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

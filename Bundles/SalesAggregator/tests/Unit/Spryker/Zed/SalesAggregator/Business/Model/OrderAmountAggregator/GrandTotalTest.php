@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\GrandTotal;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\GrandTotal;
  * @group OrderAmountAggregator
  * @group GrandTotalTest
  */
-class GrandTotalTest extends \PHPUnit_Framework_TestCase
+class GrandTotalTest extends PHPUnit_Framework_TestCase
 {
 
     /**

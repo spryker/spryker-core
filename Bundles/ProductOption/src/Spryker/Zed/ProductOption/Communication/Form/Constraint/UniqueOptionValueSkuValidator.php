@@ -77,7 +77,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
      */
     protected function isSkuChanged($submittedSku, UniqueOptionValueSku $constraint)
     {
-        /* @var $root Form */
+        /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
         $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submittedSku);

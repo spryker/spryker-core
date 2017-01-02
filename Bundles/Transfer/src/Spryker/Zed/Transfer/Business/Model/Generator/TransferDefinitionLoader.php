@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use InvalidArgumentException;
 use Zend\Config\Factory;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToUnderscore;
@@ -147,7 +148,7 @@ class TransferDefinitionLoader implements LoaderInterface
         $filteredName = $this->getFilter()->filter($name);
 
         if ($name !== $filteredName) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Transfer name `%s` does not match expected name `%s` for bundle `%s`',
                     $name,

@@ -166,7 +166,7 @@ class ZedClient
 
         $headers = [
             'User-Agent' => 'Yves 2.0',
-            'X-Yves-Host' => 1
+            'X-Yves-Host' => 1,
         ];
         $request = new Psr7Request('POST', $this->baseUrl . $pathInfo, $headers);
 
@@ -226,7 +226,7 @@ class ZedClient
         $client = new Client($config);
 
         $options = [
-            'json' => $requestTransfer->toArray()
+            'json' => $requestTransfer->toArray(),
         ];
         $response = $client->send($request, $options);
 

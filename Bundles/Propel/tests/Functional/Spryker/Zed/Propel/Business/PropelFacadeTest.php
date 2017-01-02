@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Propel\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\PropelFacade;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group Business
  * @group PropelFacadeTest
  */
-class PropelFacadeTest extends \PHPUnit_Framework_TestCase
+class PropelFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**

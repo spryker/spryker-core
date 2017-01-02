@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Shared\Kernel\Dependency\Injector;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * @group Unit
  * @group Spryker
@@ -16,6 +18,6 @@ namespace Unit\Spryker\Shared\Kernel\Dependency\Injector;
  * @group Injector
  * @group DependencyInjectorTest
  */
-class DependencyInjectorTest extends \PHPUnit_Framework_TestCase
+class DependencyInjectorTest extends PHPUnit_Framework_TestCase
 {
 }

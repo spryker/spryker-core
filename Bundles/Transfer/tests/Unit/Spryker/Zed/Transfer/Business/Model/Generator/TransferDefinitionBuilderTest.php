@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
@@ -24,7 +25,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
  * @group Generator
  * @group TransferDefinitionBuilderTest
  */
-class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
+class TransferDefinitionBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

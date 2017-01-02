@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
 use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
@@ -23,7 +24,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollec
  * @group Decorator
  * @group NavigationCollectorCacheDecoratorTest
  */
-class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
+class NavigationCollectorCacheDecoratorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

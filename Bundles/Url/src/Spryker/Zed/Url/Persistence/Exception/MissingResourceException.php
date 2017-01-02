@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Url\Persistence\Exception;
 
-class MissingResourceException extends \Exception
+use Exception;
+
+class MissingResourceException extends Exception
 {
 }

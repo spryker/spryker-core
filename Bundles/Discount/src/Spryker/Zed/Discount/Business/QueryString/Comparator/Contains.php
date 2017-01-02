@@ -51,7 +51,7 @@ class Contains implements ComparatorInterface
     {
         return [
             ComparatorOperators::TYPE_STRING,
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 

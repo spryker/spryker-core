@@ -88,7 +88,7 @@ class ProductOptionTable extends AbstractTable
             'product-option-table',
             [
                 'id-product-option-group' => $this->idProductOptionGroup,
-                'table-context' => $this->tableContext
+                'table-context' => $this->tableContext,
             ]
         )->build();
 
@@ -145,7 +145,7 @@ class ProductOptionTable extends AbstractTable
     {
         if ($this->tableContext === self::TABLE_CONTEXT_EDIT) {
             return [
-                self::COL_CHECKBOX => $this->getCheckboxHtml($productOption)
+                self::COL_CHECKBOX => $this->getCheckboxHtml($productOption),
             ];
         }
 
@@ -180,7 +180,7 @@ class ProductOptionTable extends AbstractTable
         $viewProductOptionUrl = Url::generate(
             '/product/index/view',
             [
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract
+                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
             ]
         );
 
