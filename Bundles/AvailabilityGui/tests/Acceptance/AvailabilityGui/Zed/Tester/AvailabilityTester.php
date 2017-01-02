@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Availability\Zed\Tester;
+namespace Acceptance\AvailabilityGui\Zed\Tester;
 
-use Availability\ZedAcceptanceTester;
+use AvailabilityGui\ZedAcceptanceTester;
 
 class AvailabilityTester extends ZedAcceptanceTester
 {

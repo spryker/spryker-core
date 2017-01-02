@@ -16,6 +16,8 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
+    const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    const QUANTITY = 'quantity';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -89,8 +91,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $stockEntity = $this->findOrCreateProductStockEntity($productConcreteTransfer, $idStock);
 
-            $stockEntity->setQuantity($bundleStock['quantity']);
-            $stockEntity->setIsNeverOutOfStock($bundleStock['is_never_out_of_stock']);
+            $stockEntity->setQuantity($bundleStock[self::QUANTITY]);
+            $stockEntity->setIsNeverOutOfStock($bundleStock[self::IS_NEVER_OUT_OF_STOCK]);
             $stockEntity->save();
 
             $stockTransfer = $this->mapStockTransfer($productConcreteTransfer, $stockEntity);
@@ -126,8 +128,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 }
 
                 $bundledItemStock[$productStockEntity->getFkStock()][$productStockEntity->getFkProduct()] = [
-                    'quantity' => $productStockEntity->getQuantity(),
-                    'is_never_out_of_stock' => $productStockEntity->getIsNeverOutOfStock(),
+                    static::QUANTITY => $productStockEntity->getQuantity(),
+                    static::IS_NEVER_OUT_OF_STOCK => $productStockEntity->getIsNeverOutOfStock(),
                 ];
             }
         }
@@ -150,9 +152,9 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
 
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
-                $isNeverOutOfStock = $productStockQuantity['is_never_out_of_stock'];
+                $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (int)floor($productStockQuantity['quantity'] / $bundleItemQuantity);
+                $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
 
                 if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
                     $bundleStock = $itemStock;
@@ -164,8 +166,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             }
 
             $bundleTotalStockPerWarehause[$idStock] = [
-               'quantity' => $bundleStock,
-               'is_never_out_of_stock' => $isAllNeverOutOfStock ,
+                static::QUANTITY => $bundleStock,
+                static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock ,
             ];
         }
         return $bundleTotalStockPerWarehause;

@@ -4,14 +4,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Availability\Zed;
+namespace Acceptance\AvailabilityGui\Zed;
 
-use Acceptance\Availability\Zed\PageObject\AvailabilityPage;
-use Acceptance\Availability\Zed\Tester\AvailabilityTester;
+use Acceptance\AvailabilityGui\Zed\PageObject\AvailabilityPage;
+use Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester;
 
 /**
  * @group Acceptance
- * @group Availability
+ * @group AvailabilityGui
  * @group Zed
  * @group AvailabilityEditStockCest
  */
@@ -19,7 +19,7 @@ class AvailabilityEditStockCest
 {
 
     /**
-     * @param \Acceptance\Availability\Zed\Tester\AvailabilityTester $i
+     * @param \Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester $i
      *
      * @return void
      */
@@ -39,11 +39,11 @@ class AvailabilityEditStockCest
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
-        $i->fillField('//*[@id="availability_stock_stocks_0_quantity"]', 50);
+        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50);
         $i->click('input[type=submit]');
         $i->see(AvailabilityPage::SUCCESS_MESSAGE);
 
-        $i->fillField('//*[@id="availability_stock_stocks_0_quantity"]', 'string');
+        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
         $i->see('This value is not valid.');
 

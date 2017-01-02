@@ -4,14 +4,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Availability\Zed;
+namespace Acceptance\AvailabilityGui\Zed;
 
-use Acceptance\Availability\Zed\PageObject\AvailabilityPage;
-use Acceptance\Availability\Zed\Tester\AvailabilityTester;
+use Acceptance\AvailabilityGui\Zed\PageObject\AvailabilityPage;
+use Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester;
 
 /**
  * @group Acceptance
- * @group Availability
+ * @group AvailabilityGui
  * @group Zed
  * @group AvailabilityViewCest
  */
@@ -19,7 +19,7 @@ class AvailabilityViewCest
 {
 
     /**
-     * @param \Acceptance\Availability\Zed\Tester\AvailabilityTester $i
+     * @param \Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester $i
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class AvailabilityViewCest
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
         $i->assertTableWithDataExists();
 
-        $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[6]/a");
+        $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[7]/a");
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
         $i->amOnPage(sprintf(AvailabilityPage::AVAILABILITY_VIEW_URL, AvailabilityPage::AVAILABILITY_ID));

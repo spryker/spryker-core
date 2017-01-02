@@ -581,7 +581,7 @@
 
       "Spryker\\Zed\\AvailabilityGui\\": "Bundles/AvailabilityGui/src",
       "Functional\\Spryker\\Zed\\AvailabilityGui\\": "Bundles/AvailabilityGui/tests",
-      "Acceptance\\Spryker\\Zed\\AvailabilityGui\\": "Bundles/AvailabilityGui/tests"
+      "Acceptance\\AvailabilityGui\\": "Bundles/AvailabilityGui/tests"
 
     },
     "psr-4": {
