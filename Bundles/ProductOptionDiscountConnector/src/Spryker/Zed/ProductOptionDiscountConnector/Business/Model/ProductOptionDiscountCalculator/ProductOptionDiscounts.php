@@ -303,8 +303,8 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
             $itemTransfer->setUnitTotalDiscountAmountWithProductOption((int)$unitDiscountAmountWithOptions);
             $itemTransfer->setSumTotalDiscountAmountWithProductOption((int)$sumDiscountAmountWithOptions);
 
-            $itemTransfer->setFinalUnitDiscountAmount($unitDiscountAmountWithOptions);
-            $itemTransfer->setFinalSumDiscountAmount($sumDiscountAmountWithOptions);
+            $itemTransfer->setFinalUnitDiscountAmount((int)$unitDiscountAmountWithOptions);
+            $itemTransfer->setFinalSumDiscountAmount((int)$sumDiscountAmountWithOptions);
 
             $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
                 (int)round($itemTransfer->getUnitGrossPriceWithProductOptions() - $unitDiscountAmountWithOptions)

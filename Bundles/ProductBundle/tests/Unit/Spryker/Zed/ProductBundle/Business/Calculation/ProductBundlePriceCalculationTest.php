@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use PHPUnit_Framework_MockObject_MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
@@ -115,12 +116,16 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
 
         $salesOrderItemEntity = new SpySalesOrderItem();
         $salesOrderItemEntity->setIdSalesOrderItem(1);
-        $salesOrderItemEntity->setFkSalesOrderItemBundle(1);
+        $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
+        $salesOrderItemBundleEntity->setIdSalesOrderItemBundle(1);
+        $salesOrderItemEntity->setSalesOrderItemBundle($salesOrderItemBundleEntity);
         $salesOrderItems->append($salesOrderItemEntity);
 
         $salesOrderItemEntity = new SpySalesOrderItem();
         $salesOrderItemEntity->setIdSalesOrderItem(2);
-        $salesOrderItemEntity->setFkSalesOrderItemBundle(1);
+        $salesOrderItemBundleEntity = new SpySalesOrderItemBundle();
+        $salesOrderItemBundleEntity->setIdSalesOrderItemBundle(1);
+        $salesOrderItemEntity->setSalesOrderItemBundle($salesOrderItemBundleEntity);
         $salesOrderItems->append($salesOrderItemEntity);
 
         $productBundlePriceCalculationMock->method('findOrderItemsByIdSalesOrder')
