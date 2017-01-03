@@ -16,7 +16,7 @@ use Spryker\Shared\Config\Config;
 class Zed extends Infrastructure
 {
 
-    const I_WAS_HERE = 'I_WAS_HERE';
+    private static $alreadyLoggedIn = false;
 
     /**
      * @param \Codeception\TestCase $test
@@ -29,13 +29,21 @@ class Zed extends Infrastructure
     {
         parent::_before($test);
 
-        Propel::closeConnections();
         $process = $this->runTestSetup('--restore');
 
         if ($process->getExitCode() != 0) {
             throw new \Exception('An error in data restore occured: ' . $process->getErrorOutput());
         }
     }
+
+    /**
+     * @param \Codeception\TestCase $test
+     */
+     public function _after(TestCase $test)
+     {
+         Propel::closeConnections();
+         static::$alreadyLoggedIn = false;
+     }
 
     /**
      * @return $this
@@ -62,10 +70,9 @@ class Zed extends Infrastructure
     {
         $i = $this->getWebDriver();
 
-//        $cookie = $i->grabCookie(self::I_WAS_HERE);
-//        if ($cookie) {
-//            return;
-//        }
+        if (static::$alreadyLoggedIn) {
+            return;
+        }
 
         $i->amOnPage(LoginPage::URL);
 
@@ -73,8 +80,7 @@ class Zed extends Infrastructure
         $i->fillField(LoginPage::SELECTOR_PASSWORD_FIELD, $password);
         $i->click(LoginPage::SELECTOR_SUBMIT_BUTTON);
 
-//        $i->setCookie(self::I_WAS_HERE, true);
-//        $i->saveSessionSnapshot('LoginZed');
+        static::$alreadyLoggedIn = true;
     }
 
     /**
