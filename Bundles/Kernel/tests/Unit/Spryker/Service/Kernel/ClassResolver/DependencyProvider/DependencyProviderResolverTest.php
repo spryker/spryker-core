@@ -26,12 +26,12 @@ class DependencyProviderResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\Pyz\\Service\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $projectClass = 'Unit\\ProjectNamespace\\Service\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\Pyz\\Service\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $storeClass = 'Unit\\ProjectNamespace\\Service\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
 
     /**
      * @var string

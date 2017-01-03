@@ -159,6 +159,12 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
 
+        foreach (['unique', 'foreign-key'] as $tagName) {
+            foreach ($dom->getElementsByTagName($tagName) as $item) {
+                $item->parentNode->appendChild($item->parentNode->removeChild($item));
+            }
+        }
+
         $callback = function ($a) {
             $multiplier = (strlen($a[1]) / 2) * 4;
 

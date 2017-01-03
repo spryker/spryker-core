@@ -14,7 +14,6 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
 
     const KEY_NAMESPACE = '%namespace%';
-    const KEY_APPLICATION = '%application%';
     const KEY_BUNDLE = '%bundle%';
     const KEY_STORE = '%store%';
 
@@ -54,7 +53,6 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_APPLICATION => $this->getClassInfo()->getApplication(),
             self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
             self::KEY_STORE => $store,
         ];

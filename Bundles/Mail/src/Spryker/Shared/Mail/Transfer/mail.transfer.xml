@@ -3,36 +3,33 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="MailAddress">
-        <property name="countryName" type="string" />
+    <transfer name="Mail">
+        <property name="type" type="string" />
+        <property name="sender" type="MailSender" />
+        <property name="recipients" type="MailRecipient[]" singular="recipient" />
+        <property name="subject" type="string" />
+        <property name="templates" type="MailTemplate[]" singular="template" />
+        <property name="headers" type="MailHeader[]" singular="header" />
+        <property name="attachments" type="Attachment[]" singular="attachment" />
+        <property name="locale" type="Locale" />
     </transfer>
 
-    <transfer name="Attachment">
+    <transfer name="MailAttachment">
         <property name="fileName" type="string" />
         <property name="displayName" type="string" />
         <property name="attachmentUrl" type="string" />
-        <property name="referenceId" type="string" />
-    </transfer>
-
-    <transfer name="MailCustomer">
-        <property name="customerId" type="string" />
-    </transfer>
-
-    <transfer name="Item">
-        <property name="idSalesOrderItem" type="int" />
-        <property name="name" type="string" />
-        <property name="sku" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="MailRecipient">
         <property name="email" type="string" />
         <property name="name" type="string" />
         <property name="type" type="string" />
-        <property name="mergeVars" type="array"/>
-        <property name="metadata" type="array"/>
+    </transfer>
+
+    <transfer name="MailSender">
+        <property name="email" type="string" />
+        <property name="name" type="string" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="MailHeader">
@@ -40,70 +37,19 @@
         <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="Mail">
-        <property name="templateName" type="string" />
-        <property name="templateContent" type="array" />
-        <property name="async" type="bool" />
-        <property name="ipPool" type="string" />
-        <property name="sendAt" type="string" />
-        <property name="subject" type="string" />
-        <property name="fromEmail" type="string" />
-        <property name="fromName" type="string" />
-        <property name="recipients" type="MailRecipient[]" singular="recipient" />
-        <property name="headers" type="MailHeader[]" singular="header" />
-        <property name="important" type="bool" />
-        <property name="trackOpens" type="bool" />
-        <property name="trackClicks" type="bool" />
-        <property name="autoText" type="bool" />
-        <property name="autoHtml" type="bool" />
-        <property name="inlineCss" type="bool" />
-        <property name="urlStripQueryString" type="bool" />
-        <property name="preserveRecipients" type="bool" />
-        <property name="viewContentLink" type="bool" />
-        <property name="bccAddress" type="string" />
-        <property name="trackingDomain" type="string" />
-        <property name="signingDomain" type="string" />
-        <property name="returnPathDomain" type="string" />
-        <property name="merge" type="bool" />
-        <property name="mergeLanguage" type="string" />
-        <property name="globalMergeVars" type="array" />
-        <property name="tags" type="array" />
-        <property name="subAccount" type="string" />
-        <property name="googleAnalyticsDomains" type="array" />
-        <property name="googleAnalyticsCampaign" type="string" />
-        <property name="metadata" type="array" />
-        <property name="attachments" type="Attachment[]" singular="attachment" />
-        <property name="images" type="Attachment[]" singular="image" />
-    </transfer>
-
     <transfer name="MailTemplate">
-        <property name="idMailTemplate" type="int" />
         <property name="name" type="string" />
-        <property name="subject" type="string" />
-        <property name="sender" type="string" />
-        <property name="senderName" type="string" />
-        <property name="text" type="string" />
-        <property name="html" type="string" />
-        <property name="wrapper" type="int" />
-        <property name="deleted" type="string" />
-        <property name="version" type="string" />
-        <property name="dateInterval" type="string" />
-        <property name="versionCreatedAt" type="string" />
-        <property name="versionCreatedBy" type="string" />
+        <property name="content" type="string" />
+        <property name="isHtml" type="bool" />
     </transfer>
 
-    <transfer name="SendMailResponse">
-        <property name="email" type="string" />
-        <property name="isSent" type="bool" />
-        <property name="isQueued" type="bool" />
-        <property name="isRejected" type="bool" />
-        <property name="isInvalid" type="bool" />
-        <property name="rejectReason" type="string" />
-        <property name="idMessage" type="string" />
+    <transfer name="MailResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="messages" singular="message" type="MailResponseMessage[]" />
     </transfer>
 
-    <transfer name="SendMailResponses">
-        <property name="responses" type="SendMailResponse[]" singular="response" />
+    <transfer name="MailResponseMessage">
+        <property name="message" type="string" />
     </transfer>
 
 </transfers>

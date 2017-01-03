@@ -9,10 +9,13 @@ namespace Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class FacadeMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
 {
 
-    const METHOD_STRING_PATTERN = '@method {{className}} facade()';
+    const METHOD_STRING_PATTERN = '@method {{className}}Interface facade()';
     const PATH_PATTERN = 'Business/';
     const FILE_NAME_SUFFIX = 'Facade.php';
 

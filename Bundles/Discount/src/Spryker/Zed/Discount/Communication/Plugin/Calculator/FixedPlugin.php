@@ -7,71 +7,80 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface
+class FixedPlugin extends AbstractCalculatorPlugin
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param int $percentage
+     * @api
      *
-     * @return float
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
      */
-    public function calculate(array $discountableItems, $percentage)
+    public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
     {
-        return $this->getFacade()->calculateFixed($discountableItems, $percentage);
+        return $this->getFacade()->calculateFixedDiscount($discountableItems, $discountTransfer);
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManager
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
-    protected function getCurrencyManager()
+    protected function getMoneyPlugin()
     {
-        return CurrencyManager::getInstance();
+        return $this->getFactory()->getMoneyFacade();
     }
 
     /**
+     * @api
+     *
      * @param float $value
      *
      * @return int
      */
     public function transformForPersistence($value)
     {
-        return (int)round($this->getCurrencyManager()->convertDecimalToCent($value));
+        return $this->getMoneyPlugin()->convertDecimalToInteger((float)$value);
     }
 
     /**
+     * @api
+     *
      * @param int $value
      *
      * @return string
      */
     public function transformFromPersistence($value)
     {
-        return $this->getCurrencyManager()->format(
-            $this->getCurrencyManager()->convertCentToDecimal($value),
-            false
-        );
+        $moneyTransfer = $this->getMoneyPlugin()->fromInteger((int)$value);
+
+        return $this->getMoneyPlugin()->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
+     * @api
+     *
+     * @param int $amount
+     *
      * @return string
      */
     public function getFormattedAmount($amount)
     {
-        $discountAmount = $this->getCurrencyManager()->convertCentToDecimal($amount);
+        $moneyTransfer = $this->getMoneyPlugin()->fromInteger($amount);
 
-        return $this->getCurrencyManager()->format($discountAmount);
+        return $this->getMoneyPlugin()->formatWithSymbol($moneyTransfer);
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAmountValidators()

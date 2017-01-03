@@ -6,8 +6,11 @@ modules:
             browser: phantomjs
             window_size: 1920x1080
 
+        - \Testify\Module\Environment
+        - \Config\Module\ConfigInit
+        - \Transfer\Module\TransferGenerate
+        - \Propel\Module\PropelInstall
         - \Application\Module\Yves
         - \Application\Module\Zed
         - \Sales\Module\Sales
         - \Oms\Module\Oms
-        - Asserts

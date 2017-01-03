@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Auth\Communication\Controller;
 
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
@@ -44,6 +45,19 @@ class LoginController extends AbstractController
             }
 
             $this->addErrorMessage('Authentication failed!');
+        } else {
+            $token = null;
+            if ($this->getFacade()->hasCurrentUser()) {
+                $token = $this->getFacade()->getCurrentUserToken();
+            }
+
+            if ($request->headers->get(AuthConstants::AUTH_TOKEN)) {
+                $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
+            }
+
+            if ($this->getFacade()->isAuthenticated($token)) {
+                return $this->redirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
+            }
         }
 
         return $this->viewResponse([

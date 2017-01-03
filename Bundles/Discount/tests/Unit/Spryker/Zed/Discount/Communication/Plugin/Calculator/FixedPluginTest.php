@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Codeception\TestCase\Test;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 
 /**
@@ -25,7 +26,7 @@ class FixedPluginTest extends Test
     /**
      * @return void
      */
-    public function testTransformForPersistence()
+    public function testTransformForPersistenceShouldConvertDecimalToInteger()
     {
         $plugin = new FixedPlugin();
 
@@ -36,12 +37,21 @@ class FixedPluginTest extends Test
     /**
      * @return void
      */
-    public function testTransformFromPersistence()
+    public function testTransformFromPersistenceShouldConvertIntegerToDecimalWithoutSymbol()
     {
+        $this->setLocaleForTest();
         $plugin = new FixedPlugin();
 
         $result = $plugin->transformFromPersistence(1113);
         $this->assertSame('11,13', $result);
+    }
+
+    /**
+     * @return void
+     */
+    private function setLocaleForTest()
+    {
+        Store::getInstance()->setCurrentLocale('de_DE');
     }
 
 }

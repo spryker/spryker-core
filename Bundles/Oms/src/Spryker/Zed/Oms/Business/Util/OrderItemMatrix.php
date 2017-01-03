@@ -135,16 +135,16 @@ class OrderItemMatrix
             'other' => 0,
         ];
         foreach ($orderItems as $orderItem) {
-            $created = $orderItem->getLastStateChange();
+            $lastStateChange = $orderItem->getLastStateChange();
 
             $lastDay = new \DateTime('-1 day');
-            if ($created > $lastDay) {
+            if ($lastStateChange > $lastDay) {
                 ++$grid['day'];
                 continue;
             }
 
             $lastDay = new \DateTime('-7 day');
-            if ($created > $lastDay) {
+            if ($lastStateChange >= $lastDay) {
                 ++$grid['week'];
                 continue;
             }

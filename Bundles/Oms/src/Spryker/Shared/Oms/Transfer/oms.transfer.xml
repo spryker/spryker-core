@@ -9,5 +9,13 @@
         <property name="createdAt" type="string" />
     </transfer>
 
+    <transfer name="Mail">
+        <property name="order" type="Order"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
 </transfers>
 

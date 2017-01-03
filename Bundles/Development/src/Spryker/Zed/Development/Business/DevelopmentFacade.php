@@ -70,13 +70,26 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param array $bundles
+     * @param string $bundle
+     * @param array $options
      *
      * @return void
      */
+    public function createBundle($bundle, $options)
+    {
+        $this->getFactory()->createBundleBuilder()->build($bundle, $options);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $bundles
+     *
+     * @return array
+     */
     public function updateComposerJsonInBundles(array $bundles)
     {
-        $this->getFactory()->createComposerJsonUpdater()->update($bundles);
+        return $this->getFactory()->createComposerJsonUpdater()->update($bundles);
     }
 
     /**
@@ -215,6 +228,46 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function getComposerDependencyComparison($bundleName, array $dependencies)
     {
         return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleName, $dependencies);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateYvesIdeAutoCompletion()
+    {
+        $this->getFactory()->createYvesIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateZedIdeAutoCompletion()
+    {
+        $this->getFactory()->createZedIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateClientIdeAutoCompletion()
+    {
+        $this->getFactory()->createClientIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateServiceIdeAutoCompletion()
+    {
+        $this->getFactory()->createServiceIdeAutoCompletionWriter()->writeCompletionFiles();
     }
 
 }

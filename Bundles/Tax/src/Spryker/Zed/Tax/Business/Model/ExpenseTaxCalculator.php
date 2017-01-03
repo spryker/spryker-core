@@ -43,11 +43,11 @@ class ExpenseTaxCalculator implements CalculatorInterface
                 $expenseTransfer->getTaxRate()
             );
 
-            $expenseTransfer->setUnitTaxAmount($unitTaxAmount);
-            $expenseTransfer->setSumTaxAmount($sumTaxAmount);
+            $expenseTransfer->setUnitTaxAmount((int)round($unitTaxAmount));
+            $expenseTransfer->setSumTaxAmount((int)round($sumTaxAmount));
 
-            $expenseTransfer->setUnitTaxTotal($unitTaxAmount);
-            $expenseTransfer->setSumTaxTotal($sumTaxAmount);
+            $expenseTransfer->setUnitTaxTotal((int)round($unitTaxAmount));
+            $expenseTransfer->setSumTaxTotal((int)round($sumTaxAmount));
         }
     }
 

@@ -198,7 +198,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param array|string[] $states
+     * @param string[] $states
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
 
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
@@ -227,7 +227,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param array|string[] $states
+     * @param string[] $states
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return void

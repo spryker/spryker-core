@@ -23,7 +23,7 @@ interface UtilTextServiceInterface
     /**
      *
      * Specification:
-     * - Generates random string for given lenght value
+     * - Generates random string for given length value
      *
      * @api
      *

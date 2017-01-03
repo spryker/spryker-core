@@ -68,7 +68,7 @@ class TransferGeneratorTest extends Test
 
         $this->assertTrue(file_exists($this->getTargetDirectory() . 'CatFaceTransfer.php'));
         $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.transfer'),
+            file_get_contents(__DIR__ . '/Fixtures/expected.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
         );
     }
@@ -92,7 +92,7 @@ class TransferGeneratorTest extends Test
 
         $this->assertTrue(file_exists($this->getTargetDirectory() . 'FooBarTransfer.php'));
         $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.merged.transfer'),
+            file_get_contents(__DIR__ . '/Fixtures/expected.merged.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
         );
     }

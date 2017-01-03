@@ -8,11 +8,12 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Converter;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Shared\Library\Currency\CurrencyManagerInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
+use Spryker\Zed\Money\Business\MoneyFacade;
 
 /**
  * @group Unit
@@ -90,20 +91,9 @@ class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMoneyValueConverter()
     {
-        $currencyManagerMock = $this->createCurrencyMangerMock();
-        $currencyManagerMock->method('convertDecimalToCent')->willReturnCallback(function ($amount) {
-            return ($amount * 100);
-        });
+        $discountToMoneyBridge = new DiscountToMoneyBridge(new MoneyFacade());
 
-        return new MoneyValueConverter($currencyManagerMock);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Library\Currency\CurrencyManagerInterface
-     */
-    protected function createCurrencyMangerMock()
-    {
-        return $this->getMockBuilder(CurrencyManagerInterface::class)->getMock();
+        return new MoneyValueConverter($discountToMoneyBridge);
     }
 
 }

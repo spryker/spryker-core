@@ -15,7 +15,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInter
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacadeInterface getFacade()
  */
 class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithAttributesPluginInterface
 {
@@ -60,7 +60,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAttributeTypes()
     {

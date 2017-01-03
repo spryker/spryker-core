@@ -212,12 +212,13 @@ interface GlossaryFacadeInterface
      *
      * @param string $keyName
      * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
-    public function translate($keyName, array $data = []);
+    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
 
     /**
      * @api

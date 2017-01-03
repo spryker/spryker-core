@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ComposerJsonUpdaterConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:composer-json:update';
+    const COMMAND_NAME = 'dev:dependency:update-composer-files';
     const OPTION_BUNDLE = 'bundle';
     const VERBOSE = 'verbose';
 
@@ -32,7 +32,7 @@ class ComposerJsonUpdaterConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Update composer.json of core bundles');
+            ->setDescription('Update composer.json of core bundles (Spryker core dev only).');
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
     }
@@ -53,13 +53,13 @@ class ComposerJsonUpdaterConsole extends Console
             $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
         }
 
+        $processedBundles = $this->getFacade()->updateComposerJsonInBundles($bundles);
         if ($this->input->getOption(self::VERBOSE)) {
-            foreach ($bundles as $bundle) {
-                $this->output->write('- '. $bundle);
+            $this->output->writeln(count($processedBundles) . ' bundles updated:');
+            foreach ($processedBundles as $processedBundle) {
+                $this->output->writeln('- '. $processedBundle);
             }
         }
-
-        $this->getFacade()->updateComposerJsonInBundles($bundles);
     }
 
 }

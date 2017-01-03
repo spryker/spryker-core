@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -23,13 +24,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
 
     /**
-     * Specification:
-     *  - Find all discounts with voucher
-     *  - Find all discounts matching decision rules
-     *  - Collect discountable items for each discount type
-     *  - Apply discount to exclusive if exists
-     *  - distribute discount amount throw all discountable items
-     *  - Add discount totals to quote discount properties
+     * {@inheritdoc}
      *
      * @api
      *
@@ -45,8 +40,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if given item transfer matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -67,8 +61,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *  Specification:
-     * - Check if quote grandTotal matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -89,8 +82,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *  Specification:
-     * - Check if cart total quantity matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -111,8 +103,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *  Specification:
-     * - Check quote subtotal matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -134,8 +125,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     *  Specification:
-     * - Collect all items matching given sku in clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -152,8 +142,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if item quantity matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -175,8 +164,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Collect all items matching given quantity in clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -193,8 +181,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if there is items matching single item price in clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -215,8 +202,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Collect all items matching given quantity in clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -233,8 +219,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if current week in year matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -255,8 +240,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if current day of the week is matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -277,8 +261,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if current month is matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -300,8 +283,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Check if current time matching clause
+     * {@inheritdoc}
      *
      * @api
      *
@@ -322,15 +304,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Given type look for meta data provider
-     * - Collect all available fields from all registered plugins
+     * {@inheritdoc}
      *
      * @api
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringFieldsByType($type)
     {
@@ -341,16 +321,14 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Given type look for meta data provider
-     * - Collect all available comparator operators for given fieldName
+     * {@inheritdoc}
      *
      * @api
      *
      * @param string $type
      * @param string $fieldName
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringFieldExpressionsForField($type, $fieldName)
     {
@@ -361,15 +339,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Given type look for meta data provider
-     * - Get all available comparators
+     * {@inheritdoc}
      *
      * @api
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringComparatorExpressions($type)
     {
@@ -380,15 +356,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Given type look for meta data provider
-     * - Get boolean logical comparators
+     * {@inheritdoc}
      *
      * @api
      *
      * @param string $type
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getQueryStringLogicalComparators($type)
     {
@@ -399,9 +373,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Given configure clause
-     * - Select comparator operator based on clause operator, execute it and return result.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -418,17 +390,14 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Configure specification builder on type and query string
-     * - Try building query string
-     * - Store all occurred error to array and return it
+     * {@inheritdoc}
      *
      * @api
      *
      * @param string $type
      * @param string $queryString
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function validateQueryStringByType($type, $queryString)
     {
@@ -438,10 +407,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Hydrate discount entity from DiscountConfiguratorTransfer and persist it.
-     * - If discount type is voucher create voucher pool without voucherCodes
-     * - Return id of discount entity in persistence.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -457,10 +423,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Hydrate discount entity from DiscountConfiguratorTransfer and persist it.
-     * - If discount type is voucher create/update voucher pool without voucherCodes
-     * - Return bool if discount entity was persisted
+     * {@inheritdoc}
      *
      * @api
      *
@@ -476,10 +439,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Read idDiscount from persistence
-     * - Hydrate data from entities to DiscountConfiguratorTransfer
-     * - return DiscountConfiguratorTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -495,10 +455,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Find discount entity
-     * - Change discount state to enabled/disabled.
-     * - Persist
+     * {@inheritdoc}
      *
      * @api
      *
@@ -515,13 +472,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Find discount to which voucherCodes have to be generated
-     * - Change discount state to enabled/disabled.
-     * - Create pool if not created yet.
-     * - Using voucher engine generate voucherCodes by provided configuration from DiscountVoucherTransfer
-     * - Persist code with reference to current discount
-     * - Return VoucherCreateInfoTransfer with error or success messages if there was any
+     * {@inheritdoc}
      *
      * @api
      *
@@ -537,18 +488,16 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Loop over all discountable items and calculate discount price amount per item
-     * - Sum each amount to to total
-     * - Round up cent fraction for total discount amount!
-     * - Return total calculated discount amount on given discountable items
+     * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use calculatePercentageDiscount() instead
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param float $percentage
      *
-     * @return float
+     * @return int
      */
     public function calculatePercentage(array $discountableObjects, $percentage)
     {
@@ -558,17 +507,34 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     *
-     * - Return amount passed as parameter,
-     * - Return 0 if negative number is given
+     * {@inheritdoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
+     */
+    public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer)
+    {
+        return $this->getFactory()
+            ->createCalculatorPercentage()
+            ->calculateDiscount($discountableObjects, $discountTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use calculateFixedDiscount() instead
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param float $amount
      *
-     * @return float
+     * @return int
      */
     public function calculateFixed(array $discountableObjects, $amount)
     {
@@ -578,11 +544,24 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
-     * - Loop over each DiscountableItemTransfer and calculate each item price amount share from current discount total, for single item.
-     * - Calculate floating point error and store it for later item, add it to next item.
-     * - Store item price share amount into DiscountableItemTransfer::originalItemCalculatedDiscounts array object reference! Which points to original item!
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
+     */
+    public function calculateFixedDiscount(array $discountableObjects, DiscountTransfer $discountTransfer)
+    {
+        return $this->getFactory()
+            ->createCalculatorFixed()
+            ->calculateDiscount($discountableObjects, $discountTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -598,10 +577,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     *
-     * - For given voucherCodes find all voucher entities with counter
-     * - Reduce voucher number of uses property by 1 to indicate it's not used/released.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -617,10 +593,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     *
-     * - For given voucherCodes find all voucher entities with counter
-     * - Increment voucher number of uses property by 1.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -636,11 +609,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * Specification:
-     *
-     * - Loop over all quote items, take calculated discounts and persist them discount amount is for single item
-     * - Loop over all quote expenses, take calculated discounts and persist them discount amount is for single item
-     * - If there is voucher codes mark them as already used by incrementing number of uses.
+     * {@inheritdoc}
      *
      * @api
      *

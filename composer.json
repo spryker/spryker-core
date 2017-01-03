@@ -458,12 +458,15 @@
       "Spryker\\Zed\\Setup\\": "Bundles/Setup/src",
       "Unit\\Spryker\\Zed\\Setup\\": "Bundles/Setup/tests",
       "Functional\\Spryker\\Zed\\Setup\\": "Bundles/Setup/tests",
+
       "Spryker\\Client\\Shipment\\": "Bundles/Shipment/src",
       "Unit\\Spryker\\Client\\Shipment\\": "Bundles/Shipment/tests",
       "Spryker\\Shared\\Shipment\\": "Bundles/Shipment/src",
       "Unit\\Spryker\\Shared\\Shipment\\": "Bundles/Shipment/tests",
       "Spryker\\Zed\\Shipment\\": "Bundles/Shipment/src",
       "Unit\\Spryker\\Zed\\Shipment\\": "Bundles/Shipment/tests",
+      "Acceptance\\Shipment\\": "Bundles/Shipment/tests",
+
       "Spryker\\Shared\\SqlCriteriaBuilder\\": "Bundles/SqlCriteriaBuilder/src",
       "Spryker\\Shared\\Stock\\": "Bundles/Stock/src",
       "Unit\\Spryker\\Shared\\Stock\\": "Bundles/Stock/tests",
@@ -509,7 +512,10 @@
       "Spryker\\Zed\\Transfer\\": "Bundles/Transfer/src",
       "Unit\\Spryker\\Zed\\Transfer\\": "Bundles/Transfer/tests",
       "Functional\\Spryker\\Zed\\Transfer\\": "Bundles/Transfer/tests",
+
       "Spryker\\Shared\\Twig\\": "Bundles/Twig/src",
+      "Spryker\\Zed\\Twig\\": "Bundles/Twig/src",
+
       "Spryker\\Shared\\Url\\": "Bundles/Url/src",
       "Unit\\Spryker\\Shared\\Url\\": "Bundles/Url/tests",
       "Functional\\Spryker\\Shared\\Url\\": "Bundles/Url/tests",

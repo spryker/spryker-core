@@ -130,8 +130,8 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
     protected function setExpenseGrossPriceWithDiscountsToDefaults($orderTransfer)
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            $expenseTransfer->setSumGrossPriceWithDiscounts($expenseTransfer->getSumGrossPrice());
-            $expenseTransfer->setUnitGrossPriceWithDiscounts($expenseTransfer->getUnitGrossPrice());
+            $expenseTransfer->setSumGrossPriceWithDiscounts((int)$expenseTransfer->getSumGrossPrice());
+            $expenseTransfer->setUnitGrossPriceWithDiscounts((int)$expenseTransfer->getUnitGrossPrice());
         }
     }
 
@@ -146,7 +146,7 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
         $expenseTransfer->setRefundableAmount(
-            $expenseTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getSumGrossAmount()
+            (int)$expenseTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getSumGrossAmount()
         );
     }
 
@@ -159,13 +159,13 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             $expenseTransfer->setUnitGrossPriceWithDiscounts(
-                $expenseTransfer->getUnitGrossPrice() - $expenseTransfer->getUnitTotalDiscountAmount()
+                (int)$expenseTransfer->getUnitGrossPrice() - $expenseTransfer->getUnitTotalDiscountAmount()
             );
 
             $expenseTransfer->setUnitItemTotal($expenseTransfer->getUnitGrossPriceWithDiscounts());
 
             $expenseTransfer->setSumGrossPriceWithDiscounts(
-                $expenseTransfer->getSumGrossPrice() - $expenseTransfer->getSumTotalDiscountAmount()
+                (int)$expenseTransfer->getSumGrossPrice() - $expenseTransfer->getSumTotalDiscountAmount()
             );
 
             $expenseTransfer->setSumItemTotal($expenseTransfer->getSumGrossPriceWithDiscounts());
@@ -185,8 +185,8 @@ class OrderExpensesWithDiscounts implements OrderAmountAggregatorInterface
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setQuantity($quantity);
-        $calculatedDiscountTransfer->setUnitGrossAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setSumGrossAmount($salesOrderDiscountEntity->getAmount() * $quantity);
+        $calculatedDiscountTransfer->setUnitGrossAmount((int)$salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setSumGrossAmount((int)$salesOrderDiscountEntity->getAmount() * $quantity);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());

@@ -52,6 +52,16 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @param string $bundle
+     * @param array $options
+     *
+     * @return void
+     */
+    public function createBundle($bundle, $options);
+
+    /**
+     * @api
+     *
      * @param string $bundleName
      *
      * @return array
@@ -133,5 +143,59 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function getEngineBundleList();
+
+    /**
+     * @api
+     *
+     * @param array $bundles
+     *
+     * @return void
+     */
+    public function updateComposerJsonInBundles(array $bundles);
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getExternalDependencyTree();
+
+    /**
+     * @api
+     *
+     * @param string $bundleName
+     * @param array $dependencies
+     *
+     * @return array
+     */
+    public function getComposerDependencyComparison($bundleName, array $dependencies);
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateYvesIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateZedIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateClientIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateServiceIdeAutoCompletion();
 
 }

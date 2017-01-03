@@ -149,7 +149,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface[]
      */
     public function getCalculatorPlugins()
     {
@@ -353,7 +353,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule
      */
     public function createItemQuantityDecisionRule()
     {
@@ -409,11 +409,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Library\Currency\CurrencyManagerInterface
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
-    public function getCurrencyManager()
+    public function getMoneyFacade()
     {
-        return $this->getProvidedDependency(DiscountDependencyProvider::CURRENCY_MANAGER);
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_MONEY);
     }
 
     /**
@@ -432,7 +432,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createMoneyValueConverter()
     {
-        return new MoneyValueConverter($this->getCurrencyManager());
+        return new MoneyValueConverter($this->getMoneyFacade());
     }
 
 }

@@ -12,7 +12,7 @@ use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\AvailabilityCartConnector\Business\AvailabilityCartConnectorFacade getFacade()
+ * @method \Spryker\Zed\AvailabilityCartConnector\Business\AvailabilityCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorCommunicationFactory getFactory()
  */
 class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPluginInterface

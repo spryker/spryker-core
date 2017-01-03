@@ -26,7 +26,7 @@ class CalculatorFormDataProvider
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getData()
     {

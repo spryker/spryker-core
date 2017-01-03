@@ -42,7 +42,7 @@ class BundleConfigNotFoundException extends \Exception
             'E.g. %s\\Zed\\%2$s\\%2$sConfig',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
-        );
+        ) . PHP_EOL;
 
         $message .= new Backtrace();
 

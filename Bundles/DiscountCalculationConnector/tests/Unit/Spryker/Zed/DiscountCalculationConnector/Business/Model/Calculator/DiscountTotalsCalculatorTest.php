@@ -93,7 +93,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
             $calculatedDiscountTransfer->setQuantity($calculatedDiscount['quantity']);
             $calculatedDiscountTransfer->setUnitGrossAmount($calculatedDiscount['unitGrossAmount']);
             $calculatedDiscountTransfer->setSumGrossAmount(
-                $calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
+                (int)$calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
             );
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 

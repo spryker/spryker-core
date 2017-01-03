@@ -17,6 +17,14 @@
 
 - Recommended reviewers: @reviewer_usernames
 
+#### Feature Release Notes
+
+{These are necessary for more than a single bundle release, and are usually combined feature release notes.}
+{Include here a generic description that describes what the feature is about, what new functionality is there, if needed also high level how to use tips.}
+{For improvements include what addition was made to existing feature or how an already existing functionality is made better.}
+{For a fix state what was former behavior, what was breaking or broken and what is the fixed current behavior.}  
+{Make sure you use proper English sentences.}
+
 -----------------------------------------
 
 #### Bundle MajorBundleA (e.g. "Bundle Cms")

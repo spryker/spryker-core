@@ -7,28 +7,8 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\AbstractBundleConfig as SharedAbstractBundleConfig;
 
-abstract class AbstractBundleConfig
+abstract class AbstractBundleConfig extends SharedAbstractBundleConfig
 {
-
-    /**
-     * @param string $key
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    protected function get($key, $default = null)
-    {
-        return $this->getConfig()->get($key, $default);
-    }
-
-    /**
-     * @return \Spryker\Shared\Config
-     */
-    protected function getConfig()
-    {
-        return Config::getInstance();
-    }
-
 }

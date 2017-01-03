@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
 
 class FormatPriceFunction extends TwigFunction
 {
@@ -27,10 +27,14 @@ class FormatPriceFunction extends TwigFunction
     protected function getFunction()
     {
         return function ($value, $includeSymbol = true) {
-            $currencyManager = CurrencyManager::getInstance();
-            $value = $currencyManager->convertCentToDecimal($value);
+            $moneyPlugin = new MoneyPlugin();
+            $moneyTransfer = $moneyPlugin->fromInteger($value);
 
-            return $currencyManager->format($value, $includeSymbol);
+            if ($includeSymbol) {
+                return $moneyPlugin->formatWithSymbol($moneyTransfer);
+            }
+
+            return $moneyPlugin->formatWithoutSymbol($moneyTransfer);
         };
     }
 

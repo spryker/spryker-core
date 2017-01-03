@@ -70,9 +70,9 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param array|string[] $acceptedTypes
+     * @param string[] $acceptedTypes
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getOperatorExpressionsByTypes(array $acceptedTypes)
     {
@@ -88,7 +88,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getAvailableComparatorExpressions()
     {
@@ -116,7 +116,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getCompoundComparatorExpressions()
     {
@@ -152,7 +152,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param array|string[] $withTypes
+     * @param string[] $withTypes
      * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface $operator
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException

@@ -12,12 +12,12 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Library\Sanitize\Html;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
 
 class OrdersTable extends AbstractTable
@@ -54,21 +54,29 @@ class OrdersTable extends AbstractTable
     protected $dateFormatter;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $orderItemQuery
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      */
     public function __construct(
         SpySalesOrderQuery $orderQuery,
         SpySalesOrderItemQuery $orderItemQuery,
         SalesToSalesAggregatorInterface $salesAggregatorFacade,
-        DateFormatterInterface $dateFormatter
+        DateFormatterInterface $dateFormatter,
+        SalesToMoneyInterface $moneyFacade
     ) {
         $this->orderQuery = $orderQuery;
         $this->orderItemQuery = $orderItemQuery;
         $this->salesAggregatorFacade = $salesAggregatorFacade;
         $this->dateFormatter = $dateFormatter;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -101,10 +109,13 @@ class OrdersTable extends AbstractTable
      */
     protected function formatPrice($value, $includeSymbol = true)
     {
-        $currencyManager = CurrencyManager::getInstance();
-        $value = $currencyManager->convertCentToDecimal($value);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value);
 
-        return $currencyManager->format($value, $includeSymbol);
+        if ($includeSymbol) {
+            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        }
+
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
@@ -293,9 +304,9 @@ class OrdersTable extends AbstractTable
     protected function addRangeFilter(SpySalesOrderItemQuery $filterQuery, $filter)
     {
         if ($filter === self::FILTER_DAY) {
-            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_EQUAL);
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_THAN);
         } elseif ($filter === self::FILTER_WEEK) {
-            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_THAN);
+            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_EQUAL);
             $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::GREATER_EQUAL);
         } else {
             $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);

@@ -18,10 +18,13 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMeth
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class GenerateClientIdeAutoCompletionConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:generate-client-ide-auto-completion';
+    const COMMAND_NAME = 'dev:ide:generate-client-auto-completion';
 
     /**
      * @return void
@@ -29,7 +32,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate the bundle ide auto completion interface for the Client.');
+        $this->setDescription('Generate IDE auto completion files for Client.');
     }
 
     /**

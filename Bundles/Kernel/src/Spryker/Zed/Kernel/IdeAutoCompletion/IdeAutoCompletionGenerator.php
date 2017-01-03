@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Kernel\IdeAutoCompletion;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 {
 

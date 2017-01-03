@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -19,6 +20,14 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
+     */
+    public function createWishlistQuery()
+    {
+        return SpyWishlistQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function createWishlistItemQuery()
@@ -27,11 +36,11 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function createWishlistQuery()
+    public function createProductQuery()
     {
-        return SpyWishlistQuery::create();
+        return SpyProductQuery::create();
     }
 
 }

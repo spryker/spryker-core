@@ -216,4 +216,12 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
     }
 
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
+     */
+    public function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_MONEY);
+    }
+
 }

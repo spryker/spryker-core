@@ -15,9 +15,9 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Check if product is never out of stock
-     *  - Check if product have stock in productStock table
-     *  - Check if have placed orders where items have statemachine state flagged as reserved
+     *  - Checks if product is never out of stock.
+     *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
      *
      * @api
      *
@@ -30,8 +30,9 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Check if product have stock in productStock table
-     *  - Check if have placed orders where items have statemachine state flagged as reserved
+     *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *  - Returns integer value which is Product stock - reserved state machine items.
      *
      * @api
      *
@@ -44,7 +45,7 @@ interface AvailabilityFacadeInterface
     /**
      * Specification:
      *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
-     *  - Write error message into CheckoutResponseTransfer
+     *  - Writes error message into CheckoutResponseTransfer.
      *
      * @api
      *
@@ -60,10 +61,10 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Calculate current item stock, take into account reserved items
-     *  - Store new stock for concrete product
-     *  - Store sum of all concrete product stocks for abstract product
-     *  - Touch availability abstract collector
+     *  - Calculates current item stock, take into account reserved items
+     *  - Stores new stock for concrete product
+     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Touches availability abstract collector
      *
      * @api
      *
@@ -74,10 +75,9 @@ interface AvailabilityFacadeInterface
     public function updateAvailability($sku);
 
     /**
-     *
      * Specification:
-     *  - Reads product availability data from persistense, stock, reservation, availability.
-     *  - Returns data for selected abstract product
+     *  - Reads product availability data from persistence, stock, reservation, availability.
+     *  - Returns data for selected abstract product.
      *
      * @api
      *

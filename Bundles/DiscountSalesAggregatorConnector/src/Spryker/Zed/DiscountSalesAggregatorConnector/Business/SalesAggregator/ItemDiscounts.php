@@ -163,8 +163,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setQuantity($quantity);
-        $calculatedDiscountTransfer->setUnitGrossAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setSumGrossAmount($salesOrderDiscountEntity->getAmount() * $quantity);
+        $calculatedDiscountTransfer->setUnitGrossAmount((int)$salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setSumGrossAmount((int)$salesOrderDiscountEntity->getAmount() * $quantity);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());

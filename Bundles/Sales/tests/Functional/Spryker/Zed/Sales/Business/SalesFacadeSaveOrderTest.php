@@ -23,8 +23,10 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -97,6 +99,8 @@ class SalesFacadeSaveOrderTest extends Test
         $container[SalesDependencyProvider::FACADE_COUNTRY] = new SalesToCountryBridge($countryFacadeMock);
         $container[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
+        $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
+        $container[SalesDependencyProvider::STORE] = Store::getInstance();
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();

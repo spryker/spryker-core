@@ -22,6 +22,8 @@ class Functional extends Module
     {
         parent::__construct($config);
 
+        Propel::disableInstancePooling();
+
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
