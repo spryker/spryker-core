@@ -149,10 +149,12 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             }
         }
 
-        $this->availabilityFacade->saveProductAvailability(
+        $idAvailabilityAbstract = $this->availabilityFacade->saveProductAvailability(
             $bundleProductSku,
             $bundleAvailabilityQuantity
         );
+
+        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
     }
 
     /**
