@@ -85,9 +85,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAclQueryContainer(Container $container)
     {
-        /*
-         * @deprecated Use getQueryContainer() directly for the own bundle's query container
-         */
+        /** @deprecated Use getQueryContainer() directly for the own bundle's query container */
         $container[self::QUERY_CONTAINER_ACL] = function (Container $container) {
             return $container->getLocator()->acl()->queryContainer();
         };
