@@ -96,7 +96,7 @@ class ZedBootstrap
     {
         $serviceProviders = $this->getInternalCallServiceProviderWithAuthentication();
 
-        /* @deprecated This added to keep Backward Compatibility and will be removed in major release */
+        /** @deprecated This added to keep Backward Compatibility and will be removed in major release */
         if (!$serviceProviders) {
             $serviceProviders = $this->getServiceProvider();
         }
