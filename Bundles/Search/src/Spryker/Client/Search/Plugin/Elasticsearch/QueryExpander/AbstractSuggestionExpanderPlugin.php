@@ -43,7 +43,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
     {
         $this->assertQueryHasSuggestion($query);
 
-        $this->addSuggestion($query, $this->createCompletion($query,$requestParameters));
+        $this->addSuggestion($query, $this->createCompletion($query, $requestParameters));
     }
 
     /**
