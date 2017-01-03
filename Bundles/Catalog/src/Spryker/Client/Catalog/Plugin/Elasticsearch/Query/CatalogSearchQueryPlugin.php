@@ -33,12 +33,8 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected $query;
 
-    /**
-     * @param string $searchString @deprecated Use setSearchString() method instead.
-     */
-    public function __construct($searchString = '')
+    public function __construct()
     {
-        $this->searchString = $searchString;
         $this->query = $this->createSearchQuery();
     }
 

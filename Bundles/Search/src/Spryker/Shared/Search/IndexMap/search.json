@@ -117,6 +117,7 @@
         },
         "completion-terms": {
           "type": "string",
+          "include_in_all": false,
           "analyzer": "completion_analyzer"
         },
         "suggestion-terms": {

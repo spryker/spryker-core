@@ -9,15 +9,8 @@ namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\SuggestionQueryPlugin;
-use Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\CatalogSearchResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\PaginatedResultFormatterPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultFormatterPlugin;
 
 class CatalogDependencyProvider extends AbstractDependencyProvider
 {
@@ -83,22 +76,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchQueryExpanderPlugins()
     {
-        // TODO: Return empty array after deprecated method is removed.
-        return $this->createDefaultCatalogSearchQueryExpanderPlugins();
-    }
-
-    /**
-     * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     */
-    private function createDefaultCatalogSearchQueryExpanderPlugins()
-    {
-        return [
-            new FacetQueryExpanderPlugin(),
-            new SortedQueryExpanderPlugin(),
-            new PaginatedQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -106,23 +84,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins()
     {
-        // TODO: Return empty array after deprecated method is removed.
-        return $this->createDefaultCatalogSearchResultFormatterPlugins();
-    }
-
-    /**
-     * @deprecated Plugins provided for BC reasons because they should be defined on project level only.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
-     */
-    private function createDefaultCatalogSearchResultFormatterPlugins()
-    {
-        return [
-            new FacetResultFormatterPlugin(),
-            new SortedResultFormatterPlugin(),
-            new PaginatedResultFormatterPlugin(),
-            new CatalogSearchResultFormatterPlugin(),
-        ];
+        return [];
     }
 
     /**

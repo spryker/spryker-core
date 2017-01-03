@@ -7,11 +7,7 @@
 
 namespace Spryker\Client\Catalog;
 
-use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
-use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
-use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Kernel\Store;
 
 class CatalogFactory extends AbstractFactory
 {
@@ -25,33 +21,11 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getCatalogSearchQueryPlugin() method instead.
-     *
-     * @param string $searchString
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    public function createCatalogSearchQueryPlugin($searchString)
-    {
-        return new CatalogSearchQueryPlugin($searchString);
-    }
-
-    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getCatalogSearchQueryPlugin()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_PLUGIN);
-    }
-
-    /**
-     * @deprecated Use getCatalogSearchQueryExpanderPlugins() method instead.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     */
-    public function createCatalogSearchQueryExpanderPlugins()
-    {
-        return $this->getCatalogSearchQueryExpanderPlugins();
     }
 
     /**
@@ -63,43 +37,11 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getCatalogSearchResultFormatters() method instead.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
-     */
-    public function createCatalogSearchResultFormatters()
-    {
-        return $this->getCatalogSearchResultFormatters();
-    }
-
-    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function getCatalogSearchResultFormatters()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS);
-    }
-
-    /**
-     * @deprecated See \Spryker\Client\Catalog\Model\Catalog for more info.
-     *
-     * @return \Spryker\Client\Catalog\Model\Catalog
-     */
-    public function createCatalogModel()
-    {
-        return new ModelCatalog(
-            $this->createProductKeyBuilder(),
-            $this->getStorageClient(),
-            Store::getInstance()->getCurrentLocale()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
-     */
-    protected function createProductKeyBuilder()
-    {
-        return new ProductResourceKeyBuilder();
     }
 
     /**
