@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Spryker\Zed\Transfer\TransferConfig;
@@ -21,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  * @group Model
  * @group TransferFacadeTest
  */
-class TransferFacadeTest extends \PHPUnit_Framework_TestCase
+class TransferFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**

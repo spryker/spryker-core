@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Dependency\Plugin;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 
@@ -19,7 +20,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
  * @group Plugin
  * @group StepHandlerPluginCollectionTest
  */
-class StepHandlerPluginCollectionTest extends \PHPUnit_Framework_TestCase
+class StepHandlerPluginCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const TEST_PLUGIN_NAME = 'test';

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Application\EventListener;
 
+use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\Application\EventListener\KernelLogListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,7 +26,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group EventListener
  * @group KernelLogListenerTest
  */
-class KernelLogListenerTest extends \PHPUnit_Framework_TestCase
+class KernelLogListenerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

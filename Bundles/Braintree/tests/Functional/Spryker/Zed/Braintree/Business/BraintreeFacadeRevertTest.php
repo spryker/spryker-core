@@ -98,8 +98,8 @@ class BraintreeFacadeRevertTest extends AbstractFacadeTest
             'merchantAccountId' => 'abc',
             'statusHistory' => new StatusDetails([
                 'timestamp' => new DateTime(),
-                'status' => 'voided'
-            ])
+                'status' => 'voided',
+            ]),
         ]);
         $response = new Successful([$transaction]);
 

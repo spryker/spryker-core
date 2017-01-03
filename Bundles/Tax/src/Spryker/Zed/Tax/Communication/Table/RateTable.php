@@ -59,7 +59,7 @@ class RateTable extends AbstractTable
             SpyTaxRateTableMap::COL_CREATED_AT => 'Created at',
             SpyCountryTableMap::COL_NAME => 'Country',
             SpyTaxRateTableMap::COL_RATE => 'Percentage',
-            self::TABLE_COL_ACTIONS => 'Actions'
+            self::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -134,7 +134,7 @@ class RateTable extends AbstractTable
         $editTaxRateUrl = Url::generate(
             '/tax/rate/edit',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
+                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
         return $this->generateEditButton($editTaxRateUrl, 'Edit');
@@ -150,7 +150,7 @@ class RateTable extends AbstractTable
         $viewTaxRateUrl = Url::generate(
             '/tax/rate/view',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
+                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
         return $this->generateViewButton($viewTaxRateUrl, 'View');
@@ -166,7 +166,7 @@ class RateTable extends AbstractTable
         $deleteTaxRateUrl = Url::generate(
             '/tax/rate/delete',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate()
+                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]
         );
 

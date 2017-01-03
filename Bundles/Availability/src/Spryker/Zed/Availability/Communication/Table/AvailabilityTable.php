@@ -50,7 +50,7 @@ class AvailabilityTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $url = Url::generate('/availability-table', [
-            AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract
+            AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
         ])->build();
 
         $config->setUrl($url);
@@ -60,19 +60,19 @@ class AvailabilityTable extends AbstractTable
             AvailabilityQueryContainer::CONCRETE_AVAILABILITY => 'Availability',
             AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
             AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
-            self::TABLE_COL_ACTION => 'Actions'
+            self::TABLE_COL_ACTION => 'Actions',
         ]);
 
         $config->setSortable([
             AvailabilityQueryContainer::CONCRETE_SKU,
             AvailabilityQueryContainer::CONCRETE_NAME,
             AvailabilityQueryContainer::STOCK_QUANTITY,
-            AvailabilityQueryContainer::RESERVATION_QUANTITY
+            AvailabilityQueryContainer::RESERVATION_QUANTITY,
         ]);
 
         $config->setSearchable([
             SpyProductTableMap::COL_SKU,
-            SpyProductLocalizedAttributesTableMap::COL_NAME
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
         ]);
 
         $config->setDefaultSortColumnIndex(0);
@@ -119,7 +119,7 @@ class AvailabilityTable extends AbstractTable
             [
                 self::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
                 self::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract
+                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
             ]
         );
         return $this->generateEditButton($viewTaxSetUrl, 'Edit Stock');

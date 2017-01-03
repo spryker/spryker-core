@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Service\Kernel\ClassResolver;
 
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -17,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group ClassResolver
  * @group AbstractResolverTest
  */
-abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

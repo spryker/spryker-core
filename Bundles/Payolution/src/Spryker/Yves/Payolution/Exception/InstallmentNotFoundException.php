@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Payolution\Exception;
 
-class InstallmentNotFoundException extends \Exception
+use Exception;
+
+class InstallmentNotFoundException extends Exception
 {
 }

@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\StateMachine\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandler;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
@@ -130,7 +131,7 @@ class StateMachineFacadeTest extends Test
 
         $this->assertCount(1, $processList);
 
-        /* @var \Generated\Shared\Transfer\StateMachineProcessTransfer $process */
+        /** @var \Generated\Shared\Transfer\StateMachineProcessTransfer $process */
         $process = array_pop($processList);
         $this->assertEquals($processName, $process->getProcessName());
     }
@@ -248,7 +249,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /* @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems */
+        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems */
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -259,7 +260,7 @@ class StateMachineFacadeTest extends Test
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /* @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $updatedStateMachineItems */
+        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $updatedStateMachineItems */
         $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $updatedStateMachineItems);
@@ -558,7 +559,7 @@ class StateMachineFacadeTest extends Test
 
         $stateMachineLockEntity = new SpyStateMachineLock();
         $stateMachineLockEntity->setIdentifier($identifier);
-        $stateMachineLockEntity->setExpires(new \DateTime('Yesterday'));
+        $stateMachineLockEntity->setExpires(new DateTime('Yesterday'));
         $stateMachineLockEntity->save();
 
         $stateMachineFacade->clearLocks();

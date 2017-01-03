@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Twig\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig_Environment;
+use Twig_ExtensionInterface;
 
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements \Twig_ExtensionInterface
+abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
 {
 
     /**
@@ -21,7 +23,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements \Tw
      *
      * @return void
      */
-    public function initRuntime(\Twig_Environment $environment)
+    public function initRuntime(Twig_Environment $environment)
     {
     }
 

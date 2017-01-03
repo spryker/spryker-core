@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class GroupAlreadyHasRoleException extends \Exception
+use Exception;
+
+class GroupAlreadyHasRoleException extends Exception
 {
 }

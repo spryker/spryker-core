@@ -71,7 +71,7 @@ class TwigMoneyServiceProviderTest extends PHPUnit_Framework_TestCase
         };
         $moneyServiceProvider->register($application);
 
-        /* @var $twig \Twig_Environment */
+        /** @var \Twig_Environment $twig */
         $twig = $application['twig'];
         $filter = $twig->getFilter('money');
 

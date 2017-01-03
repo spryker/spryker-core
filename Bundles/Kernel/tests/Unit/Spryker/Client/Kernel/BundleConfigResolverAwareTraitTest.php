@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Client\Kernel\BundleConfigResolverAwareTrait;
 
@@ -17,7 +18,7 @@ use Spryker\Client\Kernel\BundleConfigResolverAwareTrait;
  * @group Kernel
  * @group BundleConfigResolverAwareTraitTest
  */
-class BundleConfigResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
+class BundleConfigResolverAwareTraitTest extends PHPUnit_Framework_TestCase
 {
 
     /**

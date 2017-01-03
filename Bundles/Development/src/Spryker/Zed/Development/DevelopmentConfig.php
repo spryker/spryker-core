@@ -114,7 +114,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Symfony\\Component\\' => 'spryker/symfony',
             'Twig_' => 'spryker/twig',
             'Zend\\' => 'spryker/zend',
-            'phpDocumentor\\GraphViz\\' => 'spryker/graphviz'
+            'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
         ];
     }
 
@@ -138,7 +138,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             '/symfony/' => 'spryker/symfony',
             'twig/twig' => 'spryker/twig',
             '/zendframework/' => 'spryker/zend',
-            'phpdocumentor/graphviz' => 'spryker/graphviz'
+            'phpdocumentor/graphviz' => 'spryker/graphviz',
         ];
     }
 

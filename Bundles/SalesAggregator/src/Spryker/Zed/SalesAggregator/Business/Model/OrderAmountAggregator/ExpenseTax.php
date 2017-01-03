@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesAggregator\Dependency\Facade\SalesAggregatorToTaxInterface;
 
@@ -41,7 +42,7 @@ class ExpenseTax implements OrderAmountAggregatorInterface
      *
      * @return void
      */
-    protected function addTaxAmountToTaxableItems(\ArrayObject $taxableItems)
+    protected function addTaxAmountToTaxableItems(ArrayObject $taxableItems)
     {
         $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
 

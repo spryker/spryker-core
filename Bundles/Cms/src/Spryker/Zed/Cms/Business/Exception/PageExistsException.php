@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Exception;
 
-class PageExistsException extends \Exception
+use Exception;
+
+class PageExistsException extends Exception
 {
 }

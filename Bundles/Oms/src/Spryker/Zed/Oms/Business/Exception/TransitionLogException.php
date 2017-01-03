@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\Exception;
 
-class TransitionLogException extends \Exception
+use Exception;
+
+class TransitionLogException extends Exception
 {
 }

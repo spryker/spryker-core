@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Business\ApplicationFacade;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Application\Business\ApplicationFacade;
  * @group Business
  * @group ApplicationFacadeTest
  */
-class ApplicationFacadeTest extends \PHPUnit_Framework_TestCase
+class ApplicationFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**

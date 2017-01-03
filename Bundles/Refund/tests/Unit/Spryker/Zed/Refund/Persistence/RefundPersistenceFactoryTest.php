@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Refund\Persistence;
 
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Refund\Persistence\RefundPersistenceFactory;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Refund\Persistence\RefundPersistenceFactory;
  * @group Persistence
  * @group RefundPersistenceFactoryTest
  */
-class RefundPersistenceFactoryTest extends \PHPUnit_Framework_TestCase
+class RefundPersistenceFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

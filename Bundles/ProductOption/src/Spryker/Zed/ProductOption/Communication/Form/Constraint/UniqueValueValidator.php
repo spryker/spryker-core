@@ -76,7 +76,7 @@ class UniqueValueValidator extends ConstraintValidator
      */
     protected function isValueChanged($submitedValue, UniqueValue $constraint)
     {
-        /* @var $root Form */
+        /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
         $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submitedValue);
@@ -108,6 +108,8 @@ class UniqueValueValidator extends ConstraintValidator
                 return $productOptionValueTransfer->getIdProductOptionValue();
             }
         }
+
+        return 0;
     }
 
 }

@@ -11,6 +11,7 @@ use Braintree\Result\Successful;
 use Braintree\Transaction;
 use Braintree\Transaction\CreditCardDetails;
 use Braintree\Transaction\StatusDetails;
+use DateTime;
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -104,14 +105,14 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
             'processorSettlementResponseCode' => null,
             'processorResponseCode' => '1000',
             'processorResponseText' => 'Approved',
-            'createdAt' => new \DateTime(),
+            'createdAt' => new DateTime(),
             'status' => 'authorized',
             'type' => 'sale',
             'amount' => $this->createOrderTransfer()->getTotals()->getGrandTotal() / 100,
             'merchantAccountId' => 'abc',
             'statusHistory' => new StatusDetails([
-                'timestamp' => new \DateTime(),
-                'status' => 'authorized'
+                'timestamp' => new DateTime(),
+                'status' => 'authorized',
             ]),
             'creditCardDetails' => new CreditCardDetails([
                 'expirationMonth' => null,
@@ -119,7 +120,7 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
                 'bin' => null,
                 'last4' => null,
                 'cardType' => null,
-            ])
+            ]),
         ]);
         $response = new Successful($transaction);
 

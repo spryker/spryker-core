@@ -91,12 +91,12 @@ class ProductOptionValueSaverTest extends MockProvider
             ->setConstructorArgs([
                 $productOptionContainerMock,
                 $touchFacadeMock,
-                $translationSaverMock
+                $translationSaverMock,
             ])
             ->setMethods([
                 'getProductAbstractBySku',
                 'getOptionGroupById',
-                'createProductOptionValueEntity'
+                'createProductOptionValueEntity',
             ])
             ->getMock();
 

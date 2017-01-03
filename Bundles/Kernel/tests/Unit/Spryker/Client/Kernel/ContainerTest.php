@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Kernel\Locator;
 
@@ -17,7 +18,7 @@ use Spryker\Client\Kernel\Locator;
  * @group Kernel
  * @group ContainerTest
  */
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

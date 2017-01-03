@@ -68,7 +68,7 @@ class CmsRedirectForm extends AbstractType
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
                 }
                 return [Constraint::DEFAULT_GROUP];
-            }
+            },
         ]);
     }
 
@@ -179,7 +179,7 @@ class CmsRedirectForm extends AbstractType
                     }
                 },
             ],
-            'groups' => [self::GROUP_UNIQUE_URL_CHECK]
+            'groups' => [self::GROUP_UNIQUE_URL_CHECK],
         ]);
 
         return $urlConstraints;
@@ -201,8 +201,8 @@ class CmsRedirectForm extends AbstractType
                             $context->addViolation('URL must start with a slash');
                         }
                     },
-                ]
-            ])
+                ],
+            ]),
         ];
     }
 

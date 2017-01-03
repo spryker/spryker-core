@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\CodeTest;
 
+use ErrorException;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -59,7 +60,7 @@ class CodeTester
                 $message = 'This bundle does not exist';
             }
 
-            throw new \ErrorException($message);
+            throw new ErrorException($message);
         }
 
         $this->runTestCommand($path, $options);

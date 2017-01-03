@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Availability\Business\Exception;
 
-class ProductNotFoundException extends \Exception
+use Exception;
+
+class ProductNotFoundException extends Exception
 {
 }

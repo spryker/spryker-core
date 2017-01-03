@@ -7,12 +7,13 @@
 
 namespace Spryker\Shared\Library\PHPUnit\Constraints;
 
+use PHPUnit_Framework_Constraint;
 use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Util_Type;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Comparator\Factory;
 
-class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
+class ArrayContainsKeyEqualToConstraint extends PHPUnit_Framework_Constraint
 {
 
     /**

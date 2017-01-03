@@ -119,7 +119,7 @@ class RootNodeTable extends AbstractTable
             [
                 self::BUTTON_ICON => null,
                 'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE]),
-                'title' => 'Re-sort Child-Categories'
+                'title' => 'Re-sort Child-Categories',
             ]
         );
 
@@ -130,7 +130,7 @@ class RootNodeTable extends AbstractTable
             '<i class="fa fa-fw fa-plus"></i>',
             [
                 self::BUTTON_ICON => null,
-                'title' => 'Add Category to this Node'
+                'title' => 'Add Category to this Node',
             ]
         );
 

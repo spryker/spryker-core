@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class RoleNotSavedException extends \Exception
+use Exception;
+
+class RoleNotSavedException extends Exception
 {
 }

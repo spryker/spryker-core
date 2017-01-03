@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Business\RedirectManager;
@@ -23,7 +24,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
  * @group Url
  * @group Business
  */
-class RedirectManagerTest extends \PHPUnit_Framework_TestCase
+class RedirectManagerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

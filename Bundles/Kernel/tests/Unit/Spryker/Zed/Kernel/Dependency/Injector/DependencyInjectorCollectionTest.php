@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Dependency\Injector;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
@@ -20,7 +21,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
  * @group Injector
  * @group DependencyInjectorCollectionTest
  */
-class DependencyInjectorCollectionTest extends \PHPUnit_Framework_TestCase
+class DependencyInjectorCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     /**

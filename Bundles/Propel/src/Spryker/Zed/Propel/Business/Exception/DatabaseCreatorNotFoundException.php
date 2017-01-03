@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Exception;
 
-class DatabaseCreatorNotFoundException extends \Exception
+use Exception;
+
+class DatabaseCreatorNotFoundException extends Exception
 {
 }

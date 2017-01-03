@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Kernel\Communication\Plugin;
 
 use LogicException;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
@@ -32,7 +33,7 @@ use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
  * @group Plugin
  * @group GatewayControllerListenerPluginTest
  */
-class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
+class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

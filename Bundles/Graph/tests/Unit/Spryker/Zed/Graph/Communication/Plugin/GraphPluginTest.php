@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Graph\Communication\Plugin;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Graph\Communication\Exception\GraphNotInitializedException;
 use Spryker\Zed\Graph\Communication\GraphCommunicationFactory;
@@ -21,7 +22,7 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
  * @group Plugin
  * @group GraphPluginTest
  */
-class GraphPluginTest extends \PHPUnit_Framework_TestCase
+class GraphPluginTest extends PHPUnit_Framework_TestCase
 {
 
     const GRAPH_NAME = 'graph name';

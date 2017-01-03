@@ -117,7 +117,7 @@ class ProductOptionListTable extends AbstractTable
                 self::TABLE_COL_NAME => $this->formatNames($productOptionGroupEntity),
                 self::TABLE_COL_PRICE => $this->formatPrices($productOptionGroupEntity),
                 SpyProductOptionGroupTableMap::COL_ACTIVE => $this->getStatus($productOptionGroupEntity),
-                self::TABLE_COL_ACTIONS => $this->getActionButtons($productOptionGroupEntity)
+                self::TABLE_COL_ACTIONS => $this->getActionButtons($productOptionGroupEntity),
             ];
         }
 
@@ -220,7 +220,7 @@ class ProductOptionListTable extends AbstractTable
         $viewProductOptionUrl = Url::generate(
             '/product-option/view/index',
             [
-                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup()
+                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
             ]
         );
 
@@ -237,7 +237,7 @@ class ProductOptionListTable extends AbstractTable
         $editProductOptionUrl = Url::generate(
             '/product-option/edit/index',
             [
-                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup()
+                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
             ]
         );
 

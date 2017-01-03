@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\User\Business\Exception;
 
-class UsernameExistsException extends \Exception
+use Exception;
+
+class UsernameExistsException extends Exception
 {
 }

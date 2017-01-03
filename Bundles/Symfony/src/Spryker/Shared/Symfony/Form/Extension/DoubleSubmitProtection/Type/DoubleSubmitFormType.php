@@ -126,7 +126,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
         $resolver->setDefaults(
             [
                 static::OPTION_KEY_ERROR_MESSAGE => static::DEFAULT_ERROR_MESSAGE,
-                static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME
+                static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME,
             ]
         );
     }

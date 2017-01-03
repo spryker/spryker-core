@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
@@ -30,7 +32,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  * @group OrderStateMachine
  * @group OrderStateMachineTest
  */
-class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
+class OrderStateMachineTest extends PHPUnit_Framework_TestCase
 {
 
     const CONDITION_NAME = 'conditionName';
@@ -51,7 +53,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             [],
             $this->getReservationMock()
         );
-        $reflection = new \ReflectionClass(OrderStateMachine::class);
+        $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
         $reflectionProperty->setAccessible(true);
         $conditions = $reflectionProperty->getValue($orderStateMachine);
@@ -78,7 +80,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             [],
             $this->getReservationMock()
         );
-        $reflection = new \ReflectionClass(OrderStateMachine::class);
+        $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
         $reflectionProperty->setAccessible(true);
         $conditions = $reflectionProperty->getValue($orderStateMachine);
@@ -102,7 +104,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             [self::COMMAND_NAME => $this->getCommandMock()],
             $this->getReservationMock()
         );
-        $reflection = new \ReflectionClass(OrderStateMachine::class);
+        $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
         $reflectionProperty->setAccessible(true);
         $commands = $reflectionProperty->getValue($orderStateMachine);
@@ -129,7 +131,7 @@ class OrderStateMachineTest extends \PHPUnit_Framework_TestCase
             $commandCollection,
             $this->getReservationMock()
         );
-        $reflection = new \ReflectionClass(OrderStateMachine::class);
+        $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
         $reflectionProperty->setAccessible(true);
         $commands = $reflectionProperty->getValue($orderStateMachine);

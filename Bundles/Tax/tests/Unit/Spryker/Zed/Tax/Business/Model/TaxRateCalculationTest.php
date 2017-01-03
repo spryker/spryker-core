@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Tax\Business\Model;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Tax\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
@@ -22,7 +23,7 @@ use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
  * @group Model
  * @group TaxRateCalculationTest
  */
-class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
+class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -207,7 +208,7 @@ class TaxRateCalculationTest extends \PHPUnit_Framework_TestCase
             [
                 TaxQueryContainer::COL_ID_ABSTRACT_PRODUCT => 1,
                 TaxQueryContainer::COL_MAX_TAX_RATE => 11,
-            ]
+            ],
         ];
     }
 

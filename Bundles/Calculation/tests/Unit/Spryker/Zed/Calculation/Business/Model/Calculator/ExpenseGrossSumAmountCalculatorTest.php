@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalcu
  * @group Calculator
  * @group ExpenseGrossSumAmountCalculatorTest
  */
-class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
+class ExpenseGrossSumAmountCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const UNIT_GROSS_PRICE = 100;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Business\Model;
 
+use InvalidArgumentException;
 use Spryker\Zed\Collector\CollectorConfig;
 
 class BulkTouchQueryBuilder
@@ -59,7 +60,7 @@ class BulkTouchQueryBuilder
         $classList = $this->config->getCurrentBulkQueryClassNames();
 
         if (!isset($classList[$className])) {
-            throw new \InvalidArgumentException('Can\'t resolve bulk touch class name: ' . $className);
+            throw new InvalidArgumentException('Can\'t resolve bulk touch class name: ' . $className);
         }
 
         return $classList[$className];

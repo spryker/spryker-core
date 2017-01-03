@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Service\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Service\Kernel\Container;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
@@ -17,7 +18,7 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
  * @group Kernel
  * @group ContainerTest
  */
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends PHPUnit_Framework_TestCase
 {
 
     const TEST_VALUE = 'foo';

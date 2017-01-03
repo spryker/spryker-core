@@ -49,7 +49,7 @@ class StockSubForm extends AbstractType
             'constraints' => [
                 new Required(),
                 new Regex(['pattern' => '/[\d]+/']),
-            ]
+            ],
         ]);
 
         return $this;
@@ -64,7 +64,7 @@ class StockSubForm extends AbstractType
     {
         $builder->add(self::FIELD_STOCK_TYPE, 'text', [
             'label' => 'Stock Type',
-            'disabled' => true
+            'disabled' => true,
         ]);
 
         return $this;

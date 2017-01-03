@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Exception;
 
-class ConditionNotFoundException extends \LogicException
+use LogicException;
+
+class ConditionNotFoundException extends LogicException
 {
 }

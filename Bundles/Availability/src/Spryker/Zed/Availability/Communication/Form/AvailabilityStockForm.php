@@ -56,8 +56,8 @@ class AvailabilityStockForm extends AbstractType
         $builder->add(self::FIELD_STOCKS, 'collection', [
             'type' => new StockSubForm(),
             'options' => [
-                'data_class' => StockProductTransfer::class
-            ]
+                'data_class' => StockProductTransfer::class,
+            ],
         ]);
 
         return $this;

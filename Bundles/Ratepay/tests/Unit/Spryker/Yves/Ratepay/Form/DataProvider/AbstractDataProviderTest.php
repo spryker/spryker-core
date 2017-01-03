@@ -9,6 +9,7 @@ namespace Unit\Spryker\Yves\Ratepay\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @group Unit
@@ -19,7 +20,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @group DataProvider
  * @group AbstractDataProviderTest
  */
-class AbstractDataProviderTest extends \PHPUnit_Framework_TestCase
+class AbstractDataProviderTest extends PHPUnit_Framework_TestCase
 {
 
     const PHONE_NUMBER = 1234567890;

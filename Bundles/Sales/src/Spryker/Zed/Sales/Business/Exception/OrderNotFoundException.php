@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Business\Exception;
 
-class OrderNotFoundException extends \Exception
+use Exception;
+
+class OrderNotFoundException extends Exception
 {
 }

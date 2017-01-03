@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Mail\Business\Model\Provider;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  * @group Provider
  * @group MailProviderCollectionTest
  */
-class MailProviderCollectionTest extends \PHPUnit_Framework_TestCase
+class MailProviderCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const TYPE_A = 'type a';

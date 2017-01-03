@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Persistence;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
 use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -56,11 +57,11 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             ->addJoin(
                 [
                     SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                    (int)$idLocale
+                    (int)$idLocale,
                 ],
                 [
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                    SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE
+                    SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
                 ],
                 Criteria::LEFT_JOIN
             )
@@ -87,13 +88,13 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             $query->where(
                 'LOWER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') = ?',
                 mb_strtolower($attributeValueOrTranslation),
-                \PDO::PARAM_STR
+                PDO::PARAM_STR
             )
             ->_or()
             ->where(
                 'LOWER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') = ?',
                 mb_strtolower($attributeValueOrTranslation),
-                \PDO::PARAM_STR
+                PDO::PARAM_STR
             );
         }
 

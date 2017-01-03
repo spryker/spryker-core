@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -232,9 +233,9 @@ class OrderSaver implements OrderSaverInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItems(\ArrayObject $items)
+    protected function expandItems(ArrayObject $items)
     {
-        $expandedItems = new \ArrayObject();
+        $expandedItems = new ArrayObject();
         foreach ($items as $itemTransfer) {
             $quantity = $itemTransfer->getQuantity();
             for ($i = 1; $quantity >= $i; $i++) {

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel\Controller;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 
@@ -18,7 +19,7 @@ use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
  * @group Controller
  * @group BundleControllerActionRouteNameResolverTest
  */
-class BundleControllerActionRouteNameResolverTest extends \PHPUnit_Framework_TestCase
+class BundleControllerActionRouteNameResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

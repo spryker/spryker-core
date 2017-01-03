@@ -28,7 +28,7 @@ class CategoryCreatePage extends Category
             'attributes' => [
                 'en_US' => self::getAttributesSelector($categoryKey, 'en_US', 0),
                 'de_DE' => self::getAttributesSelector($categoryKey, 'de_DE', 1),
-            ]
+            ],
         ];
     }
 

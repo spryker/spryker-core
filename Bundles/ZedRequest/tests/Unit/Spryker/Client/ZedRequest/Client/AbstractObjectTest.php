@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
+use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\CommunicationObject;
 
 /**
@@ -17,7 +18,7 @@ use Unit\Spryker\Client\ZedRequest\Client\Fixture\CommunicationObject;
  * @group Client
  * @group AbstractObjectTest
  */
-class AbstractObjectTest extends \PHPUnit_Framework_TestCase
+class AbstractObjectTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Mail;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
@@ -14,6 +15,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionAddInterface;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionAddInterface;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Spryker\Zed\Mail\MailDependencyProvider;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 /**
  * @group Unit
@@ -22,7 +25,7 @@ use Spryker\Zed\Mail\MailDependencyProvider;
  * @group Mail
  * @group MailDependencyProviderTest
  */
-class MailDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class MailDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -75,7 +78,7 @@ class MailDependencyProviderTest extends \PHPUnit_Framework_TestCase
     {
         $pimple = new Pimple();
         $application = new Application();
-        $application['twig'] = new \Twig_Environment(new \Twig_Loader_Filesystem());
+        $application['twig'] = new Twig_Environment(new Twig_Loader_Filesystem());
         $pimple->setApplication($application);
     }
 

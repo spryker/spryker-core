@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\DummyPayment\Dependency\Injector;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Dependency\Injector\OmsDependencyInjector;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\OmsDependencyProvider;
@@ -20,7 +21,7 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
  * @group Injector
  * @group OmsDependencyInjectorTest
  */
-class OmsDependencyInjectorTest extends \PHPUnit_Framework_TestCase
+class OmsDependencyInjectorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

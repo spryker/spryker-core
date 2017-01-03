@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Controller;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Unit\Spryker\Zed\Application\Communication\Controller\Fixtures\MockController;
 
@@ -19,7 +20,7 @@ use Unit\Spryker\Zed\Application\Communication\Controller\Fixtures\MockControlle
  * @group Controller
  * @group AbstractControllerTest
  */
-class AbstractControllerTest extends \PHPUnit_Framework_TestCase
+class AbstractControllerTest extends PHPUnit_Framework_TestCase
 {
 
     const EXPECTED_INTERNAL_TYPE = 'int';

@@ -58,7 +58,7 @@ class RefundTable extends AbstractTable
             SpyRefundTableMap::COL_FK_SALES_ORDER => 'Sales Order Id',
             SpyRefundTableMap::COL_CREATED_AT => 'Refund date',
             SpyRefundTableMap::COL_AMOUNT => 'Amount',
-            SpyRefundTableMap::COL_COMMENT => 'Comment'
+            SpyRefundTableMap::COL_COMMENT => 'Comment',
         ]);
 
         $config->setSortable([
@@ -100,7 +100,7 @@ class RefundTable extends AbstractTable
                 SpyRefundTableMap::COL_FK_SALES_ORDER => $item[SpyRefundTableMap::COL_FK_SALES_ORDER],
                 SpyRefundTableMap::COL_CREATED_AT => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount($item[SpyRefundTableMap::COL_AMOUNT]),
-                SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT]
+                SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
             ];
         }
 

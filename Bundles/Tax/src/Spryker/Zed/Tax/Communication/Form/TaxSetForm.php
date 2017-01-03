@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Tax\Communication\Form;
 
+use ArrayObject;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -59,7 +60,7 @@ class TaxSetForm extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new NotBlank()
-                ]
+                ],
             ]
         );
 
@@ -80,7 +81,7 @@ class TaxSetForm extends AbstractType
             'choice_list' => $this->taxSetFormDataProvider->getOptions()[self::FIELD_TAX_RATES],
             'constraints' => [
                 new NotBlank()
-            ]
+            ],
         ]);
 
         $builder->get(self::FIELD_TAX_RATES)
@@ -91,7 +92,7 @@ class TaxSetForm extends AbstractType
                     }
                 },
                 function ($taxRates) {
-                    return new \ArrayObject($taxRates);
+                    return new ArrayObject($taxRates);
                 }
             ));
 

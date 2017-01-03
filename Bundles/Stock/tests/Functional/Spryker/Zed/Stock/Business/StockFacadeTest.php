@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Stock\Business;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -295,8 +296,8 @@ class StockFacadeTest extends Test
             ->setStockType($this->stockEntity2->getName());
 
         $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setStocks(new \ArrayObject([
-                $stockTransfer1, $stockTransfer2
+            ->setStocks(new ArrayObject([
+                $stockTransfer1, $stockTransfer2,
             ]));
 
         $this->stockFacade->persistStockProductCollection($productConcreteTransfer);

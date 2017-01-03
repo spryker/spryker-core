@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Exception;
 
-class DependencyException extends \RuntimeException
+use RuntimeException;
+
+class DependencyException extends RuntimeException
 {
 }

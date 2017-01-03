@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel\Controller;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Kernel\Controller\RouteNameResolver;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Yves\Kernel\Controller\RouteNameResolver;
  * @group Controller
  * @group RouteNameResolverTest
  */
-class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
+class RouteNameResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

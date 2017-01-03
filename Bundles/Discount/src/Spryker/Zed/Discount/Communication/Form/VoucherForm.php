@@ -63,7 +63,7 @@ class VoucherForm extends AbstractType
             self::FIELD_CUSTOM_CODE,
             'text',
             [
-                'required' => false
+                'required' => false,
             ]
         );
 
@@ -84,7 +84,7 @@ class VoucherForm extends AbstractType
                 'label' => 'Add Random Generated Code Length',
                 'placeholder' => 'No additional random characters',
                 'required' => false,
-                'choices' => $this->createCodeLengthRangeList()
+                'choices' => $this->createCodeLengthRangeList(),
             ]
         );
 
@@ -102,7 +102,7 @@ class VoucherForm extends AbstractType
             self::FIELD_MAX_NUMBER_OF_USES,
             'text',
             [
-                'label' => 'Max number of uses (0 = Infinite usage)'
+                'label' => 'Max number of uses (0 = Infinite usage)',
             ]
         );
 
@@ -131,7 +131,7 @@ class VoucherForm extends AbstractType
         $builder->add('generate', 'submit', [
             'attr' => [
                 'class' => 'btn-create',
-            ]
+            ],
         ]);
 
         return $this;

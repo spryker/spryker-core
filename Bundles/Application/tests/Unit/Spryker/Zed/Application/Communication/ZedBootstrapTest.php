@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Communication\ZedBootstrap;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Application\Communication\ZedBootstrap;
  * @group Communication
  * @group ZedBootstrapTest
  */
-class ZedBootstrapTest extends \PHPUnit_Framework_TestCase
+class ZedBootstrapTest extends PHPUnit_Framework_TestCase
 {
 
     const HTTP_X_INTERNAL_REQUEST = 'HTTP_X_INTERNAL_REQUEST';
@@ -81,7 +82,7 @@ class ZedBootstrapTest extends \PHPUnit_Framework_TestCase
             self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST,
             self::REGISTER_SERVICE_PROVIDER_FOR_INTERNAL_REQUEST_WITH_AUTHENTICATION,
             self::ADD_VARIABLES_TO_TWIG,
-            self::IS_AUTHENTICATION_ENABLED
+            self::IS_AUTHENTICATION_ENABLED,
         ])->getMock();
     }
 

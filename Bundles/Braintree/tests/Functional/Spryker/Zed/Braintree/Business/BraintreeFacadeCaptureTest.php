@@ -99,8 +99,8 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
             'merchantAccountId' => 'abc',
             'statusHistory' => new StatusDetails([
                 'timestamp' => new DateTime(),
-                'status' => 'settling'
-            ])
+                'status' => 'settling',
+            ]),
         ]);
 
         $response = new Successful([$transaction]);

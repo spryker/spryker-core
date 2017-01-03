@@ -24,10 +24,10 @@ class Head extends AbstractBuilder implements BuilderInterface
             'transaction-short-id' => $this->requestTransfer->getHead()->getTransactionShortId(),
             'credential' => [
                 'profile-id' => $this->requestTransfer->getHead()->getProfileId(),
-                'securitycode' => $this->requestTransfer->getHead()->getSecurityCode()
+                'securitycode' => $this->requestTransfer->getHead()->getSecurityCode(),
             ],
             'customer-device' => [
-                'device-token' => $this->requestTransfer->getHead()->getDeviceFingerprint()
+                'device-token' => $this->requestTransfer->getHead()->getDeviceFingerprint(),
             ],
             'external' => [
                 'merchant-consumer-id' => $this->requestTransfer->getHead()->getCustomerId(),
@@ -37,8 +37,8 @@ class Head extends AbstractBuilder implements BuilderInterface
                     'system' => [
                         '@name' => Constants::CLIENT_NAME,
                         '@version' => Constants::CLIENT_VERSION,
-                    ]
-                ]
+                    ],
+                ],
             ],
             'operation' => $this->requestTransfer->getHead()->getOperation(),
         ];

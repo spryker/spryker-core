@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Setup\Communication;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
  * @group Communication
  * @group SetupCommunicationFactoryTest
  */
-class SetupCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
+class SetupCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

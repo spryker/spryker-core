@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 /**
  * @group Functional
@@ -114,11 +116,11 @@ EOD;
      */
     protected function createTwigEnvironment()
     {
-        $twigLoader = new \Twig_Loader_Filesystem([
+        $twigLoader = new Twig_Loader_Filesystem([
             APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/IdeAutoCompletion/Generator/Templates/',
         ]);
 
-        return new \Twig_Environment($twigLoader);
+        return new Twig_Environment($twigLoader);
     }
 
     /**

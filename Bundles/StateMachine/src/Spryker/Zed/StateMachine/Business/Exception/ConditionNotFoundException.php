@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class ConditionNotFoundException extends \Exception
+use Exception;
+
+class ConditionNotFoundException extends Exception
 {
 }

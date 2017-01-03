@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Business\Model;
 
+use DateTime;
 use Generated\Shared\Transfer\TouchTransfer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
@@ -43,7 +44,7 @@ class Touch implements TouchInterface
         $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
             $touchQuery = $this->touchQueryContainer->queryTouchEntries($itemType, $itemEvent, $itemIdChunk);
-            $updated += $touchQuery->update(['Touched' => new \DateTime()]);
+            $updated += $touchQuery->update(['Touched' => new DateTime()]);
         }
 
         return $updated;

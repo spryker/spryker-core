@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Shared\ErrorHandler;
 
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -23,7 +25,7 @@ use Spryker\Shared\Library\LibraryConstants;
  * @group ErrorHandler
  * @group ErrorHandlerFactoryTest
  */
-class ErrorHandlerFactoryTest extends \PHPUnit_Framework_TestCase
+class ErrorHandlerFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -54,7 +56,7 @@ class ErrorHandlerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function getConfigReflectionProperty()
     {
-        $reflection = new \ReflectionClass(Config::class);
+        $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
         $reflectionProperty->setAccessible(true);
 

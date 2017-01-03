@@ -120,7 +120,7 @@ class ConditionTest extends StateMachineMocks
         $stateMachineHandler->expects($this->exactly(2))
             ->method('getConditionPlugins')
             ->willReturn([
-                    'condition' => $conditionPluginMock
+                    'condition' => $conditionPluginMock,
                 ]);
 
         $stateMachineHandlerResolverMock = $this->createHandlerResolverMock();

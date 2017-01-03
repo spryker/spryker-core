@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -76,7 +77,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
      *
      * @return int
      */
-    protected function getCalculatedDiscountsSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountsSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalDiscountSumGrossAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {

@@ -7,9 +7,10 @@
 
 namespace Spryker\Shared\Session\Business\Handler;
 
+use SessionHandlerInterface;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
-class SessionHandlerFile implements \SessionHandlerInterface
+class SessionHandlerFile implements SessionHandlerInterface
 {
 
     const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';

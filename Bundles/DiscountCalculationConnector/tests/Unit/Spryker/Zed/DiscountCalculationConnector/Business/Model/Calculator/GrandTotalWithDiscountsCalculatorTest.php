@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculato
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTota
  * @group Calculator
  * @group GrandTotalWithDiscountsCalculatorTest
  */
-class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
+class GrandTotalWithDiscountsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const GRAND_TOTAL_BEFORE_DISCOUNTS = 500;

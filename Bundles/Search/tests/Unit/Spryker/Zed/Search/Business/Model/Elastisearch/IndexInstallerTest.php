@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
 use Elastica\Client;
 use Elastica\Index;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
@@ -24,7 +25,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
  * @group Elastisearch
  * @group IndexInstallerTest
  */
-class IndexInstallerTest extends \PHPUnit_Framework_TestCase
+class IndexInstallerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

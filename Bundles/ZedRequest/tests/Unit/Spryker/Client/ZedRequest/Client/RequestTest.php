@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Shared\Transfer\TransferInterface;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
@@ -19,7 +20,7 @@ use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
  * @group Client
  * @group RequestTest
  */
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\Kernel;
 
-class Container extends \Pimple
+use Pimple;
+
+class Container extends Pimple
 {
 
     /**

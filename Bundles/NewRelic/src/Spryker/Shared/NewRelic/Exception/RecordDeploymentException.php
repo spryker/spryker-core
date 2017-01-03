@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\NewRelic\Exception;
 
-class RecordDeploymentException extends \Exception
+use Exception;
+
+class RecordDeploymentException extends Exception
 {
 }

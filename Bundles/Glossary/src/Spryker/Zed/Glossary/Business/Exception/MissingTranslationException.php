@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Glossary\Business\Exception;
 
-class MissingTranslationException extends \Exception
+use Exception;
+
+class MissingTranslationException extends Exception
 {
 }

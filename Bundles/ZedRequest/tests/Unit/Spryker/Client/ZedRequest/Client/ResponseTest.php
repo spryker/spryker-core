@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\ZedRequest\Client\Response;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
@@ -21,7 +22,7 @@ use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
  * @group Client
  * @group ResponseTest
  */
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends PHPUnit_Framework_TestCase
 {
 
     /**

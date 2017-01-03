@@ -155,7 +155,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected function createForm(FormTypeInterface $formType, AbstractTransfer $dataTransfer)
     {
         $formOptions = [
-            'data_class' => get_class($dataTransfer)
+            'data_class' => get_class($dataTransfer),
         ];
 
         if ($this->dataProvider) {

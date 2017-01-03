@@ -95,16 +95,16 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     {
         return [
             'product abstract has attribute' => [
-                ['touchProductAbstractByAsynchronousAttributes' => 'foo'], [], [], []
+                ['touchProductAbstractByAsynchronousAttributes' => 'foo'], [], [], [],
             ],
             'localized product abstract has attribute' => [
-                [], [], ['touchProductAbstractByAsynchronousAttributes' => 'foo'], []
+                [], [], ['touchProductAbstractByAsynchronousAttributes' => 'foo'], [],
             ],
             'product concrete has attribute' => [
-                [], ['touchProductAbstractByAsynchronousAttributes' => 'foo'], [], []
+                [], ['touchProductAbstractByAsynchronousAttributes' => 'foo'], [], [],
             ],
             'localized product concrete has attribute' => [
-                [], [], [], ['touchProductAbstractByAsynchronousAttributes' => 'foo']
+                [], [], [], ['touchProductAbstractByAsynchronousAttributes' => 'foo'],
             ],
         ];
     }

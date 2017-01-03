@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Shared\Application\Log\Request;
 
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Shared\Application\Log\Request\RequestId;
 
 /**
@@ -18,7 +20,7 @@ use Spryker\Shared\Application\Log\Request\RequestId;
  * @group Request
  * @group RequestIdTest
  */
-class RequestIdTest extends \PHPUnit_Framework_TestCase
+class RequestIdTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -58,7 +60,7 @@ class RequestIdTest extends \PHPUnit_Framework_TestCase
      */
     protected function resetRequestIdHandler()
     {
-        $reflectionClass = new \ReflectionClass(RequestId::class);
+        $reflectionClass = new ReflectionClass(RequestId::class);
         $reflectionProperty = $reflectionClass->getProperty('requestId');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(null);

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Country\Business\Internal;
 
+use Exception;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\CountryManagerInterface;
 use Spryker\Zed\Country\Business\RegionManagerInterface;
@@ -167,7 +168,7 @@ class Install extends AbstractInstaller
         $json = $this->codeMappings;
 
         if ($this->version !== $json['supplemental']['version']['_cldrVersion']) {
-            throw new \Exception('CLDR version mismatch in country install');
+            throw new Exception('CLDR version mismatch in country install');
         }
 
         $mappings = $json['supplemental']['codeMappings'];
@@ -195,7 +196,7 @@ class Install extends AbstractInstaller
         $json = $this->postalCodes;
 
         if ($this->version !== $json['supplemental']['version']['_cldrVersion']) {
-            throw new \Exception('CLDR version mismatch in country install');
+            throw new Exception('CLDR version mismatch in country install');
         }
 
         $mappings = $json['supplemental']['postalCodeData'];

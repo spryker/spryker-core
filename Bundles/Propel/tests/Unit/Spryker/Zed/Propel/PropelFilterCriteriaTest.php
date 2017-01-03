@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Propel;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
  * @group Propel
  * @group PropelFilterCriteriaTest
  */
-class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
+class PropelFilterCriteriaTest extends PHPUnit_Framework_TestCase
 {
 
     /**

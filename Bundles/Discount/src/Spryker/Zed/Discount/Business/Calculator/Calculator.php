@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -170,7 +171,7 @@ class Calculator implements CalculatorInterface
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
         $messageTransfer->setParameters([
-            'display_name' => $discountTransfer->getDisplayName()
+            'display_name' => $discountTransfer->getDisplayName(),
         ]);
 
         $this->messengerFacade->addSuccessMessage($messageTransfer);
@@ -249,7 +250,7 @@ class Calculator implements CalculatorInterface
     {
         $calculatedDiscounts = new CollectedDiscountTransfer();
         $calculatedDiscounts->setDiscount($discountTransfer);
-        $calculatedDiscounts->setDiscountableItems(new \ArrayObject($discountableItems));
+        $calculatedDiscounts->setDiscountableItems(new ArrayObject($discountableItems));
 
         return $calculatedDiscounts;
     }

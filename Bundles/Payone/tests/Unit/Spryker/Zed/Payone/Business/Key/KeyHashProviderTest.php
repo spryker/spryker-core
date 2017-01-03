@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Key;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Payone\Business\Key\HashProvider;
  * @group Key
  * @group KeyHashProviderTest
  */
-class KeyHashProviderTest extends \PHPUnit_Framework_TestCase
+class KeyHashProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

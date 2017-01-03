@@ -118,7 +118,7 @@ class CustomerTable extends AbstractTable
 
         $url = Url::generate('/customer-group/delete/customer', [
             'id-customer-group' => $customerGroupToCustomer->getFkCustomerGroup(),
-            'id-customer' => $customerGroupToCustomer->getFkCustomer()
+            'id-customer' => $customerGroupToCustomer->getFkCustomer(),
         ]);
         $buttons[] = $this->generateRemoveButton($url, 'Remove');
 

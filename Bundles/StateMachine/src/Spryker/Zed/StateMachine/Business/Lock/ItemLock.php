@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Lock;
 
+use DateInterval;
+use DateTime;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\StateMachine\Business\Exception\LockException;
@@ -86,7 +88,7 @@ class ItemLock implements ItemLockInterface
     public function clearLocks()
     {
         $this->queryContainer
-            ->queryLockedItemsByExpirationDate(new \DateTime('now'))
+            ->queryLockedItemsByExpirationDate(new DateTime('now'))
             ->delete();
     }
 
@@ -95,10 +97,10 @@ class ItemLock implements ItemLockInterface
      */
     protected function createExpirationDate()
     {
-        $dateInterval = \DateInterval::createFromDateString(
+        $dateInterval = DateInterval::createFromDateString(
             $this->stateMachineConfig->getStateMachineItemLockExpirationInterval()
         );
-        $expirationDate = new \DateTime();
+        $expirationDate = new DateTime();
         $expirationDate->add($dateInterval);
 
         return $expirationDate;

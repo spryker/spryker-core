@@ -8,6 +8,7 @@
 namespace Oms\Module;
 
 use Codeception\Module;
+use DateInterval;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -34,7 +35,7 @@ class Oms extends Module
      *
      * @return void
      */
-    public function moveItemAfterTimeOut($idSalesOrderItem, \DateInterval $timeout)
+    public function moveItemAfterTimeOut($idSalesOrderItem, DateInterval $timeout)
     {
         $omsEventTimeoutQuery = new SpyOmsEventTimeoutQuery();
         $omsEventTimeout = $omsEventTimeoutQuery->findOneByFkSalesOrderItem($idSalesOrderItem);

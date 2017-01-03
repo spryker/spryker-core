@@ -11,6 +11,7 @@ use Elastica\Client;
 use Elastica\Index;
 use Elastica\Response;
 use Elastica\Type;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
 
@@ -25,7 +26,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
  * @group Search
  * @group ElasticsearchWriterTest
  */
-class ElasticsearchWriterTest extends \PHPUnit_Framework_TestCase
+class ElasticsearchWriterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

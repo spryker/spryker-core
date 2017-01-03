@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
+use ArrayObject;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -123,13 +124,13 @@ class ProductOptionGroupForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new UniqueGroupName([
-                    UniqueGroupName::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer
+                    UniqueGroupName::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
                 ]),
                 new Regex([
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
-                    'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".'
+                    'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
                 ]),
-            ]
+            ],
         ]);
 
         return $this;
@@ -148,13 +149,15 @@ class ProductOptionGroupForm extends AbstractType
             'allow_delete' => true,
             'prototype' => true,
             'constraints' => [
-                new Callback(['callback' => function (\ArrayObject $values, ExecutionContextInterface $context) {
-                    if (count($values) === 0) {
-                        $context->buildViolation('No option values added.')
-                            ->addViolation();
-                    }
-                }]),
-            ]
+                new Callback([
+                    'callback' => function (ArrayObject $values, ExecutionContextInterface $context) {
+                        if (count($values) === 0) {
+                            $context->buildViolation('No option values added.')
+                                ->addViolation();
+                        }
+                    },
+                ]),
+            ],
         ]);
 
         $builder->get(self::FIELD_VALUES)

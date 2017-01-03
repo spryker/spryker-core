@@ -42,7 +42,7 @@ class ProductOptionTranslationForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ProductOptionTranslationTransfer::class
+            'data_class' => ProductOptionTranslationTransfer::class,
         ]);
     }
 
@@ -58,7 +58,7 @@ class ProductOptionTranslationForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new NotBlank(),
-             ]
+             ],
         ]);
 
         return $this;

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group ServiceProvider
  * @group RedirectAfterLoginProviderTest
  */
-class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
+class RedirectAfterLoginProviderTest extends PHPUnit_Framework_TestCase
 {
 
     const REQUEST_URI = 'REQUEST_URI';

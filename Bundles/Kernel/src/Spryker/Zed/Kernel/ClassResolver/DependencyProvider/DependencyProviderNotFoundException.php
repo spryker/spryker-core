@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
 
+use Exception;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
-class DependencyProviderNotFoundException extends \Exception
+class DependencyProviderNotFoundException extends Exception
 {
 
     /**

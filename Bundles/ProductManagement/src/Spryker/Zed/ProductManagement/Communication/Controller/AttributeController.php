@@ -225,7 +225,7 @@ class AttributeController extends AbstractController
         return $this->jsonResponse([
             'id_attribute' => $idProductManagementAttribute,
             'values' => $values,
-            'total' => $total
+            'total' => $total,
         ]);
     }
 

@@ -28,7 +28,7 @@ class TreeController extends AbstractController
         $categoryTree = $this->getCategoryTree($request);
 
         return $this->viewResponse([
-            'categoryTree' => $categoryTree
+            'categoryTree' => $categoryTree,
         ]);
     }
 

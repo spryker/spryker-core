@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
@@ -65,7 +66,7 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return array
      */
-    protected function createCartIndex(\ArrayObject $cartItems)
+    protected function createCartIndex(ArrayObject $cartItems)
     {
         $cartIndex = [];
         foreach ($cartItems as $key => $itemTransfer) {

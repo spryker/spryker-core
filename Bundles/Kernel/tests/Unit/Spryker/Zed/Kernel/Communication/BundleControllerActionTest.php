@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Communication
  * @group BundleControllerActionTest
  */
-class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
+class BundleControllerActionTest extends PHPUnit_Framework_TestCase
 {
 
     const BUNDLE = 'foo';

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesSplit\Business\Model;
 
+use DateTime;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
@@ -142,9 +143,9 @@ class OrderItemSplit implements OrderItemSplitInterface
         $copyOfSalesOrderItem = $salesOrderItem->copy(false);
 
         $copyOfSalesOrderItem->setGroupKey(self::SPLIT_MARKER . $copyOfSalesOrderItem->getGroupKey());
-        $copyOfSalesOrderItem->setCreatedAt(new \DateTime());
+        $copyOfSalesOrderItem->setCreatedAt(new DateTime());
         $copyOfSalesOrderItem->setQuantity($quantity);
-        $copyOfSalesOrderItem->setLastStateChange(new \DateTime());
+        $copyOfSalesOrderItem->setLastStateChange(new DateTime());
         $copyOfSalesOrderItem->save($this->getConnection());
 
         return $copyOfSalesOrderItem;
@@ -162,7 +163,7 @@ class OrderItemSplit implements OrderItemSplitInterface
     ) {
         $copyOfOrderItemOption = $salesOrderItemOption->copy(false);
 
-        $copyOfOrderItemOption->setCreatedAt(new \DateTime());
+        $copyOfOrderItemOption->setCreatedAt(new DateTime());
         $copyOfOrderItemOption->setFkSalesOrderItem($copyOfSalesOrderItem->getIdSalesOrderItem());
         $copyOfOrderItemOption->save($this->getConnection());
 

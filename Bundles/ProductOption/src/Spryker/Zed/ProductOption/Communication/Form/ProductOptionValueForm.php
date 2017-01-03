@@ -75,7 +75,7 @@ class ProductOptionValueForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ProductOptionValueTransfer::class
+            'data_class' => ProductOptionValueTransfer::class,
         ]);
     }
 
@@ -93,11 +93,11 @@ class ProductOptionValueForm extends AbstractType
                 new NotBlank(),
                 new Regex([
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
-                    'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".'
+                    'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
                 ]),
                 new UniqueValue([
-                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer
-                ])
+                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
             ],
         ]);
 
@@ -117,8 +117,8 @@ class ProductOptionValueForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new UniqueOptionValueSku([
-                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer
-                ])
+                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
             ],
         ]);
 
@@ -139,7 +139,7 @@ class ProductOptionValueForm extends AbstractType
                 new NotBlank(),
                 new Regex([
                     'pattern' => self::NUMERIC_PATTERN,
-                    'message' => 'Invalid price provided. Valid values "0-9", ".", ",".'
+                    'message' => 'Invalid price provided. Valid values "0-9", ".", ",".',
                 ]),
             ],
         ]);

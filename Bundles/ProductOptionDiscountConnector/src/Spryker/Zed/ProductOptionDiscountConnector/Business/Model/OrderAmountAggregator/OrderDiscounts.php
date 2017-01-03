@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class OrderDiscounts implements OrderAmountAggregatorInterface
@@ -36,7 +37,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getProductOptionCalculatedDiscounts(
         OrderTransfer $orderTransfer,
-        \ArrayObject $orderCalculatedDiscounts
+        ArrayObject $orderCalculatedDiscounts
     ) {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -56,7 +57,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
-    public function getSumOfCalculatedDiscounts(\ArrayObject $orderCalculatedDiscounts, \ArrayObject $calculatedDiscounts)
+    public function getSumOfCalculatedDiscounts(ArrayObject $orderCalculatedDiscounts, ArrayObject $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $displayName = $calculatedDiscountTransfer->getDisplayName();

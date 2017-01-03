@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Shared\ZedRequest\Client\Message;
  * @group Client
  * @group MessageTest
  */
-class MessageTest extends \PHPUnit_Framework_TestCase
+class MessageTest extends PHPUnit_Framework_TestCase
 {
 
     /**

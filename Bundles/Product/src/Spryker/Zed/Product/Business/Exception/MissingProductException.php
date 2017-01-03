@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Exception;
 
-class MissingProductException extends \Exception
+use Exception;
+
+class MissingProductException extends Exception
 {
 }

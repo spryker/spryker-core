@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class EmptyEntityException extends \Exception
+use Exception;
+
+class EmptyEntityException extends Exception
 {
 }

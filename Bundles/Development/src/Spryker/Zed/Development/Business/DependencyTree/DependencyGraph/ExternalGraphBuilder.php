@@ -78,7 +78,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $label = '"' . $dependency[DependencyTree::META_COMPOSER_NAME] . '": "' . $dependency[DependencyTree::META_COMPOSER_VERSION] . '"';
         $attributes = [
-            self::LABEL => $label
+            self::LABEL => $label,
         ];
 
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {

@@ -138,7 +138,7 @@ class AddressForm extends AbstractType
     protected function addMiddleNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_MIDDLE_NAME, 'text', [
-            'required' => false
+            'required' => false,
         ]);
 
         return $this;

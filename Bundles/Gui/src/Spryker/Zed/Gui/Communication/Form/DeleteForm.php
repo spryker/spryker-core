@@ -36,7 +36,7 @@ class DeleteForm extends AbstractType
 
         $resolver->setDefaults([
             'attr' => [
-                'class' => 'form-inline'
+                'class' => 'form-inline',
             ],
         ]);
     }
@@ -77,7 +77,7 @@ class DeleteForm extends AbstractType
     {
         foreach ($options['fields'] as $key => $value) {
             $builder->add($key, 'hidden', [
-                'data' => $value
+                'data' => $value,
             ]);
         }
 

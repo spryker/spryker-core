@@ -272,7 +272,7 @@ class IndexController extends AbstractController
         $redirectUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $idDiscount
+                self::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ]
         )->build() . $hash;
 

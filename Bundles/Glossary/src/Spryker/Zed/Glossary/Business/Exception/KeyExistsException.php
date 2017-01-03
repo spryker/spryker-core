@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Glossary\Business\Exception;
 
-class KeyExistsException extends \Exception
+use Exception;
+
+class KeyExistsException extends Exception
 {
 }

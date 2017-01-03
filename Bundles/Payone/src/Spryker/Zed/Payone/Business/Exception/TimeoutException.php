@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payone\Business\Exception;
 
-class TimeoutException extends \ErrorException
+use ErrorException;
+
+class TimeoutException extends ErrorException
 {
 }

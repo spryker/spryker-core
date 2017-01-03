@@ -8,6 +8,7 @@
 namespace Functional\Spryker\Zed\Sales\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -76,7 +77,7 @@ class SalesFacadeSaveOrderTest extends Test
                 'getItemsWithFlag',
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
-                'getOrderItemMatrix'
+                'getOrderItemMatrix',
             ])
             ->getMock();
         $omsFacadeMock->method('selectProcess')
@@ -264,7 +265,7 @@ class SalesFacadeSaveOrderTest extends Test
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
-        $customerCreatedAt = new \DateTime('Yesterday');
+        $customerCreatedAt = new DateTime('Yesterday');
         $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
 
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();

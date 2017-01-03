@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Calculator;
  * @group Model
  * @group CalculatorTest
  */
-class CalculatorTest extends \PHPUnit_Framework_TestCase
+class CalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Process;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -22,7 +23,7 @@ use Unit\Spryker\Yves\StepEngine\Process\Fixtures\StepMock;
  * @group Process
  * @group AbstractStepEngineTest
  */
-abstract class AbstractStepEngineTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractStepEngineTest extends PHPUnit_Framework_TestCase
 {
 
     const ERROR_ROUTE = 'error-route';

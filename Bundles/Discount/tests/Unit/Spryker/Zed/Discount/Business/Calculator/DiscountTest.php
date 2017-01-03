@@ -6,12 +6,14 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
@@ -30,7 +32,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Calculator
  * @group DiscountTest
  */
-class DiscountTest extends \PHPUnit_Framework_TestCase
+class DiscountTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -148,7 +150,7 @@ class DiscountTest extends \PHPUnit_Framework_TestCase
         $quoteTransfer = $this->createQuoteTransfer();
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setVoucherCode(123);
-        $quoteTransfer->setVoucherDiscounts(new \ArrayObject([$discountTransfer]));
+        $quoteTransfer->setVoucherDiscounts(new ArrayObject([$discountTransfer]));
 
         $updatedQuoteTransfer = $discount->calculate($quoteTransfer);
 

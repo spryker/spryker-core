@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Kernel\Locator;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\Kernel\Locator;
  * @group Calculator
  * @group SubtotalTotalsCalculatorTest
  */
-class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class SubtotalTotalsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const ITEM_GROSS_PRICE = 10000;

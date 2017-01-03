@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Discount\Business\Exception;
 
-class ComparatorException extends \Exception
+use Exception;
+
+class ComparatorException extends Exception
 {
 }

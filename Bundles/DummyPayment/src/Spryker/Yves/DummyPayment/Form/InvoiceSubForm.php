@@ -50,7 +50,7 @@ class InvoiceSubForm extends AbstractSubForm
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => DummyPaymentTransfer::class
+            'data_class' => DummyPaymentTransfer::class,
         ])->setRequired(self::OPTIONS_FIELD_NAME);
     }
 

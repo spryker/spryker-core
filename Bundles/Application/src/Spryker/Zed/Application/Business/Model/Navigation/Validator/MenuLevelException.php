@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Validator;
 
-class MenuLevelException extends \Exception
+use Exception;
+
+class MenuLevelException extends Exception
 {
 
     const ERROR_MESSAGE = 'The Menu is only allowed to have %s Sub-Levels per branch. More Levels found in "%s"!';

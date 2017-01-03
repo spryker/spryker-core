@@ -82,7 +82,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
             'constraints' => $this->createAttributeKeyFieldConstraints(),
             'disabled' => $options[self::OPTION_IS_UPDATE],
             'attr' => [
-                'placeholder' => 'Type first three letters of an existing attribute key for suggestions.'
+                'placeholder' => 'Type first three letters of an existing attribute key for suggestions.',
             ],
         ]);
 

@@ -162,7 +162,7 @@ class ProductOptionGroupSaverTest extends MockProvider
                 $touchFacadeMock,
                 $translationSaverMock,
                 $abstractProductOptionSaver,
-                $productOptionValueSaverMock
+                $productOptionValueSaverMock,
             ])
             ->setMethods([
                 'getProductAbstractBySku',

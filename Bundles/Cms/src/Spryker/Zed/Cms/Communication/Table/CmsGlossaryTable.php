@@ -160,7 +160,7 @@ class CmsGlossaryTable extends AbstractTable
     {
         $url = Url::generate('/cms/glossary/add', [
             CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
-            'placeholder' => $placeholder
+            'placeholder' => $placeholder,
         ]);
         return '<a href="' . $url . '" class="btn btn-xs btn-white">Add Glossary</a>';
     }

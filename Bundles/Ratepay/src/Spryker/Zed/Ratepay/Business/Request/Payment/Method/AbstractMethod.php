@@ -75,7 +75,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
      */
     public function paymentRequest(RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer)
     {
-        /**
+        /*
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST);
@@ -94,7 +94,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     {
         $payment = $this->loadOrderPayment($orderTransfer);
 
-        /**
+        /*
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Confirm $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_CONFIRM);
@@ -126,7 +126,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
             }
         }
 
-        /**
+        /*
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_DELIVER_CONFIRM);
@@ -168,7 +168,7 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
         }
         $needToSendShipping = (count($allOrderItems) == $canceledItemsCount);
 
-        /**
+        /*
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_CANCEL);

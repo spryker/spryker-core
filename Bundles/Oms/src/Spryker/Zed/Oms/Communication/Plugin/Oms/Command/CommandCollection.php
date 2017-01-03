@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
+use ArrayAccess;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
-class CommandCollection implements CommandCollectionInterface, \ArrayAccess
+class CommandCollection implements CommandCollectionInterface, ArrayAccess
 {
 
     /**

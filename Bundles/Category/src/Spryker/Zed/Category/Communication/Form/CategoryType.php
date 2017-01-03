@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Form;
 
+use ArrayObject;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -145,7 +146,7 @@ class CategoryType extends AbstractType
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'group_by' => 'path',
-            'required' => true
+            'required' => true,
         ]);
 
         return $this;
@@ -175,7 +176,7 @@ class CategoryType extends AbstractType
                 return (array)$extraParents;
             },
             function ($extraParents) {
-                return new \ArrayObject($extraParents);
+                return new ArrayObject($extraParents);
             }
         ));
 

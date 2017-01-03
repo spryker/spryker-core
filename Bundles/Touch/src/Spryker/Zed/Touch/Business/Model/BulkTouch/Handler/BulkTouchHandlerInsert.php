@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Handler;
 
+use DateTime;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -50,7 +51,7 @@ class BulkTouchHandlerInsert extends AbstractBulkTouchHandler
             $touchEntity->setItemEvent($itemEvent)
                 ->setItemId($itemId)
                 ->setItemType($itemType)
-                ->setTouched(new \DateTime());
+                ->setTouched(new DateTime());
 
             $propelCollection->append($touchEntity);
         }
