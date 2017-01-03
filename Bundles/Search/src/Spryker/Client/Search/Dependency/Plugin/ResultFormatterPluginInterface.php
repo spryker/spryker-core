@@ -23,7 +23,7 @@ interface ResultFormatterPluginInterface
      * @param mixed $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return mixed
      */
     public function formatResult($searchResult, array $requestParameters = []);
 

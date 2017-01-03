@@ -30,23 +30,27 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return array
+     * @return string
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
         $suggests = $searchResult->getSuggests();
-        $completions = $this->getCompletionFromSuggests($suggests);
+        $spellingSuggestion = $this->extractSpellingSuggestion($suggests);
 
-        return $completions;
+        return $spellingSuggestion;
     }
 
     /**
      * @param array $suggests
      *
-     * @return array
+     * @return string
      */
-    protected function getCompletionFromSuggests(array $suggests)
+    protected function extractSpellingSuggestion(array $suggests)
     {
+        if (!isset($suggests[SpellingSuggestionQueryExpanderPlugin::SUGGESTION_NAME])) {
+            return null;
+        }
+
         $suggest = false;
         $suggestionParts = [];
 
