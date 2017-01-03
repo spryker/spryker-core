@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Search\Exception;
 
-class MissingSuggestionQueryException extends \Exception
+use Exception;
+
+class MissingSuggestionQueryException extends Exception
 {
 }

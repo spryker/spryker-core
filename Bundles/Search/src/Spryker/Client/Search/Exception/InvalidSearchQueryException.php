@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Search\Exception;
 
-class InvalidSearchQueryException extends \Exception
+use Exception;
+
+class InvalidSearchQueryException extends Exception
 {
 }
