@@ -48,7 +48,9 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
      */
     protected function createTransferMapper()
     {
-        return new WishlistTransferMapper();
+        return new WishlistTransferMapper(
+            $this->getItemExpanderPlugins()
+        );
     }
 
     /**
@@ -57,6 +59,14 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function getProductQueryContainer()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[]
+     */
+    protected function getItemExpanderPlugins()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ITEM_EXPANDER);
     }
 
 }

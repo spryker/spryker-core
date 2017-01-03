@@ -46,7 +46,7 @@ class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
             $hydratedDiscountConfiguration->getDiscountCondition()->getDecisionRuleQueryString()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getAmount(),
             $hydratedDiscountConfiguration->getDiscountCalculator()->getAmount()
         );

@@ -24,11 +24,6 @@ abstract class AbstractOptInHandler
     protected $subscriberKeyGenerator;
 
     /**
-     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface[]
-     */
-    protected $subscriberOptInSenders;
-
-    /**
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */

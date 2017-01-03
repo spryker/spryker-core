@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+{% for bundleTransfer in bundleTransferCollection %}
+{% if bundleTransfer.getMethods().count() %}
+/**
+{% for methodTransfer in bundleTransfer.getMethods() %}
+ * @method \{{ methodTransfer.getNamespaceName() }}\{{ methodTransfer.getClassName() }} {{ methodTransfer.getName() }}()
+{% endfor %}
+ */
+interface {{ bundleTransfer.getName() }}
+{}
+
+{% endif %}
+{% endfor %}

@@ -10,11 +10,15 @@ namespace Spryker\Zed\Development;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Symfony\Component\Finder\Finder;
 
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PLUGIN_GRAPH = 'graph plugin';
+    const FINDER = 'finder';
+    const TWIG_ENVIRONMENT = 'twig environment';
+    const TWIG_LOADER_FILESYSTEM = 'twig loader filesystem';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,8 +27,20 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGIN_GRAPH] = function () {
+        $container[static::PLUGIN_GRAPH] = function () {
             return $this->getGraphPlugin();
+        };
+
+        $container[static::FINDER] = function () {
+            return $this->createFinder();
+        };
+
+        $container[static::TWIG_ENVIRONMENT] = function () {
+            return $this->createTwigEnvironment();
+        };
+
+        $container[static::TWIG_LOADER_FILESYSTEM] = function () {
+            return $this->createTwigLoaderFilesystem();
         };
 
         return $container;
@@ -36,6 +52,30 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
     protected function getGraphPlugin()
     {
         return new GraphPlugin();
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function createFinder()
+    {
+        return Finder::create();
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function createTwigEnvironment()
+    {
+        return new \Twig_Environment();
+    }
+
+    /**
+     * @return \Twig_Loader_Filesystem
+     */
+    protected function createTwigLoaderFilesystem()
+    {
+        return new \Twig_Loader_Filesystem();
     }
 
 }

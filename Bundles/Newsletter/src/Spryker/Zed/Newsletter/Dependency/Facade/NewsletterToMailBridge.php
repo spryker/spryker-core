@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
-use Generated\Shared\Transfer\SendMailResponsesTransfer;
 
 class NewsletterToMailBridge implements NewsletterToMailInterface
 {
@@ -29,21 +28,11 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
+     * @return void
      */
-    public function sendMail(MailTransfer $mailTransfer)
+    public function handleMail(MailTransfer $mailTransfer)
     {
-        return $this->mailFacade->sendMail($mailTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
-     *
-     * @return bool
-     */
-    public function isMailSent(SendMailResponsesTransfer $mailResponses)
-    {
-        return $this->mailFacade->isMailSent($mailResponses);
+        $this->mailFacade->handleMail($mailTransfer);
     }
 
 }

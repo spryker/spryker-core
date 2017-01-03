@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
+use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
@@ -269,6 +270,14 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesAggregatorInterface
+     */
+    protected function getSalesAggregatorFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES_AGGREGATOR);
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
      */
     protected function getUtilTextService()
@@ -290,6 +299,27 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Mail\MailHandler
+     */
+    public function createMailHandler()
+    {
+        $mailHandler = new MailHandler(
+            $this->getSalesAggregatorFacade(),
+            $this->getMailFacade()
+        );
+
+        return $mailHandler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
+     */
+    protected function getMailFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
     }
 
 }

@@ -8,19 +8,38 @@
 namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 class Percentage implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param float $value
+     * @deprecated use calculateDiscount instead
+     *
+     * @param array $discountableItems
+     * @param int $percentage
      *
      * @return int
      */
-    public function calculate(array $discountableItems, $value)
+    public function calculate(array $discountableItems, $percentage)
     {
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setAmount($percentage);
+
+        return $this->calculateDiscount($discountableItems, $discountTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return int
+     */
+    public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
+    {
+        $value = $discountTransfer->requireAmount()->getAmount();
+
         $this->ensureIsValidNumber($value);
 
         $discountAmount = 0;

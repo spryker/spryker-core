@@ -17,6 +17,19 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
 {
 
     /**
+     * @var \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface
+     */
+    protected $itemExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     */
+    public function __construct(array $itemExpanderPlugins)
+    {
+        $this->itemExpanderPlugins = $itemExpanderPlugins;
+    }
+
+    /**
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -53,6 +66,10 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     {
         $wishlistItemTransfer = (new WishlistItemTransfer())
             ->fromArray($wishlistItemEntity->toArray(), true);
+
+        foreach ($this->itemExpanderPlugins as $plugin) {
+            $wishlistItemTransfer = $plugin->expandItem($wishlistItemTransfer);
+        }
 
         return $wishlistItemTransfer;
     }

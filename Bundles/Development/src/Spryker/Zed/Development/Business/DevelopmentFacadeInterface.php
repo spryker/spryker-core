@@ -170,4 +170,32 @@ interface DevelopmentFacadeInterface
      */
     public function getComposerDependencyComparison($bundleName, array $dependencies);
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateYvesIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateZedIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateClientIdeAutoCompletion();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateServiceIdeAutoCompletion();
+
 }

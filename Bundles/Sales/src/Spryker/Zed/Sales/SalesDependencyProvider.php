@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -27,6 +28,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_SALES_AGGREGATOR = 'FACADE_SALES_AGGREGATOR';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
     const FACADE_MONEY = 'money facade';
+    const QUERY_CONTAINER_LOCALE = 'locale query container';
+    const STORE = 'store';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -44,6 +47,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCountryFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addSalesAggregatorFacade($container);
+        $container = $this->addStore($container);
+        $container = $this->addLocaleQueryContainer($container);
 
         return $container;
     }
@@ -158,6 +163,34 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::SERVICE_DATE_FORMATTER] = function () {
             return (new Pimple())->getApplication()['dateFormatter'];
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[self::STORE] = function () {
+            return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->queryContainer();
         };
 
         return $container;

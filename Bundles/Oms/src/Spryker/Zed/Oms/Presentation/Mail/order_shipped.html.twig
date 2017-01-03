@@ -1,0 +1,17 @@
+ <div>
+    <div style="text-align: center;">{{ 'mail.order.shipped.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},</div>
+    <br />
+    <div style="text-align: center;">{{ 'mail.order.shipped.text' | trans }}</div>
+    <br />
+    <div style="text-align: center;">{{ 'mail.order.shipped.footer.text_line_1' | trans }}</div>
+    <div style="text-align: center;">{{ 'mail.order.shipped.footer.text_line_2' | trans }}</div>
+
+    <hr /> <br />
+
+    <div style="text-align: center;"><strong>{{ 'mail.order.shipped.details' | trans }}</strong></div>
+    <div style="text-align: center;">
+        {{ 'mail.order.shipped.order_number' | trans }}: {{ mail.order.orderReference }}<br />
+        {{ 'mail.order.shipped.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}<br />
+        {{ 'mail.order.shipped.date' | trans }}: {{ mail.order.createdAt | date }}
+    </div>
+</div>

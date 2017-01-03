@@ -25,15 +25,21 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
+use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
+use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
 use Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
@@ -360,12 +366,12 @@ class CheckoutFacadeTest extends Test
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
-
             $salesOrderSaverPlugin = $this->createOrderSaverPlugin();
+            $customerOrderSavePlugin = $this->createCustomerOrderSavePlugin();
 
             return [
                 $salesOrderSaverPlugin,
-                new OrderCustomerSavePlugin(),
+                $customerOrderSavePlugin,
             ];
         };
 
@@ -377,7 +383,32 @@ class CheckoutFacadeTest extends Test
             return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
         };
 
+        $container[CustomerDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
+        $container[CustomerDependencyProvider::STORE] = Store::getInstance();
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin
+     */
+    protected function createCustomerOrderSavePlugin()
+    {
+        $container = new Container();
+        $customerDependencyProvider = new CustomerDependencyProvider();
+        $customerDependencyProvider->provideBusinessLayerDependencies($container);
+        $container[CustomerDependencyProvider::FACADE_MAIL] = $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
+
+        $customerFactory = new CustomerBusinessFactory();
+        $customerFactory->setContainer($container);
+
+        $customerFacade = new CustomerFacade();
+        $customerFacade->setFactory($customerFactory);
+
+        $customerOrderSavePlugin = new OrderCustomerSavePlugin();
+        $customerOrderSavePlugin->setFacade($customerFacade);
+
+        return $customerOrderSavePlugin;
     }
 
     /**
@@ -416,6 +447,8 @@ class CheckoutFacadeTest extends Test
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
         };
+        $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
+        $container[SalesDependencyProvider::STORE] = Store::getInstance();
 
         $salesBusinessFactoryMock->setContainer($container);
 

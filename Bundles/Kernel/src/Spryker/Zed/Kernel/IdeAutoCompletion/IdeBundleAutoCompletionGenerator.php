@@ -9,6 +9,9 @@ namespace Spryker\Zed\Kernel\IdeAutoCompletion;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class IdeBundleAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 {
 

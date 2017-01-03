@@ -18,6 +18,9 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMeth
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class GenerateClientIdeAutoCompletionConsole extends Console
 {
 

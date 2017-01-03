@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
@@ -45,9 +46,10 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         );
 
         $calculator = new Percentage();
-        $discountAmount = $calculator->calculate($items, self::DISCOUNT_PERCENTAGE_200);
+        $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_200);
+        $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
-        $this->assertEquals(self::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
+        $this->assertSame(self::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
     }
 
     /**
@@ -64,9 +66,10 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         );
 
         $calculator = new Percentage();
-        $discountAmount = $calculator->calculate($items, -1 * self::DISCOUNT_PERCENTAGE_200);
+        $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_PERCENTAGE_200);
+        $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
-        $this->assertEquals(0, $discountAmount);
+        $this->assertSame(0, $discountAmount);
     }
 
     /**
@@ -84,7 +87,8 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
 
         $calculator = new Percentage();
         $this->expectException(CalculatorException::class);
-        $discountAmount = $calculator->calculate($items, 'string');
+        $discountCalculatorTransfer = (new DiscountTransfer())->setAmount('string');
+        $calculator->calculate($items, $discountCalculatorTransfer);
     }
 
     /**
@@ -101,9 +105,10 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         );
 
         $calculator = new Percentage();
-        $discountAmount = $calculator->calculate($items, self::DISCOUNT_PERCENTAGE_10);
+        $discountCalculatorTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
+        $discountAmount = $calculator->calculateDiscount($items, $discountCalculatorTransfer);
 
-        $this->assertEquals(0, $discountAmount);
+        $this->assertSame(0, $discountAmount);
     }
 
     /**
@@ -120,7 +125,8 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         $items[0]->setQuantity(0);
 
         $calculator = new Percentage();
-        $discountAmount = $calculator->calculate($items, self::DISCOUNT_PERCENTAGE_10);
+        $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
+        $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertNotEmpty($discountAmount);
     }

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Kernel;
 use Spryker\Shared\Kernel\AbstractBundle;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @deprecated Will be removed with next major release
+ */
 class BundleNameFinder extends AbstractBundle
 {
 

@@ -1,0 +1,6 @@
+class_name: FunctionalTester
+modules:
+    enabled:
+        - Filesystem
+        - \Development\Module\Functional
+        - \Development\Module\IdeAutoCompletion
