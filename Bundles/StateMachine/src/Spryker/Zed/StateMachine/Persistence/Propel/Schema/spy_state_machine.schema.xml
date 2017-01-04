@@ -48,7 +48,7 @@
 
     <table name="spy_state_machine_lock" phpName="SpyStateMachineLock" identifierQuoting="true">
         <column name="id_state_machine_lock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="identifier" type="VARCHAR" size="1024"  required="true"/>
+        <column name="identifier" type="VARCHAR" size="255"  required="true"/>
         <column name="expires" type="TIMESTAMP" required="true"/>
 
         <behavior name="timestampable"/>
