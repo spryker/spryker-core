@@ -80,7 +80,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         $composerJson = json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
-        $composerJson = preg_replace(self::REPLACE_4_WITH_2_SPACES, '$1', $composerJson) . PHP_EOL;
+        $composerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $composerJson) . PHP_EOL;
 
         file_put_contents($composerJsonFile->getPathname(), $composerJson);
     }
@@ -108,16 +108,16 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     protected function clean($composerJson)
     {
-        if  (!empty($composerJson[self::KEY_REQUIRE])) {
-            ksort($composerJson[self::KEY_REQUIRE]);
-        } elseif (isset($composerJson[self::KEY_REQUIRE])) {
-            unset($composerJson[self::KEY_REQUIRE]);
+        if  (!empty($composerJson[static::KEY_REQUIRE])) {
+            ksort($composerJson[static::KEY_REQUIRE]);
+        } elseif (isset($composerJson[static::KEY_REQUIRE])) {
+            unset($composerJson[static::KEY_REQUIRE]);
         }
 
-        if  (!empty($composerJson[self::KEY_REQUIRE_DEV])) {
-            ksort($composerJson[self::KEY_REQUIRE_DEV]);
-        } elseif (isset($composerJson[self::KEY_REQUIRE_DEV])) {
-            unset($composerJson[self::KEY_REQUIRE_DEV]);
+        if  (!empty($composerJson[static::KEY_REQUIRE_DEV])) {
+            ksort($composerJson[static::KEY_REQUIRE_DEV]);
+        } elseif (isset($composerJson[static::KEY_REQUIRE_DEV])) {
+            unset($composerJson[static::KEY_REQUIRE_DEV]);
         }
 
         $composerJson['config']['sort-packages'] = true;

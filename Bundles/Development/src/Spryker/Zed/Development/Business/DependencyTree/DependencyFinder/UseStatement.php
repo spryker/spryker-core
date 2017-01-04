@@ -28,7 +28,7 @@ class UseStatement extends AbstractDependencyFinder
         if (preg_match_all('/use (Spryker|Orm)\\\(?<application>.*?)\\\(?<bundle>.*?)\\\(?<layerOrFileName>.*?);/', $content, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
                 $className = str_replace(['use ', ';'], '', $match[0]);
-                $toBundle = $match[self::BUNDLE];
+                $toBundle = $match[static::BUNDLE];
                 $layer = $this->getLayerFromUseStatement($match);
                 $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
                 $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
@@ -57,12 +57,12 @@ class UseStatement extends AbstractDependencyFinder
         if (preg_match('/\\\/', $relativeClassName)) {
             $classNameParts = explode('\\', $relativeClassName);
             $layer = array_shift($classNameParts);
-            if (in_array($layer, [self::LAYER_BUSINESS, self::LAYER_COMMUNICATION, self::LAYER_PERSISTENCE])) {
+            if (in_array($layer, [static::LAYER_BUSINESS, static::LAYER_COMMUNICATION, static::LAYER_PERSISTENCE])) {
                 return $layer;
             }
         }
 
-        return self::LAYER_DEFAULT;
+        return static::LAYER_DEFAULT;
     }
 
 }

@@ -21,6 +21,8 @@ class CodeStyleSniffer
     const OPTION_FIX = 'fix';
     const OPTION_PRINT_DIFF_REPORT = 'report-diff';
     const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_QUIET = 'quiet';
+    const OPTION_EXPLAIN = 'explain';
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_VERBOSE = 'verbose';
 
@@ -101,7 +103,7 @@ class CodeStyleSniffer
     protected function resolvePath($bundle, $path = null)
     {
         if ($bundle) {
-            if ($bundle === self::BUNDLE_ALL) {
+            if ($bundle === static::BUNDLE_ALL) {
                 return $this->pathToBundles;
             }
 
@@ -136,25 +138,32 @@ class CodeStyleSniffer
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
         $config = ' --standard=' . $this->codingStandard;
-        if ($options[self::OPTION_VERBOSE]) {
+        if ($options[static::OPTION_VERBOSE]) {
             $config .= ' -v';
         }
+        if (!$options[static::OPTION_QUIET]) {
+            $config .= ' -p'; // Progress
+        }
 
-        if ($options[self::OPTION_SNIFFS]) {
-            $config .= ' --sniffs=' . $options[self::OPTION_SNIFFS];
+        if ($options[static::OPTION_EXPLAIN]) {
+            $config .= ' -e';
+        }
+
+        if ($options[static::OPTION_SNIFFS]) {
+            $config .= ' --sniffs=' . $options[static::OPTION_SNIFFS];
         }
 
         if ($options['ignore']) {
             $config .= ' --ignore=' . $options['ignore'];
         }
 
-        $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';
+        $command = $options[static::OPTION_FIX] ? 'phpcbf' : 'phpcs';
         $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
 
-        if (!empty($options[self::OPTION_DRY_RUN])) {
+        if (!empty($options[static::OPTION_DRY_RUN])) {
             echo $command;
 
-            return self::CODE_SUCCESS;
+            return static::CODE_SUCCESS;
         }
 
         $process = new Process($command, $this->applicationRoot, null, null, 4800);

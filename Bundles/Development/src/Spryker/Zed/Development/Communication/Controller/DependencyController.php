@@ -39,14 +39,14 @@ class DependencyController extends AbstractController
      */
     public function outgoingAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(self::QUERY_KEY_BUNDLE);
+        $bundleName = $request->query->getAlnum(static::QUERY_KEY_BUNDLE);
 
         $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
 
         $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleName, array_keys($dependencies));
 
         return $this->viewResponse([
-            self::QUERY_KEY_BUNDLE => $bundleName,
+            static::QUERY_KEY_BUNDLE => $bundleName,
             'dependencies' => $dependencies,
             'composerDependencies' => $composerDependencies,
         ]);
@@ -59,12 +59,12 @@ class DependencyController extends AbstractController
      */
     public function incomingAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(self::QUERY_KEY_BUNDLE);
+        $bundleName = $request->query->getAlnum(static::QUERY_KEY_BUNDLE);
 
         $dependencies = $this->getFacade()->showIncomingDependenciesForBundle($bundleName);
 
         return $this->viewResponse([
-            self::QUERY_KEY_BUNDLE => $bundleName,
+            static::QUERY_KEY_BUNDLE => $bundleName,
             'dependencies' => $dependencies,
         ]);
     }
@@ -76,16 +76,16 @@ class DependencyController extends AbstractController
      */
     public function dependencyTreeGraphAction(Request $request)
     {
-        if (!$request->query->has(self::QUERY_KEY_BUNDLE)) {
+        if (!$request->query->has(static::QUERY_KEY_BUNDLE)) {
             $this->addErrorMessage('You must specify a bundle for which the graph should be build');
 
             return $this->redirectResponse('/development/dependency');
         }
 
         $callback = function () use ($request) {
-            $bundleToView = $request->query->get(self::QUERY_KEY_BUNDLE, false);
+            $bundleToView = $request->query->get(static::QUERY_KEY_BUNDLE, false);
 
-            if ($request->query->getBoolean(self::QUERY_KEY_BUILD_TREE, true)) {
+            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, true)) {
                 $this->getFacade()->buildDependencyTree('*', $bundleToView, '*');
             }
 
@@ -103,10 +103,10 @@ class DependencyController extends AbstractController
     public function simpleAction(Request $request)
     {
         $callback = function () use ($request) {
-            $bundleToView = $request->query->getBoolean(self::QUERY_KEY_BUNDLE, false);
+            $bundleToView = $request->query->getBoolean(static::QUERY_KEY_BUNDLE, false);
             $showEngineBundle = $request->query->getBoolean('show-engine-bundle', true);
 
-            if ($request->query->getBoolean(self::QUERY_KEY_BUILD_TREE, true)) {
+            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, true)) {
                 $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
                 $this->getFacade()->buildDependencyTree('*', $bundle, '*');
             }
@@ -138,9 +138,9 @@ class DependencyController extends AbstractController
     public function externalDependencyTreeAction(Request $request)
     {
         $callback = function () use ($request) {
-            $bundleToView = $request->query->getBoolean(self::QUERY_KEY_BUNDLE, false);
+            $bundleToView = $request->query->getBoolean(static::QUERY_KEY_BUNDLE, false);
 
-            if ($request->query->getBoolean(self::QUERY_KEY_BUILD_TREE, true)) {
+            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, true)) {
                 $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
                 $this->getFacade()->buildDependencyTree('*', $bundle, '*');
             }

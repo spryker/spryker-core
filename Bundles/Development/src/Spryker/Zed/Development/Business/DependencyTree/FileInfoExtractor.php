@@ -53,7 +53,7 @@ class FileInfoExtractor
             return $layer;
         }
 
-        return self::LAYER;
+        return static::LAYER;
     }
 
     /**

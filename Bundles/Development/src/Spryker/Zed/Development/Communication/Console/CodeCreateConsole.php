@@ -29,12 +29,12 @@ class CodeCreateConsole extends Console
     {
         parent::configure();
 
-        $this->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+        $this->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create bridge and facade interface (Spryker core dev only)');
 
-        $this->addArgument(self::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle where the bridge should be created in');
-        $this->addArgument(self::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to which the bundle must be connected to');
+        $this->addArgument(static::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle where the bridge should be created in');
+        $this->addArgument(static::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to which the bundle must be connected to');
     }
 
     /**
@@ -45,8 +45,8 @@ class CodeCreateConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getArgument(self::OPTION_BUNDLE);
-        $toBundle = $this->input->getArgument(self::OPTION_TO_BUNDLE);
+        $bundle = $this->input->getArgument(static::OPTION_BUNDLE);
+        $toBundle = $this->input->getArgument(static::OPTION_TO_BUNDLE);
 
         $message = 'Create bridge in ' . $bundle;
 
