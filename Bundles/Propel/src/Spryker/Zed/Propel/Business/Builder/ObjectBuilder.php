@@ -15,6 +15,7 @@ use Propel\Generator\Model\Column;
 use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\Application\Environment;
 use Spryker\Shared\Propel\PropelConstants;
@@ -71,9 +72,9 @@ class ObjectBuilder extends PropelObjectBuilder
 
         if (\$this->$clo !== \$v) {
             \$this->$clo = \$v;
-            \$this->modifiedColumns[" . $this->getColumnConstant($col) . '] = true;
+            \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
         }
-';
+";
         $this->addMutatorClose($script, $col);
     }
 
@@ -131,6 +132,9 @@ class ObjectBuilder extends PropelObjectBuilder
         // if non auto-increment but using sequence, get the id first
         if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
             $column = $table->getFirstPrimaryKeyColumn();
+            if (!$column) {
+                throw new PropelException('Cannot find primary key column in table `' . $table->getName() . '`.');
+            }
             $columnProperty = $column->getLowercasedName();
             $script .= "
         if (null === \$this->{$columnProperty}) {
@@ -189,11 +193,9 @@ class ObjectBuilder extends PropelObjectBuilder
                 . \$stmt->getExecutedQueryString()
             ;
             throw new PropelException(\$message);
-       }
-";
         }
-
-        if (!Config::get(PropelConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
+";
+        } else {
             $script .= "
                 }
             }
