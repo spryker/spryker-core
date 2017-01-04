@@ -142,7 +142,7 @@ class CodeStyleSniffer
             $config .= ' -v';
         }
         if (!$options[static::OPTION_QUIET]) {
-            $config .= ' -q';
+            $config .= ' -p'; // Progress
         }
 
         if ($options[static::OPTION_EXPLAIN]) {
