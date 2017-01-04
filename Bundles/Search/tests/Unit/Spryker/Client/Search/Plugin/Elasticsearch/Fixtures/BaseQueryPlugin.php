@@ -22,7 +22,7 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     protected $query;
 
     /**
-     * @var
+     * @var string
      */
     protected $searchString;
 

@@ -23,14 +23,14 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
      */
     public function getName()
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     /**
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return string
+     * @return string|null
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
@@ -43,7 +43,7 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
     /**
      * @param array $suggests
      *
-     * @return string
+     * @return string|null
      */
     protected function extractSpellingSuggestion(array $suggests)
     {
@@ -64,11 +64,11 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
             $suggestionParts[] = $item['text'];
         }
 
-        if ($suggest) {
-            return implode(' ', $suggestionParts);
+        if (!$suggest) {
+            return null;
         }
 
-        return null;
+        return implode(' ', $suggestionParts);
     }
 
 }

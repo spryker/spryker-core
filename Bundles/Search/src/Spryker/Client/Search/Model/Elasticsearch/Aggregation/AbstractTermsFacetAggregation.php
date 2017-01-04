@@ -18,7 +18,7 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
      *
      * @return void
      */
-    protected function setTermsAggregationSize(AbstractTermsAggregation $aggregation, $size = null)
+    protected function setTermsAggregationSize(AbstractTermsAggregation $aggregation, $size)
     {
         if ($size === null) {
             return;
