@@ -81,6 +81,8 @@ class ObjectBuilder extends PropelObjectBuilder
     /**
      * Boosts ActiveRecord::doInsert() by doing more calculations at build-time.
      *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return string
      */
     protected function addDoInsertBodyRaw()
