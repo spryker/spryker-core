@@ -21,6 +21,8 @@ class CodeStyleSniffer
     const OPTION_FIX = 'fix';
     const OPTION_PRINT_DIFF_REPORT = 'report-diff';
     const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_QUIET = 'quiet';
+    const OPTION_EXPLAIN = 'explain';
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_VERBOSE = 'verbose';
 
@@ -138,6 +140,13 @@ class CodeStyleSniffer
         $config = ' --standard=' . $this->codingStandard;
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
+        }
+        if (!$options[self::OPTION_QUIET]) {
+            $config .= ' -p';
+        }
+
+        if ($options[self::OPTION_EXPLAIN]) {
+            $config .= ' -e';
         }
 
         if ($options[self::OPTION_SNIFFS]) {

@@ -24,6 +24,7 @@ class CodeStyleSnifferConsole extends Console
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FIX = 'fix';
+    const OPTION_EXPLAIN = 'explain';
     const OPTION_BUNDLE_ALL = 'all';
     const ARGUMENT_SUB_PATH = 'path';
 
@@ -41,6 +42,7 @@ class CodeStyleSnifferConsole extends Console
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all")');
         $this->addOption(self::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
+        $this->addOption(self::OPTION_EXPLAIN, 'e', InputOption::VALUE_NONE, 'Explain the standard by showing the sniffs it includes');
         $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
         $this->addOption(self::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed');
         $this->addArgument(self::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element for project level');
