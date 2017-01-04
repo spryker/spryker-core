@@ -97,7 +97,7 @@ class PhpMdRunner
     protected function resolvePath($bundle)
     {
         if ($bundle) {
-            if ($bundle === self::BUNDLE_ALL) {
+            if ($bundle === static::BUNDLE_ALL) {
                 return $this->pathToBundles;
             }
 
@@ -130,8 +130,8 @@ class PhpMdRunner
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
         $format = 'text';
-        if ($options[self::OPTION_FORMAT]) {
-            $format = $options[self::OPTION_FORMAT];
+        if ($options[static::OPTION_FORMAT]) {
+            $format = $options[static::OPTION_FORMAT];
         }
 
         $config = $this->architectureStandard;
@@ -141,10 +141,10 @@ class PhpMdRunner
         }
 
         $command = 'vendor/bin/phpmd ' . $pathToFiles . ' ' . $format . ' ' . $config;
-        if (!empty($options[self::OPTION_DRY_RUN])) {
+        if (!empty($options[static::OPTION_DRY_RUN])) {
             echo $command;
 
-            return self::CODE_SUCCESS;
+            return static::CODE_SUCCESS;
         }
 
         $process = new Process($command, $this->applicationRoot, null, null, 4800);

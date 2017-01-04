@@ -72,8 +72,8 @@ class ComposerDependencyParser
         }
 
         // For now we can't separate in the dependency tool yet
-        $included = array_merge($declaredDependencies[self::TYPE_INCLUDE], $declaredDependencies[self::TYPE_INCLUDE_DEV]);
-        $excluded = array_merge($declaredDependencies[self::TYPE_EXCLUDE], $declaredDependencies[self::TYPE_EXCLUDE_DEV]);
+        $included = array_merge($declaredDependencies[static::TYPE_INCLUDE], $declaredDependencies[static::TYPE_INCLUDE_DEV]);
+        $excluded = array_merge($declaredDependencies[static::TYPE_EXCLUDE], $declaredDependencies[static::TYPE_EXCLUDE_DEV]);
 
         foreach ($codeDependencies as $key => $bundleDependency) {
             if (in_array($bundleDependency, $excluded)) {
@@ -109,10 +109,10 @@ class ComposerDependencyParser
             $content = json_decode($content, true);
 
             return [
-                self::TYPE_INCLUDE => isset($content[self::TYPE_INCLUDE]) ? array_keys($content[self::TYPE_INCLUDE]) : [],
-                self::TYPE_EXCLUDE => isset($content[self::TYPE_EXCLUDE]) ? array_keys($content[self::TYPE_EXCLUDE]) : [],
-                self::TYPE_INCLUDE_DEV => isset($content[self::TYPE_INCLUDE_DEV]) ? array_keys($content[self::TYPE_INCLUDE_DEV]) : [],
-                self::TYPE_EXCLUDE_DEV => isset($content[self::TYPE_EXCLUDE_DEV]) ? array_keys($content[self::TYPE_EXCLUDE_DEV]) : [],
+                static::TYPE_INCLUDE => isset($content[static::TYPE_INCLUDE]) ? array_keys($content[static::TYPE_INCLUDE]) : [],
+                static::TYPE_EXCLUDE => isset($content[static::TYPE_EXCLUDE]) ? array_keys($content[static::TYPE_EXCLUDE]) : [],
+                static::TYPE_INCLUDE_DEV => isset($content[static::TYPE_INCLUDE_DEV]) ? array_keys($content[static::TYPE_INCLUDE_DEV]) : [],
+                static::TYPE_EXCLUDE_DEV => isset($content[static::TYPE_EXCLUDE_DEV]) ? array_keys($content[static::TYPE_EXCLUDE_DEV]) : [],
             ];
         }
 

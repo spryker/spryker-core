@@ -36,16 +36,16 @@ class CodeStyleSnifferConsole extends Console
         parent::configure();
 
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+            ->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Sniff and fix code style for project or core');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all")');
-        $this->addOption(self::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
-        $this->addOption(self::OPTION_EXPLAIN, 'e', InputOption::VALUE_NONE, 'Explain the standard by showing the sniffs it includes');
-        $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
-        $this->addOption(self::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed');
-        $this->addArgument(self::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element for project level');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all")');
+        $this->addOption(static::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
+        $this->addOption(static::OPTION_EXPLAIN, 'e', InputOption::VALUE_NONE, 'Explain the standard by showing the sniffs it includes');
+        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
+        $this->addOption(static::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed');
+        $this->addArgument(static::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element for project level');
     }
 
     /**
@@ -56,12 +56,12 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(self::OPTION_BUNDLE);
+        $bundle = $this->input->getOption(static::OPTION_BUNDLE);
 
         $message = 'Check code style in project level';
         if ($bundle) {
             $message = 'Check code style in all bundles';
-            if ($bundle !== self::OPTION_BUNDLE_ALL) {
+            if ($bundle !== static::OPTION_BUNDLE_ALL) {
                 $message = 'Check code style in ' . $bundle . ' bundle';
             }
         }

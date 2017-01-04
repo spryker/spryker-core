@@ -60,13 +60,13 @@ class RequireUpdater implements UpdaterInterface
         $composerRequireVersion = Config::get(DevelopmentConstants::COMPOSER_REQUIRE_VERSION);
 
         if (preg_match('/^[0-9]/', $composerRequireVersion)) {
-            $composerRequireVersion = self::RELEASE_OPERATOR . $composerRequireVersion;
+            $composerRequireVersion = static::RELEASE_OPERATOR . $composerRequireVersion;
         }
 
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
-            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = $composerRequireVersion;
+            $composerJson[static::KEY_REQUIRE]['spryker/' . $dependentBundle] = $composerRequireVersion;
         }
 
         return $composerJson;

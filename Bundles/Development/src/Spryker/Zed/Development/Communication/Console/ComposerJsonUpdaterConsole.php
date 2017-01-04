@@ -30,11 +30,11 @@ class ComposerJsonUpdaterConsole extends Console
         parent::configure();
 
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+            ->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Update composer.json of core bundles (Spryker core dev only).');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
     }
 
     /**
@@ -48,13 +48,13 @@ class ComposerJsonUpdaterConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $bundles = [];
-        $bundleList = $this->input->getOption(self::OPTION_BUNDLE);
+        $bundleList = $this->input->getOption(static::OPTION_BUNDLE);
         if ($bundleList) {
-            $bundles = explode(',', $this->input->getOption(self::OPTION_BUNDLE));
+            $bundles = explode(',', $this->input->getOption(static::OPTION_BUNDLE));
         }
 
         $processedBundles = $this->getFacade()->updateComposerJsonInBundles($bundles);
-        if ($this->input->getOption(self::VERBOSE)) {
+        if ($this->input->getOption(static::VERBOSE)) {
             $this->output->writeln(count($processedBundles) . ' bundles updated:');
             foreach ($processedBundles as $processedBundle) {
                 $this->output->writeln('- '. $processedBundle);
