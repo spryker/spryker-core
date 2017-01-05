@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
+namespace Unit\Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -20,7 +20,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
  * @group Business
  * @group Model
  * @group Elasticsearch
- * @group Definition
+ * @group DataMapper
  * @group PageMapBuilderTest
  */
 class PageMapBuilderTest extends PHPUnit_Framework_TestCase
