@@ -26,7 +26,7 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
      *
      * @return \Elastica\Suggest\AbstractSuggest
      */
-    protected function createCompletion(Query $query, array $requestParameters = [])
+    protected function createSuggestion(Query $query, array $requestParameters = [])
     {
         $termSuggest = $this->getFactory()
             ->createSuggestBuilder()

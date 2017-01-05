@@ -8,7 +8,6 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
@@ -28,7 +27,14 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      */
     public function catalogSearch($searchString, array $requestParameters = [])
     {
-        $searchQuery = $this->createExpandedSearchQuery($searchString, $requestParameters);
+        $searchQuery = $this
+            ->getFactory()
+            ->createCatalogSearchQuery($searchString);
+
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchQueryExpanderPlugins(), $requestParameters);
 
         $resultFormatters = $this
             ->getFactory()
@@ -52,7 +58,14 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      */
     public function catalogSuggestSearch($searchString, array $requestParameters = [])
     {
-        $searchQuery = $this->createExpandedSuggestSearchQuery($searchString, $requestParameters);
+        $searchQuery = $this
+            ->getFactory()
+            ->createSuggestSearchQuery($searchString);
+
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->getSuggestionQueryExpanderPlugins(), $requestParameters);
 
         $resultFormatters = $this
             ->getFactory()
@@ -62,54 +75,6 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             ->getFactory()
             ->getSearchClient()
             ->search($searchQuery, $resultFormatters, $requestParameters);
-    }
-
-    /**
-     * @param string $searchString
-     * @param array $requestParameters
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    protected function createExpandedSearchQuery($searchString, array $requestParameters)
-    {
-        $searchQuery = $this
-            ->getFactory()
-            ->getCatalogSearchQueryPlugin();
-
-        if ($searchQuery instanceof SearchStringSetterInterface) {
-            $searchQuery->setSearchString($searchString);
-        }
-
-        $searchQuery = $this
-            ->getFactory()
-            ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchQueryExpanderPlugins(), $requestParameters);
-
-        return $searchQuery;
-    }
-
-    /**
-     * @param string $searchString
-     * @param array $requestParameters
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    protected function createExpandedSuggestSearchQuery($searchString, array $requestParameters)
-    {
-        $searchQuery = $this
-            ->getFactory()
-            ->getSuggestionQueryPlugin();
-
-        if ($searchQuery instanceof SearchStringSetterInterface) {
-            $searchQuery->setSearchString($searchString);
-        }
-
-        $searchQuery = $this
-            ->getFactory()
-            ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->getSuggestionQueryExpanderPlugins(), $requestParameters);
-
-        return $searchQuery;
     }
 
 }
