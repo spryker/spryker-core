@@ -134,7 +134,7 @@ class CalculatorForm extends AbstractType
         $defaultOptions = [
             'label' => 'Amount*',
             'attr' => [
-                'class' => 'input-group'
+                'class' => 'input-group',
             ],
             'constraints' => [
                 new NotBlank(),
@@ -193,7 +193,7 @@ class CalculatorForm extends AbstractType
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [
-                        'type' => MetaProviderFactory::TYPE_COLLECTOR
+                        'type' => MetaProviderFactory::TYPE_COLLECTOR,
                     ]
                 )->build(),
             ],

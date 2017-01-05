@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Exception;
 
-class StockTypeNotFoundException extends \Exception
+use Exception;
+
+class StockTypeNotFoundException extends Exception
 {
 }

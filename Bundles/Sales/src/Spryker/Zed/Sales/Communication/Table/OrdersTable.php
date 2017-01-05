@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
+use DateTime;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -304,12 +305,12 @@ class OrdersTable extends AbstractTable
     protected function addRangeFilter(SpySalesOrderItemQuery $filterQuery, $filter)
     {
         if ($filter === self::FILTER_DAY) {
-            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::GREATER_THAN);
+            $filterQuery->filterByLastStateChange(new DateTime('-1 day'), Criteria::GREATER_THAN);
         } elseif ($filter === self::FILTER_WEEK) {
-            $filterQuery->filterByLastStateChange(new \DateTime('-1 day'), Criteria::LESS_EQUAL);
-            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::GREATER_EQUAL);
+            $filterQuery->filterByLastStateChange(new DateTime('-1 day'), Criteria::LESS_EQUAL);
+            $filterQuery->filterByLastStateChange(new DateTime('-7 day'), Criteria::GREATER_EQUAL);
         } else {
-            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
+            $filterQuery->filterByLastStateChange(new DateTime('-7 day'), Criteria::LESS_THAN);
         }
     }
 

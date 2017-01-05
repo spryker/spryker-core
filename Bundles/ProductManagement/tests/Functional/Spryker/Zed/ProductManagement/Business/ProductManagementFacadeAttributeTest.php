@@ -368,7 +368,7 @@ class ProductManagementFacadeAttributeTest extends Test
                 new ProductManagementQueryContainer(),
                 $productManagementToLocaleBridgeMock,
                 $productManagementToGlossaryBridgeMock,
-                $glossaryKeyBuilderMock
+                $glossaryKeyBuilderMock,
             ])
             ->setMethods(['getLocaleByName'])
             ->getMock();

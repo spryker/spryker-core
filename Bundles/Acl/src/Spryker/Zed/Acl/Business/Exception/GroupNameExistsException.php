@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class GroupNameExistsException extends \Exception
+use Exception;
+
+class GroupNameExistsException extends Exception
 {
 }

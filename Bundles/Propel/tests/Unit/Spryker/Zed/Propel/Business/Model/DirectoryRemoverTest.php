@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -19,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group Model
  * @group DirectoryRemoverTest
  */
-class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
+class DirectoryRemoverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

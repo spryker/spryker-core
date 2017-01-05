@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
@@ -23,7 +24,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Model
  * @group PasswordResetTest
  */
-class PasswordResetTest extends \PHPUnit_Framework_TestCase
+class PasswordResetTest extends PHPUnit_Framework_TestCase
 {
 
     /**

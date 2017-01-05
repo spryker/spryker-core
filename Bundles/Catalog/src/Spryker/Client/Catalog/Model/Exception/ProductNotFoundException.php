@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\Catalog\Model\Exception;
 
-class ProductNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class ProductNotFoundException extends RuntimeException
 {
 
     public function __construct($id)

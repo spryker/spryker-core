@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business\Lock;
 
+use DateInterval;
+use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Business\Exception\LockException;
@@ -87,7 +89,7 @@ class TriggerLocker implements LockerInterface
     public function clearLocks()
     {
         $this->queryContainer
-            ->queryLockedItemsByExpirationDate(new \DateTime('now'))
+            ->queryLockedItemsByExpirationDate(new DateTime('now'))
             ->delete();
     }
 
@@ -96,10 +98,10 @@ class TriggerLocker implements LockerInterface
      */
     protected function createExpirationDate()
     {
-        $dateInterval = \DateInterval::createFromDateString(
+        $dateInterval = DateInterval::createFromDateString(
             $this->omsConfig->getStateMachineLockerTimeoutInterval()
         );
-        $expirationDate = new \DateTime();
+        $expirationDate = new DateTime();
         $expirationDate->add($dateInterval);
 
         return $expirationDate;

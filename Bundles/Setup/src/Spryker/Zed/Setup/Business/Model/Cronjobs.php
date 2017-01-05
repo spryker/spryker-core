@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Setup\Business\Model;
 
+use ErrorException;
 use Spryker\Shared\Library\Environment;
 use Spryker\Zed\Setup\SetupConfig;
 
@@ -96,7 +97,7 @@ class Cronjobs
     {
         foreach ($roles as $role) {
             if (!in_array($role, $this->allowedRoles)) {
-                throw new \ErrorException(
+                throw new ErrorException(
                     $role . ' is not in the list of allowed job roles! Cannot continue configuration of jenkins!'
                 );
             }
@@ -283,7 +284,7 @@ class Cronjobs
         $curl_response = curl_exec($ch);
 
         if ($curl_response === false) {
-            throw new \ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         }
 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

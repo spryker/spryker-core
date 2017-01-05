@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Service\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Service\Kernel\Container;
 use Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Unit\Spryker\Service\Kernel\Fixtures\ServiceFactory;
@@ -18,7 +19,7 @@ use Unit\Spryker\Service\Kernel\Fixtures\ServiceFactory;
  * @group Kernel
  * @group AbstractServiceFactoryTest
  */
-class AbstractServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class AbstractServiceFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const CONTAINER_KEY = 'key';

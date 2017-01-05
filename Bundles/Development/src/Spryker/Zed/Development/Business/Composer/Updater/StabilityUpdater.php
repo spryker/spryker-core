@@ -49,7 +49,7 @@ class StabilityUpdater implements UpdaterInterface
      */
     protected function updateMinimumStability(array $composerJson)
     {
-        $composerJson[self::KEY_MINIMUM_STABILITY] = $this->stability;
+        $composerJson[static::KEY_MINIMUM_STABILITY] = $this->stability;
 
         return $composerJson;
     }
@@ -61,7 +61,7 @@ class StabilityUpdater implements UpdaterInterface
      */
     protected function updatePreferStable(array $composerJson)
     {
-        $composerJson[self::KEY_PREFER_STABLE] = true;
+        $composerJson[static::KEY_PREFER_STABLE] = true;
 
         return $composerJson;
     }

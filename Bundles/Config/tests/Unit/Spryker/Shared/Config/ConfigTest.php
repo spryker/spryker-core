@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Config;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Config\Config;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Shared\Config\Config;
  * @group Config
  * @group ConfigTest
  */
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

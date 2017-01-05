@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Discount\Business\Exception;
 
-class DistributorException extends \Exception
+use Exception;
+
+class DistributorException extends Exception
 {
 }

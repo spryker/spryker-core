@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Development\Business\Composer\Updater;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -20,7 +21,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @group Updater
  * @group AutoloadUpdaterTest
  */
-class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
+class AutoloadUpdaterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -129,9 +130,9 @@ class AutoloadUpdaterTest extends \PHPUnit_Framework_TestCase
             'autoload' => [
                 'psr-0' => [
                     'Path' => 'should/stay',
-                    $autoloadKey => 'tests/'
-                ]
-            ]
+                    $autoloadKey => 'tests/',
+                ],
+            ],
         ];
     }
 

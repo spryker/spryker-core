@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
+use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -223,7 +224,7 @@ class Writer implements WriterInterface
     {
         $priceProductEntity = $this->queryContainer->queryPriceProductEntity($idPriceProduct)->find();
         if (!count($priceProductEntity) > 0) {
-            throw new \Exception(self::ENTITY_NOT_FOUND);
+            throw new Exception(self::ENTITY_NOT_FOUND);
         }
 
         return $this->queryContainer

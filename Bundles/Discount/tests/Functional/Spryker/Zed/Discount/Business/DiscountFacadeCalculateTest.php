@@ -7,6 +7,7 @@
 namespace Functional\Spryker\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use DateTime;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -197,8 +198,8 @@ class DiscountFacadeCalculateTest extends Test
         $discountEntity->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
         $discountEntity->setDiscountType($discountType);
         $discountEntity->setIsActive(1);
-        $discountEntity->setValidFrom(new \DateTime('yesterday'));
-        $discountEntity->setValidTo(new \DateTime('tomorrow'));
+        $discountEntity->setValidFrom(new DateTime('yesterday'));
+        $discountEntity->setValidTo(new DateTime('tomorrow'));
         $discountEntity->save();
 
         return $discountEntity;

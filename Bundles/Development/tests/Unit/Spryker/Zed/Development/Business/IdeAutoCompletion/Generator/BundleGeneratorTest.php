@@ -10,6 +10,7 @@ use Codeception\TestCase\Test;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
+use Twig_Environment;
 
 /**
  * @group Unit
@@ -71,7 +72,7 @@ class BundleGeneratorTest extends Test
     protected function createTwigEnvironmentMock()
     {
         return $this
-            ->getMockBuilder(\Twig_Environment::class)
+            ->getMockBuilder(Twig_Environment::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

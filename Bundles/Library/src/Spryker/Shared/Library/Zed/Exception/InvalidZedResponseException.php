@@ -8,11 +8,12 @@
 namespace Spryker\Shared\Library\Zed\Exception;
 
 use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
 
 /**
  * @deprecated Moved to ZedRequest Bundle
  */
-class InvalidZedResponseException extends \RuntimeException
+class InvalidZedResponseException extends RuntimeException
 {
 
     public function __construct($reason, ResponseInterface $response)

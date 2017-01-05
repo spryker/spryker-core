@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Exception;
 
-class ResourceNotFoundException extends \Exception
+use Exception;
+
+class ResourceNotFoundException extends Exception
 {
 }

@@ -53,7 +53,7 @@ class OrderShippedMailTypePlugin extends AbstractPlugin implements MailTypePlugi
         $orderTransfer = $mailBuilder->getMailTransfer()->requireOrder()->getOrder();
 
         $mailBuilder->setSubject('mail.order.shipped.subject', [
-            '%orderReference%' => $orderTransfer->getOrderReference()
+            '%orderReference%' => $orderTransfer->getOrderReference(),
         ]);
 
         return $this;

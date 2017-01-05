@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -87,7 +88,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
+    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, DateTime $lastTouchedAt)
     {
         $query = $this->getFactory()->createTouchQuery();
         $query

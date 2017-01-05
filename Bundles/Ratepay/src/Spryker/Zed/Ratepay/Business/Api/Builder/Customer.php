@@ -32,13 +32,13 @@ class Customer extends AbstractBuilder implements BuilderInterface
                 'email' => $this->requestTransfer->getCustomer()->getEmail(),
                 'phone' => [
                     'direct-dial' => $this->requestTransfer->getCustomer()->getPhone(),
-                ]
+                ],
             ],
             'addresses' => [
                 (new Address($this->requestTransfer, Constants::REQUEST_MODEL_ADDRESS_TYPE_BILLING)),
                 (new Address($this->requestTransfer, Constants::REQUEST_MODEL_ADDRESS_TYPE_DELIVERY)),
             ],
-            'customer-allow-credit-inquiry' => $this->requestTransfer->getCustomer()->getAllowCreditInquiry()
+            'customer-allow-credit-inquiry' => $this->requestTransfer->getCustomer()->getAllowCreditInquiry(),
         ];
         if (strlen($this->requestTransfer->getCustomer()->getCompany())) {
             $customerData['company-name'] = $this->requestTransfer->getCustomer()->getCompany();

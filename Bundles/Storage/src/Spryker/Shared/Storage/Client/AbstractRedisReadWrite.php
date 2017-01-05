@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Storage\Client;
 
+use Exception;
+
 /**
  * @deprecated Not used anymore.
  */
@@ -28,7 +30,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
         $result = $this->getResource()->set($key, $value);
         $this->addWriteAccessStats($key);
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
@@ -66,7 +68,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
         $this->addMultiWriteAccessStats($data);
 
         if (!$result) {
-            throw new \Exception(
+            throw new Exception(
                 'could not set redisKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }

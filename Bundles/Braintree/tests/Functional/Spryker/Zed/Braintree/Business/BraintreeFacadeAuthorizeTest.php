@@ -104,8 +104,8 @@ class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
             'merchantAccountId' => 'abc',
             'statusHistory' => new StatusDetails([
                 'timestamp' => new DateTime(),
-                'status' => 'authorized'
-            ])
+                'status' => 'authorized',
+            ]),
         ]);
     }
 

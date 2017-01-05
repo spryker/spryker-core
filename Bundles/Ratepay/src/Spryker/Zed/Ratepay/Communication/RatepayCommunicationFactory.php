@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Ratepay\Communication;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -164,7 +165,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createOrderTransferItems($orderItems)
     {
-        $items = new \ArrayObject();
+        $items = new ArrayObject();
         foreach ($orderItems as $orderItemEntity) {
             $items[] = $this->createItemTransferByItemEntity($orderItemEntity);
         }
@@ -194,7 +195,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createOrderTransferItemsByBasketItems($basketItems)
     {
-        $items = new \ArrayObject();
+        $items = new ArrayObject();
         foreach ($basketItems as $basketItem) {
             $items[] = $this->createItemTransferByBasketItem($basketItem);
         }

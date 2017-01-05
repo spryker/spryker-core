@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Refund\Communication;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Refund\Communication\RefundCommunicationFactory;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\Refund\Communication\Table\RefundTable;
  * @group Communication
  * @group RefundCommunicationFactoryTest
  */
-class RefundCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
+class RefundCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

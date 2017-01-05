@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
@@ -22,7 +23,7 @@ use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
  * @group Manager
  * @group PriceManagerTest
  */
-class PriceManagerTest extends \PHPUnit_Framework_TestCase
+class PriceManagerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

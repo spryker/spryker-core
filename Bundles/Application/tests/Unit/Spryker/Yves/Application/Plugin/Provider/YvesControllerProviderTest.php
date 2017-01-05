@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Yves\Application\Plugin\Provider;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Silex\Controller;
 use Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock;
@@ -19,7 +20,7 @@ use Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMoc
  * @group Provider
  * @group YvesControllerProviderTest
  */
-class YvesControllerProviderTest extends \PHPUnit_Framework_TestCase
+class YvesControllerProviderTest extends PHPUnit_Framework_TestCase
 {
 
     const METHOD_REQUIRE_HTTP = 'requireHttp';

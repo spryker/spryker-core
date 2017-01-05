@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -238,7 +239,7 @@ class CartClient extends AbstractClient implements CartClientInterface
         $items = $quoteTransfer->getItems();
 
         if (count($items) === 0) {
-            $quoteTransfer->setItems(new \ArrayObject());
+            $quoteTransfer->setItems(new ArrayObject());
         }
 
         $cartChangeTransfer = new CartChangeTransfer();

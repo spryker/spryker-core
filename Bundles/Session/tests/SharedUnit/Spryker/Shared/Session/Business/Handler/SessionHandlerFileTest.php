@@ -7,6 +7,7 @@
 
 namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\NewRelic\NewRelicApi;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Symfony\Component\Filesystem\Filesystem;
@@ -19,7 +20,7 @@ use Symfony\Component\Finder\Finder;
  * @group Business
  * @group SessionHandlerFile
  */
-class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
+class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
 {
 
     const LIFETIME = 20;

@@ -343,7 +343,7 @@ class NewRelicApi implements NewRelicApiInterface
         $options = [
             'headers' => [
                 'x-api-key' => Config::get(NewRelicConstants::NEWRELIC_API_KEY),
-            ]
+            ],
         ];
 
         $data = [];

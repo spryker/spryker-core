@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Setup;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Setup\SetupConfig;
  * @group Setup
  * @group SetupConfigTest
  */
-class SetupConfigTest extends \PHPUnit_Framework_TestCase
+class SetupConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

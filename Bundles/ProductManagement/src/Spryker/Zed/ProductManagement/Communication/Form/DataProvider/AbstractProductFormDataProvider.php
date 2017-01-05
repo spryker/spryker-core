@@ -174,7 +174,7 @@ class AbstractProductFormDataProvider
             ProductFormAdd::FORM_PRICE_AND_TAX => [
                 PriceForm::FIELD_PRICE => 0,
                 PriceForm::FIELD_TAX_RATE => 0,
-            ]
+            ],
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
@@ -365,18 +365,20 @@ class AbstractProductFormDataProvider
         return [
             ImageSetForm::FIELD_SET_ID => null,
             ImageSetForm::FIELD_SET_NAME => null,
-            ImageSetForm::PRODUCT_IMAGES => [[
-                ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
-                ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
-                ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL => null,
-                ImageCollectionForm::FIELD_FK_IMAGE_SET_ID => null,
-                ImageCollectionForm::FIELD_IMAGE_SMALL => null,
-                ImageCollectionForm::FIELD_IMAGE_LARGE => null,
-                ImageCollectionForm::FIELD_SORT_ORDER => null,
-                ImageSetForm::FIELD_SET_FK_LOCALE => null,
-                ImageSetForm::FIELD_SET_FK_PRODUCT => null,
-                ImageSetForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
-            ]]
+            ImageSetForm::PRODUCT_IMAGES => [
+                [
+                    ImageCollectionForm::FIELD_ID_PRODUCT_IMAGE => null,
+                    ImageCollectionForm::FIELD_IMAGE_PREVIEW => null,
+                    ImageCollectionForm::FIELD_IMAGE_PREVIEW_LARGE_URL => null,
+                    ImageCollectionForm::FIELD_FK_IMAGE_SET_ID => null,
+                    ImageCollectionForm::FIELD_IMAGE_SMALL => null,
+                    ImageCollectionForm::FIELD_IMAGE_LARGE => null,
+                    ImageCollectionForm::FIELD_SORT_ORDER => null,
+                    ImageSetForm::FIELD_SET_FK_LOCALE => null,
+                    ImageSetForm::FIELD_SET_FK_PRODUCT => null,
+                    ImageSetForm::FIELD_SET_FK_PRODUCT_ABSTRACT => null,
+                ],
+            ],
         ];
     }
 
@@ -462,7 +464,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -513,7 +515,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -544,7 +546,7 @@ class AbstractProductFormDataProvider
             $result[$type] = [
                 AttributeAbstractForm::FIELD_NAME => null,
                 AttributeAbstractForm::FIELD_VALUE => $value,
-                AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID => $attributeTransfer->getIdProductManagementAttribute()
+                AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID => $attributeTransfer->getIdProductManagementAttribute(),
             ];
         }
 
@@ -610,7 +612,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_INPUT_TYPE => $inputType,
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -634,7 +636,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_INPUT_TYPE => $attributeTransfer->getInputType(),
                 self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
                 self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput
+                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -663,7 +665,7 @@ class AbstractProductFormDataProvider
                 self::FORM_FIELD_INPUT_TYPE => 'text',
                 self::FORM_FIELD_VALUE_DISABLED => true,
                 self::FORM_FIELD_NAME_DISABLED => true,
-                self::FORM_FIELD_ALLOW_INPUT => false
+                self::FORM_FIELD_ALLOW_INPUT => false,
             ];
         }
 

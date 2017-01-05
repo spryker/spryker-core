@@ -28,7 +28,7 @@ class LocatorQueryContainer extends AbstractDependencyFinder
             return;
         }
         foreach ($matches as $match) {
-            $toBundle = $match[self::BUNDLE];
+            $toBundle = $match[static::BUNDLE];
 
             if (preg_match('/->/', $toBundle)) {
                 $foundParts = explode('->', $toBundle);
@@ -38,7 +38,7 @@ class LocatorQueryContainer extends AbstractDependencyFinder
             $toBundle = ucfirst($toBundle);
             $foreignClassName = $this->getClassName($toBundle);
             $dependencyInformation = [
-                DependencyTree::META_FOREIGN_LAYER => self::LAYER_PERSISTENCE,
+                DependencyTree::META_FOREIGN_LAYER => static::LAYER_PERSISTENCE,
                 DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName,
             ];
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);

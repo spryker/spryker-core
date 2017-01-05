@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -21,7 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group SchemaFinder
  * @group NavigationSchemaFinderTest
  */
-class NavigationSchemaFinderTest extends \PHPUnit_Framework_TestCase
+class NavigationSchemaFinderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

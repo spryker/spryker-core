@@ -31,7 +31,7 @@ class CalculatorFormDataProvider
     public function getData()
     {
         return [
-            CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins()
+            CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins(),
         ];
     }
 

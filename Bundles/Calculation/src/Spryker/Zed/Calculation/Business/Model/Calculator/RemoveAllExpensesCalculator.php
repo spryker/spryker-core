@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class RemoveAllExpensesCalculator implements CalculatorInterface
@@ -19,7 +20,7 @@ class RemoveAllExpensesCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setExpenses(new \ArrayObject());
+        $quoteTransfer->setExpenses(new ArrayObject());
     }
 
 }

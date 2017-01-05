@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\ZedRequest\Client;
 
 use GuzzleHttp\Psr7\Response;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Auth\AuthClient;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
@@ -23,7 +24,7 @@ use Unit\Spryker\Shared\ZedRequest\Client\Fixture\AbstractHttpClient;
  * @group Client
  * @group AbstractHttpClientTest
  */
-class AbstractHttpClientTest extends \PHPUnit_Framework_TestCase
+class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -41,7 +42,7 @@ class AbstractHttpClientTest extends \PHPUnit_Framework_TestCase
 
         $response = $abstractRequest->request('?foo=bar');
 
-        /**
+        /*
          * @var \Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer $transfer
          */
         $transfer = $response->getTransfer();

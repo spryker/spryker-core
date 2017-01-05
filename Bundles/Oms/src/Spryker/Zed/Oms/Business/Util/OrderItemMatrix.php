@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use DateTime;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -137,13 +138,13 @@ class OrderItemMatrix
         foreach ($orderItems as $orderItem) {
             $lastStateChange = $orderItem->getLastStateChange();
 
-            $lastDay = new \DateTime('-1 day');
+            $lastDay = new DateTime('-1 day');
             if ($lastStateChange > $lastDay) {
                 ++$grid['day'];
                 continue;
             }
 
-            $lastDay = new \DateTime('-7 day');
+            $lastDay = new DateTime('-7 day');
             if ($lastStateChange >= $lastDay) {
                 ++$grid['week'];
                 continue;

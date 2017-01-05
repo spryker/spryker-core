@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\DummyPayment;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 use Spryker\Zed\DummyPayment\DummyPaymentDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -18,7 +19,7 @@ use Spryker\Zed\Kernel\Container;
  * @group DummyPayment
  * @group DummyPaymentDependencyProviderTest
  */
-class DummyPaymentDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class DummyPaymentDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

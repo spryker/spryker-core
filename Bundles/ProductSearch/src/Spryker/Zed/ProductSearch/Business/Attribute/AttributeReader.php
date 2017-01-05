@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use PDO;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
@@ -92,7 +93,7 @@ class AttributeReader implements AttributeReaderInterface
         if ($searchText !== '') {
             $term = '%' . mb_strtoupper($searchText) . '%';
 
-            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, \PDO::PARAM_STR);
+            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
         }
 
         return $query->find();

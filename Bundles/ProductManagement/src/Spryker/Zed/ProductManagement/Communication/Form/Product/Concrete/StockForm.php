@@ -114,7 +114,7 @@ class StockForm extends AbstractType
     protected function addIsNeverOutOfStockCheckbox(FormBuilderInterface $builder)
     {
         $builder->add(StockForm::FIELD_IS_NEVER_OUT_OF_STOCK, 'checkbox', [
-            'label' => 'Never out of stock'
+            'label' => 'Never out of stock',
         ]);
 
         return $this;

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
 
@@ -17,7 +18,7 @@ use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
  * @group Kernel
  * @group BundleConfigResolverAwareTraitTest
  */
-class BundleConfigResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
+class BundleConfigResolverAwareTraitTest extends PHPUnit_Framework_TestCase
 {
 
     /**

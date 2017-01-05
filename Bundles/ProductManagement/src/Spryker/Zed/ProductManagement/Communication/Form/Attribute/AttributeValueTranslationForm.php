@@ -83,7 +83,7 @@ class AttributeValueTranslationForm extends AbstractType
             'label' => 'Translation',
             'constraints' => [
                 new NotBlank([
-                    'groups' => self::GROUP_VALUE_TRANSLATIONS
+                    'groups' => self::GROUP_VALUE_TRANSLATIONS,
                 ]),
             ],
         ]);

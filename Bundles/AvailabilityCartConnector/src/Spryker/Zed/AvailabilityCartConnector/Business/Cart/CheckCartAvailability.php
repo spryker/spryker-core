@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Business\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -42,7 +43,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
-        $messages = new \ArrayObject();
+        $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
              $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
                  $cartChangeTransfer,
@@ -98,7 +99,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $messageTranfer = new MessageTransfer();
         $messageTranfer->setValue($translationKey);
         $messageTranfer->setParameters([
-            self::STOCK_TRANSLATION_PARAMETER => $stock
+            self::STOCK_TRANSLATION_PARAMETER => $stock,
         ]);
 
         return $messageTranfer;

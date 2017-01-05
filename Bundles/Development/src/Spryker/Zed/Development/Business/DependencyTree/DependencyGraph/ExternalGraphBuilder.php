@@ -63,7 +63,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;
@@ -78,11 +78,11 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $label = '"' . $dependency[DependencyTree::META_COMPOSER_NAME] . '": "' . $dependency[DependencyTree::META_COMPOSER_VERSION] . '"';
         $attributes = [
-            self::LABEL => $label
+            static::LABEL => $label,
         ];
 
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;
@@ -97,7 +97,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
-            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;

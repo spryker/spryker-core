@@ -53,7 +53,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
             $productOptionGroupDataProvider->getData(),
             array_merge(
                 [
-                'data_class' => ProductOptionGroupTransfer::class
+                'data_class' => ProductOptionGroupTransfer::class,
                 ],
                 $productOptionGroupDataProvider->getOptions()
             )

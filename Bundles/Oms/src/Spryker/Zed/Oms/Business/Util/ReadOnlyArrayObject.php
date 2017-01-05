@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use ArrayObject;
 use LogicException;
 
-class ReadOnlyArrayObject extends \ArrayObject
+class ReadOnlyArrayObject extends ArrayObject
 {
 
     /**

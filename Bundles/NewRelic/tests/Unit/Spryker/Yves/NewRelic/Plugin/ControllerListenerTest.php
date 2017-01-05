@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\NewRelic\Plugin;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\NewRelic\NewRelicApi;
 use Spryker\Yves\NewRelic\Plugin\ControllerListener;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group Plugin
  * @group ControllerListenerTest
  */
-class ControllerListenerTest extends \PHPUnit_Framework_TestCase
+class ControllerListenerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

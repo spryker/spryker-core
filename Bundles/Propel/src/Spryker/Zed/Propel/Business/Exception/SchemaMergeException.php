@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Exception;
 
-class SchemaMergeException extends \Exception
+use Exception;
+
+class SchemaMergeException extends Exception
 {
 }

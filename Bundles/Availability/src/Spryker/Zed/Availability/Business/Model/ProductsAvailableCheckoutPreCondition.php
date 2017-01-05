@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -67,7 +68,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      *
      * @return array
      */
-    private function groupItemsBySku(\ArrayObject $items)
+    private function groupItemsBySku(ArrayObject $items)
     {
         $result = [];
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Url\Persistence\Exception;
 
-class UnknownResourceTypeException extends \Exception
+use Exception;
+
+class UnknownResourceTypeException extends Exception
 {
 }

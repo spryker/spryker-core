@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Business\Collector;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 
 class BaseCollector
@@ -18,7 +19,7 @@ class BaseCollector
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
-    protected function createDiscountableItemTransfer($grossPrice, $quantity, \ArrayObject $originalItemCalculatedDiscounts)
+    protected function createDiscountableItemTransfer($grossPrice, $quantity, ArrayObject $originalItemCalculatedDiscounts)
     {
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->setUnitGrossPrice($grossPrice);

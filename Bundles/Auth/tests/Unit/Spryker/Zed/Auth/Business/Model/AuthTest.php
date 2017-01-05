@@ -8,6 +8,8 @@
 namespace Unit\Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Auth\AuthConfig;
@@ -25,7 +27,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Model
  * @group AuthTest
  */
-class AuthTest extends \PHPUnit_Framework_TestCase
+class AuthTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -220,7 +222,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    protected function checkMigrateIsCalled(\PHPUnit_Framework_MockObject_MockObject $sessionClient)
+    protected function checkMigrateIsCalled(PHPUnit_Framework_MockObject_MockObject $sessionClient)
     {
         $sessionClient->expects($this->once())
             ->method('migrate')

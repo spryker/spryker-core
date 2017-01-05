@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Glossary\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use InvalidArgumentException;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig_SimpleFilter;
 
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
@@ -42,8 +44,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('trans', [$this, 'trans']),
-            new \Twig_SimpleFilter('transchoice', [$this, 'transchoice']),
+            new Twig_SimpleFilter('trans', [$this, 'trans']),
+            new Twig_SimpleFilter('transchoice', [$this, 'transchoice']),
         ];
     }
 
@@ -107,7 +109,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
         }
 
         if (!isset($ids[1])) {
-            throw new \InvalidArgumentException(sprintf('The message "%s" cannot be pluralized, because it is missing a plural (e.g. "There is one apple|There are %%count%% apples").', $id));
+            throw new InvalidArgumentException(sprintf('The message "%s" cannot be pluralized, because it is missing a plural (e.g. "There is one apple|There are %%count%% apples").', $id));
         }
 
         if (!$this->getFacade()->hasTranslation($ids[1], $localeTransfer)) {
@@ -158,7 +160,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     {
         if (!$this->localeTransfer) {
             if ($this->getLocale() === null) {
-                throw new \InvalidArgumentException('No locale or localeTransfer specified. You need to set a localeName or a LocaleTransfer, otherwise translation can not properly work.');
+                throw new InvalidArgumentException('No locale or localeTransfer specified. You need to set a localeName or a LocaleTransfer, otherwise translation can not properly work.');
             }
             $localeTransfer = new LocaleTransfer();
             $localeTransfer->setLocaleName($this->localeName);

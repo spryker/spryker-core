@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Client\Kernel\Fixtures\KernelClient;
 
 /**
@@ -16,7 +17,7 @@ use Unit\Spryker\Client\Kernel\Fixtures\KernelClient;
  * @group Kernel
  * @group AbstractClientTest
  */
-class AbstractClientTest extends \PHPUnit_Framework_TestCase
+class AbstractClientTest extends PHPUnit_Framework_TestCase
 {
 
     /**

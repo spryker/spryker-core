@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Mail\Business\Model\Mail;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Exception\MailNotFoundException;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
@@ -21,7 +22,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @group Mail
  * @group MailTypeCollectionTest
  */
-class MailTypeCollectionTest extends \PHPUnit_Framework_TestCase
+class MailTypeCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     const MAIL_TYPE_A = 'mail type a';

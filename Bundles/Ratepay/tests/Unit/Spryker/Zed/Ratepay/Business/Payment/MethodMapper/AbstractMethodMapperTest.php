@@ -377,7 +377,7 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
         //basketItems
         $basketItems = $this->requestTransfer->getShoppingBasket()->getItems();
 
-        /**
+        /*
          * @var \Generated\Shared\Transfer\RatepayRequestShoppingBasketItemTransfer $firstItem
          */
         $firstItem = $basketItems[0];

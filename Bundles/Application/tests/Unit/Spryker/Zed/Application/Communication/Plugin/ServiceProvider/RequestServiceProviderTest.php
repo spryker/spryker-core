@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group ServiceProvider
  * @group RequestServiceProviderTest
  */
-class RequestServiceProviderTest extends \PHPUnit_Framework_TestCase
+class RequestServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

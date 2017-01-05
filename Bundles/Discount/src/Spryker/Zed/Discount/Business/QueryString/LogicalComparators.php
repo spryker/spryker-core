@@ -19,7 +19,7 @@ class LogicalComparators
     {
         return [
             self::COMPARATOR_AND,
-            self::COMPARATOR_OR
+            self::COMPARATOR_OR,
         ];
     }
 

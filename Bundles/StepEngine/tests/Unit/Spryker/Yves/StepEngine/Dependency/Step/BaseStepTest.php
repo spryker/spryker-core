@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Dependency\Step;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
@@ -20,7 +21,7 @@ use Unit\Spryker\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
  * @group Step
  * @group BaseStepTest
  */
-class BaseStepTest extends \PHPUnit_Framework_TestCase
+class BaseStepTest extends PHPUnit_Framework_TestCase
 {
 
     const STEP_ROUTE = 'stepRoute';

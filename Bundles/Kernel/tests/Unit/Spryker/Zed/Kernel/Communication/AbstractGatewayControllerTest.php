@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Unit\Spryker\Zed\Kernel\Communication\Fixtures\FixtureGatewayController;
 
@@ -18,7 +19,7 @@ use Unit\Spryker\Zed\Kernel\Communication\Fixtures\FixtureGatewayController;
  * @group Communication
  * @group AbstractGatewayControllerTest
  */
-class AbstractGatewayControllerTest extends \PHPUnit_Framework_TestCase
+class AbstractGatewayControllerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

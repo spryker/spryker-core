@@ -68,7 +68,7 @@ class DiscountsTable extends AbstractTable
             self::TYPE_COL_PERIOD => self::TABLE_COL_PERIOD,
             SpyDiscountTableMap::COL_IS_ACTIVE => 'Status',
             SpyDiscountTableMap::COL_IS_EXCLUSIVE => 'Exclusive',
-            self::TABLE_COL_ACTIONS => self::TABLE_COL_ACTIONS
+            self::TABLE_COL_ACTIONS => self::TABLE_COL_ACTIONS,
         ]);
 
         $config->setSearchable([
@@ -167,7 +167,7 @@ class DiscountsTable extends AbstractTable
         $editDiscountUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount()
+                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
             ]
         );
 
@@ -184,7 +184,7 @@ class DiscountsTable extends AbstractTable
         $viewDiscountUrl = Url::generate(
             '/discount/index/view',
             [
-                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount()
+                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
             ]
         );
 
@@ -229,7 +229,7 @@ class DiscountsTable extends AbstractTable
             [
                 self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 self::URL_PARAM_VISIBILITY => $visibility,
-                self::URL_PARAM_REDIRECT_URL => '/discount/index/list'
+                self::URL_PARAM_REDIRECT_URL => '/discount/index/list',
             ]
         );
 

@@ -43,7 +43,7 @@ class Guzzle extends AbstractHttpAdapter
     protected function buildRequest($data)
     {
         $headers = [
-            'Content-Type' => Constants::REQUEST_HEADER_CONTENT_TYPE
+            'Content-Type' => Constants::REQUEST_HEADER_CONTENT_TYPE,
         ];
         $request = new Request('POST', $this->gatewayUrl, $headers, $data);
 

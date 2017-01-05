@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
@@ -37,7 +38,7 @@ class ViewController extends AbstractController
         $addresses = $customerTransfer->getAddresses()->toArray();
         $customerArray = $customerTransfer->toArray();
 
-        if ($addresses[AddressesTransfer::ADDRESSES] instanceof \ArrayObject && $addresses[AddressesTransfer::ADDRESSES]->count() < 1) {
+        if ($addresses[AddressesTransfer::ADDRESSES] instanceof ArrayObject && $addresses[AddressesTransfer::ADDRESSES]->count() < 1) {
             $addresses = [];
         }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -86,7 +87,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return void
      */
-    protected function setCalculatedProductOptionCalculatedDiscounts(\ArrayObject $items)
+    protected function setCalculatedProductOptionCalculatedDiscounts(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $totalDiscountUnitGrossAmount = $this->getProductOptionGrossUnitTotalAmount($itemTransfer->getProductOptions());
@@ -121,7 +122,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return int
      */
-    protected function getProductOptionGrossUnitTotalAmount(\ArrayObject $productOptions)
+    protected function getProductOptionGrossUnitTotalAmount(ArrayObject $productOptions)
     {
         $totalDiscountUnitGrossAmount = 0;
         $totalUnitGrossAmount = 0;
@@ -146,7 +147,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return int
      */
-    protected function getProductOptionGrossSumTotalAmount(\ArrayObject $productOptions)
+    protected function getProductOptionGrossSumTotalAmount(ArrayObject $productOptions)
     {
         $totalDiscountSumGrossAmount = 0;
         $totalSumAmount = 0;
@@ -171,7 +172,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return int
      */
-    protected function getCalculatedDiscountsUnitGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountsUnitGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalDiscountUnitGrossAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
@@ -186,7 +187,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return void
      */
-    protected function setCalculatedDiscountsSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function setCalculatedDiscountsSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $calculatedDiscountTransfer->setSumGrossAmount(
@@ -247,7 +248,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return int
      */
-    protected function getCalculatedDiscountSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalSumGrossDiscountAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
@@ -262,7 +263,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return int
      */
-    protected function getCalculatedDiscountUnitGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountUnitGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalUnitGrossDiscountAmount = 0;
         $appliedDiscounts = [];
@@ -283,7 +284,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return void
      */
-    protected function addProductOptionWithDiscountsGrossPriceAmounts(\ArrayObject $items)
+    protected function addProductOptionWithDiscountsGrossPriceAmounts(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
 
@@ -327,7 +328,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface, Calculat
      *
      * @return void
      */
-    protected function addProductOptionWithDiscountsGrossPriceAmountDefaults(\ArrayObject $items)
+    protected function addProductOptionWithDiscountsGrossPriceAmountDefaults(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
             $this->setItemDiscountDefaults($itemTransfer);

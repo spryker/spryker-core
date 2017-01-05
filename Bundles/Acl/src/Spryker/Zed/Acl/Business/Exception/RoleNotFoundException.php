@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class RoleNotFoundException extends \Exception
+use Exception;
+
+class RoleNotFoundException extends Exception
 {
 }

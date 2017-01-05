@@ -33,8 +33,8 @@ class ProductOptionCreatePage
                     'value_translation_key' => 'option_value_2_translation_key',
                     'value_sku' => 'option_value_2_sku_',
                     'value_price' => '12.34',
-                ]
-            ]
+                ],
+            ],
         ],
     ];
 

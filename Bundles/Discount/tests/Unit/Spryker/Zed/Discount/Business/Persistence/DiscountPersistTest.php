@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
@@ -29,7 +30,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Persistence
  * @group DiscountPersistTest
  */
-class DiscountPersistTest extends \PHPUnit_Framework_TestCase
+class DiscountPersistTest extends PHPUnit_Framework_TestCase
 {
 
     /**

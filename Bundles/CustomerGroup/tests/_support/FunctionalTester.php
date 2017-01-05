@@ -1,6 +1,8 @@
 <?php
 namespace CustomerGroup;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace CustomerGroup;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends \Codeception\Actor
+class FunctionalTester extends Actor
 {
 
     use _generated\FunctionalTesterActions;

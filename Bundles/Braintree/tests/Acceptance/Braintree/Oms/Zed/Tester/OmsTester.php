@@ -10,6 +10,7 @@ namespace Acceptance\Braintree\Oms\Zed\Tester;
 use Acceptance\Sales\Order\Zed\PageObject\SalesDetailPage;
 use Acceptance\Sales\Order\Zed\PageObject\SalesListPage;
 use Braintree\ZedAcceptanceTester;
+use DateInterval;
 
 class OmsTester extends ZedAcceptanceTester
 {
@@ -86,7 +87,7 @@ class OmsTester extends ZedAcceptanceTester
     {
         $rowPosition = 1;
         $idSalesOrderItem = $this->grabValueFrom(SalesDetailPage::getIdSalesOrderItemSelector($rowPosition));
-        $this->moveItemAfterTimeOut($idSalesOrderItem, \DateInterval::createFromDateString($timeout));
+        $this->moveItemAfterTimeOut($idSalesOrderItem, DateInterval::createFromDateString($timeout));
         $this->checkTimeout();
         $this->reloadPage();
     }

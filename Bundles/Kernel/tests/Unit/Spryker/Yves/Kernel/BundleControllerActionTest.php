@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Kernel\BundleControllerAction;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Yves\Kernel\BundleControllerAction;
  * @group Kernel
  * @group BundleControllerActionTest
  */
-class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
+class BundleControllerActionTest extends PHPUnit_Framework_TestCase
 {
 
     /**

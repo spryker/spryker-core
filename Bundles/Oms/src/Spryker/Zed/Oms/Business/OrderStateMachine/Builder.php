@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use LogicException;
+use SimpleXMLElement;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
@@ -181,7 +183,7 @@ class Builder implements BuilderInterface
      */
     protected function loadXml($xml)
     {
-        return new \SimpleXMLElement($xml);
+        return new SimpleXMLElement($xml);
     }
 
     /**
@@ -341,7 +343,7 @@ class Builder implements BuilderInterface
                     $targetName = (string)$xmlTransition->target;
 
                     if (!isset($stateToProcessMap[$targetName])) {
-                        throw new \LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
+                        throw new LogicException('Target: "' . $targetName . '" does not exist from source: "' . $sourceName . '"');
                     }
                     $targetProcess = $stateToProcessMap[$targetName];
                     $targetState = $targetProcess->getState($targetName);
@@ -352,7 +354,7 @@ class Builder implements BuilderInterface
                         $eventId = (string)$xmlTransition->event;
 
                         if (!isset($eventMap[$eventId])) {
-                            throw new \LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
+                            throw new LogicException('Event: "' . $eventId . '" does not exist from source: "' . $sourceName . '"');
                         }
 
                         $event = $eventMap[$eventId];
@@ -372,7 +374,7 @@ class Builder implements BuilderInterface
      *
      * @return string
      */
-    protected function getAttributeString(\SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {
         $string = (string)$xmlElement->attributes()[$attributeName];
         $string = ($string === '') ? null : $string;
@@ -386,7 +388,7 @@ class Builder implements BuilderInterface
      *
      * @return bool
      */
-    protected function getAttributeBoolean(\SimpleXMLElement $xmlElement, $attributeName)
+    protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
     {
         return (string)$xmlElement->attributes()[$attributeName] === 'true';
     }

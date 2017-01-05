@@ -10,6 +10,7 @@
 
 namespace Spryker\Zed\Propel\Business\Builder;
 
+use Exception;
 use Propel\Generator\Builder\Om\TableMapBuilder as PropelTableMapBuilder;
 
 class TableMapBuilder extends PropelTableMapBuilder
@@ -47,7 +48,7 @@ class TableMapBuilder extends PropelTableMapBuilder
             return $matches[1];
         }
 
-        throw new \Exception('Could not extract bundle name!');
+        throw new Exception('Could not extract bundle name!');
     }
 
     /**

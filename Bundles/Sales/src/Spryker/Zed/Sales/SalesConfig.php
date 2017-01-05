@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales;
 
+use BadMethodCallException;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
@@ -87,7 +88,7 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function determineProcessForOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
     {
-        throw new \BadMethodCallException('You need to provide at least one state machine process for given method!');
+        throw new BadMethodCallException('You need to provide at least one state machine process for given method!');
     }
 
     /**

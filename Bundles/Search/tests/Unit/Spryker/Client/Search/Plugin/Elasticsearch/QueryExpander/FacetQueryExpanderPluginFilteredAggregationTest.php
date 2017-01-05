@@ -352,7 +352,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         $parameters = [
             'foo' => 'asdf',
             'bar' => 456,
-            'baz' => 'c1'
+            'baz' => 'c1',
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];

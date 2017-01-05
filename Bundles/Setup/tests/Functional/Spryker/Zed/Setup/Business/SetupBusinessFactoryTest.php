@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Setup\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Setup\Business\SetupBusinessFactory;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Setup\Business\SetupBusinessFactory;
  * @group Business
  * @group SetupBusinessFactoryTest
  */
-class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class SetupBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

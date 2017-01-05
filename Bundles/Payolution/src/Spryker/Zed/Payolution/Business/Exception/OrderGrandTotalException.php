@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payolution\Business\Exception;
 
-class OrderGrandTotalException extends \Exception
+use Exception;
+
+class OrderGrandTotalException extends Exception
 {
 }

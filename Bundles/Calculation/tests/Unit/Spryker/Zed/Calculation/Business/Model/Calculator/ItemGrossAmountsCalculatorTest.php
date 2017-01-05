@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
  * @group Calculator
  * @group ItemGrossAmountsCalculatorTest
  */
-class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
+class ItemGrossAmountsCalculatorTest extends PHPUnit_Framework_TestCase
 {
 
     const UNIT_GROSS_PRICE = 100;

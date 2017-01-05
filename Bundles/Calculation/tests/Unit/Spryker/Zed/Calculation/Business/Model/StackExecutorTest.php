@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Calculation\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Calculation\Business\Model\StackExecutor;
  * @group Model
  * @group StackExecutorTest
  */
-class StackExecutorTest extends \PHPUnit_Framework_TestCase
+class StackExecutorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

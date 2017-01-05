@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMeth
  * @group MethodTagBuilder
  * @group GeneratedInterfaceMethodTagBuilderTest
  */
-class GeneratedInterfaceMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
+class GeneratedInterfaceMethodTagBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

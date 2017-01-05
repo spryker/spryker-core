@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class RoleNameExistsException extends \Exception
+use Exception;
+
+class RoleNameExistsException extends Exception
 {
 }

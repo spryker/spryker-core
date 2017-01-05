@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Price\Business\Exception;
 
-class UndefinedPriceTypeException extends \Exception
+use Exception;
+
+class UndefinedPriceTypeException extends Exception
 {
 }

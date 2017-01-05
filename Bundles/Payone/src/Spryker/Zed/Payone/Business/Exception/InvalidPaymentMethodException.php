@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payone\Business\Exception;
 
-class InvalidPaymentMethodException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class InvalidPaymentMethodException extends InvalidArgumentException
 {
 }

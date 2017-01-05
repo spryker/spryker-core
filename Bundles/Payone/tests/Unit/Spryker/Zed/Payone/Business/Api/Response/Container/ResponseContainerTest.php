@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payone\Business\Api\Response\Container;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
@@ -24,7 +25,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
  * @group Container
  * @group ResponseContainerTest
  */
-class ResponseContainerTest extends \PHPUnit_Framework_TestCase
+class ResponseContainerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

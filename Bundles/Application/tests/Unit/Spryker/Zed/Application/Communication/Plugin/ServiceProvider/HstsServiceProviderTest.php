@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ZedHstsServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
  * @group ServiceProvider
  * @group HstsServiceProviderTest
  */
-class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
+class HstsServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -62,7 +63,7 @@ class HstsServiceProviderTest extends \PHPUnit_Framework_TestCase
         $hstsConfig = [
             'max_age' => 31536000,
             'include_sub_domains' => true,
-            'preload' => true
+            'preload' => true,
         ];
         $hstsString = 'max-age=31536000; includeSubDomains; preload';
 

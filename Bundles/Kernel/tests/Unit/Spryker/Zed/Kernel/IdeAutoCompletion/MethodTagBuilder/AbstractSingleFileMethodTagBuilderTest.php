@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
+use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\SingleFileMethodTagBuilder;
 
 /**
@@ -18,7 +19,7 @@ use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\SingleFi
  * @group MethodTagBuilder
  * @group AbstractSingleFileMethodTagBuilderTest
  */
-class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
+class AbstractSingleFileMethodTagBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

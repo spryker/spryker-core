@@ -35,7 +35,7 @@ class OperatorProvider
             $this->createLessEqual(),
             $this->createGreater(),
             $this->createGreaterEqual(),
-            $this->createNotEqual()
+            $this->createNotEqual(),
         ];
     }
 

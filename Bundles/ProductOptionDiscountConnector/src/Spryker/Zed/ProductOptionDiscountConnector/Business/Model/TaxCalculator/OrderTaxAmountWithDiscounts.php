@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
@@ -62,7 +63,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
      *
      * @return int
      */
-    protected function sumExpenseTax(\ArrayObject $expenses)
+    protected function sumExpenseTax(ArrayObject $expenses)
     {
         $totalTaxAmount = 0;
         foreach ($expenses as $expenseTransfer) {
@@ -77,7 +78,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface, Cal
      *
      * @return int
      */
-    protected function sumItemTax(\ArrayObject $items)
+    protected function sumItemTax(ArrayObject $items)
     {
         $totalTaxAmount = 0;
         foreach ($items as $itemTransfer) {

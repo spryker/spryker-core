@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payolution\Business\Exception;
 
-class PaymentMethodMapperMethodNotAvailableException extends \ErrorException
+use ErrorException;
+
+class PaymentMethodMapperMethodNotAvailableException extends ErrorException
 {
 }

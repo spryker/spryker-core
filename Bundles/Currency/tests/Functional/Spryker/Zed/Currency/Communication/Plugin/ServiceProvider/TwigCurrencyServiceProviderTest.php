@@ -11,6 +11,8 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 /**
  * @group Functional
@@ -107,7 +109,7 @@ class TwigCurrencyServiceProviderTest extends PHPUnit_Framework_TestCase
         if (!static::$application) {
             $application = new Application();
             $application['twig'] = function () {
-                return new \Twig_Environment(new \Twig_Loader_Filesystem());
+                return new Twig_Environment(new Twig_Loader_Filesystem());
             };
 
             static::$application = $application;

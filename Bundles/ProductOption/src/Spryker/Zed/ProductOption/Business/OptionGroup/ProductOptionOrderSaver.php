@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -82,7 +83,7 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      */
     protected function saveOptions(ItemTransfer $itemTransfer)
     {
-        $expandedProductOptions = new \ArrayObject();
+        $expandedProductOptions = new ArrayObject();
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
 
             $expandedProductOptionTransfer = $this->cloneOption($productOptionTransfer);

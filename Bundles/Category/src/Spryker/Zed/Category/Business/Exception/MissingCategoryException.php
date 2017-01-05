@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Category\Business\Exception;
 
-class MissingCategoryException extends \Exception
+use Exception;
+
+class MissingCategoryException extends Exception
 {
 }

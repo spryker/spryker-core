@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\ZedRequest\Plugin\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Yves\ZedRequest\Plugin\ServiceProvider\ZedRequestLogServiceProvider;
@@ -20,7 +21,7 @@ use Spryker\Yves\ZedRequest\Plugin\ServiceProvider\ZedRequestLogServiceProvider;
  * @group ServiceProvider
  * @group ZedRequestLogServiceProviderTest
  */
-class ZedRequestLogServiceProviderTest extends \PHPUnit_Framework_TestCase
+class ZedRequestLogServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

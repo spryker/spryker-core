@@ -9,6 +9,7 @@ namespace Unit\Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
@@ -25,7 +26,7 @@ use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
  * @group ResultFormatter
  * @group AbstractResultFormatterPluginTest
  */
-abstract class AbstractResultFormatterPluginTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractResultFormatterPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

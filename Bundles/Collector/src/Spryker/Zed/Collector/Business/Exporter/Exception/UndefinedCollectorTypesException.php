@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Exception;
 
-class UndefinedCollectorTypesException extends \RuntimeException
+use RuntimeException;
+
+class UndefinedCollectorTypesException extends RuntimeException
 {
 
     /**

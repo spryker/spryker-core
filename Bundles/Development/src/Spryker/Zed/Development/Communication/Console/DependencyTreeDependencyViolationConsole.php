@@ -27,8 +27,8 @@ class DependencyTreeDependencyViolationConsole extends Console
         parent::configure();
 
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+            ->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Find dependency violations in the dependency tree (Spryker core dev only).');
     }
 

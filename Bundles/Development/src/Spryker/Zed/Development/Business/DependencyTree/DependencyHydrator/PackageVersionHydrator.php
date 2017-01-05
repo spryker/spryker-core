@@ -50,8 +50,8 @@ class PackageVersionHydrator implements DependencyHydratorInterface
         }
 
         foreach ($this->installedPackages as $installedPackage) {
-            if ($installedPackage[self::NAME] === $dependency[DependencyTree::META_COMPOSER_NAME]) {
-                return $installedPackage[self::VERSION];
+            if ($installedPackage[static::NAME] === $dependency[DependencyTree::META_COMPOSER_NAME]) {
+                return $installedPackage[static::VERSION];
             }
         }
     }

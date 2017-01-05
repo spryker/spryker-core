@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Exception;
 
-class ProductConcreteExistsException extends \Exception
+use Exception;
+
+class ProductConcreteExistsException extends Exception
 {
 }

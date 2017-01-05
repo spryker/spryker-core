@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\BundleProxy;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithMatcher;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
@@ -18,7 +19,7 @@ use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
  * @group Kernel
  * @group BundleProxyTest
  */
-class BundleProxyTest extends \PHPUnit_Framework_TestCase
+class BundleProxyTest extends PHPUnit_Framework_TestCase
 {
 
     /**

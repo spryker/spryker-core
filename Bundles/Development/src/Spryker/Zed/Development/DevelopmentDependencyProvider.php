@@ -11,6 +11,8 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Finder\Finder;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -67,7 +69,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function createTwigEnvironment()
     {
-        return new \Twig_Environment();
+        return new Twig_Environment();
     }
 
     /**
@@ -75,7 +77,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function createTwigLoaderFilesystem()
     {
-        return new \Twig_Loader_Filesystem();
+        return new Twig_Loader_Filesystem();
     }
 
 }

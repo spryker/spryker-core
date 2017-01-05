@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class OrderDiscounts implements OrderAmountAggregatorInterface
@@ -31,7 +32,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getOrderExpenseCalculatedDiscounts(
         OrderTransfer $orderTransfer,
-        \ArrayObject $orderCalculatedDiscounts
+        ArrayObject $orderCalculatedDiscounts
     ) {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             $orderCalculatedDiscounts = $this->getSumOfCalculatedDiscounts(
@@ -51,7 +52,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getItemCalculatedDiscounts(
         OrderTransfer $orderTransfer,
-        \ArrayObject $orderCalculatedDiscounts
+        ArrayObject $orderCalculatedDiscounts
     ) {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $orderCalculatedDiscounts = $this->getSumOfCalculatedDiscounts(
@@ -69,7 +70,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
-    public function getSumOfCalculatedDiscounts(\ArrayObject $orderCalculatedDiscounts, \ArrayObject $calculatedDiscounts)
+    public function getSumOfCalculatedDiscounts(ArrayObject $orderCalculatedDiscounts, ArrayObject $calculatedDiscounts)
     {
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
             $displayName = $calculatedDiscountTransfer->getDisplayName();
@@ -96,7 +97,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getOrderCalculatedDiscounts(OrderTransfer $orderTransfer)
     {
-        $orderCalculatedDiscounts = new \ArrayObject();
+        $orderCalculatedDiscounts = new ArrayObject();
         $orderCalculatedDiscounts = $this->getItemCalculatedDiscounts($orderTransfer, $orderCalculatedDiscounts);
         $orderCalculatedDiscounts = $this->getOrderExpenseCalculatedDiscounts($orderTransfer, $orderCalculatedDiscounts);
 

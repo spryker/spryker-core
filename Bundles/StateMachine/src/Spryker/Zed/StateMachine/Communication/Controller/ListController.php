@@ -30,7 +30,7 @@ class ListController extends AbstractController
         }
 
         return $this->viewResponse([
-            'stateMachines' => $stateMachines
+            'stateMachines' => $stateMachines,
         ]);
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -62,7 +63,7 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
      */
     protected function hydrateOrderExpenseTransfer(ObjectCollection $salesOrderExpenses, OrderTransfer $orderTransfer)
     {
-        $orderTransfer->setExpenses(new \ArrayObject());
+        $orderTransfer->setExpenses(new ArrayObject());
         foreach ($salesOrderExpenses as $salesOrderExpenseEntity) {
             $orderExpenseTransfer = new ExpenseTransfer();
             $orderExpenseTransfer->fromArray($salesOrderExpenseEntity->toArray(), true);

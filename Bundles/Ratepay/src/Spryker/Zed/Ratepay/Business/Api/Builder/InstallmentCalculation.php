@@ -31,12 +31,12 @@ class InstallmentCalculation extends AbstractBuilder implements BuilderInterface
 
         if ($this->requestTransfer->getInstallmentCalculation()->getSubType() == self::SUBTYPE_RATE) {
             $return['calculation-rate'] = [
-                'rate' => $this->requestTransfer->getInstallmentCalculation()->getCalculationRate()
+                'rate' => $this->requestTransfer->getInstallmentCalculation()->getCalculationRate(),
             ];
         }
         if ($this->requestTransfer->getInstallmentCalculation()->getSubType() == self::SUBTYPE_TIME) {
             $return['calculation-time'] = [
-                'month' => $this->requestTransfer->getInstallmentCalculation()->getMonth()
+                'month' => $this->requestTransfer->getInstallmentCalculation()->getMonth(),
             ];
         }
 

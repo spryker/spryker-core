@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Exception;
 
-class MissingTemplateException extends \Exception
+use Exception;
+
+class MissingTemplateException extends Exception
 {
 }

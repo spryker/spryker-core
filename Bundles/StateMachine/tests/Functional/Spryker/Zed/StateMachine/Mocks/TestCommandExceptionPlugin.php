@@ -6,6 +6,7 @@
 
 namespace Functional\Spryker\Zed\StateMachine\Mocks;
 
+use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 class TestCommandExceptionPlugin extends TestCommandPlugin
@@ -30,7 +31,7 @@ class TestCommandExceptionPlugin extends TestCommandPlugin
      */
     protected function throwTestException()
     {
-        throw new \Exception('Sry, something went wrong');
+        throw new Exception('Sry, something went wrong');
     }
 
 }

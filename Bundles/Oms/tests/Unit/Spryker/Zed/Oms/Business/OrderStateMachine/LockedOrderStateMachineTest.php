@@ -7,10 +7,14 @@
 
 namespace Unit\Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use DateTime;
+use Exception;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Exception\PropelException;
+use ReflectionMethod;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
@@ -26,7 +30,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  * @group OrderStateMachine
  * @group LockedOrderStateMachineTest
  */
-class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
+class LockedOrderStateMachineTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -140,7 +144,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $this->stateMachineMock->expects($this->once())
             ->method($methodToTest)
-            ->willThrowException(new \Exception('Something bad happened'));
+            ->willThrowException(new Exception('Something bad happened'));
 
         $this->expectTriggerRelease($expectedIdentifier);
 
@@ -174,7 +178,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $lockedStateMachine = $this->createLockedStateMachine();
 
-        $generateIdentifierMethod = new \ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
+        $generateIdentifierMethod = new ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
         $generateIdentifierMethod->setAccessible(true);
 
         $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList1));
@@ -206,7 +210,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $stateMachineLock->expects($this->once())
             ->method('setExpires')
-            ->with($this->isInstanceOf(\DateTime::class));
+            ->with($this->isInstanceOf(DateTime::class));
 
         $stateMachineLock->expects($this->once())
             ->method('save')
@@ -232,7 +236,7 @@ class LockedOrderStateMachineTest extends \PHPUnit_Framework_TestCase
 
         $stateMachineLock->expects($this->once())
             ->method('setExpires')
-            ->with($this->isInstanceOf(\DateTime::class));
+            ->with($this->isInstanceOf(DateTime::class));
 
         $stateMachineLock->expects($this->once())
             ->method('save')

@@ -7,9 +7,11 @@
 
 namespace Spryker\Shared\Session\Business\Handler;
 
+use Couchbase;
+use SessionHandlerInterface;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
-class SessionHandlerCouchbase implements \SessionHandlerInterface
+class SessionHandlerCouchbase implements SessionHandlerInterface
 {
 
     const METRIC_SESSION_DELETE_TIME = 'Couchbase/Session_delete_time';
@@ -98,7 +100,7 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
-        $this->connection = new \Couchbase(
+        $this->connection = new Couchbase(
             $this->hosts,
             $this->user,
             $this->password,

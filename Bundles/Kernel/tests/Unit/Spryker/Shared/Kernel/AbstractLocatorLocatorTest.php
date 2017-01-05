@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
@@ -16,7 +17,7 @@ use Unit\Spryker\Shared\Kernel\Fixtures\LocatorLocator;
  * @group Kernel
  * @group AbstractLocatorLocatorTest
  */
-class AbstractLocatorLocatorTest extends \PHPUnit_Framework_TestCase
+class AbstractLocatorLocatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

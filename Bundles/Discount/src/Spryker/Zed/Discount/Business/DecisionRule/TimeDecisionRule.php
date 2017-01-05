@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Business\DecisionRule;
 
+use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -79,7 +80,7 @@ class TimeDecisionRule implements DecisionRuleInterface
      */
     protected function getCurrentDateTime()
     {
-        return new \DateTime();
+        return new DateTime();
     }
 
 }

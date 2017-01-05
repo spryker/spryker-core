@@ -7,9 +7,11 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\Distributor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 
 /**
@@ -21,7 +23,7 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
  * @group Distributor
  * @group DistributorTest
  */
-class DistributorTest extends \PHPUnit_Framework_TestCase
+class DistributorTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -32,13 +34,13 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $distributor = $this->createDistributor();
         $discountableObjects = $this->createDiscountableObjects([
             [
-                'unit_gross_price' => 10
+                'unit_gross_price' => 10,
             ],
             [
-                'unit_gross_price' => 10
+                'unit_gross_price' => 10,
             ],
             [
-                'unit_gross_price' => 10
+                'unit_gross_price' => 10,
             ],
         ]);
 
@@ -68,13 +70,13 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
 
         $discountableObjects = $this->createDiscountableObjects([
             [
-                'unit_gross_price' => -10
+                'unit_gross_price' => -10,
             ],
             [
-                'unit_gross_price' => -10
+                'unit_gross_price' => -10,
             ],
             [
-                'unit_gross_price' => -10
+                'unit_gross_price' => -10,
             ],
         ]);
 
@@ -103,7 +105,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
 
         $discountableObjects = $this->createDiscountableObjects([
             [
-                'unit_gross_price' => 10
+                'unit_gross_price' => 10,
             ],
         ]);
 
@@ -134,7 +136,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
 
         $discountableObjects = $this->createDiscountableObjects([
             [
-                'unit_gross_price' => 10
+                'unit_gross_price' => 10,
             ],
         ]);
 
@@ -172,7 +174,7 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $discountTransfer = $this->createDiscountTransfer(50);
         $collectedDiscountTransfer->setDiscount($discountTransfer);
-        $collectedDiscountTransfer->setDiscountableItems(new \ArrayObject($discountableObjects));
+        $collectedDiscountTransfer->setDiscountableItems(new ArrayObject($discountableObjects));
 
         $distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
 
@@ -236,12 +238,12 @@ class DistributorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createDiscountableObjects($items = [])
     {
-        $discountableObjects = new \ArrayObject();
+        $discountableObjects = new ArrayObject();
         foreach ($items as $item) {
             $discountableItemTransfer = new DiscountableItemTransfer();
             $discountableItemTransfer->setUnitGrossPrice($item['unit_gross_price']);
             $discountableItemTransfer->setQuantity(1);
-            $discountableItemTransfer->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+            $discountableItemTransfer->setOriginalItemCalculatedDiscounts(new ArrayObject());
             $discountableObjects->append($discountableItemTransfer);
         }
 

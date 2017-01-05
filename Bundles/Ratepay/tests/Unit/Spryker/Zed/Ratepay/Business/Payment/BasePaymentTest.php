@@ -124,7 +124,7 @@ class BasePaymentTest extends Test
             ->setConstructorArgs([
                 $executionAdapter,
                 $converterFactory,
-                $this->mockRatepayQueryContainer()
+                $this->mockRatepayQueryContainer(),
             ])
             ->setMethods(array_merge(['logInfo'], $additionalMethods))
             ->getMock();

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
+use Exception;
 use Symfony\Component\Finder\SplFileInfo;
 
 class FileInfoExtractor
@@ -52,7 +53,7 @@ class FileInfoExtractor
             return $layer;
         }
 
-        return self::LAYER;
+        return static::LAYER;
     }
 
     /**
@@ -85,7 +86,7 @@ class FileInfoExtractor
             return array_slice($pathParts, $testsDirectoryPosition + 2);
         }
 
-        throw new \Exception(sprintf('Could not extract class name parts from file "%s".', $fileInfo->getPathname()));
+        throw new Exception(sprintf('Could not extract class name parts from file "%s".', $fileInfo->getPathname()));
     }
 
 }

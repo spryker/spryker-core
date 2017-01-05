@@ -43,7 +43,7 @@ class ShoppingBasketItem extends AbstractBuilder implements BuilderInterface
             '@quantity' => $basketItem->getQuantity(),
             '@unit-price-gross' => $basketItem->getUnitPriceGross(),
             '@tax-rate' => $basketItem->getTaxRate(),
-            '#' => $basketItem->getItemName()
+            '#' => $basketItem->getItemName(),
         ];
         if ($basketItem->getDiscount() > 0) {
             $return['@discount'] = $basketItem->getDiscount() * self::ITEM_DISCOUNT_COEFFICIENT;

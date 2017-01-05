@@ -9,6 +9,7 @@ namespace Unit\Spryker\Yves\ZedRequest\Plugin;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
 
@@ -20,7 +21,7 @@ use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
  * @group Plugin
  * @group ZedResponseLogPluginTest
  */
-class ZedResponseLogPluginTest extends \PHPUnit_Framework_TestCase
+class ZedResponseLogPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Ratepay\Business\Expander\ProductExpander;
 use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
  * @group Expander
  * @group ProductExpanderTest
  */
-class ProductExpanderTest extends \PHPUnit_Framework_TestCase
+class ProductExpanderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

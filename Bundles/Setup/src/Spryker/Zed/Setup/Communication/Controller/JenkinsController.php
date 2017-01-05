@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
+use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Library\DataDirectory;
 use Spryker\Shared\Library\Environment;
@@ -204,7 +205,7 @@ $command</command>";
 
         foreach ($roles as $role) {
             if (!in_array($role, $this->allowedRoles)) {
-                throw new \ErrorException($role . ' is not in the list of allowed roles! Cannot continue configuration of jenkins!');
+                throw new ErrorException($role . ' is not in the list of allowed roles! Cannot continue configuration of jenkins!');
             }
         }
 

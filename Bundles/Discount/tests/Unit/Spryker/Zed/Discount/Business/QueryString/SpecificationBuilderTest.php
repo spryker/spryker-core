@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -27,7 +28,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
  * @group QueryString
  * @group SpecificationBuilderTest
  */
-class SpecificationBuilderTest extends \PHPUnit_Framework_TestCase
+class SpecificationBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
