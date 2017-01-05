@@ -309,6 +309,37 @@ SCRIPT;
 
             return \$this;
         }";
+        } elseif ($col->isSetType()) {
+            $this->declareClasses(
+                'Propel\Common\Util\SetColumnConverter',
+                'Propel\Common\Exception\SetColumnConverterException'
+            );
+            $script .= "
+        \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
+        try {
+            \${$variableName} = SetColumnConverter::convertToInt(\${$variableName}, \$valueSet);
+        } catch (SetColumnConverterException \$e) {
+            throw new PropelException(sprintf('Value \"%s\" is not accepted in this set column', \$e->getValue()), \$e->getCode(), \$e);
+        }
+        if (null === \$comparison || \$comparison == Criteria::CONTAINS_ALL) {
+            if (\${$variableName} === '0') {
+                return \$this;
+            }
+            \$comparison = Criteria::BINARY_ALL;
+        } elseif (\$comparison == Criteria::CONTAINS_SOME || \$comparison == Criteria::IN) {
+            if (\${$variableName} === '0') {
+                return \$this;
+            }
+            \$comparison = Criteria::BINARY_AND;
+        } elseif (\$comparison == Criteria::CONTAINS_NONE) {
+            \$key = \$this->getAliasedColName($qualifiedName);
+            if (\${$variableName} !== '0') {
+                \$this->add(\$key, \${$variableName}, Criteria::BINARY_NONE);
+            }
+            \$this->addOr(\$key, null, Criteria::ISNULL);
+            
+            return \$this;
+        }";
         } elseif ($col->getType() == PropelTypes::ENUM) {
             $script .= "
         \$valueSet = " . $this->getTableMapClassName() . "::getValueSet(" . $this->getColumnConstant($col) . ");
