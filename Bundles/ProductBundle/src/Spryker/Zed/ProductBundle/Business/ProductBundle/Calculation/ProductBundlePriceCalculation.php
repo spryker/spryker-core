@@ -162,6 +162,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     {
         $bundleItemTransfer = new ItemTransfer();
         $bundleItemTransfer->setBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
+        $bundleItemTransfer->setQuantity($orderItemEntity->getQuantity());
         $bundleItemTransfer->fromArray($orderItemEntity->getSalesOrderItemBundle()->toArray(), true);
 
         return $bundleItemTransfer;
