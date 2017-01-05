@@ -15,8 +15,6 @@
 
    `patch` requires 1, `minor` 2 and `major` 3 reviewers.
 
-- Recommended reviewers: @reviewer_usernames
-
 #### Feature Release Notes
 
 {These are necessary for more than a single bundle release, and are usually combined feature release notes.}
@@ -61,8 +59,8 @@ Def of done (by responsible developer):
 
 ##### Change log
 {Add here highlights of what are the important new things that come with this feature.} 
-- I added this.
-- I added this.
+- Xyz has been added.
+- Xyz has been added.
 
 -----------------------------------------
 
@@ -81,7 +79,7 @@ Def of done (by responsible developer):
 Improvements
 
 {Some explanation of what has been improved.}
-- I added this.
+- Xyz has been added.
 
 -----------------------------------------
 
@@ -101,4 +99,4 @@ Def of done (by responsible developer):
 Bugfixes
 
 {Some explanation of what was wrong.}
-- I fixed this.
+- Xyz has been fixed.
