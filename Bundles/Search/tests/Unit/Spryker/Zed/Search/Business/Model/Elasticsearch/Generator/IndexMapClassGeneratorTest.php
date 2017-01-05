@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch\Generator;
+namespace Unit\Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use PHPUnit_Framework_TestCase;
@@ -19,7 +19,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
  * @group Search
  * @group Business
  * @group Model
- * @group Elastisearch
+ * @group Elasticsearch
  * @group Generator
  * @group IndexMapClassGeneratorTest
  */
