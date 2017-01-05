@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Catalog;
+namespace Spryker\Client\Catalog\Plugin\Elasticsearch\Query;
 
-interface CatalogConstants
+class SuggestionQueryPlugin extends CatalogSearchQueryPlugin
 {
 }

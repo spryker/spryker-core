@@ -24,7 +24,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      */
     public function getName()
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     /**

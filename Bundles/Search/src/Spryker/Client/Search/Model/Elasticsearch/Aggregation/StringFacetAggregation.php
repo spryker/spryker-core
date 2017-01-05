@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-class StringFacetAggregation extends AbstractFacetAggregation
+class StringFacetAggregation extends AbstractTermsFacetAggregation
 {
 
     const VALUE_SUFFIX = '-value';
@@ -45,6 +45,8 @@ class StringFacetAggregation extends AbstractFacetAggregation
             ->aggregationBuilder
             ->createTermsAggregation($fieldName . self::VALUE_SUFFIX)
             ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_VALUE));
+
+        $this->setTermsAggregationSize($facetValueAgg, $this->facetConfigTransfer->getSize());
 
         $facetNameAgg = $this
             ->createFacetNameAggregation($fieldName)

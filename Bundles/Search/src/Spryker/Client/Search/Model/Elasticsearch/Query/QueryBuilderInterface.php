@@ -49,4 +49,14 @@ interface QueryBuilderInterface
      */
     public function createBoolQuery();
 
+    /**
+     * @return \Elastica\Query\Match
+     */
+    public function createMatchQuery();
+
+    /**
+     * @return \Elastica\Query\MatchAll
+     */
+    public function createMatchAllQuery();
+
 }

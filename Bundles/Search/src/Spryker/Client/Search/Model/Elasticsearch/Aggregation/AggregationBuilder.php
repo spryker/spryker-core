@@ -11,6 +11,7 @@ use Elastica\Aggregation\Filter;
 use Elastica\Aggregation\GlobalAggregation;
 use Elastica\Aggregation\Stats;
 use Elastica\Aggregation\Terms;
+use Elastica\Aggregation\TopHits;
 
 class AggregationBuilder implements AggregationBuilderInterface
 {
@@ -53,6 +54,16 @@ class AggregationBuilder implements AggregationBuilderInterface
     public function createStatsAggregation($name)
     {
         return new Stats($name);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Elastica\Aggregation\TopHits
+     */
+    public function createTopHitsAggregation($name)
+    {
+        return new TopHits($name);
     }
 
 }

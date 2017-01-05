@@ -51,6 +51,7 @@ class CategoryCreateDataProvider
         $categoryTransfer->setIsActive(false);
         $categoryTransfer->setIsInMenu(true);
         $categoryTransfer->setIsClickable(true);
+        $categoryTransfer->setIsSearchable(true);
 
         $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setIsMain(false);
