@@ -40,8 +40,8 @@ Def of done (by responsible developer):
 
 ##### Change log
 {Add here highlights of what are the important new things that come with this feature}. 
-- I added this.
-- I added this.
+- Xyz has been added.
+- Xyz has been added.
 
 -----------------------------------------
 
