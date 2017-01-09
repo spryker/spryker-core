@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -338,12 +339,12 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesTransfers
+     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return void
      */
-    protected function createCmsPageLocalizedAttributes($cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
+    protected function createCmsPageLocalizedAttributes(ArrayObject $cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
     {
         foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
             $pageLocalizedAttributesEntity = new SpyCmsPageLocalizedAttributes();
@@ -356,12 +357,12 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesTransfers
+     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return void
      */
-    protected function updateCmsPageLocalizedAttributes($cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
+    protected function updateCmsPageLocalizedAttributes(ArrayObject $cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
     {
         foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
             $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesForPage($pageEntity, $localizedAttributesTransfer);
@@ -380,17 +381,18 @@ class PageManager implements PageManagerInterface
      */
     protected function getLocalizedAttributesForPage(SpyCmsPage $pageEntity, CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer)
     {
-        $fkLocale = $localizedAttributesTransfer
-            ->requireFkLocale()
-            ->getFkLocale();
-
         $cmsPageLocalizedAttributesQuery = $this->cmsQueryContainer
             ->queryCmsPageLocalizedAttributes()
-            ->filterByFkCmsPage($pageEntity->getIdCmsPage())
-            ->filterByFkLocale($fkLocale);
+            ->filterByFkCmsPage($pageEntity->getIdCmsPage());
 
         if ($localizedAttributesTransfer->getIdCmsPageLocalizedAttributes()) {
             $cmsPageLocalizedAttributesQuery->filterByIdCmsPageLocalizedAttributes($localizedAttributesTransfer->getIdCmsPageLocalizedAttributes());
+        } else {
+            $fkLocale = $localizedAttributesTransfer
+                ->requireFkLocale()
+                ->getFkLocale();
+
+            $cmsPageLocalizedAttributesQuery->filterByFkLocale($fkLocale);
         }
 
         return $cmsPageLocalizedAttributesQuery->findOneOrCreate();
