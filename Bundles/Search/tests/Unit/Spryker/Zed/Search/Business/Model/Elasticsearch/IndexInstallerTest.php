@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Search\Business\Model\Elastisearch;
+namespace Unit\Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Elastica\Client;
 use Elastica\Index;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
@@ -21,10 +22,10 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
  * @group Search
  * @group Business
  * @group Model
- * @group Elastisearch
+ * @group Elasticsearch
  * @group IndexInstallerTest
  */
-class IndexInstallerTest extends \PHPUnit_Framework_TestCase
+class IndexInstallerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

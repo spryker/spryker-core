@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Exception;
 
-class InvalidDataSetException extends \RuntimeException
+use RuntimeException;
+
+class InvalidDataSetException extends RuntimeException
 {
 }

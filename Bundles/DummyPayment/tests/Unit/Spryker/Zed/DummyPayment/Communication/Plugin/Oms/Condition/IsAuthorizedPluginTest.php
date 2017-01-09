@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlugin;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlug
  * @group Condition
  * @group IsAuthorizedPluginTest
  */
-class IsAuthorizedPluginTest extends \PHPUnit_Framework_TestCase
+class IsAuthorizedPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

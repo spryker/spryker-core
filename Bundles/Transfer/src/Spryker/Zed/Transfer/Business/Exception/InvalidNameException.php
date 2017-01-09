@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Exception;
 
-class InvalidNameException extends \Exception
+use Exception;
+
+class InvalidNameException extends Exception
 {
 }

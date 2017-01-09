@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -23,7 +24,7 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
  * @group QueryString
  * @group ValidatorTest
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

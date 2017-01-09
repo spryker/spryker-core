@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDiscountCalculator\DiscountTotalAmount;
 
 /**
@@ -24,7 +25,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\ProductOptionDisco
  * @group OrderAmountAggregator
  * @group DiscountTotalAmountTest
  */
-class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
+class DiscountTotalAmountTest extends PHPUnit_Framework_TestCase
 {
 
     /**

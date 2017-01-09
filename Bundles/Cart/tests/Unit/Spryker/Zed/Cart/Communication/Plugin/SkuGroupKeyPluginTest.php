@@ -9,6 +9,7 @@ namespace Unit\Spryker\Zed\Cart\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 
 /**
@@ -20,7 +21,7 @@ use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
  * @group Plugin
  * @group SkuGroupKeyPluginTest
  */
-class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
+class SkuGroupKeyPluginTest extends PHPUnit_Framework_TestCase
 {
 
     const SKU = 'sku';

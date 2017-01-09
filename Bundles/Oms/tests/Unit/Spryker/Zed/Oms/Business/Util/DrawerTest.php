@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Zed\Oms\Business\Util;
 
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
@@ -26,7 +28,7 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
  * @group Util
  * @group DrawerTest
  */
-class DrawerTest extends \PHPUnit_Framework_TestCase
+class DrawerTest extends PHPUnit_Framework_TestCase
 {
 
     const CONDITION_NAME = 'conditionName';
@@ -43,7 +45,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
         $reflectionProperty->setAccessible(true);
         $conditions = $reflectionProperty->getValue($drawer);
@@ -66,7 +68,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
         $reflectionProperty->setAccessible(true);
         $conditions = $reflectionProperty->getValue($drawer);
@@ -86,7 +88,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
         $reflectionProperty->setAccessible(true);
         $commands = $reflectionProperty->getValue($drawer);
@@ -109,7 +111,7 @@ class DrawerTest extends \PHPUnit_Framework_TestCase
             $this->getGraphMock(),
             $this->getOmsToUtilTextServiceMock()
         );
-        $reflection = new \ReflectionClass(Drawer::class);
+        $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
         $reflectionProperty->setAccessible(true);
         $commands = $reflectionProperty->getValue($drawer);

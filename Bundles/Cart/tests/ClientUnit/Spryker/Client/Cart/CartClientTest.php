@@ -9,6 +9,7 @@ namespace ClientUnit\Spryker\Client\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Session\QuoteSessionInterface;
 use Spryker\Client\Cart\Zed\CartStubInterface;
@@ -21,7 +22,7 @@ use Spryker\Client\Kernel\AbstractFactory;
  * @group Service
  * @group CartClient
  */
-class CartClientTest extends \PHPUnit_Framework_TestCase
+class CartClientTest extends PHPUnit_Framework_TestCase
 {
 
     /**

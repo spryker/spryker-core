@@ -9,11 +9,13 @@ namespace Unit\Spryker\Zed\Discount\Business\Voucher;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use stdClass;
 
 /**
  * @group Unit
@@ -24,7 +26,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Voucher
  * @group VoucherEngineTest
  */
-class VoucherEngineTest extends \PHPUnit_Framework_TestCase
+class VoucherEngineTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -167,7 +169,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
             ->willReturnSelf();
 
         $discountVoucherQueryMock->method('findOneByCode')
-            ->willReturn(new \stdClass());
+            ->willReturn(new stdClass());
 
         $discountVoucherContainerMock = $this->createDiscountQueryContainerMock();
         $discountVoucherContainerMock->method('queryDiscountVoucher')
@@ -221,7 +223,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['createDiscountVoucherEntity'])
             ->setConstructorArgs([
                 $discountConfigMock,
-                $discountQueryContainerMock
+                $discountQueryContainerMock,
             ])
             ->getMock();
 
@@ -300,7 +302,7 @@ class VoucherEngineTest extends \PHPUnit_Framework_TestCase
                 'orderByVoucherBatch',
                 'filterByFkDiscountVoucherPool',
                 'findOne',
-                'findOneByCode'
+                'findOneByCode',
             ])
             ->getMock();
     }

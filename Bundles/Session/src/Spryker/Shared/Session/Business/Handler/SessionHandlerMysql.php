@@ -7,11 +7,13 @@
 
 namespace Spryker\Shared\Session\Business\Handler;
 
+use PDO;
+use SessionHandlerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Environment;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
 
-class SessionHandlerMysql implements \SessionHandlerInterface
+class SessionHandlerMysql implements SessionHandlerInterface
 {
 
     const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
@@ -82,7 +84,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
 
         $databaseName = 'shared_data';
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $databaseName;
-        $this->connection = new \PDO($dsn, $this->user, $this->password);
+        $this->connection = new PDO($dsn, $this->user, $this->password);
 
         $this->initDb();
     }

@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\Library\Sanitize;
 
-class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
+use ArrayAccess;
+use Countable;
+use Iterator;
+
+class ArrayFilter implements Iterator, Countable, ArrayAccess
 {
 
     /**

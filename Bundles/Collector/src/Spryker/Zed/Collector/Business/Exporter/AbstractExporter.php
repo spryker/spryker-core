@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
@@ -128,7 +129,7 @@ abstract class AbstractExporter implements ExporterInterface
         }
 
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
-        $startTime = new \DateTime();
+        $startTime = new DateTime();
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
         $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
@@ -158,7 +159,7 @@ abstract class AbstractExporter implements ExporterInterface
      *
      * @return void
      */
-    protected function finishExport(BatchResultInterface $batchResult, $type, \DateTime $startTime)
+    protected function finishExport(BatchResultInterface $batchResult, $type, DateTime $startTime)
     {
         if (!$batchResult->isFailed()) {
             $this->marker->setLastExportMarkByTypeAndLocale(

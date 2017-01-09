@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceCartConnector\Business\Exception;
 
-class PriceMissingException extends \Exception
+use Exception;
+
+class PriceMissingException extends Exception
 {
 }

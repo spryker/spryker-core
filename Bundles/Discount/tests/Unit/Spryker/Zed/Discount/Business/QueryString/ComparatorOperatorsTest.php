@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
@@ -20,7 +21,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
  * @group QueryString
  * @group ComparatorOperatorsTest
  */
-class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
+class ComparatorOperatorsTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -120,7 +121,7 @@ class ComparatorOperatorsTest extends \PHPUnit_Framework_TestCase
             ->method('getAcceptedTypes')
             ->willReturn([
                 ComparatorOperators::TYPE_NUMBER,
-                ComparatorOperators::TYPE_STRING
+                ComparatorOperators::TYPE_STRING,
             ]);
         $equalComparatorMock->expects($this->once())
             ->method('getExpression')

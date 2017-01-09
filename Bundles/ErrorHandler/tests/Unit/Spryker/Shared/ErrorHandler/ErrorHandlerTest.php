@@ -7,6 +7,8 @@
 
 namespace Unit\Spryker\Shared\ErrorHandler;
 
+use Exception;
+use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
@@ -21,7 +23,7 @@ use Spryker\Shared\NewRelic\NewRelicApiInterface;
  * @group ErrorHandler
  * @group ErrorHandlerTest
  */
-class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
+class ErrorHandlerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -32,7 +34,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorLoggerMock->expects($this->exactly(2))->method('log');
 
-        $exception = new \Exception('Test exception');
+        $exception = new Exception('Test exception');
 
         $errorRendererMock = $this->getErrorRendererMock();
 
@@ -53,7 +55,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorLoggerMock->expects($this->exactly(2))->method('log');
 
-        $exception = new \Exception('Test exception');
+        $exception = new Exception('Test exception');
 
         $errorRendererMock = $this->getErrorRendererMock();
 
@@ -82,7 +84,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $errorHandlerMock->expects($this->once())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->once())->method('sendExitCode');
 
-        $errorHandlerMock->handleException(new \Exception);
+        $errorHandlerMock->handleException(new Exception);
     }
 
     /**
@@ -101,7 +103,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $errorHandlerMock->expects($this->once())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->never())->method('sendExitCode');
 
-        $errorHandlerMock->handleException(new \Exception, false);
+        $errorHandlerMock->handleException(new Exception, false);
     }
 
     /**

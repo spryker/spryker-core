@@ -184,7 +184,7 @@ class Context
      */
     public function dateTimeConvertTo($dateTime, $format = 'Y-m-d H:i:s')
     {
-        if (!($dateTime instanceof \DateTime)) {
+        if (!($dateTime instanceof DateTime)) {
             $dateTime = new DateTime($dateTime, new DateTimeZone(Store::getInstance()->getTimezone()));
         }
         $dateTime->setTimezone(new DateTimeZone($this->timezone));
@@ -202,7 +202,7 @@ class Context
      */
     public function dateTimeConvertFrom($dateTime, $format = 'Y-m-d H:i:s')
     {
-        if (!($dateTime instanceof \DateTime)) {
+        if (!($dateTime instanceof DateTime)) {
             $dateTime = new DateTime($dateTime, new DateTimeZone($this->timezone));
         }
         $dateTime->setTimezone(new DateTimeZone(Store::getInstance()->getTimezone()));
@@ -221,7 +221,7 @@ class Context
      */
     public function dateTimeConvertToFrom($contextFrom, $dateTime, $format = 'Y-m-d H:i:s')
     {
-        if (!($dateTime instanceof \DateTime)) {
+        if (!($dateTime instanceof DateTime)) {
             $dateTime = new DateTime($dateTime, new DateTimeZone(self::getInstance($contextFrom)->timezone));
         }
         $dateTime->setTimezone(new DateTimeZone($this->timezone));
@@ -240,7 +240,7 @@ class Context
      */
     public function dateTimeConvertFromTo($contextTo, $dateTime, $format = 'Y-m-d H:i:s')
     {
-        if (!($dateTime instanceof \DateTime)) {
+        if (!($dateTime instanceof DateTime)) {
             $dateTime = new DateTime($dateTime, new DateTimeZone($this->timezone));
         }
         $dateTime->setTimezone(new DateTimeZone(self::getInstance($contextTo)->timezone));

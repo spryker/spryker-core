@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollec
  * @group Cache
  * @group NavigationCacheBuilderTest
  */
-class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
+class NavigationCacheBuilderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

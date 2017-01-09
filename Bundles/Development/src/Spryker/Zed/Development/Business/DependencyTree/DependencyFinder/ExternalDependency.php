@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
+use PHP_CodeSniffer;
+use PHP_CodeSniffer_File;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -25,7 +27,7 @@ class ExternalDependency extends AbstractDependencyFinder
         if (!defined('STDIN')) {
             define('STDIN', fopen(__FILE__, 'r'));
         }
-        $file = new \PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new \PHP_CodeSniffer());
+        $file = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new PHP_CodeSniffer());
         $file->start($content);
         $tokens = $file->getTokens();
         $pointer = 0;

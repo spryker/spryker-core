@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Container;
@@ -22,7 +23,7 @@ use Unit\Spryker\Zed\Kernel\Fixtures\Factory;
  * @group Kernel
  * @group AbstractFactoryTest
  */
-class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
+class AbstractFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const CONTAINER_KEY = 'key';

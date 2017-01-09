@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Discount\Business\QueryString;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
  * @group QueryString
  * @group TokenizerTest
  */
-class TokenizerTest extends \PHPUnit_Framework_TestCase
+class TokenizerTest extends PHPUnit_Framework_TestCase
 {
 
     /**

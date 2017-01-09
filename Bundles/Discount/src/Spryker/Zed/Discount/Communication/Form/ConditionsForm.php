@@ -64,7 +64,7 @@ class ConditionsForm extends AbstractType
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [
-                        'type' => MetaProviderFactory::TYPE_DECISION_RULE
+                        'type' => MetaProviderFactory::TYPE_DECISION_RULE,
                     ]
                 )->build(),
             ],

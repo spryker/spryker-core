@@ -52,10 +52,10 @@ class ProductFormEdit extends ProductFormAdd
                 'read_only' => true,
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new SkuRegex([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new Callback([
                         'methods' => [
@@ -81,7 +81,7 @@ class ProductFormEdit extends ProductFormAdd
                                 }
                             },
                         ],
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU]
+                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                 ],
             ]);

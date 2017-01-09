@@ -99,7 +99,7 @@ class DateFormatter implements DateFormatterInterface
             return $this->context->dateTimeConvertTo($date, $this->context->dateFormat[$dateFormat]);
         }
 
-        if (!($date instanceof \DateTime)) {
+        if (!($date instanceof DateTime)) {
             $date = new DateTime($date, $timezone);
         } else {
             $date->setTimezone($timezone);

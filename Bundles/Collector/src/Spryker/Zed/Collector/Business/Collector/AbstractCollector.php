@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\Collector\Business\Collector;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use PDO;
+use Propel\Runtime\Formatter\StatementFormatter;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use Spryker\Shared\Gui\ProgressBar\ProgressBarBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
@@ -205,7 +208,7 @@ abstract class AbstractCollector
             ->withColumn('storage.key', CollectorConfig::COLLECTOR_STORAGE_KEY)
             ->setOffset($offset)
             ->setLimit($this->chunkSize)
-            ->setFormatter(\Propel\Runtime\Formatter\StatementFormatter::class);
+            ->setFormatter(StatementFormatter::class);
 
         $params = [];
         $sql = $deleteQuery->createSelectSql($params);
@@ -222,7 +225,7 @@ abstract class AbstractCollector
 
         $statement->execute($sqlParams);
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -291,8 +294,8 @@ abstract class AbstractCollector
         foreach ($baseParameters as $parameter) {
             $key = sprintf('%s.%s', $parameter['table'], $parameter['column']);
             $value = $parameter['value'];
-            if ($value instanceof \DateTime) {
-                $value = $value->format(\DateTime::ATOM);
+            if ($value instanceof DateTime) {
+                $value = $value->format(DateTime::ATOM);
             }
             $result[$key] = $value;
         }

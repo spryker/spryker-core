@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Checkout\Form;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\Form\FormFactory;
 use Spryker\Yves\Kernel\Container;
@@ -19,7 +20,7 @@ use Spryker\Yves\Kernel\Container;
  * @group Form
  * @group FormFactoryTest
  */
-class FormFactoryTest extends \PHPUnit_Framework_TestCase
+class FormFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const SUB_FORMS = 'forms';

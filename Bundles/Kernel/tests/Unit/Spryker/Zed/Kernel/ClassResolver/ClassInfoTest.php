@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\ClassResolver;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
  * @group ClassResolver
  * @group ClassInfoTest
  */
-class ClassInfoTest extends \PHPUnit_Framework_TestCase
+class ClassInfoTest extends PHPUnit_Framework_TestCase
 {
 
     /**

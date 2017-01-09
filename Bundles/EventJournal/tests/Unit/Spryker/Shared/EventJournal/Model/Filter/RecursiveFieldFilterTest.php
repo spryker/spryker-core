@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\EventJournal\Model\Filter;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\EventJournal\Model\Filter\RecursiveFieldFilter;
 
@@ -19,7 +20,7 @@ use Spryker\Shared\EventJournal\Model\Filter\RecursiveFieldFilter;
  * @group Filter
  * @group RecursiveFieldFilterTest
  */
-class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
+class RecursiveFieldFilterTest extends PHPUnit_Framework_TestCase
 {
 
     const FIELD_KEY = 'key';

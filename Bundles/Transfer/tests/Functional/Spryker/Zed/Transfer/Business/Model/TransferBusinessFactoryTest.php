@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
@@ -22,7 +23,7 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
  * @group Model
  * @group TransferBusinessFactoryTest
  */
-class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class TransferBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

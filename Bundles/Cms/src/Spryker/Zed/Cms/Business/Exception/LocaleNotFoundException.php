@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Cms\Business\Exception;
 
-class LocaleNotFoundException extends \Exception
+use Exception;
+
+class LocaleNotFoundException extends Exception
 {
 }

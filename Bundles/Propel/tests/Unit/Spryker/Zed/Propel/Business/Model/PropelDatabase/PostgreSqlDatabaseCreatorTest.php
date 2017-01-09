@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group PropelDatabase
  * @group PostgreSqlDatabaseCreatorTest
  */
-class PostgreSqlDatabaseCreatorTest extends \PHPUnit_Framework_TestCase
+class PostgreSqlDatabaseCreatorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Converter;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
@@ -25,7 +26,7 @@ use Spryker\Zed\Money\Business\MoneyFacade;
  * @group Converter
  * @group MoneyValueConverterTest
  */
-class MoneyValueConverterTest extends \PHPUnit_Framework_TestCase
+class MoneyValueConverterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

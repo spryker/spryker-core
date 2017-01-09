@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication;
 
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
@@ -25,7 +26,7 @@ use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlug
  * @group Communication
  * @group AbstractPluginTest
  */
-class AbstractPluginTest extends \PHPUnit_Framework_TestCase
+class AbstractPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

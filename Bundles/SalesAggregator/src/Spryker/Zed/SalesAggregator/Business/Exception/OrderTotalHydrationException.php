@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesAggregator\Business\Exception;
 
-class OrderTotalHydrationException extends \Exception
+use Exception;
+
+class OrderTotalHydrationException extends Exception
 {
 }

@@ -30,7 +30,7 @@ class LocatorClient extends AbstractDependencyFinder
         }
 
         foreach ($matches as $match) {
-            $toBundle = $match[self::BUNDLE];
+            $toBundle = $match[static::BUNDLE];
 
             if (preg_match('/->/', $toBundle)) {
                 $foundParts = explode('->', $toBundle);
@@ -40,7 +40,7 @@ class LocatorClient extends AbstractDependencyFinder
             $toBundle = ucfirst($toBundle);
             $foreignClassName = $this->getClassName($toBundle);
             $dependencyInformation = [
-                DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER,
+                DependencyTree::META_FOREIGN_LAYER => static::NO_LAYER,
                 DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName,
             ];
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);

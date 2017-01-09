@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Kernel\Locale;
 
-class LocaleNotFoundException extends \Exception
+use Exception;
+
+class LocaleNotFoundException extends Exception
 {
 }

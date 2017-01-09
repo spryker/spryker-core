@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\DummyPayment\Business;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentFacade;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
@@ -20,7 +21,7 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
  * @group Business
  * @group DummyPaymentFacadeTest
  */
-class DummyPaymentFacadeTest extends \PHPUnit_Framework_TestCase
+class DummyPaymentFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\StateMachine\Business\Exception;
 
-class StateMachineException extends \Exception
+use Exception;
+
+class StateMachineException extends Exception
 {
 }

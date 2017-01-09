@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Greater;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Greater;
  * @group Comparator
  * @group GreaterTest
  */
-class GreaterTest extends \PHPUnit_Framework_TestCase
+class GreaterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

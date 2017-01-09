@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Exception;
 
-class AmbiguousComparisonException extends \Exception
+use Exception;
+
+class AmbiguousComparisonException extends Exception
 {
 }

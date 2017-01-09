@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Library\Twig\Loader;
 
 use Twig_Error_Loader;
+use Twig_Loader_Filesystem;
 use Zend\Filter\Word\CamelCaseToDash;
 
-class Filesystem extends \Twig_Loader_Filesystem
+class Filesystem extends Twig_Loader_Filesystem
 {
 
     /**

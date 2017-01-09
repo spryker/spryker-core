@@ -61,7 +61,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::PRE_SUBMIT => 'validateToken'
+            FormEvents::PRE_SUBMIT => 'validateToken',
         ];
     }
 

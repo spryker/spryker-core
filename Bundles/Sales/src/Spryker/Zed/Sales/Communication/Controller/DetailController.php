@@ -47,7 +47,7 @@ class DetailController extends AbstractController
             'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
-            'orderItemSplitFormCollection' => $orderItemSplitFormCollection
+            'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
         ], $blockResponseData);
     }
 
@@ -95,7 +95,7 @@ class DetailController extends AbstractController
         $subRequest->request->set('orderTransfer', $orderTransfer);
 
         $responseData = [];
-        /**
+        /*
          * @var string $blockName
          * @var \Symfony\Component\HttpFoundation\Response $blockResponse
          */

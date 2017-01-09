@@ -57,7 +57,7 @@ class Guzzle extends AbstractHttpAdapter
     protected function authorizeRequest($user, $password)
     {
         return [
-            'auth' => [$user, $password]
+            'auth' => [$user, $password],
         ];
     }
 

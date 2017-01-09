@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Spryker\Zed\Assertion\Business\AssertionFacade;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
@@ -21,7 +22,7 @@ use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceP
  * @group ServiceProvider
  * @group AssertionServiceProviderTest
  */
-class AssertionServiceProviderTest extends \PHPUnit_Framework_TestCase
+class AssertionServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

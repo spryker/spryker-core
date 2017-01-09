@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 
 /**
@@ -21,7 +22,7 @@ use Spryker\Zed\Tax\Business\Model\TaxCalculation;
  * @group Model
  * @group TaxCalculationTest
  */
-class TaxCalculationTest extends \PHPUnit_Framework_TestCase
+class TaxCalculationTest extends PHPUnit_Framework_TestCase
 {
 
     const TAX_RATE = 19;

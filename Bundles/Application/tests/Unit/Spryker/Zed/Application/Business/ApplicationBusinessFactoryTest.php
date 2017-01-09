@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Application\Business\ApplicationBusinessFactory;
 use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
 
@@ -18,7 +19,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
  * @group Business
  * @group ApplicationBusinessFactoryTest
  */
-class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class ApplicationBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

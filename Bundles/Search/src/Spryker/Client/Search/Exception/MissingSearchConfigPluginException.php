@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Search\Exception;
 
-class MissingSearchConfigPluginException extends \Exception
+use Exception;
+
+class MissingSearchConfigPluginException extends Exception
 {
 }

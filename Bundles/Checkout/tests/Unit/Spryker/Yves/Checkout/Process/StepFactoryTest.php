@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\Checkout\Process;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\Process\StepFactory;
 use Spryker\Yves\Kernel\Container;
@@ -23,7 +24,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @group Process
  * @group StepFactoryTest
  */
-class StepFactoryTest extends \PHPUnit_Framework_TestCase
+class StepFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     const METHOD_HANDLER = 'method handler';

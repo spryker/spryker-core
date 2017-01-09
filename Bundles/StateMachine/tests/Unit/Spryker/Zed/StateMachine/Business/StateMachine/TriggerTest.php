@@ -283,7 +283,7 @@ class TriggerTest extends StateMachineMocks
             $handlerMock->method('getActiveProcesses')->willReturn([static::PROCESS_NAME]);
             $handlerMock->method('getInitialStateForProcess')->willReturn(static::INITIAL_STATE);
             $handlerMock->method('getCommandPlugins')->willReturn([
-                static::TEST_COMMAND => $commandMock
+                static::TEST_COMMAND => $commandMock,
             ]);
             $handlerResolverMock->method('get')->willReturn($handlerMock);
         }

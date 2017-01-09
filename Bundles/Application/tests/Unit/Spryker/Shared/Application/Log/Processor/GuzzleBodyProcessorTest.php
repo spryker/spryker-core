@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Application\Log\Processor;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Log\Processor\GuzzleBodyProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 
@@ -19,7 +20,7 @@ use Spryker\Shared\Log\Sanitizer\Sanitizer;
  * @group Processor
  * @group GuzzleBodyProcessorTest
  */
-class GuzzleBodyProcessorTest extends \PHPUnit_Framework_TestCase
+class GuzzleBodyProcessorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

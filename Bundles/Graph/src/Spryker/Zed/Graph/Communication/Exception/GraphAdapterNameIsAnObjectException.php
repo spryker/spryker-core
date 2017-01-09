@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Graph\Communication\Exception;
 
+use Exception;
+
 class GraphAdapterNameIsAnObjectException extends AbstractGraphAdapterException
 {
 
@@ -15,7 +17,7 @@ class GraphAdapterNameIsAnObjectException extends AbstractGraphAdapterException
      * @param int $code
      * @param \Exception|null $previous
      */
-    public function __construct($message = '', $code = 0, \Exception $previous = null)
+    public function __construct($message = '', $code = 0, Exception $previous = null)
     {
         $message .= PHP_EOL . self::MESSAGE;
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class GroupNotFoundException extends \Exception
+use Exception;
+
+class GroupNotFoundException extends Exception
 {
 }

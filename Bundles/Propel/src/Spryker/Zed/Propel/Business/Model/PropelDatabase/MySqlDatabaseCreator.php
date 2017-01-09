@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
+use PDO;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\PropelConfig;
@@ -35,7 +36,7 @@ class MySqlDatabaseCreator implements DatabaseCreatorInterface
      */
     protected function getConnection()
     {
-        return new \PDO(
+        return new PDO(
             $this->getDatabaseSourceName(),
             Config::get(PropelConstants::ZED_DB_USERNAME),
             Config::get(PropelConstants::ZED_DB_PASSWORD)

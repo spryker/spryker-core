@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Form;
 
+use ArrayObject;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -23,6 +24,7 @@ class CategoryType extends AbstractType
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_IS_IN_MENU = 'is_in_menu';
     const FIELD_IS_CLICKABLE = 'is_clickable';
+    const FIELD_IS_SEARCHABLE = 'is_searchable';
     const FIELD_IS_MAIN = 'is_main';
 
     const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
@@ -63,6 +65,7 @@ class CategoryType extends AbstractType
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
             ->addIsClickableField($builder)
+            ->addIsSearchableField($builder)
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addLocalizedAttributesForm($builder);
@@ -131,6 +134,21 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsSearchableField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IS_SEARCHABLE, 'checkbox', [
+            'label' => 'Searchable',
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
@@ -145,7 +163,7 @@ class CategoryType extends AbstractType
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'group_by' => 'path',
-            'required' => true
+            'required' => true,
         ]);
 
         return $this;
@@ -175,7 +193,7 @@ class CategoryType extends AbstractType
                 return (array)$extraParents;
             },
             function ($extraParents) {
-                return new \ArrayObject($extraParents);
+                return new ArrayObject($extraParents);
             }
         ));
 

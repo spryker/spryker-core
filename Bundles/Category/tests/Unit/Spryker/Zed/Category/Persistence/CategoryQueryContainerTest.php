@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Category\Persistence;
 
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
  * @group Persistence
  * @group CategoryQueryContainerTest
  */
-class CategoryQueryContainerTest extends \PHPUnit_Framework_TestCase
+class CategoryQueryContainerTest extends PHPUnit_Framework_TestCase
 {
 
     const ID_CATEGORY_NODE = 23;

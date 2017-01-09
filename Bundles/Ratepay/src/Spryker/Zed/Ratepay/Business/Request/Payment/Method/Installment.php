@@ -55,7 +55,7 @@ class Installment extends AbstractMethod
     {
         $paymentData = $this->getPaymentData($quoteTransfer);
 
-        /**
+        /*
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Request $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_CONFIGURATION_REQUEST);
@@ -73,7 +73,7 @@ class Installment extends AbstractMethod
     {
         $paymentData = $this->getPaymentData($quoteTransfer);
 
-        /**
+        /*
          * @var \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation $request
          */
         $request = $this->modelFactory->build(ApiConstants::REQUEST_MODEL_CALCULATION_REQUEST);

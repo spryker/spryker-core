@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business\SalesAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -47,7 +48,7 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
                 continue;
             }
 
-            $itemProductOptions = new \ArrayObject($productOptions[$itemTransfer->getIdSalesOrderItem()]);
+            $itemProductOptions = new ArrayObject($productOptions[$itemTransfer->getIdSalesOrderItem()]);
             $this->setProductOptionTotals($itemProductOptions, $itemTransfer);
 
             $itemTransfer->setProductOptions($itemProductOptions);
@@ -83,7 +84,7 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
      *
      * @return void
      */
-    protected function setProductOptionTotals(\ArrayObject $itemProductOptions, ItemTransfer $itemTransfer)
+    protected function setProductOptionTotals(ArrayObject $itemProductOptions, ItemTransfer $itemTransfer)
     {
         $totalProductOptionGrossSum = 0;
         $totalProductOptionGrossUnit = 0;

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Dependency;
+namespace Spryker\Client\Search\Dependency\Plugin;
 
-interface SearchStringSetterInterface
+interface SearchStringGetterInterface
 {
 
     /**
-     * @param string $searchString
+     * @api
      *
-     * @return void
+     * @return string
      */
-    public function setSearchString($searchString);
+    public function getSearchString();
 
 }

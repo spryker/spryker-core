@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Refund;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
@@ -22,7 +23,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  * @group Refund
  * @group RefundDependencyProviderTest
  */
-class RefundDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class RefundDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Library\Filter;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Shared\Library\Filter\SeparatorToCamelCaseFilter;
  * @group Filter
  * @group SeparatorToCamelCaseFilterTest
  */
-class SeparatorToCamelCaseFilterTest extends \PHPUnit_Framework_TestCase
+class SeparatorToCamelCaseFilterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

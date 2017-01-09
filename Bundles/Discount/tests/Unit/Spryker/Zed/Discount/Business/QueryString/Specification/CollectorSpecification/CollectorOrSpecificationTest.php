@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification\Collector
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
  * @group CollectorSpecification
  * @group CollectorOrSpecificationTest
  */
-class CollectorOrSpecificationTest extends \PHPUnit_Framework_TestCase
+class CollectorOrSpecificationTest extends PHPUnit_Framework_TestCase
 {
 
     /**

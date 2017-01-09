@@ -15,6 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -28,7 +29,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  * @group Model
  * @group RefundSaverTest
  */
-class RefundSaverTest extends \PHPUnit_Framework_TestCase
+class RefundSaverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Library\Exception;
 
-class UnknownContextPropertyException extends \Exception
+use Exception;
+
+class UnknownContextPropertyException extends Exception
 {
 }

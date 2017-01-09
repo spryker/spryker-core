@@ -57,8 +57,8 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
-            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
-            $attributes[self::LABEL] = $dependency[DependencyTree::META_BUNDLE] . self::ENGINE_BUNDLE_INFO_TEXT;
+            $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[static::LABEL] = $dependency[DependencyTree::META_BUNDLE] . static::ENGINE_BUNDLE_INFO_TEXT;
 
         }
 
@@ -74,8 +74,8 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
-            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
-            $attributes[self::LABEL] = $dependency[DependencyTree::META_FOREIGN_BUNDLE] . self::ENGINE_BUNDLE_INFO_TEXT;
+            $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[static::LABEL] = $dependency[DependencyTree::META_FOREIGN_BUNDLE] . static::ENGINE_BUNDLE_INFO_TEXT;
         }
 
         return $attributes;
@@ -90,7 +90,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
-            $attributes[self::FONT_COLOR] = self::ENGINE_BUNDLE_FONT_COLOR;
+            $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
         }
 
         return $attributes;

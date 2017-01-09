@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Graph;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Graph\Graph;
 use Spryker\Shared\Graph\GraphAdapterInterface;
 
@@ -17,7 +18,7 @@ use Spryker\Shared\Graph\GraphAdapterInterface;
  * @group Graph
  * @group GraphTest
  */
-class GraphTest extends \PHPUnit_Framework_TestCase
+class GraphTest extends PHPUnit_Framework_TestCase
 {
 
     const GRAPH_NAME = 'graph name';

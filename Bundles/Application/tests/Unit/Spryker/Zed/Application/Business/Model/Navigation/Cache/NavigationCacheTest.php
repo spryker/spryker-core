@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Library\Json;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException;
 use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
@@ -23,7 +24,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
  * @group Cache
  * @group NavigationCacheTest
  */
-class NavigationCacheTest extends \PHPUnit_Framework_TestCase
+class NavigationCacheTest extends PHPUnit_Framework_TestCase
 {
 
     /**

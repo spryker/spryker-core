@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderDiscounts;
 
 /**
@@ -22,7 +23,7 @@ use Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator\OrderD
  * @group SalesAggregator
  * @group OrderDiscountsTest
  */
-class OrderDiscountsTest extends \PHPUnit_Framework_TestCase
+class OrderDiscountsTest extends PHPUnit_Framework_TestCase
 {
 
     /**

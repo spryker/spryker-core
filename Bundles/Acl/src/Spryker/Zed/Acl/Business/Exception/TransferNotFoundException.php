@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class TransferNotFoundException extends \Exception
+use Exception;
+
+class TransferNotFoundException extends Exception
 {
 }

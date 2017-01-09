@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Console\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -21,7 +22,7 @@ use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
  * @group Model
  * @group ConsoleTest
  */
-class ConsoleTest extends \PHPUnit_Framework_TestCase
+class ConsoleTest extends PHPUnit_Framework_TestCase
 {
 
     /**

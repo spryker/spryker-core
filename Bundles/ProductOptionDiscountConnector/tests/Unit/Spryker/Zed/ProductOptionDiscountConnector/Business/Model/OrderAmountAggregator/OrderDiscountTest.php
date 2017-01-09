@@ -7,10 +7,12 @@
 
 namespace Unit\Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts;
 
 /**
@@ -23,7 +25,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggrega
  * @group OrderAmountAggregator
  * @group OrderDiscountTest
  */
-class OrderDiscountTest extends \PHPUnit_Framework_TestCase
+class OrderDiscountTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -49,7 +51,7 @@ class OrderDiscountTest extends \PHPUnit_Framework_TestCase
         $calculatedDiscountTransfer->setDisplayName('test');
         $calculatedDiscountTransfer->setSumGrossAmount(200);
 
-        $calculatedDiscounts = new \ArrayObject();
+        $calculatedDiscounts = new ArrayObject();
         $calculatedDiscounts['test'] = $calculatedDiscountTransfer;
 
         $orderTransfer->setCalculatedDiscounts($calculatedDiscounts);

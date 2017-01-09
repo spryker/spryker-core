@@ -25,4 +25,20 @@ interface CatalogClientInterface
      */
     public function catalogSearch($searchString, array $requestParameters);
 
+    /**
+     * Specification:
+     * - A query based on the given search string and request parameters will be executed
+     * - The query will be extended with the provided plugins via `\Spryker\Client\Catalog\CatalogDependencyProvider::SUGGESTION_QUERY_EXPANDER_PLUGINS`.
+     * - The result will be formatted with the provided plugins via `\Spryker\Client\Catalog\CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGINS`.
+     * - The result is a formatted associative array where the provided result formatters' name are the keys and their results are the values.
+     *
+     * @api
+     *
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return array
+     */
+    public function catalogSuggestSearch($searchString, array $requestParameters = []);
+
 }

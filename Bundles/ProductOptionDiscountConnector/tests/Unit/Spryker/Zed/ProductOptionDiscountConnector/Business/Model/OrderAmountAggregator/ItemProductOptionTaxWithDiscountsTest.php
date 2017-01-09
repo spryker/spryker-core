@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAm
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator\ItemProductOptionTaxWithDiscounts;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxInterface;
 
@@ -23,7 +24,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionTo
  * @group OrderAmountAggregator
  * @group ItemProductOptionTaxWithDiscountsTest
  */
-class ItemProductOptionTaxWithDiscountsTest extends \PHPUnit_Framework_TestCase
+class ItemProductOptionTaxWithDiscountsTest extends PHPUnit_Framework_TestCase
 {
 
     /**

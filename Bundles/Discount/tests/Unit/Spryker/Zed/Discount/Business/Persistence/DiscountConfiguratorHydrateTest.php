@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group Persistence
  * @group DiscountConfiguratorHydrateTest
  */
-class DiscountConfiguratorHydrateTest extends \PHPUnit_Framework_TestCase
+class DiscountConfiguratorHydrateTest extends PHPUnit_Framework_TestCase
 {
 
     /**

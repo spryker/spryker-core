@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionR
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 
@@ -22,7 +23,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
  * @group DecisionRuleSpecification
  * @group DecisionRuleOrSpecificationTest
  */
-class DecisionRuleOrSpecificationTest extends \PHPUnit_Framework_TestCase
+class DecisionRuleOrSpecificationTest extends PHPUnit_Framework_TestCase
 {
 
     /**

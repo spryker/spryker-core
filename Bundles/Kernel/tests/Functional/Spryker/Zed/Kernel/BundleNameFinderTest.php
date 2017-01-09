@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\BundleNameFinder;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Kernel\BundleNameFinder;
  * @group Kernel
  * @group BundleNameFinderTest
  */
-class BundleNameFinderTest extends \PHPUnit_Framework_TestCase
+class BundleNameFinderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

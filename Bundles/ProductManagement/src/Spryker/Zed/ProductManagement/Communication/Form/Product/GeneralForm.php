@@ -55,11 +55,11 @@ class GeneralForm extends AbstractSubForm
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL]
+                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL],
                     ]),
 
                     new ProductNameRegex([
-                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL]
+                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL],
                     ]),
                 ],
                 'attr' => [

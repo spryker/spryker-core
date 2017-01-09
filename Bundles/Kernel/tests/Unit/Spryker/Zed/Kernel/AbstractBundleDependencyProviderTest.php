@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Kernel
  * @group AbstractBundleDependencyProviderTest
  */
-class AbstractBundleDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class AbstractBundleDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

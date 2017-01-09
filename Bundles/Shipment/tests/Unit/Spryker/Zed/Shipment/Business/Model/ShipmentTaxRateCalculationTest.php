@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
@@ -24,7 +25,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
  * @group Model
  * @group ShipmentTaxRateCalculationTest
  */
-class ShipmentTaxRateCalculationTest extends \PHPUnit_Framework_TestCase
+class ShipmentTaxRateCalculationTest extends PHPUnit_Framework_TestCase
 {
 
     /**

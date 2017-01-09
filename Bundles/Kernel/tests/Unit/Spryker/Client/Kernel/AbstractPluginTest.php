@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -19,7 +20,7 @@ use Unit\Spryker\Client\Kernel\Fixtures\Plugin\FooPlugin;
  * @group Kernel
  * @group AbstractPluginTest
  */
-class AbstractPluginTest extends \PHPUnit_Framework_TestCase
+class AbstractPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

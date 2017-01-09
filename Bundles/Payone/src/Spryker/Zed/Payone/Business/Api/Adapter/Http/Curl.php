@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payone\Business\Api\Adapter\Http;
 
+use ErrorException;
 use Spryker\Zed\Payone\Business\Exception\TimeoutException;
 
 /**
@@ -52,7 +53,7 @@ class Curl extends AbstractHttpAdapter
             if (curl_errno($curl) === CURLE_OPERATION_TIMEOUTED) {
                 throw new TimeoutException('Timeout - Payone Communication');
             }
-            throw new \ErrorException('Invalid Response - Payone Communication: ' . curl_errno($curl));
+            throw new ErrorException('Invalid Response - Payone Communication: ' . curl_errno($curl));
         }
         if (curl_error($curl)) {
             $response[] = 'errormessage=' . curl_errno($curl) . ': ' . curl_error($curl);

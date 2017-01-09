@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Library\Generator;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Library\Generator\StringGenerator;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Library\Generator\StringGenerator;
  * @group Generator
  * @group StringGeneratorTest
  */
-class StringGeneratorTest extends \PHPUnit_Framework_TestCase
+class StringGeneratorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

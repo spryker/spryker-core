@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -111,7 +112,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt);
+    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, DateTime $lastTouchedAt);
 
     /**
      * @api

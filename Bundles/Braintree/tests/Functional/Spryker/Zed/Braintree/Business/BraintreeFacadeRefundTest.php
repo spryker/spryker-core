@@ -78,7 +78,7 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
         $refundTransactionMockBuilder->setMethods(['refund', 'initializeBraintree']);
         $refundTransactionMockBuilder->setConstructorArgs([
             new BraintreeConfig(),
-            new BraintreeToMoneyBridge($moneyFacadeMock)
+            new BraintreeToMoneyBridge($moneyFacadeMock),
         ]);
 
         if ($success) {
@@ -142,8 +142,8 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
             'merchantAccountId' => 'abc',
             'statusHistory' => new StatusDetails([
                 'timestamp' => new DateTime(),
-                'status' => 'settling'
-            ])
+                'status' => 'settling',
+            ]),
         ]);
 
         return $transaction;

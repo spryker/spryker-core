@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Category\Business\Tree;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureExpected;
 use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput;
@@ -20,7 +21,7 @@ use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInpu
  * @group Tree
  * @group CategoryTreeStructureTest
  */
-class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
+class CategoryTreeStructureTest extends PHPUnit_Framework_TestCase
 {
 
     /**

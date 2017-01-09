@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 
+use ArrayIterator;
+use ArrayObject;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Symfony\Component\Finder\Finder;
 
@@ -75,7 +77,7 @@ class BundleFinder implements BundleFinderInterface
                 ->in($bundleDirectoryGlobPattern)
                 ->depth('== 0');
         } catch (\InvalidArgumentException $exception) {
-            return new \ArrayIterator();
+            return new ArrayIterator();
         }
 
         return $directories;
@@ -119,8 +121,8 @@ class BundleFinder implements BundleFinderInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[]
      */
     protected function mergeMethods(
-        \ArrayObject $existingMethodTransferCollection,
-        \ArrayObject $methodTransferCollection
+        ArrayObject $existingMethodTransferCollection,
+        ArrayObject $methodTransferCollection
     ) {
         $methodsByName = [];
 
@@ -132,7 +134,7 @@ class BundleFinder implements BundleFinderInterface
             $methodsByName[$methodTransfer->getName()] = $methodTransfer;
         }
 
-        $mergedMethodTransferCollection = new \ArrayObject();
+        $mergedMethodTransferCollection = new ArrayObject();
         foreach ($methodsByName as $methodTransfer) {
             $mergedMethodTransferCollection->append($methodTransfer);
         }

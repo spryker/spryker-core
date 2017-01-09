@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Exception;
 
-class MissingGlossaryKeyMappingException extends \Exception
+use Exception;
+
+class MissingGlossaryKeyMappingException extends Exception
 {
 }

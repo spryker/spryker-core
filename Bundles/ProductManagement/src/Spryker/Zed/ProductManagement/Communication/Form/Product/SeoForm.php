@@ -51,7 +51,7 @@ class SeoForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_META_TITLE, 'text', [
                 'required' => false,
-                'label' => 'Title'
+                'label' => 'Title',
             ]);
 
         return $this;
@@ -67,7 +67,7 @@ class SeoForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_META_KEYWORDS, 'text', [
                 'required' => false,
-                'label' => 'Keywords'
+                'label' => 'Keywords',
             ]);
 
         return $this;
@@ -83,7 +83,7 @@ class SeoForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_META_DESCRIPTION, 'text', [
                 'required' => false,
-                'label' => 'Description'
+                'label' => 'Description',
             ]);
 
         return $this;

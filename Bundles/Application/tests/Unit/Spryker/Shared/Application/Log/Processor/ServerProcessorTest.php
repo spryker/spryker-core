@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Application\Log\Processor;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Log\Processor\ServerProcessor;
 
 /**
@@ -18,7 +19,7 @@ use Spryker\Shared\Application\Log\Processor\ServerProcessor;
  * @group Processor
  * @group ServerProcessorTest
  */
-class ServerProcessorTest extends \PHPUnit_Framework_TestCase
+class ServerProcessorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Country\Business\Exception;
 
-class RegionExistsException extends \Exception
+use Exception;
+
+class RegionExistsException extends Exception
 {
 }

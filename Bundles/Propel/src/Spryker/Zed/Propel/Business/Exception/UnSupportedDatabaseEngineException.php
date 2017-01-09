@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Exception;
 
-class UnSupportedDatabaseEngineException extends \Exception
+use Exception;
+
+class UnSupportedDatabaseEngineException extends Exception
 {
 }

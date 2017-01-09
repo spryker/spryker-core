@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Assertion\Business\Exception;
 
-class InvalidArgumentException extends \Exception
+use Exception;
+
+class InvalidArgumentException extends Exception
 {
 }

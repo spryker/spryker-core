@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\StateMachine\Mocks;
 
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
@@ -25,7 +26,7 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use Spryker\Zed\StateMachine\StateMachineConfig;
 
-class StateMachineMocks extends \PHPUnit_Framework_TestCase
+class StateMachineMocks extends PHPUnit_Framework_TestCase
 {
 
     /**

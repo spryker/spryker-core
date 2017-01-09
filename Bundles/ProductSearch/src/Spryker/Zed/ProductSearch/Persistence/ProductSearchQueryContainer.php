@@ -16,6 +16,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
@@ -159,7 +160,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 
         $query
             ->joinSpyProductSearchAttributeMap($quotedAlias, Criteria::LEFT_JOIN)
-            ->addJoinCondition($quotedAlias, $alias . '.target_field = ?', $targetField, null, \PDO::PARAM_STR)
+            ->addJoinCondition($quotedAlias, $alias . '.target_field = ?', $targetField, null, PDO::PARAM_STR)
             ->withColumn($alias . '.target_field IS NOT NULL', $alias);
 
         return $this;

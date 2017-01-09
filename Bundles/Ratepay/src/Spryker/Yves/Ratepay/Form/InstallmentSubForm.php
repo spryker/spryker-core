@@ -207,7 +207,7 @@ class InstallmentSubForm extends SubFormAbstract
             [
                 'label' => false,
                 'constraints' => [],
-                'attr' => []
+                'attr' => [],
             ]
         );
 
@@ -228,8 +228,8 @@ class InstallmentSubForm extends SubFormAbstract
                 'label' => false,
                 'constraints' => [],
                 'attr' => [
-                    'readonly' => 'readonly'
-                ]
+                    'readonly' => 'readonly',
+                ],
             ]
         );
 

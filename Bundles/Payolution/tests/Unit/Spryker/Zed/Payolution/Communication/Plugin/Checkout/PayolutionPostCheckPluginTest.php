@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlugin;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
@@ -26,7 +27,7 @@ use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
  * @group Checkout
  * @group PayolutionPostCheckPluginTest
  */
-class PayolutionPostCheckPluginTest extends \PHPUnit_Framework_TestCase
+class PayolutionPostCheckPluginTest extends PHPUnit_Framework_TestCase
 {
 
     const PROCESSING_SUCCESS_CODE = 'VA.PA.90.00';

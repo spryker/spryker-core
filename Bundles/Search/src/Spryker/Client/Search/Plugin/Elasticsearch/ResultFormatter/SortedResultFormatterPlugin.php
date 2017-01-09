@@ -23,7 +23,7 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
      */
     public function getName()
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     /**

@@ -62,10 +62,10 @@ class UniqueDiscountNameValidator extends ConstraintValidator
      */
     protected function isNameChanged($submittedDiscountName, UniqueDiscountName $constraint)
     {
-        /* @var $root Form */
+        /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
-        /* @var $data DiscountConfiguratorTransfer */
+        /** @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer $data */
         $data = $root->getData();
         $discountGeneralTransfer = $data->getDiscountGeneral();
         $idDiscount = $discountGeneralTransfer->getIdDiscount();

@@ -7,8 +7,10 @@
 
 namespace Unit\Spryker\Zed\Assertion\Business\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
+use stdClass;
 
 /**
  * @group Unit
@@ -19,7 +21,7 @@ use Spryker\Zed\Assertion\Business\Model\Assertion;
  * @group Model
  * @group AssertionTest
  */
-class AssertionTest extends \PHPUnit_Framework_TestCase
+class AssertionTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -48,7 +50,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1.1', true],
             ['1foo', false],
             [[], false],
-            [new \stdClass(), false],
+            [new stdClass(), false],
         ];
     }
 
@@ -78,7 +80,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1.1', true],
             ['1foo', false],
             [[], false],
-            [new \stdClass(), false],
+            [new stdClass(), false],
         ];
     }
 
@@ -110,7 +112,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1.1', false],
             ['foo1bar', true],
             ['1foo', true],
-            [new \stdClass(), false],
+            [new stdClass(), false],
             [[], false],
             ['foo.bar', false],
         ];
@@ -139,7 +141,7 @@ class AssertionTest extends \PHPUnit_Framework_TestCase
             ['1', false],
             ['1.1', false],
             ['foo1bar', false],
-            [new \stdClass(), false],
+            [new stdClass(), false],
             ['foo.bar', false],
             ['foobar', true],
         ];

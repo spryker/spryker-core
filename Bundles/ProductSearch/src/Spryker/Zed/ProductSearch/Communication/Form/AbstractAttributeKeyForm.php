@@ -96,7 +96,7 @@ abstract class AbstractAttributeKeyForm extends AbstractType
                         }
                     },
                 ],
-                'groups' => [self::GROUP_UNIQUE_KEY]
+                'groups' => [self::GROUP_UNIQUE_KEY],
             ]),
         ];
     }

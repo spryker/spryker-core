@@ -13,6 +13,7 @@
     "spryker/graph": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/symfony": "^2.0.0",
+    "spryker/twig": "^2.0.0",
     "spryker/zend": "^2.0.0"
   },
   "require-dev": {
@@ -33,7 +34,8 @@
   },
   "autoload-dev": {
     "psr-0": {
-      "Unit": "tests/"
+      "Unit": "tests/",
+      "Functional": "tests/"
     }
   }
 }

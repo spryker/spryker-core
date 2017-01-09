@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentFacade;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -23,7 +24,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
  * @group Command
  * @group RefundPluginTest
  */
-class RefundPluginTest extends \PHPUnit_Framework_TestCase
+class RefundPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**

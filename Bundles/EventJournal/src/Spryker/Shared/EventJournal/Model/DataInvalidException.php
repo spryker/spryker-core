@@ -7,9 +7,11 @@
 
 namespace Spryker\Shared\EventJournal\Model;
 
+use Exception;
+
 /**
  * @deprecated Use Log bundle instead
  */
-class DataInvalidException extends \Exception
+class DataInvalidException extends Exception
 {
 }

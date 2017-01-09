@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Yves\StepEngine\Dependency\Plugin;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 
@@ -19,7 +20,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  * @group Plugin
  * @group SubFormPluginCollectionTest
  */
-class SubFormPluginCollectionTest extends \PHPUnit_Framework_TestCase
+class SubFormPluginCollectionTest extends PHPUnit_Framework_TestCase
 {
 
     /**

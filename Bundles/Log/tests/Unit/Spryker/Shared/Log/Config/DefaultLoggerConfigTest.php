@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Shared\Log\Config;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 
@@ -18,7 +19,7 @@ use Spryker\Shared\Log\Config\DefaultLoggerConfig;
  * @group Config
  * @group DefaultLoggerConfigTest
  */
-class DefaultLoggerConfigTest extends \PHPUnit_Framework_TestCase
+class DefaultLoggerConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

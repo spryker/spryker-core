@@ -14,6 +14,7 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
@@ -35,7 +36,7 @@ use Unit\Spryker\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
  * @group QueryExpander
  * @group AbstractQueryExpanderPluginTest
  */
-abstract class AbstractQueryExpanderPluginTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractQueryExpanderPluginTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -319,6 +320,14 @@ abstract class AbstractQueryExpanderPluginTest extends \PHPUnit_Framework_TestCa
             );
 
         return $searchConfig;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\SearchFactory
+     */
+    protected function getSearchFactory()
+    {
+        return new SearchFactory();
     }
 
 }

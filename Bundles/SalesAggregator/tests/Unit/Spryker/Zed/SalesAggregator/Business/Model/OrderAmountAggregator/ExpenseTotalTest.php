@@ -10,6 +10,7 @@ namespace Unit\Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\SalesAggregator\Business\Model\OrderAmountAggregator\ExpenseTotal;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -24,7 +25,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  * @group OrderAmountAggregator
  * @group ExpenseTotalTest
  */
-class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
+class ExpenseTotalTest extends PHPUnit_Framework_TestCase
 {
 
     /**

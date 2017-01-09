@@ -29,7 +29,7 @@ class JavascriptQueryBuilderTransformer
         '>=' => 'greater_or_equal',
         'does not contain' => 'not_contains',
         'is in' => 'in',
-        'is not in' => 'not_in'
+        'is not in' => 'not_in',
     ];
 
     /**

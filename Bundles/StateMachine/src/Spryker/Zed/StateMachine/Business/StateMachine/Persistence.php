@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeout;
@@ -308,7 +309,7 @@ class Persistence implements PersistenceInterface
     {
         $stateMachineExpiredItems = $this->stateMachineQueryContainer
             ->queryItemsWithExpiredTimeout(
-                new \DateTime('now'),
+                new DateTime('now'),
                 $stateMachineName
             )->find();
 
@@ -344,7 +345,7 @@ class Persistence implements PersistenceInterface
      */
     public function saveStateMachineItemTimeout(
         StateMachineItemTransfer $stateMachineItemTransfer,
-        \DateTime $timeoutDate,
+        DateTime $timeoutDate,
         $eventName
     ) {
 

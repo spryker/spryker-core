@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business\Exception;
 
-class ConfigFileNotCreatedException extends \Exception
+use Exception;
+
+class ConfigFileNotCreatedException extends Exception
 {
 }

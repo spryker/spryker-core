@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business\Exception;
 
-class UserAndGroupNotFoundException extends \Exception
+use Exception;
+
+class UserAndGroupNotFoundException extends Exception
 {
 }

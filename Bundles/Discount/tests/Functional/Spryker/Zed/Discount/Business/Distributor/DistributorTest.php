@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Zed\Discount\Business\Distributor;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
@@ -224,13 +225,13 @@ class DistributorTest extends Test
      */
     protected function getItems(array $grossPrices)
     {
-        $items = new \ArrayObject();
+        $items = new ArrayObject();
 
         foreach ($grossPrices as $grossPrice) {
             $discountableItemTransfer = new DiscountableItemTransfer();
             $discountableItemTransfer->setUnitGrossPrice($grossPrice);
             $discountableItemTransfer->setQuantity(1);
-            $discountableItemTransfer->setOriginalItemCalculatedDiscounts(new \ArrayObject());
+            $discountableItemTransfer->setOriginalItemCalculatedDiscounts(new ArrayObject());
             $items->append($discountableItemTransfer);
         }
 

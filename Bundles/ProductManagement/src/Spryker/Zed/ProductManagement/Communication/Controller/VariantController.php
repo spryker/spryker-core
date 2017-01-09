@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\Library\Json;
 use Spryker\Shared\Url\Url;
@@ -58,7 +59,7 @@ class VariantController extends AbstractController
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku($sku);
         $productAbstractTransfer->setAttributes([]);
-        $productAbstractTransfer->setLocalizedAttributes(new \ArrayObject($localizedAttributes));
+        $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
 
         $matrix = $this->getFactory()->getProductFacade()->generateVariants($productAbstractTransfer, $attributes);
 
@@ -69,7 +70,7 @@ class VariantController extends AbstractController
 
         return new JsonResponse([
             'product_abstract' => $productAbstractTransfer->toArray(true),
-            'concrete' => $a
+            'concrete' => $a,
         ]);
     }
 
@@ -123,7 +124,7 @@ class VariantController extends AbstractController
     {
         return Url::generate('/product-management/edit/variant', [
             EditController::PARAM_ID_PRODUCT => $idProductConcrete,
-            EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract
+            EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
         ])->build();
     }
 

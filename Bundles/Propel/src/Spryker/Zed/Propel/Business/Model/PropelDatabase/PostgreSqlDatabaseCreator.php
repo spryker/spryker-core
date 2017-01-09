@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
+use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\PropelConfig;
@@ -123,7 +124,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
 
         $returnValue = (int)$process->getOutput();

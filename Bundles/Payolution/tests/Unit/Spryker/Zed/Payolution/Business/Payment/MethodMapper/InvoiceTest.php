@@ -212,7 +212,7 @@ class InvoiceTest extends Test
     {
         $orderEntityMock = $this->getMockBuilder(SpySalesOrder::class)->getMock();
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock*/
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
         $paymentEntityMock = $this->getMockBuilder(SpyPaymentPayolution::class)
             ->setMethods([
                 'getSpySalesOrder',

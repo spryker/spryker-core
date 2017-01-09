@@ -8,6 +8,8 @@
 namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
@@ -20,7 +22,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
  * @group ErrorRenderer
  * @group WebErrorHtmlRendererTest
  */
-class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
+class WebErrorHtmlRendererTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -57,7 +59,7 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
         $errorPageMock = $this->getErrorPageMock('YVES');
         $errorPageMock->method('getHtmlErrorPageContent')->with(ErrorHandlerConstants::YVES_ERROR_PAGE);
 
-        $errorPageMock->render(new \Exception());
+        $errorPageMock->render(new Exception());
     }
 
     /**
@@ -79,7 +81,7 @@ class WebErrorHtmlRendererTest extends \PHPUnit_Framework_TestCase
      */
     protected function prepareConfig($configKey, $configValue)
     {
-        $reflection = new \ReflectionClass(Config::class);
+        $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
         $reflectionProperty->setAccessible(true);
 

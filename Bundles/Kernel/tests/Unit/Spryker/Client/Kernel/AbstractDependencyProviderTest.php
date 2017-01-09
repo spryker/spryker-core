@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\Container;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Client\Kernel\Container;
  * @group Kernel
  * @group AbstractDependencyProviderTest
  */
-class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class AbstractDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

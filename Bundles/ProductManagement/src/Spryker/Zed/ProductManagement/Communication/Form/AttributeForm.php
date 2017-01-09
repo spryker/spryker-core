@@ -146,7 +146,7 @@ class AttributeForm extends AbstractType
                             }
                         },
                     ],
-                    'groups' => [self::GROUP_UNIQUE_KEY]
+                    'groups' => [self::GROUP_UNIQUE_KEY],
                 ]),
             ],
             'disabled' => $options[self::OPTION_IS_UPDATE],

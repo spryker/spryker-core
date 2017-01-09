@@ -65,10 +65,10 @@ class UniqueGroupNameValidator extends ConstraintValidator
      */
     protected function isGroupNameChanged($submittedGroupName, UniqueGroupName $constraint)
     {
-        /* @var $root Form */
+        /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
-        /* @var $data ProductOptionGroupTransfer */
+        /** @var \Generated\Shared\Transfer\ProductOptionGroupTransfer $data */
         $data = $root->getData();
         $idProductOptionGroup = $data->getIdProductOptionGroup();
 

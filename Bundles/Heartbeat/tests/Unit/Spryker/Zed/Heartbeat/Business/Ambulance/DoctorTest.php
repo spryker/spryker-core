@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
  * @group Ambulance
  * @group DoctorTest
  */
-class DoctorTest extends \PHPUnit_Framework_TestCase
+class DoctorTest extends PHPUnit_Framework_TestCase
 {
 
     /**

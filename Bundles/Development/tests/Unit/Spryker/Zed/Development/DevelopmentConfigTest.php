@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Development;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\DevelopmentConfig;
 
 /**
@@ -16,7 +17,7 @@ use Spryker\Zed\Development\DevelopmentConfig;
  * @group Development
  * @group DevelopmentConfigTest
  */
-class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
+class DevelopmentConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

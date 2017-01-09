@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountSalesAggregatorConnector\Business\SalesAggregator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class DiscountTotalAmount implements OrderAmountAggregatorInterface
@@ -43,7 +44,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
      *
      * @return int
      */
-    protected function getCalculatedDiscountSumGrossAmount(\ArrayObject $calculatedDiscounts)
+    protected function getCalculatedDiscountSumGrossAmount(ArrayObject $calculatedDiscounts)
     {
         $totalSumGrossDiscountAmount = 0;
         foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {

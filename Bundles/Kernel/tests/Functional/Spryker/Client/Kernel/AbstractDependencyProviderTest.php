@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Client\Kernel;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\SearchClientInterface;
@@ -21,7 +22,7 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
  * @group Kernel
  * @group AbstractDependencyProviderTest
  */
-class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class AbstractDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

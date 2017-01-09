@@ -1,6 +1,8 @@
 <?php
 namespace ProductCategory;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,7 +18,7 @@ namespace ProductCategory;
  *
  * @SuppressWarnings(PHPMD)
  */
-class AcceptanceTester extends \Codeception\Actor
+class AcceptanceTester extends Actor
 {
 
     use _generated\AcceptanceTesterActions;

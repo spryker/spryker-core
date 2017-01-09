@@ -9,6 +9,7 @@ namespace Unit\Spryker\Shared\Log;
 
 use Codeception\TestCase\Test;
 use Psr\Log\LoggerInterface;
+use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 use Spryker\Shared\Log\LogConstants;
@@ -29,7 +30,7 @@ class LoggerFactoryTest extends Test
      */
     public function testGetInstanceShouldReturnConfiguredLogger()
     {
-        $reflection = new \ReflectionClass(Config::class);
+        $reflection = new ReflectionClass(Config::class);
         $property = $reflection->getProperty('config');
         $property->setAccessible(true);
         $config = $property->getValue();
@@ -47,7 +48,7 @@ class LoggerFactoryTest extends Test
      */
     public function testGetInstanceWithoutConfiguredLoggerShouldReturnDefaultLogger()
     {
-        $reflection = new \ReflectionClass(Config::class);
+        $reflection = new ReflectionClass(Config::class);
         $property = $reflection->getProperty('config');
         $property->setAccessible(true);
         $config = $property->getValue();

@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Api\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
@@ -41,7 +42,7 @@ class BasketItemMapperTest extends AbstractMapperTest
             ->setTaxRate('q5')
             ->setUnitGrossPriceWithProductOptions(1200)
             ->setUnitTotalDiscountAmountWithProductOption(1400)
-            ->setProductOptions(new \ArrayObject());
+            ->setProductOptions(new ArrayObject());
 
         $this->mapperFactory
             ->getBasketItemMapper(

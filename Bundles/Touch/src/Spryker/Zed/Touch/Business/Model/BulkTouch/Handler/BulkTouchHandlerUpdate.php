@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Handler;
 
+use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 
 class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
@@ -29,7 +30,7 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
         foreach ($itemIdChunks as $itemIdChunk) {
             $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
             $updated += $touchQuery->update([
-                $this->getTouchedColumnName() => new \DateTime(),
+                $this->getTouchedColumnName() => new DateTime(),
                 $this->getItemEventColumnName() => $itemEvent,
             ]);
         }

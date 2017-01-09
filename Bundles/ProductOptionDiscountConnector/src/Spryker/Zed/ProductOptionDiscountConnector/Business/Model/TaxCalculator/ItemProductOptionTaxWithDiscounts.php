@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\TaxCalculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -55,7 +56,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
      *
      * @return void
      */
-    protected function addTaxWithProductOptions(\ArrayObject $items)
+    protected function addTaxWithProductOptions(ArrayObject $items)
     {
         $this->taxFacade->resetAccruedTaxCalculatorRoundingErrorDelta();
         foreach ($items as $itemTransfer) {

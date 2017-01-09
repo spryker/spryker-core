@@ -32,13 +32,13 @@ class CodePhpMessDetectorConsole extends Console
         parent::configure();
 
         $this
-            ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
+            ->setName(static::COMMAND_NAME)
+            ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Run PHPMD for project or core');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run PHPMD for (or "all")');
-        $this->addOption(self::OPTION_FORMAT, 'f', InputOption::VALUE_OPTIONAL, 'Output format [text, xml, html]');
-        $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run PHPMD for (or "all")');
+        $this->addOption(static::OPTION_FORMAT, 'f', InputOption::VALUE_OPTIONAL, 'Output format [text, xml, html]');
+        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
     }
 
     /**
@@ -49,12 +49,12 @@ class CodePhpMessDetectorConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(self::OPTION_BUNDLE);
+        $bundle = $this->input->getOption(static::OPTION_BUNDLE);
         $message = 'Run PHPMD in project level';
 
         if ($bundle) {
             $message = 'Run PHPMD in all bundles';
-            if ($bundle !== self::OPTION_BUNDLE_ALL) {
+            if ($bundle !== static::OPTION_BUNDLE_ALL) {
                 $message = 'Run PHPMD in ' . $bundle . ' bundle';
             }
         }

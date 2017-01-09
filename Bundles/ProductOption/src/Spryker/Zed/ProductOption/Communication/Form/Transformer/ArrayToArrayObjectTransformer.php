@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 
+use ArrayObject;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class ArrayToArrayObjectTransformer implements DataTransformerInterface
@@ -69,7 +70,7 @@ class ArrayToArrayObjectTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        return new \ArrayObject($value);
+        return new ArrayObject($value);
     }
 
 }

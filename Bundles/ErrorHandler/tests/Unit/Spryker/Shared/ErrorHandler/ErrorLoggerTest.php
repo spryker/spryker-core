@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Shared\ErrorHandler;
 
 use Exception;
+use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\NewRelic\NewRelicApiInterface;
@@ -19,7 +20,7 @@ use Spryker\Shared\NewRelic\NewRelicApiInterface;
  * @group ErrorHandler
  * @group ErrorLoggerTest
  */
-class ErrorLoggerTest extends \PHPUnit_Framework_TestCase
+class ErrorLoggerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -34,7 +35,7 @@ class ErrorLoggerTest extends \PHPUnit_Framework_TestCase
         $newRelicApiMock->expects($this->once())->method('noticeError');
 
         $errorLoggerMock = $this->getErrorLoggerMock($loggerMock, $newRelicApiMock);
-        $exception = new \Exception('TestException');
+        $exception = new Exception('TestException');
 
         $errorLoggerMock->log($exception);
     }

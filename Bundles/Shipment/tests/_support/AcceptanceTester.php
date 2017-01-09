@@ -2,6 +2,7 @@
 
 namespace Shipment;
 
+use Codeception\Actor;
 use Codeception\Scenario;
 
 /**
@@ -19,7 +20,7 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class AcceptanceTester extends \Codeception\Actor
+class AcceptanceTester extends Actor
 {
 
     use _generated\AcceptanceTesterActions;

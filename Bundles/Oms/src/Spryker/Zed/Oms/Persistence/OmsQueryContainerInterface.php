@@ -170,7 +170,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, \DateTime $expirationDate);
+    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
 
     /**
      * @api
@@ -179,7 +179,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
-    public function queryLockedItemsByExpirationDate(\DateTime $expirationDate);
+    public function queryLockedItemsByExpirationDate(DateTime $expirationDate);
 
     /**
      * @api

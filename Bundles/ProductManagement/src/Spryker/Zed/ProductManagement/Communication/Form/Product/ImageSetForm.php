@@ -102,7 +102,7 @@ class ImageSetForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_SET_NAME, 'text', [
                 'required' => false,
-                'label' => 'Image Set Name'
+                'label' => 'Image Set Name',
             ]);
 
         return $this;
@@ -177,8 +177,8 @@ class ImageSetForm extends AbstractSubForm
                             }
                         },
                     ],
-                    'groups' => [self::VALIDATION_GROUP_IMAGE_COLLECTION]
-                ])]
+                    'groups' => [self::VALIDATION_GROUP_IMAGE_COLLECTION],
+                ])],
             ]);
 
         return $this;

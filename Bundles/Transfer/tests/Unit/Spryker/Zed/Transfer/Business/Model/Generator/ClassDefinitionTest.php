@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 
 /**
@@ -19,7 +20,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
  * @group Generator
  * @group ClassDefinitionTest
  */
-class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
+class ClassDefinitionTest extends PHPUnit_Framework_TestCase
 {
 
     /**

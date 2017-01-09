@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Library\Twig;
 
+use Twig_SimpleFilter;
+
 /**
  * @deprecated Use Twig bundle instead.
  */
-abstract class TwigFilter extends \Twig_SimpleFilter
+abstract class TwigFilter extends Twig_SimpleFilter
 {
 
     public function __construct()

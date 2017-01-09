@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Exception;
 
-class TemplateExistsException extends \Exception
+use Exception;
+
+class TemplateExistsException extends Exception
 {
 }
