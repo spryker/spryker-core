@@ -6,9 +6,8 @@
     }
   },
   "require": {
-    "spryker/Application": "^2.0.0",
-    "spryker/Gui": "^2.0.0",
-    "spryker/Url": "^2.0.0",
+    "spryker/gui": "^2.0.0",
+    "spryker/url": "^2.0.0",
     "spryker/country": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0 || ^4.0.0",

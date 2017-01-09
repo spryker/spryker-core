@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Messenger;
 
-class ApplicationToMessengerBridge implements ApplicationToMessengerInterface
+class KernelToMessengerBridge implements KernelToMessengerInterface
 {
 
     /**

@@ -247,7 +247,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge
      */
     protected function getMessenger()
     {

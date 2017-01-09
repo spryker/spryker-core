@@ -1,7 +1,6 @@
 {
   "name": "spryker/refund",
   "require": {
-    "spryker/application": "^2.0.0",
     "spryker/gui": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/money": "^1.0.0",

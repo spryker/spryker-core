@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Dependency\Facade;
+namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageTransfer;
 

@@ -10,7 +10,7 @@ namespace Spryker\Yves\Kernel\Controller;
 use Silex\Application;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Yves\Kernel\Dependency\Messenger\ApplicationToMessengerBridge;
+use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -206,12 +206,12 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Dependency\Messenger\ApplicationToMessengerInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerInterface
      */
     private function getMessenger()
     {
         $messenger = ($this->application->offsetExists('flash_messenger')) ? $this->application['flash_messenger'] : new NullMessenger();
-        $applicationToMessengerBridge = new ApplicationToMessengerBridge($messenger);
+        $applicationToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $applicationToMessengerBridge;
     }
