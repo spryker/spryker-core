@@ -39,10 +39,10 @@ class AvailabilityStockFormDataProvider
         $stockProducts = $this->stockFacade->getStockProductsByIdProduct($idProduct);
         $stockProducts = $this->sortProducts($stockProducts);
 
-        $AvailabilityGuiStockTransfer = $this->loadAvailabilityGuiStockTransfer($sku, $stockProducts);
-        $this->addEmptyStockType($AvailabilityGuiStockTransfer);
+        $availabilityGuiStockTransfer = $this->loadAvailabilityGuiStockTransfer($sku, $stockProducts);
+        $this->addEmptyStockType($availabilityGuiStockTransfer);
 
-        return $AvailabilityGuiStockTransfer;
+        return $availabilityGuiStockTransfer;
     }
 
     /**
@@ -63,34 +63,34 @@ class AvailabilityStockFormDataProvider
      */
     protected function loadAvailabilityGuiStockTransfer($sku, array $stockProducts)
     {
-        $AvailabilityGuiStockTransfer = new AvailabilityStockTransfer();
-        $AvailabilityGuiStockTransfer->setSku($sku);
+        $availabilityGuiStockTransfer = new AvailabilityStockTransfer();
+        $availabilityGuiStockTransfer->setSku($sku);
 
         foreach ($stockProducts as $stockProductTransfer) {
-            $AvailabilityGuiStockTransfer->addStockProduct($stockProductTransfer);
+            $availabilityGuiStockTransfer->addStockProduct($stockProductTransfer);
         }
 
-        return $AvailabilityGuiStockTransfer;
+        return $availabilityGuiStockTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $AvailabilityStockTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
      * @return void
      */
-    protected function addEmptyStockType($AvailabilityStockTransfer)
+    protected function addEmptyStockType($availabilityStockTransfer)
     {
         $allStockType = $this->stockFacade->getAvailableStockTypes();
 
         foreach ($allStockType as $type) {
-            if ($this->stockTypeExist($AvailabilityStockTransfer, $type)) {
+            if ($this->stockTypeExist($availabilityStockTransfer, $type)) {
                 continue;
             }
             $stockProductTransfer = new StockProductTransfer();
             $stockProductTransfer->setStockType($type);
             $stockProductTransfer->setQuantity(0);
 
-            $AvailabilityStockTransfer->addStockProduct($stockProductTransfer);
+            $availabilityStockTransfer->addStockProduct($stockProductTransfer);
         }
     }
 
