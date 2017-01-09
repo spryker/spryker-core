@@ -433,15 +433,17 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idProductAbstract
+     * @param string $type
      *
      * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
      */
-    public function createVariantTable($idProductAbstract)
+    public function createVariantTable($idProductAbstract, $type)
     {
         return new VariantTable(
             $this->getProductQueryContainer(),
             $idProductAbstract,
-            $this->getLocaleFacade()->getCurrentLocale()
+            $this->getLocaleFacade()->getCurrentLocale(),
+            $type
         );
     }
 

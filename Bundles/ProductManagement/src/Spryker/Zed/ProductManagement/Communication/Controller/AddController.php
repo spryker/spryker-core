@@ -67,7 +67,7 @@ class AddController extends AbstractController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->createRedirectResponseAfterAdd($idProductAbstract);
+                return $this->createRedirectResponseAfterAdd($idProductAbstract, $type);
 
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
@@ -87,15 +87,17 @@ class AddController extends AbstractController
 
     /**
      * @param int $idProductAbstract
+     * @param string $type
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseAfterAdd($idProductAbstract)
+    protected function createRedirectResponseAfterAdd($idProductAbstract, $type)
     {
         return $this->redirectResponse(sprintf(
-            '/product-management/edit?%s=%d',
+            '/product-management/edit?%s=%d&type=%s',
             self::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
+            $type
         ));
     }
 

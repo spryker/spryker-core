@@ -14,6 +14,7 @@ class ProductManagementConfig extends AbstractBundleConfig
 {
 
     const PRODUCT_TYPE_BUNDLE = 'bundle';
+    const PRODUCT_TYPE_REGULAR = 'regular';
 
     /**
      * @return array

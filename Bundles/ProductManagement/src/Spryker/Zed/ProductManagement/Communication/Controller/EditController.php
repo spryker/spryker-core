@@ -22,6 +22,7 @@ class EditController extends AddController
 
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ID_PRODUCT = 'id-product';
+    const PARAM_PRODUCT_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -90,9 +91,11 @@ class EditController extends AddController
             }
         };
 
+        $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
+
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract);
+            ->createVariantTable($idProductAbstract, $type);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -133,7 +136,7 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
-        $type = $request->query->get('type');
+        $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
         if ($productTransfer->getProductBundle() !== null) {
             $type = ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
         }
@@ -209,13 +212,15 @@ class EditController extends AddController
      */
     public function variantTableAction(Request $request)
     {
-        $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
-        ));
+        $idProductAbstract = $this->castId(
+            $request->get(self::PARAM_ID_PRODUCT_ABSTRACT)
+        );
+
+        $type = $request->get(self::PARAM_PRODUCT_TYPE);
 
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract);
+            ->createVariantTable($idProductAbstract, $type);
 
         return $this->jsonResponse(
             $variantTable->fetchData()
