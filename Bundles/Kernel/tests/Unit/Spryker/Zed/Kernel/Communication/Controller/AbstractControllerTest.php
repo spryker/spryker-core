@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Communication\Controller;
+namespace Unit\Spryker\Zed\Kernel\Communication\Controller;
 
 use PHPUnit_Framework_TestCase;
-use Unit\Spryker\Zed\Application\Communication\Controller\Fixtures\MockController;
+use Unit\Spryker\Zed\Kernel\Communication\Controller\Fixtures\MockController;
 
 /**
  * @group Unit

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Application\Communication\Controller\Fixtures;
+namespace Unit\Spryker\Zed\Kernel\Communication\Controller\Fixtures;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Assertion\Business\AssertionFacade;
