@@ -154,7 +154,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     }
 
     /**
-     * @param SpySalesOrderItem $orderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $orderItemEntity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

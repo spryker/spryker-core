@@ -203,7 +203,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
         $messageTranfer = new MessageTransfer();
         $messageTranfer->setValue($translationKey);
         $messageTranfer->setParameters([
-            self::STOCK_TRANSLATION_PARAMETER => $stock
+            self::STOCK_TRANSLATION_PARAMETER => $stock,
         ]);
 
         return $messageTranfer;

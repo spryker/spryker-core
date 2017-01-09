@@ -16,6 +16,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
+
     const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
     const QUANTITY = 'quantity';
 
@@ -167,7 +168,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $bundleTotalStockPerWarehause[$idStock] = [
                 static::QUANTITY => $bundleStock,
-                static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock ,
+                static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
         return $bundleTotalStockPerWarehause;
@@ -213,7 +214,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param SpyStockProduct $stockProductEntity
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct $stockProductEntity
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer
      */

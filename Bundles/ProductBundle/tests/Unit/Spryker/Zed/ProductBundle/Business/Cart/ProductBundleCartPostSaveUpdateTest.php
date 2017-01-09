@@ -5,8 +5,10 @@
  */
 
 namespace Unit\Spryker\Zed\ProductBundle\Business\Cart;
+
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 
 /**
@@ -18,8 +20,9 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostS
  * @group Cart
  * @group ProductBundleCartPostSaveUpdateTest
  */
-class ProductBundleCartPostSaveUpdateTest extends \PHPUnit_Framework_TestCase
+class ProductBundleCartPostSaveUpdateTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -45,4 +48,5 @@ class ProductBundleCartPostSaveUpdateTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(1, $updatedQuoteTransfer->getBundleItems());
     }
+
 }

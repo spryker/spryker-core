@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
@@ -26,7 +27,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQuer
  * @group Calculation
  * @group ProductBundlePriceCalculationTest
  */
-class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
+class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -53,7 +54,6 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(360, $bundleItemTransfer->getSumItemTotal());
         $this->assertSame(20, $bundleItemTransfer->getFinalUnitDiscountAmount());
         $this->assertSame(40, $bundleItemTransfer->getFinalSumDiscountAmount());
-
     }
 
     /**
@@ -84,7 +84,7 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundlePriceCalculation
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation
      */
     protected function createProductPriceCalculationMock()
     {
@@ -97,7 +97,7 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundleToSalesQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
     protected function createSalesQueryContainerMock()
     {
@@ -105,7 +105,7 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param PHPUnit_Framework_MockObject_MockObject $productBundlePriceCalculationMock
+     * @param \PHPUnit_Framework_MockObject_MockObject $productBundlePriceCalculationMock
      *
      * @return void
      */
@@ -156,11 +156,10 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
         $quoteTransfer->setItems($bundledItems);
 
         return $quoteTransfer;
-
     }
 
     /**
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function createBundledItems()
     {
@@ -191,4 +190,5 @@ class ProductBundlePriceCalculationTest extends \PHPUnit_Framework_TestCase
 
         return $bundledItems;
     }
+
 }

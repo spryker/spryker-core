@@ -5,12 +5,14 @@
  */
 
 namespace Unit\Spryker\Zed\ProductBundle\Business\Sales;
+
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
@@ -23,7 +25,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQuer
  * @group Sales
  * @group ProductBundleSalesOrderSaverTest
  */
-class ProductBundleSalesOrderSaverTest extends \PHPUnit_Framework_TestCase
+class ProductBundleSalesOrderSaverTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -67,11 +69,10 @@ class ProductBundleSalesOrderSaverTest extends \PHPUnit_Framework_TestCase
         $productBundleMock->saveSaleOrderBundleItems($quoteTransfer, $checkoutResponseTransfer);
 
         $this->assertNotFalse($checkoutResponseTransfer->getIsSuccess());
-
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundleSalesOrderSaver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver
      */
     protected function createProductBundleSalesOrderSaverMock()
     {
@@ -84,7 +85,7 @@ class ProductBundleSalesOrderSaverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpySalesOrderItemBundle
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
      */
     protected function createSalesOrderItemBundleEntityMock()
     {
@@ -100,7 +101,7 @@ class ProductBundleSalesOrderSaverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpySalesOrderItem
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createSalesOrderItemEntityMock()
     {
@@ -113,11 +114,10 @@ class ProductBundleSalesOrderSaverTest extends \PHPUnit_Framework_TestCase
             ->willReturn(1);
 
         return $salesOrderItemEntityMock;
-
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundleToSalesQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
     protected function createSalesQueryContainerMock()
     {
@@ -125,5 +125,3 @@ class ProductBundleSalesOrderSaverTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-

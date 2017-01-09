@@ -144,7 +144,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
 
             $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
 
-            if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0 ) {
+            if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0) {
                 $bundleAvailabilityQuantity = $bundledItemQuantity;
             }
         }

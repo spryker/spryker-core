@@ -190,6 +190,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      * @param int $bundleUnitGrossPrice
      *
+     * @throws \OutOfBoundsException
+     *
      * @return void
      */
     protected function distributeBundleUnitGrossPrice(array $bundledProducts, $bundleUnitGrossPrice)
@@ -255,9 +257,9 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function getProductPrice($sku)
     {
-         if (!isset(static::$productPriceCache[$sku])) {
-             static::$productPriceCache[$sku] = $this->priceFacade->getPriceBySku($sku);
-         }
+        if (!isset(static::$productPriceCache[$sku])) {
+            static::$productPriceCache[$sku] = $this->priceFacade->getPriceBySku($sku);
+        }
 
          return static::$productPriceCache[$sku];
     }
@@ -265,7 +267,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param string $sku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function getProductConcreteTransfer($sku)
     {
@@ -277,7 +279,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocaleTransfer
      *
      * @return string

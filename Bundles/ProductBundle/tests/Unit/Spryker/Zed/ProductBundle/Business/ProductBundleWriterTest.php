@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
@@ -24,7 +25,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group Business
  * @group ProductBundleWriterTest
  */
-class ProductBundleWriterTest extends \PHPUnit_Framework_TestCase
+class ProductBundleWriterTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -7,11 +7,12 @@
 namespace Unit\Spryker\Zed\ProductBundle\Business\Stock;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
@@ -24,10 +25,10 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group Zed
  * @group ProductBundle
  * @group Business
- * @group Cart
+ * @group Stock
  * @group ProductBundleStockWriterTest
  */
-class ProductBundleStockWriterTest extends \PHPUnit_Framework_TestCase
+class ProductBundleStockWriterTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -73,7 +74,7 @@ class ProductBundleStockWriterTest extends \PHPUnit_Framework_TestCase
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface|null $stockQueryContainerMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundleStockWriter
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter
      */
     protected function createProductStockWriterMock(
         ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityMock = null,
@@ -99,7 +100,7 @@ class ProductBundleStockWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpyStockProduct
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Stock\Persistence\SpyStockProduct
      */
     protected function createStockProductEntityMock()
     {
@@ -121,7 +122,7 @@ class ProductBundleStockWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundleToStockQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface
      */
     protected function createStockQueryContainerMock()
     {
@@ -129,7 +130,7 @@ class ProductBundleStockWriterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductBundleAvailabilityHandlerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface
      */
     protected function createProductBundleAvailabilityHandlerMock()
     {
@@ -229,4 +230,5 @@ class ProductBundleStockWriterTest extends \PHPUnit_Framework_TestCase
 
         $productStockWriteMock->method('findOrCreateProductStockEntity')->willReturn($stockProductEntityMock);
     }
+
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
@@ -28,7 +29,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group Availability
  * @group ProductBundleAvailabilityCheckTest
  */
-class ProductBundleAvailabilityCheckTest extends \PHPUnit_Framework_TestCase
+class ProductBundleAvailabilityCheckTest extends PHPUnit_Framework_TestCase
 {
 
     /**

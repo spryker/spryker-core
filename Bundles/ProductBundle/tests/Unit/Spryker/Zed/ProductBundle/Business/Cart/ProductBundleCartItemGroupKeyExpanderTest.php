@@ -8,8 +8,8 @@ namespace Unit\Spryker\Zed\ProductBundle\Business\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
-
 
 /**
  * @group Unit
@@ -20,7 +20,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
  * @group Cart
  * @group ProductBundleCartItemGroupKeyExpanderTest
  */
-class ProductBundleCartItemGroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
+class ProductBundleCartItemGroupKeyExpanderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -28,7 +28,7 @@ class ProductBundleCartItemGroupKeyExpanderTest extends \PHPUnit_Framework_TestC
      */
     public function testExpandBundleItemGroupKeyShouldIncludeBundledIdentifierIntoGroupKey()
     {
-        $productBundleCartItemGroupKeyExpander= $this->createGroupKeyExpander();
+        $productBundleCartItemGroupKeyExpander = $this->createGroupKeyExpander();
 
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -44,7 +44,6 @@ class ProductBundleCartItemGroupKeyExpanderTest extends \PHPUnit_Framework_TestC
         $updateBundledItemTransfer = $updatedCartChangeTransfer->getItems()[0];
 
         $this->assertContains($itemTransfer->getRelatedBundleItemIdentifier(), $updateBundledItemTransfer->getGroupKey());
-
     }
 
     /**
@@ -52,7 +51,7 @@ class ProductBundleCartItemGroupKeyExpanderTest extends \PHPUnit_Framework_TestC
      */
     public function testExpandBundleGroupKeyShouldMakeBundledItemsWithSameSkuHaveUniqueGroupKey()
     {
-        $productBundleCartItemGroupKeyExpander= $this->createGroupKeyExpander();
+        $productBundleCartItemGroupKeyExpander = $this->createGroupKeyExpander();
 
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -83,4 +82,5 @@ class ProductBundleCartItemGroupKeyExpanderTest extends \PHPUnit_Framework_TestC
     {
         return new ProductBundleCartItemGroupKeyExpander();
     }
+
 }
