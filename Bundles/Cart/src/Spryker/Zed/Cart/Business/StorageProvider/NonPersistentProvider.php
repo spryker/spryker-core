@@ -99,9 +99,9 @@ class NonPersistentProvider implements StorageProviderInterface
     {
         $existingItemTransfer = null;
         $itemIndex = null;
-        foreach ($existingItems as $index => $itemTransfer) {
-            if ($itemTransfer->getGroupKey() === $itemIdentifier) {
-                $existingItemTransfer = $itemTransfer;
+        foreach ($existingItems as $index => $currentItemTransfer) {
+            if ($currentItemTransfer->getGroupKey() === $itemIdentifier) {
+                $existingItemTransfer = $currentItemTransfer;
                 $itemIndex = $index;
                 break;
             }

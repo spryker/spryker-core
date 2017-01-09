@@ -61,7 +61,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
         $bundledProducts = $productBundleTransfer->getBundledProducts();
 
-        if ($bundledProducts->count() == 0) {
+        if ($bundledProducts->count() == 0 && count($productBundleTransfer->getBundlesToRemove()) == 0) {
             return $productConcreteTransfer;
         }
 
