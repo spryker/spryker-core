@@ -8,7 +8,7 @@ composer require spryker/product-bundle
 
 The following information describes how to install the newly released ´Product´ bundle (01/2017).
 These instructions are only relevant if you need to add this bundle to an already installed version of the Framework.
-If you have not yet installed the Spryker Framework, you can ignore these instructions as we have already included this bundle in all versions released after January 2017.
+If you have not yet installed the Spryker Framework, ignore these instructions as include this bundle in all versions released after January 2017.
 
 You can download and install this bundle from: https://github.com/spryker/spryker/tree/feature/core-520-product-bundles/Bundles/ProductBundle
 
@@ -57,25 +57,24 @@ add `ProductBundleAvailabilityHandlerPlugin`.
 #### Plugin descriptions
 
 - `CalculateBundlePricePlugin` - calculates a bundle price.
-- `CartBundleAvailabilityPreCheckPlugin` - is a cart pre-check plugin to check bundle availability it replaces `CheckAvailabilityPlugin`.
-- `CartItemWithBundleGroupKeyExpanderPlugin` - is a cart expander plugin which extracts bundle items.
-- `CartPostSaveUpdateBundlesPlugin` - is a plugin which does a cleanup on unused bundles in a quote.
-- `CartItemWithBundleGroupKeyExpanderPlugin` - is a plugin which changes the current item group key to include bundle identifier information.
-- `ProductBundleAvailabilityCheckoutPreConditionPlugin` - is a plugin which checks product bundle availability when placing an order (final checkout step).
-- `ProductBundleAvailabilityHandlerPlugin` - is an availability handler which updates bundle availability every time a bundled item moves to reserved state.
+- `CartBundleAvailabilityPreCheckPlugin` - a cart pre-check plugin to check bundle availability. It replaces `CheckAvailabilityPlugin`.
+- `CartItemWithBundleGroupKeyExpanderPlugin` - a cart expander plugin which extracts bundle items.
+- `CartPostSaveUpdateBundlesPlugin` - does a cleanup on unused bundles in a quote.
+- `CartItemWithBundleGroupKeyExpanderPlugin` - changes the current item group key to include bundle identifier information.
+- `ProductBundleAvailabilityCheckoutPreConditionPlugin` - checks product bundle availability when placing an order (final checkout step).
+- `ProductBundleAvailabilityHandlerPlugin` - an availability handler which updates bundle availability every time a bundled item moves to reserved state.
 - `ProductBundleProductConcreteAfterUpdatePlugin` - is a plugin which persists the product bundle and is used by the Product Management bundle.
-- `ProductBundleProductConcreteReadPlugin` - is a plugin which writes product bundle data into `ProductConcreteTransfer`.
-- `ProductBundleOrderSaverPlugin` - is a plugin which saves bundle related information when an order with the bundle is placed.
-- `ProductBundlePriceAggregatorPlugin` - is a plugin which aggregates product information for the sale bundle.
-- `ProductBundleAvailabilityHandlerPlugin` -  is a stock handler plugin which updates a bundle's available stock when a bundle or bundled product changes.
+- `ProductBundleProductConcreteReadPlugin` - writes product bundle data into `ProductConcreteTransfer`.
+- `ProductBundleOrderSaverPlugin` - saves bundle related information when an order with the bundle is placed.
+- `ProductBundlePriceAggregatorPlugin` - aggregates product information for the sale bundle.
+- `ProductBundleAvailabilityHandlerPlugin` -  a stock handler plugin which updates a bundle's available stock when a bundle or bundled product changes.
 
 ### Database migrations
-Database migration is the process of adjusting the settings to incorporate the new plugin's activity.
+Database migration is the process of adjusting the DB settings to incorporate the new plugin's activity.
 
-To configure the database migration**:
+**To configure the database migration**:
 
 1. Create a sequence called spy_product_bundle_pk_seq:
-
 ``` 
 CREATE SEQUENCE "spy_product_bundle_pk_seq";
 
@@ -102,7 +101,6 @@ ALTER TABLE "spy_product_bundle" ADD CONSTRAINT "spy_product_bundle-fk_product"
     ON UPDATE CASCADE
     ON DELETE CASCADE;
 ```
-
 2. Drop old tables/fields.
 
 ```
@@ -126,6 +124,7 @@ The way the cart stores the quantity of items has changed.
 The number of items in the cart is now returned by  `$this->cartClient->getItemCount()`.
 
 **To implement the change to the cart**:
+
 1. In `\Pyz\Yves\Cart\Plugin\Provider\CartServiceProvider:register`, change:
 ```
 public function register(Application $app)
@@ -135,7 +134,6 @@ public function register(Application $app)
     });
 }
 ```
-
 2. Cart operations must be updated to cover product bundle logic as follows:
 instead of `CartOperationHandler` use `\Pyz\Yves\Cart\Handler\ProductBundleCartOperationHandler` (you can take this from the demoshop).
 
@@ -182,9 +180,10 @@ In `\Pyz\Yves\Checkout\Process\Steps\SummaryStep`, inject the grouper and cart c
 `src/Pyz/Yves/Checkout/Theme/default/checkout/summary.twig` have new item rendering structures, take samples from the demoshop.
 
 ### Customer
-The customer controller now uses the product bundle grouper so you need to change the following:
+The customer controller now uses the product bundle grouper.
 
-In `\Pyz\Yves\Customer\Controller\OrderController::getOrderDetailsResponseData`:
+**Change the following**
+In: `\Pyz\Yves\Customer\Controller\OrderController::getOrderDetailsResponseData` do:
 ```
 $bundleItemGrouper = $this->getFactory()->createProductBundleGroupper();
        $items = $bundleItemGrouper->getGroupedBundleItems(
