@@ -99,26 +99,35 @@ class PageManager implements PageManagerInterface
      */
     protected function createPage(PageTransfer $pageTransfer)
     {
+        $this->checkTemplateExists($pageTransfer->getFkTemplate());
+
         $this->cmsQueryContainer
             ->getConnection()
             ->beginTransaction();
 
-        $this->checkTemplateExists($pageTransfer->getFkTemplate());
-
-        $pageEntity = new SpyCmsPage();
-
-        $pageEntity->fromArray($pageTransfer->toArray());
-        $pageEntity->save();
-
-        $pageTransfer->setIdCmsPage($pageEntity->getIdCmsPage());
-
-        $this->createCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
+        $this->persistNewPage($pageTransfer);
 
         $this->cmsQueryContainer
             ->getConnection()
             ->commit();
 
         return $pageTransfer;
+    }
+
+    /**
+     * @param PageTransfer $pageTransfer
+     *
+     * @return void
+     */
+    protected function persistNewPage(PageTransfer $pageTransfer)
+    {
+        $pageEntity = new SpyCmsPage();
+        $pageEntity->fromArray($pageTransfer->toArray());
+        $pageEntity->save();
+
+        $pageTransfer->setIdCmsPage($pageEntity->getIdCmsPage());
+
+        $this->createCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
     }
 
     /**
@@ -132,6 +141,22 @@ class PageManager implements PageManagerInterface
             ->getConnection()
             ->beginTransaction();
 
+        $this->persistExistingPage($pageTransfer);
+
+        $this->cmsQueryContainer
+            ->getConnection()
+            ->commit();
+
+        return $pageTransfer;
+    }
+
+    /**
+     * @param PageTransfer $pageTransfer
+     *
+     * @return void
+     */
+    protected function persistExistingPage(PageTransfer $pageTransfer)
+    {
         $pageEntity = $this->getPageById($pageTransfer->getIdCmsPage());
         $pageEntity->fromArray($pageTransfer->modifiedToArray());
 
@@ -142,12 +167,6 @@ class PageManager implements PageManagerInterface
         $pageEntity->save();
 
         $this->updateCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
-
-        $this->cmsQueryContainer
-            ->getConnection()
-            ->commit();
-
-        return $pageTransfer;
     }
 
     /**

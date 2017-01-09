@@ -27,7 +27,7 @@
         <id-method-parameter value="spy_cms_page_pk_seq"/>
     </table>
 
-    <table name="spy_cms_page_localized_attributes" phpName="SpyCmsPageLocalizedAttributes">
+    <table name="spy_cms_page_localized_attributes" idMethod="native" allowPkInsert="true">
         <column name="id_cms_page_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_page" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>

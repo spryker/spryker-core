@@ -27,7 +27,7 @@ class CmsPageFormDataProvider
     /**
      * @var \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider
      */
-    private $cmsPageLocalizedAttributesFormDataProvider;
+    protected $cmsPageLocalizedAttributesFormDataProvider;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
