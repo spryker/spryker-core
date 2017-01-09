@@ -75,7 +75,6 @@ Database migration is the process of adjusting the DB settings to incorporate th
 **To configure the database migration**:
 
 1. Create a sequence called spy_product_bundle_pk_seq:
-
 ``` 
 CREATE SEQUENCE "spy_product_bundle_pk_seq";
 
@@ -102,7 +101,6 @@ ALTER TABLE "spy_product_bundle" ADD CONSTRAINT "spy_product_bundle-fk_product"
     ON UPDATE CASCADE
     ON DELETE CASCADE;
 ```
-
 2. Drop old tables/fields.
 
 ```
@@ -136,7 +134,6 @@ public function register(Application $app)
     });
 }
 ```
-
 2. Cart operations must be updated to cover product bundle logic as follows:
 instead of `CartOperationHandler` use `\Pyz\Yves\Cart\Handler\ProductBundleCartOperationHandler` (you can take this from the demoshop).
 
