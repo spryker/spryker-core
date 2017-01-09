@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication\Controller;
 
+use Exception;
 use PHPUnit_Framework_TestCase;
 use Unit\Spryker\Zed\Kernel\Communication\Controller\Fixtures\MockController;
 
@@ -14,7 +15,7 @@ use Unit\Spryker\Zed\Kernel\Communication\Controller\Fixtures\MockController;
  * @group Unit
  * @group Spryker
  * @group Zed
- * @group Application
+ * @group Kernel
  * @group Communication
  * @group Controller
  * @group AbstractControllerTest
@@ -38,7 +39,7 @@ class AbstractControllerTest extends PHPUnit_Framework_TestCase
         $controller = new MockController();
 
         if (!$isValid) {
-            $this->expectException(\Exception::class);
+            $this->expectException(Exception::class);
         }
 
         $result = $controller->indexAction($input);
