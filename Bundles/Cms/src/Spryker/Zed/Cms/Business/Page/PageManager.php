@@ -115,7 +115,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
      */
@@ -151,7 +151,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
      */
