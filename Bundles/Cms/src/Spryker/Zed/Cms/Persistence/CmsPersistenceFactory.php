@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Persistence;
 
 use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
@@ -59,6 +60,14 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     public function createLocaleQuery()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_LOCALE);
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function createCmsPageLocalizedAttributesQuery()
+    {
+        return SpyCmsPageLocalizedAttributesQuery::create();
     }
 
 }

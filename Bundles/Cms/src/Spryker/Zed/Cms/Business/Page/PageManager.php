@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
+use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
 use Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException;
@@ -96,6 +98,10 @@ class PageManager implements PageManagerInterface
      */
     protected function createPage(PageTransfer $pageTransfer)
     {
+        $this->cmsQueryContainer
+            ->getConnection()
+            ->beginTransaction();
+
         $this->checkTemplateExists($pageTransfer->getFkTemplate());
 
         $pageEntity = new SpyCmsPage();
@@ -104,6 +110,12 @@ class PageManager implements PageManagerInterface
         $pageEntity->save();
 
         $pageTransfer->setIdCmsPage($pageEntity->getIdCmsPage());
+
+        $this->createCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
+
+        $this->cmsQueryContainer
+            ->getConnection()
+            ->commit();
 
         return $pageTransfer;
     }
@@ -115,6 +127,10 @@ class PageManager implements PageManagerInterface
      */
     protected function updatePage(PageTransfer $pageTransfer)
     {
+        $this->cmsQueryContainer
+            ->getConnection()
+            ->beginTransaction();
+
         $pageEntity = $this->getPageById($pageTransfer->getIdCmsPage());
         $pageEntity->fromArray($pageTransfer->modifiedToArray());
 
@@ -122,11 +138,13 @@ class PageManager implements PageManagerInterface
             $this->updatePageUrl($pageTransfer);
         }
 
-        if (!$pageEntity->isModified()) {
-            return $pageTransfer;
-        }
-
         $pageEntity->save();
+
+        $this->updateCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);
+
+        $this->cmsQueryContainer
+            ->getConnection()
+            ->commit();
 
         return $pageTransfer;
     }
@@ -317,6 +335,65 @@ class PageManager implements PageManagerInterface
         $localTransfer->fromArray($localEntity->toArray());
 
         return $localTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesTransfers
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
+     *
+     * @return void
+     */
+    protected function createCmsPageLocalizedAttributes($cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
+    {
+        foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
+            $pageLocalizedAttributesEntity = new SpyCmsPageLocalizedAttributes();
+            $pageLocalizedAttributesEntity->fromArray($localizedAttributesTransfer->modifiedToArray());
+            $pageLocalizedAttributesEntity->setFkCmsPage($pageEntity->getIdCmsPage());
+            $pageLocalizedAttributesEntity->save();
+
+            $localizedAttributesTransfer->fromArray($pageLocalizedAttributesEntity->toArray(), true);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesTransfers
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
+     *
+     * @return void
+     */
+    protected function updateCmsPageLocalizedAttributes($cmsPageLocalizedAttributesTransfers, SpyCmsPage $pageEntity)
+    {
+        foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
+            $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesForPage($pageEntity, $localizedAttributesTransfer);
+            $cmsPageLocalizedAttributesEntity->fromArray(array_filter($localizedAttributesTransfer->modifiedToArray()));
+            $cmsPageLocalizedAttributesEntity->save();
+
+            $localizedAttributesTransfer->fromArray($cmsPageLocalizedAttributesEntity->toArray(), true);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
+     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
+     */
+    protected function getLocalizedAttributesForPage(SpyCmsPage $pageEntity, CmsPageLocalizedAttributesTransfer $localizedAttributesTransfer)
+    {
+        $fkLocale = $localizedAttributesTransfer
+            ->requireFkLocale()
+            ->getFkLocale();
+
+        $cmsPageLocalizedAttributesQuery = $this->cmsQueryContainer
+            ->queryCmsPageLocalizedAttributes()
+            ->filterByFkCmsPage($pageEntity->getIdCmsPage())
+            ->filterByFkLocale($fkLocale);
+
+        if ($localizedAttributesTransfer->getIdCmsPageLocalizedAttributes()) {
+            $cmsPageLocalizedAttributesQuery->filterByIdCmsPageLocalizedAttributes($localizedAttributesTransfer->getIdCmsPageLocalizedAttributes());
+        }
+
+        return $cmsPageLocalizedAttributesQuery->findOneOrCreate();
     }
 
 }

@@ -20,10 +20,33 @@
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
+        <column name="is_searchable" type="BOOLEAN" required="true" default="false"/>
         <foreign-key name="spy_cms_page-fk_template" foreignTable="spy_cms_template" phpName="CmsTemplate" onDelete="CASCADE">
             <reference foreign="id_cms_template" local="fk_template"/>
         </foreign-key>
         <id-method-parameter value="spy_cms_page_pk_seq"/>
+    </table>
+
+    <table name="spy_cms_page_localized_attributes" phpName="SpyCmsPageLocalizedAttributes">
+        <column name="id_cms_page_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_cms_page" required="true" type="INTEGER"/>
+        <column name="fk_locale" required="true" type="INTEGER"/>
+        <column name="name" required="true" type="VARCHAR"/>
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" />
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" />
+        <foreign-key name="spy_cms_page_localized_attributes-fk_cms_page" foreignTable="spy_cms_page" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_cms_page" foreign="id_cms_page"/>
+        </foreign-key>
+        <foreign-key name="spy_cms_page_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+        <unique name="spy_cms_page_localized_attributes-unique-fk_cms_page">
+            <unique-column name="fk_cms_page"/>
+            <unique-column name="fk_locale"/>
+        </unique>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_cms_page_localized_attributes_pk_seq"/>
     </table>
 
     <table name="spy_cms_glossary_key_mapping" phpName="SpyCmsGlossaryKeyMapping">

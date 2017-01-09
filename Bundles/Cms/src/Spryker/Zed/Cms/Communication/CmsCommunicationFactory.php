@@ -16,6 +16,7 @@ use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
@@ -100,7 +101,19 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageFormDataProvider()
     {
-        return new CmsPageFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
+        return new CmsPageFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->createCmsPageLocalizedAttributesFormDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider
+     */
+    public function createCmsPageLocalizedAttributesFormDataProvider()
+    {
+        return new CmsPageLocalizedAttributesFormDataProvider($this->getQueryContainer());
     }
 
     /**

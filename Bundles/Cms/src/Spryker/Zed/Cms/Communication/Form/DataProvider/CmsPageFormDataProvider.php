@@ -14,17 +14,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 class CmsPageFormDataProvider
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
-
-    const PAGE = 'Page';
-
-    const FIELD_URL = 'url';
-    const FIELD_ID_CMS_PAGE = 'idCmsPage';
-    const FIELD_FK_TEMPLATE = 'fkTemplate';
-    const FIELD_CURRENT_TEMPLATE = 'cur_temp';
-    const FIELD_IS_ACTIVE = 'is_active';
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -36,13 +25,23 @@ class CmsPageFormDataProvider
     protected $cmsToLocaleInterface;
 
     /**
+     * @var \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider
+     */
+    private $cmsPageLocalizedAttributesFormDataProvider;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $cmsToLocaleInterface
+     * @param \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider $cmsPageLocalizedAttributesFormDataProvider
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToLocaleInterface $cmsToLocaleInterface)
-    {
+    public function __construct(
+        CmsQueryContainerInterface $cmsQueryContainer,
+        CmsToLocaleInterface $cmsToLocaleInterface,
+        CmsPageLocalizedAttributesFormDataProvider $cmsPageLocalizedAttributesFormDataProvider
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->cmsToLocaleInterface = $cmsToLocaleInterface;
+        $this->cmsPageLocalizedAttributesFormDataProvider = $cmsPageLocalizedAttributesFormDataProvider;
     }
 
     /**
@@ -69,6 +68,9 @@ class CmsPageFormDataProvider
             CmsPageForm::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
             CmsPageForm::FIELD_IS_ACTIVE => $pageUrlTemplate->getIsActive(),
             CmsPageForm::FIELD_ID_URL => $pageUrlTemplate->getVirtualColumn('idUrl'),
+            CmsPageForm::FIELD_IS_SEARCHABLE => $pageUrlTemplate->getIsSearchable(),
+            CmsPageForm::FIELD_LOCALIZED_ATTRIBUTES => $this->cmsPageLocalizedAttributesFormDataProvider
+                ->getData($pageUrlTemplate->getIdCmsPage(), $pageUrlTemplate->getVirtualColumn('idLocale')),
         ];
     }
 
