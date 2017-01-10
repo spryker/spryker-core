@@ -9,6 +9,7 @@ namespace Spryker\Zed\User\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserUpdateForm extends UserForm
 {
@@ -23,7 +24,18 @@ class UserUpdateForm extends UserForm
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(self::OPTION_STATUS_CHOICES);
-        $resolver->setRequired(self::OPTION_GROUP_CHOICES);
+    }
+
+    /**
+     * @deprecated Use `configureOptions()` instead.
+     *
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**
