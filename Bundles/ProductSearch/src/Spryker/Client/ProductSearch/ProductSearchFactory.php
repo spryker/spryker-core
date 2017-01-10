@@ -22,6 +22,14 @@ class ProductSearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    public function getStorageClient()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
      * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore()

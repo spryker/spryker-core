@@ -127,12 +127,4 @@ abstract class AbstractFactory
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
-    /**
-     * @return \Spryker\Client\Storage\StorageClient
-     */
-    public function getStorageClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_KV_STORAGE);
-    }
-
 }

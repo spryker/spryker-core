@@ -1,10 +1,5 @@
 {
   "name": "spryker/kernel",
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
   "require": {
     "php": ">=5.6.0",
     "everon/collection": "^1.0.0",
@@ -14,7 +9,6 @@
     "spryker/search": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
     "spryker/session": "^2.0.0",
     "spryker/silex": "^2.0.0",
-    "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/transfer": "^2.0.0",
     "spryker/zed-request": "^2.5.0",
@@ -42,6 +36,11 @@
   ],
   "config": {
     "sort-packages": true
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
   },
   "autoload-dev": {
     "psr-0": {

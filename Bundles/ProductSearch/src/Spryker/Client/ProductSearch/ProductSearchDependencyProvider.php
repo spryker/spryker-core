@@ -15,6 +15,7 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
 {
 
     const STORE = 'store';
+    const CLIENT_STORAGE = 'storage client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -25,7 +26,8 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $this->provideStore($container);
+        $container = $this->provideStore($container);
+        $container = $this->addStorageClient($container);
 
         return $container;
     }
@@ -33,13 +35,29 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function provideStore(Container $container)
     {
         $container[self::STORE] = function () {
             return Store::getInstance();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStorageClient(Container $container)
+    {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
+            return $container->getLocator()->storage()->client();
+        };
+
+        return $container;
     }
 
 }
