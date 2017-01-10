@@ -38,4 +38,12 @@ class PayolutionFactory extends AbstractFactory
         return new PayolutionStub($this->getZedRequestClient());
     }
 
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
 }

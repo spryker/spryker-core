@@ -38,4 +38,12 @@ class CartFactory extends AbstractFactory
         return new CartStub($this->getZedRequestClient());
     }
 
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
 }

@@ -7,20 +7,20 @@
 
 namespace Spryker\Client\ZedRequest\Stub;
 
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class ZedRequestStub
 {
 
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
     protected $zedStub;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedStub
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(ZedRequestClientInterface $zedStub)
     {
         $this->zedStub = $zedStub;
     }

@@ -111,12 +111,4 @@ abstract class AbstractFactory
         $dependencyProvider->provideServiceLayerDependencies($container);
     }
 
-    /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClient
-     */
-    public function getZedRequestClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
 }
