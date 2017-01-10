@@ -10,7 +10,6 @@ namespace Functional\Spryker\Client\Kernel;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 /**
@@ -42,17 +41,6 @@ class AbstractDependencyProviderTest extends PHPUnit_Framework_TestCase
         $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
         $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
         $this->assertInstanceOf(ZedRequestClientInterface::class, $container[AbstractDependencyProvider::CLIENT_ZED_REQUEST]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerShouldContainSearchClient()
-    {
-        $container = new Container();
-        $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
-        $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
-        $this->assertInstanceOf(SearchClientInterface::class, $container[AbstractDependencyProvider::CLIENT_SEARCH]);
     }
 
     /**
