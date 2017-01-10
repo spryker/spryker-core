@@ -112,14 +112,6 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClient
-     */
-    public function getSessionClient()
-    {
-        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SESSION);
-    }
-
-    /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClient
      */
     public function getZedRequestClient()

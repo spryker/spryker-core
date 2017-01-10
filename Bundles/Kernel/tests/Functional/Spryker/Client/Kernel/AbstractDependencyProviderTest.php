@@ -11,7 +11,6 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\SearchClientInterface;
-use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 /**
@@ -32,17 +31,6 @@ class AbstractDependencyProviderTest extends PHPUnit_Framework_TestCase
         $container = new Container();
         $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
         $this->assertInstanceOf(Container::class, $abstractDependencyContainerMock->provideServiceLayerDependencies($container));
-    }
-
-    /**
-     * @return void
-     */
-    public function testContainerShouldContainSessionClient()
-    {
-        $container = new Container();
-        $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();
-        $abstractDependencyContainerMock->provideServiceLayerDependencies($container);
-        $this->assertInstanceOf(SessionClientInterface::class, $container[AbstractDependencyProvider::CLIENT_SESSION]);
     }
 
     /**

@@ -15,11 +15,19 @@ class CartFactory extends AbstractFactory
 {
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
      */
     public function createSession()
     {
         return new QuoteSession($this->getSessionClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CLIENT_SESSION);
     }
 
     /**

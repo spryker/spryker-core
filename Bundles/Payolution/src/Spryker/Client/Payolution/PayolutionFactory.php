@@ -15,11 +15,19 @@ class PayolutionFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\Payolution\Session\PayolutionSession
+     * @return \Spryker\Client\Payolution\Session\PayolutionSessionInterface
      */
     public function createPayolutionSession()
     {
         return new PayolutionSession($this->getSessionClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_SESSION);
     }
 
     /**

@@ -11,7 +11,6 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
 {
 
     const CLIENT_ZED_REQUEST = 'zed request client';
-    const CLIENT_SESSION = 'session client';
     const CLIENT_SEARCH = 'search client';
 
     /**
@@ -21,23 +20,10 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $this->addSessionClient($container);
         $this->addZedClient($container);
         $this->addSearchClient($container);
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addSessionClient(Container $container)
-    {
-        $container[self::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
-        };
     }
 
     /**
