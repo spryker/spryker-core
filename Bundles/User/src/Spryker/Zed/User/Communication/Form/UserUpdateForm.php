@@ -24,6 +24,7 @@ class UserUpdateForm extends UserForm
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(self::OPTION_STATUS_CHOICES);
+        $resolver->setRequired(self::OPTION_GROUP_CHOICES);
     }
 
     /**
