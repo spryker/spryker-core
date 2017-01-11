@@ -17,7 +17,7 @@ use Spryker\Zed\Navigation\NavigationConfig;
  * @group Navigation
  * @group NavigationConfigTest
  */
-class ApplicationConfigTest extends PHPUnit_Framework_TestCase
+class NavigationConfigTest extends PHPUnit_Framework_TestCase
 {
 
     /**

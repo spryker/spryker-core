@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Service\UtilDateTime;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Service\Kernel\Container;
 use Spryker\Service\UtilDateTime\UtilDateTimeDependencyProvider;
 
@@ -17,7 +18,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeDependencyProvider;
  * @group UtilDateTime
  * @group UtilDateTimeDependencyProviderTest
  */
-class UtilDateTimeDependencyProviderTest extends \PHPUnit_Framework_TestCase
+class UtilDateTimeDependencyProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**

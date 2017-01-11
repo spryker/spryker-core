@@ -7,9 +7,12 @@
 
 namespace Functional\Spryker\Service\UtilDateTime\ServiceProvider;
 
+use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 /**
  * @group Functional
@@ -19,7 +22,7 @@ use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvide
  * @group ServiceProvider
  * @group DateTimeFormatterServiceProviderTest
  */
-class DateTimeFormatterServiceProviderTest extends \PHPUnit_Framework_TestCase
+class DateTimeFormatterServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -43,7 +46,7 @@ class DateTimeFormatterServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $application = new Application();
         $application['twig'] = function () {
-            return new \Twig_Environment(new \Twig_Loader_Filesystem());
+            return new Twig_Environment(new Twig_Loader_Filesystem());
         };
 
         return $application;

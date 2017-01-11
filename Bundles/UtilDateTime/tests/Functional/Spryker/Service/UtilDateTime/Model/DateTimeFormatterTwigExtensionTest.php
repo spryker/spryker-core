@@ -7,6 +7,7 @@
 
 namespace Functional\Spryker\Service\UtilDateTime\Model;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Shared\Twig\TwigFilter;
@@ -19,7 +20,7 @@ use Spryker\Shared\Twig\TwigFilter;
  * @group Model
  * @group DateTimeFormatterTwigExtensionTest
  */
-class DateTimeFormatterTwigExtensionTest extends \PHPUnit_Framework_TestCase
+class DateTimeFormatterTwigExtensionTest extends PHPUnit_Framework_TestCase
 {
 
     const DATE_TO_FORMAT = '1980-12-06 08:00:00';

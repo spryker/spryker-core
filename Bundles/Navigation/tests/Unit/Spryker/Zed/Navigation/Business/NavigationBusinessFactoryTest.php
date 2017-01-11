@@ -19,7 +19,7 @@ use Spryker\Zed\Navigation\Business\NavigationBusinessFactory;
  * @group Business
  * @group NavigationBusinessFactoryTest
  */
-class ApplicationBusinessFactoryTest extends PHPUnit_Framework_TestCase
+class NavigationBusinessFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**

@@ -9,6 +9,8 @@ namespace Functional\Spryker\Service\UtilDateTime;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
@@ -20,7 +22,7 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
  * @group UtilDateTime
  * @group UtilDateTimeServiceTest
  */
-class UtilDateTimeServiceTest extends \PHPUnit_Framework_TestCase
+class UtilDateTimeServiceTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -130,7 +132,7 @@ class UtilDateTimeServiceTest extends \PHPUnit_Framework_TestCase
     protected function prepareConfig(array $config)
     {
         Config::init();
-        $reflectionClass = new \ReflectionClass(Config::class);
+        $reflectionClass = new ReflectionClass(Config::class);
         $reflectionProperty = $reflectionClass->getProperty('config');
         $reflectionProperty->setAccessible(true);
         $configuration = $reflectionProperty->getValue();

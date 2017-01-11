@@ -18,7 +18,7 @@ use Spryker\Zed\Navigation\Business\NavigationFacade;
  * @group Business
  * @group NavigationFacadeTest
  */
-class ApplicationFacadeTest extends PHPUnit_Framework_TestCase
+class NavigationFacadeTest extends PHPUnit_Framework_TestCase
 {
 
     /**

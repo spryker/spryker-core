@@ -7,6 +7,9 @@
 
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
-interface CountableIteratorInterface extends \Iterator, \Countable
+use Countable;
+use Iterator;
+
+interface CountableIteratorInterface extends Iterator, Countable
 {
 }

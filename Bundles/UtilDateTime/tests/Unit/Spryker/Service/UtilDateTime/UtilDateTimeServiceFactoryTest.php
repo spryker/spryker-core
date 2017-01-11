@@ -7,6 +7,7 @@
 
 namespace Unit\Spryker\Service\UtilDateTime;
 
+use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
 
@@ -17,7 +18,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
  * @group UtilDateTime
  * @group UtilDateTimeServiceFactoryTest
  */
-class UtilDateTimeServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class UtilDateTimeServiceFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**
