@@ -7,19 +7,14 @@
 
 namespace Spryker\Zed\Sales\Communication\Table;
 
-use DateTime;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Library\DateFormatterInterface;
 use Spryker\Shared\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Library\Sanitize\Html;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable
 {
@@ -31,18 +26,13 @@ class OrdersTable extends AbstractTable
     const URL_SALES_DETAIL = '/sales/detail';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
-    const FILTER_DAY = 'day';
-    const FILTER_WEEK = 'week';
+    const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
 
     /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
      */
-    protected $orderQuery;
-
-    /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    protected $orderItemQuery;
+    protected $queryBuilder;
 
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacade
@@ -60,24 +50,29 @@ class OrdersTable extends AbstractTable
     protected $moneyFacade;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $orderItemQuery
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeInterface
+     */
+    protected $sanitizeService;
+
+    /**
+     * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeInterface $sanitizeService
      */
     public function __construct(
-        SpySalesOrderQuery $orderQuery,
-        SpySalesOrderItemQuery $orderItemQuery,
+        OrdersTableQueryBuilderInterface $queryBuilder,
         SalesToSalesAggregatorInterface $salesAggregatorFacade,
         DateFormatterInterface $dateFormatter,
-        SalesToMoneyInterface $moneyFacade
+        SalesToMoneyInterface $moneyFacade,
+        SalesToUtilSanitizeInterface $sanitizeService
     ) {
-        $this->orderQuery = $orderQuery;
-        $this->orderItemQuery = $orderItemQuery;
+        $this->queryBuilder = $queryBuilder;
         $this->salesAggregatorFacade = $salesAggregatorFacade;
         $this->dateFormatter = $dateFormatter;
         $this->moneyFacade = $moneyFacade;
+        $this->sanitizeService = $sanitizeService;
     }
 
     /**
@@ -93,6 +88,7 @@ class OrdersTable extends AbstractTable
 
         $config->addRawColumn(self::URL);
         $config->addRawColumn(SpySalesOrderTableMap::COL_FK_CUSTOMER);
+        $config->addRawColumn(SpySalesOrderTableMap::COL_EMAIL);
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -100,42 +96,6 @@ class OrdersTable extends AbstractTable
         $this->persistFilters($config);
 
         return $config;
-    }
-
-    /**
-     * @param int $value
-     * @param bool $includeSymbol
-     *
-     * @return string
-     */
-    protected function formatPrice($value, $includeSymbol = true)
-    {
-        $moneyTransfer = $this->moneyFacade->fromInteger($value);
-
-        if ($includeSymbol) {
-            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
-        }
-
-        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function formatCustomer(array $item)
-    {
-        $customer = $item[SpySalesOrderTableMap::COL_FIRST_NAME] . ' ' . $item[SpySalesOrderTableMap::COL_LAST_NAME];
-        $customer = Html::escape($customer);
-        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]) {
-            $url = Url::generate('/customer/view', [
-                'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
-            ]);
-            $customer = '<a href="' . $url . '">' . $customer . '</a>';
-        }
-
-        return $customer;
     }
 
     /**
@@ -155,15 +115,89 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->dateFormatter->dateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
-                SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
-                SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],
+                SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
+                static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
                 self::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
+                static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 self::URL => implode(' ', $this->createActionUrls($item)),
             ];
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function formatCustomer(array $item)
+    {
+        $salutation = $item[SpySalesOrderTableMap::COL_SALUTATION];
+
+        $customer = sprintf(
+            '%s%s %s',
+            $salutation ? $salutation . ' ' : '',
+            $item[SpySalesOrderTableMap::COL_FIRST_NAME],
+            $item[SpySalesOrderTableMap::COL_LAST_NAME]
+        );
+
+        $customer = $this->sanitizeService->escapeHtml($customer);
+
+        if ($item[SpySalesOrderTableMap::COL_FK_CUSTOMER]) {
+            $url = Url::generate('/customer/view', [
+                'id-customer' => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
+            ]);
+            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        }
+
+        return $customer;
+    }
+
+    /**
+     * @param string $emailAddress
+     *
+     * @return string
+     */
+    protected function formatEmailAddress($emailAddress)
+    {
+        $escapedEmailAddress = $this->sanitizeService->escapeHtml($emailAddress);
+        $emailAddressLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $escapedEmailAddress);
+
+        return $emailAddressLink;
+    }
+
+    /**
+     * @param string $itemStateNamesCsv
+     *
+     * @return string
+     */
+    protected function groupItemStateNames($itemStateNamesCsv)
+    {
+        $itemStateNames = explode(',', $itemStateNamesCsv);
+        $itemStateNames = array_map('trim', $itemStateNames);
+        $distinctItemStateNames = array_unique($itemStateNames);
+        $distinctItemStateNamesCsv = implode(', ', $distinctItemStateNames);
+
+        return $distinctItemStateNamesCsv;
+    }
+
+    /**
+     * @param int $value
+     * @param bool $includeSymbol
+     *
+     * @return string
+     */
+    protected function formatPrice($value, $includeSymbol = true)
+    {
+        $moneyTransfer = $this->moneyFacade->fromInteger($value);
+
+        if ($includeSymbol) {
+            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        }
+
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
@@ -190,30 +224,11 @@ class OrdersTable extends AbstractTable
      */
     protected function buildQuery()
     {
-        $query = $this->orderQuery;
-
         $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
-        if (!$idOrderItemProcess) {
-            return $query;
-        }
-
         $idOrderItemItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
-
-        $filterQuery = $this->orderItemQuery
-            ->filterByFkOmsOrderProcess($idOrderItemProcess)
-            ->filterByFkOmsOrderItemState($idOrderItemItemState);
-
         $filter = $this->request->query->get(self::FILTER);
-        $this->addRangeFilter($filterQuery, $filter);
 
-        $orders = $filterQuery->groupByFkSalesOrder()
-            ->select(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
-            ->find()
-            ->toArray();
-
-        $query->filterByIdSalesOrder($orders, Criteria::IN);
-
-        return $query;
+        return $this->queryBuilder->buildQuery($idOrderItemProcess, $idOrderItemItemState, $filter);
     }
 
     /**
@@ -257,13 +272,14 @@ class OrdersTable extends AbstractTable
     protected function getHeaderFields()
     {
         return [
-            SpySalesOrderTableMap::COL_ID_SALES_ORDER => 'Order Id',
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER => '#',
             SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
             SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
-            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer',
+            SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Full Name',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
-            SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
+            static::ITEM_STATE_NAMES_CSV => 'Order State',
             self::GRAND_TOTAL => 'GrandTotal',
+            static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
             self::URL => 'Actions',
         ];
     }
@@ -278,7 +294,6 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
-            SpySalesOrderTableMap::COL_FIRST_NAME,
         ];
     }
 
@@ -292,26 +307,8 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
-            SpySalesOrderTableMap::COL_FIRST_NAME,
+            static::NUMBER_OF_ORDER_ITEMS,
         ];
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $filterQuery
-     * @param string $filter
-     *
-     * @return void
-     */
-    protected function addRangeFilter(SpySalesOrderItemQuery $filterQuery, $filter)
-    {
-        if ($filter === self::FILTER_DAY) {
-            $filterQuery->filterByLastStateChange(new DateTime('-1 day'), Criteria::GREATER_THAN);
-        } elseif ($filter === self::FILTER_WEEK) {
-            $filterQuery->filterByLastStateChange(new DateTime('-1 day'), Criteria::LESS_EQUAL);
-            $filterQuery->filterByLastStateChange(new DateTime('-7 day'), Criteria::GREATER_EQUAL);
-        } else {
-            $filterQuery->filterByLastStateChange(new DateTime('-7 day'), Criteria::LESS_THAN);
-        }
     }
 
 }
