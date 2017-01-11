@@ -118,8 +118,10 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::RENDERER] = function () {
             $twig = $this->getTwigEnvironment();
-            $translator = new TwigTranslatorPlugin();
-            $twig->addExtension($translator);
+            if (!$twig->hasExtension(TwigTranslatorPlugin::class)) {
+                $translator = new TwigTranslatorPlugin();
+                $twig->addExtension($translator);
+            }
             $rendererBridge = new MailToRendererBridge($twig);
 
             return $rendererBridge;
