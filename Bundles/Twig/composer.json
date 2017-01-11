@@ -7,6 +7,7 @@
   },
   "require": {
     "spryker/kernel": "^2.0.0",
+    "spryker/zend": "^2.0.0",
     "twig/twig": "^1.20.0"
   },
   "require-dev": {
