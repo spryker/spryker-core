@@ -41,5 +41,4 @@ class CollectorDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
-
 }

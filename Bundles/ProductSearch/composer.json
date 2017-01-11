@@ -14,6 +14,7 @@
     "spryker/product": "^4.0.0",
     "spryker/propel": "^2.2.0",
     "spryker/search": "^5.0.0",
+    "spryker/storage": "^3.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0",
     "spryker/util-data-reader": "^1.0.0"

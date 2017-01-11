@@ -9,6 +9,7 @@
     "spryker/calculation": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/messenger": "^2.0.0",
+    "spryker/session": "^3.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/zed-request": "^2.0.0"
   },
