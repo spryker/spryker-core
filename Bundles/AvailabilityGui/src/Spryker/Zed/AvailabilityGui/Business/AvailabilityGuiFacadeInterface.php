@@ -5,10 +5,10 @@
  */
 namespace Spryker\Zed\AvailabilityGui\Business;
 
-
 /**
  * @method \Spryker\Zed\AvailabilityGui\Business\AvailabilityGuiBusinessFactory getFactory()
  */
 interface AvailabilityGuiFacadeInterface
 {
+
 }
