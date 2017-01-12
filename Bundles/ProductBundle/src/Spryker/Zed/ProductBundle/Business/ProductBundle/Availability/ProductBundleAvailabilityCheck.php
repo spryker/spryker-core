@@ -112,8 +112,13 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
 
             if (!$this->checkIfItemIsSellable($itemsInCart, $sku, $itemQuantity)) {
                 $available = $this->availabilityFacade->calculateStockForProduct($sku);
+
+                $quantityWithBundles = $this->getAccumulatedItemQuantityForBundledProductsByGivenSku(
+                    $itemsInCart,
+                    $itemTransfer->getSku()
+                );
                 $cartPreCheckErrorMessages->append(
-                    $this->createItemIsNotAvailableMessageTransfer($available)
+                    $this->createItemIsNotAvailableMessageTransfer($available - $quantityWithBundles)
                 );
             }
 
@@ -132,6 +137,30 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     {
         $quantity = 0;
         foreach ($items as $itemTransfer) {
+            if ($itemTransfer->getSku() !== $sku) {
+                continue;
+            }
+            $quantity += $itemTransfer->getQuantity();
+        }
+
+        return $quantity;
+    }
+
+
+    /**
+     * @param \ArrayObject $items
+     * @param string $sku
+     *
+     * @return int
+     */
+    protected function getAccumulatedItemQuantityForBundledProductsByGivenSku(ArrayObject $items, $sku)
+    {
+        $quantity = 0;
+        foreach ($items as $itemTransfer) {
+            if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
+                continue;
+            }
+
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
