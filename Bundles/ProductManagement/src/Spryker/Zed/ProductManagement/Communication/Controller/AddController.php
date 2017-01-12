@@ -81,7 +81,7 @@ class AddController extends AbstractController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'productFormAddTabs' => $this->getFactory()->createProductFormAddTabs()->createView(),
-            'type' => $type
+            'type' => $type,
         ]);
     }
 

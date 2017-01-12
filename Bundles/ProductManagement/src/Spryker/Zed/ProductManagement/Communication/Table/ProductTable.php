@@ -193,7 +193,6 @@ class ProductTable extends AbstractProductTable
         foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
             if ($spyProductEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
                 return 'Yes';
-                break;
             }
         }
 

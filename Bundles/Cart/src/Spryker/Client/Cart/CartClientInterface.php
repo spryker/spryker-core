@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -71,7 +72,7 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(\ArrayObject $items);
+    public function removeItems(ArrayObject $items);
 
     /**
      * @api

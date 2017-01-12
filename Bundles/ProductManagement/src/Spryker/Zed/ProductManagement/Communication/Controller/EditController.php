@@ -201,7 +201,7 @@ class EditController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs($type)->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
-            'type' => $type
+            'type' => $type,
         ]);
     }
 

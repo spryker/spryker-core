@@ -66,7 +66,7 @@ class BundledProductForm extends AbstractType
                     'pattern' => self::NUMERIC_PATTERN,
                     'message' => 'Invalid quantity provided. Valid values "0-9".',
                 ]),
-            ]
+            ],
         ]);
 
         return $this;
@@ -82,7 +82,7 @@ class BundledProductForm extends AbstractType
         $builder->add(self::FIELD_ID_PRODUCT_CONCRETE, 'hidden', [
             'label' => 'quantity',
             'required' => false,
-            'constraints' => []
+            'constraints' => [],
         ]);
 
         return $this;

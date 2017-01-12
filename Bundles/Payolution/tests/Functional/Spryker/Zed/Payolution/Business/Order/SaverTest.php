@@ -28,7 +28,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Order\Saver;
 use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;

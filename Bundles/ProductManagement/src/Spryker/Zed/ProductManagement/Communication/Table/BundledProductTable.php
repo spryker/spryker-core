@@ -122,7 +122,7 @@ class BundledProductTable extends AbstractTable
             static::COL_SELECT,
             static::COL_PRICE,
             static::COL_AVAILABILITY,
-            SpyProductTableMap::COL_SKU
+            SpyProductTableMap::COL_SKU,
         ]);
 
         $config->setSearchable([
@@ -134,7 +134,7 @@ class BundledProductTable extends AbstractTable
             SpyProductLocalizedAttributesTableMap::COL_NAME,
             SpyProductTableMap::COL_SKU,
             SpyStockProductTableMap::COL_QUANTITY,
-            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK
+            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK,
         ]);
 
         return $config;
@@ -170,7 +170,7 @@ class BundledProductTable extends AbstractTable
                 static::COL_SELECT => $this->addCheckBox($item),
                 static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
-                SpyProductTableMap::COL_SKU =>$this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
+                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
                 static::COL_PRICE => $this->getFormatedPrice($item->getSku()),
                 SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
                 static::COL_AVAILABILITY => $availability,

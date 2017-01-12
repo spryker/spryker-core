@@ -95,7 +95,7 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return void
      */
-    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer , array $cartIndex)
+    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
     {
         $existingItemTransfer = null;
         $itemIndex = null;

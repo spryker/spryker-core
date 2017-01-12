@@ -127,7 +127,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(\ArrayObject $items)
+    public function removeItems(ArrayObject $items)
     {
         $cartChangeTransfer = $this->createCartChangeTransfer();
         $cartChangeTransfer->setItems($items);

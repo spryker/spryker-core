@@ -143,7 +143,6 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
             $expenseTransfer->setUnitItemTotal($expenseTransfer->getUnitGrossPriceWithDiscounts());
             $expenseTransfer->setSumItemTotal($expenseTransfer->getSumGrossPriceWithDiscounts());
 
-
         }
     }
 

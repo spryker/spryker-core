@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -71,7 +72,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $url = Url::generate('bundled-product-availability-table', [
-            BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle
+            BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle,
         ])->build();
 
         $config->setUrl($url);
@@ -89,12 +90,12 @@ class BundledProductAvailabilityTable extends AbstractTable
             AvailabilityQueryContainer::CONCRETE_NAME,
             AvailabilityQueryContainer::CONCRETE_AVAILABILITY,
             AvailabilityQueryContainer::STOCK_QUANTITY,
-            AvailabilityQueryContainer::RESERVATION_QUANTITY
+            AvailabilityQueryContainer::RESERVATION_QUANTITY,
         ]);
 
         $config->setSearchable([
             SpyProductTableMap::COL_SKU,
-            SpyProductLocalizedAttributesTableMap::COL_NAME
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
         ]);
 
         $config->setDefaultSortColumnIndex(0);

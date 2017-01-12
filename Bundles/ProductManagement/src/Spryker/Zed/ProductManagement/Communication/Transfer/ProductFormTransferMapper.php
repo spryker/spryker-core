@@ -479,7 +479,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             return $productConcreteTransfer;
         }
 
-        $productsToBeBundled = new \ArrayObject();
+        $productsToBeBundled = new ArrayObject();
         $productBundleTransfer = new ProductBundleTransfer();
         foreach ($form->getData()[ProductConcreteFormEdit::FORM_ASSIGNED_BUNDLED_PRODUCTS] as $bundledProduct) {
             $productForBundleTransfer = new ProductForBundleTransfer();
