@@ -32,7 +32,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function findUrl(UrlTransfer $urlTransfer);
 
@@ -95,7 +95,7 @@ interface UrlFacadeInterface
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer|null
      */
     public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 

@@ -7,11 +7,15 @@
 
 namespace Spryker\Shared\Url;
 
+use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
-use Spryker\Zed\Library\Sanitize\Html;
 
 /**
  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.
+ *
+ * @deprecated Use UrlService instead.
+ *
+ * TODO: implement this in service layer
  */
 class Url
 {
@@ -170,7 +174,9 @@ class Url
      */
     public function buildEscaped()
     {
-        return Html::escape($this->build());
+        $utilSanitizeService = new UtilSanitizeService();
+
+        return $utilSanitizeService->escapeHtml($this->build());
     }
 
     /**

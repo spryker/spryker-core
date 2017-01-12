@@ -7,6 +7,11 @@
 
 namespace Spryker\Shared\Url;
 
+/**
+ * @deprecated Use UrlService instead.
+ *
+ * TODO: implement UrlBuilder in service
+ */
 class UrlBuilder implements UrlBuilderInterface
 {
 

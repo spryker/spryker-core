@@ -58,6 +58,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         return $urlManager->convertUrlEntityToTransfer($pageUrl);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
     public function findUrl(UrlTransfer $urlTransfer)
     {
         // TODO: implement new logic
@@ -82,6 +89,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @deprecated
      *
      * @param string $url
@@ -95,6 +104,13 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         return $urlManager->hasUrl($url);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
     public function updateUrl(UrlTransfer $urlTransfer)
     {
         // TODO: implement new logic
@@ -118,31 +134,73 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         // TODO implement new logic instead old
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
     public function activateUrl(UrlTransfer $urlTransfer)
     {
         // TODO: implement new logic
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
     public function deactivateUrl(UrlTransfer $urlTransfer)
     {
         // TODO: implement new logic
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
     public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         // TODO: implement new logic
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer|null
+     */
     public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         // TODO: implement new logic
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
     public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         // TODO: implement new logic
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
     public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         // TODO: implement new logic
@@ -153,7 +211,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * TODO: (has 1 usage in CMS bundle)
      *
-     * @param UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
      *
      * @return void
      */
@@ -167,9 +225,11 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @deprecated
      *
-     * @param RedirectTransfer $urlRedirectTransfer
+     * @param \Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
      *
      * @return void
      */
@@ -178,19 +238,29 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         $this->getFactory()->createRedirectManager()->deleteUrlRedirect($urlRedirectTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
     public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         // TODO: implement new logic
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectTransfer
+     */
     public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         // TODO: implement new logic
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // ------------------------------------------ N e w   A P I   m e t h o d s ----------------------------------------
-    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * @api
