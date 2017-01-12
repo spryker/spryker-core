@@ -172,18 +172,6 @@ interface CmsFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param string $url
-     *
-     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createPageUrl(PageTransfer $pageTransfer, $url);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void

@@ -16,6 +16,18 @@
         <property name="validTo" type="string" />
         <property name="url" type="Url" />
         <property name="isActive" type="string" />
+        <property name="isSearchable" type="bool" />
+        <property name="localizedAttributes" type="CmsPageLocalizedAttributes[]" singular="localizedAttribute" />
+    </transfer>
+
+    <transfer name="CmsPageLocalizedAttributes">
+        <property name="idCmsPageLocalizedAttributes" type="int" />
+        <property name="fkCmsPage" type="int" />
+        <property name="fkLocale" type="int" />
+        <property name="name" type="string" />
+        <property name="metaTitle" type="string" />
+        <property name="metaKeywords" type="string" />
+        <property name="metaDescription" type="string" />
     </transfer>
 
     <transfer name="PageKeyMapping">

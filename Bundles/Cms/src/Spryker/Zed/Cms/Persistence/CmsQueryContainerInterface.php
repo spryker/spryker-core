@@ -178,4 +178,11 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      */
     public function queryLocaleById($idLocale);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributes();
+
 }

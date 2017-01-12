@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -190,9 +191,12 @@ class PageController extends AbstractController
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($data, true);
-        unset($data['url']);
+        unset($data[CmsPageForm::FIELD_URL]);
 
         $pageTransfer = new PageTransfer();
+        $pageTransfer->addLocalizedAttribute($this->createCmsPageLocalizedAttributesTransfer($data));
+        unset($data[CmsPageForm::FIELD_LOCALIZED_ATTRIBUTES]);
+
         $pageTransfer->fromArray($data, true);
 
         $pageTransfer->setUrl($urlTransfer);
@@ -288,6 +292,21 @@ class PageController extends AbstractController
 
             $this->getFactory()->getGlossaryFacade()->createAndTouchTranslation($key, $localeTransfer, '');
         }
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer
+     */
+    protected function createCmsPageLocalizedAttributesTransfer(array $data)
+    {
+        $cmsPageLocalizedAttributesTransfer = new CmsPageLocalizedAttributesTransfer();
+        $cmsPageLocalizedAttributesTransfer
+            ->fromArray($data[CmsPageForm::FIELD_LOCALIZED_ATTRIBUTES], true)
+            ->setFkLocale($data[CmsPageForm::FIELD_FK_LOCALE]);
+
+        return $cmsPageLocalizedAttributesTransfer;
     }
 
 }

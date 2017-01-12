@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -226,28 +225,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         $glossaryKeyMappingManager = $this->getFactory()->createGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->deletePageKeyMapping($pageTransfer, $placeholder);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
-     * @param string $url @deprecated Will be removed with the next major
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function createPageUrl(PageTransfer $pageTransfer, $url)
-    {
-        $pageManager = $this->getFactory()->createPageManager();
-
-        // For BC reasons only
-        if ($url) {
-            $urlTransfer = new UrlTransfer();
-            $urlTransfer->setUrl($url);
-            $pageTransfer->setUrl($urlTransfer);
-        }
-
-        return $pageManager->createPageUrl($pageTransfer);
     }
 
     /**
