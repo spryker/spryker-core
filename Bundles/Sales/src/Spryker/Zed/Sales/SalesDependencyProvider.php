@@ -17,7 +17,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {

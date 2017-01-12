@@ -14,7 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable
 {
@@ -50,7 +50,7 @@ class OrdersTable extends AbstractTable
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeInterface
+     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface
      */
     protected $sanitizeService;
 
@@ -59,7 +59,7 @@ class OrdersTable extends AbstractTable
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSalesAggregatorInterface $salesAggregatorFacade
      * @param \Spryker\Shared\Library\DateFormatterInterface $dateFormatter
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToUtilSanitizeInterface $sanitizeService
+     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
