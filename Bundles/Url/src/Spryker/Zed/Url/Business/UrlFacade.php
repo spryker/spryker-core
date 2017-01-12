@@ -9,6 +9,7 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -21,14 +22,35 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $resourceType
-     * @param int $idResource
+     * TODO: replace all usages (has 3 usages in Category, ProductManagement and CMS bundle + some test usages)
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer)` format instead.
+     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer)` format instead.
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
+    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer, $resourceType = null, $idResource = null)
+    {
+        if (func_num_args() === 4) {
+            return $this->legacyCreateUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
+        }
+
+        // TODO: implement new logic
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string|null $resourceType
+     * @param int|null $idResource
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function legacyCreateUrl($url, LocaleTransfer $locale, $resourceType = null, $idResource = null)
     {
         $urlManager = $this->getFactory()->createUrlManager();
         $pageUrl = $urlManager->createUrl($url, $locale, $resourceType, $idResource);
@@ -36,8 +58,146 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         return $urlManager->convertUrlEntityToTransfer($pageUrl);
     }
 
+    public function findUrl(UrlTransfer $urlTransfer)
+    {
+        // TODO: implement new logic
+    }
+
     /**
      * @api
+     *
+     * TODO: (has 3 usages in Product, CMS and Category bundles)
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $url String format is only for BC reasons.
+     *
+     * @return bool
+     */
+    public function hasUrl($url)
+    {
+        if (is_string($url)) {
+            return $this->legacyHasUrl($url);
+        }
+
+        // TODO: implement new logic
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function legacyHasUrl($url)
+    {
+        $urlManager = $this->getFactory()->createUrlManager();
+
+        return $urlManager->hasUrl($url);
+    }
+
+    public function updateUrl(UrlTransfer $urlTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    /**
+     * @api
+     *
+     * TODO: (has 2 usages in Category and Product bundles)
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer)
+    {
+        $urlManager = $this->getFactory()->createUrlManager();
+
+        $urlManager->deleteUrl($urlTransfer);
+
+        // TODO implement new logic instead old
+    }
+
+    public function activateUrl(UrlTransfer $urlTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    public function deactivateUrl(UrlTransfer $urlTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    public function findUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    /**
+     * @api
+     *
+     * TODO: (has 1 usage in CMS bundle)
+     *
+     * @param UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect($urlRedirectTransfer)
+    {
+        if ($urlRedirectTransfer instanceof RedirectTransfer) {
+            $this->legacyDeleteUrlRedirect($urlRedirectTransfer);
+        }
+
+        // TODO implement new logic
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param RedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    protected function legacyDeleteUrlRedirect(RedirectTransfer $urlRedirectTransfer)
+    {
+        $this->getFactory()->createRedirectManager()->deleteUrlRedirect($urlRedirectTransfer);
+    }
+
+    public function activateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    {
+        // TODO: implement new logic
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------ N e w   A P I   m e t h o d s ----------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @api
+     *
+     * @deprecated Use createUrl() instead.
+     *
+     * TODO: (has 1 usage in CMS bundle)
      *
      * @param string $url
      * @param string $resourceType
@@ -56,6 +216,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrl/updateUrl instead.
+     *
+     * TODO: (has 0 usages + some test usages)
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -70,19 +234,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param string $url
+     * @deprecated Use hasUrl() instead.
      *
-     * @return bool
-     */
-    public function hasUrl($url)
-    {
-        $urlManager = $this->getFactory()->createUrlManager();
-
-        return $urlManager->hasUrl($url);
-    }
-
-    /**
-     * @api
+     * TODO: (has 0 usages + some test usages)
      *
      * @param int $idUrl
      *
@@ -98,6 +252,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use findUrl() instead.
+     *
+     * TODO: (has 1 usage in Category bundle)
+     *
      * @param string $urlString
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -112,6 +270,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated use findUrl() instead.
+     *
+     * TODO: (has 0 usages + some test usages)
      *
      * @param int $idUrl
      *
@@ -132,6 +294,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
+     * TODO: (has 1 usage in Category bundle)
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -148,6 +312,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @api
      *
      * @deprecated Will be removed with next major release
+     *
+     * TODO: (has 1 usage in Category bundle)
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -166,6 +332,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
+     * TODO: (has 1 usage in Category bundle)
+     *
      * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
@@ -180,6 +348,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use activateUrl() instead.
+     *
+     * TODO: (has 4 usages in Category, CMS, Product and ProductManagement bundles)
+     *
      * @param int $idUrl
      *
      * @return void
@@ -192,6 +364,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use deactivateUrl() instead.
+     *
+     * TODO: (has 3 usages in Category, CMS and Product bundles)
+     *
      * @param int $idUrl
      *
      * @return void
@@ -203,6 +379,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use createUrlRedirect() instead.
+     *
+     * TODO: (has 0 usages + some test usages)
      *
      * @param string $toUrl
      * @param int $status
@@ -220,6 +400,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrlRedirect() instead.
+     *
+     * TODO: (has 1 usage in CMS bundle)
+     *
      * @param string $toUrl
      * @param int $status
      *
@@ -235,6 +419,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use createUrlRedirect() instead.
+     *
+     * TODO: (has 0 usages + some test usages)
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -252,17 +440,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
-     * @return void
-     */
-    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer)
-    {
-        $this->getFactory()->createRedirectManager()->deleteUrlRedirect($redirectTransfer);
-    }
-
-    /**
-     * @api
+     * TODO: (has 1 usage in CMS bundle)
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -280,6 +460,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
+     *
+     * TODO: (has 0 usages + some test usages)
+     *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
@@ -293,6 +477,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use activateUrlRedirect() instead.
+     *
+     * TODO: (has 0 usages)
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -308,6 +496,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use createUrl()/updateUrl() instead.
+     *
+     * TODO: (has 3 usages in Category, CMS and Product bundles)
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -322,19 +514,9 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
      *
-     * @return void
-     */
-    public function deleteUrl(UrlTransfer $urlTransfer)
-    {
-        $urlManager = $this->getFactory()->createUrlManager();
-
-        $urlManager->deleteUrl($urlTransfer);
-    }
-
-    /**
-     * @api
+     * TODO: (has 1 usage in CMS bundle)
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -352,6 +534,8 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @deprecated This method will be removed with next major release because of invalid dependency direction.
      * Use ProductFacade::getProductUrl() instead.
+     *
+     * TODO: (has 0 usages)
      *
      * @param int $idProductAbstract
      * @param int $idLocale

@@ -23,4 +23,11 @@
         <property name="resourceId" type="int" />
     </transfer>
 
+    <transfer name="UrlRedirect">
+        <property name="idUrlRedirect" type="int" />
+        <property name="source" type="Url" />
+        <property name="toUrl" type="string" />
+        <property name="status" type="int" />
+    </transfer>
+
 </transfers>
