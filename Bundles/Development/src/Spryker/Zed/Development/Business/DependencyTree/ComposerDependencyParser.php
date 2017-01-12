@@ -40,6 +40,7 @@ class ComposerDependencyParser
     public function getComposerDependencyComparison($bundleName, $codeDependencies)
     {
         $codeDependencies = $this->getOverwrittenDependenciesForBundle($bundleName, $codeDependencies);
+        $codeDependencies = $this->filterCodeDependencies($codeDependencies);
 
         $composerDependencies = $this->getParsedComposerDependenciesForBundle($bundleName);
 
@@ -163,7 +164,33 @@ class ComposerDependencyParser
     protected function shouldSkip(SplFileInfo $composerJsonFile, $bundleName)
     {
         $folder = $composerJsonFile->getRelativePath();
-        return $folder !== $bundleName;
+
+        return ($folder !== $bundleName);
+    }
+
+    /**
+     * @TODO find better way to handle this:
+     *
+     * Propel bundle is separated into two bundles.
+     *
+     * "spryker/propel-orm" for the dependency to the external "propel/propel"
+     * "spryker/propel" for our own code like Builders etc.
+     *
+     * "spryker/propel-orm" is a dependency of "spryker/propel" but
+     * is displayed in the list of Composer dependencies. To prevent this wrong
+     * dependency "alert" PropelOrm gets filtered out when both bundles are present.
+     *
+     * @param array $codeDependencies
+     *
+     * @return array
+     */
+    private function filterCodeDependencies(array $codeDependencies)
+    {
+        if (in_array('Propel', $codeDependencies) && in_array('PropelOrm', $codeDependencies)) {
+            unset($codeDependencies[array_search('PropelOrm', $codeDependencies)]);
+        }
+
+        return $codeDependencies;
     }
 
 }

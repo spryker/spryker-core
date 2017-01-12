@@ -102,7 +102,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'Psr\\' => 'spryker/log',
-            'Propel\\' => 'spryker/propel',
+            'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
             'Pimple\\' => 'spryker/pimple',
             'Predis\\' => 'spryker/redis',
@@ -125,7 +125,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'psr/log' => 'spryker/log',
-            'propel/propel' => 'spryker/propel',
+            'propel/propel' => 'spryker/propel-orm',
             'silex/silex' => 'spryker/silex',
             'pimple/pimple' => 'spryker/pimple',
             'mandrill/mandrill' => 'spryker/mandrill',
