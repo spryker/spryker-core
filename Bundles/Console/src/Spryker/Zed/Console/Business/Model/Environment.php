@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Console\Business\Model;
 
 use Spryker\Shared\Config\Application\Environment as SprykerEnvironment;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 class Environment
 {
@@ -30,6 +31,9 @@ class Environment
             || define('SYSTEM_UNDER_TEST', false);
 
         SprykerEnvironment::initialize();
+
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
     }
 
 }

@@ -7,6 +7,7 @@
   },
   "require": {
     "spryker/config": "^2.0.0",
+    "spryker/error-handler": "^1.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/messenger": "^2.0.0",
     "spryker/propel": "^2.0.0",

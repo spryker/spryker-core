@@ -19,6 +19,7 @@ use Propel\Generator\Platform\PlatformInterface;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Config\Application\Environment;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Propel\PropelConstants;
 
 class ObjectBuilderWithLogger extends PropelObjectBuilder
@@ -32,6 +33,9 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         parent::__construct($table);
 
         Environment::initialize();
+
+        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
+        $errorHandlerEnvironment->initialize();
     }
 
     /**

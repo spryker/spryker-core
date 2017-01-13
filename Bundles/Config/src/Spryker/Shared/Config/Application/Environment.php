@@ -8,9 +8,6 @@
 namespace Spryker\Shared\Config\Application;
 
 use Exception;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
-use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\Store;
 
 class Environment
@@ -31,9 +28,6 @@ class Environment
         static::defineApplicationStaticDir();
         static::defineApplicationVendorDir();
         static::defineApplicationDataDir();
-        static::initializeErrorHandlerEnvironment();
-
-        ini_set('display_errors', Config::get(ErrorHandlerConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
         $locale = current($store->getLocales());
@@ -41,15 +35,6 @@ class Environment
         self::initializeLocale($locale);
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
-    }
-
-    /**
-     * @return void
-     */
-    protected static function initializeErrorHandlerEnvironment()
-    {
-        $errorHandlerEnvironment = new ErrorHandlerEnvironment();
-        $errorHandlerEnvironment->initialize();
     }
 
     /**
