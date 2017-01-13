@@ -47,4 +47,11 @@ interface CustomerGroupInterface
      */
     public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer);
 
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
+     */
+    public function findCustomerGroupByIdCustomer($idCustomer);
+
 }

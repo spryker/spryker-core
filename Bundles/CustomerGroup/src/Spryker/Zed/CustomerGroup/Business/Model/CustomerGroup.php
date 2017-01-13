@@ -191,4 +191,26 @@ class CustomerGroup implements CustomerGroupInterface
         }
     }
 
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
+     */
+    public function findCustomerGroupByIdCustomer($idCustomer)
+    {
+        $customerGroupEntity = $this->queryContainer
+            ->queryCustomerGroupByFkCustomer($idCustomer)
+            ->findOne();
+
+        if (!$customerGroupEntity) {
+            return null;
+        }
+
+        $customerGroupTransfer = new CustomerGroupTransfer();
+        $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+
+        return $customerGroupTransfer;
+
+    }
+
 }

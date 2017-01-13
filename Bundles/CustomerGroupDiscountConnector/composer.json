@@ -1,0 +1,47 @@
+{
+  "name": "spryker/customer-group-discount-connector",
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    },
+    "psr-4": {
+      "CustomerGroup\\Module\\": "tests/"
+    }
+  },
+  "require": {
+    "spryker/customer-group": "^0.2.0",
+    "spryker/discount": "^3.0.0",
+    "spryker/kernel": "^2.8.0"
+  },
+  "require-dev": {
+    "spryker/assertion": "^2.0.0",
+    "spryker/code-sniffer": "*",
+    "spryker/config": "^2.1.0",
+    "spryker/testify": "*"
+  },
+  "description": "CustomerGroupDiscountConnector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  }
+}
