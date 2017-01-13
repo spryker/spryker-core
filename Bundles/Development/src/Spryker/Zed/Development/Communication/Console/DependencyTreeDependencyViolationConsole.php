@@ -60,20 +60,24 @@ class DependencyTreeDependencyViolationConsole extends Console
             $violations = [];
             $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundle);
 
-            $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundle, array_keys($dependencies));
+            $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
 
             foreach ($composerDependencies as $composerDependency) {
-                if ($composerDependency['code'] && $composerDependency['composer']) {
+                if ($composerDependency['code'] && $composerDependency['composerRequire']) {
                     continue;
                 }
-                if (!$composerDependency['code']) {
-                    $composerDependency['code'] = '-';
-                }
-                if (!$composerDependency['composer']) {
-                    $composerDependency['composer'] = '-';
+                if (!$composerDependency['code'] && $composerDependency['composerRequireDev']) {
+                    continue;
                 }
 
-                $violations[] = 'code: ' . $composerDependency['code'] . ' / composer: ' . $composerDependency['composer'];
+                if (!$composerDependency['code'] && !$composerDependency['composerRequireDev']) {
+                    $composerDependency['code'] = '-';
+                }
+                if (!$composerDependency['composerRequire']) {
+                    $composerDependency['composerRequire'] = '-';
+                }
+
+                $violations[] = 'code: ' . $composerDependency['code'] . ' / composer: ' . $composerDependency['composerRequire'];
             }
 
             if (!$violations) {

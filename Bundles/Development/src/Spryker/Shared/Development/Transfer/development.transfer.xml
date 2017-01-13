@@ -20,4 +20,29 @@
         <property name="namespaceName" type="string"/>
     </transfer>
 
+    <transfer name="BundleDependencies">
+        <property name="bundle" type="string"/>
+        <property name="dependencyBundles" type="DependencyBundle[]" singular="dependencyBundle"/>
+    </transfer>
+
+    <transfer name="DependencyBundle">
+        <property name="bundle" type="string"/>
+        <property name="dependencies" type="Dependency[]" singular="dependency"/>
+    </transfer>
+
+    <transfer name="Dependency">
+        <property name="bundle" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isInTest" type="bool"/>
+    </transfer>
+
+    <transfer name="ComposerDependencyCollection">
+        <property name="composerDependencies" type="ComposerDependency[]" singular="composerDependency"/>
+    </transfer>
+
+    <transfer name="ComposerDependency">
+        <property name="name" type="string"/>
+        <property name="isDev" type="bool"/>
+    </transfer>
+
 </transfers>

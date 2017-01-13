@@ -41,13 +41,12 @@ class DependencyController extends AbstractController
     {
         $bundleName = $request->query->getAlnum(static::QUERY_KEY_BUNDLE);
 
-        $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
-
-        $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleName, array_keys($dependencies));
+        $bundleDependenciesTransfer = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
+        $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependenciesTransfer);
 
         return $this->viewResponse([
             static::QUERY_KEY_BUNDLE => $bundleName,
-            'dependencies' => $dependencies,
+            'dependencies' => $bundleDependenciesTransfer,
             'composerDependencies' => $composerDependencies,
         ]);
     }

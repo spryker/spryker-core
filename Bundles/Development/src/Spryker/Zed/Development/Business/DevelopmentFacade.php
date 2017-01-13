@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\BundleDependenciesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -97,7 +98,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $bundleName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\BundleDependenciesTransfer
      */
     public function showOutgoingDependenciesForBundle($bundleName)
     {
@@ -220,14 +221,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string $bundleName
-     * @param array $dependencies
+     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison($bundleName, array $dependencies)
+    public function getComposerDependencyComparison(BundleDependenciesTransfer $bundleDependenciesTransfer)
     {
-        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleName, $dependencies);
+        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleDependenciesTransfer);
     }
 
     /**

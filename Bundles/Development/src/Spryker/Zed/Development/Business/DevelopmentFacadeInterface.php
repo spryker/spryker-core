@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\BundleDependenciesTransfer;
+
 interface DevelopmentFacadeInterface
 {
 
@@ -163,12 +165,11 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param string $bundleName
-     * @param array $dependencies
+     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison($bundleName, array $dependencies);
+    public function getComposerDependencyComparison(BundleDependenciesTransfer $bundleDependenciesTransfer);
 
     /**
      * @api

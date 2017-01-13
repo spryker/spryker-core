@@ -1,35 +1,55 @@
 {% extends '@Application/Layout/layout.twig' %}
 {% block content %}
     <div class="spy-layout sparse">
-        <h3>{{ "Outgoing dependencies of the" | trans }} {{ bundle }} {{ "bundle" | trans }}</h3>
+
         <table class="table table-striped spy-grid">
-            <tr class="text-left">
+
+            <tr>
+                <td colspan="4"><h3>{{ "Outgoing dependencies of the" | trans }} {{ bundle }} {{ "bundle" | trans }}</h3></td>
+            </tr>
+
+            <tr>
                 <th>{{ 'Dependency' | trans }}</th>
                 <th>{{ 'Count' | trans }}</th>
+                <th>{{ 'in src' | trans }}</th>
+                <th>{{ 'in tests' | trans }}</th>
             </tr>
-            {% for dependency, count in dependencies %}
+
+            {% for dependencyBundle in dependencies.dependencyBundles %}
                 <tr>
-                    <td><a href="/development/dependency/outgoing?bundle={{ dependency }}">{{ dependency }}</a></td>
-                    <td>{{ count }}</td>
+                    <td><a href="/development/dependency/outgoing?bundle={{ dependencyBundle.bundle }}">{{ dependencyBundle.bundle }}</a></td>
+                    <td>{{ dependencyBundle.dependencies | length }}</td>
+                    {% set inSrc = 0 %}
+                    {% set inTest = 0 %}
+                    {% for dependency in dependencyBundle.dependencies  %}
+                        {% if dependency.isInTest %}
+                            {% set inTest = inTest + 1 %}
+                        {% else %}
+                            {% set inSrc = inSrc + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ inSrc }}</td>
+                    <td>{{ inTest }}</td>
                 </tr>
             {% endfor %}
-        </table>
-    </div>
 
-    <hr>
+            <tr>
+                <td colspan="4"><h3>{{ "Composer dependencies" | trans }}</h3></td>
+            </tr>
 
-    <div class="spy-layout sparse">
-        <h3>{{ "Composer dependencies" | trans }}</h3>
-        <table class="table table-striped spy-grid">
-            <tr class="text-left">
-                <th>{{ 'Found in code' | trans }}</th>
+            <tr>
+                <th colspan="2">{{ 'Found in code' | trans }}</th>
                 <th>{{ 'Declared in composer.json' | trans }}</th>
+                <th>{{ 'Declared in composer.json (dev)' | trans }}</th>
             </tr>
             {% for composerDependency in composerDependencies %}
+                {% if composerDependency.code %}
                 <tr>
-                    <td{% if not composerDependency.composer %} style="color: red"{% endif %}>{{ composerDependency.code }}</td>
-                    <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composer }}</td>
+                    <td colspan="2"{% if not composerDependency.composerRequire and not composerDependency.composerRequireDev %} style="color: red"{% endif %}>{{ composerDependency.code }}</td>
+                    <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composerRequire }}</td>
+                    <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composerRequireDev }}</td>
                 </tr>
+                {% endif %}
             {% endfor %}
         </table>
     </div>

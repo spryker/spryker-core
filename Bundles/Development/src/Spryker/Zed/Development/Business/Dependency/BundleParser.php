@@ -7,9 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
+use Generated\Shared\Transfer\BundleDependenciesTransfer;
+use Generated\Shared\Transfer\DependencyBundleTransfer;
+use Generated\Shared\Transfer\DependencyTransfer;
 use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\DevelopmentConfig;
+use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Zend\Filter\FilterChain;
+use Zend\Filter\Word\SeparatorToCamelCase;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BundleParser
@@ -31,6 +37,11 @@ class BundleParser
     protected $bundleConfig;
 
     /**
+     * @var BundleDependenciesTransfer
+     */
+    protected $bundleDependenciesTransfer;
+
+    /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
@@ -43,23 +54,89 @@ class BundleParser
     /**
      * @param string $bundleName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\BundleDependenciesTransfer
      */
     public function parseOutgoingDependencies($bundleName)
     {
-        $allFileDependencies = $this->parseDependencies($bundleName);
-        $externalBundleDependencies = $this->buildExternalBundleDependencies($allFileDependencies, $bundleName);
-        $locatorBundleDependencies = $this->buildLocatorBundleDependencies($allFileDependencies, $bundleName);
+        $bundleDependenciesTransfer = new BundleDependenciesTransfer();
+        $bundleDependenciesTransfer->setBundle($bundleName);
 
+        $this->bundleDependenciesTransfer = $bundleDependenciesTransfer;
+
+        $allFileDependencies = $this->parseDependencies($bundleName);
+
+        $this->addAllDependencies($allFileDependencies);
+        $this->addExternalBundleDependencies($allFileDependencies);
+        $this->addLocatorBundleDependencies($allFileDependencies);
+
+        $callback = function (DependencyBundleTransfer $a, DependencyBundleTransfer $b) {
+            return strcmp($a->getBundle(), $b->getBundle());
+        };
+
+        $dependencyBundles = $this->bundleDependenciesTransfer->getDependencyBundles()->getArrayCopy();
+
+        usort($dependencyBundles, $callback);
+
+        $this->bundleDependenciesTransfer->setDependencyBundles(new \ArrayObject());
+
+        foreach ($dependencyBundles as $dependencyBundle) {
+            $this->bundleDependenciesTransfer->addDependencyBundle($dependencyBundle);
+        }
+
+        return $this->bundleDependenciesTransfer;
+    }
+
+    /**
+     * @param array $allFileDependencies
+     *
+     * @return void
+     */
+    protected function addAllDependencies(array $allFileDependencies)
+    {
         $allFileDependencies = $this->filterRelevantClasses($allFileDependencies);
         $allFileDependencies = $this->ignorePluginInterfaces($allFileDependencies);
 
-        $bundleDependencies = $this->buildBundleDependencies($allFileDependencies, $bundleName);
-        $bundleDependencies = $this->addPersistenceLayerDependencies($bundleName, $bundleDependencies);
-        $bundleDependencies += $externalBundleDependencies;
-        $bundleDependencies += $locatorBundleDependencies;
+        $this->buildBundleDependencies($allFileDependencies);
+    }
 
-        return $bundleDependencies;
+    /**
+     * @param array $allFileDependencies
+     *
+     * @return void
+     */
+    protected function addExternalBundleDependencies(array $allFileDependencies)
+    {
+        $map = $this->config->getExternalToInternalNamespaceMap();
+
+        foreach ($allFileDependencies as $file => $fileDependencies) {
+            foreach ($fileDependencies as $fileDependency) {
+                $found = null;
+                foreach ($map as $namespace => $package) {
+                    if (strpos($fileDependency, $namespace) !== 0) {
+                        continue;
+                    }
+
+                    $found = $package;
+                    break;
+                }
+
+                if ($found === null) {
+                    continue;
+                }
+
+                $foreignBundle = substr($found, 8);
+                $filter = new SeparatorToCamelCase('-');
+                $foreignBundle = ucfirst($filter->filter($foreignBundle));
+
+                $dependencyTransfer = new DependencyTransfer();
+                $dependencyTransfer
+                    ->setBundle($foreignBundle)
+                    ->setType('external')
+                    ->setIsInTest(!strpos($file, '/src/'));
+
+                $this->addDependency($dependencyTransfer);
+            }
+        }
     }
 
     /**
@@ -134,42 +211,69 @@ class BundleParser
 
     /**
      * @param array $allFileDependencies
-     * @param string $bundle
      *
      * @return array
      */
-    protected function buildBundleDependencies(array $allFileDependencies, $bundle)
+    protected function buildBundleDependencies(array $allFileDependencies)
     {
-        $bundleDependencies = [];
-        foreach ($allFileDependencies as $fileDependencies) {
+        foreach ($allFileDependencies as $file => $fileDependencies) {
             foreach ($fileDependencies as $fileDependency) {
-                $expl = explode('\\', $fileDependency);
-                $foreignBundle = $expl[2];
-                if ($bundle !== $foreignBundle) {
-                    if (array_key_exists($foreignBundle, $bundleDependencies) === false) {
-                        $bundleDependencies[$foreignBundle] = 0;
-                    }
-                    $bundleDependencies[$foreignBundle]++;
+                $fileNameParts = explode('\\', $fileDependency);
+                $foreignBundle = $fileNameParts[2];
+                if ($this->bundleDependenciesTransfer->getBundle() !== $foreignBundle) {
+                    $dependencyTransfer = new DependencyTransfer();
+                    $dependencyTransfer->setBundle($foreignBundle);
+                    $dependencyTransfer->setType('spryker');
+                    $dependencyTransfer->setIsInTest(!strpos($file, '/src/'));
+
+                    $this->addDependency($dependencyTransfer);
                 }
             }
         }
+    }
 
-        ksort($bundleDependencies);
+    /**
+     * @param \Generated\Shared\Transfer\DependencyTransfer $dependencyTransfer
+     *
+     * @return void
+     */
+    protected function addDependency(DependencyTransfer $dependencyTransfer)
+    {
+        $dependencyBundleTransfer = $this->getDependencyBundleTransfer($dependencyTransfer);
+        $dependencyBundleTransfer->addDependency($dependencyTransfer);
+    }
 
-        return $bundleDependencies;
+    /**
+     * @param \Generated\Shared\Transfer\DependencyTransfer $dependencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyBundleTransfer
+     */
+    protected function getDependencyBundleTransfer(DependencyTransfer $dependencyTransfer)
+    {
+        foreach ($this->bundleDependenciesTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+            if ($dependencyBundleTransfer->getBundle() === $dependencyTransfer->getBundle()) {
+                return $dependencyBundleTransfer;
+            }
+        }
+
+        $dependencyBundleTransfer = new DependencyBundleTransfer();
+        $dependencyBundleTransfer->setBundle($dependencyTransfer->getBundle());
+
+        $this->bundleDependenciesTransfer->addDependencyBundle($dependencyBundleTransfer);
+
+        return $dependencyBundleTransfer;
     }
 
     /**
      * @param string $bundleName
-     * @param array $bundleDependencies
      *
-     * @return array
+     * @return void
      */
-    protected function addPersistenceLayerDependencies($bundleName, array $bundleDependencies)
+    protected function addPersistenceLayerDependencies($bundleName)
     {
         $folder = $this->config->getBundleDirectory() . $bundleName . '/src/Spryker/Zed/' . $bundleName . '/Persistence/Propel/Schema/';
         if (!is_dir($folder)) {
-            return $bundleDependencies;
+            return;
         }
 
         $files = $this->find($folder);
@@ -197,11 +301,9 @@ class BundleParser
             }
 
             foreach ($tables as $table) {
-                $bundleDependencies = $this->checkForPersistenceLayerDependency($table, $bundleDependencies, $bundleName);
+                $this->addPersistenceLayerDependency($table);
             }
         }
-
-        return $bundleDependencies;
     }
 
     /**
@@ -212,46 +314,6 @@ class BundleParser
     protected function find($folder)
     {
         return $this->finder->in($folder)->name('*.schema.xml')->depth('< 2');
-    }
-
-    /**
-     * @param array $allFileDependencies
-     * @param string $currentBundleName
-     *
-     * @return array
-     */
-    protected function buildExternalBundleDependencies(array $allFileDependencies, $currentBundleName)
-    {
-        $bundleDependencies = [];
-
-        $map = $this->config->getExternalToInternalNamespaceMap();
-
-        foreach ($allFileDependencies as $file => $fileDependencies) {
-            foreach ($fileDependencies as $fileDependency) {
-                $found = null;
-                foreach ($map as $namespace => $package) {
-                    if (strpos($fileDependency, $namespace) !== 0) {
-                        continue;
-                    }
-
-                    $found = $package;
-                    break;
-                }
-
-                if ($found === null) {
-                    continue;
-                }
-
-                $name = substr($found, 8);
-                $name = str_replace('-', '_', $name);
-                $filter = new UnderscoreToCamelCase();
-                $name = ucfirst($filter->filter($name));
-
-                $bundleDependencies = $this->addDependency($name, $bundleDependencies, $currentBundleName);
-            }
-        }
-
-        return $bundleDependencies;
     }
 
     /**
@@ -279,70 +341,71 @@ class BundleParser
     }
 
     /**
-     * @param array $allFileDependencies
-     * @param string $bundleName
+     * @param $allFileDependencies
      *
-     * @return array
+     * @return void
      */
-    protected function buildLocatorBundleDependencies($allFileDependencies, $bundleName)
+    protected function addLocatorBundleDependencies($allFileDependencies)
     {
-        $dependencies = [];
-
         foreach ($allFileDependencies as $fileName => $fileDependencies) {
             if (!$fileDependencies || strpos($fileName, 'DependencyProvider.php') === false) {
                 continue;
             }
 
-            $dependencies += $this->extractDependenciesFromDependencyProvider($fileName, $bundleName);
+            $this->addDependenciesFromDependencyProvider($fileName);
         }
-
-        return $dependencies;
     }
 
     /**
      * @param string $fileName
-     * @param string $bundleName;
      *
-     * @return array
+     * @return void
      */
-    protected function extractDependenciesFromDependencyProvider($fileName, $bundleName)
+    protected function addDependenciesFromDependencyProvider($fileName)
     {
         $content = file_get_contents($fileName);
 
         if (!preg_match_all('/->(?<bundle>\w+?)\(\)->(client|facade|queryContainer)\(\)/', $content, $matches, PREG_SET_ORDER)) {
-            return [];
+            return;
         }
-
-        $dependencies = [];
 
         foreach ($matches as $match) {
             $toBundle = ucfirst($match['bundle']);
+            $dependencyTransfer = new DependencyTransfer();
+            $dependencyTransfer
+                ->setBundle($toBundle)
+                ->setType('spryker (locator)')
+                ->setIsInTest(false);
 
-            $dependencies = $this->addDependency($toBundle, $dependencies, $bundleName);
+            $this->addDependency($dependencyTransfer);
         }
-
-        return $dependencies;
     }
 
     /**
      * @param string $table
-     * @param array $bundleDependencies
-     * @param string $currentBundle
      *
-     * @return array
+     * @return void
      */
-    protected function checkForPersistenceLayerDependency($table, array $bundleDependencies, $currentBundle)
+    protected function addPersistenceLayerDependency($table)
     {
         $filter = new UnderscoreToCamelCase();
         $name = $filter->filter($table);
 
         $existent = $this->isExistentBundle($name);
         if ($existent) {
-            $bundleDependencies = $this->addDependency($name, $bundleDependencies, $currentBundle);
-            return $bundleDependencies;
+            $dependencyTransfer = new DependencyTransfer();
+            $dependencyTransfer
+                ->setBundle($name)
+                ->setType('spryker (persistence)')
+                ->setIsInTest(false);
+
+            $this->addDependency($dependencyTransfer);
+
+            return;
         }
 
         $lastUnderscore = strrpos($table, '_');
+
         while ($lastUnderscore) {
             $table = substr($table, 0, $lastUnderscore);
 
@@ -355,33 +418,14 @@ class BundleParser
                 continue;
             }
 
-            $this->addDependency($name, $bundleDependencies, $currentBundle);
+            $dependencyTransfer = new DependencyTransfer();
+            $dependencyTransfer
+                ->setBundle($name)
+                ->setType('spryker (persistence)')
+                ->setIsInTest(false);
+
             break;
         }
-
-        return $bundleDependencies;
-    }
-
-    /**
-     * @param string $name
-     * @param array $bundleDependencies
-     * @param string|null $currentBundleName
-     *
-     * @return array
-     */
-    protected function addDependency($name, array $bundleDependencies, $currentBundleName = null)
-    {
-        if ($currentBundleName !== null && $name === $currentBundleName) {
-            return $bundleDependencies;
-        }
-
-        if (!isset($bundleDependencies[$name])) {
-            $bundleDependencies[$name] = 0;
-        }
-
-        $bundleDependencies[$name]++;
-
-        return $bundleDependencies;
     }
 
 }
