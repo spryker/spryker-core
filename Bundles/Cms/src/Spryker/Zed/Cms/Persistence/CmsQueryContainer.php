@@ -559,4 +559,14 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY);
     }
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function queryCmsPageLocalizedAttributes()
+    {
+        return $this->getFactory()->createCmsPageLocalizedAttributesQuery();
+    }
+
 }
