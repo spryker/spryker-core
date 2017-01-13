@@ -8,7 +8,6 @@
 namespace Unit\Spryker\Zed\Kernel\Communication\Controller\Fixtures;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Assertion\Business\AssertionFacade;
 
 class MockController extends AbstractController
 {
@@ -21,14 +20,6 @@ class MockController extends AbstractController
     public function indexAction($id)
     {
         return $this->castId($id);
-    }
-
-    /**
-     * @return \Spryker\Zed\Assertion\Business\AssertionFacade
-     */
-    protected function getAssertion()
-    {
-        return new AssertionFacade();
     }
 
 }

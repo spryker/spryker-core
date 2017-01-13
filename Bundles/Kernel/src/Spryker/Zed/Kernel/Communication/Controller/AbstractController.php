@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
 use Spryker\Zed\Kernel\Dependency\Facade\NullMessenger;
+use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -149,11 +150,15 @@ abstract class AbstractController
      *
      * @param mixed $id
      *
+     * @throws \Spryker\Zed\Kernel\Exception\Controller\InvalidIdException
+     *
      * @return int
      */
     protected function castId($id)
     {
-        $this->getAssertion()->assertNumericNotZero($id);
+        if (!is_numeric($id) || $id === 0) {
+            throw new InvalidIdException('The given id is not numeric or 0 (zero)');
+        }
 
         return (int)$id;
     }
@@ -278,14 +283,6 @@ abstract class AbstractController
     protected function getApplication()
     {
         return $this->application;
-    }
-
-    /**
-     * @return \Spryker\Zed\Assertion\Business\AssertionFacadeInterface
-     */
-    protected function getAssertion()
-    {
-        return $this->getApplication()['assertion'];
     }
 
 }
