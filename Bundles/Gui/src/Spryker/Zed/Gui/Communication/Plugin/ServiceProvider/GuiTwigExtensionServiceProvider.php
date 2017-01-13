@@ -86,7 +86,6 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
      */
     public function boot(Application $app)
     {
-
     }
 
 }
