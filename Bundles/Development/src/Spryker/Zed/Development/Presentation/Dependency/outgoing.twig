@@ -9,7 +9,7 @@
             </tr>
             {% for dependency, count in dependencies %}
                 <tr>
-                    <td>{{ dependency }}</td>
+                    <td><a href="/development/dependency/outgoing?bundle={{ dependency }}">{{ dependency }}</a></td>
                     <td>{{ count }}</td>
                 </tr>
             {% endfor %}
