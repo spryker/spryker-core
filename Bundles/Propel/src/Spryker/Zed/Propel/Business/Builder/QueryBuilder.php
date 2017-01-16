@@ -337,7 +337,7 @@ SCRIPT;
                 \$this->add(\$key, \${$variableName}, Criteria::BINARY_NONE);
             }
             \$this->addOr(\$key, null, Criteria::ISNULL);
-            
+
             return \$this;
         }";
         } elseif ($col->getType() == PropelTypes::ENUM) {
@@ -363,7 +363,7 @@ SCRIPT;
         }";
         } elseif ($col->isTextType()) {
             $script .= "
-        if (\$comparison == Criteria::LIKE) {
+        if (\$comparison == Criteria::LIKE || \$comparison == Criteria::ILIKE) {
             \$$variableName = str_replace('*', '%', \$$variableName);
         }
 
