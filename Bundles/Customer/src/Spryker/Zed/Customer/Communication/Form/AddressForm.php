@@ -47,6 +47,10 @@ class AddressForm extends AbstractType
         $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
         $resolver->setRequired(self::OPTION_PREFERRED_COUNTRY_CHOICES);
+
+        $resolver->setDefaults([
+            'required' => false,
+        ]);
     }
 
     /**
@@ -135,7 +139,7 @@ class AddressForm extends AbstractType
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FIRST_NAME, 'text', [
-            'label' => 'First Name',
+            'label' => 'First Name *',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
 
@@ -150,7 +154,7 @@ class AddressForm extends AbstractType
     protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_LAST_NAME, 'text', [
-            'label' => 'Last Name',
+            'label' => 'Last Name *',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
 
@@ -165,7 +169,10 @@ class AddressForm extends AbstractType
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ADDRESS_1, 'text', [
-            'label' => 'Address line 1',
+            'label' => 'Address line 1 *',
+            'constraints' => [
+                new NotBlank(),
+            ]
         ]);
 
         return $this;
@@ -207,7 +214,10 @@ class AddressForm extends AbstractType
     protected function addCityField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CITY, 'text', [
-            'label' => 'City',
+            'label' => 'City *',
+            'constraints' => [
+                new NotBlank(),
+            ]
         ]);
 
         return $this;
@@ -221,8 +231,9 @@ class AddressForm extends AbstractType
     protected function addZipCodeField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ZIP_CODE, 'text', [
-            'label' => 'Zip Code',
+            'label' => 'Zip Code *',
             'constraints' => [
+                new NotBlank(),
                 new Length(['max' => 15]),
             ],
         ]);
@@ -240,10 +251,13 @@ class AddressForm extends AbstractType
     protected function addFkCountryField(FormBuilderInterface $builder, array $choices, array $preferredChoices = [])
     {
         $builder->add(self::FIELD_FK_COUNTRY, 'choice', [
-            'label' => 'Country',
+            'label' => 'Country *',
             'placeholder' => 'Select one',
             'choices' => $choices,
             'preferred_choices' => $preferredChoices,
+            'constraints' => [
+                new NotBlank(),
+            ]
         ]);
 
         return $this;
