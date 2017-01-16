@@ -172,7 +172,7 @@ class AddressForm extends AbstractType
             'label' => 'Address line 1 *',
             'constraints' => [
                 new NotBlank(),
-            ]
+            ],
         ]);
 
         return $this;
@@ -217,7 +217,7 @@ class AddressForm extends AbstractType
             'label' => 'City *',
             'constraints' => [
                 new NotBlank(),
-            ]
+            ],
         ]);
 
         return $this;
@@ -257,7 +257,7 @@ class AddressForm extends AbstractType
             'preferred_choices' => $preferredChoices,
             'constraints' => [
                 new NotBlank(),
-            ]
+            ],
         ]);
 
         return $this;
