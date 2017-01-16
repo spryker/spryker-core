@@ -1,6 +1,0 @@
-{
-  "description": "Needed for core dependency management - overwrites dependencies between bundles",
-  "include": {
-    "Twig": "Required by renderer. Can be replaced with anything else which is able to render views, default is Twig_Environment."
-  }
-}

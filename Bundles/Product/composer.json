@@ -10,7 +10,7 @@
     "spryker/console": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/locale": "^2.2.0",
-    "spryker/propel": "^2.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/touch": "^2.0.0",
@@ -20,6 +20,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "Product bundle",

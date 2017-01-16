@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
+use ArrayObject;
 use Generated\Shared\Transfer\BundleDependenciesTransfer;
 use Generated\Shared\Transfer\DependencyBundleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\DevelopmentConfig;
-use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
-use Zend\Filter\FilterChain;
 use Zend\Filter\Word\SeparatorToCamelCase;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -37,7 +36,7 @@ class BundleParser
     protected $bundleConfig;
 
     /**
-     * @var BundleDependenciesTransfer
+     * @var \Generated\Shared\Transfer\BundleDependenciesTransfer
      */
     protected $bundleDependenciesTransfer;
 
@@ -68,6 +67,7 @@ class BundleParser
         $this->addAllDependencies($allFileDependencies);
         $this->addExternalBundleDependencies($allFileDependencies);
         $this->addLocatorBundleDependencies($allFileDependencies);
+        $this->addPersistenceLayerDependencies($bundleName);
 
         $callback = function (DependencyBundleTransfer $a, DependencyBundleTransfer $b) {
             return strcmp($a->getBundle(), $b->getBundle());
@@ -77,7 +77,7 @@ class BundleParser
 
         usort($dependencyBundles, $callback);
 
-        $this->bundleDependenciesTransfer->setDependencyBundles(new \ArrayObject());
+        $this->bundleDependenciesTransfer->setDependencyBundles(new ArrayObject());
 
         foreach ($dependencyBundles as $dependencyBundle) {
             $this->bundleDependenciesTransfer->addDependencyBundle($dependencyBundle);
@@ -307,6 +307,53 @@ class BundleParser
     }
 
     /**
+     * @param string $table
+     *
+     * @return void
+     */
+    protected function addPersistenceLayerDependency($table)
+    {
+        $filter = new UnderscoreToCamelCase();
+        $name = $filter->filter($table);
+
+        $existent = $this->isExistentBundle($name);
+        if ($existent) {
+            $dependencyTransfer = new DependencyTransfer();
+            $dependencyTransfer
+                ->setBundle($name)
+                ->setType('spryker (persistence)')
+                ->setIsInTest(false);
+
+            $this->addDependency($dependencyTransfer);
+
+            return;
+        }
+
+        $lastUnderscore = strrpos($table, '_');
+
+        while ($lastUnderscore) {
+            $table = substr($table, 0, $lastUnderscore);
+
+            $filter = new UnderscoreToCamelCase();
+            $name = $filter->filter($table);
+
+            $existent = $this->isExistentBundle($name);
+            if (!$existent) {
+                $lastUnderscore = strrpos($table, '_');
+                continue;
+            }
+
+            $dependencyTransfer = new DependencyTransfer();
+            $dependencyTransfer
+                ->setBundle($name)
+                ->setType('spryker (persistence)')
+                ->setIsInTest(false);
+
+            break;
+        }
+    }
+
+    /**
      * @param string
      *
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
@@ -365,7 +412,7 @@ class BundleParser
     {
         $content = file_get_contents($fileName);
 
-        if (!preg_match_all('/->(?<bundle>\w+?)\(\)->(client|facade|queryContainer)\(\)/', $content, $matches, PREG_SET_ORDER)) {
+        if (!preg_match_all('/->(?<bundle>\w+?)\(\)->(client|facade|queryContainer|service)\(\)/', $content, $matches, PREG_SET_ORDER)) {
             return;
         }
 
@@ -378,53 +425,6 @@ class BundleParser
                 ->setIsInTest(false);
 
             $this->addDependency($dependencyTransfer);
-        }
-    }
-
-    /**
-     * @param string $table
-     *
-     * @return void
-     */
-    protected function addPersistenceLayerDependency($table)
-    {
-        $filter = new UnderscoreToCamelCase();
-        $name = $filter->filter($table);
-
-        $existent = $this->isExistentBundle($name);
-        if ($existent) {
-            $dependencyTransfer = new DependencyTransfer();
-            $dependencyTransfer
-                ->setBundle($name)
-                ->setType('spryker (persistence)')
-                ->setIsInTest(false);
-
-            $this->addDependency($dependencyTransfer);
-
-            return;
-        }
-
-        $lastUnderscore = strrpos($table, '_');
-
-        while ($lastUnderscore) {
-            $table = substr($table, 0, $lastUnderscore);
-
-            $filter = new UnderscoreToCamelCase();
-            $name = $filter->filter($table);
-
-            $existent = $this->isExistentBundle($name);
-            if (!$existent) {
-                $lastUnderscore = strrpos($table, '_');
-                continue;
-            }
-
-            $dependencyTransfer = new DependencyTransfer();
-            $dependencyTransfer
-                ->setBundle($name)
-                ->setType('spryker (persistence)')
-                ->setIsInTest(false);
-
-            break;
         }
     }
 

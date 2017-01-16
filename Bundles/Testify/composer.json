@@ -14,14 +14,14 @@
     "codeception/codeception": "~2.1.5",
     "php-mock/php-mock": "~1.0.1",
     "satooshi/php-coveralls": "^1.0.0",
+    "spryker/config": "^2.0.0",
     "spryker/error-handler": "^1.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/propel": "^2.0.0",
     "spryker/silex": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/config": "^2.0.0"
+    "spryker/code-sniffer": "*"
   },
   "description": "Testify bundle",
   "license": "proprietary",

@@ -117,8 +117,8 @@ class ComposerDependencyParser
         if (!$declaredDependencies) {
             return $bundleDependenciesTransfer;
         }
-
-        // For now we can't separate in the dependency tool yet
+//echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($declaredDependencies) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+//        // For now we can't separate in the dependency tool yet
 //        $included = array_merge($declaredDependencies[static::TYPE_INCLUDE], $declaredDependencies[static::TYPE_INCLUDE_DEV]);
 //        $excluded = array_merge($declaredDependencies[static::TYPE_EXCLUDE], $declaredDependencies[static::TYPE_EXCLUDE_DEV]);
 //

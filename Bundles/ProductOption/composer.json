@@ -9,16 +9,18 @@
     "spryker/locale": "^2.0.0",
     "spryker/money": "^1.0.0",
     "spryker/product": "^2.0.0 || ^3.0.0 || ^4.0.0",
-    "spryker/propel": "^2.2.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/storage": "^2.0.0",
     "spryker/symfony": "^2.0.0",
     "spryker/tax": "^2.0.0 || ^3.0.0",
     "spryker/touch": "^2.0.0",
-    "spryker/url": "^2.0.0"
+    "spryker/url": "^2.0.0",
+    "spryker/util-encoding": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^2.2.0",
     "spryker/testify": "*"
   },
   "description": "ProductOption bundle",

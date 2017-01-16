@@ -8,12 +8,13 @@
   "require": {
     "spryker/discount": "^3.2.1",
     "spryker/kernel": "^2.0.0",
-    "spryker/propel": "^2.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/tax": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "^2.0.0",
     "spryker/testify": "*"
   },
   "description": "DiscountSalesAggregatorConnector bundle",

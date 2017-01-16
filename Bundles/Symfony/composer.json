@@ -28,7 +28,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/kernel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/kernel": "Required by optional DoubleSubmitProtectionServiceProvider plugin."
   },
   "description": "Symfony bundle",
   "license": "proprietary",

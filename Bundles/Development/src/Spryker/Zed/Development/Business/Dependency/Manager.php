@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
+use Generated\Shared\Transfer\BundleDependenciesTransfer;
 use Symfony\Component\Finder\Finder;
 
 class Manager
@@ -43,20 +44,34 @@ class Manager
 
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
-            try {
-                $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
-            } catch (\Exception $e) {
-                $dependencies = []; // TODO illegal try-catch
-            }
-            if (array_key_exists($bundleName, $dependencies)) {
+            $bundleDependenciesTransfer = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
+
+            if ($dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependenciesTransfer)) {
                 if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
                     $incomingDependencies[$foreignBundle] = 0;
                 }
-                $incomingDependencies[$foreignBundle] += $dependencies[$bundleName];
+                $incomingDependencies[$foreignBundle] += count($dependencyBundle->toArray());
             }
         }
 
         return $incomingDependencies;
+    }
+
+    /**
+     * @param string $bundleName
+     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     *
+     * @return bool|\Generated\Shared\Transfer\DependencyBundleTransfer|mixed
+     */
+    protected function findDependencyTo($bundleName, BundleDependenciesTransfer $bundleDependenciesTransfer)
+    {
+        foreach ($bundleDependenciesTransfer->getDependencyBundles() as $dependencyBundle) {
+            if ($dependencyBundle->getBundle() === $bundleName) {
+                return $dependencyBundle;
+            }
+        }
+
+        return false;
     }
 
     /**

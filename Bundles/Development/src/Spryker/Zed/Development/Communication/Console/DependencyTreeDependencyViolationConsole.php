@@ -63,7 +63,7 @@ class DependencyTreeDependencyViolationConsole extends Console
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
 
             foreach ($composerDependencies as $composerDependency) {
-                if ($composerDependency['code'] && $composerDependency['composerRequire']) {
+                if ($composerDependency['code'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
                     continue;
                 }
                 if (!$composerDependency['code'] && $composerDependency['composerRequireDev']) {

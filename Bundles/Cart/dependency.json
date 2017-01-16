@@ -1,7 +1,0 @@
-{
-  "description": "Needed for core dependency management - overwrites dependencies between bundles",
-  "exclude-dev": {
-    "Price": "Required by tests and declared as require-dev right now",
-    "Product": "Required by tests and declared as require-dev right now"
-  }
-}
