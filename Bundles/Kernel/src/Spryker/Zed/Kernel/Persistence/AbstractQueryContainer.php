@@ -94,6 +94,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @api
+     *
      * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getConnection()

@@ -41,14 +41,30 @@ class DependencyController extends AbstractController
     {
         $bundleName = $request->query->getAlnum(static::QUERY_KEY_BUNDLE);
 
-        $bundleDependenciesTransfer = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
-        $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependenciesTransfer);
+        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
+        $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
 
         return $this->viewResponse([
             static::QUERY_KEY_BUNDLE => $bundleName,
-            'dependencies' => $bundleDependenciesTransfer,
+            'dependencies' => $bundleDependencyCollectionTransfer,
             'composerDependencies' => $composerDependencies,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function outgoingGraphAction(Request $request)
+    {
+        $callback = function () use ($request) {
+            $bundleName = $request->query->getAlnum(self::QUERY_KEY_BUNDLE);
+
+            echo $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName);
+        };
+
+        return $this->streamedResponse($callback);
     }
 
     /**

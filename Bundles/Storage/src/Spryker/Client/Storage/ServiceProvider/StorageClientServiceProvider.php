@@ -39,7 +39,6 @@ class StorageClientServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-
     }
 
 }

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\Dependency;
 
-use Generated\Shared\Transfer\BundleDependenciesTransfer;
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Symfony\Component\Finder\Finder;
 
 class Manager
 {
 
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\BundleParser
+     * @var \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
      */
     protected $bundleParser;
 
@@ -24,10 +24,10 @@ class Manager
     protected $bundleDirectory;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\BundleParser $bundleParser
+     * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
      * @param string $bundleDirectory
      */
-    public function __construct(BundleParser $bundleParser, $bundleDirectory)
+    public function __construct(BundleParserInterface $bundleParser, $bundleDirectory)
     {
         $this->bundleParser = $bundleParser;
         $this->bundleDirectory = $bundleDirectory;
@@ -44,9 +44,9 @@ class Manager
 
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
-            $bundleDependenciesTransfer = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
+            $bundleDependencyCollectionTransfer = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
 
-            if ($dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependenciesTransfer)) {
+            if ($dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependencyCollectionTransfer)) {
                 if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
                     $incomingDependencies[$foreignBundle] = 0;
                 }
@@ -59,13 +59,13 @@ class Manager
 
     /**
      * @param string $bundleName
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return bool|\Generated\Shared\Transfer\DependencyBundleTransfer|mixed
      */
-    protected function findDependencyTo($bundleName, BundleDependenciesTransfer $bundleDependenciesTransfer)
+    protected function findDependencyTo($bundleName, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-        foreach ($bundleDependenciesTransfer->getDependencyBundles() as $dependencyBundle) {
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundle) {
             if ($dependencyBundle->getBundle() === $bundleName) {
                 return $dependencyBundle;
             }

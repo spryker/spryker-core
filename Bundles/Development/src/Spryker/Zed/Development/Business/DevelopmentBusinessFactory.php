@@ -41,6 +41,7 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatemen
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydrator;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\PackageNameHydrator;
@@ -336,6 +337,30 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string $bundleToView
+     *
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder
+     */
+    public function createOutgoingDependencyGraphBuilder($bundleToView)
+    {
+        $outgoingDependencyGraphBuilder = new OutgoingGraphBuilder(
+            $bundleToView,
+            $this->getGraph(),
+            $this->createDependencyBundleParser()
+        );
+
+        return $outgoingDependencyGraphBuilder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     */
+    protected function createOutgoingGraphBuilder()
+    {
+        return new DetailedGraphBuilder($this->getGraph()->init('Dependency Tree'));
+    }
+
+    /**
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
@@ -355,7 +380,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder
      */
     protected function createSimpleGraphBuilder()
     {
@@ -433,7 +458,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder
      */
     protected function createExternalGraphBuilder()
     {

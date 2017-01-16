@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
-use Generated\Shared\Transfer\BundleDependenciesTransfer;
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -98,7 +98,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $bundleName
      *
-     * @return \Generated\Shared\Transfer\BundleDependenciesTransfer
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
     public function showOutgoingDependenciesForBundle($bundleName)
     {
@@ -139,6 +139,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function buildDependencyTree($application, $bundle, $layer)
     {
         $this->getFactory()->createDependencyTreeBuilder($application, $bundle, $layer)->buildDependencyTree();
+    }
+
+    /**
+     * @api
+     *
+     * @param string|bool $bundleToView
+     *
+     * @return string
+     */
+    public function drawOutgoingDependencyTreeGraph($bundleToView)
+    {
+        return $this->getFactory()->createOutgoingDependencyGraphBuilder($bundleToView)->build();
     }
 
     /**
@@ -221,13 +233,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependenciesTransfer $bundleDependenciesTransfer)
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleDependenciesTransfer);
+        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
     }
 
     /**

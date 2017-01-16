@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
-use Generated\Shared\Transfer\BundleDependenciesTransfer;
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 
 interface DevelopmentFacadeInterface
 {
@@ -104,6 +104,15 @@ interface DevelopmentFacadeInterface
      *
      * @return string
      */
+    public function drawOutgoingDependencyTreeGraph($bundleToView);
+
+    /**
+     * @api
+     *
+     * @param string|bool $bundleToView
+     *
+     * @return string
+     */
     public function drawDetailedDependencyTreeGraph($bundleToView);
 
     /**
@@ -165,11 +174,11 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependenciesTransfer $bundleDependenciesTransfer);
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer);
 
     /**
      * @api

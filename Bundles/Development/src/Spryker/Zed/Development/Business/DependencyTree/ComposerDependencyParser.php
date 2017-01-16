@@ -8,12 +8,10 @@
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
 use ArrayObject;
-use Generated\Shared\Transfer\BundleDependenciesTransfer;
-use Generated\Shared\Transfer\ComposerDependenciesTransfer;
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\ComposerDependencyCollectionTransfer;
 use Generated\Shared\Transfer\ComposerDependencyTransfer;
 use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\VarDumper\VarDumper;
 use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ComposerDependencyParser
@@ -38,18 +36,18 @@ class ComposerDependencyParser
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependenciesTransfer $bundleDependenciesTransfer)
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-//        $bundleDependenciesTransfer = $this->getOverwrittenDependenciesForBundle($bundleDependenciesTransfer);
-        $bundleDependenciesTransfer = $this->filterCodeDependencies($bundleDependenciesTransfer);
+//        $bundleDependencyCollectionTransfer = $this->getOverwrittenDependenciesForBundle($bundleDependencyCollectionTransfer);
+        $bundleDependencyCollectionTransfer = $this->filterCodeDependencies($bundleDependencyCollectionTransfer);
 
-        $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($bundleDependenciesTransfer->getBundle());
+        $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($bundleDependencyCollectionTransfer->getBundle());
 
-        $bundleNames = $this->getBundleDependencyNames($bundleDependenciesTransfer);
+        $bundleNames = $this->getBundleDependencyNames($bundleDependencyCollectionTransfer);
         $requireNames = $this->getRequireNames($composerDependencyCollectionTransfer);
         $requireDevNames = $this->getRequireNames($composerDependencyCollectionTransfer, true);
 
@@ -59,7 +57,7 @@ class ComposerDependencyParser
         $dependencies = [];
 
         foreach ($allBundleNames as $bundleName) {
-            if ($bundleDependenciesTransfer->getBundle() === $bundleName) {
+            if ($bundleDependencyCollectionTransfer->getBundle() === $bundleName) {
                 continue;
             }
             $dependencies[] = [
@@ -73,14 +71,14 @@ class ComposerDependencyParser
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return array
      */
-    protected function getBundleDependencyNames(BundleDependenciesTransfer $bundleDependenciesTransfer)
+    protected function getBundleDependencyNames(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $bundleNames = [];
-        foreach ($bundleDependenciesTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
             $bundleNames[] = $dependencyBundleTransfer->getBundle();
         }
 
@@ -106,16 +104,16 @@ class ComposerDependencyParser
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\BundleDependenciesTransfer
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
-    protected function getOverwrittenDependenciesForBundle(BundleDependenciesTransfer $bundleDependenciesTransfer)
+    protected function getOverwrittenDependenciesForBundle(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-        $declaredDependencies = $this->parseDeclaredDependenciesForBundle($bundleDependenciesTransfer->getBundle());
+        $declaredDependencies = $this->parseDeclaredDependenciesForBundle($bundleDependencyCollectionTransfer->getBundle());
 
         if (!$declaredDependencies) {
-            return $bundleDependenciesTransfer;
+            return $bundleDependencyCollectionTransfer;
         }
 //echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($declaredDependencies) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 //        // For now we can't separate in the dependency tool yet
@@ -243,35 +241,35 @@ class ComposerDependencyParser
      * is displayed in the list of Composer dependencies. To prevent this wrong
      * dependency "alert" PropelOrm gets filtered out when both bundles are present.
      *
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\BundleDependenciesTransfer
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
-    private function filterCodeDependencies(BundleDependenciesTransfer $bundleDependenciesTransfer)
+    private function filterCodeDependencies(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-        if ($this->hasDependencyTo('Propel', $bundleDependenciesTransfer) && $this->hasDependencyTo('PropelOrm', $bundleDependenciesTransfer)) {
-            $dependencyBundles = $bundleDependenciesTransfer->getDependencyBundles();
-            $bundleDependenciesTransfer->setDependencyBundles(new ArrayObject());
+        if ($this->hasDependencyTo('Propel', $bundleDependencyCollectionTransfer) && $this->hasDependencyTo('PropelOrm', $bundleDependencyCollectionTransfer)) {
+            $dependencyBundles = $bundleDependencyCollectionTransfer->getDependencyBundles();
+            $bundleDependencyCollectionTransfer->setDependencyBundles(new ArrayObject());
             foreach ($dependencyBundles as $dependencyBundle) {
                 if ($dependencyBundle->getBundle() !== 'PropelOrm') {
-                    $bundleDependenciesTransfer->addDependencyBundle($dependencyBundle);
+                    $bundleDependencyCollectionTransfer->addDependencyBundle($dependencyBundle);
                 }
             }
         }
 
-        return $bundleDependenciesTransfer;
+        return $bundleDependencyCollectionTransfer;
     }
 
     /**
-     * @param $bundle
-     * @param \Generated\Shared\Transfer\BundleDependenciesTransfer $bundleDependenciesTransfer
+     * @param string $bundle
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
      *
      * @return bool
      */
-    private function hasDependencyTo($bundle, BundleDependenciesTransfer $bundleDependenciesTransfer)
+    private function hasDependencyTo($bundle, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-        foreach ($bundleDependenciesTransfer->getDependencyBundles() as $dependencyBundle) {
-            if ($dependencyBundle->getBundle() === $bundle) {
+        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+            if ($dependencyBundleTransfer->getBundle() === $bundle) {
                 return true;
             }
         }
@@ -280,7 +278,7 @@ class ComposerDependencyParser
     }
 
     /**
-     * @param $package
+     * @param string $package
      *
      * @return string
      */

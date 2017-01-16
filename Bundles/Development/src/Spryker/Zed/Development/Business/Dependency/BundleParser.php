@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use ArrayObject;
-use Generated\Shared\Transfer\BundleDependenciesTransfer;
+use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyBundleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Spryker\Zed\Development\Business\DependencyTree\Finder;
@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Zend\Filter\Word\SeparatorToCamelCase;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class BundleParser
+class BundleParser implements BundleParserInterface
 {
 
     /**
@@ -36,9 +36,9 @@ class BundleParser
     protected $bundleConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\BundleDependenciesTransfer
+     * @var \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
-    protected $bundleDependenciesTransfer;
+    protected $bundleDependencyCollectionTransfer;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
@@ -53,14 +53,14 @@ class BundleParser
     /**
      * @param string $bundleName
      *
-     * @return \Generated\Shared\Transfer\BundleDependenciesTransfer
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
     public function parseOutgoingDependencies($bundleName)
     {
-        $bundleDependenciesTransfer = new BundleDependenciesTransfer();
-        $bundleDependenciesTransfer->setBundle($bundleName);
+        $bundleDependencyCollectionTransfer = new BundleDependencyCollectionTransfer();
+        $bundleDependencyCollectionTransfer->setBundle($bundleName);
 
-        $this->bundleDependenciesTransfer = $bundleDependenciesTransfer;
+        $this->bundleDependencyCollectionTransfer = $bundleDependencyCollectionTransfer;
 
         $allFileDependencies = $this->parseDependencies($bundleName);
 
@@ -73,17 +73,17 @@ class BundleParser
             return strcmp($a->getBundle(), $b->getBundle());
         };
 
-        $dependencyBundles = $this->bundleDependenciesTransfer->getDependencyBundles()->getArrayCopy();
+        $dependencyBundles = $this->bundleDependencyCollectionTransfer->getDependencyBundles()->getArrayCopy();
 
         usort($dependencyBundles, $callback);
 
-        $this->bundleDependenciesTransfer->setDependencyBundles(new ArrayObject());
+        $this->bundleDependencyCollectionTransfer->setDependencyBundles(new ArrayObject());
 
         foreach ($dependencyBundles as $dependencyBundle) {
-            $this->bundleDependenciesTransfer->addDependencyBundle($dependencyBundle);
+            $this->bundleDependencyCollectionTransfer->addDependencyBundle($dependencyBundle);
         }
 
-        return $this->bundleDependenciesTransfer;
+        return $this->bundleDependencyCollectionTransfer;
     }
 
     /**
@@ -220,7 +220,7 @@ class BundleParser
             foreach ($fileDependencies as $fileDependency) {
                 $fileNameParts = explode('\\', $fileDependency);
                 $foreignBundle = $fileNameParts[2];
-                if ($this->bundleDependenciesTransfer->getBundle() !== $foreignBundle) {
+                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignBundle) {
                     $dependencyTransfer = new DependencyTransfer();
                     $dependencyTransfer->setBundle($foreignBundle);
                     $dependencyTransfer->setType('spryker');
@@ -250,7 +250,7 @@ class BundleParser
      */
     protected function getDependencyBundleTransfer(DependencyTransfer $dependencyTransfer)
     {
-        foreach ($this->bundleDependenciesTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
+        foreach ($this->bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundleTransfer) {
             if ($dependencyBundleTransfer->getBundle() === $dependencyTransfer->getBundle()) {
                 return $dependencyBundleTransfer;
             }
@@ -259,7 +259,7 @@ class BundleParser
         $dependencyBundleTransfer = new DependencyBundleTransfer();
         $dependencyBundleTransfer->setBundle($dependencyTransfer->getBundle());
 
-        $this->bundleDependenciesTransfer->addDependencyBundle($dependencyBundleTransfer);
+        $this->bundleDependencyCollectionTransfer->addDependencyBundle($dependencyBundleTransfer);
 
         return $dependencyBundleTransfer;
     }
@@ -388,11 +388,11 @@ class BundleParser
     }
 
     /**
-     * @param $allFileDependencies
+     * @param array $allFileDependencies
      *
      * @return void
      */
-    protected function addLocatorBundleDependencies($allFileDependencies)
+    protected function addLocatorBundleDependencies(array $allFileDependencies)
     {
         foreach ($allFileDependencies as $fileName => $fileDependencies) {
             if (!$fileDependencies || strpos($fileName, 'DependencyProvider.php') === false) {

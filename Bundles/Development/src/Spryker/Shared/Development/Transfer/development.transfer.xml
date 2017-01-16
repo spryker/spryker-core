@@ -20,7 +20,7 @@
         <property name="namespaceName" type="string"/>
     </transfer>
 
-    <transfer name="BundleDependencies">
+    <transfer name="BundleDependencyCollection">
         <property name="bundle" type="string"/>
         <property name="dependencyBundles" type="DependencyBundle[]" singular="dependencyBundle"/>
     </transfer>
