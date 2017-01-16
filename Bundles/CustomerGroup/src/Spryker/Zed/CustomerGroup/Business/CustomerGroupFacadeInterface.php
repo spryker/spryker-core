@@ -91,6 +91,9 @@ interface CustomerGroupFacadeInterface
 
     /**
      *
+     * Specification:
+     *  - Finds Customer group by given customer id
+     *
      * @api
      *
      * @param int $idCustomer

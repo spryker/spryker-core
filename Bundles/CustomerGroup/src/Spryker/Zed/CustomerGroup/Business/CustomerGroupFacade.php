@@ -97,6 +97,7 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * {@inheritdoc}
      *
      * @api
      *
