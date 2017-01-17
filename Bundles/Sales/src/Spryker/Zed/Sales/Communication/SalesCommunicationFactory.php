@@ -111,10 +111,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createOrdersTableQueryBuilder()
     {
-        return new OrdersTableQueryBuilder(
-            $this->getQueryContainer()->querySalesOrder(),
-            $this->getQueryContainer()->querySalesOrderItem()
-        );
+        return new OrdersTableQueryBuilder($this->getQueryContainer()->querySalesOrder());
     }
 
     /**

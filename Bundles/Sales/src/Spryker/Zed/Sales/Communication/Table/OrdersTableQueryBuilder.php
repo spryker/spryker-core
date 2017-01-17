@@ -8,13 +8,9 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use DateTime;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Propel\Business\Runtime\ActiveQuery\Criteria as SprykerCriteria;
 
 class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 {
@@ -30,20 +26,10 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     protected $salesOrderQuery;
 
     /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    protected $salesOrderItemQuery;
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
      */
-    public function __construct(
-        SpySalesOrderQuery $salesOrderQuery,
-        SpySalesOrderItemQuery $salesOrderItemQuery
-    ) {
+    public function __construct(SpySalesOrderQuery $salesOrderQuery) {
         $this->salesOrderQuery = $salesOrderQuery;
-        $this->salesOrderItemQuery = $salesOrderItemQuery;
     }
 
     /**
@@ -53,7 +39,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function buildQuery($idOrderItemProcess, $idOrderItemState, $dateFilter)
+    public function buildQuery($idOrderItemProcess = null, $idOrderItemState = null, $dateFilter = null)
     {
         $query = $this->salesOrderQuery;
         $query = $this->addItemStates($query);
@@ -70,28 +56,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
      */
     protected function addItemStates(SpySalesOrderQuery $query)
     {
-        $subQuery = clone $this->salesOrderItemQuery;
-        $subQuery
-            ->joinWithState()
-            ->addSelfSelectColumns()
-            ->clearSelectColumns()
-            ->withColumn(
-                sprintf('GROUP_CONCAT(%s)', SpyOmsOrderItemStateTableMap::COL_NAME),
-                static::FIELD_ITEM_STATE_NAMES_CSV
-            )
-            ->filterByFkSalesOrder(
-                sprintf(
-                    '%s = %s',
-                    SpySalesOrderItemTableMap::COL_FK_SALES_ORDER,
-                    SpySalesOrderTableMap::COL_ID_SALES_ORDER
-                ),
-                Criteria::CUSTOM
-            )
-            ->groupByFkSalesOrder();
-
-        $query = $this->addSubQuery($query, $subQuery, static::FIELD_ITEM_STATE_NAMES_CSV);
-
-        return $query;
+        return $query->addItemStateNameAggregationToResult(static::FIELD_ITEM_STATE_NAMES_CSV);
     }
 
     /**
@@ -101,47 +66,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
      */
     protected function addItemCount(SpySalesOrderQuery $query)
     {
-        $subQuery = clone $this->salesOrderItemQuery;
-        $subQuery
-            ->addSelfSelectColumns()
-            ->clearSelectColumns()
-            ->withColumn(
-                sprintf('COUNT(%s)', SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM),
-                static::FIELD_NUMBER_OF_ORDER_ITEMS
-            )
-            ->filterByFkSalesOrder(
-                sprintf(
-                    '%s = %s',
-                    SpySalesOrderItemTableMap::COL_FK_SALES_ORDER,
-                    SpySalesOrderTableMap::COL_ID_SALES_ORDER
-                ),
-                Criteria::CUSTOM
-            )
-            ->groupByFkSalesOrder();
-
-        $subQuery->setPrimaryTableName(SpySalesOrderItemTableMap::TABLE_NAME);
-
-        $query = $this->addSubQuery($query, $subQuery, static::FIELD_NUMBER_OF_ORDER_ITEMS);
-
-        return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $subQuery
-     * @param string $resultFieldName
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function addSubQuery(SpySalesOrderQuery $query, ModelCriteria $subQuery, $resultFieldName)
-    {
-        $params = [];
-        $query->withColumn(
-            sprintf('(%s)', $subQuery->createSelectSql($params)),
-            $resultFieldName
-        );
-
-        return $query;
+        return $query->addItemCountToResult(static::FIELD_NUMBER_OF_ORDER_ITEMS);
     }
 
     /**
@@ -173,13 +98,9 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
             return $query;
         }
 
-        $query
-            ->useItemQuery()
-                ->filterByFkOmsOrderProcess($idOrderItemProcess)
-                ->filterByFkOmsOrderItemState($idOrderItemState)
-            ->endUse();
-
-        return $query;
+        return $query
+            ->filterByIdItemOrderProcess($idOrderItemProcess)
+            ->filterByIdItemState($idOrderItemState);
     }
 
     /**
@@ -195,21 +116,17 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
         }
 
         if ($dateFilter === self::DATE_FILTER_DAY) {
-            $query
-                ->useItemQuery()
-                    ->filterByLastStateChange(new DateTime('-1 day'), Criteria::GREATER_THAN)
-                ->endUse();
+            $query->filterByLastItemStateChange(new DateTime('-1 day'), Criteria::GREATER_THAN);
         } elseif ($dateFilter === self::DATE_FILTER_WEEK) {
-            $query
-                ->useItemQuery()
-                    ->filterByLastStateChange(new DateTime('-1 day'), Criteria::LESS_EQUAL)
-                    ->filterByLastStateChange(new DateTime('-7 day'), Criteria::GREATER_EQUAL)
-                ->endUse();
+            $query->filterByLastItemStateChange(
+                [
+                    'min' => new DateTime('-7 day'),
+                    'max' => new DateTime('-1 day'),
+                ],
+                SprykerCriteria::BETWEEN
+            );
         } else {
-            $query
-                ->useItemQuery()
-                    ->filterByLastStateChange(new DateTime('-7 day'), Criteria::LESS_THAN)
-                ->endUse();
+            $query->filterByLastItemStateChange(new DateTime('-7 day'), Criteria::LESS_THAN);
         }
 
         return $query;

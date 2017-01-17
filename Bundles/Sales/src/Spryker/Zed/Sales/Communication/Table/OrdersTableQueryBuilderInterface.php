@@ -17,6 +17,6 @@ interface OrdersTableQueryBuilderInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function buildQuery($idOrderItemProcess, $idOrderItemState, $dateFilter);
+    public function buildQuery($idOrderItemProcess = null, $idOrderItemState = null, $dateFilter = null);
 
 }
