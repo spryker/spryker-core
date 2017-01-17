@@ -210,7 +210,6 @@ class CustomerGroup implements CustomerGroupInterface
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
         return $customerGroupTransfer;
-
     }
 
 }
