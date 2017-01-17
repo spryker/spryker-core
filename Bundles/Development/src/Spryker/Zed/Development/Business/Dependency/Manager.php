@@ -45,8 +45,9 @@ class Manager
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
             $bundleDependencyCollectionTransfer = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
+            $dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependencyCollectionTransfer);
 
-            if ($dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependencyCollectionTransfer)) {
+            if ($dependencyBundle) {
                 if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
                     $incomingDependencies[$foreignBundle] = 0;
                 }

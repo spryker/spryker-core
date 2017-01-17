@@ -1,3 +1,3 @@
 # PropelOrm Changelog
 
-[PropelOrm Changelog](https://github.com/spryker/PropelOrm/releases)
+[Release Changelog](https://github.com/spryker/PropelOrm/releases)

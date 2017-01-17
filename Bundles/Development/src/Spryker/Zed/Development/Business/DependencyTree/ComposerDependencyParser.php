@@ -42,7 +42,7 @@ class ComposerDependencyParser
      */
     public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
-//        $bundleDependencyCollectionTransfer = $this->getOverwrittenDependenciesForBundle($bundleDependencyCollectionTransfer);
+        $bundleDependencyCollectionTransfer = $this->getOverwrittenDependenciesForBundle($bundleDependencyCollectionTransfer);
         $bundleDependencyCollectionTransfer = $this->filterCodeDependencies($bundleDependencyCollectionTransfer);
 
         $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($bundleDependencyCollectionTransfer->getBundle());
@@ -111,24 +111,21 @@ class ComposerDependencyParser
     protected function getOverwrittenDependenciesForBundle(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
     {
         $declaredDependencies = $this->parseDeclaredDependenciesForBundle($bundleDependencyCollectionTransfer->getBundle());
-
         if (!$declaredDependencies) {
             return $bundleDependencyCollectionTransfer;
         }
-//echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($declaredDependencies) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-//        // For now we can't separate in the dependency tool yet
-//        $included = array_merge($declaredDependencies[static::TYPE_INCLUDE], $declaredDependencies[static::TYPE_INCLUDE_DEV]);
-//        $excluded = array_merge($declaredDependencies[static::TYPE_EXCLUDE], $declaredDependencies[static::TYPE_EXCLUDE_DEV]);
-//
-//        foreach ($codeDependencies as $key => $bundleDependency) {
-//            if (in_array($bundleDependency, $excluded)) {
-//                unset($codeDependencies[$key]);
-//            }
-//        }
-//
-//        $codeDependencies = array_merge($codeDependencies, $included);
-//
-//        return $codeDependencies;
+
+        $excluded = $declaredDependencies[static::TYPE_EXCLUDE];
+
+        $dependencyBundlesCollectionTransfer = $bundleDependencyCollectionTransfer->getDependencyBundles();
+        $bundleDependencyCollectionTransfer->setDependencyBundles(new ArrayObject());
+        foreach ($dependencyBundlesCollectionTransfer as $dependencyBundleTransfer) {
+            if (!in_array($dependencyBundleTransfer->getBundle(), $excluded)) {
+                $bundleDependencyCollectionTransfer->addDependencyBundle($dependencyBundleTransfer);
+            }
+        }
+
+        return $bundleDependencyCollectionTransfer;
     }
 
     /**
