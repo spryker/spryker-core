@@ -151,7 +151,7 @@ class CustomerTable extends AbstractTable
         $customerRow = $customerGroupToCustomer->toArray();
 
         $customerRow[self::ACTIONS] = $this->buildLinks($customerGroupToCustomer);
-        $customerRow['gender'] = self::GENDER_MAPPER[$customerRow['gender']];
+        $customerRow['gender'] = $this->getGender($customerRow);
 
         return $customerRow;
     }
@@ -170,6 +170,20 @@ class CustomerTable extends AbstractTable
             ->withColumn(SpyCustomerTableMap::COL_GENDER, 'gender');
 
         return $query;
+    }
+
+    /**
+     * @param array $customerRow
+     *
+     * @return mixed
+     */
+    protected function getGender(array $customerRow)
+    {
+        if (!isset($customerRow['gender'])) {
+            return 'N/A';
+        }
+
+        return self::GENDER_MAPPER[$customerRow['gender']];
     }
 
 }

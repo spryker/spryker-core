@@ -1,5 +1,5 @@
 <?php
-namespace CustomerGroupDiscount;
+namespace CustomerGroupDiscountConnector;
 
 use Codeception\Actor;
 
