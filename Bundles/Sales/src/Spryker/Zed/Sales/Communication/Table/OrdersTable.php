@@ -86,7 +86,7 @@ class OrdersTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::URL);
+        $config->addRawColumn(static::URL);
         $config->addRawColumn(SpySalesOrderTableMap::COL_FK_CUSTOMER);
         $config->addRawColumn(SpySalesOrderTableMap::COL_EMAIL);
 
@@ -117,9 +117,9 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $this->formatCustomer($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                self::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
+                static::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
-                self::URL => implode(' ', $this->createActionUrls($item)),
+                static::URL => implode(' ', $this->createActionUrls($item)),
             ];
         }
         unset($queryResults);
@@ -210,8 +210,8 @@ class OrdersTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->generateViewButton(
-            Url::generate(self::URL_SALES_DETAIL, [
-                self::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+            Url::generate(static::URL_SALES_DETAIL, [
+                static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
             ]),
             'View'
         );
@@ -224,9 +224,9 @@ class OrdersTable extends AbstractTable
      */
     protected function buildQuery()
     {
-        $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
-        $idOrderItemItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
-        $filter = $this->request->query->get(self::FILTER);
+        $idOrderItemProcess = $this->request->query->getInt(static::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemItemState = $this->request->query->getInt(static::ID_ORDER_ITEM_STATE);
+        $filter = $this->request->query->get(static::FILTER);
 
         return $this->queryBuilder->buildQuery($idOrderItemProcess, $idOrderItemItemState, $filter);
     }
@@ -238,10 +238,10 @@ class OrdersTable extends AbstractTable
      */
     protected function persistFilters(TableConfiguration $config)
     {
-        $idOrderItemProcess = $this->request->query->getInt(self::ID_ORDER_ITEM_PROCESS);
+        $idOrderItemProcess = $this->request->query->getInt(static::ID_ORDER_ITEM_PROCESS);
         if ($idOrderItemProcess) {
-            $idOrderItemState = $this->request->query->getInt(self::ID_ORDER_ITEM_STATE);
-            $filter = $this->request->query->get(self::FILTER);
+            $idOrderItemState = $this->request->query->getInt(static::ID_ORDER_ITEM_STATE);
+            $filter = $this->request->query->get(static::FILTER);
 
             $config->setUrl(
                 sprintf(
@@ -278,9 +278,9 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Full Name',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             static::ITEM_STATE_NAMES_CSV => 'Order State',
-            self::GRAND_TOTAL => 'GrandTotal',
+            static::GRAND_TOTAL => 'GrandTotal',
             static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
-            self::URL => 'Actions',
+            static::URL => 'Actions',
         ];
     }
 
