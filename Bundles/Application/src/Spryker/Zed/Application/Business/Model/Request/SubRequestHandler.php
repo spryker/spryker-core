@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Application\Business\Model\Request;
 
-use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
+use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -75,7 +75,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     /**
      * @param string[] $urlParts
      *
-     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlInvalidException
      *
      * @return bool
      */

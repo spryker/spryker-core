@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Url;
 
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
-use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
+use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
 
 /**
  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.
@@ -70,7 +70,7 @@ class Url
      *
      * @param string $url Full URL used to create a Url object
      *
-     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlInvalidException
      *
      * @return $this
      */
