@@ -5,25 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin;
+namespace Spryker\Zed\Kernel\Communication\Plugin;
 
-use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-/**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
- * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
- */
 class Pimple extends AbstractPlugin
 {
 
     /**
-     * @var \Spryker\Shared\Application\Communication\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected static $application;
 
     /**
-     * @param \Spryker\Shared\Application\Communication\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */
@@ -33,7 +29,7 @@ class Pimple extends AbstractPlugin
     }
 
     /**
-     * @return \Spryker\Shared\Application\Communication\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication()
     {

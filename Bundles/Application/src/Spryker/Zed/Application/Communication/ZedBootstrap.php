@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Container;
@@ -26,7 +26,7 @@ class ZedBootstrap
     use BundleDependencyProviderResolverAwareTrait;
 
     /**
-     * @var \Spryker\Shared\Application\Communication\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected $application;
 
@@ -36,7 +36,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Communication\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function boot()
     {
@@ -131,7 +131,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Communication\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function getBaseApplication()
     {
@@ -145,7 +145,7 @@ class ZedBootstrap
     }
 
     /**
-     * @param \Spryker\Shared\Application\Communication\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */

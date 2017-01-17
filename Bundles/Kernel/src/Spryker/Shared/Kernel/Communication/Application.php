@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Communication;
+namespace Spryker\Shared\Kernel\Communication;
 
 use Silex\Application as SilexApplication;
 use Silex\Application\TranslationTrait;

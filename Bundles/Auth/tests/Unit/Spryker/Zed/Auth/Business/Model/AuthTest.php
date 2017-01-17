@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Spryker\Client\Session\SessionClient;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;

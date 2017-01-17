@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\Customer\Communication\Controller;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Controller\EditController;
