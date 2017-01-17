@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductBundle\Persistence\Propel;
 
 use Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle as BaseSpyProductBundle;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Exception\PropelException;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_bundle' table.
@@ -21,4 +24,26 @@ use Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle as BaseSpyProductBun
  */
 abstract class AbstractSpyProductBundle extends BaseSpyProductBundle
 {
+
+    /**
+     * @param  ConnectionInterface $con
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return bool
+     */
+    public function preSave(ConnectionInterface $con = null)
+    {
+        $numberOfBundlesUsing = SpyProductBundleQuery::create()
+            ->filterByFkProduct($this->fk_bundled_product)
+            ->_or()
+            ->filterByFkBundledProduct($this->fk_product)
+            ->count();
+
+        if ($numberOfBundlesUsing > 0) {
+            throw new PropelException('Cannot assign bundle product or use bundled product as a bundle.');
+        }
+
+        return true;
+    }
 }

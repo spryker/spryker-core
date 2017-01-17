@@ -164,8 +164,6 @@ class BundledProductTable extends AbstractTable
         $productAbstractCollection = [];
         foreach ($queryResults as $item) {
 
-            $availability = $this->availabilityFacade->calculateStockForProduct($item->getSku());
-
             $productAbstractCollection[] = [
                 static::COL_SELECT => $this->addCheckBox($item),
                 static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
@@ -173,7 +171,7 @@ class BundledProductTable extends AbstractTable
                 SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
                 static::COL_PRICE => $this->getFormatedPrice($item->getSku()),
                 SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
-                static::COL_AVAILABILITY => $availability,
+                static::COL_AVAILABILITY => $this->getAvailability($item),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
             ];
         }
@@ -237,6 +235,20 @@ class BundledProductTable extends AbstractTable
             $this->utilEncodingService->encodeJson($productConcreteEntity->toArray()),
             $checked
         );
+    }
+
+    /**
+     * @param SpyProduct $productConcreteEntity
+     *
+     * @return int
+     */
+    protected function getAvailability(SpyProduct $productConcreteEntity )
+    {
+        $availability = 0;
+        if (!$productConcreteEntity->getIsNeverOutOfStock()) {
+            $availability = $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
+        }
+        return $availability;
     }
 
 }

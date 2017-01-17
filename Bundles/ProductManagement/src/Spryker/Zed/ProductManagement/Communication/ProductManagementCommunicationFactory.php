@@ -490,13 +490,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string|null $type
-     *
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
-    public function createProductConcreteFormEditTabs($type = null)
+    public function createProductConcreteFormEditTabs()
     {
-        return new ProductConcreteFormEditTabs($type);
+        return new ProductConcreteFormEditTabs();
     }
 
     /**

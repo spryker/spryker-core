@@ -136,6 +136,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     ) {
         $addToCartItems = [];
         $quantity = $itemTransfer->getQuantity();
+
+        $productOptions = $itemTransfer->getProductOptions();
         for ($i = 0; $i < $quantity; $i++) {
 
             $bundleItemTransfer = clone $itemTransfer;
@@ -148,6 +150,9 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $quoteTransfer->addBundleItem($bundleItemTransfer);
 
             $bundledItems = $this->createBundledItemsTransferCollection($bundledProducts, $bundleItemIdentifier);
+
+            $lastBundledItemTransfer = $bundledItems[count($bundledItems) - 1];
+            $lastBundledItemTransfer->setProductOptions($productOptions);
 
             $this->distributeBundleUnitGrossPrice($bundledItems, $itemTransfer->getUnitGrossPrice());
 
@@ -166,7 +171,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier)
     {
         $bundledItems = [];
-        foreach ($bundledProducts as $productBundleEntity) {
+        foreach ($bundledProducts as $index => $productBundleEntity) {
             $quantity = $productBundleEntity->getQuantity();
             for ($i = 0; $i < $quantity; $i++) {
                 $bundledItems[] = $this->createBundledItemTransfer($productBundleEntity, $bundleItemIdentifier);
@@ -184,7 +189,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $itemTransfer->requireSku();
 
-        return $itemTransfer->getSku() . self::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
+        return $itemTransfer->getSku() . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
     }
 
     /**

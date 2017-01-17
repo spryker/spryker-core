@@ -27,7 +27,6 @@
             <tr class="text-left">
                 <th><input type="checkbox" id="check-all-orders" /></th>
                 <th>{{ 'SKU' | trans }}</th>
-                <th>{{ 'Bundle SKU' | trans }}</th>
                 <th>{{ 'Unit Price' | trans }}</th>
                 <th>{{ 'Tax amount' | trans }}</th>
                 <th>{{ 'Tax %' | trans }}</th>
@@ -44,7 +43,6 @@
                 <tr data-qa-item-row="{{ orderItem.idSalesOrderItem }}">
                     <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
                     <td>{{ orderItem.Sku }}</td>
-                    <td>---</td>
                     <td>{{ orderItem.unitGrossPriceWithProductOptions | default(0) | money }}</td>
                     <td>{{ orderItem.sumTaxAmountWithProductOptionAndDiscountAmounts | default(0) | money }}</td>
                     <td>{{ orderItem.taxRate|default(0) }} %</td>

@@ -1,6 +1,6 @@
 {{ bundledProductTable | raw }}
 
-<strong>{{ "Bundle availability based on assigned products:" | trans }} </strong> :
+<strong>{{ "Bundle availability based on assigned products:" | trans }} </strong>
 {% if currentProduct.product_bundle %}
     {% if currentProduct.product_bundle.is_never_out_of_stock %}
          {{ 'Is never out of stock' }}

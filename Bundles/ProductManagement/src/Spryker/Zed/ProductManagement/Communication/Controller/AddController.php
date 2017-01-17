@@ -87,17 +87,15 @@ class AddController extends AbstractController
 
     /**
      * @param int $idProductAbstract
-     * @param string $type
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseAfterAdd($idProductAbstract, $type)
+    protected function createRedirectResponseAfterAdd($idProductAbstract)
     {
         return $this->redirectResponse(sprintf(
-            '/product-management/edit?%s=%d&type=%s',
+            '/product-management/edit?%s=%d',
             self::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract,
-            $type
+            $idProductAbstract
         ));
     }
 

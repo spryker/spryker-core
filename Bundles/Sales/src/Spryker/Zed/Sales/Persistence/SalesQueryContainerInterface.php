@@ -128,4 +128,13 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      */
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
+    /**
+     * @api
+     *
+     * @param $idSalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function queryCountUniqueProductsForOrder($idSalesOrder);
+
 }

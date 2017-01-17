@@ -99,7 +99,7 @@ $(document).ready(function() {
         bundledItemsToBeRemoved.forEach(function(element, index) {
             elementsToRemove += element;
 
-            if (index > size) {
+            if (index + 1 < size) {
                 elementsToRemove += ',';
             }
         });

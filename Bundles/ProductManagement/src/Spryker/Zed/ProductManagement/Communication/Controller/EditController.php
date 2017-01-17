@@ -136,7 +136,7 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
-        $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
+        $type = ProductManagementConfig::PRODUCT_TYPE_REGULAR;
         if ($productTransfer->getProductBundle() !== null) {
             $type = ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
         }
@@ -199,7 +199,7 @@ class EditController extends AddController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
-            'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs($type)->createView(),
+            'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,
         ]);

@@ -26,6 +26,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     const STOCK_TRANSLATION_PARAMETER = 'stock';
+    const SKU_TRANSLATION_PARAMTER = 'sku';
 
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
@@ -103,7 +104,10 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
                 if (!$this->isAllBundleItemsAvailable($itemsInCart, $bundledItems, $itemTransfer->getQuantity())) {
                     $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku());
 
-                    $cartPreCheckErrorMessages[] = $this->createItemIsNotAvailableMessageTransfer($availabilityEntity->getQuantity());
+                    $cartPreCheckErrorMessages[] = $this->createItemIsNotAvailableMessageTransfer(
+                        $availabilityEntity->getQuantity(),
+                        $itemTransfer->getSku()
+                    );
                 }
                 continue;
             }
@@ -118,8 +122,14 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
                     $itemsInCart,
                     $itemTransfer->getSku()
                 );
+
+                $availabilitAfterBundles = $available - $quantityWithBundles;
+
                 $cartPreCheckErrorMessages->append(
-                    $this->createItemIsNotAvailableMessageTransfer($available - $quantityWithBundles)
+                    $this->createItemIsNotAvailableMessageTransfer(
+                        $availabilitAfterBundles,
+                        $itemTransfer->getSku()
+                    )
                 );
             }
 
@@ -172,13 +182,14 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
 
     /**
      * @param string $stock
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createItemIsNotAvailableMessageTransfer($stock)
+    protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
     {
         $translationKey = $this->getItemAvailabilityTranslationKey($stock);
-        return $this->createCartMessageTransfer($stock, $translationKey);
+        return $this->createCartMessageTransfer($stock, $translationKey, $sku);
     }
 
     /**
@@ -187,7 +198,7 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     protected function createCheckoutResponseTransfer()
     {
         $checkoutErrorTransfer = new CheckoutErrorTransfer();
-        $checkoutErrorTransfer->setMessage(self::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY);
+        $checkoutErrorTransfer->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY);
 
         return $checkoutErrorTransfer;
     }
@@ -199,9 +210,9 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
      */
     protected function getItemAvailabilityTranslationKey($stock)
     {
-        $translationKey = self::CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED;
+        $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED;
         if ($stock <= 0) {
-            $translationKey = self::CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY;
+            $translationKey = static::CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY;
         }
         return $translationKey;
     }
@@ -224,15 +235,17 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
     /**
      * @param int $stock
      * @param string $translationKey
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createCartMessageTransfer($stock, $translationKey)
+    protected function createCartMessageTransfer($stock, $translationKey, $sku)
     {
         $messageTranfer = new MessageTransfer();
         $messageTranfer->setValue($translationKey);
         $messageTranfer->setParameters([
-            self::STOCK_TRANSLATION_PARAMETER => $stock,
+            static::SKU_TRANSLATION_PARAMTER => $sku,
+            static::STOCK_TRANSLATION_PARAMETER => $stock,
         ]);
 
         return $messageTranfer;

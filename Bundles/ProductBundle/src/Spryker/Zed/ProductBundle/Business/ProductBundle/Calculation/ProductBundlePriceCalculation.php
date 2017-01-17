@@ -84,7 +84,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
                     continue;
                 }
                 $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
-
             }
         }
 

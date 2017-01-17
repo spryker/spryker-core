@@ -93,8 +93,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $stockEntity = $this->findOrCreateProductStockEntity($productConcreteTransfer, $idStock);
 
-            $stockEntity->setQuantity($bundleStock[self::QUANTITY]);
-            $stockEntity->setIsNeverOutOfStock($bundleStock[self::IS_NEVER_OUT_OF_STOCK]);
+            $stockEntity->setQuantity($bundleStock[static::QUANTITY]);
+            $stockEntity->setIsNeverOutOfStock($bundleStock[static::IS_NEVER_OUT_OF_STOCK]);
             $stockEntity->save();
 
             $stockTransfer = $this->mapStockTransfer($productConcreteTransfer, $stockEntity);

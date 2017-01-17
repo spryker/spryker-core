@@ -167,10 +167,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
      */
     protected function addAssignBundledProductForm(FormBuilderInterface $builder, array $options)
     {
-        if (isset($options[static::OPTION_IS_BUNDLE_ITEM]) && $options[static::OPTION_IS_BUNDLE_ITEM] !== true) {
-            return $this;
-        }
-
         $builder->add(self::FORM_ASSIGNED_BUNDLED_PRODUCTS, 'collection', [
             'type' => new BundledProductForm(),
             'allow_add' => true,
