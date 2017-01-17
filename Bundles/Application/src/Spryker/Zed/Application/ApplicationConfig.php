@@ -7,18 +7,8 @@
 
 namespace Spryker\Zed\Application;
 
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
-
-    /**
-     * @return string
-     */
-    public function getBundlesDirectory()
-    {
-        return $this->get(KernelConstants::SPRYKER_ROOT);
-    }
-
 }

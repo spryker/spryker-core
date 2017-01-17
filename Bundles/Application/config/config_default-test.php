@@ -16,8 +16,4 @@ $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
 
 $config[ErrorHandlerConstants::ERROR_LEVEL] = E_ALL;
 
-$config[ApplicationConstants::ZED_TWIG_OPTIONS] = [
-    'cache' => APPLICATION_ROOT_DIR . '/data/DE/cache/Zed/twig',
-];
-
 $config[ApplicationConstants::YVES_SSL_ENABLED] = false;

@@ -22,10 +22,6 @@ interface ApplicationConstants
     const STORE_PREFIX = 'STORE_PREFIX';
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
-    // see http://twig.sensiolabs.org/doc/api.html#environment-options
-    const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
-    const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';
-
     const YVES_THEME = 'YVES_THEME';
     const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
     const YVES_TRUSTED_HOSTS = 'YVES_TRUSTED_HOSTS';

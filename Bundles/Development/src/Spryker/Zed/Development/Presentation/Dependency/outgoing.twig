@@ -42,15 +42,33 @@
                 <th>{{ 'Declared in composer.json' | trans }}</th>
                 <th>{{ 'Declared in composer.json (dev)' | trans }}</th>
             </tr>
+            {% set hasDevOnlyRequirements = false %}
             {% for composerDependency in composerDependencies %}
-                {% if composerDependency.code %}
+                {% if composerDependency.code or composerDependency.composerRequire %}
                 <tr>
                     <td colspan="2"{% if not composerDependency.composerRequire and not composerDependency.composerRequireDev %} style="color: red"{% endif %}>{{ composerDependency.code }}</td>
                     <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composerRequire }}</td>
-                    <td{% if not composerDependency.code %} style="color: red"{% endif %}>{{ composerDependency.composerRequireDev }}</td>
+                    <td>{{ composerDependency.composerRequireDev }}</td>
                 </tr>
+                {% else %}
+                    {% set hasDevOnlyRequirements = true %}
                 {% endif %}
             {% endfor %}
+
+            {% if hasDevOnlyRequirements %}
+                <tr>
+                    <td colspan="4"><h3>{{ "Composer dev only dependencies" | trans }}</h3></td>
+                </tr>
+
+                {% for composerDependency in composerDependencies %}
+                    {% if not composerDependency.code and not composerDependency.composerRequire %}
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                        <td>{{ composerDependency.composerRequireDev }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </table>
     </div>
 

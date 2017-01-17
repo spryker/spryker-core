@@ -24,7 +24,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvi
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
-use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -70,7 +69,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new UrlGeneratorServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
-            new GuiTwigExtensionServiceProvider(),
             new TranslationServiceProvider(),
             new SubRequestServiceProvider(),
             new HeadersSecurityServiceProvider(),

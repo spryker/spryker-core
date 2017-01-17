@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Business\Model\Twig;
+namespace Spryker\Zed\Twig\Business\Model;
 
 use Zend\Filter\Word\CamelCaseToDash;
 

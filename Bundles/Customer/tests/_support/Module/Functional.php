@@ -16,7 +16,7 @@ use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvide
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider;
+use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
 use Spryker\Zed\Console\Business\Model\ConsoleMessenger;
 use Spryker\Zed\Country\Business\CountryFacade;

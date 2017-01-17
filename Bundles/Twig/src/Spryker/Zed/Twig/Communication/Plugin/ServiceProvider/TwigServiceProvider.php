@@ -5,34 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Twig\Communication\Plugin\ServiceProvider;
 
 use FilesystemIterator;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Shared\Twig\TwigFileSystem;
-use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
-use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Twig\Business\Model\RouteResolver;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig_Loader_Chain;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
- * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
- * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Zed\Twig\TwigConfig getConfig()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @var \Silex\Application
      */
     private $app;
 
@@ -45,7 +42,6 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     {
         $this->app = $app;
 
-        $this->provideFormTypeExtension();
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
@@ -72,7 +68,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             );
         });
 
-        $app['twig.options'] = Config::get(ApplicationConstants::ZED_TWIG_OPTIONS);
+        $app['twig.options'] = Config::get(TwigConstants::ZED_TWIG_OPTIONS);
 
         $app['twig.global.variables'] = $app->share(function () {
             return [];
@@ -145,18 +141,6 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         }
 
         return $this->app->render('@' . $route . '.twig', $parameters);
-    }
-
-    /**
-     * @return void
-     */
-    protected function provideFormTypeExtension()
-    {
-        $this->app['form.type.extensions'] = $this->app->share(function () {
-            return [
-                new NoValidateTypeExtension(),
-            ];
-        });
     }
 
     /**

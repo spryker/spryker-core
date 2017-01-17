@@ -51,7 +51,7 @@ class Manager
                 if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
                     $incomingDependencies[$foreignBundle] = 0;
                 }
-                $incomingDependencies[$foreignBundle] += count($dependencyBundle->toArray());
+                $incomingDependencies[$foreignBundle] += count($dependencyBundle->getDependencies());
             }
         }
 
