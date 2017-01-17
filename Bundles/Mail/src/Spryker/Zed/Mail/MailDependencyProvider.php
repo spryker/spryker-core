@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Mail;
 
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;

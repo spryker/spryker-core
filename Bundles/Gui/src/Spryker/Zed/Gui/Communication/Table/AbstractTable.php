@@ -16,8 +16,8 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 

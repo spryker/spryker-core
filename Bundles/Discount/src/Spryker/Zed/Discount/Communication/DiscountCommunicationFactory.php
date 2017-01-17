@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
@@ -25,6 +24,7 @@ use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Symfony\Component\Form\FormInterface;
 
 /**

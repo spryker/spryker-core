@@ -6,7 +6,6 @@
     }
   },
   "require": {
-    "spryker/glossary": "^2.0.0",
     "spryker/kernel": "^2.0.0",
     "spryker/log": "^2.0.0",
     "spryker/silex": "^2.0.0",

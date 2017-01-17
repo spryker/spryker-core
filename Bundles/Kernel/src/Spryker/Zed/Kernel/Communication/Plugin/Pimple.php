@@ -10,6 +10,9 @@ namespace Spryker\Zed\Kernel\Communication\Plugin;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ */
 class Pimple extends AbstractPlugin
 {
 

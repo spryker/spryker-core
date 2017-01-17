@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;

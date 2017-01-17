@@ -9,8 +9,8 @@ namespace Unit\Spryker\Zed\Application\Business\Model\Request;
 
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
-use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
 use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
+use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
