@@ -338,15 +338,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @param string $bundleToView
+     * @param array $excludedBundles
      *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\OutgoingGraphBuilder
      */
-    public function createOutgoingDependencyGraphBuilder($bundleToView)
+    public function createOutgoingDependencyGraphBuilder($bundleToView, array $excludedBundles = [])
     {
         $outgoingDependencyGraphBuilder = new OutgoingGraphBuilder(
             $bundleToView,
             $this->getGraph(),
-            $this->createDependencyBundleParser()
+            $this->createDependencyBundleParser(),
+            $excludedBundles
         );
 
         return $outgoingDependencyGraphBuilder;

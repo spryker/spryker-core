@@ -36,7 +36,7 @@ class OutgoingGraphBuilder
     protected $bundlesToFilter;
 
     /**
-     * @param $bundleName
+     * @param string $bundleName
      * @param \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin $graph
      * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
      * @param array $bundlesToFilter
@@ -54,11 +54,10 @@ class OutgoingGraphBuilder
      */
     public function build()
     {
-        $this->graph->init('Outgoing dependencies');
+        $this->graph->init('Outgoing dependencies', ['bgcolor' => '#f3f3f4']);
 
         $allDependencies = new ArrayObject();
         $this->buildGraph($this->bundleName, $allDependencies);
-
 
         foreach ($allDependencies as $bundleName => $dependentBundles) {
             $label = $bundleName . ' ' . count($dependentBundles);
@@ -84,8 +83,6 @@ class OutgoingGraphBuilder
     {
         $dependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);
         $dependencies = $this->getBundleNames($dependencies);
-
-
 
         $allDependencies[$bundleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {

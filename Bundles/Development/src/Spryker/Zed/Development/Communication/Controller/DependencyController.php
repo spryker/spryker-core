@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Development\Communication\Controller;
 
+use Spryker\Zed\Development\Communication\Form\BundlesFormType;
+use Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class DependencyController extends AbstractController
 {
@@ -54,17 +57,35 @@ class DependencyController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @return array
      */
     public function outgoingGraphAction(Request $request)
     {
-        $callback = function () use ($request) {
-            $bundleName = $request->query->getAlnum(self::QUERY_KEY_BUNDLE);
+        $bundleName = $request->query->getAlnum(self::QUERY_KEY_BUNDLE);
+        $dataProvider = $this->getFactory()->createBundleFormDataProvider($request, $bundleName);
 
-            echo $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName);
-        };
+        $form = $this->getFactory()
+            ->createBundlesForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
-        return $this->streamedResponse($callback);
+        $excludedBundles = [];
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+            if (isset($formData[BundlesFormType::EXCLUDED_BUNDLES])) {
+                $excludedBundles = $formData[BundlesFormType::EXCLUDED_BUNDLES];
+            }
+        }
+
+        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName, $excludedBundles);
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'graph' => $graph,
+        ]);
     }
 
     /**
