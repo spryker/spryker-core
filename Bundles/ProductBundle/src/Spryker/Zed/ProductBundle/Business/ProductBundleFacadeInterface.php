@@ -195,7 +195,7 @@ interface ProductBundleFacadeInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete);
 

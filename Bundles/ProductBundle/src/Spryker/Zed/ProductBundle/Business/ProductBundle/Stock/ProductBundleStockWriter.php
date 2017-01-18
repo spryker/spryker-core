@@ -69,9 +69,11 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
         $bundleItems = $this->findBundledItemsByIdBundleProduct($productConcreteTransfer->getIdProductConcrete());
 
-        $bundleTotalStockPerWarehause = $this->calculateBundleStockPerWarehouse($bundleItems);
+        $bundleTotalStockPerWarehouse = $this->calculateBundleStockPerWarehouse($bundleItems);
 
-        $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehause);
+        $this->productBundleQueryContainer->getConnection()->beginTransaction();
+        $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehouse);
+        $this->productBundleQueryContainer->getConnection()->commit();
 
         $this->productBundleAvailabilityHandler->updateBundleAvailability($productConcreteTransfer->getSku());
 
@@ -80,16 +82,16 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $bundleTotalStockPerWarehause
+     * @param array $bundleTotalStockPerWarehouse
      *
      * @return void
      */
     protected function updateBundleStock(
         ProductConcreteTransfer $productConcreteTransfer,
-        array $bundleTotalStockPerWarehause
+        array $bundleTotalStockPerWarehouse
     ) {
 
-        foreach ($bundleTotalStockPerWarehause as $idStock => $bundleStock) {
+        foreach ($bundleTotalStockPerWarehouse as $idStock => $bundleStock) {
 
             $stockEntity = $this->findOrCreateProductStockEntity($productConcreteTransfer, $idStock);
 

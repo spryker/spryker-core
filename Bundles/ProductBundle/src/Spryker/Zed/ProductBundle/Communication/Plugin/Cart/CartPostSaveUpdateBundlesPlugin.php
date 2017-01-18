@@ -19,6 +19,8 @@ class CartPostSaveUpdateBundlesPlugin extends AbstractPlugin implements PostSave
 {
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

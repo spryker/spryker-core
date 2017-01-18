@@ -581,6 +581,7 @@
 
       "Spryker\\Shared\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/src",
+      "Spryker\\Yves\\ProductBundle\\": "Bundles/ProductBundle/src",
       "Unit\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests",
       "Functional\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests",
       "Acceptance\\Spryker\\Zed\\ProductBundle\\": "Bundles/ProductBundle/tests",

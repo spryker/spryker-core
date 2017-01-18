@@ -76,7 +76,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundleSalesOrderSaver()
     {
-        return new ProductBundleSalesOrderSaver($this->getSalesQueryContainer());
+        return new ProductBundleSalesOrderSaver($this->getSalesQueryContainer(), $this->getQueryContainer());
     }
 
     /**

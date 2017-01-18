@@ -20,8 +20,6 @@ class ProductBundleAvailabilityCheckoutPreConditionPlugin extends AbstractPlugin
 {
 
     /**
-     * Checks a condition before the order is saved. If the condition fails, an error is added to the response transfer.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

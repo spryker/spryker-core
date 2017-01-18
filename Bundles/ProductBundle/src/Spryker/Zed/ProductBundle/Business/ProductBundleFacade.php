@@ -21,13 +21,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
 {
 
     /**
-     *
-     * Specification:
-     *
-     * - Takes all items to be added to cart and checks if any is bundle item
-     * - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned
-     * - Finds all bundled items from that bundle and puts into add to cart operation, assign bundle identifier they belong to.
-     * - The price amount is assigned, proportionaly split through items quantity = 1
+     * {@inheritdoc}
      *
      * @api
      *
@@ -43,10 +37,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - The group key is build to uniquely identify bundled items.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -62,10 +53,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Updates QuoteTransfer::bundleItems to be in sync with current existing bundled items in cart.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -81,12 +69,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Checks if items which being added to cart is available, for bundle it checks bundled items.
-     * - Even if same item added separatelly from bundle availability is checked together.
-     * - Sets error message if not available
+     * {@inheritdoc}
      *
      * @api
      *
@@ -102,12 +85,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Checks if items which being added to checkout is available, for bundle it checks bundled items.
-     * - Even if same item added separatelly from bundle availability is checked together.
-     * - Sets error message if not available
+     * {@inheritdoc}
      *
      * @api
      *
@@ -126,9 +104,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * * Specification:
-     *
-     *  - Calculates QuoteTransfer::bundleItems prices
+     * {@inheritdoc}
      *
      * @api
      *
@@ -144,10 +120,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     *  - Aggregates OrderTransfer::bundleItems prices
+     * {@inheritdoc}
      *
      * @api
      *
@@ -163,11 +136,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * Specification:
-     *
-     * - Gets all items which belong to bundle
-     * - Updates bundle products with new availability, given sku belong
-     * - Touch abstract availability for bundle product
+     * {@inheritdoc}
      *
      * @api
      *
@@ -183,12 +152,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     *  - Calculated bundle availability based on bundled items
-     *  - Persists availability
-     *  - Touches availability abstract collector for bundle
+     * {@inheritdoc}
      *
      * @api
      *
@@ -204,10 +168,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Persists bundled product to sales database tables, from QuoteTransfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -224,11 +185,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Persists bundled products within ProductConcrete
-     * - Updates product bundle available stock
+     * {@inheritdoc}
      *
      * @api
      *
@@ -244,16 +201,13 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Finds all bundled products to given concrete product
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idProductConcrete
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
@@ -263,11 +217,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *
-     * - Assigns bundled products to ProductConcreteTransfer::productBundle
-     * - Returns modified ProductConcreteTransfer
+     * {@inheritdoc}
      *
      * @api
      *

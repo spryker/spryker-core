@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterface
 {
@@ -22,11 +23,20 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     protected $salesQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    public function __construct(ProductBundleToSalesQueryContainerInterface $salesQueryContainer)
-    {
+    protected $productBundleQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     */
+    public function __construct(
+        ProductBundleToSalesQueryContainerInterface $salesQueryContainer,
+        ProductBundleQueryContainerInterface $productBundleQueryContainer
+    ) {
         $this->salesQueryContainer = $salesQueryContainer;
+        $this->productBundleQueryContainer = $productBundleQueryContainer;
     }
 
     /**
@@ -37,8 +47,10 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $this->productBundleQueryContainer->getConnection()->beginTransaction();
         $bundleItemsSaved = $this->saveSalesBundleProducts($quoteTransfer);
         $this->updateRelatedSalesOrderItems($checkoutResponse, $bundleItemsSaved);
+        $this->productBundleQueryContainer->getConnection()->commit();
     }
 
     /**

@@ -141,7 +141,7 @@ instead of `CartOperationHandler` use `\Pyz\Yves\Cart\Handler\ProductBundleCartO
 
 
   * `src/Pyz/Yves/Cart/Theme/default/cart/parts/cart-item.twig` and `src/Pyz/Yves/Cart/Theme/default/cart/index.twig` - now handle product bundles.
-  * Project has received a new bundle called `ProductBundle` in which the bundle grouper is currently stored. This groups items for presentation in `\Pyz\Yves\ProductBundle\Grouper\ProductBundleGrouper`
+  * Project has received a new bundle called `ProductBundle` in which the bundle grouper is currently stored. This groups items for presentation in `\Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper`
 
 As result, views where items are displayed have also to be changed in `\Pyz\Yves\Cart\Controller\CartController::indexAction`:
 

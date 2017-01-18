@@ -19,8 +19,6 @@ class ProductBundlePriceAggregatorPlugin extends AbstractPlugin implements Order
 {
 
     /**
-     * Aggregates data and adds it to the transfer.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

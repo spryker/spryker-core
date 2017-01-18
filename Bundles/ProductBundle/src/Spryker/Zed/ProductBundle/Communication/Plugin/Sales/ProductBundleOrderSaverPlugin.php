@@ -20,8 +20,6 @@ class ProductBundleOrderSaverPlugin extends AbstractPlugin implements CheckoutSa
 {
 
     /**
-     * This plugin retrieves (its) data from the quote object and saves it to the database.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

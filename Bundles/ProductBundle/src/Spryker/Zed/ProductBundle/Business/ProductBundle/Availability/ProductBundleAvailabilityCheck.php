@@ -116,18 +116,18 @@ class ProductBundleAvailabilityCheck implements ProductBundleAvailabilityCheckIn
             $itemQuantity = $itemTransfer->getQuantity();
 
             if (!$this->checkIfItemIsSellable($itemsInCart, $sku, $itemQuantity)) {
-                $available = $this->availabilityFacade->calculateStockForProduct($sku);
+                $bundleAvailability = $this->availabilityFacade->calculateStockForProduct($sku);
 
-                $quantityWithBundles = $this->getAccumulatedItemQuantityForBundledProductsByGivenSku(
+                $bundledItemsQuantity = $this->getAccumulatedItemQuantityForBundledProductsByGivenSku(
                     $itemsInCart,
                     $itemTransfer->getSku()
                 );
 
-                $availabilitAfterBundles = $available - $quantityWithBundles;
+                $availabilityAfterBundling = $bundleAvailability - $bundledItemsQuantity;
 
                 $cartPreCheckErrorMessages->append(
                     $this->createItemIsNotAvailableMessageTransfer(
-                        $availabilitAfterBundles,
+                        $availabilityAfterBundling,
                         $itemTransfer->getSku()
                     )
                 );

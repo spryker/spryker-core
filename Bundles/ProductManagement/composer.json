@@ -23,7 +23,8 @@
     "spryker/tax": "^3.0.0",
     "spryker/touch": "^2.2.0",
     "spryker/url": "^2.1.0",
-    "spryker/util-text": "^1.0.0"
+    "spryker/util-text": "^1.0.0",
+    "spryker/util-encoding": "^1.0.0"
   },
   "description": "ProductManagement bundle",
   "license": "proprietary",

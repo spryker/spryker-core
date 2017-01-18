@@ -16,6 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
  * @group Unit
@@ -78,9 +79,10 @@ class ProductBundleSalesOrderSaverTest extends PHPUnit_Framework_TestCase
     protected function createProductBundleSalesOrderSaverMock()
     {
         $queryContainerMock = $this->createSalesQueryContainerMock();
+        $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
 
         return $this->getMockBuilder(ProductBundleSalesOrderSaver::class)
-            ->setConstructorArgs([$queryContainerMock])
+            ->setConstructorArgs([$queryContainerMock, $productBundleQueryContainerMock])
             ->setMethods(['findSalesOrderItem', 'createSalesOrderItemBundleEntity'])
             ->getMock();
     }
@@ -124,5 +126,14 @@ class ProductBundleSalesOrderSaverTest extends PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder(ProductBundleToSalesQueryContainerInterface::class)->getMock();
     }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
+     */
+    protected function createProductBundleQueryContainerMock()
+    {
+        return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
+    }
+
 
 }

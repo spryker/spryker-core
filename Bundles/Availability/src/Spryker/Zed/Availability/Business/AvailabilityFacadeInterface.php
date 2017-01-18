@@ -102,6 +102,12 @@ interface AvailabilityFacadeInterface
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
+     *
+     * Specification:
+     *  - Updates availability for gyven sky, by quantity
+     *  - Touches availability collector if data changed
+     *  - Returns id of availability abstrast id
+     *
      * @api
      *
      * @param string $sku

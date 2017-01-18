@@ -19,12 +19,6 @@ class ProductBundleProductConcreteAfterUpdatePlugin extends AbstractPlugin imple
 {
 
     /**
-     * Specification:
-     * - Executed before and after an concrete product is created.
-     * - Can be used for persisting other concrete product related information to database or execute any other logic.
-     * - The ID of the concrete product is available only if the plugin executed on "after" event.
-     * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

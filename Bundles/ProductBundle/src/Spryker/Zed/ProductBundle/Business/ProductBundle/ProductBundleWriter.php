@@ -67,8 +67,11 @@ class ProductBundleWriter implements ProductBundleWriterInterface
 
         $productConcreteTransfer->requireIdProductConcrete();
 
+        $this->productBundleQueryContainer->getConnection()->beginTransaction();
         $this->createBundledProducts($productConcreteTransfer, $bundledProducts);
         $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
+        $this->productBundleQueryContainer->getConnection()->commit();
+
         $productBundleTransfer->setBundlesToRemove([]);
 
         $this->productBundleStockWriter->updateStock($productConcreteTransfer);
@@ -143,7 +146,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
      * @param int $idProductBundle
      * @param int $idBundledProduct
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
     protected function findProductBundleEntity($idProductBundle, $idBundledProduct)
     {

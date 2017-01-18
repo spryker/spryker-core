@@ -19,8 +19,6 @@ class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPlu
 {
 
     /**
-     * This plugin makes calculations based on the given quote. The result is added to the quote.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

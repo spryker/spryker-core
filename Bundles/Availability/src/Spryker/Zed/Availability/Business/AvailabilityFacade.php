@@ -103,9 +103,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     *
-     * Specification:
-     *  - Touches availability abstract collector for given abstract product
+     * {@inheritdoc}
      *
      * @api
      *
@@ -121,6 +119,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku

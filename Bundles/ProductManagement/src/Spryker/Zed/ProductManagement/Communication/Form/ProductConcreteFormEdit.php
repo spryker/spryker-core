@@ -24,7 +24,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
 
     const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
-    const PRODUCT_BUNDLES_TO_BE_REMOVED = 'product_bundles_to_be_removed';
+    const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
 
     const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
 
@@ -54,7 +54,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
-            ->addProductOptionValuesToBeRemoved($builder);
+            ->addBundledProductsToBeRemoved($builder);
     }
 
     /***
@@ -62,28 +62,28 @@ class ProductConcreteFormEdit extends ProductFormAdd
      *
      * @return $this
      */
-    protected function addProductOptionValuesToBeRemoved(FormBuilderInterface $builder)
+    protected function addBundledProductsToBeRemoved(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCT_BUNDLES_TO_BE_REMOVED, 'hidden', [
+            ->add(self::BUNDLED_PRODUCTS_TO_BE_REMOVED, 'hidden', [
                 'attr' => [
-                    'id' => self::PRODUCT_BUNDLES_TO_BE_REMOVED,
+                    'id' => self::BUNDLED_PRODUCTS_TO_BE_REMOVED,
                 ],
             ]);
 
-        $builder->get(self::PRODUCT_BUNDLES_TO_BE_REMOVED)
+        $builder->get(self::BUNDLED_PRODUCTS_TO_BE_REMOVED)
             ->addModelTransformer(new CallbackTransformer(
                 function ($value) {
                     if ($value) {
                         return implode(',', $value);
                     }
                 },
-                function ($productBundlesToBeRemoved) {
-                    if (!$productBundlesToBeRemoved) {
+                function ($bundledProductsToBeRemoved) {
+                    if (!$bundledProductsToBeRemoved) {
                         return [];
                     }
 
-                    return explode(',', $productBundlesToBeRemoved);
+                    return explode(',', $bundledProductsToBeRemoved);
                 }
             ));
 
@@ -196,6 +196,13 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'constraints' => [new Callback([
                     'methods' => [
                         function ($dataToValidate, ExecutionContextInterface $context) {
+
+                            $rootData = $context->getRoot()->getData();
+                            if (isset($rootData[static::FORM_ASSIGNED_BUNDLED_PRODUCTS]) &&
+                                count($rootData[static::FORM_ASSIGNED_BUNDLED_PRODUCTS]) > 0) {
+                                return;
+                            }
+
                             foreach ($dataToValidate as $data) {
 
                                 $stockCount = (int)$data[StockForm::FIELD_QUANTITY];

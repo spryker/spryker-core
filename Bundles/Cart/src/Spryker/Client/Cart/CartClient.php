@@ -123,7 +123,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @param \ArrayObject $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
