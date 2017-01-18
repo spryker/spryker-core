@@ -9,7 +9,7 @@
     }
   },
   "require": {
-    "spryker/customer-group": "^0.2.0",
+    "spryker/customer-group": "^1.0.0",
     "spryker/discount": "^3.0.0",
     "spryker/kernel": "^2.8.0"
   },
