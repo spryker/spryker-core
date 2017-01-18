@@ -60,8 +60,18 @@ class OutgoingGraphBuilder
         $this->buildGraph($this->bundleName, $allDependencies);
 
         foreach ($allDependencies as $bundleName => $dependentBundles) {
-            $label = $bundleName . ' ' . count($dependentBundles);
-            $this->graph->addNode($bundleName, ['label' => $label]);
+
+            $attributes = [
+                'label' => $bundleName . ' ' . count($dependentBundles),
+            ];
+
+            if ($this->bundleName === $bundleName) {
+                $attributes['fillcolor'] = '#ffffff';
+                $attributes['style'] = 'filled';
+//                echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($attributes) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+            }
+
+            $this->graph->addNode($bundleName, $attributes);
         }
 
         foreach ($allDependencies as $bundleName => $dependentBundles) {

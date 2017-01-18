@@ -142,6 +142,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @return array
+     */
+    public function calculateStability()
+    {
+        return $this->getFactory()->createStabilityCalculator()->calculateStability();
+    }
+
+    /**
      * @api
      *
      * @param string|bool $bundleToView

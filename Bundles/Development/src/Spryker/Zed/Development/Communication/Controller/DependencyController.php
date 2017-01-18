@@ -89,6 +89,16 @@ class DependencyController extends AbstractController
     }
 
     /**
+     * @return array
+     */
+    public function stabilityAction()
+    {
+        return $this->viewResponse([
+            'bundles' => $this->getFacade()->calculateStability(),
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array

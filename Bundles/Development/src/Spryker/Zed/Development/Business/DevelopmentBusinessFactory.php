@@ -71,6 +71,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
@@ -162,6 +163,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
 
         return new Manager($bundleParser, $this->getConfig()->getBundleDirectory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Stability\StabilityCalculatorInterface
+     */
+    public function createStabilityCalculator()
+    {
+        return new StabilityCalculator();
     }
 
     /**
