@@ -135,5 +135,4 @@ class ProductBundleSalesOrderSaverTest extends PHPUnit_Framework_TestCase
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
 
-
 }

@@ -26,7 +26,7 @@ abstract class AbstractSpyProductBundle extends BaseSpyProductBundle
 {
 
     /**
-     * @param  ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -46,4 +46,5 @@ abstract class AbstractSpyProductBundle extends BaseSpyProductBundle
 
         return true;
     }
+
 }
