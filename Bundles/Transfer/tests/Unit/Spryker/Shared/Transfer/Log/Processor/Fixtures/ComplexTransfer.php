@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Application\Log\Processor\Fixtures;
+namespace Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Shared\Transfer\TransferInterface;
@@ -24,12 +24,12 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     protected $emptyTransfer;
 
     /**
-     * @var \Unit\Spryker\Shared\Application\Log\Processor\Fixtures\SimpleTransfer
+     * @var \Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer
      */
     protected $innerTransfer;
 
     /**
-     * @var \Unit\Spryker\Shared\Application\Log\Processor\Fixtures\SimpleTransfer[]
+     * @var \Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[]
      */
     protected $transferCollection;
 
@@ -44,19 +44,19 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
             'is_transfer' => false,
         ],
         'emptyTransfer' => [
-            'type' => '\Unit\Spryker\Shared\Application\Log\Processor\Fixtures\SimpleTransfer',
+            'type' => '\Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer',
             'name_underscore' => 'empty_transfer',
             'is_collection' => false,
             'is_transfer' => true,
         ],
         'innerTransfer' => [
-            'type' => '\Unit\Spryker\Shared\Application\Log\Processor\Fixtures\SimpleTransfer',
+            'type' => '\Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer',
             'name_underscore' => 'inner_transfer',
             'is_collection' => false,
             'is_transfer' => true,
         ],
         'transferCollection' => [
-            'type' => '\Unit\Spryker\Shared\Application\Log\Processor\Fixtures\SimpleTransfer',
+            'type' => '\Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer',
             'name_underscore' => 'transfer_collection',
             'is_collection' => true,
             'is_transfer' => true,
@@ -114,7 +114,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @return \Unit\Spryker\Shared\Application\Log\Processor\SimpleTransfer
+     * @return \Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer
      */
     public function getInnerTransfer()
     {
@@ -122,7 +122,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @param \Unit\Spryker\Shared\Application\Log\Processor\SimpleTransfer $innerTransfer
+     * @param \Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer $innerTransfer
      *
      * @return $this
      */
@@ -134,7 +134,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @return \Unit\Spryker\Shared\Application\Log\Processor\SimpleTransfer[]
+     * @return \Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[]
      */
     public function getTransferCollection()
     {
@@ -142,7 +142,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @param \Unit\Spryker\Shared\Application\Log\Processor\SimpleTransfer[] $transferCollection
+     * @param \Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[] $transferCollection
      *
      * @return $this
      */

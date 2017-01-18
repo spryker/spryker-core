@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Application\Log\Processor;
+namespace Unit\Spryker\Shared\Transfer\Log\Processor;
 
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\Application\Log\Processor\TransferSanitizerProcessor;
+use Spryker\Shared\Transfer\Log\Processor\TransferSanitizerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
-use Unit\Spryker\Shared\Application\Log\Processor\Fixtures\ComplexTransfer;
+use Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures\ComplexTransfer;
 
 /**
  * @group Unit

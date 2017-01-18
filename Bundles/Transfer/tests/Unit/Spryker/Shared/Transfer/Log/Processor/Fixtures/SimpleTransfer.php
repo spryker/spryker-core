@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Application\Log\Processor\Fixtures;
+namespace Unit\Spryker\Shared\Transfer\Log\Processor\Fixtures;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Shared\Transfer\TransferInterface;

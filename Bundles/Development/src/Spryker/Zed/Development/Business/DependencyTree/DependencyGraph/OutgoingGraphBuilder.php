@@ -41,7 +41,7 @@ class OutgoingGraphBuilder
      * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
      * @param array $bundlesToFilter
      */
-    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, array $bundlesToFilter = ['Transfer'])
+    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, array $bundlesToFilter = [])
     {
         $this->bundleName = $bundleName;
         $this->graph = $graph;

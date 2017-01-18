@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Transfer\Log\Processor;
 
 use ArrayObject;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
