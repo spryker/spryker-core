@@ -13,8 +13,6 @@ use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
-use Spryker\Shared\Library\Environment;
-use Spryker\Shared\Url\UrlBuilder;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
@@ -30,7 +28,6 @@ use Spryker\Zed\Kernel\Container;
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const URL_BUILDER = 'URL_BUILDER';
     const SERVICE_ENCODING = 'util encoding service';
 
     /**
@@ -40,9 +37,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::URL_BUILDER] = function () {
-            return new UrlBuilder();
-        };
         $container[static::SERVICE_ENCODING] = function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
         };

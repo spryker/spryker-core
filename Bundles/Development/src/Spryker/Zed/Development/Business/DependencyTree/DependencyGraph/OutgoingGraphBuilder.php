@@ -31,15 +31,22 @@ class OutgoingGraphBuilder
     protected $bundleParser;
 
     /**
-     * @param string $bundleName
+     * @var array
+     */
+    protected $bundlesToFilter;
+
+    /**
+     * @param $bundleName
      * @param \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin $graph
      * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
+     * @param array $bundlesToFilter
      */
-    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser)
+    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, array $bundlesToFilter = ['Transfer'])
     {
         $this->bundleName = $bundleName;
         $this->graph = $graph;
         $this->bundleParser = $bundleParser;
+        $this->bundlesToFilter = $bundlesToFilter;
     }
 
     /**
@@ -52,10 +59,14 @@ class OutgoingGraphBuilder
         $allDependencies = new ArrayObject();
         $this->buildGraph($this->bundleName, $allDependencies);
 
+
         foreach ($allDependencies as $bundleName => $dependentBundles) {
-            $this->graph->addNode($bundleName);
+            $label = $bundleName . ' ' . count($dependentBundles);
+            $this->graph->addNode($bundleName, ['label' => $label]);
+        }
+
+        foreach ($allDependencies as $bundleName => $dependentBundles) {
             foreach ($dependentBundles as $dependentBundle) {
-                $this->graph->addNode($dependentBundle);
                 $this->graph->addEdge($bundleName, $dependentBundle);
             }
         }
@@ -73,6 +84,9 @@ class OutgoingGraphBuilder
     {
         $dependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);
         $dependencies = $this->getBundleNames($dependencies);
+
+
+
         $allDependencies[$bundleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
             if (array_key_exists($dependentBundle, $allDependencies)) {
@@ -104,7 +118,21 @@ class OutgoingGraphBuilder
             }
         }
 
-        return $bundleNames;
+        return $this->filterBundles($bundleNames);
+    }
+
+    /**
+     * @param array $dependencies
+     *
+     * @return array
+     */
+    protected function filterBundles(array $dependencies)
+    {
+        $callback = function ($bundle) {
+            return !in_array($bundle, $this->bundlesToFilter);
+        };
+
+        return array_filter($dependencies, $callback);
     }
 
 }
