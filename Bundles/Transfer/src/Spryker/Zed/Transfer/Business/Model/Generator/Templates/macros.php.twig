@@ -1,5 +1,10 @@
 {# constant #}
 {% macro addConstant(constant) %}
+    {% if constant.deprecationDescription is not null -%}
+    /**
+     * @deprecated {{ constant.deprecationDescription }}
+     */
+    {% endif -%}
     const {{ constant.name }} = '{{ constant.value }}';
 {% endmacro %}
 
@@ -11,10 +16,10 @@
     protected $transferMetadata = [
     {% for property in normalizedProperties %}
     self::{{ property.propertyConst }} => [
-          'type' => '{{ property.type_fully_qualified }}',
-          'name_underscore' => '{{ property.name_underscore }}',
-          'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
-          'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
+            'type' => '{{ property.type_fully_qualified }}',
+            'name_underscore' => '{{ property.name_underscore }}',
+            'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
+            'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];
@@ -46,10 +51,14 @@
 {# set method #}
 {%- macro addSet(method) %}
     /**
-{% if method.bundles is defined %}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
      *
-{% endif %}
+     {% endif -%}
      * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
      *
      * @return $this
@@ -66,10 +75,14 @@
 {# get method #}
 {%- macro addGet(method) %}
     /**
-{% if method.bundles is defined %}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
      *
-{% endif %}
+     {% endif -%}
      * @return {{ method.return }}
      */
     public function {{ method.name }}()
@@ -81,10 +94,14 @@
 {# add method #}
 {%- macro addAdd(method) %}
     /**
-{% if method.bundles is defined %}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
      *
-{% endif %}
+     {% endif -%}
      * @param {{ method.var }} ${{ method.property }}
      *
      * @return $this
@@ -101,10 +118,14 @@
 {# require method #}
 {%- macro addRequire(method) %}
     /**
-{% if method.bundles is defined %}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
      *
-{% endif %}
+     {% endif -%}
      * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this

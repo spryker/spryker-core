@@ -62,6 +62,7 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
+            'deprecated' => null,
             'property' => [
                 'propertyA' => [
                     'name' => 'propertyA',

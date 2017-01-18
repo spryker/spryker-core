@@ -7,7 +7,6 @@
 namespace Generated\Shared\Transfer;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -17,9 +16,7 @@ class FooBarTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';
-
     const BLA = 'bla';
-
     const SELF_REFERENCE = 'selfReference';
 
     /**
@@ -33,7 +30,7 @@ class FooBarTransfer extends AbstractTransfer
     protected $bla;
 
     /**
-     * @var \ArrayObject|FooBarTransfer[]
+     * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
     protected $selfReference;
 
@@ -42,22 +39,22 @@ class FooBarTransfer extends AbstractTransfer
      */
     protected $transferMetadata = [
         self::NAME => [
-          'type' => 'string',
-          'name_underscore' => 'name',
-          'is_collection' => false,
-          'is_transfer' => false,
+            'type' => 'string',
+            'name_underscore' => 'name',
+            'is_collection' => false,
+            'is_transfer' => false,
         ],
         self::BLA => [
-          'type' => 'int',
-          'name_underscore' => 'bla',
-          'is_collection' => false,
-          'is_transfer' => false,
+            'type' => 'int',
+            'name_underscore' => 'bla',
+            'is_collection' => false,
+            'is_transfer' => false,
         ],
         self::SELF_REFERENCE => [
-          'type' => 'Generated\Shared\Transfer\FooBarTransfer',
-          'name_underscore' => 'self_reference',
-          'is_collection' => true,
-          'is_transfer' => true,
+            'type' => 'Generated\Shared\Transfer\FooBarTransfer',
+            'name_underscore' => 'self_reference',
+            'is_collection' => true,
+            'is_transfer' => true,
         ],
     ];
 
@@ -66,7 +63,7 @@ class FooBarTransfer extends AbstractTransfer
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      */
     public function setName($name)
     {
@@ -89,9 +86,9 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireName()
     {
@@ -101,11 +98,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test|Test2
      *
      * @param int $bla
      *
-     * @return self
+     * @return $this
      */
     public function setBla($bla)
     {
@@ -116,7 +113,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test|Test2
      *
      * @return int
      */
@@ -126,11 +123,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test|Test2
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireBla()
     {
@@ -140,11 +137,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test2
      *
-     * @param \ArrayObject|FooBarTransfer[] $selfReference
+     * @param \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[] $selfReference
      *
-     * @return self
+     * @return $this
      */
     public function setSelfReference(\ArrayObject $selfReference)
     {
@@ -155,9 +152,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test2
      *
-     * @return FooBarTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
     public function getSelfReference()
     {
@@ -165,11 +162,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test2
      *
-     * @param FooBarTransfer $selfReference
+     * @param \Generated\Shared\Transfer\FooBarTransfer $selfReference
      *
-     * @return self
+     * @return $this
      */
     public function addSelfReference(FooBarTransfer $selfReference)
     {
@@ -180,11 +177,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @bundle Test2
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireSelfReference()
     {

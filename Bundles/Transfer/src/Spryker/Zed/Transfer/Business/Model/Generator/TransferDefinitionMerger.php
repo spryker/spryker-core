@@ -12,13 +12,14 @@ use Exception;
 class TransferDefinitionMerger implements MergerInterface
 {
 
-    const ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY =
-        'Property \'%1$s\' defined more than once with different attributes! To fix this, search for \'property name="%1$s"\' in the code base and fix the wrong one.';
+    const ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL =
+        'Value mismatch for "%1$s.%2$s" tranfer property. Value1: "%3$s"; Value2: "%4$s". ' .
+        'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
 
     /**
      * @var array
      */
-    private $mergedTransferDefinitions = [];
+    protected $mergedTransferDefinitions = [];
 
     /**
      * @param array $transferDefinitions
@@ -27,11 +28,14 @@ class TransferDefinitionMerger implements MergerInterface
      */
     public function merge(array $transferDefinitions)
     {
+        $this->mergedTransferDefinitions = [];
+
         foreach ($transferDefinitions as $transferDefinition) {
             if (array_key_exists($transferDefinition['name'], $this->mergedTransferDefinitions)) {
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $this->mergeDefinitions(
                     $this->mergedTransferDefinitions[$transferDefinition['name']],
-                    $transferDefinition
+                    $transferDefinition,
+                    $transferDefinition['name']
                 );
             } else {
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $transferDefinition;
@@ -47,23 +51,40 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return array
      */
-    private function mergeDefinitions(array $existingDefinition, array $definitionToMerge)
+    protected function mergeDefinitions(array $existingDefinition, array $definitionToMerge, $transferName)
     {
         return [
             'name' => $existingDefinition['name'],
-            'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property']),
+            'deprecated' => $this->mergeDeprecatedClassDefinition($existingDefinition, $definitionToMerge),
+            'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property'], $transferName),
         ];
+    }
+
+    /**
+     * @param array $existingDefinition
+     * @param array $definitionToMerge
+     *
+     * @return string|null
+     */
+    protected function mergeDeprecatedClassDefinition(array $existingDefinition, array $definitionToMerge)
+    {
+        if (!isset($existingDefinition['deprecated'])) {
+            $existingDefinition['deprecated'] = null;
+        }
+        if (!isset($definitionToMerge['deprecated'])) {
+            $definitionToMerge['deprecated'] = null;
+        }
+
+        return $this->mergeDeprecatedAttributes($existingDefinition['deprecated'], $definitionToMerge['deprecated']);
     }
 
     /**
      * @param array $existingProperties
      * @param array $propertiesToMerge
      *
-     * @throws \Exception
-     *
      * @return array
      */
-    private function mergeProperty(array $existingProperties, array $propertiesToMerge)
+    protected function mergeProperty(array $existingProperties, array $propertiesToMerge, $transferName)
     {
         $mergedProperties = [];
 
@@ -71,54 +92,95 @@ class TransferDefinitionMerger implements MergerInterface
             $mergedProperties[$property['name']] = $property;
         }
 
-        foreach ($propertiesToMerge as $property) {
-            if (!array_key_exists($property['name'], $mergedProperties)) {
-                $mergedProperties[$property['name']] = $property;
-            } elseif (!$this->propertiesAreIdentically($property, $mergedProperties[$property['name']])) {
-                throw new Exception(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property['name']));
-            } else {
-                $mergedProperties[$property['name']] = $this->mergePropertyBundles(
-                    $mergedProperties[$property['name']],
-                    $property
-                );
+        foreach ($propertiesToMerge as $propertyToMerge) {
+            if (!array_key_exists($propertyToMerge['name'], $mergedProperties)) {
+                $mergedProperties[$propertyToMerge['name']] = $propertyToMerge;
+                continue;
             }
+
+            $mergedProperties[$propertyToMerge['name']] = $this->mergeProperties(
+                $mergedProperties[$propertyToMerge['name']],
+                $propertyToMerge,
+                $transferName
+            );
         }
 
         return $mergedProperties;
     }
 
     /**
-     * @param array $property1
-     * @param array $property2
+     * @param array $property
+     * @param array $propertyToMerge
+     * @param string $transferName
      *
-     * @return bool
-     */
-    private function propertiesAreIdentically(array $property1, array $property2)
-    {
-        unset($property1['bundle'], $property1['bundles']);
-        unset($property2['bundle'], $property2['bundles']);
-
-        $diff = array_diff($property1, $property2);
-        if (count($diff) === 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param array $property1
-     * @param array $property2
+     * @throws \Exception
      *
      * @return array
      */
-    private function mergePropertyBundles(array $property1, array $property2)
+    protected function mergeProperties(array $property, array $propertyToMerge, $transferName)
     {
-        $mergedPropertyBundles = array_merge($property1['bundles'], $property2['bundles']);
+        foreach ($propertyToMerge as $propertyName => $propertyValue) {
+            if (!array_key_exists($propertyName, $property)) {
+                $property[$propertyName] = $propertyValue;
+                continue;
+            }
 
-        $property1['bundles'] = array_unique($mergedPropertyBundles);
+            switch ($propertyName) {
+                case 'bundles':
+                    $property[$propertyName] = $this->mergePropertyBundles($property[$propertyName], $propertyValue);
+                    break;
 
-        return $property1;
+                case 'deprecated':
+                    $property[$propertyName] = $this->mergeDeprecatedAttributes($property[$propertyName], $propertyValue);
+                    break;
+
+                default:
+                    if ($propertyValue !== $property[$propertyName]) {
+                        throw new Exception(sprintf(
+                            static::ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL,
+                            $transferName,
+                            $propertyName,
+                            $property[$propertyName],
+                            $propertyValue
+                        ));
+                    }
+                    break;
+            }
+        }
+
+        return $property;
+    }
+
+    /**
+     * @param array $bundles1
+     * @param array $bundles2
+     *
+     * @return array
+     */
+    protected function mergePropertyBundles(array $bundles1, array $bundles2)
+    {
+        $mergedPropertyBundles = array_merge($bundles1, $bundles2);
+
+        return array_unique($mergedPropertyBundles);
+    }
+
+    /**
+     * @param string $deprecated1
+     * @param string $deprecated2
+     *
+     * @return string|null
+     */
+    protected function mergeDeprecatedAttributes($deprecated1, $deprecated2)
+    {
+        if ($deprecated1 === null && $deprecated2 === null) {
+            return null;
+        }
+
+        if ($deprecated1 === null) {
+            return $deprecated2;
+        }
+
+        return $deprecated1;
     }
 
 }

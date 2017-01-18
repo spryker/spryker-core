@@ -12,6 +12,10 @@ use Spryker\Shared\Transfer\AbstractTransfer;
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ {% if deprecationDescription is not null -%}
+ *
+ * @deprecated {{ deprecationDescription }}
+ {% endif -%}
  */
 class {{ className }} extends AbstractTransfer
 {

@@ -3,6 +3,5 @@
     <transfer name="FooBar">
         <property name="name" type="string" />
         <property name="bla" type="int" />
-        <property name="selfReference" type="FooBar[]" />
     </transfer>
 </transfers>

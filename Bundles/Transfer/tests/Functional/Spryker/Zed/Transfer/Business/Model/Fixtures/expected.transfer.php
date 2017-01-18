@@ -7,8 +7,6 @@
 namespace Generated\Shared\Transfer;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -18,9 +16,7 @@ class CatFaceTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';
-
     const ITEM = 'item';
-
     const ITEMS = 'items';
 
     /**
@@ -29,12 +25,12 @@ class CatFaceTransfer extends AbstractTransfer
     protected $name;
 
     /**
-     * @var ItemTransfer
+     * @var \Generated\Shared\Transfer\ItemTransfer
      */
     protected $item;
 
     /**
-     * @var \ArrayObject|ItemTransfer[]
+     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected $items;
 
@@ -43,22 +39,22 @@ class CatFaceTransfer extends AbstractTransfer
      */
     protected $transferMetadata = [
         self::NAME => [
-          'type' => 'string',
-          'name_underscore' => 'name',
-          'is_collection' => false,
-          'is_transfer' => false,
+            'type' => 'string',
+            'name_underscore' => 'name',
+            'is_collection' => false,
+            'is_transfer' => false,
         ],
         self::ITEM => [
-          'type' => 'Generated\Shared\Transfer\ItemTransfer',
-          'name_underscore' => 'item',
-          'is_collection' => false,
-          'is_transfer' => true,
+            'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'name_underscore' => 'item',
+            'is_collection' => false,
+            'is_transfer' => true,
         ],
         self::ITEMS => [
-          'type' => 'Generated\Shared\Transfer\ItemTransfer',
-          'name_underscore' => 'items',
-          'is_collection' => true,
-          'is_transfer' => true,
+            'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'name_underscore' => 'items',
+            'is_collection' => true,
+            'is_transfer' => true,
         ],
     ];
 
@@ -67,7 +63,7 @@ class CatFaceTransfer extends AbstractTransfer
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      */
     public function setName($name)
     {
@@ -90,9 +86,9 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireName()
     {
@@ -104,9 +100,9 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @param ItemTransfer|null $item
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $item
      *
-     * @return self
+     * @return $this
      */
     public function setItem(ItemTransfer $item = null)
     {
@@ -119,7 +115,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function getItem()
     {
@@ -129,9 +125,9 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireItem()
     {
@@ -143,9 +139,9 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
-     * @return self
+     * @return $this
      */
     public function setItems(\ArrayObject $items)
     {
@@ -158,7 +154,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @return ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getItems()
     {
@@ -168,9 +164,9 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
-     * @return self
+     * @return $this
      */
     public function addItem(ItemTransfer $item)
     {
@@ -183,9 +179,9 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireItems()
     {

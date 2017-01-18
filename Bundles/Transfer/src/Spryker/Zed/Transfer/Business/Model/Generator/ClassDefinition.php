@@ -47,6 +47,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $constructorDefinition = [];
 
     /**
+     * @var string
+     */
+    private $deprecationDescription;
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -54,6 +59,10 @@ class ClassDefinition implements ClassDefinitionInterface
     public function setDefinition(array $definition)
     {
         $this->setName($definition['name']);
+
+        if (isset($definition['deprecated'])) {
+            $this->deprecationDescription = $definition['deprecated'];
+        }
 
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
@@ -111,6 +120,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $this->getPropertyConstantName($property),
             'value' => $property['name'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
 
         $this->constants[$property['name']] = $propertyInfo;
@@ -325,6 +335,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getDeprecationDescription()
+    {
+        return $this->deprecationDescription;
+    }
+
+    /**
      * @param array $property
      *
      * @return void
@@ -463,6 +481,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'return' => $this->getReturnType($property),
             'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $this->methods[$methodName] = $method;
     }
@@ -483,6 +502,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'var' => $this->getSetVar($property),
             'bundles' => $property['bundles'],
             'typeHint' => null,
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method['typeHint'], $property, $method);
@@ -511,6 +531,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'parent' => $parent,
             'var' => $this->getAddVar($property),
             'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
 
         $typeHint = $this->getAddTypeHint($property);
@@ -570,6 +591,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'isCollection' => $this->isCollection($property),
             'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $this->methods[$methodName] = $method;
     }
@@ -600,6 +622,16 @@ class ClassDefinition implements ClassDefinitionInterface
                 $this->name
             ));
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    private function getPropertyDeprecationDescription(array $property)
+    {
+        return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
 
 }
