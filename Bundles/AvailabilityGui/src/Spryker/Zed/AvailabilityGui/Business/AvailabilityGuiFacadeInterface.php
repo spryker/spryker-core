@@ -10,5 +10,4 @@ namespace Spryker\Zed\AvailabilityGui\Business;
  */
 interface AvailabilityGuiFacadeInterface
 {
-
 }

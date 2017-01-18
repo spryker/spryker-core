@@ -242,6 +242,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -250,7 +252,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     {
         return $this->querySalesOrderItemsByIdSalesOrder($idSalesOrder)
             ->withColumn('COUNT(*)', 'Count')
-            ->select(array('Count'))
+            ->select(['Count'])
             ->groupBySku()
             ->orderByCount();
     }
