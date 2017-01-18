@@ -70,7 +70,6 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     public function boot(Application $app)
     {
-
     }
 
 }

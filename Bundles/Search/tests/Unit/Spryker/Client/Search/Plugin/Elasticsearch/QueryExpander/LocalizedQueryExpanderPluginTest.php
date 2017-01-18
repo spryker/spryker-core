@@ -72,6 +72,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function createLocalizedQueryExpanderPluginMock()
     {
+        /** @var \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit_Framework_MockObject_MockObject $queryExpander */
         $queryExpander = $this->getMockBuilder(LocalizedQueryExpanderPlugin::class)
             ->setMethods(['getCurrentLocale'])
             ->getMock();
@@ -79,6 +80,8 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
         $queryExpander
             ->method('getCurrentLocale')
             ->willReturn('ab_CD');
+
+        $queryExpander->setFactory($this->getSearchFactory());
 
         return $queryExpander;
     }

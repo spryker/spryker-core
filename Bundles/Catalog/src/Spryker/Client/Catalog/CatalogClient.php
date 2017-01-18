@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Catalog;
 
-use Spryker\Client\Catalog\Dependency\SearchStringSetterInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -17,10 +16,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
 
     /**
-     * Specification:
-     * - A query based on the given search string and request parameters will be executed
-     * - The query will also create facet aggregations, pagination and sorting based on the request parameters
-     * - The result is a formatted associative array where the used result formatters' name are the keys and their results are the values
+     * {@inheritdoc}
      *
      * @api
      *
@@ -31,7 +27,14 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      */
     public function catalogSearch($searchString, array $requestParameters = [])
     {
-        $searchQuery = $this->createExpandedSearchQuery($searchString, $requestParameters);
+        $searchQuery = $this
+            ->getFactory()
+            ->createCatalogSearchQuery($searchString);
+
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchQueryExpanderPlugins(), $requestParameters);
 
         $resultFormatters = $this
             ->getFactory()
@@ -44,27 +47,34 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return array
      */
-    protected function createExpandedSearchQuery($searchString, array $requestParameters)
+    public function catalogSuggestSearch($searchString, array $requestParameters = [])
     {
         $searchQuery = $this
             ->getFactory()
-            ->getCatalogSearchQueryPlugin();
-
-        if ($searchQuery instanceof SearchStringSetterInterface) {
-            $searchQuery->setSearchString($searchString);
-        }
+            ->createSuggestSearchQuery($searchString);
 
         $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchQueryExpanderPlugins(), $requestParameters);
+            ->expandQuery($searchQuery, $this->getFactory()->getSuggestionQueryExpanderPlugins(), $requestParameters);
 
-        return $searchQuery;
+        $resultFormatters = $this
+            ->getFactory()
+            ->getSuggestionResultFormatters();
+
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
+use Elastica\Query\MatchAll;
 use Elastica\Query\Nested;
 use Elastica\Query\Range;
 use Elastica\Query\Term;
@@ -83,6 +85,22 @@ class QueryBuilder implements QueryBuilderInterface
     public function createBoolQuery()
     {
         return new BoolQuery();
+    }
+
+    /**
+     * @return \Elastica\Query\Match
+     */
+    public function createMatchQuery()
+    {
+        return new Match();
+    }
+
+    /**
+     * @return \Elastica\Query\MatchAll
+     */
+    public function createMatchAllQuery()
+    {
+        return new MatchAll();
     }
 
 }

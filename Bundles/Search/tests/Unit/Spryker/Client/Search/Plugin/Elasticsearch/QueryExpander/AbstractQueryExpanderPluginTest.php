@@ -322,4 +322,12 @@ abstract class AbstractQueryExpanderPluginTest extends PHPUnit_Framework_TestCas
         return $searchConfig;
     }
 
+    /**
+     * @return \Spryker\Client\Search\SearchFactory
+     */
+    protected function getSearchFactory()
+    {
+        return new SearchFactory();
+    }
+
 }
